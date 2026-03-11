@@ -236,6 +236,9 @@ class Environment(object):
             return "llvm -mtriple=aarch64-linux-gnu"
         if self.TARGET in ["sim", "tsim", "intelfocl"]:
             return "llvm"
+        elif self.TARGET == "axu5evb":
+            # AXU5EVB runs Linux on aarch64, same host target family as pynq/ultra96
+            return tvm.target.Target("llvm -mtriple=aarch64-linux-gnu")
         raise ValueError("Unknown target %s" % self.TARGET)
 
     @property

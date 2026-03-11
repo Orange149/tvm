@@ -1,0 +1,17 @@
+/dts-v1/;
+/plugin/;
+
+&{/} {
+  fragment@0 {
+    target-path = "/amba_pl@0";   // 你需要用实际路径替换
+    __overlay__ {
+      vta_uio@a0000000 {
+        compatible = "generic-uio";
+        reg = <0x0 0xA0000000 0x0 0x10000>;
+        interrupts = <0 121 4>;          // 先保留你试的 121
+        interrupt-parent = <&gic>;       // 建议加上（如果 base dtb 有 &gic symbols）
+        status = "okay";
+      };
+    };
+  };
+};

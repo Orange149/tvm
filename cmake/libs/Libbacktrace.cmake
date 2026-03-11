@@ -43,10 +43,10 @@ ExternalProject_Add(project_libbacktrace
                     "CC=${c_compiler}"
                     "CFLAGS=${CMAKE_C_FLAGS}"
                     "LDFLAGS=${CMAKE_EXE_LINKER_FLAGS}"
-                    "CPP=${c_compiler} -E"
+                    "CPP=${c_compiler} -E --sysroot=${CMAKE_SYSROOT}"
                     "NM=${CMAKE_NM}"
                     "STRIP=${CMAKE_STRIP}"
-                    "--host=${MACHINE_NAME}"
+                    "--host=aarch64-xilinx-linux"
   INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/libbacktrace"
   BUILD_COMMAND make
   INSTALL_COMMAND make install

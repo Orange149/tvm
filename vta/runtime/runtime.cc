@@ -35,6 +35,8 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cstdarg>
+#include <cstdio>
 #include <cstring>
 #include <memory>
 #include <mutex>
@@ -43,6 +45,21 @@
 #include <vector>
 
 namespace vta {
+
+inline bool RuntimeTraceEnabled() {
+  const char* v = getenv("VTA_RUNTIME_TRACE");
+  return v && v[0] != '\0' && strcmp(v, "0") != 0;
+}
+
+inline void RuntimeTrace(const char* fmt, ...) {
+  if (!RuntimeTraceEnabled()) return;
+  va_list ap;
+  va_start(ap, fmt);
+  fprintf(stderr, "[vta_runtime][TRACE] ");
+  vfprintf(stderr, fmt, ap);
+  fprintf(stderr, "\n");
+  va_end(ap);
+}
 
 // Avoid bad configurations.
 static_assert(VTA_UOP_WIDTH == sizeof(VTAUop) * 8, "VTA_UOP_WIDTH do not match VTAUop size");
@@ -175,11 +192,14 @@ struct DataBuffer {
    * \param size The size of the buffer.
    */
   static DataBuffer* Alloc(size_t size) {
+    RuntimeTrace("DataBuffer::Alloc begin size=%zu", size);
     void* data = VTAMemAlloc(size, kAlwaysCache);
     CHECK(data != nullptr);
     DataBuffer* buffer = new DataBuffer();
     buffer->data_ = data;
     buffer->phy_addr_ = VTAMemGetPhyAddr(data);
+    RuntimeTrace("DataBuffer::Alloc done size=%zu data=%p phy=0x%llx", size, data,
+                 static_cast<unsigned long long>(buffer->phy_addr_));
 
     alloc_stat->AddAlloc(buffer);
     return buffer;
@@ -395,6 +415,11 @@ class BaseQueue {
     fpga_buff_ = static_cast<char*>(VTAMemAlloc(max_bytes, coherent_ || always_cache_));
     CHECK(fpga_buff_ != nullptr);
     fpga_buff_phy_ = VTAMemGetPhyAddr(fpga_buff_);
+    RuntimeTrace(
+        "BaseQueue::InitSpace elem_bytes=%u max_bytes=%u coherent=%d always_cache=%d fpga=%p "
+        "phy=0x%llx",
+        elem_bytes, max_bytes, coherent ? 1 : 0, always_cache ? 1 : 0, fpga_buff_,
+        static_cast<unsigned long long>(fpga_buff_phy_));
   }
   /*!
    * \brief Reset the pointer of the buffer.
@@ -1000,10 +1025,14 @@ class CommandQueue {
  public:
   CommandQueue() { this->InitSpace(); }
   void InitSpace() {
+    RuntimeTrace("CommandQueue::InitSpace begin");
     uop_queue_.InitSpace();
+    RuntimeTrace("CommandQueue::InitSpace uop_queue done");
     insn_queue_.InitSpace();
+    RuntimeTrace("CommandQueue::InitSpace insn_queue done");
     device_ = VTADeviceAlloc();
     CHECK(device_ != nullptr);
+    RuntimeTrace("CommandQueue::InitSpace device done handle=%p", device_);
   }
 
   ~CommandQueue() { VTADeviceFree(device_); }
@@ -1304,6 +1333,8 @@ void VTABufferFree(void* buffer) { vta::DataBuffer::Free(vta::DataBuffer::FromHa
 
 void VTABufferCopy(const void* from, size_t from_offset, void* to, size_t to_offset, size_t size,
                    int kind_mask) {
+  vta::RuntimeTrace("VTABufferCopy kind_mask=%d from=%p+%zu to=%p+%zu size=%zu", kind_mask, from,
+                    from_offset, to, to_offset, size);
   vta::DataBuffer* from_buffer = nullptr;
   vta::DataBuffer* to_buffer = nullptr;
 
