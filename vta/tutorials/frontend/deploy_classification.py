@@ -88,7 +88,7 @@ def parse_args():
     )
     parser.add_argument(
         "--host",
-        default="192.168.1.248",
+        default="192.168.1.228",
         help="RPC server host",
     )
     parser.add_argument(

@@ -22,9 +22,67 @@ import tvm
 from tvm import te
 from tvm import autotvm
 from tvm import topi
+from tvm.autotvm.task.space import OtherOptionEntity, SplitEntity
 
 from .utils import is_packed_layout
 from ..environment import get_env
+
+
+def _set_safe_fallback(cfg, b, c_o, x_i, x_j, c_i):
+    """Install a deterministic fallback config for packed conv2d.
+
+    For AXU5EVB we bias the fallback toward the best legal configs observed from
+    direct-RPC sweeps on the dominant ResNet-18 conv workloads. Other targets
+    keep the original conservative single-thread behavior.
+    """
+
+    def _extent(axis):
+        return topi.utils.get_const_int(axis.dom.extent)
+
+    def _split_by_inner(extent, inner):
+        inner = max(1, min(extent, inner))
+        assert extent % inner == 0
+        return SplitEntity([extent // inner, inner])
+
+    b_ext = _extent(b)
+    co_ext = _extent(c_o)
+    h_ext = _extent(x_i)
+    w_ext = _extent(x_j)
+    ci_ext = _extent(c_i)
+
+    cfg["tile_b"] = SplitEntity([b_ext, 1])
+    cfg["tile_h"] = SplitEntity([h_ext, 1])
+    cfg["tile_w"] = SplitEntity([w_ext, 1])
+    cfg["tile_ci"] = SplitEntity([ci_ext, 1])
+    cfg["tile_co"] = SplitEntity([co_ext, 1])
+    cfg["oc_nthread"] = OtherOptionEntity(1)
+    cfg["h_nthread"] = OtherOptionEntity(1)
+
+    env = get_env()
+    if env.TARGET != "axu5evb":
+        return
+
+    # AXU5EVB heuristics from measured legal configs:
+    # - C2: 56x56 ic64 oc64 k3s1      -> tile_h=56, tile_w=1, oc_nthread=2
+    # - C5: 28x28 ic128 oc128 k3s1    -> tile_h=28, tile_w=2, oc_nthread=1
+    # - P3: 14x14 ic256 oc512 k1s2    -> output 7x7, tile_h=7, tile_w=7, oc_nthread=2
+    cfg["tile_h"] = _split_by_inner(h_ext, h_ext)
+
+    if (h_ext, w_ext, ci_ext, co_ext) == (56, 56, 4, 4):
+        cfg["tile_w"] = _split_by_inner(w_ext, 1)
+        cfg["oc_nthread"] = OtherOptionEntity(2)
+    elif (h_ext, w_ext, ci_ext, co_ext) == (28, 28, 8, 8):
+        cfg["tile_w"] = _split_by_inner(w_ext, 2)
+        cfg["oc_nthread"] = OtherOptionEntity(1)
+    elif (h_ext, w_ext, ci_ext, co_ext) == (7, 7, 16, 32):
+        cfg["tile_w"] = _split_by_inner(w_ext, 7)
+        cfg["oc_nthread"] = OtherOptionEntity(2)
+    else:
+        # Generic AXU5EVB fallback: maximize row reuse, keep width conservative,
+        # and only enable channel threading when the outer channel tile is large
+        # enough to split safely.
+        cfg["tile_w"] = _split_by_inner(w_ext, 1)
+        cfg["oc_nthread"] = OtherOptionEntity(2 if co_ext >= 2 else 1)
 
 
 @autotvm.register_topi_compute("conv2d_packed.vta")
@@ -117,6 +175,9 @@ def schedule_conv2d_packed(cfg, outs):
     cfg.define_knob("oc_nthread", [1, 2])
     cfg.define_knob("h_nthread", [1, 2])
     ###### space definition end ######
+
+    if cfg.is_fallback:
+        _set_safe_fallback(cfg, b, c_o, x_i, x_j, c_i)
 
     data, kernel = conv2d_stage.op.input_tensors
     if isinstance(data.op, tvm.te.ComputeOp) and "pad" in data.op.tag:

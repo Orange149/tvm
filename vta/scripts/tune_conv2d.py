@@ -25,6 +25,7 @@ import tvm
 from tvm import te
 from tvm import autotvm
 from tvm import topi
+from tvm import rpc
 import vta
 import vta.testing
 
@@ -73,36 +74,37 @@ def my_clip(x, a_min, a_max):
     return x
 
 
-def conv2d(N, CI, H, W, CO, KH, KW, strides, padding, dilation):
+def register_vta_conv2d_template():
+    from tvm.autotvm.task import TaskExtractEnv
+
+    TaskExtractEnv()
+
+    @autotvm.template("conv2d_packed.vta")
+    def _topi_nn_conv2d(*args, **kwargs):
+        assert not kwargs, "kwargs are not supported in this template"
+        data, kernel, strides, padding, dilation, layout, out_dtype = args
+
+        with tvm.target.vta():
+            res = vta.top.conv2d_packed(data, kernel, strides, padding, dilation, layout, out_dtype)
+            res = topi.right_shift(res, env.WGT_WIDTH)
+            res = my_clip(res, 0, (1 << env.OUT_WIDTH) - 1)
+            res = topi.cast(res, env.out_dtype)
+
+        if tvm.target.Target.current().device_name == "vta":
+            sch = vta.top.schedule_conv2d_packed([res])
+        else:
+            sch = te.create_schedule([res.op])
+        return sch, [data, kernel, res]
+
+
+def create_conv2d_task_args(N, CI, H, W, CO, KH, KW, strides, padding, dilation):
     data_shape = (N // env.BATCH, CI // env.BLOCK_IN, H, W, env.BATCH, env.BLOCK_IN)
     kernel_shape = (CO // env.BLOCK_OUT, CI // env.BLOCK_IN, KH, KW, env.BLOCK_OUT, env.BLOCK_IN)
-    bias_shape = (N // env.BATCH, CO // env.BLOCK_OUT, 1, 1, env.BATCH, env.BLOCK_OUT)
 
     data = te.placeholder(data_shape, name="data", dtype=env.inp_dtype)
     kernel = te.placeholder(kernel_shape, name="kernel", dtype=env.wgt_dtype)
-    bias = te.placeholder(bias_shape, name="bias", dtype=env.acc_dtype)
-
-    with tvm.target.vta():
-        res = topi.nn.conv2d(
-            input=data,
-            filter=kernel,
-            padding=padding,
-            strides=strides,
-            dilation=dilation,
-            layout="NCHW%dn%dc" % (env.BATCH, env.BLOCK_IN),
-            out_dtype=env.acc_dtype,
-        )
-        res = topi.right_shift(res, env.WGT_WIDTH)
-        res = topi.add(res, bias)
-        res = my_clip(res, 0, (1 << env.OUT_WIDTH - 1) - 1)
-        res = topi.cast(res, env.out_dtype)
-
-    if tvm.target.Target.current().device_name == "vta":
-        s = topi.generic.schedule_conv2d_nchw([res])
-    else:
-        s = te.create_schedule([res.op])
-
-    return s, [data, kernel, bias, res]
+    layout = "NCHW%dn%dc" % (env.BATCH, env.BLOCK_IN)
+    return (data, kernel, strides, padding, dilation, layout, env.acc_dtype)
 
 
 if __name__ == "__main__":
@@ -125,8 +127,34 @@ if __name__ == "__main__":
         print("Set your AutoTVM tracker node host and port variables to run the autotuner")
         exit()
 
-    for idx, (wl_name, wl) in enumerate(resnet_wkls):
-        prefix = "[Task %2d/%2d] " % (idx, len(resnet_wkls))
+    register_vta_conv2d_template()
+
+    if env.TARGET != "sim":
+        print("Request remote device...")
+        remote = autotvm.measure.request_remote(env.TARGET, tracker_host, int(tracker_port), timeout=10000)
+        if os.environ.get("VTA_TUNE_RECONFIG", "0") == "1":
+            print("Reconfiguring VTA runtime...")
+            vta.reconfig_runtime(remote)
+        if os.environ.get("VTA_TUNE_PROGRAM_FPGA", "0") == "1":
+            print("Programming FPGA bitstream...")
+            vta.program_fpga(remote, bitstream=None)
+    else:
+        remote = rpc.LocalSession()
+
+    selected_wl = os.environ.get("VTA_TUNE_WORKLOAD", "").strip()
+    if selected_wl:
+        workloads = [(name, wl) for name, wl in resnet_wkls if name == selected_wl]
+        if not workloads:
+            raise RuntimeError(f"Unknown VTA_TUNE_WORKLOAD={selected_wl}")
+    else:
+        workloads = resnet_wkls
+
+    measure_number = int(os.environ.get("VTA_TUNE_MEASURE_NUMBER", "1"))
+    measure_timeout = int(os.environ.get("VTA_TUNE_TIMEOUT", "10"))
+    max_trials = int(os.environ.get("VTA_TUNE_TRIALS", "16"))
+
+    for idx, (wl_name, wl) in enumerate(workloads):
+        prefix = "[Task %2d/%2d] " % (idx, len(workloads))
 
         # Read in workload parameters
         N = wl.batch
@@ -141,12 +169,12 @@ if __name__ == "__main__":
         dilation = (1, 1)
 
         # Create task
+        task_args = create_conv2d_task_args(N, CI, H, W, CO, KH, KW, strides, padding, dilation)
         task = autotvm.task.create(
-            conv2d,
-            args=(N, CI, H, W, CO, KH, KW, strides, padding, dilation),
-            target=tvm.target.vta(),
+            "conv2d_packed.vta",
+            args=task_args,
+            target=env.target,
             target_host=env.target_host,
-            template_key="direct",
         )
         print(task.config_space)
 
@@ -157,20 +185,21 @@ if __name__ == "__main__":
                 env.TARGET,
                 host=tracker_host,
                 port=int(tracker_port),
-                number=5,
-                timeout=60,
+                number=measure_number,
+                timeout=measure_timeout,
                 # check_correctness=True, # TODO: re-enable when check_correctness works again.
             ),
         )
 
         # Run Tuner
         tuner = autotvm.tuner.RandomTuner(task)
+        n_trial = min(len(task.config_space), max_trials)
         tuner.tune(
-            n_trial=len(task.config_space),
+            n_trial=n_trial,
             early_stopping=None,
             measure_option=measure_option,
             callbacks=[
-                autotvm.callback.progress_bar(len(task.config_space), prefix=prefix),
+                autotvm.callback.progress_bar(n_trial, prefix=prefix),
                 autotvm.callback.log_to_file(tmp_log_file),
             ],
         )
