@@ -4,7 +4,7 @@
 This script focuses on the validated workflow:
 1. split ResNet18 into CPU/VTA/CPU stages
 2. build each stage independently
-3. run stages sequentially over RPC
+3. run stages sequentially over RPC while keeping intermediate tensors on-board
 4. simulate an ideal stage pipeline from measured stage service times
 """
 
@@ -77,6 +77,11 @@ def parse_args():
         default=0,
         help="If > 0, simulate an ideal stage pipeline for this many batches using measured stage service times",
     )
+    parser.add_argument(
+        "--final-output-to-host",
+        action="store_true",
+        help="Fetch the final stage output back to host numpy for inspection",
+    )
     return parser.parse_args()
 
 
@@ -129,11 +134,14 @@ def wrap_stage_with_explicit_pack(relay_func):
 
     bitpack_start = op.op.get("annotation.bitpack_start")
     bitpack_end = op.op.get("annotation.bitpack_end")
+    cpu_dev = tvm.device("cpu")
 
     data_param = relay_func.params[0]
-    packed_input = relay.Call(bitpack_start, [data_param])
+    cpu_input = relay.annotation.on_device(data_param, cpu_dev)
+    packed_input = relay.Call(bitpack_start, [cpu_input])
     wrapped_body = relay.expr.bind(relay_func.body, {data_param: packed_input})
     wrapped_body = relay.Call(bitpack_end, [wrapped_body])
+    wrapped_body = relay.annotation.on_device(wrapped_body, cpu_dev)
     wrapped_func = relay.Function(
         relay_func.params,
         wrapped_body,
@@ -142,6 +150,26 @@ def wrap_stage_with_explicit_pack(relay_func):
         relay_func.attrs,
     )
     return vta_graphpack.run_opt_pass(wrapped_func, transform.InferType())
+
+
+def annotate_all_ops_to_ext_dev(relay_func):
+    """Build stage1 as a hetero graph with CPU-visible inputs and ext_dev body.
+
+    Keep the stage input and the explicit pack path on CPU, then switch to
+    ext_dev from the first packed int32 conv2d onward. This lets the stage
+    accept the previous CPU stage's output directly on-board.
+    """
+
+    relay_func = vta_graphpack.run_opt_pass(relay_func, transform.InferType())
+    locator = vta_graphpack.ExprLocator()
+    locator.visit(relay_func)
+    conv2d = op.op.get("nn.conv2d")
+    start_candidates = locator.op2nodes.get((conv2d, "int32"), [])
+    start = start_candidates[0] if start_candidates else 0
+    end = locator.counter + 2
+    annotator = vta_graphpack.ExprDeviceAnnot(start=start, end=end)
+    annotated = annotator.visit(relay_func)
+    return vta_graphpack.run_opt_pass(annotated, transform.InferType())
 
 
 def build_vta_stage(stage_name, relay_prog, params, env):
@@ -160,16 +188,21 @@ def build_vta_stage(stage_name, relay_prog, params, env):
     packer = vta_graphpack.ExprPack(env.BATCH, env.BLOCK_OUT, env.WGT_WIDTH)
     packed = packer.visit(packed)
     packed = vta_graphpack.run_opt_pass(packed, transform.InferType())
+    packed = annotate_all_ops_to_ext_dev(packed)
 
     target = env.target
     target_with_host = tvm.target.Target(target, host=env.target_host)
+    build_target = {
+        "cpu": tvm.target.Target(env.target_vta_cpu, host=env.target_host),
+        "ext_dev": target_with_host,
+    }
     with vta.build_config(
         opt_level=3,
         disabled_pass={"AlterOpLayout", "tir.CommonSubexprElimTIR"},
     ):
         graph, lib, lowered_params = relay.build(
             packed,
-            target=target_with_host,
+            target=build_target,
             params=params,
         )
     print("[BUILD] {} -> VTA build ok".format(stage_name))
@@ -234,7 +267,7 @@ def connect_remote(env, host, port):
 
 def create_stage_module(stage_name, stage_device, graph, lib, remote):
     if stage_device == "vta":
-        ctx = remote.ext_dev(0)
+        ctx = [remote.ext_dev(0), remote.cpu(0)]
     else:
         ctx = remote.cpu(0)
     mod = graph_executor.create(graph, lib, ctx)
@@ -249,6 +282,15 @@ def print_serial_stage_timing(rows):
         print("\t{:<12}: {:8.3f} ms".format(stage_name, value))
         total += value
     print("\t{:<12}: {:8.3f} ms".format("total", total))
+
+
+def describe_value_location(value):
+    if isinstance(value, np.ndarray):
+        return "host.numpy"
+    if hasattr(value, "device"):
+        dev = value.device
+        return "{}:{}".format(dev.device_type, dev.device_id)
+    return type(value).__name__
 
 
 def simulate_pipeline(stage_service_rows, num_batches):
@@ -357,7 +399,18 @@ def main():
         for stage_info in built_stages:
             mod = stage_info["module"]
             stage_name = stage_info["name"]
-            mod.set_input("data", current)
+            print(
+                "[RUN] {} set_input(data) from {}".format(
+                    stage_name, describe_value_location(current)
+                )
+            )
+            if hasattr(current, "device"):
+                try:
+                    mod.set_input_zero_copy("data", current)
+                except Exception:
+                    mod.set_input("data", current)
+            else:
+                mod.set_input("data", current)
             t0 = time.time()
             mod.run()
             t1 = time.time()
@@ -371,7 +424,14 @@ def main():
             stage_rows.append((stage_name + ".run", run_ms))
             stage_rows.append((stage_name + ".out", get_ms))
             stage_service_rows.append((stage_name, run_ms + get_ms))
-            current = out.numpy()
+            current = out
+        if args.final_output_to_host:
+            print("[RUN] fetch final output to host numpy ...")
+            h0 = time.time()
+            final_output = current.numpy()
+            h1 = time.time()
+            stage_rows.append(("final_host.copy", (h1 - h0) * 1000.0))
+            print("[RUN] final output shape =", final_output.shape)
         print_serial_stage_timing(stage_rows)
         if args.pipeline_batches > 0:
             simulate_pipeline(stage_service_rows, args.pipeline_batches)
