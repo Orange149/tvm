@@ -301,6 +301,9 @@ runtime::Module BuildAMDGPU(IRModule mod, Target target) {
 #elif TVM_LLVM_VERSION <= 90
   ICHECK(tm->addPassesToEmitFile(pass, destObj, nullptr, llvm::TargetMachine::CGFT_ObjectFile) == 0)
       << "Cannot emit target CGFT_ObjectFile";
+#elif TVM_LLVM_VERSION >= 180
+  ICHECK(tm->addPassesToEmitFile(pass, destObj, nullptr, llvm::CodeGenFileType::ObjectFile) == 0)
+      << "Cannot emit target CGFT_ObjectFile";
 #else
   ICHECK(tm->addPassesToEmitFile(pass, destObj, nullptr, llvm::CGFT_ObjectFile) == 0)
       << "Cannot emit target CGFT_ObjectFile";
@@ -315,6 +318,10 @@ runtime::Module BuildAMDGPU(IRModule mod, Target target) {
 #elif TVM_LLVM_VERSION <= 90
   ICHECK(tm->addPassesToEmitFile(passAsm, destAsm, nullptr,
                                  llvm::TargetMachine::CGFT_AssemblyFile) == 0)
+      << "Cannot emit target CGFT_AssemblyFile";
+#elif TVM_LLVM_VERSION >= 180
+  ICHECK(tm->addPassesToEmitFile(passAsm, destAsm, nullptr,
+                                 llvm::CodeGenFileType::AssemblyFile) == 0)
       << "Cannot emit target CGFT_AssemblyFile";
 #else
   ICHECK(tm->addPassesToEmitFile(passAsm, destAsm, nullptr, llvm::CGFT_AssemblyFile) == 0)

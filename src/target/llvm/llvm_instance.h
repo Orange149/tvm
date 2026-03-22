@@ -54,6 +54,12 @@ class TargetMachine;
 namespace tvm {
 namespace codegen {
 
+#if TVM_LLVM_VERSION >= 180
+using LLVMCodeGenOptLevel = llvm::CodeGenOptLevel;
+#else
+using LLVMCodeGenOptLevel = llvm::CodeGenOpt::Level;
+#endif
+
 class LLVMTarget;
 
 /*!
@@ -216,7 +222,7 @@ class LLVMTargetInfo {
    * \brief Get the LLVM optimization level
    * \return optimization level for this target
    */
-  llvm::CodeGenOpt::Level GetOptLevel() const { return opt_level_; }
+  LLVMCodeGenOptLevel GetOptLevel() const { return opt_level_; }
 
   /*!
    * \class Option
@@ -282,7 +288,7 @@ class LLVMTargetInfo {
   std::vector<Option> llvm_options_;
   llvm::TargetOptions target_options_;
   llvm::FastMathFlags fast_math_flags_;
-  llvm::CodeGenOpt::Level opt_level_;
+  LLVMCodeGenOptLevel opt_level_;
   llvm::Reloc::Model reloc_model_ = llvm::Reloc::PIC_;
   llvm::CodeModel::Model code_model_ = llvm::CodeModel::Small;
   std::shared_ptr<llvm::TargetMachine> target_machine_;

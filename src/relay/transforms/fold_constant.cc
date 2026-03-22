@@ -63,6 +63,28 @@ bool IsComplexConstant(const Expr& expr) {
   }
 }
 
+/*!
+ * \brief Recursively strips "on_device" annotations from an expression.
+ *
+ * FoldConstant evaluates pure constant expressions on the compiler's assumed CPU target for
+ * cross-compilation. Embedded "on_device" annotations are placement constraints only, so they can
+ * be removed before CPU-side evaluation.
+ */
+class OnDeviceStripper : public ExprMutator {
+ public:
+  Expr Strip(const Expr& expr) { return VisitExpr(expr); }
+
+ private:
+  Expr VisitExpr_(const CallNode* call_node) final {
+    Expr expr = GetRef<Expr>(call_node);
+    OnDeviceProps props = GetOnDeviceProps(expr);
+    if (props.body.defined()) {
+      return VisitExpr(props.body);
+    }
+    return ExprMutator::VisitExpr_(call_node);
+  }
+};
+
 // TODO(tvm-team) consider combine dead-code with constant folder.
 // or make a more powerful partial evaluator.
 class ConstantFolder : public MixedModeMutator {
@@ -267,7 +289,8 @@ class ConstantFolder : public MixedModeMutator {
     // always use graph executor with no link-params
     dict.Set(tvm::attr::kExecutor,
              relay::Executor::Create("graph", {{"link-params", Bool(false)}}));
-    Expr result = ObjectToExpr(Eval(expr, module_->type_definitions, module_->Imports(),
+    Expr eval_expr = OnDeviceStripper().Strip(expr);
+    Expr result = ObjectToExpr(Eval(eval_expr, module_->type_definitions, module_->Imports(),
                                     eval_cpu_dev_, eval_cpu_target_, dict));
     VLOG(1) << "Evaluated to constant:" << std::endl << PrettyPrint(result);
     return result;

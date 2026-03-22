@@ -345,6 +345,10 @@ runtime::Module BuildNVPTX(IRModule mod, Target target) {
   ICHECK(tm->addPassesToEmitFile(pass, dest_ptx, nullptr, llvm::TargetMachine::CGFT_AssemblyFile) ==
          0)
       << "Cannot emit target CGFT_ObjectFile";
+#elif TVM_LLVM_VERSION >= 180
+  ICHECK(tm->addPassesToEmitFile(pass, dest_ptx, nullptr, llvm::CodeGenFileType::AssemblyFile) ==
+         0)
+      << "Cannot emit target CGFT_ObjectFile";
 #else
   ICHECK(tm->addPassesToEmitFile(pass, dest_ptx, nullptr, llvm::CGFT_AssemblyFile) == 0)
       << "Cannot emit target CGFT_ObjectFile";

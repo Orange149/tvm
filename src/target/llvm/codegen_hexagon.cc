@@ -588,6 +588,9 @@ runtime::Module BuildHexagon(IRModule mod, Target target) {
 #if TVM_LLVM_VERSION <= 90
       auto ft = cgft == Asm ? llvm::TargetMachine::CodeGenFileType::CGFT_AssemblyFile
                             : llvm::TargetMachine::CodeGenFileType::CGFT_ObjectFile;
+#elif TVM_LLVM_VERSION >= 180
+      auto ft = cgft == Asm ? llvm::CodeGenFileType::AssemblyFile
+                            : llvm::CodeGenFileType::ObjectFile;
 #else
       auto ft = cgft == Asm ? llvm::CGFT_AssemblyFile : llvm::CGFT_ObjectFile;
 #endif

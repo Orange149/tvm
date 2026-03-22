@@ -65,7 +65,11 @@ def _load_sw():
 
 def enabled():
     """Check if simulator is enabled."""
-    f = tvm.get_global_func("vta.simulator.profiler_clear", True)
+    env = get_env()
+    if env.TARGET == "tsim":
+        f = tvm.get_global_func("vta.tsim.profiler_clear", True)
+    else:
+        f = tvm.get_global_func("vta.simulator.profiler_clear", True)
     return f is not None
 
 

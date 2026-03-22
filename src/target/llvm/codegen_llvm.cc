@@ -430,17 +430,17 @@ void CodeGenLLVM::Optimize() {
   // Construct the default pass pipeline depending on the opt level.
   std::string pipeline;
   switch (llvm_target_->GetOptLevel()) {
-    case llvm::CodeGenOpt::Level::None:
+    case LLVMCodeGenOptLevel::None:
       pipeline = "default<O0>";
       break;
-    case llvm::CodeGenOpt::Level::Less:
+    case LLVMCodeGenOptLevel::Less:
       pipeline = "default<O1>";
       break;
-    case llvm::CodeGenOpt::Level::Default:
+    case LLVMCodeGenOptLevel::Default:
       pipeline = "default<O2>";
       break;
     default:
-      // CodeGenOpt::Level::Aggressive
+      // LLVMCodeGenOptLevel::Aggressive
       pipeline = "default<O3>";
       break;
   }
@@ -492,22 +492,22 @@ void CodeGenLLVM::Optimize() {
   llvm::PassManagerBuilder builder;
 
   // Use the same opt-level as specified in TargetMachine for running passes
-  llvm::CodeGenOpt::Level opt_level = llvm_target_->GetOptLevel();
+  LLVMCodeGenOptLevel opt_level = llvm_target_->GetOptLevel();
 
   switch (opt_level) {
-    case llvm::CodeGenOpt::Level::None:
+    case LLVMCodeGenOptLevel::None:
       builder.OptLevel = 0;
       break;
-    case llvm::CodeGenOpt::Level::Less:
+    case LLVMCodeGenOptLevel::Less:
       builder.OptLevel = 1;
       break;
 
-    case llvm::CodeGenOpt::Level::Default:
+    case LLVMCodeGenOptLevel::Default:
       builder.OptLevel = 2;
       break;
 
     default:
-      // CodeGenOpt::Level::Aggressive
+      // LLVMCodeGenOptLevel::Aggressive
       builder.OptLevel = 3;
   }
 

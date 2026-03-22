@@ -32,6 +32,8 @@ from __future__ import absolute_import, print_function
 import argparse
 import json
 import os
+import shutil
+import sys
 import time
 import traceback
 from os.path import join
@@ -145,6 +147,14 @@ def device_type_name(device_type):
     return mapping.get(int(device_type), "dev_type_%s" % int(device_type))
 
 
+def find_native_cxx():
+    for candidate in ["g++", "clang++", "c++", "gcc", "clang", "cc"]:
+        path = shutil.which(candidate)
+        if path:
+            return path
+    raise RuntimeError("No native host C/C++ compiler found in PATH")
+
+
 def print_graph_device_stats(graph_json):
     device_attr = graph_json.get("attrs", {}).get("device_index", None)
     if not device_attr or len(device_attr) < 2:
@@ -164,6 +174,42 @@ def print_graph_device_stats(graph_json):
     print("\n[GRAPH] node device distribution")
     for dt, cnt in sorted(per_dev.items(), key=lambda x: x[0]):
         print("\t{}({}): {} nodes".format(device_type_name(dt), dt, cnt))
+
+    per_dev_nodes = {}
+    for i, n in enumerate(nodes):
+        dt = int(dev_idx[i])
+        per_dev_nodes.setdefault(dt, []).append((i, n.get("name", "<unnamed>"), n.get("op", "unknown")))
+
+    transitions = []
+    for i in range(1, len(dev_idx)):
+        prev_dt = int(dev_idx[i - 1])
+        curr_dt = int(dev_idx[i])
+        if prev_dt != curr_dt:
+            transitions.append((i - 1, prev_dt, i, curr_dt))
+
+    print("[GRAPH] device transitions =", len(transitions))
+    for prev_idx, prev_dt, curr_idx, curr_dt in transitions:
+        print(
+            "\t{}({}) node {} -> {}({}) node {}".format(
+                device_type_name(prev_dt),
+                prev_dt,
+                prev_idx,
+                device_type_name(curr_dt),
+                curr_dt,
+                curr_idx,
+            )
+        )
+        print("\t  prev: {} {}".format(nodes[prev_idx].get("op", "unknown"), nodes[prev_idx].get("name", "<unnamed>")))
+        print("\t  curr: {} {}".format(nodes[curr_idx].get("op", "unknown"), nodes[curr_idx].get("name", "<unnamed>")))
+
+    print("[GRAPH] nodes by device")
+    for dt in sorted(per_dev_nodes):
+        entries = per_dev_nodes[dt]
+        print("\t{}({}): nodes {}..{}".format(device_type_name(dt), dt, entries[0][0], entries[-1][0]))
+        for idx, name, op in entries[:12]:
+            print("\t  {:>3} {:<7} {}".format(idx, op, name))
+        if len(entries) > 12:
+            print("\t  ... {} more nodes".format(len(entries) - 12))
 
     per_dev_op = Counter()
     cross_edges = 0
@@ -231,6 +277,183 @@ def dump_relay_device_annotations(relay_func, max_lines=220):
         print("[RELAY] on_device[%d] %s" % (idx, line.strip()))
     if len(on_device_lines) > 20:
         print("[RELAY] ... truncated %d more on_device lines" % (len(on_device_lines) - 20))
+
+
+def _fmt_bytes(num_bytes):
+    value = float(num_bytes)
+    units = ["B", "KB", "MB", "GB"]
+    unit_idx = 0
+    while value >= 1024.0 and unit_idx < len(units) - 1:
+        value /= 1024.0
+        unit_idx += 1
+    return "{:.2f} {}".format(value, units[unit_idx])
+
+
+def print_vta_runtime_profile(title, stats, divisor=None):
+    if not stats:
+        return
+
+    print("\n[VTA-RUNTIME] {}".format(title))
+    fields = [
+        ("mem_copy_from_host", "mem_copy_from_host_calls", "mem_copy_from_host_bytes", "mem_copy_from_host_us"),
+        ("mem_copy_to_host", "mem_copy_to_host_calls", "mem_copy_to_host_bytes", "mem_copy_to_host_us"),
+        ("flush_cache", "flush_cache_calls", "flush_cache_bytes", "flush_cache_us"),
+        ("invalidate_cache", "invalidate_cache_calls", "invalidate_cache_bytes", "invalidate_cache_us"),
+    ]
+    for label, calls_key, bytes_key, us_key in fields:
+        calls = int(stats.get(calls_key, 0))
+        num_bytes = int(stats.get(bytes_key, 0))
+        total_us = float(stats.get(us_key, 0.0))
+        print(
+            "\t{:<18} calls={:<6d} bytes={:<10s} time={:8.3f} ms".format(
+                label, calls, _fmt_bytes(num_bytes), total_us / 1000.0
+            )
+        )
+        if divisor:
+            print(
+                "\t{:<18} avg_per_run calls={:<8.3f} bytes={:<10s} time={:8.3f} ms".format(
+                    label,
+                    float(calls) / divisor,
+                    _fmt_bytes(float(num_bytes) / divisor),
+                    (total_us / divisor) / 1000.0,
+                )
+            )
+
+    load_calls = int(stats.get("load_buffer_2d_calls", 0))
+    load_bytes = int(stats.get("load_buffer_2d_bytes", 0))
+    store_calls = int(stats.get("store_buffer_2d_calls", 0))
+    store_bytes = int(stats.get("store_buffer_2d_bytes", 0))
+    sync_calls = int(stats.get("synchronize_calls", 0))
+    sync_insns = int(stats.get("synchronize_insns", 0))
+    device_wait_ms = float(stats.get("device_run_wait_us", 0.0)) / 1000.0
+
+    print(
+        "\t{:<18} calls={:<6d} bytes={}".format(
+            "load_buffer_2d", load_calls, _fmt_bytes(load_bytes)
+        )
+    )
+    print(
+        "\t{:<18} calls={:<6d} bytes={}".format(
+            "store_buffer_2d", store_calls, _fmt_bytes(store_bytes)
+        )
+    )
+    print(
+        "\t{:<18} calls={:<6d} insns={:<8d} time={:8.3f} ms".format(
+            "device_run_wait", sync_calls, sync_insns, device_wait_ms
+        )
+    )
+    if divisor:
+        print(
+            "\t{:<18} avg_per_run calls={:<8.3f} insns={:<8.3f} time={:8.3f} ms".format(
+                "device_run_wait",
+                float(sync_calls) / divisor,
+                float(sync_insns) / divisor,
+                device_wait_ms / divisor,
+            )
+        )
+
+
+def _profile_metric_to_float(metric):
+    if isinstance(metric, (int, float)):
+        return float(metric)
+    if isinstance(metric, dict):
+        for key in ["microseconds", "percent", "count", "ratio"]:
+            if key in metric:
+                return float(metric[key])
+        for value in metric.values():
+            if isinstance(value, (int, float, dict)):
+                return _profile_metric_to_float(value)
+    return None
+
+
+def _profile_metric_to_str(metric):
+    if metric is None:
+        return None
+    if isinstance(metric, str):
+        return metric
+    if isinstance(metric, dict):
+        for key in ["string", "Name", "name"]:
+            if key in metric:
+                return _profile_metric_to_str(metric[key])
+        for value in metric.values():
+            text = _profile_metric_to_str(value)
+            if text is not None:
+                return text
+    return str(metric)
+
+
+def classify_profile_node(name, device_type):
+    lowered = str(name).lower()
+    if "__copy" in lowered:
+        return "copy"
+    if int(device_type) == 12:
+        return "vta_subgraph"
+    if any(token in lowered for token in ["global_avg_pool", "batch_flatten", "dense"]):
+        return "cpu_postproc"
+    if any(token in lowered for token in ["transpose", "reshape", "layout_transform", "cast"]):
+        return "cpu_layout"
+    return "cpu_other"
+
+
+def summarize_profile_report(report, graph_json):
+    if not graph_json:
+        print("[PROFILE] graph_json unavailable, skip breakdown summary")
+        return
+
+    device_attr = graph_json.get("attrs", {}).get("device_index", None)
+    if not device_attr or len(device_attr) < 2:
+        print("[PROFILE] device_index attr not found, skip breakdown summary")
+        return
+
+    dev_idx = device_attr[1]
+    nodes = graph_json["nodes"]
+    node_device = {}
+    for idx, node in enumerate(nodes):
+        node_device[node.get("name", "<unnamed>")] = int(dev_idx[idx])
+
+    report_json = json.loads(report.json())
+    rows = report_json.get("calls", [])
+    category_us = Counter()
+    category_rows = Counter()
+    unmatched = []
+
+    for row in rows:
+        name = _profile_metric_to_str(row.get("Name"))
+        if not name or name == "----------":
+            continue
+        duration_us = _profile_metric_to_float(row.get("Duration (us)"))
+        if duration_us is None:
+            continue
+        if name not in node_device:
+            unmatched.append((name, duration_us))
+            continue
+        category = classify_profile_node(name, node_device[name])
+        category_us[category] += float(duration_us)
+        category_rows[category] += 1
+
+    total_us = sum(category_us.values())
+    print("\n[PROFILE] breakdown by stage")
+    if total_us <= 0:
+        print("[PROFILE] no matched per-op durations found")
+    else:
+        order = ["vta_subgraph", "copy", "cpu_layout", "cpu_postproc", "cpu_other"]
+        for key in order:
+            if key in category_us:
+                ms = category_us[key] / 1000.0
+                pct = 100.0 * category_us[key] / total_us
+                print(
+                    "\t{:<12}: {:8.3f} ms  ({:5.1f}%)  rows={}".format(
+                        key, ms, pct, category_rows[key]
+                    )
+                )
+        print("\t{:<12}: {:8.3f} ms".format("total", total_us / 1000.0))
+
+    if unmatched:
+        print("[PROFILE] unmatched rows =", len(unmatched))
+        for name, duration_us in unmatched[:10]:
+            print("\t{:8.3f} us  {}".format(duration_us, name))
+        if len(unmatched) > 10:
+            print("\t... {} more unmatched rows".format(len(unmatched) - 10))
 
 
 def parse_args():
@@ -388,6 +611,11 @@ def parse_args():
         action="store_true",
         help="Print Relay text after graph_pack to inspect on_device annotations",
     )
+    parser.add_argument(
+        "--sweep-pack-stop-ops",
+        default="",
+        help="Comma-separated pack_stop_op candidates. Build each variant and print graph/device stats, then exit without RPC run.",
+    )
     return parser.parse_args()
 
 
@@ -401,6 +629,7 @@ env = vta.get_env()
 # Select logical device
 device = args.device
 target = env.target if device == "vta" else env.target_vta_cpu
+target_with_host = tvm.target.Target(target, host=env.target_host)
 
 # Dictionary lookup for when to start/end bit packing
 pack_dict = {
@@ -416,6 +645,7 @@ model = args.model
 assert model in pack_dict, "Unsupported model: %s" % model
 pack_start_op = args.pack_start_op if args.pack_start_op else pack_dict[model][0]
 pack_stop_op = args.pack_stop_op if args.pack_stop_op else pack_dict[model][1]
+final_graph_json = None
 
 print("========== Configuration ==========")
 print("env.TARGET           =", env.TARGET)
@@ -439,6 +669,10 @@ print("fusion_mode          =", args.fusion_mode)
 print("fuse_max_depth       =", args.fuse_max_depth)
 print("input_resolution     = {}x{}".format(input_height, input_width))
 print("dump_relay_annot     =", args.dump_relay_annot)
+print(
+    "sweep_pack_stop_ops  =",
+    args.sweep_pack_stop_ops if args.sweep_pack_stop_ops else "<none>",
+)
 print("RPC host             =", args.host)
 print("RPC port             =", args.port)
 print("===================================")
@@ -476,6 +710,15 @@ else:
 # Contexts
 ctx = remote.ext_dev(0) if device == "vta" else remote.cpu(0)
 ctxes = [remote.ext_dev(0), remote.cpu(0)] if device == "vta" else [remote.cpu(0)]
+vta_runtime_profiler_clear = None
+vta_runtime_profiler_status = None
+if device == "vta":
+    try:
+        vta_runtime_profiler_clear = remote.get_function("vta.runtime.profiler_clear")
+        vta_runtime_profiler_status = remote.get_function("vta.runtime.profiler_status")
+        print("[VTA-RUNTIME] profiler hooks enabled")
+    except Exception as err:  # pylint: disable=broad-except
+        print("[VTA-RUNTIME] profiler hooks unavailable:", err)
 
 ######################################################################
 # Build the inference graph executor
@@ -516,6 +759,117 @@ with build_ctx:
             ):
                 mod = relay.quantize.quantize(mod, params=params)
 
+    else:
+        print("[BUILD] graph_pack not needed for CPU path")
+    def build_graph_variant(relay_prog, variant_label):
+        global final_graph_json
+        relay_params = params
+        if args.fusion_mode == "off":
+            print("[BUILD] defuse Relay primitive functions before build ...")
+            relay_mod = tvm.IRModule.from_expr(relay_prog)
+            relay_mod = relay.transform.InferType()(relay_mod)
+            relay_mod = relay.transform.DefuseOps()(relay_mod)
+            relay_prog = relay_mod["main"]
+
+        print("[BUILD] relay.build{} ...".format(" [" + variant_label + "]" if variant_label else ""))
+        tir_dumps = []
+        pass_config = {}
+        enable_tir_dump = bool(args.dump_tir_path and device != "vta")
+        if args.dump_tir_path and device == "vta":
+            print("[TIR] dump_tir_path is disabled in VTA mode to avoid interfering with vta.build_config")
+        disabled_passes = {"AlterOpLayout"}
+        if args.fusion_mode == "off":
+            disabled_passes.add("FuseOps")
+        elif args.fusion_mode == "limited":
+            pass_config["relay.FuseOps.max_depth"] = args.fuse_max_depth
+        if enable_tir_dump:
+            @tvm.tir.transform.prim_func_pass(opt_level=0)
+            def _dump_tir_pass(tir_func, _, __):
+                tir_dumps.append(str(tir_func))
+                return tir_func
+
+            pass_config["tir.add_lower_pass"] = [(3, _dump_tir_pass)]
+
+        if device != "vta":
+            with tvm.transform.PassContext(
+                opt_level=3, disabled_pass=disabled_passes, config=pass_config
+            ):
+                graph, lib, lowered_params = relay.build(
+                    relay_prog,
+                    target=target_with_host,
+                    params=relay_params,
+                )
+        else:
+            if args.hetero:
+                build_target = {
+                    "cpu": tvm.target.Target(env.target_vta_cpu, host=env.target_host),
+                    "ext_dev": target_with_host,
+                }
+            else:
+                build_target = target_with_host
+            with vta.build_config(
+                opt_level=3,
+                disabled_pass=disabled_passes | {"tir.CommonSubexprElimTIR"},
+            ):
+                graph, lib, lowered_params = relay.build(
+                    relay_prog,
+                    target=build_target,
+                    params=relay_params,
+                )
+
+        if enable_tir_dump:
+            tir_text = "\n\n".join(tir_dumps)
+            with open(args.dump_tir_path, "w") as f:
+                f.write(tir_text)
+            print("[TIR] dumped to", args.dump_tir_path)
+            summarize_tir_usage(tir_text)
+
+        g = json.loads(graph)
+        final_graph_json = g
+        print("=== graph summary{} ===".format(" [" + variant_label + "]" if variant_label else ""))
+        print("num_nodes =", len(g["nodes"]))
+        print("arg_nodes =", g.get("arg_nodes"))
+        print("heads =", g.get("heads"))
+
+        if "attrs" in g:
+            for k, v in g["attrs"].items():
+                if "device" in k.lower():
+                    print("attr", k, "=", v)
+
+        if args.print_device_stats:
+            print_graph_device_stats(g)
+
+        for i, n in enumerate(g["nodes"][:40]):
+            print(i, n["op"], n["name"])
+
+        return graph, lib, lowered_params
+
+    sweep_stop_ops = [s.strip() for s in args.sweep_pack_stop_ops.split(",") if s.strip()]
+    if sweep_stop_ops:
+        if device != "vta":
+            raise RuntimeError("--sweep-pack-stop-ops is only supported for --device vta")
+        print("[SWEEP] pack_stop_op candidates =", sweep_stop_ops)
+        for stop_op in sweep_stop_ops:
+            print("\n[SWEEP] graph_pack stop_op =", stop_op)
+            try:
+                relay_prog = graph_pack(
+                    mod["main"],
+                    env.BATCH,
+                    env.BLOCK_OUT,
+                    env.WGT_WIDTH,
+                    start_name=pack_start_op,
+                    stop_name=stop_op,
+                    device_annot=args.hetero,
+                    annot_start_name=args.hetero_annot_start,
+                    annot_end_name=args.hetero_annot_end,
+                )
+                build_graph_variant(relay_prog, "stop=" + stop_op)
+            except Exception as err:  # pylint: disable=broad-except
+                print("[SWEEP] stop_op={} failed: {}: {}".format(stop_op, type(err).__name__, err))
+        print("\n[SWEEP] completed build-only sweep; skipping RPC run.")
+        sys.exit(0)
+
+    if device == "vta":
         print("[BUILD] graph_pack enabled for VTA ...")
         relay_prog = graph_pack(
             mod["main"],
@@ -531,89 +885,12 @@ with build_ctx:
         if args.dump_relay_annot:
             dump_relay_device_annotations(relay_prog)
     else:
-        print("[BUILD] graph_pack not needed for CPU path")
         relay_prog = mod["main"]
 
-    if args.fusion_mode == "off":
-        print("[BUILD] defuse Relay primitive functions before build ...")
-        relay_mod = tvm.IRModule.from_expr(relay_prog)
-        relay_mod = relay.transform.InferType()(relay_mod)
-        relay_mod = relay.transform.DefuseOps()(relay_mod)
-        relay_prog = relay_mod["main"]
-
-    print("[BUILD] relay.build ...")
-    tir_dumps = []
-    pass_config = {}
-    enable_tir_dump = bool(args.dump_tir_path and device != "vta")
-    if args.dump_tir_path and device == "vta":
-        print("[TIR] dump_tir_path is disabled in VTA mode to avoid interfering with vta.build_config")
-    disabled_passes = {"AlterOpLayout"}
-    if args.fusion_mode == "off":
-        disabled_passes.add("FuseOps")
-    elif args.fusion_mode == "limited":
-        pass_config["relay.FuseOps.max_depth"] = args.fuse_max_depth
-    if enable_tir_dump:
-        @tvm.tir.transform.prim_func_pass(opt_level=0)
-        def _dump_tir_pass(tir_func, _, __):
-            tir_dumps.append(str(tir_func))
-            return tir_func
-
-        pass_config["tir.add_lower_pass"] = [(3, _dump_tir_pass)]
-
-    if device != "vta":
-        with tvm.transform.PassContext(
-            opt_level=3, disabled_pass=disabled_passes, config=pass_config
-        ):
-            graph, lib, params = relay.build(
-                relay_prog,
-                target=tvm.target.Target(target, host=env.target_host),
-                params=params,
-            )
-    else:
-        if args.hetero:
-            build_target = {
-                "cpu": env.target_vta_cpu,
-                "ext_dev": target,
-            }
-        else:
-            build_target = tvm.target.Target(target, host=env.target_host)
-        with vta.build_config(
-            opt_level=3,
-            disabled_pass=disabled_passes | {"tir.CommonSubexprElimTIR"},
-        ):
-            graph, lib, params = relay.build(
-                relay_prog,
-                target=build_target,
-                target_host=env.target_host if args.hetero else None,
-                params=params,
-            )
-
-    if enable_tir_dump:
-        tir_text = "\n\n".join(tir_dumps)
-        with open(args.dump_tir_path, "w") as f:
-            f.write(tir_text)
-        print("[TIR] dumped to", args.dump_tir_path)
-        summarize_tir_usage(tir_text)
+    graph, lib, params = build_graph_variant(relay_prog, "")
 
     build_time = time.time() - build_start
     print("[BUILD] %s inference graph built in %.2fs!" % (model, build_time))
-
-    g = json.loads(graph)
-    print("=== graph summary ===")
-    print("num_nodes =", len(g["nodes"]))
-    print("arg_nodes =", g.get("arg_nodes"))
-    print("heads =", g.get("heads"))
-
-    if "attrs" in g:
-        for k, v in g["attrs"].items():
-            if "device" in k.lower():
-                print("attr", k, "=", v)
-
-    if args.print_device_stats:
-        print_graph_device_stats(g)
-
-    for i, n in enumerate(g["nodes"][:40]):
-        print(i, n["op"], n["name"])
 
     ##################################################################
     # Export and upload
@@ -622,27 +899,34 @@ with build_ctx:
     temp = utils.tempdir()
     lib_path = temp.relpath("graphlib.so")
 
-    sysroot = os.environ["SDKTARGETSYSROOT"]
-    fcompile = cc.cross_compiler("aarch64-xilinx-linux-g++")
+    if env.TARGET in ["sim", "tsim", "intelfocl"]:
+        native_cc = find_native_cxx()
+        print("[RPC] export_library (native, cc={}) -> {}".format(native_cc, lib_path))
+        lib.export_library(lib_path, fcompile=cc.create_shared, cc=native_cc)
+        print("[RPC] load_module(graphlib.so) ...")
+        lib = remote.load_module(lib_path)
+    else:
+        sysroot = os.environ["SDKTARGETSYSROOT"]
+        fcompile = cc.cross_compiler("aarch64-xilinx-linux-g++")
 
-    print("[RPC] export_library ->", lib_path)
-    lib.export_library(
-        lib_path,
-        fcompile=fcompile,
-        options=[
-            f"--sysroot={sysroot}",
-            f"-Wl,-rpath-link,{sysroot}/lib",
-            f"-Wl,-rpath-link,{sysroot}/usr/lib",
-            f"-L{sysroot}/lib",
-            f"-L{sysroot}/usr/lib",
-        ],
-    )
+        print("[RPC] export_library (cross) ->", lib_path)
+        lib.export_library(
+            lib_path,
+            fcompile=fcompile,
+            options=[
+                f"--sysroot={sysroot}",
+                f"-Wl,-rpath-link,{sysroot}/lib",
+                f"-Wl,-rpath-link,{sysroot}/usr/lib",
+                f"-L{sysroot}/lib",
+                f"-L{sysroot}/usr/lib",
+            ],
+        )
 
-    print("[RPC] upload graphlib.so ...")
-    remote.upload(lib_path)
+        print("[RPC] upload graphlib.so ...")
+        remote.upload(lib_path)
 
-    print("[RPC] load_module(graphlib.so) ...")
-    lib = remote.load_module("graphlib.so")
+        print("[RPC] load_module(graphlib.so) ...")
+        lib = remote.load_module("graphlib.so")
 
     print("[GRAPH] create graph executor ...")
     if device == "vta":
@@ -697,6 +981,8 @@ try:
     t2 = time.time()
 
     if args.debug_single_run or not args.enable_timer:
+        if vta_runtime_profiler_clear is not None:
+            vta_runtime_profiler_clear()
         print("[RUN] 3/6 before m.run() ...")
         m.run()
         t3 = time.time()
@@ -719,6 +1005,11 @@ try:
         }
         print_stage_timing("single run", timings_ms)
         print_stage_table("single run", [("single", timings_ms)])
+        if vta_runtime_profiler_status is not None:
+            print_vta_runtime_profile(
+                "single run",
+                json.loads(vta_runtime_profiler_status()),
+            )
 
         if args.print_top5:
             for b in range(env.BATCH):
@@ -798,6 +1089,8 @@ try:
                 m.run()
                 _ = m.get_output(0, tvm.nd.empty((env.BATCH, 1000), "float32", remote.cpu(0)))
 
+            if vta_runtime_profiler_clear is not None:
+                vta_runtime_profiler_clear()
             set_data_ms = []
             run_ms = []
             get_output_ms = []
@@ -846,6 +1139,12 @@ try:
                 "total": float(np.std(total_ms)),
             }
             print_stage_table("params-once summary", [("avg", params_once_avg), ("std", params_once_std)])
+            if vta_runtime_profiler_status is not None:
+                print_vta_runtime_profile(
+                    "params-once benchmark totals",
+                    json.loads(vta_runtime_profiler_status()),
+                    divisor=float(args.benchmark_runs),
+                )
 
         if args.community_bench:
             print("\n[BENCH] community benchmark (warmup + time_evaluator on run)")
@@ -897,8 +1196,21 @@ try:
             report = md.profile()
             print("\n[PROFILE] per-op table")
             print(report.table(sort=True, aggregate=True, col_sums=True))
+            summarize_profile_report(report, final_graph_json)
 
     if args.enable_timer:
+        if env.TARGET == "tsim":
+            print(
+                "[TIMER] skip time_evaluator on tsim: ext_dev uses default timer and may hang or"
+                " add simulator overhead; prefer cycle_count and runtime profiler from the single run."
+            )
+            if device == "vta":
+                sim_stats = simulator.stats()
+                print("\nExecution statistics:")
+                for k, v in sim_stats.items():
+                    print("\t{:<16}: {:>16}".format(k, v))
+            sys.exit(0)
+
         print(
             "[TIMER] enable time_evaluator(number=%d, repeat=%d) ..."
             % (args.number, args.repeat)

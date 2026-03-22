@@ -72,7 +72,12 @@ namespace codegen {
 namespace {
 namespace defaults {
 static const char* cpu = "generic";
-static const llvm::CodeGenOpt::Level opt_level = llvm::CodeGenOpt::Aggressive;
+static const LLVMCodeGenOptLevel opt_level =
+#if TVM_LLVM_VERSION >= 180
+    llvm::CodeGenOptLevel::Aggressive;
+#else
+    llvm::CodeGenOpt::Aggressive;
+#endif
 }  // namespace defaults
 }  // namespace
 
@@ -229,14 +234,30 @@ LLVMTargetInfo::LLVMTargetInfo(LLVMInstance& instance, const Target& target) {
   if (maybe_level.defined()) {
     int level = maybe_level.value()->value;
     if (level <= 0) {
+ #if TVM_LLVM_VERSION >= 180
+      opt_level_ = llvm::CodeGenOptLevel::None;
+ #else
       opt_level_ = llvm::CodeGenOpt::None;
+ #endif
     } else if (level == 1) {
+ #if TVM_LLVM_VERSION >= 180
+      opt_level_ = llvm::CodeGenOptLevel::Less;
+ #else
       opt_level_ = llvm::CodeGenOpt::Less;
+ #endif
     } else if (level == 2) {
+ #if TVM_LLVM_VERSION >= 180
+      opt_level_ = llvm::CodeGenOptLevel::Default;
+ #else
       opt_level_ = llvm::CodeGenOpt::Default;
+ #endif
     } else {
       // level >= 3
+ #if TVM_LLVM_VERSION >= 180
+      opt_level_ = llvm::CodeGenOptLevel::Aggressive;
+ #else
       opt_level_ = llvm::CodeGenOpt::Aggressive;
+ #endif
     }
   } else {
     opt_level_ = defaults::opt_level;
@@ -365,16 +386,16 @@ std::string LLVMTargetInfo::str() const {
   if (opt_level_ != defaults::opt_level) {
     os << " -opt-level=";
     switch (opt_level_) {
-      case llvm::CodeGenOpt::None:
+      case LLVMCodeGenOptLevel::None:
         os << "0";
         break;
-      case llvm::CodeGenOpt::Less:
+      case LLVMCodeGenOptLevel::Less:
         os << "1";
         break;
-      case llvm::CodeGenOpt::Default:
+      case LLVMCodeGenOptLevel::Default:
         os << "2";
         break;
-      case llvm::CodeGenOpt::Aggressive:
+      case LLVMCodeGenOptLevel::Aggressive:
         os << "3";
         break;
     }

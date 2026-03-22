@@ -26,10 +26,12 @@
  */
 #include "runtime.h"
 
+#include <chrono>
 #include <dmlc/logging.h>
 #include <malloc.h>
 #include <stdlib.h>
 #include <tvm/runtime/c_runtime_api.h>
+#include <tvm/runtime/registry.h>
 #include <vta/driver.h>
 #include <vta/hw_spec.h>
 
@@ -40,11 +42,137 @@
 #include <cstring>
 #include <memory>
 #include <mutex>
+#include <sstream>
 #include <set>
 #include <thread>
 #include <vector>
 
 namespace vta {
+
+class RuntimeProfiler {
+ public:
+  struct Stats {
+    uint64_t mem_copy_from_host_calls{0};
+    uint64_t mem_copy_from_host_bytes{0};
+    double mem_copy_from_host_us{0.0};
+
+    uint64_t mem_copy_to_host_calls{0};
+    uint64_t mem_copy_to_host_bytes{0};
+    double mem_copy_to_host_us{0.0};
+
+    uint64_t flush_cache_calls{0};
+    uint64_t flush_cache_bytes{0};
+    double flush_cache_us{0.0};
+
+    uint64_t invalidate_cache_calls{0};
+    uint64_t invalidate_cache_bytes{0};
+    double invalidate_cache_us{0.0};
+
+    uint64_t load_buffer_2d_calls{0};
+    uint64_t load_buffer_2d_bytes{0};
+
+    uint64_t store_buffer_2d_calls{0};
+    uint64_t store_buffer_2d_bytes{0};
+
+    uint64_t synchronize_calls{0};
+    uint64_t synchronize_insns{0};
+    double device_run_wait_us{0.0};
+  };
+
+  static RuntimeProfiler& Global() {
+    static RuntimeProfiler inst;
+    return inst;
+  }
+
+  void Clear() {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_ = Stats();
+  }
+
+  void AddMemCopyFromHost(size_t size, double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.mem_copy_from_host_calls += 1;
+    stats_.mem_copy_from_host_bytes += size;
+    stats_.mem_copy_from_host_us += us;
+  }
+
+  void AddMemCopyToHost(size_t size, double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.mem_copy_to_host_calls += 1;
+    stats_.mem_copy_to_host_bytes += size;
+    stats_.mem_copy_to_host_us += us;
+  }
+
+  void AddFlushCache(size_t size, double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.flush_cache_calls += 1;
+    stats_.flush_cache_bytes += size;
+    stats_.flush_cache_us += us;
+  }
+
+  void AddInvalidateCache(size_t size, double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.invalidate_cache_calls += 1;
+    stats_.invalidate_cache_bytes += size;
+    stats_.invalidate_cache_us += us;
+  }
+
+  void AddLoadBuffer2D(size_t bytes) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.load_buffer_2d_calls += 1;
+    stats_.load_buffer_2d_bytes += bytes;
+  }
+
+  void AddStoreBuffer2D(size_t bytes) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.store_buffer_2d_calls += 1;
+    stats_.store_buffer_2d_bytes += bytes;
+  }
+
+  void AddSynchronize(uint64_t insns, double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.synchronize_calls += 1;
+    stats_.synchronize_insns += insns;
+    stats_.device_run_wait_us += us;
+  }
+
+  std::string AsJSON() {
+    std::lock_guard<std::mutex> lock(mtx_);
+    const Stats& s = stats_;
+    std::ostringstream os;
+    os << "{"
+       << "\"mem_copy_from_host_calls\":" << s.mem_copy_from_host_calls << ","
+       << "\"mem_copy_from_host_bytes\":" << s.mem_copy_from_host_bytes << ","
+       << "\"mem_copy_from_host_us\":" << s.mem_copy_from_host_us << ","
+       << "\"mem_copy_to_host_calls\":" << s.mem_copy_to_host_calls << ","
+       << "\"mem_copy_to_host_bytes\":" << s.mem_copy_to_host_bytes << ","
+       << "\"mem_copy_to_host_us\":" << s.mem_copy_to_host_us << ","
+       << "\"flush_cache_calls\":" << s.flush_cache_calls << ","
+       << "\"flush_cache_bytes\":" << s.flush_cache_bytes << ","
+       << "\"flush_cache_us\":" << s.flush_cache_us << ","
+       << "\"invalidate_cache_calls\":" << s.invalidate_cache_calls << ","
+       << "\"invalidate_cache_bytes\":" << s.invalidate_cache_bytes << ","
+       << "\"invalidate_cache_us\":" << s.invalidate_cache_us << ","
+       << "\"load_buffer_2d_calls\":" << s.load_buffer_2d_calls << ","
+       << "\"load_buffer_2d_bytes\":" << s.load_buffer_2d_bytes << ","
+       << "\"store_buffer_2d_calls\":" << s.store_buffer_2d_calls << ","
+       << "\"store_buffer_2d_bytes\":" << s.store_buffer_2d_bytes << ","
+       << "\"synchronize_calls\":" << s.synchronize_calls << ","
+       << "\"synchronize_insns\":" << s.synchronize_insns << ","
+       << "\"device_run_wait_us\":" << s.device_run_wait_us << "}";
+    return os.str();
+  }
+
+ private:
+  std::mutex mtx_;
+  Stats stats_;
+};
+
+inline double NowMicros() {
+  using Clock = std::chrono::steady_clock;
+  using Micros = std::chrono::duration<double, std::micro>;
+  return std::chrono::duration_cast<Micros>(Clock::now().time_since_epoch()).count();
+}
 
 inline bool RuntimeTraceEnabled() {
   const char* v = getenv("VTA_RUNTIME_TRACE");
@@ -158,7 +286,9 @@ struct DataBuffer {
    */
   void InvalidateCache(size_t offset, size_t size) {
     if (!kBufferCoherent && kAlwaysCache) {
+      double t0 = NowMicros();
       VTAInvalidateCache(reinterpret_cast<char*>(data_) + offset, phy_addr_ + offset, size);
+      RuntimeProfiler::Global().AddInvalidateCache(size, NowMicros() - t0);
     }
   }
   /*!
@@ -168,7 +298,9 @@ struct DataBuffer {
    */
   void FlushCache(size_t offset, size_t size) {
     if (!kBufferCoherent && kAlwaysCache) {
+      double t0 = NowMicros();
       VTAFlushCache(reinterpret_cast<char*>(data_) + offset, phy_addr_ + offset, size);
+      RuntimeProfiler::Global().AddFlushCache(size, NowMicros() - t0);
     }
   }
   /*!
@@ -178,7 +310,9 @@ struct DataBuffer {
    * Bytes.
    */
   void MemCopyFromHost(void* dst, const void* src, size_t size) {
+    double t0 = NowMicros();
     VTAMemCopyFromHost(dst, src, size);
+    RuntimeProfiler::Global().AddMemCopyFromHost(size, NowMicros() - t0);
   }
   /*!
    * \brief Performs a copy operation from buffer allocated with VTAMemAlloc to host memory.
@@ -186,7 +320,11 @@ struct DataBuffer {
    * \param src The source buffer in FPGA-accessible memory. Has to be allocated with VTAMemAlloc().
    * \param size Size of the region in Bytes.
    */
-  void MemCopyToHost(void* dst, const void* src, size_t size) { VTAMemCopyToHost(dst, src, size); }
+  void MemCopyToHost(void* dst, const void* src, size_t size) {
+    double t0 = NowMicros();
+    VTAMemCopyToHost(dst, src, size);
+    RuntimeProfiler::Global().AddMemCopyToHost(size, NowMicros() - t0);
+  }
   /*!
    * \brief Allocate a buffer of a given size.
    * \param size The size of the buffer.
@@ -1074,6 +1212,8 @@ class CommandQueue {
                     uint32_t x_stride, uint32_t x_pad_before, uint32_t y_pad_before,
                     uint32_t x_pad_after, uint32_t y_pad_after, uint32_t dst_sram_index,
                     uint32_t dst_memory_type) {
+    RuntimeProfiler::Global().AddLoadBuffer2D(static_cast<size_t>(x_size) * y_size *
+                                              GetElemBytes(dst_memory_type));
     VTAMemInsn* insn = insn_queue_.CreateMemInsn(dst_memory_type);
     insn->opcode = VTA_OPCODE_LOAD;
     insn->memory_type = dst_memory_type;
@@ -1093,6 +1233,8 @@ class CommandQueue {
   void StoreBuffer2D(uint32_t src_sram_index, uint32_t src_memory_type, void* dst_dram_addr,
                      uint32_t dst_elem_offset, uint32_t x_size, uint32_t y_size,
                      uint32_t x_stride) {
+    RuntimeProfiler::Global().AddStoreBuffer2D(static_cast<size_t>(x_size) * y_size *
+                                               GetElemBytes(src_memory_type));
     VTAMemInsn* insn = insn_queue_.CreateStoreInsn();
     insn->opcode = VTA_OPCODE_STORE;
     insn->memory_type = src_memory_type;
@@ -1158,8 +1300,10 @@ class CommandQueue {
 
     // Make sure that we don't exceed contiguous physical memory limits
     CHECK(insn_queue_.count() * sizeof(VTAGenericInsn) <= VTA_MAX_XFER);
-    int timeout =
-        VTADeviceRun(device_, insn_queue_.dram_phy_addr(), insn_queue_.count(), wait_cycles);
+    uint64_t insn_count = insn_queue_.count();
+    double t0 = NowMicros();
+    int timeout = VTADeviceRun(device_, insn_queue_.dram_phy_addr(), insn_count, wait_cycles);
+    RuntimeProfiler::Global().AddSynchronize(insn_count, NowMicros() - t0);
     CHECK_EQ(timeout, 0);
     // Reset buffers
     uop_queue_.Reset();
@@ -1440,3 +1584,11 @@ int VTADepPop(VTACommandHandle cmd, int from_qid, int to_qid) {
 void VTASynchronize(VTACommandHandle cmd, uint32_t wait_cycles) {
   static_cast<vta::CommandQueue*>(cmd)->Synchronize(wait_cycles);
 }
+
+TVM_REGISTER_GLOBAL("vta.runtime.profiler_clear").set_body_typed([]() {
+  vta::RuntimeProfiler::Global().Clear();
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.profiler_status").set_body_typed([]() {
+  return vta::RuntimeProfiler::Global().AsJSON();
+});
