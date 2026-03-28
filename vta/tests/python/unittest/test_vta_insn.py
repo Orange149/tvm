@@ -15,6 +15,10 @@
 # specific language governing permissions and limitations
 # under the License.
 """Unit test VTA's instructions """
+import json
+import threading
+import time
+
 import tvm
 from tvm import te
 import numpy as np
@@ -26,6 +30,61 @@ import vta.testing
 from vta.testing import simulator
 
 np.random.seed(0xDEADB)
+
+
+def _build_save_load_out_module(env, remote, module_name):
+    n = 6
+    x = te.placeholder((n, n, env.BATCH, env.BLOCK_OUT), name="x", dtype=env.acc_dtype)
+    x_buf = te.compute((n, n, env.BATCH, env.BLOCK_OUT), lambda *i: x(*i), "x_buf")
+    y_buf = te.compute((n, n, env.BATCH, env.BLOCK_OUT), lambda *i: x_buf(*i) >> 0, "y_buf")
+    y = te.compute((n, n, env.BATCH, env.BLOCK_OUT), lambda *i: y_buf(*i).astype(env.inp_dtype), "y")
+
+    s = te.create_schedule(y.op)
+    s[x_buf].set_scope(env.acc_scope)
+    s[x_buf].pragma(x_buf.op.axis[0], env.dma_copy)
+    s[y_buf].set_scope(env.acc_scope)
+    s[y_buf].pragma(y_buf.op.axis[0], env.alu)
+    s[y].pragma(y.op.axis[0], env.dma_copy)
+
+    with vta.build_config():
+        m = vta.build(s, [x, y], tvm.target.Target("ext_dev", host=env.target_host))
+
+    if not remote:
+        return None
+
+    temp = utils.tempdir()
+    m.save(temp.relpath(module_name))
+    remote.upload(temp.relpath(module_name))
+    f = remote.load_module(module_name)
+    return f, x, y, n
+
+
+def _make_save_load_out_io(env, remote, x, y, n):
+    dev = remote.ext_dev(0)
+    x_np = np.random.randint(1, 10, size=(n, n, env.BATCH, env.BLOCK_OUT)).astype(x.dtype)
+    y_np = x_np.astype(y.dtype)
+    x_nd = tvm.nd.array(x_np, dev)
+    y_nd = tvm.nd.empty(y_np.shape, device=dev, dtype=y_np.dtype)
+    return x_np, y_np, x_nd, y_nd
+
+
+def _avg_stat(stats, total_key, count_key):
+    count = int(stats.get(count_key, 0))
+    if count == 0:
+        return 0.0
+    return float(stats.get(total_key, 0.0)) / count
+
+
+def _has_driver_stats(stats):
+    return int(stats.get("driver_run_calls", 0)) > 0
+
+
+def _burn_cpu_us(duration_us):
+    deadline = time.perf_counter() + duration_us / 1e6
+    value = 0
+    while time.perf_counter() < deadline:
+        value = (value * 1664525 + 1013904223) & 0xFFFFFFFF
+    return value
 
 
 def test_save_load_out():
@@ -77,6 +136,356 @@ def test_save_load_out():
             print("Save load execution statistics:")
             for k, v in sim_stats.items():
                 print("\t{:<16}: {:>16}".format(k, v))
+
+    vta.testing.run(_run)
+
+
+def test_save_load_out_replay():
+    """Test single-command-batch replay on a minimal load/store module."""
+
+    def _run(env, remote):
+        n = 6
+        x = te.placeholder((n, n, env.BATCH, env.BLOCK_OUT), name="x", dtype=env.acc_dtype)
+        x_buf = te.compute((n, n, env.BATCH, env.BLOCK_OUT), lambda *i: x(*i), "x_buf")
+        y_buf = te.compute((n, n, env.BATCH, env.BLOCK_OUT), lambda *i: x_buf(*i) >> 0, "y_buf")
+        y = te.compute(
+            (n, n, env.BATCH, env.BLOCK_OUT), lambda *i: y_buf(*i).astype(env.inp_dtype), "y"
+        )
+
+        s = te.create_schedule(y.op)
+        s[x_buf].set_scope(env.acc_scope)
+        s[x_buf].pragma(x_buf.op.axis[0], env.dma_copy)
+        s[y_buf].set_scope(env.acc_scope)
+        s[y_buf].pragma(y_buf.op.axis[0], env.alu)
+        s[y].pragma(y.op.axis[0], env.dma_copy)
+
+        with vta.build_config():
+            m = vta.build(s, [x, y], tvm.target.Target("ext_dev", host=env.target_host))
+
+        if not remote:
+            return
+
+        temp = utils.tempdir()
+        m.save(temp.relpath("load_act_replay.o"))
+        remote.upload(temp.relpath("load_act_replay.o"))
+        f = remote.load_module("load_act_replay.o")
+
+        dev = remote.ext_dev(0)
+        x_np = np.random.randint(1, 10, size=(n, n, env.BATCH, env.BLOCK_OUT)).astype(x.dtype)
+        y_np = x_np.astype(y.dtype)
+        x_nd = tvm.nd.array(x_np, dev)
+        y_nd = tvm.nd.empty(y_np.shape, device=dev, dtype=y_np.dtype)
+
+        profiler_clear = remote.get_function("vta.runtime.profiler_clear")
+        profiler_status = remote.get_function("vta.runtime.profiler_status")
+        replay_begin_capture = remote.get_function("vta.runtime.replay_begin_capture")
+        replay_begin_replay = remote.get_function("vta.runtime.replay_begin_replay")
+        replay_reset = remote.get_function("vta.runtime.replay_reset")
+        replay_status = remote.get_function("vta.runtime.replay_status")
+
+        if env.TARGET in ["sim", "tsim"]:
+            simulator.clear_stats()
+
+        # Warm up once so the measured capture/replay path is stable.
+        f(x_nd, y_nd)
+        np.testing.assert_equal(y_np, y_nd.numpy())
+
+        replay_label = "unit:test_save_load_out_replay"
+        replay_reset()
+        profiler_clear()
+
+        replay_begin_capture(replay_label)
+        f(x_nd, y_nd)
+        np.testing.assert_equal(y_np, y_nd.numpy())
+
+        replay_begin_replay(replay_label)
+        f(x_nd, y_nd)
+        np.testing.assert_equal(y_np, y_nd.numpy())
+
+        stats = json.loads(profiler_status())
+        status = json.loads(replay_status())
+        assert int(stats.get("template_capture_calls", 0)) == 1
+        assert int(stats.get("template_replay_hits", 0)) >= 1
+        assert int(stats.get("template_replay_fallbacks", 0)) == 0
+        assert int(status.get("template_count", 0)) >= 1
+
+    vta.testing.run(_run)
+
+
+def test_save_load_out_replay_perf():
+    """Benchmark replay against baseline on a minimal load/store module."""
+
+    def _run(env, remote):
+        repeats = 20
+        built = _build_save_load_out_module(env, remote, "load_act_replay_perf.o")
+        if built is None:
+            return
+        f, x, y, n = built
+        _, y_np, x_nd, y_nd = _make_save_load_out_io(env, remote, x, y, n)
+
+        profiler_clear = remote.get_function("vta.runtime.profiler_clear")
+        profiler_status = remote.get_function("vta.runtime.profiler_status")
+        replay_begin_capture = remote.get_function("vta.runtime.replay_begin_capture")
+        replay_begin_replay = remote.get_function("vta.runtime.replay_begin_replay")
+        replay_reset = remote.get_function("vta.runtime.replay_reset")
+
+        if env.TARGET in ["sim", "tsim"]:
+            simulator.clear_stats()
+
+        def _run_once(label=None):
+            if label == "capture":
+                replay_begin_capture(replay_label)
+            elif label == "replay":
+                replay_begin_replay(replay_label)
+            t0 = time.perf_counter()
+            f(x_nd, y_nd)
+            elapsed_us = (time.perf_counter() - t0) * 1e6
+            np.testing.assert_equal(y_np, y_nd.numpy())
+            return elapsed_us
+
+        # Warm up once so the measured path is stable.
+        _run_once()
+
+        profiler_clear()
+        baseline_us = [_run_once() for _ in range(repeats)]
+        baseline_stats = json.loads(profiler_status())
+
+        replay_label = "unit:test_save_load_out_replay_perf"
+        replay_reset()
+        profiler_clear()
+
+        capture_us = _run_once("capture")
+        replay_us = [_run_once("replay") for _ in range(repeats)]
+        replay_stats = json.loads(profiler_status())
+
+        assert int(replay_stats.get("template_capture_calls", 0)) == 1
+        assert int(replay_stats.get("template_replay_hits", 0)) >= repeats
+        assert int(replay_stats.get("template_replay_fallbacks", 0)) == 0
+
+        baseline_avg = float(np.mean(baseline_us))
+        baseline_std = float(np.std(baseline_us))
+        replay_avg = float(np.mean(replay_us))
+        replay_std = float(np.std(replay_us))
+        replay_delta_pct = 0.0
+        if baseline_avg != 0.0:
+            replay_delta_pct = ((replay_avg - baseline_avg) / baseline_avg) * 100.0
+
+        print("Replay perf summary:")
+        print(
+            "\tbaseline wall time us avg/std : {:.3f} / {:.3f}".format(baseline_avg, baseline_std)
+        )
+        print("\tcapture wall time us         : {:.3f}".format(capture_us))
+        print("\treplay wall time us avg/std  : {:.3f} / {:.3f}".format(replay_avg, replay_std))
+        print("\treplay delta vs baseline pct : {:.3f}".format(replay_delta_pct))
+        print(
+            "\tbaseline avg device wait us  : {:.3f}".format(
+                _avg_stat(baseline_stats, "device_run_wait_us", "synchronize_calls")
+            )
+        )
+        print(
+            "\treplay avg device wait us    : {:.3f}".format(
+                _avg_stat(replay_stats, "device_run_wait_us", "synchronize_calls")
+            )
+        )
+        print(
+            "\tbaseline avg driver run us   : {:.3f}".format(
+                _avg_stat(baseline_stats, "driver_run_total_us", "driver_run_calls")
+            )
+        )
+        print(
+            "\treplay avg driver run us     : {:.3f}".format(
+                _avg_stat(replay_stats, "driver_run_total_us", "driver_run_calls")
+            )
+        )
+        print(
+            "\tbaseline avg driver poll us  : {:.3f}".format(
+                _avg_stat(baseline_stats, "driver_poll_wait_us", "driver_run_calls")
+            )
+        )
+        print(
+            "\treplay avg driver poll us    : {:.3f}".format(
+                _avg_stat(replay_stats, "driver_poll_wait_us", "driver_run_calls")
+            )
+        )
+        print(
+            "\tbaseline avg submit us       : {:.3f}".format(
+                _avg_stat(baseline_stats, "driver_submit_mmio_us", "driver_run_calls")
+            )
+        )
+        print(
+            "\treplay avg submit us         : {:.3f}".format(
+                _avg_stat(replay_stats, "driver_submit_mmio_us", "driver_run_calls")
+            )
+        )
+        print(
+            "\tprofiler capture/replay us   : {:.3f} / {:.3f}".format(
+                float(replay_stats.get("template_capture_us", 0.0)),
+                float(replay_stats.get("template_replay_us", 0.0)),
+            )
+        )
+        print(
+            "\tbaseline host extra us est   : {:.3f}".format(
+                baseline_avg - _avg_stat(baseline_stats, "driver_run_total_us", "driver_run_calls")
+            )
+        )
+        print(
+            "\treplay host extra us est     : {:.3f}".format(
+                replay_avg - _avg_stat(replay_stats, "driver_run_total_us", "driver_run_calls")
+            )
+        )
+        print(
+            "\tbaseline runtime gap us est  : {:.3f}".format(
+                _avg_stat(baseline_stats, "device_run_wait_us", "synchronize_calls")
+                - _avg_stat(baseline_stats, "driver_poll_wait_us", "driver_run_calls")
+            )
+        )
+        print(
+            "\treplay runtime gap us est    : {:.3f}".format(
+                _avg_stat(replay_stats, "device_run_wait_us", "synchronize_calls")
+                - _avg_stat(replay_stats, "driver_poll_wait_us", "driver_run_calls")
+            )
+        )
+        if not _has_driver_stats(replay_stats):
+            print("\tdriver profiler              : unavailable on sim/tsim stub path")
+
+    vta.testing.run(_run)
+
+
+def test_save_load_out_time_breakdown():
+    """Profile baseline host/runtime/driver time breakdown for a minimal VTA subgraph."""
+
+    def _run(env, remote):
+        repeats = 20
+        built = _build_save_load_out_module(env, remote, "load_act_time_breakdown.o")
+        if built is None:
+            return
+        f, x, y, n = built
+        _, y_np, x_nd, y_nd = _make_save_load_out_io(env, remote, x, y, n)
+
+        profiler_clear = remote.get_function("vta.runtime.profiler_clear")
+        profiler_status = remote.get_function("vta.runtime.profiler_status")
+
+        if env.TARGET in ["sim", "tsim"]:
+            simulator.clear_stats()
+
+        # Warm up once so the measured path is stable.
+        f(x_nd, y_nd)
+        np.testing.assert_equal(y_np, y_nd.numpy())
+
+        profiler_clear()
+        wall_us = []
+        for _ in range(repeats):
+            t0 = time.perf_counter()
+            f(x_nd, y_nd)
+            wall_us.append((time.perf_counter() - t0) * 1e6)
+            np.testing.assert_equal(y_np, y_nd.numpy())
+
+        stats = json.loads(profiler_status())
+        assert int(stats.get("synchronize_calls", 0)) == repeats
+
+        wall_avg = float(np.mean(wall_us))
+        wall_std = float(np.std(wall_us))
+        avg_runtime_wait = _avg_stat(stats, "device_run_wait_us", "synchronize_calls")
+        avg_driver_run = _avg_stat(stats, "driver_run_total_us", "driver_run_calls")
+        avg_driver_submit = _avg_stat(stats, "driver_submit_mmio_us", "driver_run_calls")
+        avg_driver_poll = _avg_stat(stats, "driver_poll_wait_us", "driver_run_calls")
+        host_extra = wall_avg - avg_driver_run
+        runtime_gap = avg_runtime_wait - avg_driver_poll
+
+        print("Time breakdown summary:")
+        print("\thost wall time us avg/std    : {:.3f} / {:.3f}".format(wall_avg, wall_std))
+        print("\truntime wait us avg          : {:.3f}".format(avg_runtime_wait))
+        print("\tdriver run us avg            : {:.3f}".format(avg_driver_run))
+        print("\tdriver submit us avg         : {:.3f}".format(avg_driver_submit))
+        print("\tdriver poll us avg           : {:.3f}".format(avg_driver_poll))
+        print("\thost extra us est            : {:.3f}".format(host_extra))
+        print("\truntime gap us est           : {:.3f}".format(runtime_gap))
+        if not _has_driver_stats(stats):
+            print("\tdriver profiler              : unavailable on sim/tsim stub path")
+
+    vta.testing.run(_run)
+
+
+def test_save_load_out_synthetic_overlap():
+    """Inject synthetic CPU work to test whether VTA time can hide host computation."""
+
+    def _run(env, remote):
+        repeats = 10
+        cpu_loads_us = [50.0, 100.0, 250.0, 500.0]
+        built = _build_save_load_out_module(env, remote, "load_act_synth_overlap.o")
+        if built is None:
+            return
+        f, x, y, n = built
+        _, y_np, x_nd, y_nd = _make_save_load_out_io(env, remote, x, y, n)
+
+        profiler_clear = remote.get_function("vta.runtime.profiler_clear")
+        profiler_status = remote.get_function("vta.runtime.profiler_status")
+
+        if env.TARGET in ["sim", "tsim"]:
+            simulator.clear_stats()
+
+        def _run_vta_once():
+            f(x_nd, y_nd)
+            np.testing.assert_equal(y_np, y_nd.numpy())
+
+        def _run_overlap_once(cpu_load_us):
+            started = threading.Event()
+            error = []
+
+            def _worker():
+                try:
+                    started.set()
+                    _run_vta_once()
+                except Exception as err:  # pragma: no cover
+                    error.append(err)
+
+            worker = threading.Thread(target=_worker)
+            t0 = time.perf_counter()
+            worker.start()
+            started.wait()
+            _burn_cpu_us(cpu_load_us)
+            worker.join()
+            if error:
+                raise error[0]
+            return (time.perf_counter() - t0) * 1e6
+
+        def _run_sequential_once(cpu_load_us):
+            t0 = time.perf_counter()
+            _run_vta_once()
+            _burn_cpu_us(cpu_load_us)
+            return (time.perf_counter() - t0) * 1e6
+
+        _run_vta_once()
+
+        print("Synthetic overlap summary:")
+        for cpu_load_us in cpu_loads_us:
+            profiler_clear()
+            sequential_us = [_run_sequential_once(cpu_load_us) for _ in range(repeats)]
+            sequential_stats = json.loads(profiler_status())
+
+            profiler_clear()
+            overlap_us = [_run_overlap_once(cpu_load_us) for _ in range(repeats)]
+            overlap_stats = json.loads(profiler_status())
+
+            assert int(sequential_stats.get("synchronize_calls", 0)) == repeats
+            assert int(overlap_stats.get("synchronize_calls", 0)) == repeats
+
+            sequential_avg = float(np.mean(sequential_us))
+            overlap_avg = float(np.mean(overlap_us))
+            hidden_us = sequential_avg - overlap_avg
+            print(
+                "\tcpu_load_us={:.1f} sequential_avg_us={:.3f} overlap_avg_us={:.3f} hidden_us={:.3f}".format(
+                    cpu_load_us, sequential_avg, overlap_avg, hidden_us
+                )
+            )
+            print(
+                "\t  overlap driver run/poll us : {:.3f} / {:.3f}".format(
+                    _avg_stat(overlap_stats, "driver_run_total_us", "driver_run_calls"),
+                    _avg_stat(overlap_stats, "driver_poll_wait_us", "driver_run_calls"),
+                )
+            )
+            if not _has_driver_stats(overlap_stats):
+                print("\t  driver profiler            : unavailable on sim/tsim stub path")
 
     vta.testing.run(_run)
 

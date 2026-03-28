@@ -21,6 +21,7 @@ Besides the compiler toolchain, it also includes utility functions to
 configure the hardware environment and access remote device through RPC.
 """
 import sys
+import tvm
 import tvm._ffi.base
 
 from .autotvm import module_loader
@@ -36,3 +37,51 @@ __version__ = "0.1.0"
 if not tvm._ffi.base._RUNTIME_ONLY:
     from . import top
     from .build_module import build_config, lower, build
+
+
+def _runtime_func(name, remote=None):
+    if remote is not None:
+        return remote.get_function(name)
+    return tvm.get_global_func(name)
+
+
+def shared_cpu_view(arr, remote=None):
+    """Create a CPU-visible alias over a VTA ext_dev NDArray."""
+
+    return _runtime_func("vta.runtime.ndarray_shared_cpu_view", remote)(arr)
+
+
+def mark_shared_buffer_host_write(arr, remote=None):
+    """Mark a VTA shared buffer dirty after CPU writes through its alias."""
+
+    return _runtime_func("vta.runtime.ndarray_mark_host_write", remote)(arr)
+
+
+def sync_shared_buffer_host_read(arr, remote=None):
+    """Make device-written data visible to CPU before reading through its alias."""
+
+    return _runtime_func("vta.runtime.ndarray_sync_host_read", remote)(arr)
+
+
+def replay_begin_capture(label, remote=None):
+    """Enable VTA command template capture for the next run."""
+
+    return _runtime_func("vta.runtime.replay_begin_capture", remote)(label)
+
+
+def replay_begin_replay(label, remote=None):
+    """Enable VTA command template replay for the next run."""
+
+    return _runtime_func("vta.runtime.replay_begin_replay", remote)(label)
+
+
+def replay_reset(remote=None):
+    """Clear captured VTA command templates and disable replay mode."""
+
+    return _runtime_func("vta.runtime.replay_reset", remote)()
+
+
+def replay_status(remote=None):
+    """Get VTA command replay status as a JSON string."""
+
+    return _runtime_func("vta.runtime.replay_status", remote)()

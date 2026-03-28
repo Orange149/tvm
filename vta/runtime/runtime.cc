@@ -31,26 +31,275 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <tvm/runtime/c_runtime_api.h>
+#include <tvm/runtime/device_api.h>
+#include <tvm/runtime/ndarray.h>
 #include <tvm/runtime/registry.h>
 #include <vta/driver.h>
 #include <vta/hw_spec.h>
 
 #include <algorithm>
+#include <array>
 #include <cassert>
+#include <cstdint>
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
+#include <deque>
 #include <memory>
 #include <mutex>
 #include <sstream>
 #include <set>
 #include <thread>
+#include <unordered_map>
 #include <vector>
 
 namespace vta {
 
+namespace {
+
+constexpr size_t kMaxTrackedDirtyRanges = 32;
+constexpr size_t kSmallDMATransferBytes = 4096;
+constexpr size_t kRuntimeMemoryTypeBuckets = 7;
+constexpr size_t kDMATopSignatureCount = 3;
+constexpr size_t kMaxRuntimeEvents = 4096;
+
+enum class CopyScopeKind : int {
+  kNone = 0,
+  kInput = 1,
+  kOutput = 2,
+  kDeviceCopy = 3,
+};
+
+using DirtyRange = std::pair<size_t, size_t>;
+
+thread_local std::vector<CopyScopeKind> copy_scope_stack;
+
+inline CopyScopeKind ParseCopyScope(const std::string& scope) {
+  if (scope == "input") return CopyScopeKind::kInput;
+  if (scope == "output") return CopyScopeKind::kOutput;
+  if (scope == "device_copy") return CopyScopeKind::kDeviceCopy;
+  return CopyScopeKind::kNone;
+}
+
+inline void PushCopyScope(CopyScopeKind scope) { copy_scope_stack.push_back(scope); }
+
+inline void PopCopyScope() {
+  if (!copy_scope_stack.empty()) {
+    copy_scope_stack.pop_back();
+  }
+}
+
+inline size_t MemoryTypeStatIndex(uint32_t memory_type) {
+  switch (memory_type) {
+    case VTA_MEM_ID_UOP:
+      return 0;
+    case VTA_MEM_ID_INP:
+      return 1;
+    case VTA_MEM_ID_WGT:
+      return 2;
+    case VTA_MEM_ID_ACC:
+      return 3;
+    case VTA_MEM_ID_OUT:
+      return 4;
+    case VTA_MEM_ID_ACC_8BIT:
+      return 5;
+    default:
+      return 6;
+  }
+}
+
+inline const char* MemoryTypeStatName(size_t index) {
+  switch (index) {
+    case 0:
+      return "uop";
+    case 1:
+      return "inp";
+    case 2:
+      return "wgt";
+    case 3:
+      return "acc";
+    case 4:
+      return "out";
+    case 5:
+      return "acc8";
+    default:
+      return "unknown";
+  }
+}
+
+inline uint32_t MemoryTypeElemBytes(uint32_t memory_type) {
+  switch (memory_type) {
+    case VTA_MEM_ID_UOP:
+      return VTA_UOP_ELEM_BYTES;
+    case VTA_MEM_ID_INP:
+      return VTA_INP_ELEM_BYTES;
+    case VTA_MEM_ID_WGT:
+      return VTA_WGT_ELEM_BYTES;
+    case VTA_MEM_ID_ACC:
+      return VTA_ACC_ELEM_BYTES;
+    case VTA_MEM_ID_OUT:
+      return VTA_OUT_ELEM_BYTES;
+    case VTA_MEM_ID_ACC_8BIT:
+      return VTA_ACC_ELEM_BYTES / 4;
+    default:
+      return 1;
+  }
+}
+
+inline uint64_t EncodeDMASignature(uint32_t memory_type, uint32_t x_size, uint32_t y_size,
+                                   uint32_t x_stride) {
+  return (static_cast<uint64_t>(memory_type & 0xffu) << 48) |
+         (static_cast<uint64_t>(x_size & 0xffffu) << 32) |
+         (static_cast<uint64_t>(y_size & 0xffffu) << 16) |
+         static_cast<uint64_t>(x_stride & 0xffffu);
+}
+
+inline std::string DescribeDMASignature(uint64_t sig, uint64_t count) {
+  uint32_t memory_type = static_cast<uint32_t>((sig >> 48) & 0xffu);
+  uint32_t x_size = static_cast<uint32_t>((sig >> 32) & 0xffffu);
+  uint32_t y_size = static_cast<uint32_t>((sig >> 16) & 0xffffu);
+  uint32_t x_stride = static_cast<uint32_t>(sig & 0xffffu);
+  std::ostringstream os;
+  os << MemoryTypeStatName(MemoryTypeStatIndex(memory_type)) << ":x=" << x_size << ",y=" << y_size
+     << ",stride=" << x_stride << ",count=" << count;
+  return os.str();
+}
+
+inline std::string JSONQuote(const std::string& s) {
+  std::ostringstream os;
+  os << "\"";
+  for (char ch : s) {
+    switch (ch) {
+      case '"':
+        os << "\\\"";
+        break;
+      case '\\':
+        os << "\\\\";
+        break;
+      default:
+        os << ch;
+        break;
+    }
+  }
+  os << "\"";
+  return os.str();
+}
+
+inline CopyScopeKind CurrentCopyScope() {
+  return copy_scope_stack.empty() ? CopyScopeKind::kNone : copy_scope_stack.back();
+}
+
+inline bool LazyCoherenceEnabled() {
+  static const bool enabled = []() {
+    const char* v = getenv("VTA_LAZY_COHERENCE");
+    return !(v && v[0] != '\0' && strcmp(v, "0") == 0);
+  }();
+  return enabled;
+}
+
+inline size_t DirtyRangeBytes(const DirtyRange& range) { return range.second - range.first; }
+
+inline DirtyRange MakeDirtyRange(size_t begin, size_t size) { return {begin, begin + size}; }
+
+inline void InsertDirtyRange(std::vector<DirtyRange>* ranges, DirtyRange range, size_t buffer_size) {
+  if (range.first >= range.second) return;
+  std::vector<DirtyRange> out;
+  bool inserted = false;
+  for (const DirtyRange& curr : *ranges) {
+    if (curr.second < range.first) {
+      out.push_back(curr);
+    } else if (range.second < curr.first) {
+      if (!inserted) {
+        out.push_back(range);
+        inserted = true;
+      }
+      out.push_back(curr);
+    } else {
+      range.first = std::min(range.first, curr.first);
+      range.second = std::max(range.second, curr.second);
+    }
+  }
+  if (!inserted) {
+    out.push_back(range);
+  }
+  if (out.size() > kMaxTrackedDirtyRanges) {
+    out.clear();
+    out.push_back({0, buffer_size});
+  }
+  *ranges = std::move(out);
+}
+
+inline void RemoveDirtyRange(std::vector<DirtyRange>* ranges, DirtyRange range) {
+  if (range.first >= range.second) return;
+  std::vector<DirtyRange> out;
+  for (const DirtyRange& curr : *ranges) {
+    if (curr.second <= range.first || range.second <= curr.first) {
+      out.push_back(curr);
+      continue;
+    }
+    if (curr.first < range.first) {
+      out.push_back({curr.first, range.first});
+    }
+    if (range.second < curr.second) {
+      out.push_back({range.second, curr.second});
+    }
+  }
+  *ranges = std::move(out);
+}
+
+inline size_t Compute2DSpanBytes(uint32_t elem_bytes, uint32_t elem_offset, uint32_t x_size,
+                                 uint32_t y_size, uint32_t x_stride) {
+  if (x_size == 0 || y_size == 0) return 0;
+  uint64_t row_end = static_cast<uint64_t>(elem_offset) +
+                     static_cast<uint64_t>(x_stride) * (static_cast<uint64_t>(y_size) - 1) +
+                     static_cast<uint64_t>(x_size);
+  return static_cast<size_t>(row_end * elem_bytes) - static_cast<size_t>(elem_offset) * elem_bytes;
+}
+
+inline VTADriverProfilerStats DiffDriverStats(const VTADriverProfilerStats& after,
+                                              const VTADriverProfilerStats& before) {
+  VTADriverProfilerStats out{};
+  out.run_calls = after.run_calls - before.run_calls;
+  out.run_insns = after.run_insns - before.run_insns;
+  out.timeout_calls = after.timeout_calls - before.timeout_calls;
+  out.poll_iters = after.poll_iters - before.poll_iters;
+  out.run_total_us = after.run_total_us - before.run_total_us;
+  out.submit_mmio_us = after.submit_mmio_us - before.submit_mmio_us;
+  out.post_start_sleep_us = after.post_start_sleep_us - before.post_start_sleep_us;
+  out.poll_wait_us = after.poll_wait_us - before.poll_wait_us;
+  return out;
+}
+
+}  // namespace
+
+inline CopyScopeKind CopyScopeFromString(const std::string& scope) { return ParseCopyScope(scope); }
+
+inline void PushScopedCopy(CopyScopeKind scope) { PushCopyScope(scope); }
+
+inline void PopScopedCopy() { PopCopyScope(); }
+
+inline CopyScopeKind CurrentScopedCopy() { return CurrentCopyScope(); }
+
+inline double NowMicros();
+
 class RuntimeProfiler {
  public:
+  enum class EventKind : int {
+    kBufferCopy = 0,
+    kMemCopyFromHost = 1,
+    kMemCopyToHost = 2,
+    kFlushCache = 3,
+    kInvalidateCache = 4,
+    kLoadBuffer2D = 5,
+    kStoreBuffer2D = 6,
+    kPushGEMMOp = 7,
+    kPushALUOp = 8,
+    kSynchronize = 9,
+    kTemplateCapture = 10,
+    kTemplateReplay = 11,
+    kTemplateReplayFallback = 12,
+  };
+
   struct Stats {
     uint64_t mem_copy_from_host_calls{0};
     uint64_t mem_copy_from_host_bytes{0};
@@ -70,13 +319,75 @@ class RuntimeProfiler {
 
     uint64_t load_buffer_2d_calls{0};
     uint64_t load_buffer_2d_bytes{0};
-
+    uint64_t load_buffer_2d_small_calls{0};
+    uint64_t load_buffer_2d_strided_calls{0};
+    uint64_t load_buffer_2d_padded_calls{0};
+    uint64_t load_buffer_2d_xsize1_calls{0};
+    uint64_t load_buffer_2d_ysize1_calls{0};
+    double load_buffer_2d_enqueue_us{0.0};
+    std::array<uint64_t, kRuntimeMemoryTypeBuckets> load_buffer_2d_mem_type_calls{};
+    std::array<uint64_t, kRuntimeMemoryTypeBuckets> load_buffer_2d_mem_type_bytes{};
     uint64_t store_buffer_2d_calls{0};
     uint64_t store_buffer_2d_bytes{0};
+    uint64_t store_buffer_2d_small_calls{0};
+    uint64_t store_buffer_2d_strided_calls{0};
+    uint64_t store_buffer_2d_xsize1_calls{0};
+    uint64_t store_buffer_2d_ysize1_calls{0};
+    double store_buffer_2d_enqueue_us{0.0};
+    std::array<uint64_t, kRuntimeMemoryTypeBuckets> store_buffer_2d_mem_type_calls{};
+    std::array<uint64_t, kRuntimeMemoryTypeBuckets> store_buffer_2d_mem_type_bytes{};
+    uint64_t push_gemm_op_calls{0};
+    double push_gemm_op_us{0.0};
+    uint64_t push_alu_op_calls{0};
+    double push_alu_op_us{0.0};
+    uint64_t template_capture_calls{0};
+    uint64_t template_replay_hits{0};
+    uint64_t template_replay_fallbacks{0};
+    double template_capture_us{0.0};
+    double template_replay_us{0.0};
+    uint64_t input_copy_calls{0};
+    uint64_t input_copy_bytes{0};
+    double input_copy_us{0.0};
+
+    uint64_t output_copy_calls{0};
+    uint64_t output_copy_bytes{0};
+    double output_copy_us{0.0};
+
+    uint64_t device_copy_calls{0};
+    uint64_t device_copy_bytes{0};
+    double device_copy_us{0.0};
 
     uint64_t synchronize_calls{0};
     uint64_t synchronize_insns{0};
+    uint64_t synchronize_load_bytes{0};
+    uint64_t synchronize_store_bytes{0};
     double device_run_wait_us{0.0};
+    uint64_t driver_run_calls{0};
+    uint64_t driver_run_insns{0};
+    uint64_t driver_timeout_calls{0};
+    uint64_t driver_poll_iters{0};
+    double driver_run_total_us{0.0};
+    double driver_submit_mmio_us{0.0};
+    double driver_post_start_sleep_us{0.0};
+    double driver_poll_wait_us{0.0};
+  };
+
+  struct Event {
+    uint64_t seq{0};
+    double ts_us{0.0};
+    EventKind kind{EventKind::kBufferCopy};
+    CopyScopeKind copy_scope{CopyScopeKind::kNone};
+    size_t bytes{0};
+    double duration_us{0.0};
+    uint64_t insns{0};
+    size_t load_bytes{0};
+    size_t store_bytes{0};
+    uint32_t memory_type{0};
+    uint32_t x_size{0};
+    uint32_t y_size{0};
+    uint32_t x_stride{0};
+    bool is_padded{false};
+    VTADriverProfilerStats driver{};
   };
 
   static RuntimeProfiler& Global() {
@@ -87,6 +398,11 @@ class RuntimeProfiler {
   void Clear() {
     std::lock_guard<std::mutex> lock(mtx_);
     stats_ = Stats();
+    load_signature_counts_.clear();
+    store_signature_counts_.clear();
+    events_.clear();
+    next_event_seq_ = 1;
+    VTADriverProfilerClear();
   }
 
   void AddMemCopyFromHost(size_t size, double us) {
@@ -94,6 +410,7 @@ class RuntimeProfiler {
     stats_.mem_copy_from_host_calls += 1;
     stats_.mem_copy_from_host_bytes += size;
     stats_.mem_copy_from_host_us += us;
+    PushEventLocked(MakeSizeEvent(EventKind::kMemCopyFromHost, size, us));
   }
 
   void AddMemCopyToHost(size_t size, double us) {
@@ -101,6 +418,7 @@ class RuntimeProfiler {
     stats_.mem_copy_to_host_calls += 1;
     stats_.mem_copy_to_host_bytes += size;
     stats_.mem_copy_to_host_us += us;
+    PushEventLocked(MakeSizeEvent(EventKind::kMemCopyToHost, size, us));
   }
 
   void AddFlushCache(size_t size, double us) {
@@ -108,6 +426,7 @@ class RuntimeProfiler {
     stats_.flush_cache_calls += 1;
     stats_.flush_cache_bytes += size;
     stats_.flush_cache_us += us;
+    PushEventLocked(MakeSizeEvent(EventKind::kFlushCache, size, us));
   }
 
   void AddInvalidateCache(size_t size, double us) {
@@ -115,25 +434,129 @@ class RuntimeProfiler {
     stats_.invalidate_cache_calls += 1;
     stats_.invalidate_cache_bytes += size;
     stats_.invalidate_cache_us += us;
+    PushEventLocked(MakeSizeEvent(EventKind::kInvalidateCache, size, us));
   }
 
-  void AddLoadBuffer2D(size_t bytes) {
+  void AddLoadBuffer2D(uint32_t memory_type, uint32_t x_size, uint32_t y_size, uint32_t x_stride,
+                       bool is_padded, double us) {
     std::lock_guard<std::mutex> lock(mtx_);
-    stats_.load_buffer_2d_calls += 1;
-    stats_.load_buffer_2d_bytes += bytes;
+    RecordLoadBuffer2D(&stats_, &load_signature_counts_, memory_type, x_size, y_size, x_stride,
+                       is_padded);
+    stats_.load_buffer_2d_enqueue_us += us;
+    Event event;
+    event.kind = EventKind::kLoadBuffer2D;
+    event.duration_us = us;
+    event.bytes =
+        static_cast<size_t>(x_size) * y_size * static_cast<size_t>(MemoryTypeElemBytes(memory_type));
+    event.memory_type = memory_type;
+    event.x_size = x_size;
+    event.y_size = y_size;
+    event.x_stride = x_stride;
+    event.is_padded = is_padded;
+    PushEventLocked(event);
   }
 
-  void AddStoreBuffer2D(size_t bytes) {
+  void AddStoreBuffer2D(uint32_t memory_type, uint32_t x_size, uint32_t y_size, uint32_t x_stride,
+                        double us) {
     std::lock_guard<std::mutex> lock(mtx_);
-    stats_.store_buffer_2d_calls += 1;
-    stats_.store_buffer_2d_bytes += bytes;
+    RecordStoreBuffer2D(&stats_, &store_signature_counts_, memory_type, x_size, y_size, x_stride);
+    stats_.store_buffer_2d_enqueue_us += us;
+    Event event;
+    event.kind = EventKind::kStoreBuffer2D;
+    event.duration_us = us;
+    event.bytes =
+        static_cast<size_t>(x_size) * y_size * static_cast<size_t>(MemoryTypeElemBytes(memory_type));
+    event.memory_type = memory_type;
+    event.x_size = x_size;
+    event.y_size = y_size;
+    event.x_stride = x_stride;
+    PushEventLocked(event);
   }
 
-  void AddSynchronize(uint64_t insns, double us) {
+  void AddPushGEMMOp(double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.push_gemm_op_calls += 1;
+    stats_.push_gemm_op_us += us;
+    PushEventLocked(MakeSizeEvent(EventKind::kPushGEMMOp, 0, us));
+  }
+
+  void AddPushALUOp(double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.push_alu_op_calls += 1;
+    stats_.push_alu_op_us += us;
+    PushEventLocked(MakeSizeEvent(EventKind::kPushALUOp, 0, us));
+  }
+
+  void AddTemplateCapture(double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.template_capture_calls += 1;
+    stats_.template_capture_us += us;
+    PushEventLocked(MakeSizeEvent(EventKind::kTemplateCapture, 0, us));
+  }
+
+  void AddTemplateReplay(double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.template_replay_hits += 1;
+    stats_.template_replay_us += us;
+    PushEventLocked(MakeSizeEvent(EventKind::kTemplateReplay, 0, us));
+  }
+
+  void AddTemplateReplayFallback() {
+    std::lock_guard<std::mutex> lock(mtx_);
+    stats_.template_replay_fallbacks += 1;
+    PushEventLocked(MakeSizeEvent(EventKind::kTemplateReplayFallback, 0, 0.0));
+  }
+
+  void AddScopedCopy(CopyScopeKind scope, size_t size, double us) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    switch (scope) {
+      case CopyScopeKind::kInput:
+        stats_.input_copy_calls += 1;
+        stats_.input_copy_bytes += size;
+        stats_.input_copy_us += us;
+        break;
+      case CopyScopeKind::kOutput:
+        stats_.output_copy_calls += 1;
+        stats_.output_copy_bytes += size;
+        stats_.output_copy_us += us;
+        break;
+      case CopyScopeKind::kDeviceCopy:
+        stats_.device_copy_calls += 1;
+        stats_.device_copy_bytes += size;
+        stats_.device_copy_us += us;
+        break;
+      case CopyScopeKind::kNone:
+        break;
+    }
+    Event event = MakeSizeEvent(EventKind::kBufferCopy, size, us);
+    event.copy_scope = scope;
+    PushEventLocked(event);
+  }
+
+  void AddSynchronize(uint64_t insns, size_t load_bytes, size_t store_bytes, double us,
+                      const VTADriverProfilerStats& driver_delta) {
     std::lock_guard<std::mutex> lock(mtx_);
     stats_.synchronize_calls += 1;
     stats_.synchronize_insns += insns;
+    stats_.synchronize_load_bytes += load_bytes;
+    stats_.synchronize_store_bytes += store_bytes;
     stats_.device_run_wait_us += us;
+    stats_.driver_run_calls += driver_delta.run_calls;
+    stats_.driver_run_insns += driver_delta.run_insns;
+    stats_.driver_timeout_calls += driver_delta.timeout_calls;
+    stats_.driver_poll_iters += driver_delta.poll_iters;
+    stats_.driver_run_total_us += driver_delta.run_total_us;
+    stats_.driver_submit_mmio_us += driver_delta.submit_mmio_us;
+    stats_.driver_post_start_sleep_us += driver_delta.post_start_sleep_us;
+    stats_.driver_poll_wait_us += driver_delta.poll_wait_us;
+    Event event;
+    event.kind = EventKind::kSynchronize;
+    event.duration_us = us;
+    event.insns = insns;
+    event.load_bytes = load_bytes;
+    event.store_bytes = store_bytes;
+    event.driver = driver_delta;
+    PushEventLocked(event);
   }
 
   std::string AsJSON() {
@@ -155,17 +578,277 @@ class RuntimeProfiler {
        << "\"invalidate_cache_us\":" << s.invalidate_cache_us << ","
        << "\"load_buffer_2d_calls\":" << s.load_buffer_2d_calls << ","
        << "\"load_buffer_2d_bytes\":" << s.load_buffer_2d_bytes << ","
+       << "\"load_buffer_2d_small_calls\":" << s.load_buffer_2d_small_calls << ","
+       << "\"load_buffer_2d_strided_calls\":" << s.load_buffer_2d_strided_calls << ","
+       << "\"load_buffer_2d_xsize1_calls\":" << s.load_buffer_2d_xsize1_calls << ","
+       << "\"load_buffer_2d_ysize1_calls\":" << s.load_buffer_2d_ysize1_calls << ","
+       << "\"load_buffer_2d_padded_calls\":" << s.load_buffer_2d_padded_calls << ","
+       << "\"load_buffer_2d_enqueue_us\":" << s.load_buffer_2d_enqueue_us << ","
        << "\"store_buffer_2d_calls\":" << s.store_buffer_2d_calls << ","
        << "\"store_buffer_2d_bytes\":" << s.store_buffer_2d_bytes << ","
+       << "\"store_buffer_2d_small_calls\":" << s.store_buffer_2d_small_calls << ","
+       << "\"store_buffer_2d_strided_calls\":" << s.store_buffer_2d_strided_calls << ","
+       << "\"store_buffer_2d_xsize1_calls\":" << s.store_buffer_2d_xsize1_calls << ","
+       << "\"store_buffer_2d_ysize1_calls\":" << s.store_buffer_2d_ysize1_calls << ","
+       << "\"store_buffer_2d_enqueue_us\":" << s.store_buffer_2d_enqueue_us << ","
+       << "\"push_gemm_op_calls\":" << s.push_gemm_op_calls << ","
+       << "\"push_gemm_op_us\":" << s.push_gemm_op_us << ","
+       << "\"push_alu_op_calls\":" << s.push_alu_op_calls << ","
+       << "\"push_alu_op_us\":" << s.push_alu_op_us << ","
+       << "\"template_capture_calls\":" << s.template_capture_calls << ","
+       << "\"template_replay_hits\":" << s.template_replay_hits << ","
+       << "\"template_replay_fallbacks\":" << s.template_replay_fallbacks << ","
+       << "\"template_capture_us\":" << s.template_capture_us << ","
+       << "\"template_replay_us\":" << s.template_replay_us << ","
+       << "\"input_copy_calls\":" << s.input_copy_calls << ","
+       << "\"input_copy_bytes\":" << s.input_copy_bytes << ","
+       << "\"input_copy_us\":" << s.input_copy_us << ","
+       << "\"output_copy_calls\":" << s.output_copy_calls << ","
+       << "\"output_copy_bytes\":" << s.output_copy_bytes << ","
+       << "\"output_copy_us\":" << s.output_copy_us << ","
+       << "\"device_copy_calls\":" << s.device_copy_calls << ","
+       << "\"device_copy_bytes\":" << s.device_copy_bytes << ","
+       << "\"device_copy_us\":" << s.device_copy_us << ","
        << "\"synchronize_calls\":" << s.synchronize_calls << ","
        << "\"synchronize_insns\":" << s.synchronize_insns << ","
-       << "\"device_run_wait_us\":" << s.device_run_wait_us << "}";
+       << "\"synchronize_load_bytes\":" << s.synchronize_load_bytes << ","
+       << "\"synchronize_store_bytes\":" << s.synchronize_store_bytes << ","
+       << "\"device_run_wait_us\":" << s.device_run_wait_us << ","
+       << "\"driver_run_calls\":" << s.driver_run_calls << ","
+       << "\"driver_run_insns\":" << s.driver_run_insns << ","
+       << "\"driver_timeout_calls\":" << s.driver_timeout_calls << ","
+       << "\"driver_poll_iters\":" << s.driver_poll_iters << ","
+       << "\"driver_run_total_us\":" << s.driver_run_total_us << ","
+       << "\"driver_submit_mmio_us\":" << s.driver_submit_mmio_us << ","
+       << "\"driver_post_start_sleep_us\":" << s.driver_post_start_sleep_us << ","
+       << "\"driver_poll_wait_us\":" << s.driver_poll_wait_us << ","
+       << "\"event_count\":" << events_.size();
+    for (size_t i = 0; i < kRuntimeMemoryTypeBuckets; ++i) {
+      os << ",\"load_buffer_2d_" << MemoryTypeStatName(i) << "_calls\":"
+         << s.load_buffer_2d_mem_type_calls[i];
+      os << ",\"load_buffer_2d_" << MemoryTypeStatName(i) << "_bytes\":"
+         << s.load_buffer_2d_mem_type_bytes[i];
+      os << ",\"store_buffer_2d_" << MemoryTypeStatName(i) << "_calls\":"
+         << s.store_buffer_2d_mem_type_calls[i];
+      os << ",\"store_buffer_2d_" << MemoryTypeStatName(i) << "_bytes\":"
+         << s.store_buffer_2d_mem_type_bytes[i];
+    }
+    os << ",\"load_buffer_2d_top_signatures\":";
+    AppendTopSignaturesJSON(os, load_signature_counts_);
+    os << ",\"store_buffer_2d_top_signatures\":";
+    AppendTopSignaturesJSON(os, store_signature_counts_);
+    os << "}";
+    return os.str();
+  }
+
+  std::string EventsAsJSON(int max_events) {
+    std::lock_guard<std::mutex> lock(mtx_);
+    size_t keep = events_.size();
+    if (max_events > 0) {
+      keep = std::min(keep, static_cast<size_t>(max_events));
+    }
+    size_t begin = events_.size() - keep;
+    std::ostringstream os;
+    os << "[";
+    for (size_t i = begin; i < events_.size(); ++i) {
+      if (i != begin) os << ",";
+      AppendEventJSON(os, events_[i]);
+    }
+    os << "]";
     return os.str();
   }
 
  private:
+  static const char* EventKindName(EventKind kind) {
+    switch (kind) {
+      case EventKind::kBufferCopy:
+        return "buffer_copy";
+      case EventKind::kMemCopyFromHost:
+        return "mem_copy_from_host";
+      case EventKind::kMemCopyToHost:
+        return "mem_copy_to_host";
+      case EventKind::kFlushCache:
+        return "flush_cache";
+      case EventKind::kInvalidateCache:
+        return "invalidate_cache";
+      case EventKind::kLoadBuffer2D:
+        return "load_buffer_2d";
+      case EventKind::kStoreBuffer2D:
+        return "store_buffer_2d";
+      case EventKind::kPushGEMMOp:
+        return "push_gemm_op";
+      case EventKind::kPushALUOp:
+        return "push_alu_op";
+      case EventKind::kSynchronize:
+        return "synchronize";
+      case EventKind::kTemplateCapture:
+        return "template_capture";
+      case EventKind::kTemplateReplay:
+        return "template_replay";
+      case EventKind::kTemplateReplayFallback:
+        return "template_replay_fallback";
+    }
+    return "unknown";
+  }
+
+  static const char* CopyScopeName(CopyScopeKind scope) {
+    switch (scope) {
+      case CopyScopeKind::kInput:
+        return "input";
+      case CopyScopeKind::kOutput:
+        return "output";
+      case CopyScopeKind::kDeviceCopy:
+        return "device_copy";
+      case CopyScopeKind::kNone:
+        return "none";
+    }
+    return "none";
+  }
+
+  static Event MakeSizeEvent(EventKind kind, size_t bytes, double us) {
+    Event event;
+    event.kind = kind;
+    event.bytes = bytes;
+    event.duration_us = us;
+    return event;
+  }
+
+  void PushEventLocked(Event event) {
+    event.seq = next_event_seq_++;
+    event.ts_us = NowMicros();
+    if (events_.size() == kMaxRuntimeEvents) {
+      events_.pop_front();
+    }
+    events_.push_back(std::move(event));
+  }
+
+  static void AppendDriverJSON(std::ostringstream& os, const VTADriverProfilerStats& driver) {
+    os << "{"
+       << "\"run_calls\":" << driver.run_calls << ","
+       << "\"run_insns\":" << driver.run_insns << ","
+       << "\"timeout_calls\":" << driver.timeout_calls << ","
+       << "\"poll_iters\":" << driver.poll_iters << ","
+       << "\"run_total_us\":" << driver.run_total_us << ","
+       << "\"submit_mmio_us\":" << driver.submit_mmio_us << ","
+       << "\"post_start_sleep_us\":" << driver.post_start_sleep_us << ","
+       << "\"poll_wait_us\":" << driver.poll_wait_us << "}";
+  }
+
+  static void AppendEventJSON(std::ostringstream& os, const Event& event) {
+    os << "{"
+       << "\"seq\":" << event.seq << ","
+       << "\"ts_us\":" << event.ts_us << ","
+       << "\"kind\":" << JSONQuote(EventKindName(event.kind)) << ","
+       << "\"scope\":" << JSONQuote(CopyScopeName(event.copy_scope)) << ","
+       << "\"bytes\":" << event.bytes << ","
+       << "\"duration_us\":" << event.duration_us << ","
+       << "\"insns\":" << event.insns << ","
+       << "\"load_bytes\":" << event.load_bytes << ","
+       << "\"store_bytes\":" << event.store_bytes << ","
+       << "\"memory_type\":" << event.memory_type << ","
+       << "\"x_size\":" << event.x_size << ","
+       << "\"y_size\":" << event.y_size << ","
+       << "\"x_stride\":" << event.x_stride << ","
+       << "\"is_padded\":" << (event.is_padded ? "true" : "false") << ","
+       << "\"driver\":";
+    AppendDriverJSON(os, event.driver);
+    os << "}";
+  }
+
+  static void UpdateDMABuffer2D(std::array<uint64_t, kRuntimeMemoryTypeBuckets>* mem_type_calls,
+                                std::array<uint64_t, kRuntimeMemoryTypeBuckets>* mem_type_bytes,
+                                std::unordered_map<uint64_t, uint64_t>* signatures,
+                                uint64_t* calls, uint64_t* bytes, uint64_t* small_calls,
+                                uint64_t* strided_calls, uint64_t* padded_calls,
+                                uint64_t* xsize1_calls, uint64_t* ysize1_calls,
+                                uint32_t memory_type, uint32_t x_size, uint32_t y_size,
+                                uint32_t x_stride, bool is_padded, int64_t sign) {
+    const int64_t transfer_bytes =
+        static_cast<int64_t>(static_cast<uint64_t>(x_size) * static_cast<uint64_t>(y_size) *
+                             static_cast<uint64_t>(MemoryTypeElemBytes(memory_type)));
+    *calls = static_cast<uint64_t>(static_cast<int64_t>(*calls) + sign);
+    *bytes = static_cast<uint64_t>(static_cast<int64_t>(*bytes) + transfer_bytes * sign);
+    *small_calls = static_cast<uint64_t>(
+        static_cast<int64_t>(*small_calls) + (transfer_bytes < static_cast<int64_t>(kSmallDMATransferBytes) ? sign : 0));
+    *strided_calls = static_cast<uint64_t>(
+        static_cast<int64_t>(*strided_calls) + (x_stride != x_size ? sign : 0));
+    if (padded_calls != nullptr) {
+      *padded_calls = static_cast<uint64_t>(static_cast<int64_t>(*padded_calls) +
+                                            (is_padded ? sign : 0));
+    }
+    *xsize1_calls = static_cast<uint64_t>(
+        static_cast<int64_t>(*xsize1_calls) + (x_size == 1 ? sign : 0));
+    *ysize1_calls = static_cast<uint64_t>(
+        static_cast<int64_t>(*ysize1_calls) + (y_size == 1 ? sign : 0));
+    size_t memory_index = MemoryTypeStatIndex(memory_type);
+    (*mem_type_calls)[memory_index] = static_cast<uint64_t>(
+        static_cast<int64_t>((*mem_type_calls)[memory_index]) + sign);
+    (*mem_type_bytes)[memory_index] = static_cast<uint64_t>(
+        static_cast<int64_t>((*mem_type_bytes)[memory_index]) + transfer_bytes * sign);
+    uint64_t signature = EncodeDMASignature(memory_type, x_size, y_size, x_stride);
+    auto it = signatures->find(signature);
+    if (sign > 0) {
+      if (it == signatures->end()) {
+        signatures->emplace(signature, static_cast<uint64_t>(sign));
+      } else {
+        it->second += static_cast<uint64_t>(sign);
+      }
+    } else if (it != signatures->end()) {
+      uint64_t delta = static_cast<uint64_t>(-sign);
+      if (it->second <= delta) {
+        signatures->erase(it);
+      } else {
+        it->second -= delta;
+      }
+    }
+  }
+
+  static void RecordLoadBuffer2D(Stats* stats, std::unordered_map<uint64_t, uint64_t>* signatures,
+                                 uint32_t memory_type, uint32_t x_size, uint32_t y_size,
+                                 uint32_t x_stride, bool is_padded) {
+    UpdateDMABuffer2D(&stats->load_buffer_2d_mem_type_calls, &stats->load_buffer_2d_mem_type_bytes,
+                      signatures, &stats->load_buffer_2d_calls, &stats->load_buffer_2d_bytes,
+                      &stats->load_buffer_2d_small_calls, &stats->load_buffer_2d_strided_calls,
+                      &stats->load_buffer_2d_padded_calls, &stats->load_buffer_2d_xsize1_calls,
+                      &stats->load_buffer_2d_ysize1_calls, memory_type, x_size, y_size, x_stride,
+                      is_padded, 1);
+  }
+
+  static void RecordStoreBuffer2D(Stats* stats, std::unordered_map<uint64_t, uint64_t>* signatures,
+                                  uint32_t memory_type, uint32_t x_size, uint32_t y_size,
+                                  uint32_t x_stride) {
+    UpdateDMABuffer2D(&stats->store_buffer_2d_mem_type_calls,
+                      &stats->store_buffer_2d_mem_type_bytes, signatures,
+                      &stats->store_buffer_2d_calls, &stats->store_buffer_2d_bytes,
+                      &stats->store_buffer_2d_small_calls, &stats->store_buffer_2d_strided_calls,
+                      nullptr, &stats->store_buffer_2d_xsize1_calls,
+                      &stats->store_buffer_2d_ysize1_calls, memory_type, x_size, y_size, x_stride,
+                      false, 1);
+  }
+
+  static void AppendTopSignaturesJSON(std::ostringstream& os,
+                                      const std::unordered_map<uint64_t, uint64_t>& signatures) {
+    std::vector<std::pair<uint64_t, uint64_t>> items(signatures.begin(), signatures.end());
+    std::sort(items.begin(), items.end(),
+              [](const std::pair<uint64_t, uint64_t>& lhs,
+                 const std::pair<uint64_t, uint64_t>& rhs) {
+                if (lhs.second != rhs.second) return lhs.second > rhs.second;
+                return lhs.first < rhs.first;
+              });
+    os << "[";
+    for (size_t i = 0; i < std::min(items.size(), kDMATopSignatureCount); ++i) {
+      if (i != 0) os << ",";
+      os << JSONQuote(DescribeDMASignature(items[i].first, items[i].second));
+    }
+    os << "]";
+  }
+
   std::mutex mtx_;
   Stats stats_;
+  std::unordered_map<uint64_t, uint64_t> load_signature_counts_;
+  std::unordered_map<uint64_t, uint64_t> store_signature_counts_;
+  std::deque<Event> events_;
+  uint64_t next_event_seq_{1};
 };
 
 inline double NowMicros() {
@@ -279,6 +962,8 @@ struct DataBuffer {
   void* virt_addr() const { return data_; }
   /*! \return Physical address of the data. */
   vta_phy_addr_t phy_addr() const { return phy_addr_; }
+  /*! \return Size of the buffer in bytes. */
+  size_t size() const { return size_; }
   /*!
    * \brief Invalidate the cache of given location in data buffer.
    * \param offset The offset to the data.
@@ -302,6 +987,62 @@ struct DataBuffer {
       VTAFlushCache(reinterpret_cast<char*>(data_) + offset, phy_addr_ + offset, size);
       RuntimeProfiler::Global().AddFlushCache(size, NowMicros() - t0);
     }
+  }
+
+  void MarkHostWrite(size_t offset, size_t size) {
+    if (size == 0) return;
+    if (!LazyCoherenceEnabled()) {
+      this->FlushCache(offset, size);
+      return;
+    }
+    DirtyRange range = MakeDirtyRange(offset, size);
+    RemoveDirtyRange(&fpga_dirty_ranges_, range);
+    InsertDirtyRange(&cpu_dirty_ranges_, range, size_);
+  }
+
+  void MarkDeviceWrite(size_t offset, size_t size) {
+    if (size == 0) return;
+    if (!LazyCoherenceEnabled()) {
+      this->InvalidateCache(offset, size);
+      return;
+    }
+    DirtyRange range = MakeDirtyRange(offset, size);
+    RemoveDirtyRange(&cpu_dirty_ranges_, range);
+    InsertDirtyRange(&fpga_dirty_ranges_, range, size_);
+  }
+
+  void EnsureDeviceReadable(size_t offset, size_t size) {
+    if (size == 0) return;
+    if (!LazyCoherenceEnabled()) {
+      this->FlushCache(offset, size);
+      return;
+    }
+    DirtyRange range = MakeDirtyRange(offset, size);
+    for (const DirtyRange& curr : cpu_dirty_ranges_) {
+      size_t begin = std::max(curr.first, range.first);
+      size_t end = std::min(curr.second, range.second);
+      if (begin < end) {
+        this->FlushCache(begin, end - begin);
+      }
+    }
+    RemoveDirtyRange(&cpu_dirty_ranges_, range);
+  }
+
+  void EnsureHostReadable(size_t offset, size_t size) {
+    if (size == 0) return;
+    if (!LazyCoherenceEnabled()) {
+      this->InvalidateCache(offset, size);
+      return;
+    }
+    DirtyRange range = MakeDirtyRange(offset, size);
+    for (const DirtyRange& curr : fpga_dirty_ranges_) {
+      size_t begin = std::max(curr.first, range.first);
+      size_t end = std::min(curr.second, range.second);
+      if (begin < end) {
+        this->InvalidateCache(begin, end - begin);
+      }
+    }
+    RemoveDirtyRange(&fpga_dirty_ranges_, range);
   }
   /*!
    * \brief Performs a copy operation from host memory to buffer allocated with VTAMemAlloc.
@@ -333,9 +1074,12 @@ struct DataBuffer {
     RuntimeTrace("DataBuffer::Alloc begin size=%zu", size);
     void* data = VTAMemAlloc(size, kAlwaysCache);
     CHECK(data != nullptr);
-    DataBuffer* buffer = new DataBuffer();
+    void* header = memalign(ALLOC_ALIGNMENT, sizeof(DataBuffer));
+    CHECK(header != nullptr);
+    DataBuffer* buffer = new (header) DataBuffer();
     buffer->data_ = data;
     buffer->phy_addr_ = VTAMemGetPhyAddr(data);
+    buffer->size_ = size;
     RuntimeTrace("DataBuffer::Alloc done size=%zu data=%p phy=0x%llx", size, data,
                  static_cast<unsigned long long>(buffer->phy_addr_));
 
@@ -349,7 +1093,8 @@ struct DataBuffer {
   static void Free(DataBuffer* buffer) {
     alloc_stat->DelAlloc(buffer);
     VTAMemFree(buffer->data_);
-    delete buffer;
+    buffer->~DataBuffer();
+    free(buffer);
   }
   /*!
    * \brief Create data buffer header from buffer ptr.
@@ -369,6 +1114,12 @@ struct DataBuffer {
   void* data_;
   /*! \brief The physical address of the buffer, excluding header. */
   vta_phy_addr_t phy_addr_;
+  /*! \brief The size of the buffer in bytes. */
+  size_t size_{0};
+  /*! \brief Host-writable dirty ranges that are not yet visible to FPGA. */
+  std::vector<DirtyRange> cpu_dirty_ranges_;
+  /*! \brief Device-writable dirty ranges that are not yet visible to CPU. */
+  std::vector<DirtyRange> fpga_dirty_ranges_;
 
   // a copy of global shared_ptr instance
   // to avoid the global instance is destructed before there are still some pending DataBuffers not
@@ -705,6 +1456,30 @@ class UopQueue : public BaseQueue<VTAUop> {
     // and if interface is non-coherent
     if (!coherent_ && always_cache_) {
       VTAFlushCache(fpga_buff_, fpga_buff_phy_, offset);
+    }
+  }
+
+  std::vector<char> SerializeCacheBytes() const {
+    uint32_t total_size = 0;
+    for (const UopKernel* kernel : cache_) {
+      total_size += kernel->size() * kElemBytes;
+    }
+    std::vector<char> out(total_size);
+    uint32_t offset = 0;
+    for (const UopKernel* kernel : cache_) {
+      uint32_t ksize = kernel->size() * kElemBytes;
+      memcpy(out.data() + offset, kernel->data(), ksize);
+      offset += ksize;
+    }
+    return out;
+  }
+
+  void LoadSerializedBytes(const std::vector<char>& bytes) {
+    if (bytes.empty()) return;
+    CHECK_LE(bytes.size(), static_cast<size_t>(kMaxBytes));
+    VTAMemCopyFromHost(fpga_buff_, bytes.data(), bytes.size());
+    if (!coherent_ && always_cache_) {
+      VTAFlushCache(fpga_buff_, fpga_buff_phy_, bytes.size());
     }
   }
 
@@ -1052,6 +1827,10 @@ class InsnQueue : public BaseQueue<VTAGenericInsn> {
       CommitPendingPop(i);
     }
   }
+  bool HasPendingPop(int stage) const {
+    CHECK(stage > 0 && stage < 4);
+    return pending_pop_prev_[stage] || pending_pop_next_[stage];
+  }
   bool PendingPop() {
     for (int i = kLoadStage; i <= kStoreStage; ++i) {
       if (pending_pop_prev_[i]) return true;
@@ -1072,6 +1851,21 @@ class InsnQueue : public BaseQueue<VTAGenericInsn> {
     // and if interface is non-coherent
     if (!coherent_ && always_cache_) {
       VTAFlushCache(fpga_buff_, fpga_buff_phy_, buff_size);
+    }
+  }
+
+  std::vector<char> SerializeBytes() const {
+    const char* begin = reinterpret_cast<const char*>(dram_buffer_.data());
+    return std::vector<char>(begin, begin + dram_buffer_.size() * sizeof(VTAGenericInsn));
+  }
+
+  void LoadSerializedBytes(const std::vector<char>& bytes) {
+    if (bytes.empty()) return;
+    CHECK_EQ(bytes.size() % sizeof(VTAGenericInsn), 0U);
+    CHECK_LE(bytes.size(), static_cast<size_t>(kMaxBytes));
+    VTAMemCopyFromHost(fpga_buff_, bytes.data(), bytes.size());
+    if (!coherent_ && always_cache_) {
+      VTAFlushCache(fpga_buff_, fpga_buff_phy_, bytes.size());
     }
   }
 
@@ -1161,6 +1955,40 @@ class InsnQueue : public BaseQueue<VTAGenericInsn> {
  */
 class CommandQueue {
  public:
+  enum class ReplayMode : int {
+    kDisabled = 0,
+    kCapture = 1,
+    kReplay = 2,
+  };
+
+  struct PendingDMA {
+    uint32_t opcode{0};
+    uint32_t memory_type{0};
+    uint64_t dram_base{0};
+    uint64_t sram_base{0};
+    uint32_t x_size{0};
+    uint32_t y_size{0};
+    uint32_t x_stride{0};
+    uint32_t y_pad_before{0};
+    uint32_t y_pad_after{0};
+    uint32_t x_pad_before{0};
+    uint32_t x_pad_after{0};
+  };
+
+  struct CapturedTemplate {
+    std::string label;
+    std::vector<char> uop_bytes;
+    std::vector<char> insn_bytes;
+    uint64_t insn_count{0};
+    size_t load_bytes{0};
+    size_t store_bytes{0};
+    std::vector<std::tuple<DataBuffer*, size_t, size_t>> store_ranges;
+    uintptr_t first_load_handle{0};
+    uintptr_t first_store_handle{0};
+
+    bool valid() const { return !label.empty() && insn_count != 0 && !insn_bytes.empty(); }
+  };
+
   CommandQueue() { this->InitSpace(); }
   void InitSpace() {
     RuntimeTrace("CommandQueue::InitSpace begin");
@@ -1212,14 +2040,36 @@ class CommandQueue {
                     uint32_t x_stride, uint32_t x_pad_before, uint32_t y_pad_before,
                     uint32_t x_pad_after, uint32_t y_pad_after, uint32_t dst_sram_index,
                     uint32_t dst_memory_type) {
-    RuntimeProfiler::Global().AddLoadBuffer2D(static_cast<size_t>(x_size) * y_size *
-                                              GetElemBytes(dst_memory_type));
+    if (mode_ == ReplayMode::kReplay) return;
+    double t0 = NowMicros();
+    const uint32_t elem_bytes = GetElemBytes(dst_memory_type);
+    const size_t transfer_bytes = static_cast<size_t>(x_size) * y_size * elem_bytes;
+    pending_load_bytes_ += transfer_bytes;
+    DataBuffer* src = DataBuffer::FromHandle(src_dram_addr);
+    CHECK(src != nullptr);
+    if (mode_ == ReplayMode::kCapture && current_first_load_handle_ == 0) {
+      current_first_load_handle_ = reinterpret_cast<uintptr_t>(src_dram_addr);
+    }
+    src->EnsureDeviceReadable(
+        static_cast<size_t>(src_elem_offset) * elem_bytes,
+        Compute2DSpanBytes(elem_bytes, src_elem_offset, x_size, y_size, x_stride));
+    PendingDMA next = {};
+    next.opcode = VTA_OPCODE_LOAD;
+    next.memory_type = dst_memory_type;
+    next.sram_base = dst_sram_index;
+    next.dram_base = src->phy_addr() / GetElemBytes(dst_memory_type) + src_elem_offset;
+    next.y_size = y_size;
+    next.x_size = x_size;
+    next.x_stride = x_stride;
+    next.y_pad_before = y_pad_before;
+    next.y_pad_after = y_pad_after;
+    next.x_pad_before = x_pad_before;
+    next.x_pad_after = x_pad_after;
     VTAMemInsn* insn = insn_queue_.CreateMemInsn(dst_memory_type);
     insn->opcode = VTA_OPCODE_LOAD;
     insn->memory_type = dst_memory_type;
     insn->sram_base = dst_sram_index;
-    DataBuffer* src = DataBuffer::FromHandle(src_dram_addr);
-    insn->dram_base = src->phy_addr() / GetElemBytes(dst_memory_type) + src_elem_offset;
+    insn->dram_base = next.dram_base;
     insn->y_size = y_size;
     insn->x_size = x_size;
     insn->x_stride = x_stride;
@@ -1228,19 +2078,40 @@ class CommandQueue {
     insn->x_pad_0 = x_pad_before;
     insn->x_pad_1 = x_pad_after;
     this->CheckInsnOverFlow();
+    RuntimeProfiler::Global().AddLoadBuffer2D(
+        dst_memory_type, x_size, y_size, x_stride,
+        x_pad_before != 0 || y_pad_before != 0 || x_pad_after != 0 || y_pad_after != 0,
+        NowMicros() - t0);
   }
 
   void StoreBuffer2D(uint32_t src_sram_index, uint32_t src_memory_type, void* dst_dram_addr,
                      uint32_t dst_elem_offset, uint32_t x_size, uint32_t y_size,
                      uint32_t x_stride) {
-    RuntimeProfiler::Global().AddStoreBuffer2D(static_cast<size_t>(x_size) * y_size *
-                                               GetElemBytes(src_memory_type));
+    if (mode_ == ReplayMode::kReplay) return;
+    double t0 = NowMicros();
+    const uint32_t elem_bytes = GetElemBytes(src_memory_type);
+    const size_t transfer_bytes = static_cast<size_t>(x_size) * y_size * elem_bytes;
+    pending_store_bytes_ += transfer_bytes;
+    DataBuffer* dst = DataBuffer::FromHandle(dst_dram_addr);
+    CHECK(dst != nullptr);
+    if (mode_ == ReplayMode::kCapture && current_first_store_handle_ == 0) {
+      current_first_store_handle_ = reinterpret_cast<uintptr_t>(dst_dram_addr);
+    }
+    size_t range_start = static_cast<size_t>(dst_elem_offset) * elem_bytes;
+    size_t range_extent = Compute2DSpanBytes(elem_bytes, dst_elem_offset, x_size, y_size, x_stride);
+    PendingDMA next = {};
+    next.opcode = VTA_OPCODE_STORE;
+    next.memory_type = src_memory_type;
+    next.sram_base = src_sram_index;
+    next.dram_base = dst->phy_addr() / GetElemBytes(src_memory_type) + dst_elem_offset;
+    next.y_size = y_size;
+    next.x_size = x_size;
+    next.x_stride = x_stride;
     VTAMemInsn* insn = insn_queue_.CreateStoreInsn();
     insn->opcode = VTA_OPCODE_STORE;
     insn->memory_type = src_memory_type;
     insn->sram_base = src_sram_index;
-    DataBuffer* dst = DataBuffer::FromHandle(dst_dram_addr);
-    insn->dram_base = dst->phy_addr() / GetElemBytes(src_memory_type) + dst_elem_offset;
+    insn->dram_base = next.dram_base;
     insn->y_size = y_size;
     insn->x_size = x_size;
     insn->x_stride = x_stride;
@@ -1248,28 +2119,51 @@ class CommandQueue {
     insn->y_pad_1 = 0;
     insn->x_pad_0 = 0;
     insn->x_pad_1 = 0;
+    pending_store_ranges_.push_back({dst, range_start, range_extent});
     this->CheckInsnOverFlow();
+    RuntimeProfiler::Global().AddStoreBuffer2D(src_memory_type, x_size, y_size, x_stride,
+                                               NowMicros() - t0);
   }
 
-  void DepPush(int from_qid, int to_qid) { insn_queue_.DepPush(from_qid, to_qid); }
+  void DepPush(int from_qid, int to_qid) {
+    if (mode_ == ReplayMode::kReplay) return;
+    insn_queue_.DepPush(from_qid, to_qid);
+  }
 
-  void DepPop(int from_qid, int to_qid) { insn_queue_.DepPop(from_qid, to_qid); }
+  void DepPop(int from_qid, int to_qid) {
+    if (mode_ == ReplayMode::kReplay) return;
+    insn_queue_.DepPop(from_qid, to_qid);
+  }
 
   void ReadBarrier(void* buffer, uint32_t elem_bits, uint32_t start, uint32_t extent) {
+    if (mode_ == ReplayMode::kReplay) return;
     if (!(debug_flag_ & VTA_DEBUG_SKIP_READ_BARRIER)) {
       uint32_t elem_bytes = (elem_bits + 8 - 1) / 8;
-      DataBuffer::FromHandle(buffer)->FlushCache(elem_bytes * start, elem_bytes * extent);
+      DataBuffer::FromHandle(buffer)->EnsureDeviceReadable(elem_bytes * start, elem_bytes * extent);
     }
   }
 
   void WriteBarrier(void* buffer, uint32_t elem_bits, uint32_t start, uint32_t extent) {
+    if (mode_ == ReplayMode::kReplay) return;
     if (!(debug_flag_ & VTA_DEBUG_SKIP_WRITE_BARRIER)) {
       uint32_t elem_bytes = (elem_bits + 8 - 1) / 8;
-      DataBuffer::FromHandle(buffer)->InvalidateCache(elem_bytes * start, elem_bytes * extent);
+      if (auto* data_buf = DataBuffer::FromHandle(buffer)) {
+        pending_store_ranges_.push_back({data_buf, elem_bytes * start, elem_bytes * extent});
+      }
     }
   }
 
   void Synchronize(uint32_t wait_cycles) {
+    if (mode_ == ReplayMode::kReplay) {
+      this->ReplayCapturedTemplate(wait_cycles);
+      pending_store_ranges_.clear();
+      pending_load_bytes_ = 0;
+      pending_store_bytes_ = 0;
+      uop_queue_.Reset();
+      insn_queue_.Reset();
+      this->ResetTemplateMode();
+      return;
+    }
     // Insert dependences to force serialization
     if (debug_flag_ & VTA_DEBUG_FORCE_SERIAL) {
       insn_queue_.RewriteForceSerial();
@@ -1286,7 +2180,12 @@ class CommandQueue {
     insn->opcode = VTA_OPCODE_FINISH;
     CHECK(!insn_queue_.PendingPop());
     // Check if there are no instruction to execute at all
-    if (insn_queue_.count() == 0) return;
+    if (insn_queue_.count() == 0) {
+      pending_store_ranges_.clear();
+      pending_load_bytes_ = 0;
+      pending_store_bytes_ = 0;
+      return;
+    }
     // Synchronization for the queues
     uop_queue_.AutoReadBarrier();
     insn_queue_.AutoReadBarrier();
@@ -1301,13 +2200,33 @@ class CommandQueue {
     // Make sure that we don't exceed contiguous physical memory limits
     CHECK(insn_queue_.count() * sizeof(VTAGenericInsn) <= VTA_MAX_XFER);
     uint64_t insn_count = insn_queue_.count();
+    VTADriverProfilerStats driver_before{};
+    VTADriverProfilerStatus(&driver_before);
     double t0 = NowMicros();
     int timeout = VTADeviceRun(device_, insn_queue_.dram_phy_addr(), insn_count, wait_cycles);
-    RuntimeProfiler::Global().AddSynchronize(insn_count, NowMicros() - t0);
+    VTADriverProfilerStats driver_after{};
+    VTADriverProfilerStatus(&driver_after);
+    for (const auto& range : pending_store_ranges_) {
+      if (std::get<0>(range) != nullptr) {
+        std::get<0>(range)->MarkDeviceWrite(std::get<1>(range), std::get<2>(range));
+      }
+    }
+    pending_store_ranges_.clear();
+    RuntimeProfiler::Global().AddSynchronize(insn_count, pending_load_bytes_, pending_store_bytes_,
+                                             NowMicros() - t0,
+                                             DiffDriverStats(driver_after, driver_before));
     CHECK_EQ(timeout, 0);
+    if (mode_ == ReplayMode::kCapture) {
+      double tc0 = NowMicros();
+      this->CaptureCurrentTemplate();
+      RuntimeProfiler::Global().AddTemplateCapture(NowMicros() - tc0);
+    }
     // Reset buffers
+    pending_load_bytes_ = 0;
+    pending_store_bytes_ = 0;
     uop_queue_.Reset();
     insn_queue_.Reset();
+    this->ResetTemplateMode();
   }
 
   // Get record kernel
@@ -1319,7 +2238,55 @@ class CommandQueue {
   // Set debug flag
   void SetDebugFlag(int debug_flag) { debug_flag_ = debug_flag; }
 
+  void BeginTemplateCapture(const std::string& label) {
+    mode_ = ReplayMode::kCapture;
+    active_template_label_ = label;
+    current_first_load_handle_ = 0;
+    current_first_store_handle_ = 0;
+  }
+
+  void BeginTemplateReplay(const std::string& label) {
+    active_template_label_ = label;
+    auto it = captured_templates_.find(label);
+    if (it == captured_templates_.end() || !it->second.valid()) {
+      mode_ = ReplayMode::kDisabled;
+      RuntimeProfiler::Global().AddTemplateReplayFallback();
+      return;
+    }
+    mode_ = ReplayMode::kReplay;
+    current_first_load_handle_ = it->second.first_load_handle;
+    current_first_store_handle_ = it->second.first_store_handle;
+  }
+
+  void ResetTemplateMode() {
+    mode_ = ReplayMode::kDisabled;
+    active_template_label_.clear();
+    current_first_load_handle_ = 0;
+    current_first_store_handle_ = 0;
+  }
+
+  void ClearCapturedTemplates() {
+    this->ResetTemplateMode();
+    captured_templates_.clear();
+  }
+
+  std::string TemplateReplayStatusJSON() const {
+    std::ostringstream os;
+    os << "{"
+       << "\"mode\":" << JSONQuote(ReplayModeName(mode_)) << ","
+       << "\"active_label\":" << JSONQuote(active_template_label_) << ","
+       << "\"template_count\":" << captured_templates_.size();
+    auto it = captured_templates_.find(active_template_label_);
+    if (it != captured_templates_.end()) {
+      os << ",\"active_template_valid\":" << (it->second.valid() ? "true" : "false");
+    }
+    os << "}";
+    return os.str();
+  }
+
   void PushGEMMOp(void** uop_handle, int (*finit)(void*), void* signature, int nbytes) {
+    if (mode_ == ReplayMode::kReplay) return;
+    double t0 = NowMicros();
     UopKernelMap** uptr = reinterpret_cast<UopKernelMap**>(uop_handle);
     if (uptr[0] == nullptr) {
       uptr[0] = new UopKernelMap();
@@ -1336,9 +2303,12 @@ class CommandQueue {
     }
     this->PushGEMMOp(static_cast<UopKernel*>(kptr[0]));
     this->CheckInsnOverFlow();
+    RuntimeProfiler::Global().AddPushGEMMOp(NowMicros() - t0);
   }
 
   void PushALUUop(void** uop_handle, int (*finit)(void*), void* signature, int nbytes) {
+    if (mode_ == ReplayMode::kReplay) return;
+    double t0 = NowMicros();
     UopKernelMap** uptr = reinterpret_cast<UopKernelMap**>(uop_handle);
     if (uptr[0] == nullptr) {
       uptr[0] = new UopKernelMap();
@@ -1355,6 +2325,7 @@ class CommandQueue {
     }
     this->PushALUUop(static_cast<UopKernel*>(kptr[0]));
     this->CheckInsnOverFlow();
+    RuntimeProfiler::Global().AddPushALUOp(NowMicros() - t0);
   }
 
   static std::shared_ptr<CommandQueue>& ThreadLocal() {
@@ -1457,6 +2428,57 @@ class CommandQueue {
   // Auto sync when instruction overflow
   void AutoSync() { this->Synchronize(1 << 31); }
 
+  void CaptureCurrentTemplate() {
+    CapturedTemplate templ;
+    templ.label = active_template_label_;
+    templ.uop_bytes = uop_queue_.SerializeCacheBytes();
+    templ.insn_bytes = insn_queue_.SerializeBytes();
+    templ.insn_count = insn_queue_.count();
+    templ.load_bytes = pending_load_bytes_;
+    templ.store_bytes = pending_store_bytes_;
+    templ.store_ranges = pending_store_ranges_;
+    templ.first_load_handle = current_first_load_handle_;
+    templ.first_store_handle = current_first_store_handle_;
+    captured_templates_[active_template_label_] = std::move(templ);
+  }
+
+  void ReplayCapturedTemplate(uint32_t wait_cycles) {
+    auto it = captured_templates_.find(active_template_label_);
+    CHECK(it != captured_templates_.end());
+    const CapturedTemplate& templ = it->second;
+    CHECK(templ.valid());
+    VTADriverProfilerStats driver_before{};
+    VTADriverProfilerStatus(&driver_before);
+    double t0 = NowMicros();
+    uop_queue_.LoadSerializedBytes(templ.uop_bytes);
+    insn_queue_.LoadSerializedBytes(templ.insn_bytes);
+    int timeout = VTADeviceRun(device_, insn_queue_.dram_phy_addr(), templ.insn_count, wait_cycles);
+    VTADriverProfilerStats driver_after{};
+    VTADriverProfilerStatus(&driver_after);
+    for (const auto& range : templ.store_ranges) {
+      if (std::get<0>(range) != nullptr) {
+        std::get<0>(range)->MarkDeviceWrite(std::get<1>(range), std::get<2>(range));
+      }
+    }
+    RuntimeProfiler::Global().AddSynchronize(
+        templ.insn_count, templ.load_bytes, templ.store_bytes, NowMicros() - t0,
+        DiffDriverStats(driver_after, driver_before));
+    RuntimeProfiler::Global().AddTemplateReplay(NowMicros() - t0);
+    CHECK_EQ(timeout, 0);
+  }
+
+  static const char* ReplayModeName(ReplayMode mode) {
+    switch (mode) {
+      case ReplayMode::kDisabled:
+        return "disabled";
+      case ReplayMode::kCapture:
+        return "capture";
+      case ReplayMode::kReplay:
+        return "replay";
+    }
+    return "disabled";
+  }
+
   // Internal debug flag
   int debug_flag_{0};
   // The kernel we are currently recording
@@ -1467,6 +2489,16 @@ class CommandQueue {
   InsnQueue<VTA_MAX_XFER, kBufferCoherent, kAlwaysCache> insn_queue_;
   // Device handle
   VTADeviceHandle device_{nullptr};
+  // DRAM ranges that become CPU-stale after the next synchronize completes.
+  std::vector<std::tuple<DataBuffer*, size_t, size_t>> pending_store_ranges_;
+  // Aggregate DMA bytes submitted since the last synchronize.
+  size_t pending_load_bytes_{0};
+  size_t pending_store_bytes_{0};
+  ReplayMode mode_{ReplayMode::kDisabled};
+  std::string active_template_label_;
+  std::unordered_map<std::string, CapturedTemplate> captured_templates_;
+  uintptr_t current_first_load_handle_{0};
+  uintptr_t current_first_store_handle_{0};
 };
 
 }  // namespace vta
@@ -1479,6 +2511,7 @@ void VTABufferCopy(const void* from, size_t from_offset, void* to, size_t to_off
                    int kind_mask) {
   vta::RuntimeTrace("VTABufferCopy kind_mask=%d from=%p+%zu to=%p+%zu size=%zu", kind_mask, from,
                     from_offset, to, to_offset, size);
+  double t0 = vta::NowMicros();
   vta::DataBuffer* from_buffer = nullptr;
   vta::DataBuffer* to_buffer = nullptr;
 
@@ -1491,17 +2524,24 @@ void VTABufferCopy(const void* from, size_t from_offset, void* to, size_t to_off
     to = to_buffer->virt_addr();
   }
 
-  if (from_buffer) {
+  if (from_buffer && to_buffer) {
+    from_buffer->EnsureHostReadable(from_offset, size);
+    to_buffer->MemCopyFromHost(static_cast<char*>(to) + to_offset,
+                               static_cast<const char*>(from) + from_offset, size);
+    to_buffer->MarkHostWrite(to_offset, size);
+  } else if (from_buffer) {
     // This is an FPGA to host mem transfer
-    from_buffer->InvalidateCache(from_offset, size);
+    from_buffer->EnsureHostReadable(from_offset, size);
     from_buffer->MemCopyToHost(static_cast<char*>(to) + to_offset,
                                static_cast<const char*>(from) + from_offset, size);
   } else if (to_buffer) {
     // This is a host to FPGA mem transfer
     to_buffer->MemCopyFromHost(static_cast<char*>(to) + to_offset,
                                static_cast<const char*>(from) + from_offset, size);
-    to_buffer->FlushCache(to_offset, size);
+    to_buffer->MarkHostWrite(to_offset, size);
   }
+  vta::RuntimeProfiler::Global().AddScopedCopy(vta::CurrentScopedCopy(), size,
+                                               vta::NowMicros() - t0);
 }
 
 VTACommandHandle VTATLSCommandHandle() { return vta::CommandQueue::ThreadLocal().get(); }
@@ -1592,3 +2632,77 @@ TVM_REGISTER_GLOBAL("vta.runtime.profiler_clear").set_body_typed([]() {
 TVM_REGISTER_GLOBAL("vta.runtime.profiler_status").set_body_typed([]() {
   return vta::RuntimeProfiler::Global().AsJSON();
 });
+
+TVM_REGISTER_GLOBAL("vta.runtime.profiler_events")
+    .set_body([](tvm::runtime::TVMArgs args, tvm::runtime::TVMRetValue* rv) {
+  int max_events = 0;
+  if (args.size() >= 1) {
+    max_events = args[0];
+  }
+  *rv = vta::RuntimeProfiler::Global().EventsAsJSON(max_events);
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.replay_begin_capture").set_body_typed([](std::string label) {
+  vta::CommandQueue::ThreadLocal()->BeginTemplateCapture(label);
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.replay_begin_replay").set_body_typed([](std::string label) {
+  vta::CommandQueue::ThreadLocal()->BeginTemplateReplay(label);
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.replay_reset").set_body_typed([]() {
+  vta::CommandQueue::ThreadLocal()->ClearCapturedTemplates();
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.replay_status").set_body_typed([]() {
+  return vta::CommandQueue::ThreadLocal()->TemplateReplayStatusJSON();
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.push_copy_scope").set_body_typed([](std::string scope) {
+  vta::PushScopedCopy(vta::CopyScopeFromString(scope));
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.pop_copy_scope").set_body_typed([]() {
+  vta::PopScopedCopy();
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.ndarray_shared_cpu_view")
+    .set_body_typed([](tvm::runtime::NDArray arr) {
+      using namespace tvm::runtime;
+      tvm::Device dev = arr->device;
+      if (dev.device_type >= kRPCSessMask) {
+        dev.device_type = static_cast<DLDeviceType>(dev.device_type % kRPCSessMask);
+      }
+      ICHECK_EQ(dev.device_type, kDLExtDev)
+          << "shared CPU view only supports ext_dev NDArrays";
+      auto* orig =
+          const_cast<NDArray::Container*>(static_cast<const NDArray::Container*>(arr.get()));
+      auto* data_buf = vta::DataBuffer::FromHandle(arr->data);
+      ICHECK(data_buf != nullptr) << "NDArray is not backed by a VTA shared buffer";
+      auto* view = new NDArray::Container(data_buf->virt_addr(), arr.Shape(), arr->dtype,
+                                          tvm::Device{kDLCPU, 0});
+      orig->IncRef();
+      view->manager_ctx = orig;
+      view->SetDeleter([](Object* ptr_obj) {
+        auto* ptr = static_cast<NDArray::Container*>(ptr_obj);
+        if (ptr->manager_ctx != nullptr) {
+          static_cast<NDArray::Container*>(ptr->manager_ctx)->DecRef();
+        }
+        delete ptr;
+      });
+      return NDArray(GetObjectPtr<Object>(view));
+    });
+
+TVM_REGISTER_GLOBAL("vta.runtime.ndarray_mark_host_write")
+    .set_body_typed([](tvm::runtime::NDArray arr) {
+      auto* data_buf = vta::DataBuffer::FromHandle(arr->data);
+      ICHECK(data_buf != nullptr) << "expected ext_dev NDArray backed by VTA shared buffer";
+      data_buf->MarkHostWrite(0, data_buf->size());
+    });
+
+TVM_REGISTER_GLOBAL("vta.runtime.ndarray_sync_host_read")
+    .set_body_typed([](tvm::runtime::NDArray arr) {
+      auto* data_buf = vta::DataBuffer::FromHandle(arr->data);
+      ICHECK(data_buf != nullptr) << "expected ext_dev NDArray backed by VTA shared buffer";
+      data_buf->EnsureHostReadable(0, data_buf->size());
+    });

@@ -80,9 +80,6 @@ def run(run_func):
     else:
         # --- add for AXU5EVB (no python on board, use tvm_rpc server) ---
         if env.TARGET == "axu5evb":
-            from tvm import rpc
-            import os
-
             host = os.environ.get("VTA_RPC_HOST", "192.168.1.235")
             port = int(os.environ.get("VTA_RPC_PORT", "9090"))
             key  = os.environ.get("VTA_RPC_KEY", "")
