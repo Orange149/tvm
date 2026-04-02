@@ -125,8 +125,6 @@ def build_conv2d_module(env, remote, s, data, kernel, bias, res, target):
     仿照你 GEMM 的 _build_and_load():
     在 PC 上交叉编译成 .so，再 upload 到板子，再 load_module。
     """
-    sysroot = os.environ["SDKTARGETSYSROOT"]
-
     if "vta" in target.keys:
         with vta.build_config(disabled_pass={"tir.CommonSubexprElimTIR"}):
             mod = vta.build(
@@ -146,18 +144,22 @@ def build_conv2d_module(env, remote, s, data, kernel, bias, res, target):
     tmp = utils.tempdir()
     so_path = tmp.relpath("conv2d.so")
 
-    fcompile = cc.cross_compiler("aarch64-xilinx-linux-g++")
-    mod.export_library(
-        so_path,
-        fcompile=fcompile,
-        options=[
-            f"--sysroot={sysroot}",
-            f"-Wl,-rpath-link,{sysroot}/lib",
-            f"-Wl,-rpath-link,{sysroot}/usr/lib",
-            f"-L{sysroot}/lib",
-            f"-L{sysroot}/usr/lib",
-        ],
-    )
+    if env.TARGET in ["sim", "tsim"]:
+        mod.export_library(so_path)
+    else:
+        sysroot = os.environ["SDKTARGETSYSROOT"]
+        fcompile = cc.cross_compiler("aarch64-xilinx-linux-g++")
+        mod.export_library(
+            so_path,
+            fcompile=fcompile,
+            options=[
+                f"--sysroot={sysroot}",
+                f"-Wl,-rpath-link,{sysroot}/lib",
+                f"-Wl,-rpath-link,{sysroot}/usr/lib",
+                f"-L{sysroot}/lib",
+                f"-L{sysroot}/usr/lib",
+            ],
+        )
 
     remote.upload(so_path)
     return remote.load_module("conv2d.so")
@@ -165,8 +167,6 @@ def build_conv2d_module(env, remote, s, data, kernel, bias, res, target):
 
 def build_conv2d_debug_module(env, remote, s, data, kernel, bias, res, target, debug_flag):
     """Build a VTA module with runtime debug flags enabled."""
-    sysroot = os.environ["SDKTARGETSYSROOT"]
-
     with vta.build_config(debug_flag=debug_flag, disabled_pass={"tir.CommonSubexprElimTIR"}):
         mod = vta.build(
             s,
@@ -178,18 +178,22 @@ def build_conv2d_debug_module(env, remote, s, data, kernel, bias, res, target, d
     tmp = utils.tempdir()
     so_path = tmp.relpath("conv2d_debug.so")
 
-    fcompile = cc.cross_compiler("aarch64-xilinx-linux-g++")
-    mod.export_library(
-        so_path,
-        fcompile=fcompile,
-        options=[
-            f"--sysroot={sysroot}",
-            f"-Wl,-rpath-link,{sysroot}/lib",
-            f"-Wl,-rpath-link,{sysroot}/usr/lib",
-            f"-L{sysroot}/lib",
-            f"-L{sysroot}/usr/lib",
-        ],
-    )
+    if env.TARGET in ["sim", "tsim"]:
+        mod.export_library(so_path)
+    else:
+        sysroot = os.environ["SDKTARGETSYSROOT"]
+        fcompile = cc.cross_compiler("aarch64-xilinx-linux-g++")
+        mod.export_library(
+            so_path,
+            fcompile=fcompile,
+            options=[
+                f"--sysroot={sysroot}",
+                f"-Wl,-rpath-link,{sysroot}/lib",
+                f"-Wl,-rpath-link,{sysroot}/usr/lib",
+                f"-L{sysroot}/lib",
+                f"-L{sysroot}/usr/lib",
+            ],
+        )
 
     remote.upload(so_path)
     return remote.load_module("conv2d_debug.so")

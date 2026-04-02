@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import csv
 import importlib.util
+import json
 import os
 import time
 from contextlib import nullcontext
@@ -113,6 +114,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tune-log", default="", help="Optional AutoTVM log file")
     parser.add_argument("--output", default="", help="Optional CSV path")
     parser.add_argument(
+        "--output-dir",
+        default="",
+        help="If set, write the benchmark CSV as raw_benchmark.csv under this directory unless --output is explicitly given",
+    )
+    parser.add_argument(
+        "--case-file",
+        default="",
+        help="Optional CSV or JSON file that defines custom benchmark cases; when set, it replaces the built-in RESNET18_CASES list",
+    )
+    parser.add_argument(
         "--cases",
         default="",
         help="Comma-separated case ids to run; empty means all cases",
@@ -120,11 +131,57 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def selected_cases(case_filter: str) -> List[BenchmarkCase]:
+def _parse_optional_int(value):
+    if value in ["", None]:
+        return None
+    return int(value)
+
+
+def _case_from_mapping(raw: Dict[str, object]) -> BenchmarkCase:
+    def get_required(key):
+        if key not in raw or raw[key] in ["", None]:
+            raise ValueError("Missing required benchmark case field: {}".format(key))
+        return raw[key]
+
+    return BenchmarkCase(
+        case_id=str(get_required("case_id")),
+        op_name=str(raw.get("op_name", "conv2d")),
+        batch=int(raw.get("batch", env.BATCH)),
+        channels_in=int(get_required("channels_in")),
+        height=int(get_required("height")),
+        width=int(get_required("width")),
+        channels_out=_parse_optional_int(raw.get("channels_out")),
+        kernel_h=_parse_optional_int(raw.get("kernel_h")),
+        kernel_w=_parse_optional_int(raw.get("kernel_w")),
+        stride_h=_parse_optional_int(raw.get("stride_h")),
+        stride_w=_parse_optional_int(raw.get("stride_w")),
+        pad_h=_parse_optional_int(raw.get("pad_h")),
+        pad_w=_parse_optional_int(raw.get("pad_w")),
+        note=str(raw.get("note", "")),
+    )
+
+
+def load_case_file(case_file: str) -> List[BenchmarkCase]:
+    path = Path(case_file)
+    if not path.exists():
+        raise FileNotFoundError("Case file not found: {}".format(case_file))
+    if path.suffix.lower() == ".json":
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(payload, list):
+            raise ValueError("JSON case file must contain a list of case objects")
+        return [_case_from_mapping(item) for item in payload]
+    if path.suffix.lower() == ".csv":
+        with path.open() as f:
+            return [_case_from_mapping(row) for row in csv.DictReader(f)]
+    raise ValueError("Unsupported case file format: {}".format(path.suffix))
+
+
+def selected_cases(case_filter: str, case_file: str = "") -> List[BenchmarkCase]:
+    source_cases = load_case_file(case_file) if case_file else RESNET18_CASES
     if not case_filter.strip():
-        return RESNET18_CASES
+        return source_cases
     wanted = {item.strip() for item in case_filter.split(",") if item.strip()}
-    return [case for case in RESNET18_CASES if case.case_id in wanted]
+    return [case for case in source_cases if case.case_id in wanted]
 
 
 def make_conv_workload(case: BenchmarkCase) -> Workload:
@@ -267,11 +324,23 @@ def output_path(arg_output: str) -> str:
     return f"resnet18_single_op_bench_{ts}.csv"
 
 
+def resolve_output_path(arg_output: str, output_dir: str) -> str:
+    if arg_output:
+        return arg_output
+    if output_dir:
+        out_dir = Path(output_dir)
+        if not out_dir.is_absolute():
+            out_dir = Path("/home/orange/code/tvm") / out_dir
+        out_dir.mkdir(parents=True, exist_ok=True)
+        return str(out_dir / "raw_benchmark.csv")
+    return output_path(arg_output)
+
+
 def main() -> None:
     args = parse_args()
-    cases = selected_cases(args.cases)
+    cases = selected_cases(args.cases, args.case_file)
     devices = [item.strip() for item in args.devices.split(",") if item.strip()]
-    csv_path = output_path(args.output)
+    csv_path = resolve_output_path(args.output, args.output_dir)
     remote = connect_remote(args.host, args.port)
 
     print("========== Configuration ==========")
@@ -279,6 +348,7 @@ def main() -> None:
     print("host         =", args.host)
     print("port         =", args.port)
     print("devices      =", devices)
+    print("case_file    =", args.case_file if args.case_file else "<builtin>")
     print("cases        =", [case.case_id for case in cases])
     print("number       =", args.number)
     print("warmup       =", args.warmup)
