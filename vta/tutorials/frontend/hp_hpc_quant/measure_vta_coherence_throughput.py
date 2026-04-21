@@ -18,9 +18,15 @@ import argparse
 import csv
 import json
 import statistics
+import sys
 import time
 from pathlib import Path
 from typing import Dict, List
+
+# Allow direct execution from the grouped hp_hpc_quant directory.
+FRONTEND_DIR = Path(__file__).resolve().parent.parent
+if str(FRONTEND_DIR) not in sys.path:
+    sys.path.insert(0, str(FRONTEND_DIR))
 
 from benchmark_resnet18_single_ops import (  # pylint: disable=import-error
     benchmark_conv_case,
@@ -29,7 +35,7 @@ from benchmark_resnet18_single_ops import (  # pylint: disable=import-error
     is_vta_compatible_conv,
     selected_cases,
 )
-from vta_runtime_profile_utils import ensure_dir
+from hp_hpc_quant.vta_runtime_profile_utils import ensure_dir
 
 
 DEFAULT_CASES = ",".join(

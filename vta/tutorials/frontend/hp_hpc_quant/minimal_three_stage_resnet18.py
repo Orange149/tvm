@@ -15,6 +15,7 @@ from __future__ import absolute_import, print_function
 
 import argparse
 import os
+import sys
 
 import numpy as np
 import tvm
@@ -24,6 +25,11 @@ from tvm.contrib import graph_executor
 import vta
 
 from mxnet.gluon.model_zoo import vision
+
+# Allow direct execution from the grouped hp_hpc_quant directory.
+FRONTEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if FRONTEND_DIR not in sys.path:
+    sys.path.insert(0, FRONTEND_DIR)
 
 from split_resnet18_stages import (
     SCHEMES,

@@ -13,7 +13,12 @@ import time
 from tvm import rpc
 
 import vta
-from vta_runtime_profile_utils import (
+
+FRONTEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if FRONTEND_DIR not in sys.path:
+    sys.path.insert(0, FRONTEND_DIR)
+
+from hp_hpc_quant.vta_runtime_profile_utils import (
     dump_runtime_snapshot,
     fetch_runtime_profiler_hooks,
     hooks_available,
@@ -28,7 +33,7 @@ def parse_args():
     parser.add_argument("--port", type=int, default=9090)
     parser.add_argument(
         "--output-dir",
-        default="vta/tutorials/frontend/report_out/hp_profile_suite",
+        default="vta/tutorials/frontend/hp_hpc_quant/results/hp_profile_suite",
         help="Directory for suite logs, CSVs, and profiler JSON artifacts",
     )
     parser.add_argument(
