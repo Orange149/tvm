@@ -956,7 +956,7 @@ static std::shared_ptr<DeviceAllocStat> alloc_stat(new DeviceAllocStat());
  * \brief Data buffer represents data on CMA.
  */
 struct DataBuffer {
-  DataBuffer() { alloc_stat_ = alloc_stat; }
+  explicit DataBuffer(bool cached = true) : cached_(cached) { alloc_stat_ = alloc_stat; }
 
   /*! \return Virtual address of the data. */
   void* virt_addr() const { return data_; }
@@ -964,13 +964,15 @@ struct DataBuffer {
   vta_phy_addr_t phy_addr() const { return phy_addr_; }
   /*! \return Size of the buffer in bytes. */
   size_t size() const { return size_; }
+  /*! \return Whether the CPU mapping uses cache. */
+  bool cached() const { return cached_; }
   /*!
    * \brief Invalidate the cache of given location in data buffer.
    * \param offset The offset to the data.
    * \param size The size of the data.
    */
   void InvalidateCache(size_t offset, size_t size) {
-    if (!kBufferCoherent && kAlwaysCache) {
+    if (!kBufferCoherent && cached_) {
       double t0 = NowMicros();
       VTAInvalidateCache(reinterpret_cast<char*>(data_) + offset, phy_addr_ + offset, size);
       RuntimeProfiler::Global().AddInvalidateCache(size, NowMicros() - t0);
@@ -982,7 +984,7 @@ struct DataBuffer {
    * \param size The size of the data.
    */
   void FlushCache(size_t offset, size_t size) {
-    if (!kBufferCoherent && kAlwaysCache) {
+    if (!kBufferCoherent && cached_) {
       double t0 = NowMicros();
       VTAFlushCache(reinterpret_cast<char*>(data_) + offset, phy_addr_ + offset, size);
       RuntimeProfiler::Global().AddFlushCache(size, NowMicros() - t0);
@@ -1070,13 +1072,13 @@ struct DataBuffer {
    * \brief Allocate a buffer of a given size.
    * \param size The size of the buffer.
    */
-  static DataBuffer* Alloc(size_t size) {
+  static DataBuffer* Alloc(size_t size, bool cached = kAlwaysCache) {
     RuntimeTrace("DataBuffer::Alloc begin size=%zu", size);
-    void* data = VTAMemAlloc(size, kAlwaysCache);
+    void* data = VTAMemAlloc(size, cached ? VTA_CACHED : VTA_NOT_CACHED);
     CHECK(data != nullptr);
     void* header = memalign(ALLOC_ALIGNMENT, sizeof(DataBuffer));
     CHECK(header != nullptr);
-    DataBuffer* buffer = new (header) DataBuffer();
+    DataBuffer* buffer = new (header) DataBuffer(cached);
     buffer->data_ = data;
     buffer->phy_addr_ = VTAMemGetPhyAddr(data);
     buffer->size_ = size;
@@ -1116,6 +1118,8 @@ struct DataBuffer {
   vta_phy_addr_t phy_addr_;
   /*! \brief The size of the buffer in bytes. */
   size_t size_{0};
+  /*! \brief Whether this buffer uses a cached CPU mapping. */
+  bool cached_{true};
   /*! \brief Host-writable dirty ranges that are not yet visible to FPGA. */
   std::vector<DirtyRange> cpu_dirty_ranges_;
   /*! \brief Device-writable dirty ranges that are not yet visible to CPU. */
@@ -2504,6 +2508,10 @@ class CommandQueue {
 }  // namespace vta
 
 void* VTABufferAlloc(size_t size) { return vta::DataBuffer::Alloc(size); }
+
+void* VTABufferAllocWithCache(size_t size, int cached) {
+  return vta::DataBuffer::Alloc(size, cached != 0);
+}
 
 void VTABufferFree(void* buffer) { vta::DataBuffer::Free(vta::DataBuffer::FromHandle(buffer)); }
 

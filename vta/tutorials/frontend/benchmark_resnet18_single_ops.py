@@ -27,6 +27,7 @@ from typing import Dict, List, Optional
 from tvm import autotvm, rpc
 
 import vta
+from vta_runtime_profile_utils import ensure_dir
 
 
 @dataclass(frozen=True)
@@ -127,6 +128,17 @@ def parse_args() -> argparse.Namespace:
         "--cases",
         default="",
         help="Comma-separated case ids to run; empty means all cases",
+    )
+    parser.add_argument(
+        "--vta-runtime-profile-dir",
+        default="",
+        help="Optional directory to dump per-case VTA runtime profiler status/events JSON",
+    )
+    parser.add_argument(
+        "--vta-runtime-profile-events-limit",
+        type=int,
+        default=200,
+        help="Maximum number of VTA runtime profiler events to dump per snapshot",
     )
     return parser.parse_args()
 
@@ -270,6 +282,8 @@ def benchmark_conv_case(
     number: int,
     warmup: int,
     check_correctness: bool,
+    runtime_profile_dir: str = "",
+    runtime_profile_events_limit: int = 200,
 ) -> Dict[str, object]:
     workload = make_conv_workload(case)
     target = device_target(device)
@@ -286,6 +300,8 @@ def benchmark_conv_case(
         print_ir=False,
         number=number,
         warmup=warmup,
+        runtime_profile_dir=runtime_profile_dir,
+        runtime_profile_events_limit=runtime_profile_events_limit,
     )
     return {
         "case_id": case.case_id,
@@ -408,6 +424,11 @@ def main() -> None:
                         "incompatible with VTA packed conv requirements; channels/batch must align with VTA block sizes",
                     )
                 else:
+                    case_profile_dir = ""
+                    if device == "vta" and args.vta_runtime_profile_dir:
+                        case_profile_dir = str(
+                            Path(ensure_dir(args.vta_runtime_profile_dir)) / "single_op" / case.case_id
+                        )
                     row = benchmark_conv_case(
                         remote,
                         case,
@@ -415,6 +436,8 @@ def main() -> None:
                         number=args.number,
                         warmup=args.warmup,
                         check_correctness=args.check_correctness,
+                        runtime_profile_dir=case_profile_dir,
+                        runtime_profile_events_limit=args.vta_runtime_profile_events_limit,
                     )
                     print(
                         "kernel={:.4f} ms total={:.4f} ms gops={:.2f} ok={}".format(

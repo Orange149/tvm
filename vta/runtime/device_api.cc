@@ -33,6 +33,8 @@ namespace runtime {
 
 class VTADeviceAPI final : public DeviceAPI {
  public:
+  static constexpr const char* kBoundaryUncachedScope = "global.vta_boundary_uncached";
+
   void SetDevice(Device dev) final {}
 
   void GetAttr(Device dev, DeviceAttrKind kind, TVMRetValue* rv) final {
@@ -43,6 +45,19 @@ class VTADeviceAPI final : public DeviceAPI {
 
   void* AllocDataSpace(Device dev, size_t size, size_t alignment, DLDataType type_hint) final {
     return VTABufferAlloc(size);
+  }
+
+  void* AllocDataSpace(Device dev, int ndim, const int64_t* shape, DLDataType dtype,
+                       Optional<String> mem_scope) final {
+    size_t size = static_cast<size_t>(dtype.bits * dtype.lanes + 7) / 8;
+    for (int i = 0; i < ndim; ++i) {
+      size *= static_cast<size_t>(shape[i]);
+    }
+    bool cached = true;
+    if (mem_scope.defined() && mem_scope.value() == kBoundaryUncachedScope) {
+      cached = false;
+    }
+    return VTABufferAllocWithCache(size, cached ? VTA_CACHED : VTA_NOT_CACHED);
   }
 
   void FreeDataSpace(Device dev, void* ptr) final { VTABufferFree(ptr); }

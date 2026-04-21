@@ -52,6 +52,13 @@ from tvm.contrib.debugger import debug_executor
 import vta
 from vta.testing import simulator
 from vta.top import graph_pack
+from vta_runtime_profile_utils import (
+    clear_runtime_profiler,
+    dump_runtime_snapshot,
+    dump_status_only,
+    fetch_runtime_profiler_hooks,
+    hooks_available,
+)
 
 # Make sure that TVM was compiled with RPC=1
 assert tvm.runtime.enabled("rpc")
@@ -616,6 +623,23 @@ def parse_args():
         default="",
         help="Comma-separated pack_stop_op candidates. Build each variant and print graph/device stats, then exit without RPC run.",
     )
+    parser.add_argument(
+        "--vta-runtime-profile-dir",
+        default="",
+        help="Optional directory to dump VTA runtime profiler snapshots as JSON",
+    )
+    parser.add_argument(
+        "--vta-runtime-profile-events-limit",
+        type=int,
+        default=200,
+        help="Maximum number of VTA runtime profiler events to dump per snapshot",
+    )
+    parser.add_argument(
+        "--vta-runtime-profile-checkpoint-every",
+        type=int,
+        default=0,
+        help="If > 0, dump cumulative params-once benchmark profiler status every N runs",
+    )
     return parser.parse_args()
 
 
@@ -712,13 +736,19 @@ ctx = remote.ext_dev(0) if device == "vta" else remote.cpu(0)
 ctxes = [remote.ext_dev(0), remote.cpu(0)] if device == "vta" else [remote.cpu(0)]
 vta_runtime_profiler_clear = None
 vta_runtime_profiler_status = None
+vta_runtime_profiler_events = None
 if device == "vta":
     try:
-        vta_runtime_profiler_clear = remote.get_function("vta.runtime.profiler_clear")
-        vta_runtime_profiler_status = remote.get_function("vta.runtime.profiler_status")
+        profiler_hooks = fetch_runtime_profiler_hooks(remote)
+        vta_runtime_profiler_clear = profiler_hooks.get("clear")
+        vta_runtime_profiler_status = profiler_hooks.get("status")
+        vta_runtime_profiler_events = profiler_hooks.get("events")
         print("[VTA-RUNTIME] profiler hooks enabled")
     except Exception as err:  # pylint: disable=broad-except
         print("[VTA-RUNTIME] profiler hooks unavailable:", err)
+        profiler_hooks = {"clear": None, "status": None, "events": None}
+else:
+    profiler_hooks = {"clear": None, "status": None, "events": None}
 
 ######################################################################
 # Build the inference graph executor
@@ -973,20 +1003,43 @@ try:
     # Load params once (real deployment path). We still time this one-time cost.
     print("[RUN] 1/6 set_input(params) ...")
     t0 = time.time()
+    if args.vta_runtime_profile_dir and hooks_available(profiler_hooks):
+        clear_runtime_profiler(profiler_hooks)
     m.set_input(**params)
     t1 = time.time()
 
     print("[RUN] 2/6 set_input(data) ...")
     m.set_input("data", image)
     t2 = time.time()
+    if args.vta_runtime_profile_dir and hooks_available(profiler_hooks):
+        dump_runtime_snapshot(
+            args.vta_runtime_profile_dir,
+            "after_set_input",
+            profiler_hooks,
+            events_limit=args.vta_runtime_profile_events_limit,
+            extra={
+                "phase": "after_set_input",
+                "set_params_ms": (t1 - t0) * 1000.0,
+                "set_data_ms": (t2 - t1) * 1000.0,
+            },
+        )
 
     if args.debug_single_run or not args.enable_timer:
-        if vta_runtime_profiler_clear is not None:
-            vta_runtime_profiler_clear()
         print("[RUN] 3/6 before m.run() ...")
         m.run()
         t3 = time.time()
         print("[RUN] 4/6 after m.run()")
+        if args.vta_runtime_profile_dir and hooks_available(profiler_hooks):
+            dump_runtime_snapshot(
+                args.vta_runtime_profile_dir,
+                "after_run",
+                profiler_hooks,
+                events_limit=args.vta_runtime_profile_events_limit,
+                extra={
+                    "phase": "after_run",
+                    "run_ms": (t3 - t2) * 1000.0,
+                },
+            )
 
         print("[RUN] 5/6 before get_output() ...")
         tvm_output = m.get_output(
@@ -994,6 +1047,18 @@ try:
         )
         t4 = time.time()
         print("[RUN] 6/6 after get_output()")
+        if args.vta_runtime_profile_dir and hooks_available(profiler_hooks):
+            dump_runtime_snapshot(
+                args.vta_runtime_profile_dir,
+                "after_get_output",
+                profiler_hooks,
+                events_limit=args.vta_runtime_profile_events_limit,
+                extra={
+                    "phase": "after_get_output",
+                    "get_output_ms": (t4 - t3) * 1000.0,
+                    "total_ms": (t4 - t0) * 1000.0,
+                },
+            )
 
         output_np = tvm_output.numpy()
         timings_ms = {
@@ -1089,13 +1154,17 @@ try:
                 m.run()
                 _ = m.get_output(0, tvm.nd.empty((env.BATCH, 1000), "float32", remote.cpu(0)))
 
-            if vta_runtime_profiler_clear is not None:
-                vta_runtime_profiler_clear()
+            if hooks_available(profiler_hooks):
+                clear_runtime_profiler(profiler_hooks)
             set_data_ms = []
             run_ms = []
             get_output_ms = []
             total_ms = []
-            for _ in range(args.benchmark_runs):
+            checkpoint_every = max(0, int(args.vta_runtime_profile_checkpoint_every))
+            checkpoint_dir = ""
+            if args.vta_runtime_profile_dir:
+                checkpoint_dir = os.path.join(args.vta_runtime_profile_dir, "checkpoints")
+            for bench_idx in range(args.benchmark_runs):
                 p0 = time.time()
                 m.set_input("data", image)
                 p1 = time.time()
@@ -1107,6 +1176,16 @@ try:
                 run_ms.append((p2 - p1) * 1000.0)
                 get_output_ms.append((p3 - p2) * 1000.0)
                 total_ms.append((p3 - p0) * 1000.0)
+                if checkpoint_every > 0 and (bench_idx + 1) % checkpoint_every == 0 and hooks_available(profiler_hooks):
+                    dump_status_only(
+                        checkpoint_dir,
+                        "checkpoint_{:02d}".format(bench_idx + 1),
+                        profiler_hooks,
+                        extra={
+                            "phase": "params_once_checkpoint",
+                            "completed_runs": int(bench_idx + 1),
+                        },
+                    )
 
             print_stage_timing(
                 "params-once avg",
@@ -1144,6 +1223,24 @@ try:
                     "params-once benchmark totals",
                     json.loads(vta_runtime_profiler_status()),
                     divisor=float(args.benchmark_runs),
+                )
+            if args.vta_runtime_profile_dir and hooks_available(profiler_hooks):
+                dump_runtime_snapshot(
+                    args.vta_runtime_profile_dir,
+                    "params_once_benchmark_totals",
+                    profiler_hooks,
+                    events_limit=args.vta_runtime_profile_events_limit,
+                    extra={
+                        "phase": "params_once_benchmark_totals",
+                        "benchmark_runs": int(args.benchmark_runs),
+                        "warmup": int(args.warmup),
+                        "avg_ms": {
+                            "set_data": float(np.mean(set_data_ms)) if set_data_ms else 0.0,
+                            "run": float(np.mean(run_ms)) if run_ms else 0.0,
+                            "get_output": float(np.mean(get_output_ms)) if get_output_ms else 0.0,
+                            "total": float(np.mean(total_ms)) if total_ms else 0.0,
+                        },
+                    },
                 )
 
         if args.community_bench:

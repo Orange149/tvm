@@ -42,7 +42,7 @@ extern "C" {
 #define VTA_DEBUG_SKIP_WRITE_BARRIER (1 << 4)
 #define VTA_DEBUG_FORCE_SERIAL (1 << 5)
 
-#define ALLOC_ALIGNMENT 64
+#define ALLOC_ALIGNMENT 256
 
 /*!
  * \brief Allocate data buffer.
@@ -50,6 +50,14 @@ extern "C" {
  * \return A pointer to the allocated buffer.
  */
 TVM_DLL void* VTABufferAlloc(size_t size);
+
+/*!
+ * \brief Allocate data buffer with an explicit cache policy.
+ * \param size Buffer size.
+ * \param cached Whether the CPU mapping should be cached.
+ * \return A pointer to the allocated buffer.
+ */
+TVM_DLL void* VTABufferAllocWithCache(size_t size, int cached);
 
 /*!
  * \brief Free data buffer.
