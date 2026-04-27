@@ -7,7 +7,7 @@ else
   killall tvm_rpc 2>/dev/null || true
 fi
 
-BITSTREAM=vta_hpc.bit
+BITSTREAM=vta_hp4.bit
 SD_FIRMWARE_DIR=/mnt/sd/tvm_deploy/firmware
 
 mkdir -p /lib/firmware
@@ -21,4 +21,4 @@ if [ ! -f /lib/firmware/${BITSTREAM} ]; then
 fi
 
 echo ${BITSTREAM} > /sys/class/fpga_manager/fpga0/firmware
-exec /mnt/sd/tvm_deploy/start_axu5evb_cpp_rpc.sh /mnt/sd/tvm_deploy/hpc "${1:-9090}"
+exec /mnt/sd/tvm_deploy/start_axu5evb_cpp_rpc.sh /mnt/sd/tvm_deploy/hp "${1:-9090}"
