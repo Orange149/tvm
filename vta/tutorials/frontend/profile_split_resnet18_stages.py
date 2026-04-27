@@ -20,6 +20,12 @@ import vta
 from vta.top import graphpack as vta_graphpack
 from vta.testing import simulator
 
+from hp_hpc_quant.vta_runtime_profile_utils import (
+    dump_runtime_snapshot,
+    fetch_runtime_profiler_hooks,
+    hooks_available,
+)
+
 from split_resnet18_stages import (  # pylint: disable=import-error
     AUTO_RESOURCE_AWARE_SCHEME,
     SCHEMES,
@@ -99,6 +105,17 @@ def parse_args():
         "--print-vta-runtime-profile",
         action="store_true",
         help="Print VTA runtime profiler status after the steady-state window",
+    )
+    parser.add_argument(
+        "--vta-runtime-profile-dir",
+        default="",
+        help="Optional directory to dump VTA runtime profiler snapshots as JSON",
+    )
+    parser.add_argument(
+        "--vta-runtime-profile-events-limit",
+        type=int,
+        default=200,
+        help="Maximum number of VTA runtime profiler events to dump per snapshot",
     )
     parser.add_argument(
         "--resource-aware-candidate-name",
@@ -877,6 +894,7 @@ def execute_scheme_run(
     remote,
     vta_runtime_profiler_clear,
     vta_runtime_profiler_status,
+    profiler_hooks=None,
 ):
     cpu_target = tvm.target.Target(env.target_vta_cpu, host=env.target_host)
     image = preprocess_image(args.batch, args.image_size) if args.run_stages else None
@@ -1053,6 +1071,20 @@ def execute_scheme_run(
         profile_stats = json.loads(vta_runtime_profiler_status())
         if args.print_vta_runtime_profile:
             print_vta_runtime_profile("steady-state staged run", profile_stats, divisor=float(args.repeat))
+    if args.vta_runtime_profile_dir and hooks_available(profiler_hooks):
+        dump_runtime_snapshot(
+            args.vta_runtime_profile_dir,
+            "{}_steady_state_staged_run".format(resolved_scheme_name),
+            profiler_hooks,
+            events_limit=args.vta_runtime_profile_events_limit,
+            extra={
+                "phase": "steady_state_staged_run",
+                "scheme": resolved_scheme_name,
+                "repeat": int(args.repeat),
+                "warmup_repeat": int(args.warmup_repeat),
+                "image_size": int(args.image_size),
+            },
+        )
 
     result["all_run_records"] = all_run_records
     result["final_rows"] = final_rows
@@ -1578,6 +1610,7 @@ def main():
     remote = None
     vta_runtime_profiler_clear = None
     vta_runtime_profiler_status = None
+    profiler_hooks = None
 
     if args.run_stages:
         print("[RPC] connecting directly to {}:{} ...".format(args.host, args.port))
@@ -1592,8 +1625,9 @@ def main():
                 "yes" if threadpool_info["num_threads_available"] else "no",
             )
         )
-        vta_runtime_profiler_clear = fetch_optional_runtime_func(remote, "vta.runtime.profiler_clear")
-        vta_runtime_profiler_status = fetch_optional_runtime_func(remote, "vta.runtime.profiler_status")
+        profiler_hooks = fetch_runtime_profiler_hooks(remote)
+        vta_runtime_profiler_clear = profiler_hooks.get("clear")
+        vta_runtime_profiler_status = profiler_hooks.get("status")
 
     if args.resource_aware_run_calibration_set:
         calibration_candidates = build_resource_aware_calibration_set(
@@ -1641,6 +1675,7 @@ def main():
                     remote,
                     vta_runtime_profiler_clear,
                     vta_runtime_profiler_status,
+                    profiler_hooks,
                 )
                 row["measured_total_service"] = run_result["total_service_avg"]
                 row["stage0_service_ms"] = run_result["stage_service_avg"].get("stage0_cpu")
@@ -1722,6 +1757,7 @@ def main():
                 remote,
                 vta_runtime_profiler_clear,
                 vta_runtime_profiler_status,
+                profiler_hooks,
             )
             baseline_stage1_ms = float(
                 baseline_result["stage_service_avg"].get(
@@ -1766,6 +1802,7 @@ def main():
                 remote,
                 vta_runtime_profiler_clear,
                 vta_runtime_profiler_status,
+                profiler_hooks,
             )
             metrics = run_result["runtime_metrics"]
             load_calls = float(metrics.get("load_buffer_2d_calls", 0.0))
@@ -1880,6 +1917,7 @@ def main():
         remote,
         vta_runtime_profiler_clear,
         vta_runtime_profiler_status,
+        profiler_hooks,
     )
 
 

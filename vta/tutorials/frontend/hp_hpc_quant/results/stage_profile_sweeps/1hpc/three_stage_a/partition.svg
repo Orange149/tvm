@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="5140" height="384" viewBox="0 0 5140 384">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="40" y="34" font-size="24" font-family="monospace" fill="#111827">Partition Visualization: three_stage_a</text>
+<text x="40" y="58" font-size="14" font-family="monospace" fill="#4b5563">Current TVM/VTA stack. Single CPU -&gt; VTA -&gt; CPU partition. Colors: CPU blue, VTA green.</text>
+<rect x="28" y="64" width="1204" height="168" rx="16" fill="#dbeafe" fill-opacity="0.28" stroke="#1d4ed8" stroke-width="2"/>
+<text x="40" y="86" font-size="18" font-family="monospace" font-weight="700" fill="#0f172a">stage0_cpu [CPU]</text>
+<rect x="40" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="50" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">stem</text>
+<text x="50" y="132" font-size="12" font-family="monospace" fill="#334155">conv=1 residual=no</text>
+<text x="50" y="150" font-size="12" font-family="monospace" fill="#334155">kind=stem</text>
+<text x="50" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x3x224x224</text>
+<text x="50" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x64x56x56</text>
+<text x="50" y="204" font-size="12" font-family="monospace" fill="#334155">io : 588.0 KB / 784.0 KB</text>
+<text x="50" y="222" font-size="12" font-family="monospace" fill="#334155">shape_change=yes</text>
+<rect x="280" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="290" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">layer1_block0_main_preadd</text>
+<text x="290" y="132" font-size="12" font-family="monospace" fill="#334155">conv=2 residual=yes</text>
+<text x="290" y="150" font-size="12" font-family="monospace" fill="#334155">kind=main_preadd</text>
+<text x="290" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x64x56x56</text>
+<text x="290" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x64x56x56 | residual:1x64x56x56</text>
+<text x="290" y="204" font-size="12" font-family="monospace" fill="#334155">io : 784.0 KB / 1.5 MB</text>
+<text x="290" y="222" font-size="12" font-family="monospace" fill="#334155">param=290.0 KB</text>
+<rect x="520" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="530" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">layer1_block0_add_relu_tail</text>
+<text x="530" y="132" font-size="12" font-family="monospace" fill="#334155">conv=0 residual=yes</text>
+<text x="530" y="150" font-size="12" font-family="monospace" fill="#334155">kind=add_relu_tail</text>
+<text x="530" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x64x56x56 | residual:1x64x56x56</text>
+<text x="530" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x64x56x56</text>
+<text x="530" y="204" font-size="12" font-family="monospace" fill="#334155">io : 1.5 MB / 784.0 KB</text>
+<rect x="760" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="770" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">layer1_block1_main_preadd</text>
+<text x="770" y="132" font-size="12" font-family="monospace" fill="#334155">conv=2 residual=yes</text>
+<text x="770" y="150" font-size="12" font-family="monospace" fill="#334155">kind=main_preadd</text>
+<text x="770" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x64x56x56</text>
+<text x="770" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x64x56x56 | residual:1x64x56x56</text>
+<text x="770" y="204" font-size="12" font-family="monospace" fill="#334155">io : 784.0 KB / 1.5 MB</text>
+<text x="770" y="222" font-size="12" font-family="monospace" fill="#334155">param=290.0 KB</text>
+<rect x="1000" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="1010" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">layer1_block1_add_relu_tail</text>
+<text x="1010" y="132" font-size="12" font-family="monospace" fill="#334155">conv=0 residual=yes</text>
+<text x="1010" y="150" font-size="12" font-family="monospace" fill="#334155">kind=add_relu_tail</text>
+<text x="1010" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x64x56x56 | residual:1x64x56x56</text>
+<text x="1010" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x64x56x56</text>
+<text x="1010" y="204" font-size="12" font-family="monospace" fill="#334155">io : 1.5 MB / 784.0 KB</text>
+<rect x="1248" y="64" width="2404" height="168" rx="16" fill="#dcfce7" fill-opacity="0.28" stroke="#15803d" stroke-width="2"/>
+<text x="1260" y="86" font-size="18" font-family="monospace" font-weight="700" fill="#14532d">stage1_vta [VTA]</text>
+<rect x="1260" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="1270" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer2_block0_main_preadd</text>
+<text x="1270" y="132" font-size="12" font-family="monospace" fill="#334155">conv=2 residual=yes</text>
+<text x="1270" y="150" font-size="12" font-family="monospace" fill="#334155">kind=main_preadd</text>
+<text x="1270" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x64x56x56</text>
+<text x="1270" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x128x28x28 | residual:1x64x56x56</text>
+<text x="1270" y="204" font-size="12" font-family="monospace" fill="#334155">io : 784.0 KB / 1.1 MB</text>
+<text x="1270" y="222" font-size="12" font-family="monospace" fill="#334155">shape_change=yes</text>
+<rect x="1500" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="1510" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer2_block0_skip_proj</text>
+<text x="1510" y="132" font-size="12" font-family="monospace" fill="#334155">conv=1 residual=yes</text>
+<text x="1510" y="150" font-size="12" font-family="monospace" fill="#334155">kind=skip_proj</text>
+<text x="1510" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x128x28x28 | residual:1x64x56x56</text>
+<text x="1510" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x128x28x28 | residual:1x128x28x28</text>
+<text x="1510" y="204" font-size="12" font-family="monospace" fill="#334155">io : 1.1 MB / 784.0 KB</text>
+<text x="1510" y="222" font-size="12" font-family="monospace" fill="#334155">param=34.0 KB</text>
+<rect x="1740" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="1750" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer2_block0_add_relu_tail</text>
+<text x="1750" y="132" font-size="12" font-family="monospace" fill="#334155">conv=0 residual=yes</text>
+<text x="1750" y="150" font-size="12" font-family="monospace" fill="#334155">kind=add_relu_tail</text>
+<text x="1750" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x128x28x28 | residual:1x128x28x28</text>
+<text x="1750" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x128x28x28</text>
+<text x="1750" y="204" font-size="12" font-family="monospace" fill="#334155">io : 784.0 KB / 392.0 KB</text>
+<rect x="1980" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="1990" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer2_block1_main_preadd</text>
+<text x="1990" y="132" font-size="12" font-family="monospace" fill="#334155">conv=2 residual=yes</text>
+<text x="1990" y="150" font-size="12" font-family="monospace" fill="#334155">kind=main_preadd</text>
+<text x="1990" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x128x28x28</text>
+<text x="1990" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x128x28x28 | residual:1x128x28x28</text>
+<text x="1990" y="204" font-size="12" font-family="monospace" fill="#334155">io : 392.0 KB / 784.0 KB</text>
+<text x="1990" y="222" font-size="12" font-family="monospace" fill="#334155">param=1.1 MB</text>
+<rect x="2220" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="2230" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer2_block1_add_relu_tail</text>
+<text x="2230" y="132" font-size="12" font-family="monospace" fill="#334155">conv=0 residual=yes</text>
+<text x="2230" y="150" font-size="12" font-family="monospace" fill="#334155">kind=add_relu_tail</text>
+<text x="2230" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x128x28x28 | residual:1x128x28x28</text>
+<text x="2230" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x128x28x28</text>
+<text x="2230" y="204" font-size="12" font-family="monospace" fill="#334155">io : 784.0 KB / 392.0 KB</text>
+<rect x="2460" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="2470" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer3_block0_main_preadd</text>
+<text x="2470" y="132" font-size="12" font-family="monospace" fill="#334155">conv=2 residual=yes</text>
+<text x="2470" y="150" font-size="12" font-family="monospace" fill="#334155">kind=main_preadd</text>
+<text x="2470" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x128x28x28</text>
+<text x="2470" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x256x14x14 | residual:1x128x28x28</text>
+<text x="2470" y="204" font-size="12" font-family="monospace" fill="#334155">io : 392.0 KB / 588.0 KB</text>
+<text x="2470" y="222" font-size="12" font-family="monospace" fill="#334155">shape_change=yes</text>
+<rect x="2700" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="2710" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer3_block0_skip_proj</text>
+<text x="2710" y="132" font-size="12" font-family="monospace" fill="#334155">conv=1 residual=yes</text>
+<text x="2710" y="150" font-size="12" font-family="monospace" fill="#334155">kind=skip_proj</text>
+<text x="2710" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x256x14x14 | residual:1x128x28x28</text>
+<text x="2710" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x256x14x14 | residual:1x256x14x14</text>
+<text x="2710" y="204" font-size="12" font-family="monospace" fill="#334155">io : 588.0 KB / 392.0 KB</text>
+<text x="2710" y="222" font-size="12" font-family="monospace" fill="#334155">param=132.0 KB</text>
+<rect x="2940" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="2950" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer3_block0_add_relu_tail</text>
+<text x="2950" y="132" font-size="12" font-family="monospace" fill="#334155">conv=0 residual=yes</text>
+<text x="2950" y="150" font-size="12" font-family="monospace" fill="#334155">kind=add_relu_tail</text>
+<text x="2950" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x256x14x14 | residual:1x256x14x14</text>
+<text x="2950" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x256x14x14</text>
+<text x="2950" y="204" font-size="12" font-family="monospace" fill="#334155">io : 392.0 KB / 196.0 KB</text>
+<rect x="3180" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="3190" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer3_block1_main_preadd</text>
+<text x="3190" y="132" font-size="12" font-family="monospace" fill="#334155">conv=2 residual=yes</text>
+<text x="3190" y="150" font-size="12" font-family="monospace" fill="#334155">kind=main_preadd</text>
+<text x="3190" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x256x14x14</text>
+<text x="3190" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x256x14x14 | residual:1x256x14x14</text>
+<text x="3190" y="204" font-size="12" font-family="monospace" fill="#334155">io : 196.0 KB / 392.0 KB</text>
+<text x="3190" y="222" font-size="12" font-family="monospace" fill="#334155">param=4.5 MB</text>
+<rect x="3420" y="92" width="220" height="112" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="3430" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#14532d">layer3_block1_add_relu_tail</text>
+<text x="3430" y="132" font-size="12" font-family="monospace" fill="#334155">conv=0 residual=yes</text>
+<text x="3430" y="150" font-size="12" font-family="monospace" fill="#334155">kind=add_relu_tail</text>
+<text x="3430" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x256x14x14 | residual:1x256x14x14</text>
+<text x="3430" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x256x14x14</text>
+<text x="3430" y="204" font-size="12" font-family="monospace" fill="#334155">io : 392.0 KB / 196.0 KB</text>
+<rect x="3668" y="64" width="1444" height="168" rx="16" fill="#dbeafe" fill-opacity="0.28" stroke="#1d4ed8" stroke-width="2"/>
+<text x="3680" y="86" font-size="18" font-family="monospace" font-weight="700" fill="#0f172a">stage2_cpu [CPU]</text>
+<rect x="3680" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="3690" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">layer4_block0_main_preadd</text>
+<text x="3690" y="132" font-size="12" font-family="monospace" fill="#334155">conv=2 residual=yes</text>
+<text x="3690" y="150" font-size="12" font-family="monospace" fill="#334155">kind=main_preadd</text>
+<text x="3690" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x256x14x14</text>
+<text x="3690" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x512x7x7 | residual:1x256x14x14</text>
+<text x="3690" y="204" font-size="12" font-family="monospace" fill="#334155">io : 196.0 KB / 294.0 KB</text>
+<text x="3690" y="222" font-size="12" font-family="monospace" fill="#334155">shape_change=yes</text>
+<rect x="3920" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="3930" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">layer4_block0_skip_proj</text>
+<text x="3930" y="132" font-size="12" font-family="monospace" fill="#334155">conv=1 residual=yes</text>
+<text x="3930" y="150" font-size="12" font-family="monospace" fill="#334155">kind=skip_proj</text>
+<text x="3930" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x512x7x7 | residual:1x256x14x14</text>
+<text x="3930" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x512x7x7 | residual:1x512x7x7</text>
+<text x="3930" y="204" font-size="12" font-family="monospace" fill="#334155">io : 294.0 KB / 196.0 KB</text>
+<text x="3930" y="222" font-size="12" font-family="monospace" fill="#334155">param=520.0 KB</text>
+<rect x="4160" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="4170" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">layer4_block0_add_relu_tail</text>
+<text x="4170" y="132" font-size="12" font-family="monospace" fill="#334155">conv=0 residual=yes</text>
+<text x="4170" y="150" font-size="12" font-family="monospace" fill="#334155">kind=add_relu_tail</text>
+<text x="4170" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x512x7x7 | residual:1x512x7x7</text>
+<text x="4170" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x512x7x7</text>
+<text x="4170" y="204" font-size="12" font-family="monospace" fill="#334155">io : 196.0 KB / 98.0 KB</text>
+<rect x="4400" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="4410" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">layer4_block1_main_preadd</text>
+<text x="4410" y="132" font-size="12" font-family="monospace" fill="#334155">conv=2 residual=yes</text>
+<text x="4410" y="150" font-size="12" font-family="monospace" fill="#334155">kind=main_preadd</text>
+<text x="4410" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x512x7x7</text>
+<text x="4410" y="186" font-size="12" font-family="monospace" fill="#334155">out: main:1x512x7x7 | residual:1x512x7x7</text>
+<text x="4410" y="204" font-size="12" font-family="monospace" fill="#334155">io : 98.0 KB / 196.0 KB</text>
+<text x="4410" y="222" font-size="12" font-family="monospace" fill="#334155">param=18.0 MB</text>
+<rect x="4640" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="4650" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">layer4_block1_add_relu_tail</text>
+<text x="4650" y="132" font-size="12" font-family="monospace" fill="#334155">conv=0 residual=yes</text>
+<text x="4650" y="150" font-size="12" font-family="monospace" fill="#334155">kind=add_relu_tail</text>
+<text x="4650" y="168" font-size="12" font-family="monospace" fill="#334155">in : main:1x512x7x7 | residual:1x512x7x7</text>
+<text x="4650" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x512x7x7</text>
+<text x="4650" y="204" font-size="12" font-family="monospace" fill="#334155">io : 196.0 KB / 98.0 KB</text>
+<rect x="4880" y="92" width="220" height="112" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+<text x="4890" y="114" font-size="15" font-family="monospace" font-weight="700" fill="#0f172a">head</text>
+<text x="4890" y="132" font-size="12" font-family="monospace" fill="#334155">conv=0 residual=no</text>
+<text x="4890" y="150" font-size="12" font-family="monospace" fill="#334155">kind=head</text>
+<text x="4890" y="168" font-size="12" font-family="monospace" fill="#334155">in : data:1x512x7x7</text>
+<text x="4890" y="186" font-size="12" font-family="monospace" fill="#334155">out: out:1x1000</text>
+<text x="4890" y="204" font-size="12" font-family="monospace" fill="#334155">io : 98.0 KB / 3.9 KB</text>
+<text x="4890" y="222" font-size="12" font-family="monospace" fill="#334155">shape_change=yes</text>
+<line x1="1224" y1="238" x2="1250" y2="238" stroke="#111827" stroke-width="2" marker-end="url(#arrowhead)"/>
+<text x="1240.0" y="228" text-anchor="middle" font-size="12" font-family="monospace" fill="#111827">stage0_cpu -&gt; stage1_vta | out:1x64x56x56 | 784.0 KB</text>
+<line x1="3644" y1="238" x2="3670" y2="238" stroke="#111827" stroke-width="2" marker-end="url(#arrowhead)"/>
+<text x="3660.0" y="228" text-anchor="middle" font-size="12" font-family="monospace" fill="#111827">stage1_vta -&gt; stage2_cpu | out:1x256x14x14 | 196.0 KB</text>
+<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#111827"/></marker></defs>
+<text x="40" y="286" font-size="14" font-family="monospace" fill="#111827">Cut summary: stage boundaries are the black arrows; each box is one atomic subchain unit; tuple boundaries are shown as multi-slot shape text.</text>
+</svg>

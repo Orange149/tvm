@@ -1,0 +1,186 @@
+$ /home/orange/miniconda3/envs/vta-resnet/bin/python vta/tutorials/frontend/profile_split_resnet18_stages.py --scheme three_stage_e --host 192.168.1.133 --port 9090 --image-size 224 --vta-stage-mode vta_build --run-stages --repeat 10 --warmup-repeat 1 --print-vta-runtime-profile --vta-runtime-profile-dir /home/orange/code/tvm/vta/tutorials/frontend/hp_hpc_quant/results/stage_profile_sweeps/1hpc/three_stage_e/profile --vta-runtime-profile-events-limit 4096 --save-partition-viz /home/orange/code/tvm/vta/tutorials/frontend/hp_hpc_quant/results/stage_profile_sweeps/1hpc/three_stage_e/partition.svg --stage0-num-threads 4 --stage2-num-threads 4 --timer-number 1 --timer-repeat 3
+
+[RPC] connecting directly to 192.168.1.133:9090 ...
+[RPC] runtime thread pool: requested=- before=4 after=4 config_available=yes num_threads_available=yes
+========== Stage Split ==========
+scheme      = three_stage_e
+input       = (1, 3, 224, 224)
+model       = resnet18_v1
+=================================
+stage0_cpu  device=cpu  units=['stem', 'layer1_block0_main_preadd', 'layer1_block0_add_relu_tail']
+stage1_vta  device=vta  units=['layer1_block1_main_preadd', 'layer1_block1_add_relu_tail', 'layer2_block0_main_preadd', 'layer2_block0_skip_proj', 'layer2_block0_add_relu_tail', 'layer2_block1_main_preadd', 'layer2_block1_add_relu_tail', 'layer3_block0_main_preadd', 'layer3_block0_skip_proj', 'layer3_block0_add_relu_tail', 'layer3_block1_main_preadd', 'layer3_block1_add_relu_tail', 'layer4_block0_main_preadd', 'layer4_block0_skip_proj', 'layer4_block0_add_relu_tail']
+stage2_cpu  device=cpu  units=['layer4_block1_main_preadd', 'layer4_block1_add_relu_tail', 'head']
+========== Feature Blocks ==========
+len(features) = 9
+feature[0] = Conv2D
+feature[1] = BatchNorm
+feature[2] = Activation
+feature[3] = MaxPool2D
+feature[4] = HybridSequential
+feature[5] = HybridSequential
+feature[6] = HybridSequential
+feature[7] = HybridSequential
+feature[8] = GlobalAvgPool2D
+output      = Dense
+====================================
+========== Atomic Units ==========
+len(units) = 21
+unit[0] = stem
+unit[1] = head
+unit[2] = layer1_block0_main_preadd
+unit[3] = layer1_block0_add_relu_tail
+unit[4] = layer1_block1_main_preadd
+unit[5] = layer1_block1_add_relu_tail
+unit[6] = layer2_block0_main_preadd
+unit[7] = layer2_block0_skip_proj
+unit[8] = layer2_block0_add_relu_tail
+unit[9] = layer2_block1_main_preadd
+unit[10] = layer2_block1_add_relu_tail
+unit[11] = layer3_block0_main_preadd
+unit[12] = layer3_block0_skip_proj
+unit[13] = layer3_block0_add_relu_tail
+unit[14] = layer3_block1_main_preadd
+unit[15] = layer3_block1_add_relu_tail
+unit[16] = layer4_block0_main_preadd
+unit[17] = layer4_block0_skip_proj
+unit[18] = layer4_block0_add_relu_tail
+unit[19] = layer4_block1_main_preadd
+unit[20] = layer4_block1_add_relu_tail
+==================================
+[VIZ] saved partition visualization -> /home/orange/code/tvm/vta/tutorials/frontend/hp_hpc_quant/results/stage_profile_sweeps/1hpc/three_stage_e/partition.svg
+
+========== stage0_cpu ==========
+[STAGE] device      = cpu
+[STAGE] input_schema = {'slots': [{'slot_index': 0, 'role': 'data', 'shape': (1, 3, 224, 224), 'dtype': 'float32'}], 'arity': 1, 'kind': 'tensor'}
+[STAGE] output_schema= {'kind': 'tensor', 'arity': 1, 'slots': [{'slot_index': 0, 'role': 'out', 'shape': (1, 64, 56, 56), 'dtype': 'float32'}]}
+[STAGE] params      = 15
+pool is not optimized for arm cpu.
+/home/orange/code/tvm/vta/tutorials/frontend/profile_split_resnet18_stages.py:238: DeprecationWarning: legacy graph executor behavior of producing json / lib / params will be removed in the next release. Please see documents of tvm.contrib.graph_executor.GraphModule for the  new recommended usage.
+  graph, lib, lowered_params = relay.build(mod, target=target, params=params)
+[BUILD] stage0_cpu -> CPU build ok
+[GRAPH] stage0_cpu
+  num_nodes = 11
+  arg_nodes = 7
+  heads     = [[10, 0, 0]]
+  attr device_index = ['list_int', [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+[BUILD] stage0_cpu params=6
+[RUN] stage0_cpu graph executor created on cpu
+
+========== stage1_vta ==========
+[STAGE] device      = vta
+[STAGE] input_schema = {'slots': [{'slot_index': 0, 'role': 'data', 'shape': (1, 64, 56, 56), 'dtype': 'float32'}], 'arity': 1, 'kind': 'tensor'}
+[STAGE] output_schema= {'kind': 'tensor', 'arity': 1, 'slots': [{'slot_index': 0, 'role': 'out', 'shape': (1, 512, 7, 7), 'dtype': 'float32'}]}
+[STAGE] params      = 75
+/home/orange/code/tvm/vta/tutorials/frontend/profile_split_resnet18_stages.py:385: DeprecationWarning: legacy graph executor behavior of producing json / lib / params will be removed in the next release. Please see documents of tvm.contrib.graph_executor.GraphModule for the  new recommended usage.
+  graph, lib, lowered_params = relay.build(
+[BUILD] stage1_vta -> VTA build ok
+[GRAPH] stage1_vta
+  num_nodes = 58
+  arg_nodes = 31
+  heads     = [[57, 0, 0]]
+  attr device_index = ['list_int', [1, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1, 1]]
+[BUILD] stage1_vta params=30
+[RUN] stage1_vta graph executor created on vta
+
+========== stage2_cpu ==========
+[STAGE] device      = cpu
+[STAGE] input_schema = {'slots': [{'slot_index': 0, 'role': 'data', 'shape': (1, 512, 7, 7), 'dtype': 'float32'}], 'arity': 1, 'kind': 'tensor'}
+[STAGE] output_schema= {'kind': 'tensor', 'arity': 1, 'slots': [{'slot_index': 0, 'role': 'out', 'shape': (1, 1000), 'dtype': 'float32'}]}
+[STAGE] params      = 12
+dense is not optimized for arm cpu.
+dense is not optimized for arm cpu.
+/home/orange/code/tvm/vta/tutorials/frontend/profile_split_resnet18_stages.py:238: DeprecationWarning: legacy graph executor behavior of producing json / lib / params will be removed in the next release. Please see documents of tvm.contrib.graph_executor.GraphModule for the  new recommended usage.
+  graph, lib, lowered_params = relay.build(mod, target=target, params=params)
+[BUILD] stage2_cpu -> CPU build ok
+[GRAPH] stage2_cpu
+  num_nodes = 12
+  arg_nodes = 7
+  heads     = [[11, 0, 0]]
+  attr device_index = ['list_int', [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+[BUILD] stage2_cpu params=6
+[RUN] stage2_cpu graph executor created on cpu
+
+[BOUNDARY] staged tensor interfaces
+        stage0_cpu -> stage1_vta  slots=[out:(1, 64, 56, 56) float32] bytes=802816
+        stage1_vta -> stage2_cpu  slots=[out:(1, 512, 7, 7) float32] bytes=100352
+        boundary_count     = 2
+        total_boundary_bytes = 903168
+[RUN] clear profiler after param loading / stage setup
+[RUN] warmup 1 iteration(s) before steady-state profiling ...
+[RUN] stage0_cpu set_input(data0) from host.numpy
+[RUN] stage1_vta set_input(data0) from 129:0
+[RUN] stage2_cpu set_input(data0) from 129:0
+[RUN] clear profiler after warmup; starting steady-state window
+
+[RUN] serial stage execution (steady-state window) ...
+[RUN] repeat 1/10
+[RUN] stage0_cpu set_input(data0) from host.numpy
+[RUN] stage1_vta set_input(data0) from 129:0
+[RUN] stage2_cpu set_input(data0) from 129:0
+[RUN] repeat 2/10
+[RUN] repeat 3/10
+[RUN] repeat 4/10
+[RUN] repeat 5/10
+[RUN] repeat 6/10
+[RUN] repeat 7/10
+[RUN] repeat 8/10
+[RUN] repeat 9/10
+[RUN] repeat 10/10
+
+[TIMING] serial staged run
+	stage0_cpu.in:   61.149 ms
+	stage0_cpu.run:   54.942 ms
+	stage0_cpu.out:    2.219 ms
+	stage0_cpu.service:  118.310 ms
+	stage1_vta.in:    0.511 ms
+	stage1_vta.run:   73.509 ms
+	stage1_vta.out:    2.275 ms
+	stage1_vta.service:   76.295 ms
+	stage2_cpu.in:    0.905 ms
+	stage2_cpu.run:   26.058 ms
+	stage2_cpu.out:    2.338 ms
+	stage2_cpu.service:   29.301 ms
+	total_service:  223.907 ms
+
+[TIMING] repeated serial staged run
+	stage0_cpu.in    avg=  61.922 ms  std=   0.608 ms
+	stage0_cpu.run   avg=  55.010 ms  std=   0.441 ms
+	stage0_cpu.out   avg=   2.182 ms  std=   0.285 ms
+	stage0_cpu.service avg= 119.113 ms  std=   1.173 ms
+	stage0_cpu       avg= 119.113 ms  std=   1.173 ms
+	stage1_vta.in    avg=   0.562 ms  std=   0.076 ms
+	stage1_vta.run   avg=  73.467 ms  std=   0.359 ms
+	stage1_vta.out   avg=   1.892 ms  std=   0.299 ms
+	stage1_vta.service avg=  75.921 ms  std=   0.581 ms
+	stage1_vta       avg=  75.921 ms  std=   0.581 ms
+	stage2_cpu.in    avg=   0.593 ms  std=   0.113 ms
+	stage2_cpu.run   avg=  25.808 ms  std=   0.366 ms
+	stage2_cpu.out   avg=   1.962 ms  std=   0.370 ms
+	stage2_cpu.service avg=  28.363 ms  std=   0.688 ms
+	stage2_cpu       avg=  28.363 ms  std=   0.688 ms
+	total.service    avg= 223.397 ms  std=   1.550 ms
+
+[VTA-RUNTIME] steady-state staged run
+input_copy         calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+output_copy        calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+device_copy        calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+flush_cache        calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+invalidate_cache   calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+load_buffer_2d     calls=15980  bytes=120258560  small=4780   strided=8480   padded=6560  
+load_shape         x1=960    y1=940   
+store_buffer_2d    calls=940    bytes=12293120   small=0      strided=720   
+store_shape        x1=0      y1=220   
+dma_summary        load_avg_bytes=7525.6 store_avg_bytes=13077.8 load_enqueue_ms=   0.835 store_enqueue_ms=   0.042
+uop_summary        gemm_calls=846      alu_calls=510      gemm_enqueue_ms=   0.249 alu_enqueue_ms=   0.212
+device_run_wait    calls=150    insns=34690    load_bytes=12025856   store_bytes=1229312    time=  60.166 ms
+
+[VTA-INTERNAL] single-run diagnosis
+        dma_load_calls=1598 dma_load_bytes=12025856 dma_load_avg_bytes=7525.6
+        dma_store_calls=94 dma_store_bytes=1229312 dma_store_avg_bytes=13077.8
+        small_dma_ratio load=0.299 store=0.000 x1/y1 load=96/94 store=0/22
+        enqueue_ms load=0.835 store=0.042 gemm=0.249 alu=0.212 synchronize_insns=3469 device_wait_ms=60.166
+
+[TIMER] per-stage pure run via time_evaluator
+        stage0_cpu run_mean_ms=52.002 run_std_ms=0.249 number=1 repeat=3
+        stage1_vta run_mean_ms=68.721 run_std_ms=0.127 number=1 repeat=3
+        stage2_cpu run_mean_ms=23.469 run_std_ms=0.229 number=1 repeat=3

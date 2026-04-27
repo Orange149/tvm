@@ -1,0 +1,124 @@
+$ /home/orange/miniconda3/envs/vta-resnet/bin/python vta/tutorials/frontend/profile_split_resnet18_stages.py --scheme all_vta --host 192.168.1.133 --port 9090 --image-size 224 --vta-stage-mode vta_build --run-stages --repeat 10 --warmup-repeat 1 --print-vta-runtime-profile --vta-runtime-profile-dir /home/orange/code/tvm/vta/tutorials/frontend/hp_hpc_quant/results/stage_profile_sweeps/1hpc_sleep1us_coherent/all_vta/profile --vta-runtime-profile-events-limit 4096 --save-partition-viz /home/orange/code/tvm/vta/tutorials/frontend/hp_hpc_quant/results/stage_profile_sweeps/1hpc_sleep1us_coherent/all_vta/partition.svg --stage0-num-threads 4 --stage2-num-threads 4 --timer-number 1 --timer-repeat 3
+
+[RPC] connecting directly to 192.168.1.133:9090 ...
+[RPC] runtime thread pool: requested=- before=4 after=4 config_available=yes num_threads_available=yes
+========== Stage Split ==========
+scheme      = all_vta
+input       = (1, 3, 224, 224)
+model       = resnet18_v1
+=================================
+stage0_vta  device=vta  units=['stem', 'layer1_block0_main_preadd', 'layer1_block0_add_relu_tail', 'layer1_block1_main_preadd', 'layer1_block1_add_relu_tail', 'layer2_block0_main_preadd', 'layer2_block0_skip_proj', 'layer2_block0_add_relu_tail', 'layer2_block1_main_preadd', 'layer2_block1_add_relu_tail', 'layer3_block0_main_preadd', 'layer3_block0_skip_proj', 'layer3_block0_add_relu_tail', 'layer3_block1_main_preadd', 'layer3_block1_add_relu_tail', 'layer4_block0_main_preadd', 'layer4_block0_skip_proj', 'layer4_block0_add_relu_tail', 'layer4_block1_main_preadd', 'layer4_block1_add_relu_tail', 'head']
+========== Feature Blocks ==========
+len(features) = 9
+feature[0] = Conv2D
+feature[1] = BatchNorm
+feature[2] = Activation
+feature[3] = MaxPool2D
+feature[4] = HybridSequential
+feature[5] = HybridSequential
+feature[6] = HybridSequential
+feature[7] = HybridSequential
+feature[8] = GlobalAvgPool2D
+output      = Dense
+====================================
+========== Atomic Units ==========
+len(units) = 21
+unit[0] = stem
+unit[1] = head
+unit[2] = layer1_block0_main_preadd
+unit[3] = layer1_block0_add_relu_tail
+unit[4] = layer1_block1_main_preadd
+unit[5] = layer1_block1_add_relu_tail
+unit[6] = layer2_block0_main_preadd
+unit[7] = layer2_block0_skip_proj
+unit[8] = layer2_block0_add_relu_tail
+unit[9] = layer2_block1_main_preadd
+unit[10] = layer2_block1_add_relu_tail
+unit[11] = layer3_block0_main_preadd
+unit[12] = layer3_block0_skip_proj
+unit[13] = layer3_block0_add_relu_tail
+unit[14] = layer3_block1_main_preadd
+unit[15] = layer3_block1_add_relu_tail
+unit[16] = layer4_block0_main_preadd
+unit[17] = layer4_block0_skip_proj
+unit[18] = layer4_block0_add_relu_tail
+unit[19] = layer4_block1_main_preadd
+unit[20] = layer4_block1_add_relu_tail
+==================================
+[VIZ] saved partition visualization -> /home/orange/code/tvm/vta/tutorials/frontend/hp_hpc_quant/results/stage_profile_sweeps/1hpc_sleep1us_coherent/all_vta/partition.svg
+
+========== stage0_vta ==========
+[STAGE] device      = vta
+[STAGE] input_schema = {'slots': [{'slot_index': 0, 'role': 'data', 'shape': (1, 3, 224, 224), 'dtype': 'float32'}], 'arity': 1, 'kind': 'tensor'}
+[STAGE] output_schema= {'kind': 'tensor', 'arity': 1, 'slots': [{'slot_index': 0, 'role': 'out', 'shape': (1, 1000), 'dtype': 'float32'}]}
+[STAGE] params      = 102
+dense is not optimized for arm cpu.
+/home/orange/code/tvm/vta/tutorials/frontend/profile_split_resnet18_stages.py:385: DeprecationWarning: legacy graph executor behavior of producing json / lib / params will be removed in the next release. Please see documents of tvm.contrib.graph_executor.GraphModule for the  new recommended usage.
+  graph, lib, lowered_params = relay.build(
+[BUILD] stage0_vta -> VTA build ok
+[GRAPH] stage0_vta
+  num_nodes = 79
+  arg_nodes = 43
+  heads     = [[78, 0, 0]]
+  attr device_index = ['list_int', [12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 1, 1, 1, 1, 1, 1, 1]]
+[BUILD] stage0_vta params=42
+[RUN] stage0_vta graph executor created on vta
+
+[BOUNDARY] staged tensor interfaces
+        boundary_count     = 0
+        total_boundary_bytes = 0
+[RUN] clear profiler after param loading / stage setup
+[RUN] warmup 1 iteration(s) before steady-state profiling ...
+[RUN] stage0_vta set_input(data0) from host.numpy
+[RUN] clear profiler after warmup; starting steady-state window
+
+[RUN] serial stage execution (steady-state window) ...
+[RUN] repeat 1/10
+[RUN] stage0_vta set_input(data0) from host.numpy
+[RUN] repeat 2/10
+[RUN] repeat 3/10
+[RUN] repeat 4/10
+[RUN] repeat 5/10
+[RUN] repeat 6/10
+[RUN] repeat 7/10
+[RUN] repeat 8/10
+[RUN] repeat 9/10
+[RUN] repeat 10/10
+
+[TIMING] serial staged run
+	stage0_vta.in:   64.042 ms
+	stage0_vta.run:  115.275 ms
+	stage0_vta.out:    2.061 ms
+	stage0_vta.service:  181.377 ms
+	total_service:  181.377 ms
+
+[TIMING] repeated serial staged run
+	stage0_vta.in    avg=  63.616 ms  std=   0.649 ms
+	stage0_vta.run   avg= 115.041 ms  std=   0.297 ms
+	stage0_vta.out   avg=   2.151 ms  std=   0.413 ms
+	stage0_vta.service avg= 180.808 ms  std=   0.604 ms
+	stage0_vta       avg= 180.808 ms  std=   0.604 ms
+	total.service    avg= 180.808 ms  std=   0.604 ms
+
+[VTA-RUNTIME] steady-state staged run
+input_copy         calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+output_copy        calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+device_copy        calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+flush_cache        calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+invalidate_cache   calls=0      bytes=0          avg_bytes=0          time=   0.000 ms
+load_buffer_2d     calls=21100  bytes=183434240  small=6380   strided=10880  padded=8960  
+load_shape         x1=960    y1=1260  
+store_buffer_2d    calls=1260   bytes=16808960   small=0      strided=1000  
+store_shape        x1=0      y1=260   
+dma_summary        load_avg_bytes=8693.6 store_avg_bytes=13340.4 load_enqueue_ms=   1.015 store_enqueue_ms=   0.057
+uop_summary        gemm_calls=1118     alu_calls=686      gemm_enqueue_ms=   0.321 alu_enqueue_ms=   0.277
+device_run_wait    calls=190    insns=45750    load_bytes=18343424   store_bytes=1680896    time=  82.113 ms
+
+[VTA-INTERNAL] single-run diagnosis
+        dma_load_calls=2110 dma_load_bytes=18343424 dma_load_avg_bytes=8693.6
+        dma_store_calls=126 dma_store_bytes=1680896 dma_store_avg_bytes=13340.4
+        small_dma_ratio load=0.302 store=0.000 x1/y1 load=96/126 store=0/26
+        enqueue_ms load=1.015 store=0.057 gemm=0.321 alu=0.277 synchronize_insns=4575 device_wait_ms=82.113
+
+[TIMER] per-stage pure run via time_evaluator
+        stage0_vta run_mean_ms=108.379 run_std_ms=0.327 number=1 repeat=3

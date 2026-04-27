@@ -1,0 +1,55 @@
+{
+  "config_label": "1hpc_sleep1us_coherent_cpu4",
+  "finished_at": 1777276546,
+  "host": "192.168.1.133",
+  "image_size": 224,
+  "port": 9090,
+  "repeat": 10,
+  "results": [
+    {
+      "cmd": [
+        "/home/orange/miniconda3/envs/vta-resnet/bin/python",
+        "vta/tutorials/frontend/profile_split_resnet18_stages.py",
+        "--scheme",
+        "three_stage_e",
+        "--host",
+        "192.168.1.133",
+        "--port",
+        "9090",
+        "--image-size",
+        "224",
+        "--vta-stage-mode",
+        "vta_build",
+        "--run-stages",
+        "--repeat",
+        "10",
+        "--warmup-repeat",
+        "1",
+        "--print-vta-runtime-profile",
+        "--vta-runtime-profile-dir",
+        "/home/orange/code/tvm/vta/tutorials/frontend/hp_hpc_quant/results/stage_profile_sweeps/1hpc_sleep1us_coherent_cpu4/three_stage_e/profile",
+        "--vta-runtime-profile-events-limit",
+        "4096",
+        "--save-partition-viz",
+        "/home/orange/code/tvm/vta/tutorials/frontend/hp_hpc_quant/results/stage_profile_sweeps/1hpc_sleep1us_coherent_cpu4/three_stage_e/partition.svg",
+        "--stage0-num-threads",
+        "4",
+        "--stage2-num-threads",
+        "4",
+        "--timer-number",
+        "1",
+        "--timer-repeat",
+        "3"
+      ],
+      "duration_s": 45.584113121032715,
+      "log_path": "/home/orange/code/tvm/vta/tutorials/frontend/hp_hpc_quant/results/stage_profile_sweeps/1hpc_sleep1us_coherent_cpu4/three_stage_e/stage_profile.log",
+      "returncode": 0,
+      "scheme": "three_stage_e"
+    }
+  ],
+  "schemes": [
+    "three_stage_e"
+  ],
+  "started_at": 1777276500,
+  "warmup_repeat": 1
+}
