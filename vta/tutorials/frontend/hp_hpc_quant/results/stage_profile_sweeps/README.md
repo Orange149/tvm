@@ -158,6 +158,12 @@ export PYTHONUNBUFFERED=1
 - `load_buffer_2d_calls/run = 1598`
 - `store_buffer_2d_calls/run = 94`
 - `device_run_wait_ms/run ≈ 60.17`
+- `runtime enqueue/run`:
+  - `load = 0.835 ms`
+  - `store = 0.042 ms`
+  - `gemm = 0.249 ms`
+  - `alu = 0.212 ms`
+  - `total ≈ 1.338 ms`
 - `top load signatures`:
   - `inp:x=14,y=14,stride=14,count=2240`
   - `wgt:x=9,y=2,stride=72,count=1920`
@@ -170,6 +176,12 @@ export PYTHONUNBUFFERED=1
 - `load_buffer_2d_calls/run = 2110`
 - `store_buffer_2d_calls/run = 126`
 - `device_run_wait_ms/run ≈ 82.11`
+- `runtime enqueue/run`:
+  - `load = 1.015 ms`
+  - `store = 0.057 ms`
+  - `gemm = 0.321 ms`
+  - `alu = 0.277 ms`
+  - `total ≈ 1.670 ms`
 - `top load signature`:
   - `wgt:x=9,y=2,stride=36,count=2240`
 
@@ -177,6 +189,84 @@ export PYTHONUNBUFFERED=1
 
 - `all_vta` 总时延最短，但 VTA 负载更重，DMA 次数更多
 - `three_stage_e` 作为 split 方案最佳，仍值得作为后续 runtime / event / DMA 优化主线
+
+## Event Analysis Results
+
+这部分结果来自 `analyze_vta_profile_events.py` 对 `1hpc/three_stage_e` 和
+`1hpc/all_vta` 的 `4096` 条事件窗口分析。
+
+### `three_stage_e` event summary
+
+- `events_count = 4096`
+- `device_run_wait_us = 601661`
+- `driver_poll_wait_us = 589650`
+- `load_buffer_2d_calls = 15980`
+- `store_buffer_2d_calls = 940`
+- `load_buffer_2d_small_calls = 4780`
+- `load_buffer_2d_strided_calls = 8480`
+- `load_buffer_2d_padded_calls = 6560`
+- `top load signatures`:
+  - `inp:x=14,y=14,stride=14,count=2240`
+  - `wgt:x=9,y=2,stride=72,count=1920`
+  - `wgt:x=9,y=4,stride=144,count=1920`
+- `event kind` 前几项：
+  - `load_buffer_2d: 2192`
+  - `push_gemm_op: 1152`
+  - `push_alu_op: 610`
+  - `store_buffer_2d: 114`
+  - `synchronize: 22`
+- `padded_ratio = 0.2148`
+- `dma_signature_top` 前几项：
+  - `load_buffer_2d:x=14,y=14,stride=14 -> 384`
+  - `load_buffer_2d:x=9,y=4,stride=144 -> 320`
+  - `load_buffer_2d:x=28,y=15,stride=28 -> 192`
+  - `load_buffer_2d:x=9,y=2,stride=72 -> 192`
+  - `load_buffer_2d:x=7,y=7,stride=7 -> 128`
+
+这组结果和 `status.json` 的聚合统计一致：`three_stage_e` 的 VTA 子图仍然以
+`14x14` input load 为最显著特征，small/strided/padded load 也都不少，说明
+当前主要瓶颈还是碎 input DMA，而不是 enqueue 开销。
+
+### `all_vta` event summary
+
+- `events_count = 4096`
+- `device_run_wait_us = 820869`
+- `driver_poll_wait_us = 804981`
+- `load_buffer_2d_calls = 21100`
+- `store_buffer_2d_calls = 1260`
+- `load_buffer_2d_small_calls = 6380`
+- `load_buffer_2d_strided_calls = 10880`
+- `load_buffer_2d_padded_calls = 8960`
+- `top load signatures`:
+  - `wgt:x=9,y=2,stride=36,count=2240`
+  - `inp:x=14,y=14,stride=14,count=2240`
+  - `wgt:x=9,y=2,stride=72,count=1920`
+- `event kind` 前几项：
+  - `load_buffer_2d: 2122`
+  - `push_gemm_op: 1124`
+  - `push_alu_op: 696`
+  - `store_buffer_2d: 128`
+  - `synchronize: 20`
+- `padded_ratio = 0.22`
+- `dma_signature_top` 前几项：
+  - `load_buffer_2d:x=9,y=2,stride=36 -> 224`
+  - `load_buffer_2d:x=14,y=14,stride=14 -> 224`
+  - `load_buffer_2d:x=7,y=7,stride=7 -> 197`
+  - `load_buffer_2d:x=9,y=16,stride=288 -> 197`
+  - `load_buffer_2d:x=28,y=15,stride=28 -> 192`
+
+`all_vta` 的事件窗口显示出更高的 VTA 侧压力：`device_run_wait`、
+`driver_poll_wait`、`load/store calls` 都高于 `three_stage_e`。它总时延更短，但
+代价是把更多工作和更多 DMA 负担压到了 VTA 上。
+
+### Comparison and takeaways
+
+- 两个方案的事件窗口都显示 `load_buffer_2d` 是最主要的 event 类型，DMA 仍然是主问题，而不是 enqueue 本身。
+- `three_stage_e` 的总 load/store call 数明显少于 `all_vta`，这和它作为“最佳 split 方案”的定位一致。
+- 但 `three_stage_e` 的 input side 仍然保留了非常强的 `14x14` load 形态，说明当前主要优化瓶颈依然是 VTA 子图内部的碎 input DMA。
+- `all_vta` 的 `device_run_wait`、`driver_poll_wait`、`load/store calls` 都更高，说明它把更多工作压到了 VTA 上，虽然总时延更短，但 VTA 侧负担更重。
+- 两边 `padded_ratio` 都在约 `0.21~0.22`，说明边界相关的 padded DMA 不是个别异常，而是当前 schedule 的稳定特征。
+- 下一步的优化方向仍然应该是：优先减少 input-side 的 `14x14`、`7x7`、`strided/padded` load；再考虑 weight side 的进一步聚合；event 结果支持继续把 `three_stage_e` 作为 DMA 形态优化主线。
 
 ## Event Analysis Script
 
@@ -210,3 +300,126 @@ export PYTHONUNBUFFERED=1
   - `top_signatures`
 
 如果某次运行的 `events.json` 为空，脚本会自动退回用 `status.json` 做摘要；但对这三组当前结果来说，这已经不是主路径，因为所有 `events.json` 都是 `4096` 条。
+
+## Summary and optimization directions
+
+基于当前这批 `1hpc` profile，可以先得出下面几条结论。
+
+### 1. `three_stage_e` 仍然是最好的 split 方案
+
+数据依据：
+
+- `1hpc/all_vta total.service = 180.502 ms`
+- `1hpc/three_stage_e total.service = 223.397 ms`
+- `1hpc/three_stage_d total.service = 235.146 ms`
+- `1hpc/three_stage_a total.service = 248.867 ms`
+- `1hpc/three_stage_b total.service = 263.906 ms`
+
+结论：
+
+- 如果允许整图都压到 VTA，`all_vta` 总时延最短。
+- 如果限定在 split 方案里，`three_stage_e` 仍然是当前最优切图。
+- 后续如果要继续做异构图优化，`three_stage_e` 仍然应该作为主线。
+
+### 2. 当前主要瓶颈仍然是 VTA 子图内部的碎 DMA，尤其是 input-side load
+
+数据依据：
+
+- `three_stage_e load_buffer_2d_calls/run = 1598`
+- `three_stage_e load_buffer_2d_small_calls/run = 478`
+- `three_stage_e load_buffer_2d_strided_calls/run = 848`
+- `three_stage_e load_buffer_2d_padded_calls/run = 656`
+- `three_stage_e top load signature = inp:x=14,y=14,stride=14,count=2240`
+- `three_stage_e` event top signatures:
+  - `load_buffer_2d:x=14,y=14,stride=14 -> 384`
+  - `load_buffer_2d:x=7,y=7,stride=7 -> 128`
+
+结论：
+
+- 当前 VTA 内部最突出的坏味道不是单一的大块 DMA，而是大量 `14x14`、`7x7`、带 stride / padding 的 input load。
+- 这说明主要问题仍然在 VTA 子图内部的 tile / DMA 形态，而不是单纯的 host-device 边界传输。
+
+### 3. `all_vta` 虽然总时延更短，但 VTA 侧负担明显更重
+
+数据依据：
+
+- `all_vta device_run_wait_ms/run ≈ 82.11`
+- `three_stage_e device_run_wait_ms/run ≈ 60.17`
+- `all_vta load_buffer_2d_calls/run = 2110`
+- `three_stage_e load_buffer_2d_calls/run = 1598`
+- `all_vta store_buffer_2d_calls/run = 126`
+- `three_stage_e store_buffer_2d_calls/run = 94`
+- `all_vta load_buffer_2d_padded_calls/run = 896`
+- `three_stage_e load_buffer_2d_padded_calls/run = 656`
+
+结论：
+
+- `all_vta` 的更短总时延是以更高的 VTA 侧运行等待时间和更高的 DMA 次数换来的。
+- 这使它更像“纯性能上界参考”，而不是最适合继续做异构 runtime 优化的主线。
+
+### 4. event 结果说明 DMA 才是主问题，不是 enqueue 本身
+
+数据依据：
+
+- `three_stage_e` event kinds:
+  - `load_buffer_2d = 2192`
+  - `push_gemm_op = 1152`
+  - `push_alu_op = 610`
+  - `store_buffer_2d = 114`
+- `all_vta` event kinds:
+  - `load_buffer_2d = 2122`
+  - `push_gemm_op = 1124`
+  - `push_alu_op = 696`
+  - `store_buffer_2d = 128`
+- 两边 `padded_ratio` 都在 `0.21 ~ 0.22`
+
+结论：
+
+- 事件窗口里最主要的 event 类型都是 `load_buffer_2d`，说明 DMA 仍然是主要压力来源。
+- `push_gemm_op` / `push_alu_op` 虽然数量也不少，但当前数据并不支持把“enqueue 开销”当成第一优先级。
+
+### 5. VTA runtime API 本身的时间占比不大，但静态化仍然有明确上限收益
+
+数据依据：
+
+- `three_stage_e runtime enqueue total ≈ 1.338 ms/run`
+  - `load 0.835 ms`
+  - `store 0.042 ms`
+  - `gemm 0.249 ms`
+  - `alu 0.212 ms`
+- `three_stage_e stage1_vta run_mean = 68.721 ms`
+- `all_vta runtime enqueue total ≈ 1.670 ms/run`
+- `all_vta stage0_vta run_mean = 108.658 ms`
+
+结论：
+
+- 单看平均时延，runtime API 组织/下发指令的时间不是主瓶颈。
+- 对 `three_stage_e` 来说，静态化 runtime 的理论直接收益上限大约是 `1.338 ms/run`，约等于 `stage1_vta run_mean` 的 `1.9%`。
+- 对 `all_vta` 来说，这个上限大约是 `1.670 ms/run`，约等于 `stage0_vta run_mean` 的 `1.5%`。
+- 所以如果目标只是压低平均 latency，静态化收益明确但不会是决定性提升；它更适合用来减少每次推理的 runtime 抖动，给后续 pipeline / steady-state frame pacing 打基础。
+
+### 6. 当前最值得尝试的优化方向
+
+按优先级建议：
+
+1. 优先优化 input-side DMA 形态  
+   目标是减少 `14x14`、`7x7`、`strided`、`padded` load。
+
+2. 再优化 weight-side 聚合  
+   例如减少 `wgt:x=9,y=2` / `wgt:x=9,y=4` 这类碎 weight load 的次数。
+
+3. 继续以 `three_stage_e` 为主线做 runtime / compiler 优化  
+   因为它是当前最优 split，同时又比 `all_vta` 更能代表“异构图真实优化空间”。
+
+4. 如果后续要做自动化搜索，cost model 应重点吸收这些特征  
+   例如：
+   - `load_buffer_2d_small_calls`
+   - `load_buffer_2d_strided_calls`
+   - `load_buffer_2d_padded_calls`
+   - top DMA signatures
+   - `device_run_wait_us`
+   - runtime enqueue totals
+
+简化成一句话：
+
+> 当前 profile 的核心结论是：`three_stage_e` 仍然是最佳 split 主线，而真正值得继续优化的点不是 host 侧接口，而是 VTA 子图内部仍然很碎的 input-side DMA 形态。
