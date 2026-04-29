@@ -20,6 +20,7 @@ import tvm.testing
 from tvm import te, runtime
 import numpy as np
 import json
+import pytest
 from tvm import rpc
 from tvm import relay
 from tvm.contrib import utils, graph_executor
@@ -137,6 +138,56 @@ def test_load_unexpected_params():
     new_params = graph_module.get_params()
     new_params.update({"y_unknown": np.ones((1,)).astype("float32")})
     rt_mod.load_params(runtime.save_param_dict(new_params))
+
+
+@tvm.testing.requires_llvm
+def test_graph_executor_pipeline_cpu():
+    dev = tvm.cpu(0)
+    x = relay.var("x", shape=(1, 4), dtype="float32")
+    bias = relay.var("bias", shape=(1, 4), dtype="float32")
+    mod = tvm.IRModule.from_expr(relay.Function([x, bias], relay.add(x, bias)))
+    bias_data = np.array([[10.0, 20.0, 30.0, 40.0]], dtype="float32")
+
+    graph_module = relay.build(mod, target="llvm", params={"bias": bias_data})
+    rt_mod = graph_executor.create(graph_module.get_graph_json(), graph_module.get_lib(), dev)
+    rt_mod.load_params(runtime.save_param_dict(graph_module.get_params()))
+
+    pipeline_init = rt_mod["pipeline_init"]
+    pipeline_submit = rt_mod["pipeline_submit"]
+    pipeline_try_submit = rt_mod["pipeline_try_submit"]
+    pipeline_wait = rt_mod["pipeline_wait"]
+    pipeline_poll = rt_mod["pipeline_poll"]
+    pipeline_close = rt_mod["pipeline_close"]
+    pipeline_stats = rt_mod["pipeline_stats"]
+
+    pipeline_init(2)
+    x0 = tvm.nd.array(np.array([[1.0, 2.0, 3.0, 4.0]], dtype="float32"), dev)
+    x1 = tvm.nd.array(np.array([[5.0, 6.0, 7.0, 8.0]], dtype="float32"), dev)
+    req0 = pipeline_submit("x", x0)
+    req1 = pipeline_submit("x", x1)
+    assert pipeline_poll(req0) in ("queued", "running", "done")
+    assert pipeline_poll(req1) in ("queued", "running", "done")
+
+    out0 = pipeline_wait(req0, dev.device_type, dev.device_id)[0]
+    out1 = pipeline_wait(req1, dev.device_type, dev.device_id)[0]
+    np.testing.assert_allclose(out0.numpy(), x0.numpy() + bias_data)
+    np.testing.assert_allclose(out1.numpy(), x1.numpy() + bias_data)
+
+    stats = json.loads(pipeline_stats())
+    assert stats["submitted"] == 2
+    assert stats["completed"] == 2
+    assert stats["errors"] == 0
+
+    pipeline_init(1)
+    req2 = pipeline_try_submit("x", x0)
+    assert req2 >= 0
+    assert pipeline_try_submit("x", x1) == -1
+    out2 = pipeline_wait(req2, dev.device_type, dev.device_id)[0]
+    np.testing.assert_allclose(out2.numpy(), x0.numpy() + bias_data)
+
+    pipeline_close()
+    with pytest.raises(tvm.error.TVMError):
+        pipeline_submit("x", x0)
 
 
 def test_save_load_file():

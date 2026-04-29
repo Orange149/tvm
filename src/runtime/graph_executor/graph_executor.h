@@ -31,8 +31,12 @@
 #include <tvm/runtime/ndarray.h>
 #include <tvm/runtime/packed_func.h>
 
+#include <condition_variable>
+#include <deque>
 #include <memory>
+#include <mutex>
 #include <string>
+#include <thread>
 #include <tuple>
 #include <unordered_map>
 #include <unordered_set>
@@ -82,6 +86,7 @@ class TVM_DLL GraphExecutor : public ModuleNode {
    * \return The corresponding member function.
    */
   virtual PackedFunc GetFunction(const String& name, const ObjectPtr<Object>& sptr_to_self);
+  ~GraphExecutor() override;
 
   /*!
    * \return The type key of the executor.
@@ -193,6 +198,19 @@ class TVM_DLL GraphExecutor : public ModuleNode {
    * \param param_blob A binary blob of parameter.
    */
   void LoadParams(const std::string& param_blob);
+
+  /*! \brief Initialize experimental multi-slot pipeline execution. */
+  void PipelineInit(int max_inflight);
+  /*! \brief Submit one request to the experimental pipeline. */
+  int64_t PipelineSubmit(TVMArgs args, bool wait_for_slot);
+  /*! \brief Wait for one request and return host-device outputs. */
+  Array<NDArray> PipelineWait(int64_t request_id, Device host);
+  /*! \brief Poll one request status. */
+  std::string PipelinePoll(int64_t request_id);
+  /*! \brief Close experimental pipeline execution. */
+  void PipelineClose();
+  /*! \brief Return experimental pipeline state as JSON. */
+  std::string PipelineStats();
 
   /*!
    * \brief Share parameters from pre-existing GraphExecutor instance.
@@ -387,6 +405,22 @@ class TVM_DLL GraphExecutor : public ModuleNode {
       ICHECK_EQ(bitmask, 1 | 2 | 4) << "invalid format";
     }
   };
+  enum class PipelineSlotStatus {
+    kFree,
+    kQueued,
+    kRunning,
+    kDone,
+    kError,
+  };
+  struct PipelineSlot {
+    std::unique_ptr<GraphExecutor> executor;
+    PipelineSlotStatus status{PipelineSlotStatus::kFree};
+    int64_t request_id{-1};
+    std::string error;
+  };
+  void PipelineWorkerLoop();
+  int PipelineFindFreeSlotLocked() const;
+  static const char* PipelineStatusName(PipelineSlotStatus status);
   // The graph attribute fields.
   void Load(dmlc::JSONReader* reader) {
     reader->BeginObject();
@@ -487,6 +521,23 @@ class TVM_DLL GraphExecutor : public ModuleNode {
    * When the module does not include linked parmeters, module_lookup_linked_param_ will be nullptr.
    */
   bool module_lookup_linked_param_valid_;
+  /*! \brief Saved graph JSON for experimental pipeline slot creation. */
+  std::string graph_json_;
+  /*! \brief Saved parameter blob for experimental pipeline slot parameter sharing. */
+  std::string param_blob_;
+  /*! \brief Experimental pipeline state. */
+  mutable std::mutex pipeline_mutex_;
+  std::condition_variable pipeline_cv_;
+  std::vector<std::unique_ptr<PipelineSlot>> pipeline_slots_;
+  std::deque<int> pipeline_queue_;
+  std::unordered_map<int64_t, int> pipeline_request_to_slot_;
+  std::thread pipeline_worker_;
+  bool pipeline_enabled_{false};
+  bool pipeline_closing_{false};
+  int64_t pipeline_next_request_id_{0};
+  uint64_t pipeline_submitted_{0};
+  uint64_t pipeline_completed_{0};
+  uint64_t pipeline_errors_{0};
 };
 
 std::vector<Device> GetAllDevice(const TVMArgs& args, int dev_start_arg);

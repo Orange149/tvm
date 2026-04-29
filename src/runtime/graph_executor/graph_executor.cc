@@ -33,9 +33,11 @@
 #include <tvm/runtime/serializer.h>
 
 #include <algorithm>
+#include <chrono>
 #include <functional>
 #include <memory>
 #include <numeric>
+#include <sstream>
 #include <string>
 #include <unordered_set>
 #include <utility>
@@ -65,6 +67,8 @@ void GraphExecutor::Run() {
   }
 }
 
+GraphExecutor::~GraphExecutor() { this->PipelineClose(); }
+
 /*!
  * \brief Initialize the graph executor with graph and device.
  * \param graph_json The execution graph.
@@ -77,6 +81,7 @@ void GraphExecutor::Run() {
 void GraphExecutor::Init(const std::string& graph_json, tvm::runtime::Module module,
                          const std::vector<Device>& devs,
                          const PackedFunc lookup_linked_param_func) {
+  graph_json_ = graph_json;
   std::istringstream is(graph_json);
   dmlc::JSONReader reader(&is);
   this->Load(&reader);
@@ -298,8 +303,234 @@ void GraphExecutor::CopyOutputTo(int index, DLTensor* data_out) {
  * \param param_blob A binary blob of parameter.
  */
 void GraphExecutor::LoadParams(const std::string& param_blob) {
+  param_blob_ = param_blob;
   dmlc::MemoryStringStream strm(const_cast<std::string*>(&param_blob));
   this->LoadParams(&strm);
+}
+
+const char* GraphExecutor::PipelineStatusName(PipelineSlotStatus status) {
+  switch (status) {
+    case PipelineSlotStatus::kFree:
+      return "free";
+    case PipelineSlotStatus::kQueued:
+      return "queued";
+    case PipelineSlotStatus::kRunning:
+      return "running";
+    case PipelineSlotStatus::kDone:
+      return "done";
+    case PipelineSlotStatus::kError:
+      return "error";
+  }
+  return "unknown";
+}
+
+int GraphExecutor::PipelineFindFreeSlotLocked() const {
+  for (size_t i = 0; i < pipeline_slots_.size(); ++i) {
+    if (pipeline_slots_[i]->status == PipelineSlotStatus::kFree) {
+      return static_cast<int>(i);
+    }
+  }
+  return -1;
+}
+
+void GraphExecutor::PipelineInit(int max_inflight) {
+  ICHECK_GT(max_inflight, 0);
+  this->PipelineClose();
+
+  std::vector<std::unique_ptr<PipelineSlot>> slots;
+  slots.reserve(max_inflight);
+  for (int i = 0; i < max_inflight; ++i) {
+    auto slot = std::make_unique<PipelineSlot>();
+    slot->executor = std::make_unique<GraphExecutor>();
+    slot->executor->Init(graph_json_, module_, devices_, lookup_linked_param_);
+    if (!param_blob_.empty()) {
+      dmlc::MemoryStringStream strm(const_cast<std::string*>(&param_blob_));
+      slot->executor->ShareParams(*this, &strm);
+    }
+    slots.push_back(std::move(slot));
+  }
+
+  {
+    std::lock_guard<std::mutex> lock(pipeline_mutex_);
+    pipeline_slots_ = std::move(slots);
+    pipeline_queue_.clear();
+    pipeline_request_to_slot_.clear();
+    pipeline_enabled_ = true;
+    pipeline_closing_ = false;
+    pipeline_next_request_id_ = 0;
+    pipeline_submitted_ = 0;
+    pipeline_completed_ = 0;
+    pipeline_errors_ = 0;
+  }
+  pipeline_worker_ = std::thread(&GraphExecutor::PipelineWorkerLoop, this);
+}
+
+int64_t GraphExecutor::PipelineSubmit(TVMArgs args, bool wait_for_slot) {
+  ICHECK_EQ(args.size() % 2, 0) << "pipeline_submit expects key-value input pairs";
+  std::unique_lock<std::mutex> lock(pipeline_mutex_);
+  ICHECK(pipeline_enabled_) << "pipeline_init must be called before pipeline_submit";
+  if (wait_for_slot) {
+    pipeline_cv_.wait(lock, [this]() {
+      return pipeline_closing_ || this->PipelineFindFreeSlotLocked() >= 0;
+    });
+  }
+  if (pipeline_closing_) {
+    LOG(FATAL) << "pipeline is closing";
+  }
+  int slot_idx = this->PipelineFindFreeSlotLocked();
+  if (slot_idx < 0) {
+    return -1;
+  }
+
+  PipelineSlot* slot = pipeline_slots_[slot_idx].get();
+  GraphExecutor* exec = slot->executor.get();
+  for (int i = 0; i < args.size(); i += 2) {
+    if (String::CanConvertFrom(args[i])) {
+      int in_idx = exec->GetInputIndex(args[i].operator String());
+      ICHECK_GE(in_idx, 0) << args[i].operator String() << " is not a valid input name";
+      exec->SetInput(in_idx, args[i + 1]);
+    } else {
+      exec->SetInput(args[i], args[i + 1]);
+    }
+  }
+
+  int64_t request_id = pipeline_next_request_id_++;
+  slot->request_id = request_id;
+  slot->error.clear();
+  slot->status = PipelineSlotStatus::kQueued;
+  pipeline_request_to_slot_[request_id] = slot_idx;
+  pipeline_queue_.push_back(slot_idx);
+  ++pipeline_submitted_;
+  lock.unlock();
+  pipeline_cv_.notify_all();
+  return request_id;
+}
+
+Array<NDArray> GraphExecutor::PipelineWait(int64_t request_id, Device host) {
+  std::unique_lock<std::mutex> lock(pipeline_mutex_);
+  ICHECK(pipeline_enabled_) << "pipeline_init must be called before pipeline_wait";
+  pipeline_cv_.wait(lock, [this, request_id]() {
+    auto it = pipeline_request_to_slot_.find(request_id);
+    if (it == pipeline_request_to_slot_.end()) return true;
+    PipelineSlotStatus status = pipeline_slots_[it->second]->status;
+    return status == PipelineSlotStatus::kDone || status == PipelineSlotStatus::kError ||
+           pipeline_closing_;
+  });
+
+  auto it = pipeline_request_to_slot_.find(request_id);
+  ICHECK(it != pipeline_request_to_slot_.end()) << "unknown pipeline request_id " << request_id;
+  PipelineSlot* slot = pipeline_slots_[it->second].get();
+  if (slot->status == PipelineSlotStatus::kError) {
+    std::string err = slot->error;
+    slot->request_id = -1;
+    slot->status = PipelineSlotStatus::kFree;
+    pipeline_request_to_slot_.erase(it);
+    lock.unlock();
+    pipeline_cv_.notify_all();
+    LOG(FATAL) << "pipeline request " << request_id << " failed: " << err;
+  }
+  ICHECK(slot->status == PipelineSlotStatus::kDone)
+      << "pipeline request " << request_id << " is not done, status="
+      << PipelineStatusName(slot->status);
+
+  Array<NDArray> outputs;
+  for (int i = 0; i < slot->executor->NumOutputs(); ++i) {
+    NDArray out = slot->executor->GetOutput(i);
+    NDArray copied = NDArray::Empty(out.Shape(), out.DataType(), host);
+    out.CopyTo(copied);
+    outputs.push_back(copied);
+  }
+  slot->request_id = -1;
+  slot->status = PipelineSlotStatus::kFree;
+  pipeline_request_to_slot_.erase(it);
+  lock.unlock();
+  pipeline_cv_.notify_all();
+  return outputs;
+}
+
+std::string GraphExecutor::PipelinePoll(int64_t request_id) {
+  std::lock_guard<std::mutex> lock(pipeline_mutex_);
+  if (!pipeline_enabled_) return "closed";
+  auto it = pipeline_request_to_slot_.find(request_id);
+  if (it == pipeline_request_to_slot_.end()) return "unknown";
+  return PipelineStatusName(pipeline_slots_[it->second]->status);
+}
+
+std::string GraphExecutor::PipelineStats() {
+  std::lock_guard<std::mutex> lock(pipeline_mutex_);
+  std::ostringstream os;
+  os << "{";
+  os << "\"enabled\":" << (pipeline_enabled_ ? "true" : "false");
+  os << ",\"slots\":" << pipeline_slots_.size();
+  os << ",\"queued\":" << pipeline_queue_.size();
+  os << ",\"submitted\":" << pipeline_submitted_;
+  os << ",\"completed\":" << pipeline_completed_;
+  os << ",\"errors\":" << pipeline_errors_;
+  os << ",\"slot_status\":[";
+  for (size_t i = 0; i < pipeline_slots_.size(); ++i) {
+    if (i != 0) os << ",";
+    os << "\"" << PipelineStatusName(pipeline_slots_[i]->status) << "\"";
+  }
+  os << "]}";
+  return os.str();
+}
+
+void GraphExecutor::PipelineClose() {
+  {
+    std::lock_guard<std::mutex> lock(pipeline_mutex_);
+    if (!pipeline_enabled_ && !pipeline_worker_.joinable()) {
+      return;
+    }
+    pipeline_closing_ = true;
+  }
+  pipeline_cv_.notify_all();
+  if (pipeline_worker_.joinable()) {
+    pipeline_worker_.join();
+  }
+  {
+    std::lock_guard<std::mutex> lock(pipeline_mutex_);
+    pipeline_slots_.clear();
+    pipeline_queue_.clear();
+    pipeline_request_to_slot_.clear();
+    pipeline_enabled_ = false;
+    pipeline_closing_ = false;
+  }
+}
+
+void GraphExecutor::PipelineWorkerLoop() {
+  while (true) {
+    int slot_idx = -1;
+    {
+      std::unique_lock<std::mutex> lock(pipeline_mutex_);
+      pipeline_cv_.wait(lock, [this]() { return pipeline_closing_ || !pipeline_queue_.empty(); });
+      if (pipeline_closing_ && pipeline_queue_.empty()) {
+        return;
+      }
+      slot_idx = pipeline_queue_.front();
+      pipeline_queue_.pop_front();
+      pipeline_slots_[slot_idx]->status = PipelineSlotStatus::kRunning;
+    }
+
+    try {
+      pipeline_slots_[slot_idx]->executor->Run();
+      {
+        std::lock_guard<std::mutex> lock(pipeline_mutex_);
+        pipeline_slots_[slot_idx]->status = PipelineSlotStatus::kDone;
+        ++pipeline_completed_;
+      }
+    } catch (const std::exception& err) {
+      std::lock_guard<std::mutex> lock(pipeline_mutex_);
+      pipeline_slots_[slot_idx]->status = PipelineSlotStatus::kError;
+      pipeline_slots_[slot_idx]->error = err.what();
+      ++pipeline_errors_;
+    } catch (...) {
+      std::lock_guard<std::mutex> lock(pipeline_mutex_);
+      pipeline_slots_[slot_idx]->status = PipelineSlotStatus::kError;
+      pipeline_slots_[slot_idx]->error = "unknown exception";
+      ++pipeline_errors_;
+    }
+    pipeline_cv_.notify_all();
+  }
 }
 
 void GraphExecutor::LoadParams(dmlc::Stream* strm) {
@@ -662,6 +893,35 @@ PackedFunc GraphExecutor::GetFunction(const String& name, const ObjectPtr<Object
         [sptr_to_self, this](TVMArgs args, TVMRetValue* rv) { *rv = this->NumInputs(); });
   } else if (name == "run") {
     return PackedFunc([sptr_to_self, this](TVMArgs args, TVMRetValue* rv) { this->Run(); });
+  } else if (name == "pipeline_init") {
+    return PackedFunc([sptr_to_self, this](TVMArgs args, TVMRetValue* rv) {
+      this->PipelineInit(args[0]);
+    });
+  } else if (name == "pipeline_submit") {
+    return PackedFunc([sptr_to_self, this](TVMArgs args, TVMRetValue* rv) {
+      *rv = this->PipelineSubmit(args, true);
+    });
+  } else if (name == "pipeline_try_submit") {
+    return PackedFunc([sptr_to_self, this](TVMArgs args, TVMRetValue* rv) {
+      *rv = this->PipelineSubmit(args, false);
+    });
+  } else if (name == "pipeline_wait") {
+    return PackedFunc([sptr_to_self, this](TVMArgs args, TVMRetValue* rv) {
+      Device host{static_cast<DLDeviceType>(args[1].operator int()), args[2].operator int()};
+      *rv = this->PipelineWait(args[0].operator int64_t(), host);
+    });
+  } else if (name == "pipeline_poll") {
+    return PackedFunc([sptr_to_self, this](TVMArgs args, TVMRetValue* rv) {
+      *rv = this->PipelinePoll(args[0].operator int64_t());
+    });
+  } else if (name == "pipeline_close") {
+    return PackedFunc([sptr_to_self, this](TVMArgs args, TVMRetValue* rv) {
+      this->PipelineClose();
+    });
+  } else if (name == "pipeline_stats") {
+    return PackedFunc([sptr_to_self, this](TVMArgs args, TVMRetValue* rv) {
+      *rv = this->PipelineStats();
+    });
   } else if (name == "run_from_inputs") {
     return PackedFunc(
         [sptr_to_self, this](TVMArgs args, TVMRetValue* rv) {

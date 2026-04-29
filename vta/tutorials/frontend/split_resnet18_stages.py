@@ -19,6 +19,10 @@ Recommended first scheme:
     stage0_cpu : stem + layer1_block0
     stage1_vta : layer1_block1 + layer2 + layer3 + layer4_block0
     stage2_cpu : layer4_block1 + head
+  three_stage_f
+    stage0_cpu : stem
+    stage1_vta : layer1 + layer2 + layer3 + layer4_block0
+    stage2_cpu : layer4_block1 + head
 """
 
 from __future__ import absolute_import, print_function
@@ -130,6 +134,19 @@ SCHEMES = {
             + LAYER2_UNITS
             + LAYER3_UNITS
             + BLOCK_UNIT_GROUPS["layer4_block0"],
+        ),
+        _make_stage(
+            "stage2_cpu",
+            "cpu",
+            BLOCK_UNIT_GROUPS["layer4_block1"] + ["head"],
+        ),
+    ],
+    "three_stage_f": [
+        _make_stage("stage0_cpu", "cpu", ["stem"]),
+        _make_stage(
+            "stage1_vta",
+            "vta",
+            LAYER1_UNITS + LAYER2_UNITS + LAYER3_UNITS + BLOCK_UNIT_GROUPS["layer4_block0"],
         ),
         _make_stage(
             "stage2_cpu",
@@ -1312,6 +1329,9 @@ def _matching_known_scheme_name(vta_unit_names):
             + LAYER3_UNITS
             + BLOCK_UNIT_GROUPS["layer4_block0"]
         ): "three_stage_e",
+        tuple(
+            LAYER1_UNITS + LAYER2_UNITS + LAYER3_UNITS + BLOCK_UNIT_GROUPS["layer4_block0"]
+        ): "three_stage_f",
         tuple(LAYER2_UNITS + BLOCK_UNIT_GROUPS["layer3_block0"]): "block_stage_a",
         tuple(BLOCK_UNIT_GROUPS["layer2_block1"] + BLOCK_UNIT_GROUPS["layer3_block0"]): "block_stage_b",
         tuple(LAYER2_UNITS): "block_stage_c",

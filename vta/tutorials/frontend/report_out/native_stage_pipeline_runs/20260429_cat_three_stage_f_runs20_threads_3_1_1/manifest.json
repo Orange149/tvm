@@ -1,0 +1,213 @@
+{
+  "baseline": "RPC all_vta",
+  "image_size": 224,
+  "input_count": 1,
+  "input_dtype": "float32",
+  "input_file": "input.bin",
+  "input_list": "",
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "inputs": [
+    {
+      "index": 0,
+      "input_file": "input.bin",
+      "source_image": "/home/orange/code/tvm/build_axu_aarch64/cat.png"
+    }
+  ],
+  "kind": "resnet18_native_stage_pipeline",
+  "model": "resnet18_v1",
+  "pipeline_output_jsonl": "native_result.jsonl",
+  "pipeline_stage_runtime_threads": {
+    "stage0": 3,
+    "stage1": 1,
+    "stage2": 1
+  },
+  "queue_depth": 2,
+  "rpc_baseline_result": "",
+  "run_serial_before_pipeline": true,
+  "runner": "vta_stage_pipeline_runner",
+  "runs": 20,
+  "runtime_libs": [
+    "libtvm_runtime.so",
+    "libvta.so"
+  ],
+  "runtime_num_threads": 4,
+  "scheme": "three_stage_f",
+  "serial": false,
+  "serial_output_jsonl": "stage_serial_result.jsonl",
+  "serial_stage_runtime_threads": {
+    "stage0": 3,
+    "stage1": 1,
+    "stage2": 1
+  },
+  "stages": [
+    {
+      "device": "cpu",
+      "graph": "stages/stage0_cpu/graph.json",
+      "index": 0,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage0_cpu/graphlib.so",
+      "name": "stage0_cpu",
+      "output_bytes": 802816,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage0_cpu/params.params",
+      "unit_names": [
+        "stem"
+      ]
+    },
+    {
+      "device": "vta",
+      "graph": "stages/stage1_vta/graph.json",
+      "index": 1,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage1_vta/graphlib.so",
+      "name": "stage1_vta",
+      "output_bytes": 100352,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage1_vta/params.params",
+      "unit_names": [
+        "layer1_block0_main_preadd",
+        "layer1_block0_add_relu_tail",
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail",
+        "layer3_block1_main_preadd",
+        "layer3_block1_add_relu_tail",
+        "layer4_block0_main_preadd",
+        "layer4_block0_skip_proj",
+        "layer4_block0_add_relu_tail"
+      ]
+    },
+    {
+      "device": "cpu",
+      "graph": "stages/stage2_cpu/graph.json",
+      "index": 2,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage2_cpu/graphlib.so",
+      "name": "stage2_cpu",
+      "output_bytes": 4000,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              1000
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage2_cpu/params.params",
+      "unit_names": [
+        "layer4_block1_main_preadd",
+        "layer4_block1_add_relu_tail",
+        "head"
+      ]
+    }
+  ],
+  "target": "axu5evb"
+}
