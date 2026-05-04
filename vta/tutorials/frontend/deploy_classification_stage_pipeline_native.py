@@ -97,6 +97,17 @@ def parse_args():
         default="three_stage_e",
         choices=sorted(list(SCHEMES.keys()) + [AUTO_RESOURCE_AWARE_SCHEME]),
     )
+    parser.add_argument(
+        "--resource-aware-candidate-name",
+        default="",
+        help="When --scheme auto_resource_aware, force a specific enumerated candidate window",
+    )
+    parser.add_argument(
+        "--resource-aware-top-k",
+        type=int,
+        default=10,
+        help="When --scheme auto_resource_aware, print this many static-ranked candidates",
+    )
     parser.add_argument("--image", default="", help="Input image path; defaults to cached cat image")
     parser.add_argument("--image-dir", default="", help="Directory of input jpg/jpeg/png images")
     parser.add_argument("--max-images", type=int, default=0, help="Maximum images to package")
@@ -301,7 +312,8 @@ def build_stage_modules(args, package_dir):
         env.BATCH,
         args.image_size,
         print_resource_aware=(args.scheme == AUTO_RESOURCE_AWARE_SCHEME),
-        candidate_top_k=10,
+        selected_candidate_name=args.resource_aware_candidate_name or None,
+        candidate_top_k=args.resource_aware_top_k,
     )
     resolved_scheme_name = selected["scheme_name"] if selected is not None else args.scheme
     validate_scheme(feature_blocks, scheme_cfg, unit_blocks)
@@ -525,6 +537,8 @@ def write_manifest(args, package_dir, env, resolved_scheme_name, stage_records, 
         "model": args.model,
         "target": env.TARGET,
         "scheme": resolved_scheme_name,
+        "requested_scheme": args.scheme,
+        "resource_aware_candidate_name": args.resource_aware_candidate_name,
         "image_size": int(args.image_size),
         "input_shape": list(image.shape),
         "input_dtype": str(image.dtype),

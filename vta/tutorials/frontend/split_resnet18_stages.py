@@ -550,6 +550,79 @@ def _shape_bits_nbytes(shape, bit_width):
     return (_shape_numel(shape) * int(bit_width)) // 8
 
 
+def _conv_out_dim(in_dim, kernel, stride, pad):
+    return ((int(in_dim) + 2 * int(pad) - int(kernel)) // int(stride)) + 1
+
+
+def _conv2d_macs(batch, in_channels, out_channels, out_h, out_w, kernel_h, kernel_w, groups=1):
+    return int(batch) * int(out_channels) * int(out_h) * int(out_w) * (
+        int(in_channels) // int(groups)
+    ) * int(kernel_h) * int(kernel_w)
+
+
+def _dense_macs(batch, in_features, out_features):
+    return int(batch) * int(in_features) * int(out_features)
+
+
+def build_resnet18_unit_compute_metadata(batch, image_size):
+    """Return first-order compute counts for each atomic ResNet18 unit.
+
+    The `*_ops_est` fields count one multiply-add as two scalar ops. Element
+    ops cover residual add/relu, pooling, and the dense head where relevant.
+    """
+
+    h2 = _conv_out_dim(image_size, 7, 2, 3)
+    h4 = image_size // 4
+    h8 = image_size // 8
+    h16 = image_size // 16
+    h32 = image_size // 32
+
+    block_shapes = {
+        "layer1_block0": {"inp_c": 64, "out_c": 64, "out_h": h4, "skip": False},
+        "layer1_block1": {"inp_c": 64, "out_c": 64, "out_h": h4, "skip": False},
+        "layer2_block0": {"inp_c": 64, "out_c": 128, "out_h": h8, "skip": True},
+        "layer2_block1": {"inp_c": 128, "out_c": 128, "out_h": h8, "skip": False},
+        "layer3_block0": {"inp_c": 128, "out_c": 256, "out_h": h16, "skip": True},
+        "layer3_block1": {"inp_c": 256, "out_c": 256, "out_h": h16, "skip": False},
+        "layer4_block0": {"inp_c": 256, "out_c": 512, "out_h": h32, "skip": True},
+        "layer4_block1": {"inp_c": 512, "out_c": 512, "out_h": h32, "skip": False},
+    }
+
+    compute = {}
+
+    def add(name, macs=0, elem_ops=0):
+        macs = int(macs)
+        elem_ops = int(elem_ops)
+        ops = int(2 * macs + elem_ops)
+        compute[name] = {
+            "compute_macs_est": macs,
+            "element_ops_est": elem_ops,
+            "compute_ops_est": ops,
+            "compute_gops_est": float(ops) / 1e9,
+        }
+
+    stem_conv_macs = _conv2d_macs(batch, 3, 64, h2, h2, 7, 7)
+    stem_pool_ops = int(batch) * 64 * h4 * h4 * 9
+    add("stem", macs=stem_conv_macs, elem_ops=stem_pool_ops)
+
+    for block_name, info in block_shapes.items():
+        inp_c = info["inp_c"]
+        out_c = info["out_c"]
+        out_h = info["out_h"]
+        conv1_macs = _conv2d_macs(batch, inp_c, out_c, out_h, out_h, 3, 3)
+        conv2_macs = _conv2d_macs(batch, out_c, out_c, out_h, out_h, 3, 3)
+        add(block_name + "_main_preadd", macs=conv1_macs + conv2_macs)
+        if info["skip"]:
+            skip_macs = _conv2d_macs(batch, inp_c, out_c, out_h, out_h, 1, 1)
+            add(block_name + "_skip_proj", macs=skip_macs)
+        add(block_name + "_add_relu_tail", elem_ops=int(batch) * out_c * out_h * out_h * 2)
+
+    head_pool_ops = int(batch) * 512 * h32 * h32
+    head_dense_macs = _dense_macs(batch, 512, 1000)
+    add("head", macs=head_dense_macs, elem_ops=head_pool_ops)
+    return compute
+
+
 def _block_param_nbytes(block):
     total = 0
     for param in block.collect_params().values():
@@ -568,6 +641,7 @@ def schema_nbytes(schema):
 def build_resnet18_unit_metadata(unit_blocks, batch, image_size):
     env = vta.get_env()
     io_schemas = build_resnet18_unit_io_schemas(batch, image_size)
+    compute_metadata = build_resnet18_unit_compute_metadata(batch, image_size)
     metadata = {}
     for name, block in unit_blocks.items():
         input_schema = io_schemas[name]["input_schema"]
@@ -607,6 +681,7 @@ def build_resnet18_unit_metadata(unit_blocks, batch, image_size):
             ),
             "is_residual": bool(is_residual),
         }
+        metadata[name].update(compute_metadata.get(name, {}))
     return metadata
 
 
@@ -1059,10 +1134,19 @@ def _score_resource_aware_candidate(vta_unit_names, unit_metadata, capacity_spec
     span_penalty = (max(0, span - 2) ** 2) * 300000
     estimated_load_bytes = sum(unit_metadata[name]["input_bytes"] for name in vta_unit_names)
     estimated_store_bytes = sum(unit_metadata[name]["output_bytes"] for name in vta_unit_names)
+    vta_compute_ops_est = sum(unit_metadata[name].get("compute_ops_est", 0) for name in vta_unit_names)
+    vta_compute_gops_est = float(vta_compute_ops_est) / 1e9
     start_idx = UNIT_ORDER.index(vta_unit_names[0])
     end_idx = UNIT_ORDER.index(vta_unit_names[-1])
     stage0_unit_names = UNIT_ORDER[:start_idx]
     stage2_unit_names = UNIT_ORDER[end_idx + 1 :]
+    cpu_stage0_compute_ops_est = sum(
+        unit_metadata[name].get("compute_ops_est", 0) for name in stage0_unit_names
+    )
+    cpu_stage2_compute_ops_est = sum(
+        unit_metadata[name].get("compute_ops_est", 0) for name in stage2_unit_names
+    )
+    cpu_total_compute_ops_est = cpu_stage0_compute_ops_est + cpu_stage2_compute_ops_est
     boundary_count = 0
     total_boundary_bytes = 0
     if stage0_unit_names:
@@ -1240,6 +1324,13 @@ def _score_resource_aware_candidate(vta_unit_names, unit_metadata, capacity_spec
         "partial_layer_boundaries": int(partial_layer_boundaries),
         "span": int(span),
         "conv_count": int(conv_count),
+        "vta_compute_ops_est": int(vta_compute_ops_est),
+        "vta_compute_gops_est": float(vta_compute_gops_est),
+        "cpu_stage0_compute_ops_est": int(cpu_stage0_compute_ops_est),
+        "cpu_stage2_compute_ops_est": int(cpu_stage2_compute_ops_est),
+        "cpu_total_compute_ops_est": int(cpu_total_compute_ops_est),
+        "cpu_total_compute_gops_est": float(cpu_total_compute_ops_est) / 1e9,
+        "total_compute_ops_est": int(cpu_total_compute_ops_est + vta_compute_ops_est),
         "stage0_unit_names": list(stage0_unit_names),
         "stage2_unit_names": list(stage2_unit_names),
         "start_idx": int(start_idx),
@@ -1458,7 +1549,7 @@ def print_resource_aware_candidates(candidates, selected_scheme_name=None, max_r
         selected_label = "yes" if candidate["scheme_name"] == selected_scheme_name else "no"
         reason_tags = ",".join(_describe_candidate_reasons(candidate))
         print(
-            "#{} {} alias={} score={} selected={} hard_reject={} reject_reasons={} reasons={} start_idx={} end_idx={} span={} boundary_bytes={} boundary_count={} shape_change_units={} partial_layer_boundaries={} tile_input_load={} tile_weight_load={} tile_output_store={} tile_acc_peak={} tile_count={} tile_spill_penalty={} vta_stage_cost={} cpu_stage0_cost={} cpu_stage2_cost={} cpu_stage0_parallel_cost={} cpu_stage2_parallel_cost={} cpu_tail_penalty={} cpu_bucket_costs={} cpu_bucket_max={} pipeline_bottleneck_cost={} cpu_prefix_penalty={} stage0_dominance_penalty={} stage_imbalance_penalty={} boundary_penalty={} edge_penalty={} fusion_disruption_penalty={} block_tail_penalty={} est_load={} est_store={} peak_inp={} peak_wgt={} peak_acc={} peak_out={} internal_boundary_total={} residual_live_total={} max_ratio(in/wgt/acc/out)={:.3f}/{:.3f}/{:.3f}/{:.3f} span_penalty={} vta_units={}".format(
+            "#{} {} alias={} score={} selected={} hard_reject={} reject_reasons={} reasons={} start_idx={} end_idx={} span={} boundary_bytes={} boundary_count={} shape_change_units={} partial_layer_boundaries={} cpu_gops_est={:.6f} vta_gops_est={:.6f} tile_input_load={} tile_weight_load={} tile_output_store={} tile_acc_peak={} tile_count={} tile_spill_penalty={} vta_stage_cost={} cpu_stage0_cost={} cpu_stage2_cost={} cpu_stage0_parallel_cost={} cpu_stage2_parallel_cost={} cpu_tail_penalty={} cpu_bucket_costs={} cpu_bucket_max={} pipeline_bottleneck_cost={} cpu_prefix_penalty={} stage0_dominance_penalty={} stage_imbalance_penalty={} boundary_penalty={} edge_penalty={} fusion_disruption_penalty={} block_tail_penalty={} est_load={} est_store={} peak_inp={} peak_wgt={} peak_acc={} peak_out={} internal_boundary_total={} residual_live_total={} max_ratio(in/wgt/acc/out)={:.3f}/{:.3f}/{:.3f}/{:.3f} span_penalty={} vta_units={}".format(
                 idx,
                 candidate["scheme_name"],
                 candidate["alias_scheme_name"] or "-",
@@ -1474,6 +1565,8 @@ def print_resource_aware_candidates(candidates, selected_scheme_name=None, max_r
                 candidate["boundary_count"],
                 candidate["shape_change_units"],
                 candidate["partial_layer_boundaries"],
+                candidate["cpu_total_compute_gops_est"],
+                candidate["vta_compute_gops_est"],
                 candidate["tile_input_load_bytes_est"],
                 candidate["tile_weight_load_bytes_est"],
                 candidate["tile_output_store_bytes_est"],
