@@ -202,6 +202,21 @@ SCHEMES = {
             BLOCK_UNIT_GROUPS["layer3_block1"] + LAYER4_UNITS + ["head"],
         ),
     ],
+    "fine_conv_vta_a": [
+        _make_stage("stage0_cpu", "cpu", ["stem"] + LAYER1_UNITS),
+        _make_stage(
+            "stage1_vta",
+            "vta",
+            ["layer2_block0_main_preadd", "layer2_block0_skip_proj"],
+        ),
+        _make_stage("stage2_cpu", "cpu", ["layer2_block0_add_relu_tail"]),
+        _make_stage("stage3_vta", "vta", ["layer2_block1_main_preadd"]),
+        _make_stage(
+            "stage4_cpu",
+            "cpu",
+            ["layer2_block1_add_relu_tail"] + LAYER3_UNITS + LAYER4_UNITS + ["head"],
+        ),
+    ],
 }
 
 RESOURCE_AWARE_SCORE_WEIGHTS = {

@@ -472,6 +472,317 @@ class ExprPack(ExprMutator):
         return relay.Call(self.visit(call.op), args, call.attrs)
 
 
+class _LayoutInfo:
+    """Logical layout state tracked by boundary-aware graph packing."""
+
+    def __init__(self, kind, shape=None, fields=None):
+        self.kind = kind
+        self.shape = tuple(shape) if shape is not None else None
+        self.fields = fields
+
+    @staticmethod
+    def normal(shape=None):
+        return _LayoutInfo("normal", shape=shape)
+
+    @staticmethod
+    def packed(shape):
+        return _LayoutInfo("packed", shape=shape)
+
+    @staticmethod
+    def tuple(fields):
+        return _LayoutInfo("tuple", fields=list(fields))
+
+    def is_packed(self):
+        return self.kind == "packed"
+
+    def is_tuple(self):
+        return self.kind == "tuple"
+
+
+class ExprBoundaryBridgePack(ExprMutator):
+    """Pack/unpack Relay tensors at explicit VTA subgraph boundaries.
+
+    Unlike :class:`ExprPack`, this mutator does not rely on a single global
+    packed interval.  It tracks whether each expression is in ordinary 4-D NCHW
+    form or VTA packed 6-D form, and lowers ``bitpack_start``/``bitpack_end``
+    markers as local layout bridges.
+    """
+
+    def __init__(self, bfactor, cfactor, weight_bits):
+        self.bfactor = bfactor
+        self.cfactor = cfactor
+        self.weight_bits = weight_bits
+        self.bitpack_start = op.op.get("annotation.bitpack_start")
+        self.bitpack_end = op.op.get("annotation.bitpack_end")
+        self.conv2d = op.op.get("nn.conv2d")
+        self.conv2d_transpose = op.op.get("nn.conv2d_transpose")
+        self.add = op.op.get("add")
+        self.multiply = op.op.get("multiply")
+        self.bias_add = op.op.get("nn.bias_add")
+        self.pad = op.op.get("nn.pad")
+        self.upsampling = op.op.get("nn.upsampling")
+        self.reshape = op.op.get("reshape")
+        self._layout = {}
+        super().__init__()
+
+    def _set_layout(self, expr, layout):
+        self._layout[expr] = layout
+        return expr
+
+    def _layout_of(self, expr):
+        layout = self._layout.get(expr)
+        if layout is not None:
+            return layout
+        shape = _get_tensor_shape(expr)
+        return _LayoutInfo.normal(shape if shape else None)
+
+    def _type_shape(self, checked_type):
+        if isinstance(checked_type, relay.ty.TensorType):
+            return _to_shape(checked_type.shape)
+        return None
+
+    def _can_pack_shape(self, shape):
+        return shape is not None and len(shape) == 4
+
+    def _ensure_packed(self, expr, layout=None, fallback_shape=None):
+        layout = layout or self._layout_of(expr)
+        if layout.is_packed():
+            return expr, layout
+        shape = layout.shape or fallback_shape
+        if not self._can_pack_shape(shape):
+            return expr, layout
+        packed = _pack_batch_channel(expr, shape, self.bfactor, self.cfactor)
+        self._set_layout(packed, _LayoutInfo.packed(shape))
+        return packed, self._layout_of(packed)
+
+    def _ensure_normal(self, expr, layout=None):
+        layout = layout or self._layout_of(expr)
+        if layout.is_tuple():
+            fields = []
+            field_layouts = []
+            for idx, field_layout in enumerate(layout.fields):
+                field = relay.TupleGetItem(expr, idx)
+                self._set_layout(field, field_layout)
+                field, field_layout = self._ensure_normal(field, field_layout)
+                fields.append(field)
+                field_layouts.append(field_layout)
+            tup = relay.Tuple(fields)
+            self._set_layout(tup, _LayoutInfo.tuple(field_layouts))
+            return tup, self._layout_of(tup)
+        if not layout.is_packed():
+            return expr, layout
+        normal = _unpack_batch_channel(expr, layout.shape, unpack_transpose=True)
+        self._set_layout(normal, _LayoutInfo.normal(layout.shape))
+        return normal, self._layout_of(normal)
+
+    def _pack_weight_arg(self, weight, kernel_shape, channels):
+        weight, kernel_shape, channels = _weight_shape_match(
+            weight, kernel_shape, channels, self.cfactor
+        )
+        kernel = _pack_weight(weight, kernel_shape, self.cfactor)
+        assert 8 % self.weight_bits == 0
+        w_lanes = 8 // self.weight_bits
+        if w_lanes != 1:
+            assert 8 % w_lanes == 0
+            kernel = op.bitpack(kernel, lanes=w_lanes)
+        return kernel, channels
+
+    def _pack_weight_transpose_arg(self, weight, kernel_shape, channels):
+        weight, kernel_shape, channels = _weight_shape_match_transpose(
+            weight, kernel_shape, channels, self.cfactor
+        )
+        kernel = _pack_weight_conv2d_transpose(weight, kernel_shape, self.cfactor)
+        return kernel, channels
+
+    def _pack_binary_args(self, call, args, input_types, layouts):
+        lhs, rhs = args
+        lhs_layout, rhs_layout = layouts
+        lhs_shape = self._type_shape(input_types[0])
+        rhs_shape = self._type_shape(input_types[1])
+        if lhs_layout.is_packed() or rhs_layout.is_packed():
+            lhs, lhs_layout = self._ensure_packed(lhs, lhs_layout, lhs_shape)
+            if len(rhs_shape or ()) == 3:
+                rhs, rhs_shape = _const_shape_match(rhs, rhs_shape, self.cfactor)
+                rhs = _pack_const(rhs, rhs_shape, input_types[1].dtype, self.bfactor, self.cfactor)
+                rhs_layout = lhs_layout
+            else:
+                rhs, rhs_layout = self._ensure_packed(rhs, rhs_layout, rhs_shape)
+            packed_call = relay.Call(call.op, [lhs, rhs], call.attrs, call.type_args, call.span)
+            logical_shape = _get_tensor_shape(call)
+            self._set_layout(packed_call, _LayoutInfo.packed(logical_shape))
+            return packed_call
+        return None
+
+    def _is_packed_elementwise_passthrough(self, call, layouts):
+        if not any(layout.is_packed() for layout in layouts):
+            return False
+        if not isinstance(call.op, tvm.ir.Op):
+            return False
+        if not isinstance(call.checked_type, relay.ty.TensorType):
+            return False
+        op_name = call.op.name
+        return op_name in {
+            "cast",
+            "clip",
+            "right_shift",
+            "nn.relu",
+            "annotation.stop_fusion",
+        }
+
+    def visit_var(self, var):
+        shape = _get_tensor_shape(var)
+        return self._set_layout(var, _LayoutInfo.normal(shape if shape else None))
+
+    def visit_constant(self, const):
+        shape = _get_tensor_shape(const)
+        return self._set_layout(const, _LayoutInfo.normal(shape if shape else None))
+
+    def visit_let(self, let):
+        new_var = self.visit(let.var)
+        new_val = self.visit(let.value)
+        self._set_layout(new_var, self._layout_of(new_val))
+        new_body = self.visit(let.body)
+        ret = relay.expr.Let(new_var, new_val, new_body)
+        self._set_layout(ret, self._layout_of(new_body))
+        return ret
+
+    def visit_tuple(self, tup):
+        fields = [self.visit(field) for field in tup.fields]
+        ret = relay.Tuple(fields, tup.span)
+        self._set_layout(ret, _LayoutInfo.tuple([self._layout_of(field) for field in fields]))
+        return ret
+
+    def visit_tuple_getitem(self, op):
+        tuple_value = self.visit(op.tuple_value)
+        ret = relay.TupleGetItem(tuple_value, op.index)
+        tuple_layout = self._layout_of(tuple_value)
+        if tuple_layout.is_tuple() and op.index < len(tuple_layout.fields):
+            self._set_layout(ret, tuple_layout.fields[op.index])
+        else:
+            self._set_layout(ret, _LayoutInfo.normal(self._type_shape(op.checked_type)))
+        return ret
+
+    def visit_call(self, call):
+        input_types = [arg.checked_type for arg in call.args]
+        args = [self.visit(arg) for arg in call.args]
+        layouts = [self._layout_of(arg) for arg in args]
+
+        if call.op == self.bitpack_start:
+            packed, packed_layout = self._ensure_packed(
+                args[0], layouts[0], self._type_shape(call.args[0].checked_type)
+            )
+            self._set_layout(packed, packed_layout)
+            return packed
+
+        if call.op == self.bitpack_end:
+            normal, normal_layout = self._ensure_normal(args[0], layouts[0])
+            self._set_layout(normal, normal_layout)
+            return normal
+
+        if call.op == self.conv2d and _get_tensor_type(call) == "int32":
+            data, data_layout = self._ensure_packed(args[0], layouts[0], self._type_shape(input_types[0]))
+            weight, _ = self._ensure_normal(args[1], layouts[1])
+            kernel_shape = _to_shape(input_types[1].shape)
+            kernel, channels = self._pack_weight_arg(weight, kernel_shape, call.attrs.channels)
+            packed_call = op.nn.conv2d(
+                data,
+                kernel,
+                strides=call.attrs.strides,
+                padding=call.attrs.padding,
+                dilation=call.attrs.dilation,
+                groups=call.attrs.groups,
+                channels=channels,
+                kernel_size=call.attrs.kernel_size,
+                data_layout="NCHW%dn%dc" % (self.bfactor, self.cfactor),
+                kernel_layout="OIHW%do%di" % (self.cfactor, self.cfactor),
+                out_dtype=call.attrs.out_dtype,
+            )
+            self._set_layout(packed_call, _LayoutInfo.packed(_get_tensor_shape(call)))
+            return packed_call
+
+        if call.op == self.conv2d_transpose and _get_tensor_type(call) == "int32":
+            data, data_layout = self._ensure_packed(args[0], layouts[0], self._type_shape(input_types[0]))
+            weight, _ = self._ensure_normal(args[1], layouts[1])
+            kernel_shape = _to_shape(input_types[1].shape)
+            kernel, channels = self._pack_weight_transpose_arg(
+                weight, kernel_shape, call.attrs.channels
+            )
+            packed_call = op.nn.conv2d_transpose(
+                data,
+                kernel,
+                strides=call.attrs.strides,
+                padding=call.attrs.padding,
+                dilation=call.attrs.dilation,
+                groups=call.attrs.groups,
+                channels=channels,
+                kernel_size=call.attrs.kernel_size,
+                data_layout="NCHW%dn%dc" % (self.bfactor, self.cfactor),
+                kernel_layout="IOHW%di%do" % (self.cfactor, self.cfactor),
+                output_padding=call.attrs.output_padding,
+                out_dtype=call.attrs.out_dtype,
+            )
+            self._set_layout(packed_call, _LayoutInfo.packed(_get_tensor_shape(call)))
+            return packed_call
+
+        if call.op in [self.add, self.multiply]:
+            packed_binary = self._pack_binary_args(call, args, input_types, layouts)
+            if packed_binary is not None:
+                return packed_binary
+
+        if call.op == self.bias_add and layouts[0].is_packed():
+            data = args[0]
+            bias = _pack_const(
+                args[1],
+                _to_shape(input_types[1].shape),
+                input_types[1].dtype,
+                self.bfactor,
+                self.cfactor,
+            )
+            ret = relay.Call(self.add, [data, bias])
+            self._set_layout(ret, _LayoutInfo.packed(_get_tensor_shape(call)))
+            return ret
+
+        if call.op == self.pad and layouts[0].is_packed():
+            pad_width = call.attrs.pad_width
+            if len(pad_width) == 4:
+                data, pad_value = args
+                new_pad_width = []
+                new_pad_width.extend(pad_width)
+                for _ in range(2):
+                    new_pad_width.append([0, 0])
+                ret = op.nn.pad(data, pad_value=pad_value, pad_width=new_pad_width)
+                self._set_layout(ret, _LayoutInfo.packed(_get_tensor_shape(call)))
+                return ret
+
+        if call.op == self.upsampling and layouts[0].is_packed():
+            (data,) = args
+            ret = op.nn.upsampling(
+                data,
+                call.attrs.scale_h,
+                call.attrs.scale_w,
+                "NCHW%dn%dc" % (self.bfactor, self.cfactor),
+                call.attrs.method,
+                call.attrs.align_corners,
+            )
+            self._set_layout(ret, _LayoutInfo.packed(_get_tensor_shape(call)))
+            return ret
+
+        if self._is_packed_elementwise_passthrough(call, layouts):
+            ret = relay.Call(call.op, args, call.attrs, call.type_args, call.span)
+            packed_layout = next(layout for layout in layouts if layout.is_packed())
+            logical_shape = _get_tensor_shape(call) or packed_layout.shape
+            self._set_layout(ret, _LayoutInfo.packed(logical_shape))
+            return ret
+
+        if any(layout.is_packed() for layout in layouts):
+            args = [self._ensure_normal(arg, layout)[0] for arg, layout in zip(args, layouts)]
+            layouts = [self._layout_of(arg) for arg in args]
+
+        ret = relay.Call(self.visit(call.op), args, call.attrs, call.type_args, call.span)
+        self._set_layout(ret, _LayoutInfo.normal(_get_tensor_shape(call) or None))
+        return ret
+
+
 class BT(Exception):
     pass
 
@@ -545,6 +856,7 @@ def graph_pack(
     device_annot=False,
     annot_start_name="nn.conv2d",
     annot_end_name="annotation.stop_fusion",
+    boundary_bridge=False,
 ):
     """Pack the graph into batch&channel packed format.
 
@@ -591,23 +903,33 @@ def graph_pack(
     annot_end_name: str, optional
         device annotation end node, after which we mark the nodes as 'cpu'
 
+    boundary_bridge: boolean, optional
+        If true, lower explicit bitpack_start/bitpack_end markers as local
+        4-D/6-D layout bridges instead of using the legacy single packed interval.
+
     Returns
     -------
     expr : Expr
         The transformed expression.
     """
     assert isinstance(expr, relay.Function)
-    assert (
-        (start_name != stop_name)
-        or (start_name_idx is None != stop_name_idx is None)
-        or (not (start_name_idx is None and stop_name_idx is None))
-        or (start_name_idx < stop_name_idx)
-    )
-    expr = get_subgraph(expr, start_name, stop_name, start_name_idx, stop_name_idx, count_meta)
+    if not (boundary_bridge and start_name is None and stop_name is None):
+        assert (
+            (start_name != stop_name)
+            or (start_name_idx is None != stop_name_idx is None)
+            or (not (start_name_idx is None and stop_name_idx is None))
+            or (start_name_idx < stop_name_idx)
+        )
+        expr = get_subgraph(expr, start_name, stop_name, start_name_idx, stop_name_idx, count_meta)
     expr = run_opt_pass(expr, transform.InferType())
-    packer = ExprPack(bfactor, cfactor, weight_bits)
+    packer = (
+        ExprBoundaryBridgePack(bfactor, cfactor, weight_bits)
+        if boundary_bridge
+        else ExprPack(bfactor, cfactor, weight_bits)
+    )
     expr = packer.visit(expr)
-    assert not packer.start_pack
+    if not boundary_bridge:
+        assert not packer.start_pack
     expr = run_opt_pass(expr, transform.InferType())
 
     if device_annot:

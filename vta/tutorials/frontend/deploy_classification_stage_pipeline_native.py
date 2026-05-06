@@ -317,14 +317,11 @@ def build_stage_modules(args, package_dir):
     )
     resolved_scheme_name = selected["scheme_name"] if selected is not None else args.scheme
     validate_scheme(feature_blocks, scheme_cfg, unit_blocks)
-    if [stage["device"] for stage in scheme_cfg] != ["cpu", "vta", "cpu"]:
+    devices = [stage["device"] for stage in scheme_cfg]
+    if len(scheme_cfg) < 3 or devices[0] != "cpu" or devices[-1] != "cpu" or "vta" not in devices:
         raise RuntimeError(
-            "stage pipeline requires cpu/vta/cpu scheme, got {}".format(
-                [stage["device"] for stage in scheme_cfg]
-            )
+            "stage pipeline requires cpu/.../vta/.../cpu scheme, got {}".format(devices)
         )
-    if len(scheme_cfg) != 3:
-        raise RuntimeError("stage pipeline requires exactly 3 stages")
 
     stage_records = []
     for idx, stage in enumerate(scheme_cfg):
@@ -449,30 +446,50 @@ def _stage_cli(stage_record, prefix):
     )
 
 
-def resolve_stage_runtime_threads(args, serial):
-    if serial:
-        return {
-            "stage0": int(args.stage0_runtime_num_threads or args.runtime_num_threads),
-            "stage1": int(args.stage1_runtime_num_threads or 1),
-            "stage2": int(args.stage2_runtime_num_threads or args.runtime_num_threads),
-        }
-    return {
-        "stage0": int(args.stage0_runtime_num_threads or 3),
-        "stage1": int(args.stage1_runtime_num_threads or 1),
-        "stage2": int(args.stage2_runtime_num_threads or 1),
-    }
+def resolve_stage_runtime_threads(args, serial, stage_records=None):
+    stage_records = stage_records or [{"device": "cpu"}, {"device": "vta"}, {"device": "cpu"}]
+    explicit = [
+        int(args.stage0_runtime_num_threads or 0),
+        int(args.stage1_runtime_num_threads or 0),
+        int(args.stage2_runtime_num_threads or 0),
+    ]
+    threads = {}
+    for idx, record in enumerate(stage_records):
+        key = "stage{}".format(idx)
+        if idx < len(explicit) and explicit[idx] > 0:
+            threads[key] = explicit[idx]
+        elif serial:
+            threads[key] = int(args.runtime_num_threads if record.get("device") == "cpu" else 1)
+        elif idx == 0 and record.get("device") == "cpu":
+            threads[key] = 3
+        else:
+            threads[key] = 1
+    return threads
 
 
 def write_run_script(args, package_dir, stage_records, serial, output_jsonl, script_name):
     input_args = "--input-list inputs.txt" if args.image_dir else "--input input.bin"
     serial_arg = " \\\n  --serial" if serial else ""
-    stage_threads = resolve_stage_runtime_threads(args, serial)
-    tvm_num_threads = max(
-        int(args.runtime_num_threads),
-        stage_threads["stage0"],
-        stage_threads["stage1"],
-        stage_threads["stage2"],
-    )
+    stage_threads = resolve_stage_runtime_threads(args, serial, stage_records)
+    tvm_num_threads = max([int(args.runtime_num_threads)] + list(stage_threads.values()))
+    stage_cli = []
+    for idx, record in enumerate(stage_records):
+        prefix = "stage{}".format(idx)
+        stage_cli.append(
+            "{} \\\n"
+            "  --{}-name {} \\\n"
+            "  --{}-device {} \\\n"
+            "  --{}-runtime-num-threads {}".format(
+                _stage_cli(record, prefix),
+                prefix,
+                shlex.quote(record["name"]),
+                prefix,
+                shlex.quote(record["device"]),
+                prefix,
+                stage_threads[prefix],
+            )
+        )
+    stage_cli = " \\\n".join(stage_cli)
     profile_args = ""
     if args.vta_runtime_profile_dir:
         profile_dir = args.vta_runtime_profile_dir.rstrip("/") + ("/serial" if serial else "/pipeline")
@@ -499,28 +516,18 @@ export AXU5EVB_DRIVER_POST_START_SLEEP_NS
 export AXU5EVB_DRIVER_POLL_SLEEP_NS
 
 exec ./vta_stage_pipeline_runner \\
-{stage0} \\
-{stage1} \\
-{stage2} \\
+{stage_cli} \\
   {input_args} \\
   --runs {runs} \\
   --queue-depth {queue_depth} \\
   --runtime-num-threads {runtime_num_threads} \\
-  --stage0-runtime-num-threads {stage0_threads} \\
-  --stage1-runtime-num-threads {stage1_threads} \\
-  --stage2-runtime-num-threads {stage2_threads} \\
   --output-jsonl {output_jsonl}{serial_arg}{profile_args}
 """.format(
-        stage0=_stage_cli(stage_records[0], "stage0"),
-        stage1=_stage_cli(stage_records[1], "stage1"),
-        stage2=_stage_cli(stage_records[2], "stage2"),
+        stage_cli=stage_cli,
         input_args=input_args,
         runs=int(args.runs),
         queue_depth=int(args.queue_depth),
         runtime_num_threads=int(args.runtime_num_threads),
-        stage0_threads=stage_threads["stage0"],
-        stage1_threads=stage_threads["stage1"],
-        stage2_threads=stage_threads["stage2"],
         tvm_num_threads=tvm_num_threads,
         output_jsonl=shlex.quote(output_jsonl),
         serial_arg=serial_arg,
@@ -549,8 +556,12 @@ def write_manifest(args, package_dir, env, resolved_scheme_name, stage_records, 
         "runs": int(args.runs),
         "queue_depth": int(args.queue_depth),
         "runtime_num_threads": int(args.runtime_num_threads),
-        "serial_stage_runtime_threads": resolve_stage_runtime_threads(args, serial=True),
-        "pipeline_stage_runtime_threads": resolve_stage_runtime_threads(args, serial=False),
+        "serial_stage_runtime_threads": resolve_stage_runtime_threads(
+            args, serial=True, stage_records=stage_records
+        ),
+        "pipeline_stage_runtime_threads": resolve_stage_runtime_threads(
+            args, serial=False, stage_records=stage_records
+        ),
         "serial": bool(args.serial),
         "run_serial_before_pipeline": bool(args.run_serial_before_pipeline),
         "serial_output_jsonl": args.serial_output_jsonl,
@@ -859,7 +870,7 @@ def compare_rpc_baseline_top1(baseline_path, native_path):
     print("[COMPARE] RPC baseline vs native top1 matched for {} frame(s)".format(len(native_rows)))
 
 
-def check_package(package_dir, image_dir_used):
+def check_package(package_dir, image_dir_used, stage_records):
     required = [
         "vta_stage_pipeline_runner",
         "manifest.json",
@@ -867,16 +878,16 @@ def check_package(package_dir, image_dir_used):
         "libvta.so",
         "run_stage_serial.sh",
         "run_stage_pipeline.sh",
-        "stages/stage0_cpu/graph.json",
-        "stages/stage0_cpu/graphlib.so",
-        "stages/stage0_cpu/params.params",
-        "stages/stage1_vta/graph.json",
-        "stages/stage1_vta/graphlib.so",
-        "stages/stage1_vta/params.params",
-        "stages/stage2_cpu/graph.json",
-        "stages/stage2_cpu/graphlib.so",
-        "stages/stage2_cpu/params.params",
     ]
+    for record in stage_records:
+        stage_dir = "stages/{}".format(record["name"])
+        required.extend(
+            [
+                "{}/graph.json".format(stage_dir),
+                "{}/graphlib.so".format(stage_dir),
+                "{}/params.params".format(stage_dir),
+            ]
+        )
     for rel in required:
         path = package_dir / rel
         if not path.exists():
@@ -952,7 +963,7 @@ def main():
             script_name="run_stage_pipeline.sh",
         )
         write_manifest(args, package_dir, env, resolved_scheme_name, stage_records, image, input_records)
-        check_package(package_dir, bool(args.image_dir))
+        check_package(package_dir, bool(args.image_dir), stage_records)
         tar_path = package_tar(package_dir)
 
         print("[PACKAGE]", package_dir)

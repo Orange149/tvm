@@ -25,6 +25,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <cctype>
 #include <condition_variable>
 #include <cstdint>
 #include <cstdlib>
@@ -52,16 +53,17 @@ using tvm::runtime::PackedFunc;
 using tvm::runtime::Registry;
 
 struct StageArgs {
+  std::string name;
+  std::string device;
   std::string graph;
   std::string lib;
   std::string params;
   std::vector<std::string> input_names{"data0"};
+  int runtime_num_threads = -1;
 };
 
 struct Args {
-  StageArgs stage0;
-  StageArgs stage1;
-  StageArgs stage2;
+  std::vector<StageArgs> stages;
   std::string input;
   std::string input_list;
   std::string output_jsonl = "native_result.jsonl";
@@ -69,9 +71,6 @@ struct Args {
   int runs = 1;
   int queue_depth = 2;
   int runtime_num_threads = 4;
-  int stage0_runtime_num_threads = -1;
-  int stage1_runtime_num_threads = -1;
-  int stage2_runtime_num_threads = -1;
   int events_limit = 200;
   int checkpoint_every = 0;
   bool serial = false;
@@ -172,19 +171,15 @@ std::string JsonEscape(const std::string& value) {
 void Usage(const char* prog) {
   std::cerr
       << "Usage: " << prog << " [options]\n"
-      << "  --stage0-graph PATH --stage0-lib PATH --stage0-params PATH\n"
-      << "  --stage1-graph PATH --stage1-lib PATH --stage1-params PATH\n"
-      << "  --stage2-graph PATH --stage2-lib PATH --stage2-params PATH\n"
-      << "  --stage0-input-names data0[,data1]\n"
-      << "  --stage1-input-names data0[,data1]\n"
-      << "  --stage2-input-names data0[,data1]\n"
+      << "  --stageN-graph PATH --stageN-lib PATH --stageN-params PATH\n"
+      << "  --stageN-input-names data0[,data1]\n"
+      << "  --stageN-device cpu|vta\n"
+      << "  --stageN-name NAME\n"
       << "  --input PATH | --input-list PATH\n"
       << "  --runs N\n"
       << "  --queue-depth N\n"
       << "  --runtime-num-threads N\n"
-      << "  --stage0-runtime-num-threads N\n"
-      << "  --stage1-runtime-num-threads N\n"
-      << "  --stage2-runtime-num-threads N\n"
+      << "  --stageN-runtime-num-threads N\n"
       << "  --serial\n"
       << "  --output-jsonl PATH\n"
       << "  --vta-runtime-profile-dir DIR\n"
@@ -194,6 +189,34 @@ void Usage(const char* prog) {
 
 Args ParseArgs(int argc, char** argv) {
   Args args;
+  auto ensure_stage = [&](size_t index) -> StageArgs& {
+    if (args.stages.size() <= index) {
+      args.stages.resize(index + 1);
+    }
+    return args.stages[index];
+  };
+  auto parse_stage_key = [](const std::string& key, size_t* index,
+                            std::string* suffix) -> bool {
+    const std::string prefix = "--stage";
+    if (key.rfind(prefix, 0) != 0) {
+      return false;
+    }
+    size_t pos = prefix.size();
+    if (pos >= key.size() || !std::isdigit(static_cast<unsigned char>(key[pos]))) {
+      return false;
+    }
+    size_t value = 0;
+    while (pos < key.size() && std::isdigit(static_cast<unsigned char>(key[pos]))) {
+      value = value * 10 + static_cast<size_t>(key[pos] - '0');
+      ++pos;
+    }
+    if (pos >= key.size() || key[pos] != '-') {
+      return false;
+    }
+    *index = value;
+    *suffix = key.substr(pos + 1);
+    return true;
+  };
   for (int i = 1; i < argc; ++i) {
     std::string key = argv[i];
     auto need_value = [&](const std::string& opt) -> std::string {
@@ -203,30 +226,27 @@ Args ParseArgs(int argc, char** argv) {
       return argv[++i];
     };
 
-    if (key == "--stage0-graph") {
-      args.stage0.graph = need_value(key);
-    } else if (key == "--stage0-lib") {
-      args.stage0.lib = need_value(key);
-    } else if (key == "--stage0-params") {
-      args.stage0.params = need_value(key);
-    } else if (key == "--stage0-input-names") {
-      args.stage0.input_names = SplitCSV(need_value(key));
-    } else if (key == "--stage1-graph") {
-      args.stage1.graph = need_value(key);
-    } else if (key == "--stage1-lib") {
-      args.stage1.lib = need_value(key);
-    } else if (key == "--stage1-params") {
-      args.stage1.params = need_value(key);
-    } else if (key == "--stage1-input-names") {
-      args.stage1.input_names = SplitCSV(need_value(key));
-    } else if (key == "--stage2-graph") {
-      args.stage2.graph = need_value(key);
-    } else if (key == "--stage2-lib") {
-      args.stage2.lib = need_value(key);
-    } else if (key == "--stage2-params") {
-      args.stage2.params = need_value(key);
-    } else if (key == "--stage2-input-names") {
-      args.stage2.input_names = SplitCSV(need_value(key));
+    size_t stage_index = 0;
+    std::string stage_suffix;
+    if (parse_stage_key(key, &stage_index, &stage_suffix)) {
+      StageArgs& stage = ensure_stage(stage_index);
+      if (stage_suffix == "graph") {
+        stage.graph = need_value(key);
+      } else if (stage_suffix == "lib") {
+        stage.lib = need_value(key);
+      } else if (stage_suffix == "params") {
+        stage.params = need_value(key);
+      } else if (stage_suffix == "input-names") {
+        stage.input_names = SplitCSV(need_value(key));
+      } else if (stage_suffix == "device") {
+        stage.device = need_value(key);
+      } else if (stage_suffix == "name") {
+        stage.name = need_value(key);
+      } else if (stage_suffix == "runtime-num-threads") {
+        stage.runtime_num_threads = std::stoi(need_value(key));
+      } else {
+        throw std::runtime_error("Unknown stage option " + key);
+      }
     } else if (key == "--input") {
       args.input = need_value(key);
     } else if (key == "--input-list") {
@@ -237,12 +257,6 @@ Args ParseArgs(int argc, char** argv) {
       args.queue_depth = std::stoi(need_value(key));
     } else if (key == "--runtime-num-threads") {
       args.runtime_num_threads = std::stoi(need_value(key));
-    } else if (key == "--stage0-runtime-num-threads") {
-      args.stage0_runtime_num_threads = std::stoi(need_value(key));
-    } else if (key == "--stage1-runtime-num-threads") {
-      args.stage1_runtime_num_threads = std::stoi(need_value(key));
-    } else if (key == "--stage2-runtime-num-threads") {
-      args.stage2_runtime_num_threads = std::stoi(need_value(key));
     } else if (key == "--output-jsonl") {
       args.output_jsonl = need_value(key);
     } else if (key == "--serial") {
@@ -261,9 +275,36 @@ Args ParseArgs(int argc, char** argv) {
     }
   }
 
-  if (args.stage0.graph.empty() || args.stage0.lib.empty() || args.stage0.params.empty() ||
-      args.stage1.graph.empty() || args.stage1.lib.empty() || args.stage1.params.empty() ||
-      args.stage2.graph.empty() || args.stage2.lib.empty() || args.stage2.params.empty()) {
+  if (args.stages.empty()) {
+    throw std::runtime_error("at least one stage is required");
+  }
+  for (size_t i = 0; i < args.stages.size(); ++i) {
+    StageArgs& stage = args.stages[i];
+    if (stage.name.empty()) {
+      stage.name = "stage" + std::to_string(i);
+    }
+    if (stage.device.empty()) {
+      stage.device = (i == 1 ? "vta" : "cpu");
+    }
+    if (stage.device != "cpu" && stage.device != "vta") {
+      throw std::runtime_error("--stage" + std::to_string(i) + "-device must be cpu or vta");
+    }
+    if (stage.graph.empty() || stage.lib.empty() || stage.params.empty()) {
+      throw std::runtime_error("all stage graph/lib/params arguments are required");
+    }
+    if (stage.runtime_num_threads < -1) {
+      throw std::runtime_error("--stage*-runtime-num-threads must be >= -1");
+    }
+  }
+  if (args.stages.size() > 1) {
+    for (size_t i = 0; i < args.stages.size(); ++i) {
+      if (args.stages[i].graph.empty() || args.stages[i].lib.empty() ||
+          args.stages[i].params.empty()) {
+        throw std::runtime_error("stage indices must be contiguous from stage0");
+      }
+    }
+  }
+  if (args.stages.empty()) {
     throw std::runtime_error("all stage graph/lib/params arguments are required");
   }
   if (!args.input.empty() && !args.input_list.empty()) {
@@ -281,10 +322,6 @@ Args ParseArgs(int argc, char** argv) {
   if (args.runtime_num_threads < 0) {
     throw std::runtime_error("--runtime-num-threads must be non-negative");
   }
-  if (args.stage0_runtime_num_threads < -1 || args.stage1_runtime_num_threads < -1 ||
-      args.stage2_runtime_num_threads < -1) {
-    throw std::runtime_error("--stage*-runtime-num-threads must be >= -1");
-  }
   if (args.events_limit < 0) {
     throw std::runtime_error("--vta-runtime-profile-events-limit must be non-negative");
   }
@@ -295,26 +332,16 @@ Args ParseArgs(int argc, char** argv) {
 }
 
 void ResolveStageThreadDefaults(Args* args) {
-  if (args->serial) {
-    if (args->stage0_runtime_num_threads < 0) {
-      args->stage0_runtime_num_threads = args->runtime_num_threads;
+  for (size_t i = 0; i < args->stages.size(); ++i) {
+    StageArgs& stage = args->stages[i];
+    if (stage.runtime_num_threads >= 0) {
+      continue;
     }
-    if (args->stage1_runtime_num_threads < 0) {
-      args->stage1_runtime_num_threads = 1;
+    if (args->serial) {
+      stage.runtime_num_threads = stage.device == "cpu" ? args->runtime_num_threads : 1;
+    } else {
+      stage.runtime_num_threads = (i == 0 && stage.device == "cpu") ? 3 : 1;
     }
-    if (args->stage2_runtime_num_threads < 0) {
-      args->stage2_runtime_num_threads = args->runtime_num_threads;
-    }
-    return;
-  }
-  if (args->stage0_runtime_num_threads < 0) {
-    args->stage0_runtime_num_threads = 3;
-  }
-  if (args->stage1_runtime_num_threads < 0) {
-    args->stage1_runtime_num_threads = 1;
-  }
-  if (args->stage2_runtime_num_threads < 0) {
-    args->stage2_runtime_num_threads = 1;
   }
 }
 
@@ -463,12 +490,8 @@ struct Frame {
   std::string input_file;
   double enqueue_ms{0.0};
   std::vector<NDArray> stage_inputs;
-  std::vector<NDArray> stage0_outputs;
-  std::vector<NDArray> stage1_outputs;
-  std::vector<NDArray> stage2_outputs;
-  StageTiming stage0;
-  StageTiming stage1;
-  StageTiming stage2;
+  std::vector<std::vector<NDArray>> stage_outputs;
+  std::vector<StageTiming> stage_timings;
   double done_ms{0.0};
   int top1{-1};
 };
@@ -595,25 +618,17 @@ std::string ResultJSON(const Frame& frame, int completion_index, const std::stri
      << ",\"input_file\":\"" << JsonEscape(frame.input_file) << "\""
      << ",\"top1\":" << frame.top1
      << ",\"total_latency_ms\":" << (frame.done_ms - frame.enqueue_ms)
-     << ",\"stage0_ms\":" << frame.stage0.ServiceMs()
-     << ",\"stage1_ms\":" << frame.stage1.ServiceMs()
-     << ",\"stage2_ms\":" << frame.stage2.ServiceMs()
-     << ",\"stage0_set_ms\":" << frame.stage0.SetMs()
-     << ",\"stage0_run_ms\":" << frame.stage0.RunMs()
-     << ",\"stage0_get_ms\":" << frame.stage0.GetMs()
-     << ",\"stage1_set_ms\":" << frame.stage1.SetMs()
-     << ",\"stage1_run_ms\":" << frame.stage1.RunMs()
-     << ",\"stage1_get_ms\":" << frame.stage1.GetMs()
-     << ",\"stage2_set_ms\":" << frame.stage2.SetMs()
-     << ",\"stage2_run_ms\":" << frame.stage2.RunMs()
-     << ",\"stage2_get_ms\":" << frame.stage2.GetMs()
-     << ",\"stage0_start_ms\":" << rel(frame.stage0.set_start_ms)
-     << ",\"stage0_end_ms\":" << rel(frame.stage0.end_ms)
-     << ",\"stage1_start_ms\":" << rel(frame.stage1.set_start_ms)
-     << ",\"stage1_end_ms\":" << rel(frame.stage1.end_ms)
-     << ",\"stage2_start_ms\":" << rel(frame.stage2.set_start_ms)
-     << ",\"stage2_end_ms\":" << rel(frame.stage2.end_ms)
-     << "}";
+     << ",\"stage_count\":" << frame.stage_timings.size();
+  for (size_t i = 0; i < frame.stage_timings.size(); ++i) {
+    const StageTiming& timing = frame.stage_timings[i];
+    os << ",\"stage" << i << "_ms\":" << timing.ServiceMs()
+       << ",\"stage" << i << "_set_ms\":" << timing.SetMs()
+       << ",\"stage" << i << "_run_ms\":" << timing.RunMs()
+       << ",\"stage" << i << "_get_ms\":" << timing.GetMs()
+       << ",\"stage" << i << "_start_ms\":" << rel(timing.set_start_ms)
+       << ",\"stage" << i << "_end_ms\":" << rel(timing.end_ms);
+  }
+  os << "}";
   return os.str();
 }
 
@@ -638,23 +653,28 @@ int main(int argc, char** argv) {
   try {
     Args args = ParseArgs(argc, argv);
     ResolveStageThreadDefaults(&args);
-    const int max_runtime_threads =
-        std::max({args.runtime_num_threads, args.stage0_runtime_num_threads,
-                  args.stage1_runtime_num_threads, args.stage2_runtime_num_threads});
+    int max_runtime_threads = args.runtime_num_threads;
+    for (const StageArgs& stage : args.stages) {
+      max_runtime_threads = std::max(max_runtime_threads, stage.runtime_num_threads);
+    }
     if (max_runtime_threads > 0) {
       const std::string max_threads_env = std::to_string(max_runtime_threads);
       setenv("TVM_NUM_THREADS", max_threads_env.c_str(), 1);
     }
     ConfigureThreadPool(args.runtime_num_threads, "main");
-    std::cout << "[THREADPOOL] resolved stage threads: stage0="
-              << args.stage0_runtime_num_threads << " stage1=" << args.stage1_runtime_num_threads
-              << " stage2=" << args.stage2_runtime_num_threads << "\n";
+    std::cout << "[THREADPOOL] resolved stage threads:";
+    for (size_t i = 0; i < args.stages.size(); ++i) {
+      std::cout << " stage" << i << "=" << args.stages[i].runtime_num_threads;
+    }
+    std::cout << "\n";
 
-    StageExecutor stage0 = LoadStage("stage0_cpu", "cpu", args.stage0);
-    StageExecutor stage1 = LoadStage("stage1_vta", "vta", args.stage1);
-    StageExecutor stage2 = LoadStage("stage2_cpu", "cpu", args.stage2);
+    std::vector<StageExecutor> stages;
+    stages.reserve(args.stages.size());
+    for (const StageArgs& stage_arg : args.stages) {
+      stages.push_back(LoadStage(stage_arg.name, stage_arg.device, stage_arg));
+    }
 
-    DLTensor* input_tensor = stage0.get_input(args.stage0.input_names[0]);
+    DLTensor* input_tensor = stages[0].get_input(args.stages[0].input_names[0]);
     if (input_tensor == nullptr) {
       throw std::runtime_error("Unable to resolve first stage input tensor");
     }
@@ -707,21 +727,27 @@ int main(int argc, char** argv) {
         frame.input_file = input.input_file;
         frame.enqueue_ms = NowMillis();
         frame.stage_inputs = {input.data};
-        ConfigureThreadPool(args.stage0_runtime_num_threads, "serial.stage0");
-        frame.stage0_outputs = RunStage(&stage0, frame.stage_inputs, &frame.stage0);
-        ConfigureThreadPool(args.stage1_runtime_num_threads, "serial.stage1");
-        frame.stage1_outputs = RunStage(&stage1, frame.stage0_outputs, &frame.stage1);
-        ConfigureThreadPool(args.stage2_runtime_num_threads, "serial.stage2");
-        frame.stage2_outputs = RunStage(&stage2, frame.stage1_outputs, &frame.stage2);
+        frame.stage_outputs.resize(stages.size());
+        frame.stage_timings.resize(stages.size());
+        const std::vector<NDArray>* current_inputs = &frame.stage_inputs;
+        for (size_t stage_index = 0; stage_index < stages.size(); ++stage_index) {
+          ConfigureThreadPool(args.stages[stage_index].runtime_num_threads,
+                              "serial.stage" + std::to_string(stage_index));
+          frame.stage_outputs[stage_index] =
+              RunStage(&stages[stage_index], *current_inputs, &frame.stage_timings[stage_index]);
+          current_inputs = &frame.stage_outputs[stage_index];
+        }
         frame.done_ms = NowMillis();
-        frame.top1 = Top1Float32(frame.stage2_outputs[0]);
+        frame.top1 = Top1Float32(frame.stage_outputs.back()[0]);
         write_completed(frame, "serial");
       }
     } else {
-      BoundedQueue<std::shared_ptr<Frame>> input_q(static_cast<size_t>(args.queue_depth));
-      BoundedQueue<std::shared_ptr<Frame>> s0_to_s1_q(static_cast<size_t>(args.queue_depth));
-      BoundedQueue<std::shared_ptr<Frame>> s1_to_s2_q(static_cast<size_t>(args.queue_depth));
-      BoundedQueue<std::shared_ptr<Frame>> result_q(static_cast<size_t>(args.queue_depth));
+      std::vector<std::unique_ptr<BoundedQueue<std::shared_ptr<Frame>>>> queues;
+      queues.reserve(stages.size() + 1);
+      for (size_t i = 0; i <= stages.size(); ++i) {
+        queues.emplace_back(
+            std::make_unique<BoundedQueue<std::shared_ptr<Frame>>>(args.queue_depth));
+      }
       std::mutex error_mutex;
       std::exception_ptr first_error = nullptr;
 
@@ -729,58 +755,40 @@ int main(int argc, char** argv) {
         std::lock_guard<std::mutex> lock(error_mutex);
         if (first_error == nullptr) {
           first_error = err;
-          input_q.Close();
-          s0_to_s1_q.Close();
-          s1_to_s2_q.Close();
-          result_q.Close();
+          for (auto& queue : queues) {
+            queue->Close();
+          }
         }
       };
 
-      std::thread stage0_thread([&]() {
-        try {
-          ConfigureThreadPool(args.stage0_runtime_num_threads, "pipeline.stage0");
-          std::shared_ptr<Frame> frame;
-          while (input_q.Pop(&frame)) {
-            frame->stage0_outputs = RunStage(&stage0, frame->stage_inputs, &frame->stage0);
-            if (!s0_to_s1_q.Push(frame)) break;
+      std::vector<std::thread> stage_threads;
+      stage_threads.reserve(stages.size());
+      for (size_t stage_index = 0; stage_index < stages.size(); ++stage_index) {
+        stage_threads.emplace_back([&, stage_index]() {
+          try {
+            ConfigureThreadPool(args.stages[stage_index].runtime_num_threads,
+                                "pipeline.stage" + std::to_string(stage_index));
+            std::shared_ptr<Frame> frame;
+            while (queues[stage_index]->Pop(&frame)) {
+              const std::vector<NDArray>& stage_inputs =
+                  stage_index == 0 ? frame->stage_inputs : frame->stage_outputs[stage_index - 1];
+              frame->stage_outputs[stage_index] = RunStage(
+                  &stages[stage_index], stage_inputs, &frame->stage_timings[stage_index]);
+              if (stage_index > 0) {
+                frame->stage_outputs[stage_index - 1].clear();
+              }
+              if (stage_index + 1 == stages.size()) {
+                frame->done_ms = NowMillis();
+                frame->top1 = Top1Float32(frame->stage_outputs[stage_index][0]);
+              }
+              if (!queues[stage_index + 1]->Push(frame)) break;
+            }
+            queues[stage_index + 1]->Close();
+          } catch (...) {
+            record_error(std::current_exception());
           }
-          s0_to_s1_q.Close();
-        } catch (...) {
-          record_error(std::current_exception());
-        }
-      });
-
-      std::thread stage1_thread([&]() {
-        try {
-          ConfigureThreadPool(args.stage1_runtime_num_threads, "pipeline.stage1");
-          std::shared_ptr<Frame> frame;
-          while (s0_to_s1_q.Pop(&frame)) {
-            frame->stage1_outputs = RunStage(&stage1, frame->stage0_outputs, &frame->stage1);
-            frame->stage0_outputs.clear();
-            if (!s1_to_s2_q.Push(frame)) break;
-          }
-          s1_to_s2_q.Close();
-        } catch (...) {
-          record_error(std::current_exception());
-        }
-      });
-
-      std::thread stage2_thread([&]() {
-        try {
-          ConfigureThreadPool(args.stage2_runtime_num_threads, "pipeline.stage2");
-          std::shared_ptr<Frame> frame;
-          while (s1_to_s2_q.Pop(&frame)) {
-            frame->stage2_outputs = RunStage(&stage2, frame->stage1_outputs, &frame->stage2);
-            frame->stage1_outputs.clear();
-            frame->done_ms = NowMillis();
-            frame->top1 = Top1Float32(frame->stage2_outputs[0]);
-            if (!result_q.Push(frame)) break;
-          }
-          result_q.Close();
-        } catch (...) {
-          record_error(std::current_exception());
-        }
-      });
+        });
+      }
 
       std::thread producer_thread([&]() {
         try {
@@ -792,26 +800,28 @@ int main(int argc, char** argv) {
             frame->input_file = input.input_file;
             frame->enqueue_ms = NowMillis();
             frame->stage_inputs = {input.data};
-            if (!input_q.Push(frame)) {
+            frame->stage_outputs.resize(stages.size());
+            frame->stage_timings.resize(stages.size());
+            if (!queues[0]->Push(frame)) {
               break;
             }
           }
-          input_q.Close();
+          queues[0]->Close();
         } catch (...) {
-          input_q.Close();
+          queues[0]->Close();
           record_error(std::current_exception());
         }
       });
 
       std::shared_ptr<Frame> frame;
-      while (result_q.Pop(&frame)) {
+      while (queues.back()->Pop(&frame)) {
         write_completed(*frame, "pipeline");
       }
 
       producer_thread.join();
-      stage0_thread.join();
-      stage1_thread.join();
-      stage2_thread.join();
+      for (std::thread& stage_thread : stage_threads) {
+        stage_thread.join();
+      }
 
       if (first_error != nullptr) {
         std::rethrow_exception(first_error);

@@ -282,8 +282,7 @@ def _pack_stage_inputs(relay_func, cpu_dev, bitpack_start):
     bind_map = {}
     packed_params = []
     for param in relay_func.params:
-        cpu_input = relay.annotation.on_device(param, cpu_dev)
-        packed_input = relay.Call(bitpack_start, [cpu_input])
+        packed_input = relay.Call(bitpack_start, [param])
         bind_map[param] = packed_input
         packed_params.append(param)
     wrapped_body = relay.expr.bind(relay_func.body, bind_map)
@@ -309,7 +308,6 @@ def wrap_stage_with_explicit_pack(relay_func):
 
     packed_params, wrapped_body = _pack_stage_inputs(relay_func, cpu_dev, bitpack_start)
     wrapped_body = _unpack_stage_outputs(wrapped_body, bitpack_end)
-    wrapped_body = relay.annotation.on_device(wrapped_body, cpu_dev)
     wrapped_func = relay.Function(
         packed_params,
         wrapped_body,
@@ -367,17 +365,26 @@ def build_vta_stage(stage_name, relay_prog, params, env, use_graph_pack=False):
         packed = vta_graphpack.run_opt_pass(packed, transform.InferType())
     else:
         packed = wrap_stage_with_explicit_pack(qmod["main"])
-        packer = vta_graphpack.ExprPack(env.BATCH, env.BLOCK_OUT, env.WGT_WIDTH)
-        packed = packer.visit(packed)
+        packed = vta_graphpack.graph_pack(
+            packed,
+            env.BATCH,
+            env.BLOCK_OUT,
+            env.WGT_WIDTH,
+            start_name=None,
+            stop_name=None,
+            boundary_bridge=True,
+        )
         packed = vta_graphpack.run_opt_pass(packed, transform.InferType())
-        packed = annotate_all_ops_to_ext_dev(packed)
 
     target = env.target
     target_with_host = tvm.target.Target(target, host=env.target_host)
-    build_target = {
-        "cpu": tvm.target.Target(env.target_vta_cpu, host=env.target_host),
-        "ext_dev": target_with_host,
-    }
+    if use_graph_pack:
+        build_target = {
+            "cpu": tvm.target.Target(env.target_vta_cpu, host=env.target_host),
+            "ext_dev": target_with_host,
+        }
+    else:
+        build_target = target_with_host
     with vta.build_config(
         opt_level=3,
         disabled_pass={"AlterOpLayout", "tir.CommonSubexprElimTIR"},
