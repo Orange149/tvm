@@ -1,0 +1,3763 @@
+{
+  "baselines": {
+    "native_single_stage_pipeline_fps": 2.9619880760327932,
+    "packed_graph_smoke_fps": 6.52152984603568,
+    "packed_hetero_best_fps": 4.2922,
+    "rpc_all_vta_fps": 3.724346058177234
+  },
+  "best": {
+    "balance_imbalance_ms_est": 85.52899490909094,
+    "balanced_cycle_ms_est": 274.42710031515156,
+    "bottleneck_stage": 2,
+    "boundary_bytes_est": 1124864,
+    "boundary_conv_outputs": [
+      4,
+      8,
+      11
+    ],
+    "boundary_ms": 0.7499093333333333,
+    "boundary_reasons": "",
+    "boundary_status": "safe",
+    "boundary_valid": true,
+    "boundary_warnings": "per_stage_quantization_experimental;non_pool4_start_boundary_experimental;cpu_tail_requires_serial_raw_gate;concat_route_cpu_tail_boundary;cpu_to_vta_boundary_requires_pack_quant:pool1;vta_to_cpu_boundary_requires_unpack_dequant:route23;vta_to_cpu_boundary_requires_unpack_dequant:small42;vta_to_cpu_boundary_requires_unpack_dequant:big64",
+    "candidate_id": "yolo_pool1_to_dual_pre18_14",
+    "correctness": {
+      "detection_gate": {
+        "candidate_detection_count": 5,
+        "compared_topk": 3,
+        "passes_detection_gate": true,
+        "reference_detection_count": 3,
+        "rows": [
+          {
+            "candidate_class_id": 0,
+            "candidate_rank": 0,
+            "class_match": true,
+            "iou": 0.8754563894523326,
+            "passes": true,
+            "rank": 0,
+            "ref_class_id": 0,
+            "score_delta": 0.042338788509368896
+          },
+          {
+            "candidate_class_id": 16,
+            "candidate_rank": 2,
+            "class_match": true,
+            "iou": 0.5260103626943006,
+            "passes": true,
+            "rank": 1,
+            "ref_class_id": 16,
+            "score_delta": 0.10094434022903442
+          },
+          {
+            "candidate_class_id": 17,
+            "candidate_rank": 3,
+            "class_match": true,
+            "iou": 0.8823012736056214,
+            "passes": true,
+            "rank": 2,
+            "ref_class_id": 17,
+            "score_delta": 0.04721921682357788
+          }
+        ]
+      },
+      "raw_output_gate": {
+        "max_mean_abs_delta": 0.5200830395587006,
+        "max_sum_abs_delta": 89651.914554347,
+        "output_count_match": true,
+        "passes_raw_output_gate": false,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 0.5200830395587006,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 89651.914554347,
+            "sum_rel_delta": 1.0435740577784234
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 0.00019773979275512776,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 8.521576067156275,
+            "sum_rel_delta": 0.010248196369898568
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      }
+    },
+    "correctness_policy": "detection_gate",
+    "cpu_prefix_convs": [
+      0,
+      1
+    ],
+    "cpu_tail_convs": [
+      9,
+      10,
+      12
+    ],
+    "detection_gate_passed": true,
+    "detection_summary": {
+      "detection_count": 5,
+      "image_shape_hwc": [
+        416,
+        416,
+        3
+      ],
+      "net_shape_hw": [
+        416,
+        416
+      ],
+      "nms_threshold": 0.45,
+      "threshold": 0.56,
+      "top_detections": [
+        {
+          "bottom": 367,
+          "class_id": 0,
+          "class_name": "person",
+          "labels": [
+            "person 0.9196"
+          ],
+          "left": 195,
+          "objectness": 0.9198002815246582,
+          "right": 273,
+          "score": 0.919562041759491,
+          "top": 118
+        },
+        {
+          "bottom": 329,
+          "class_id": 16,
+          "class_name": "dog",
+          "labels": [
+            "dog 0.9149"
+          ],
+          "left": 110,
+          "objectness": 0.9157084226608276,
+          "right": 167,
+          "score": 0.9148906469345093,
+          "top": 278
+        },
+        {
+          "bottom": 346,
+          "class_id": 16,
+          "class_name": "dog",
+          "labels": [
+            "dog 0.8102"
+          ],
+          "left": 76,
+          "objectness": 0.8168538808822632,
+          "right": 199,
+          "score": 0.8101768493652344,
+          "top": 265
+        },
+        {
+          "bottom": 329,
+          "class_id": 17,
+          "class_name": "horse",
+          "labels": [
+            "horse 0.7572"
+          ],
+          "left": 403,
+          "objectness": 0.8977380394935608,
+          "right": 609,
+          "score": 0.7571994662284851,
+          "top": 133
+        },
+        {
+          "bottom": 327,
+          "class_id": 0,
+          "class_name": "person",
+          "labels": [
+            "person 0.7097"
+          ],
+          "left": 212,
+          "objectness": 0.7106896638870239,
+          "right": 249,
+          "score": 0.7096788883209229,
+          "top": 133
+        }
+      ]
+    },
+    "dma_fragmentation_ms": 0.06,
+    "effective_segment_count": 3.0,
+    "end_name": "dual_pre18_14",
+    "end_output_names": [
+      "route23",
+      "small42",
+      "big64"
+    ],
+    "failure_type": "",
+    "fitted_cycle_ms_est": 434.61130350700114,
+    "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/yolo_pool1_to_dual_pre18_14/pipeline.log",
+    "mean_total_latency_ms": 2513.2132697,
+    "measured_cycle_ms": 310.23915436842105,
+    "mode": "pipeline",
+    "needs_route_input": false,
+    "passes_correctness_gate": true,
+    "pattern_cpu_vta_cpu": 1.0,
+    "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+    "pipeline_throughput_fps": 3.223319770954704,
+    "predicted_cycle_ms": 330.4915714322989,
+    "predicted_fps": 3.0257957734478858,
+    "raw_gate_passed": false,
+    "raw_mismatch_summary": {
+      "max_mean_abs_delta": 0.5200830395587006,
+      "max_sum_abs_delta": 89651.914554347,
+      "output_count_match": true,
+      "passes_raw_output_gate": false,
+      "rows": [
+        {
+          "index": 0,
+          "mean_abs_delta": 0.5200830395587006,
+          "passes": false,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 89651.914554347,
+          "sum_rel_delta": 1.0435740577784234
+        },
+        {
+          "index": 1,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 2,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 3,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 4,
+          "mean_abs_delta": 0.00019773979275512776,
+          "passes": false,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 8.521576067156275,
+          "sum_rel_delta": 0.010248196369898568
+        },
+        {
+          "index": 5,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 6,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 7,
+          "mean_abs_delta": 3.333369136271358e-10,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        }
+      ]
+    },
+    "raw_outputs": [
+      {
+        "dtype": "float32",
+        "fnv1a64": "4b181980c0c259c5",
+        "index": 0,
+        "max": 1.542059183,
+        "mean": 0.021715879,
+        "min": -1.690734386,
+        "nbytes": 689520,
+        "shape": [
+          1,
+          255,
+          26,
+          26
+        ],
+        "size": 172380,
+        "sum": 3743.383304347
+      },
+      {
+        "dtype": "int32",
+        "fnv1a64": "6437c9a572635250",
+        "index": 1,
+        "max": 2.0,
+        "mean": 1.0,
+        "min": 0.0,
+        "nbytes": 12,
+        "shape": [
+          3
+        ],
+        "size": 3,
+        "sum": 3.0
+      },
+      {
+        "dtype": "float32",
+        "fnv1a64": "1634dd673862fe48",
+        "index": 2,
+        "max": 344.0,
+        "mean": 108.25,
+        "min": 10.0,
+        "nbytes": 48,
+        "shape": [
+          12
+        ],
+        "size": 12,
+        "sum": 1299.0
+      },
+      {
+        "dtype": "int32",
+        "fnv1a64": "b619ac38b449dc99",
+        "index": 3,
+        "max": 255.0,
+        "mean": 66.0,
+        "min": 3.0,
+        "nbytes": 24,
+        "shape": [
+          6
+        ],
+        "size": 6,
+        "sum": 396.0
+      },
+      {
+        "dtype": "float32",
+        "fnv1a64": "ec0ca3a99cf64eeb",
+        "index": 4,
+        "max": 1.179515719,
+        "mean": 0.019097297,
+        "min": -1.512302876,
+        "nbytes": 172380,
+        "shape": [
+          1,
+          255,
+          13,
+          13
+        ],
+        "size": 43095,
+        "sum": 822.998016218
+      },
+      {
+        "dtype": "int32",
+        "fnv1a64": "7f5875e9426f5e51",
+        "index": 5,
+        "max": 5.0,
+        "mean": 4.0,
+        "min": 3.0,
+        "nbytes": 12,
+        "shape": [
+          3
+        ],
+        "size": 3,
+        "sum": 12.0
+      },
+      {
+        "dtype": "float32",
+        "fnv1a64": "1634dd673862fe48",
+        "index": 6,
+        "max": 344.0,
+        "mean": 108.25,
+        "min": 10.0,
+        "nbytes": 48,
+        "shape": [
+          12
+        ],
+        "size": 12,
+        "sum": 1299.0
+      },
+      {
+        "dtype": "int32",
+        "fnv1a64": "85777e194f56eaa9",
+        "index": 7,
+        "max": 255.0,
+        "mean": 61.666666667,
+        "min": 3.0,
+        "nbytes": 24,
+        "shape": [
+          6
+        ],
+        "size": 6,
+        "sum": 370.0
+      }
+    ],
+    "resource_cycle_ms": 201.29559272727275,
+    "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/yolo_pool1_to_dual_pre18_14/native_pipeline_result.jsonl",
+    "run_kind": "pipeline",
+    "small_island_count": 0.0,
+    "split_boundary_diagnostics": {
+      "candidate_id": "yolo_pool1_to_dual_pre18_14",
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "stage_count": 3,
+      "stage_raw_outputs": [
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "d04bb90b6a171f94",
+              "index": 0,
+              "max": 23.534864426,
+              "mean": 0.948156469,
+              "min": -5.474978447,
+              "nbytes": 1384448,
+              "shape": [
+                1,
+                32,
+                104,
+                104
+              ],
+              "size": 346112,
+              "sum": 328168.331691308
+            }
+          ],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "7f78a3aa3ff9fa6f",
+              "index": 0,
+              "max": 16.53125,
+              "mean": -0.030636776,
+              "min": -2.048437595,
+              "nbytes": 692224,
+              "shape": [
+                1,
+                256,
+                26,
+                26
+              ],
+              "size": 173056,
+              "sum": -5301.877878526
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "94bdf6f847e431bb",
+              "index": 1,
+              "max": 8.265625,
+              "mean": 0.462866427,
+              "min": -0.736718774,
+              "nbytes": 86528,
+              "shape": [
+                1,
+                128,
+                13,
+                13
+              ],
+              "size": 21632,
+              "sum": 10012.726554345
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "a361f8a00ed780ca",
+              "index": 2,
+              "max": 7.7265625,
+              "mean": 0.477369681,
+              "min": -0.862500012,
+              "nbytes": 346112,
+              "shape": [
+                1,
+                512,
+                13,
+                13
+              ],
+              "size": 86528,
+              "sum": 41305.843721999
+            }
+          ],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "4b181980c0c259c5",
+              "index": 0,
+              "max": 1.542059183,
+              "mean": 0.021715879,
+              "min": -1.690734386,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": 3743.383304347
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "ec0ca3a99cf64eeb",
+              "index": 4,
+              "max": 1.179515719,
+              "mean": 0.019097297,
+              "min": -1.512302876,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 822.998016218
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_raw_outputs_available": true,
+      "start_name": "pool1"
+    },
+    "sram_risk_ms": 0.0,
+    "stage0_ms_est": 83.06688,
+    "stage1_vta_ms_est": 115.76659781818181,
+    "stage2_ms_est": 201.29559272727275,
+    "stage_count": 3.0,
+    "stage_devices": "cpu/vta/cpu",
+    "stage_get_mean_ms": [
+      2.2425990000000002,
+      4.43083115,
+      0.6699233
+    ],
+    "stage_imbalance_ms": 120.15447609999998,
+    "stage_mean_ms": [
+      184.9074986,
+      185.0419927,
+      305.1964688
+    ],
+    "stage_raw_outputs": [
+      {
+        "outputs": [
+          {
+            "dtype": "float32",
+            "fnv1a64": "d04bb90b6a171f94",
+            "index": 0,
+            "max": 23.534864426,
+            "mean": 0.948156469,
+            "min": -5.474978447,
+            "nbytes": 1384448,
+            "shape": [
+              1,
+              32,
+              104,
+              104
+            ],
+            "size": 346112,
+            "sum": 328168.331691308
+          }
+        ],
+        "stage_index": 0
+      },
+      {
+        "outputs": [
+          {
+            "dtype": "float32",
+            "fnv1a64": "7f78a3aa3ff9fa6f",
+            "index": 0,
+            "max": 16.53125,
+            "mean": -0.030636776,
+            "min": -2.048437595,
+            "nbytes": 692224,
+            "shape": [
+              1,
+              256,
+              26,
+              26
+            ],
+            "size": 173056,
+            "sum": -5301.877878526
+          },
+          {
+            "dtype": "float32",
+            "fnv1a64": "94bdf6f847e431bb",
+            "index": 1,
+            "max": 8.265625,
+            "mean": 0.462866427,
+            "min": -0.736718774,
+            "nbytes": 86528,
+            "shape": [
+              1,
+              128,
+              13,
+              13
+            ],
+            "size": 21632,
+            "sum": 10012.726554345
+          },
+          {
+            "dtype": "float32",
+            "fnv1a64": "a361f8a00ed780ca",
+            "index": 2,
+            "max": 7.7265625,
+            "mean": 0.477369681,
+            "min": -0.862500012,
+            "nbytes": 346112,
+            "shape": [
+              1,
+              512,
+              13,
+              13
+            ],
+            "size": 86528,
+            "sum": 41305.843721999
+          }
+        ],
+        "stage_index": 1
+      },
+      {
+        "outputs": [
+          {
+            "dtype": "float32",
+            "fnv1a64": "4b181980c0c259c5",
+            "index": 0,
+            "max": 1.542059183,
+            "mean": 0.021715879,
+            "min": -1.690734386,
+            "nbytes": 689520,
+            "shape": [
+              1,
+              255,
+              26,
+              26
+            ],
+            "size": 172380,
+            "sum": 3743.383304347
+          },
+          {
+            "dtype": "int32",
+            "fnv1a64": "6437c9a572635250",
+            "index": 1,
+            "max": 2.0,
+            "mean": 1.0,
+            "min": 0.0,
+            "nbytes": 12,
+            "shape": [
+              3
+            ],
+            "size": 3,
+            "sum": 3.0
+          },
+          {
+            "dtype": "float32",
+            "fnv1a64": "1634dd673862fe48",
+            "index": 2,
+            "max": 344.0,
+            "mean": 108.25,
+            "min": 10.0,
+            "nbytes": 48,
+            "shape": [
+              12
+            ],
+            "size": 12,
+            "sum": 1299.0
+          },
+          {
+            "dtype": "int32",
+            "fnv1a64": "b619ac38b449dc99",
+            "index": 3,
+            "max": 255.0,
+            "mean": 66.0,
+            "min": 3.0,
+            "nbytes": 24,
+            "shape": [
+              6
+            ],
+            "size": 6,
+            "sum": 396.0
+          },
+          {
+            "dtype": "float32",
+            "fnv1a64": "ec0ca3a99cf64eeb",
+            "index": 4,
+            "max": 1.179515719,
+            "mean": 0.019097297,
+            "min": -1.512302876,
+            "nbytes": 172380,
+            "shape": [
+              1,
+              255,
+              13,
+              13
+            ],
+            "size": 43095,
+            "sum": 822.998016218
+          },
+          {
+            "dtype": "int32",
+            "fnv1a64": "7f5875e9426f5e51",
+            "index": 5,
+            "max": 5.0,
+            "mean": 4.0,
+            "min": 3.0,
+            "nbytes": 12,
+            "shape": [
+              3
+            ],
+            "size": 3,
+            "sum": 12.0
+          },
+          {
+            "dtype": "float32",
+            "fnv1a64": "1634dd673862fe48",
+            "index": 6,
+            "max": 344.0,
+            "mean": 108.25,
+            "min": 10.0,
+            "nbytes": 48,
+            "shape": [
+              12
+            ],
+            "size": 12,
+            "sum": 1299.0
+          },
+          {
+            "dtype": "int32",
+            "fnv1a64": "85777e194f56eaa9",
+            "index": 7,
+            "max": 255.0,
+            "mean": 61.666666667,
+            "min": 3.0,
+            "nbytes": 24,
+            "shape": [
+              6
+            ],
+            "size": 6,
+            "sum": 370.0
+          }
+        ],
+        "stage_index": 2
+      }
+    ],
+    "stage_run_mean_ms": [
+      181.47015855,
+      175.05933755,
+      303.5850476
+    ],
+    "stage_set_mean_ms": [
+      1.19474105,
+      5.551824,
+      0.9414979
+    ],
+    "stage_times_ms": [
+      184.9074986,
+      185.0419927,
+      305.1964688
+    ],
+    "start_name": "pool1",
+    "status": "ok",
+    "tail_cpu_ms": 201.29559272727275,
+    "throughput_fps": 3.223319770954704,
+    "vta_convs": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11
+    ],
+    "vta_dma_ms": 0.5113018181818182
+  },
+  "buildable_count": 1,
+  "candidate_count": 1,
+  "generated_at": "2026-05-14T10:41:05",
+  "heuristic_params_json": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/heuristic_params_resnet18_v23_200.json",
+  "measure_count": 20,
+  "pipeline_ok_count": 1,
+  "rows": [
+    {
+      "balance_imbalance_ms_est": 85.52899490909094,
+      "balanced_cycle_ms_est": 274.42710031515156,
+      "bottleneck_stage": 2,
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "boundary_reasons": "",
+      "boundary_status": "safe",
+      "boundary_valid": true,
+      "boundary_warnings": "per_stage_quantization_experimental;non_pool4_start_boundary_experimental;cpu_tail_requires_serial_raw_gate;concat_route_cpu_tail_boundary;cpu_to_vta_boundary_requires_pack_quant:pool1;vta_to_cpu_boundary_requires_unpack_dequant:route23;vta_to_cpu_boundary_requires_unpack_dequant:small42;vta_to_cpu_boundary_requires_unpack_dequant:big64",
+      "candidate_id": "yolo_pool1_to_dual_pre18_14",
+      "correctness": {
+        "detection_gate": {
+          "candidate_detection_count": 5,
+          "compared_topk": 3,
+          "passes_detection_gate": true,
+          "reference_detection_count": 3,
+          "rows": [
+            {
+              "candidate_class_id": 0,
+              "candidate_rank": 0,
+              "class_match": true,
+              "iou": 0.8754563894523326,
+              "passes": true,
+              "rank": 0,
+              "ref_class_id": 0,
+              "score_delta": 0.042338788509368896
+            },
+            {
+              "candidate_class_id": 16,
+              "candidate_rank": 2,
+              "class_match": true,
+              "iou": 0.5260103626943006,
+              "passes": true,
+              "rank": 1,
+              "ref_class_id": 16,
+              "score_delta": 0.10094434022903442
+            },
+            {
+              "candidate_class_id": 17,
+              "candidate_rank": 3,
+              "class_match": true,
+              "iou": 0.8823012736056214,
+              "passes": true,
+              "rank": 2,
+              "ref_class_id": 17,
+              "score_delta": 0.04721921682357788
+            }
+          ]
+        },
+        "raw_output_gate": {
+          "max_mean_abs_delta": 0.5200830395587006,
+          "max_sum_abs_delta": 89651.914554347,
+          "output_count_match": true,
+          "passes_raw_output_gate": false,
+          "rows": [
+            {
+              "index": 0,
+              "mean_abs_delta": 0.5200830395587006,
+              "passes": false,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 89651.914554347,
+              "sum_rel_delta": 1.0435740577784234
+            },
+            {
+              "index": 1,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 2,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 3,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 4,
+              "mean_abs_delta": 0.00019773979275512776,
+              "passes": false,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 8.521576067156275,
+              "sum_rel_delta": 0.010248196369898568
+            },
+            {
+              "index": 5,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 6,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 7,
+              "mean_abs_delta": 3.333369136271358e-10,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            }
+          ]
+        }
+      },
+      "correctness_policy": "detection_gate",
+      "cpu_prefix_convs": [
+        0,
+        1
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "detection_gate_passed": true,
+      "detection_summary": {
+        "detection_count": 5,
+        "image_shape_hwc": [
+          416,
+          416,
+          3
+        ],
+        "net_shape_hw": [
+          416,
+          416
+        ],
+        "nms_threshold": 0.45,
+        "threshold": 0.56,
+        "top_detections": [
+          {
+            "bottom": 367,
+            "class_id": 0,
+            "class_name": "person",
+            "labels": [
+              "person 0.9196"
+            ],
+            "left": 195,
+            "objectness": 0.9198002815246582,
+            "right": 273,
+            "score": 0.919562041759491,
+            "top": 118
+          },
+          {
+            "bottom": 329,
+            "class_id": 16,
+            "class_name": "dog",
+            "labels": [
+              "dog 0.9149"
+            ],
+            "left": 110,
+            "objectness": 0.9157084226608276,
+            "right": 167,
+            "score": 0.9148906469345093,
+            "top": 278
+          },
+          {
+            "bottom": 346,
+            "class_id": 16,
+            "class_name": "dog",
+            "labels": [
+              "dog 0.8102"
+            ],
+            "left": 76,
+            "objectness": 0.8168538808822632,
+            "right": 199,
+            "score": 0.8101768493652344,
+            "top": 265
+          },
+          {
+            "bottom": 329,
+            "class_id": 17,
+            "class_name": "horse",
+            "labels": [
+              "horse 0.7572"
+            ],
+            "left": 403,
+            "objectness": 0.8977380394935608,
+            "right": 609,
+            "score": 0.7571994662284851,
+            "top": 133
+          },
+          {
+            "bottom": 327,
+            "class_id": 0,
+            "class_name": "person",
+            "labels": [
+              "person 0.7097"
+            ],
+            "left": 212,
+            "objectness": 0.7106896638870239,
+            "right": 249,
+            "score": 0.7096788883209229,
+            "top": 133
+          }
+        ]
+      },
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "failure_type": "",
+      "fitted_cycle_ms_est": 434.61130350700114,
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/yolo_pool1_to_dual_pre18_14/serial.log",
+      "mean_total_latency_ms": 490.325173,
+      "measured_cycle_ms": 490.325173,
+      "mode": "serial",
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/packages/yolo_pool1_to_dual_pre18_14",
+      "passes_correctness_gate": true,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "pipeline_throughput_fps": null,
+      "predicted_cycle_ms": 330.4915714322989,
+      "predicted_fps": 3.0257957734478858,
+      "raw_gate_passed": false,
+      "raw_mismatch_summary": {
+        "max_mean_abs_delta": 0.5200830395587006,
+        "max_sum_abs_delta": 89651.914554347,
+        "output_count_match": true,
+        "passes_raw_output_gate": false,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 0.5200830395587006,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 89651.914554347,
+            "sum_rel_delta": 1.0435740577784234
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 0.00019773979275512776,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 8.521576067156275,
+            "sum_rel_delta": 0.010248196369898568
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "4b181980c0c259c5",
+          "index": 0,
+          "max": 1.542059183,
+          "mean": 0.021715879,
+          "min": -1.690734386,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": 3743.383304347
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "ec0ca3a99cf64eeb",
+          "index": 4,
+          "max": 1.179515719,
+          "mean": 0.019097297,
+          "min": -1.512302876,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 822.998016218
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "resource_cycle_ms": 201.29559272727275,
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/yolo_pool1_to_dual_pre18_14/native_serial_result.jsonl",
+      "run_kind": "serial_smoke",
+      "small_island_count": 0.0,
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_pool1_to_dual_pre18_14",
+        "end_name": "dual_pre18_14",
+        "end_output_names": [
+          "route23",
+          "small42",
+          "big64"
+        ],
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "d04bb90b6a171f94",
+                "index": 0,
+                "max": 23.534864426,
+                "mean": 0.948156469,
+                "min": -5.474978447,
+                "nbytes": 1384448,
+                "shape": [
+                  1,
+                  32,
+                  104,
+                  104
+                ],
+                "size": 346112,
+                "sum": 328168.331691308
+              }
+            ],
+            "stage_index": 0
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "7f78a3aa3ff9fa6f",
+                "index": 0,
+                "max": 16.53125,
+                "mean": -0.030636776,
+                "min": -2.048437595,
+                "nbytes": 692224,
+                "shape": [
+                  1,
+                  256,
+                  26,
+                  26
+                ],
+                "size": 173056,
+                "sum": -5301.877878526
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "94bdf6f847e431bb",
+                "index": 1,
+                "max": 8.265625,
+                "mean": 0.462866427,
+                "min": -0.736718774,
+                "nbytes": 86528,
+                "shape": [
+                  1,
+                  128,
+                  13,
+                  13
+                ],
+                "size": 21632,
+                "sum": 10012.726554345
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "a361f8a00ed780ca",
+                "index": 2,
+                "max": 7.7265625,
+                "mean": 0.477369681,
+                "min": -0.862500012,
+                "nbytes": 346112,
+                "shape": [
+                  1,
+                  512,
+                  13,
+                  13
+                ],
+                "size": 86528,
+                "sum": 41305.843721999
+              }
+            ],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "4b181980c0c259c5",
+                "index": 0,
+                "max": 1.542059183,
+                "mean": 0.021715879,
+                "min": -1.690734386,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": 3743.383304347
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "ec0ca3a99cf64eeb",
+                "index": 4,
+                "max": 1.179515719,
+                "mean": 0.019097297,
+                "min": -1.512302876,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 822.998016218
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": "pool1"
+      },
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 83.06688,
+      "stage1_vta_ms_est": 115.76659781818181,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "stage_get_mean_ms": [
+        0.655747,
+        3.4774839999999996,
+        0.442985
+      ],
+      "stage_imbalance_ms": 59.402079499999985,
+      "stage_mean_ms": [
+        110.467405,
+        160.124786,
+        219.52686549999999
+      ],
+      "stage_raw_outputs": [
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "d04bb90b6a171f94",
+              "index": 0,
+              "max": 23.534864426,
+              "mean": 0.948156469,
+              "min": -5.474978447,
+              "nbytes": 1384448,
+              "shape": [
+                1,
+                32,
+                104,
+                104
+              ],
+              "size": 346112,
+              "sum": 328168.331691308
+            }
+          ],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "7f78a3aa3ff9fa6f",
+              "index": 0,
+              "max": 16.53125,
+              "mean": -0.030636776,
+              "min": -2.048437595,
+              "nbytes": 692224,
+              "shape": [
+                1,
+                256,
+                26,
+                26
+              ],
+              "size": 173056,
+              "sum": -5301.877878526
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "94bdf6f847e431bb",
+              "index": 1,
+              "max": 8.265625,
+              "mean": 0.462866427,
+              "min": -0.736718774,
+              "nbytes": 86528,
+              "shape": [
+                1,
+                128,
+                13,
+                13
+              ],
+              "size": 21632,
+              "sum": 10012.726554345
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "a361f8a00ed780ca",
+              "index": 2,
+              "max": 7.7265625,
+              "mean": 0.477369681,
+              "min": -0.862500012,
+              "nbytes": 346112,
+              "shape": [
+                1,
+                512,
+                13,
+                13
+              ],
+              "size": 86528,
+              "sum": 41305.843721999
+            }
+          ],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "4b181980c0c259c5",
+              "index": 0,
+              "max": 1.542059183,
+              "mean": 0.021715879,
+              "min": -1.690734386,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": 3743.383304347
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "ec0ca3a99cf64eeb",
+              "index": 4,
+              "max": 1.179515719,
+              "mean": 0.019097297,
+              "min": -1.512302876,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 822.998016218
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_run_mean_ms": [
+        108.33216300000001,
+        152.05958049999998,
+        218.51714449999997
+      ],
+      "stage_set_mean_ms": [
+        1.479495,
+        4.587721500000001,
+        0.566736
+      ],
+      "stage_times_ms": [
+        110.467405,
+        160.124786,
+        219.52686549999999
+      ],
+      "start_name": "pool1",
+      "status": "ok",
+      "tail_cpu_ms": 201.29559272727275,
+      "throughput_fps": 2.039462901489661,
+      "vta_convs": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    },
+    {
+      "balance_imbalance_ms_est": 85.52899490909094,
+      "balanced_cycle_ms_est": 274.42710031515156,
+      "bottleneck_stage": 2,
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "boundary_reasons": "",
+      "boundary_status": "safe",
+      "boundary_valid": true,
+      "boundary_warnings": "per_stage_quantization_experimental;non_pool4_start_boundary_experimental;cpu_tail_requires_serial_raw_gate;concat_route_cpu_tail_boundary;cpu_to_vta_boundary_requires_pack_quant:pool1;vta_to_cpu_boundary_requires_unpack_dequant:route23;vta_to_cpu_boundary_requires_unpack_dequant:small42;vta_to_cpu_boundary_requires_unpack_dequant:big64",
+      "candidate_id": "yolo_pool1_to_dual_pre18_14",
+      "correctness": {
+        "detection_gate": {
+          "candidate_detection_count": 5,
+          "compared_topk": 3,
+          "passes_detection_gate": true,
+          "reference_detection_count": 3,
+          "rows": [
+            {
+              "candidate_class_id": 0,
+              "candidate_rank": 0,
+              "class_match": true,
+              "iou": 0.8754563894523326,
+              "passes": true,
+              "rank": 0,
+              "ref_class_id": 0,
+              "score_delta": 0.042338788509368896
+            },
+            {
+              "candidate_class_id": 16,
+              "candidate_rank": 2,
+              "class_match": true,
+              "iou": 0.5260103626943006,
+              "passes": true,
+              "rank": 1,
+              "ref_class_id": 16,
+              "score_delta": 0.10094434022903442
+            },
+            {
+              "candidate_class_id": 17,
+              "candidate_rank": 3,
+              "class_match": true,
+              "iou": 0.8823012736056214,
+              "passes": true,
+              "rank": 2,
+              "ref_class_id": 17,
+              "score_delta": 0.04721921682357788
+            }
+          ]
+        },
+        "raw_output_gate": {
+          "max_mean_abs_delta": 0.5200830395587006,
+          "max_sum_abs_delta": 89651.914554347,
+          "output_count_match": true,
+          "passes_raw_output_gate": false,
+          "rows": [
+            {
+              "index": 0,
+              "mean_abs_delta": 0.5200830395587006,
+              "passes": false,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 89651.914554347,
+              "sum_rel_delta": 1.0435740577784234
+            },
+            {
+              "index": 1,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 2,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 3,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 4,
+              "mean_abs_delta": 0.00019773979275512776,
+              "passes": false,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 8.521576067156275,
+              "sum_rel_delta": 0.010248196369898568
+            },
+            {
+              "index": 5,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 6,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 7,
+              "mean_abs_delta": 3.333369136271358e-10,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            }
+          ]
+        }
+      },
+      "correctness_policy": "detection_gate",
+      "cpu_prefix_convs": [
+        0,
+        1
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "detection_gate_passed": true,
+      "detection_summary": {
+        "detection_count": 5,
+        "image_shape_hwc": [
+          416,
+          416,
+          3
+        ],
+        "net_shape_hw": [
+          416,
+          416
+        ],
+        "nms_threshold": 0.45,
+        "threshold": 0.56,
+        "top_detections": [
+          {
+            "bottom": 367,
+            "class_id": 0,
+            "class_name": "person",
+            "labels": [
+              "person 0.9196"
+            ],
+            "left": 195,
+            "objectness": 0.9198002815246582,
+            "right": 273,
+            "score": 0.919562041759491,
+            "top": 118
+          },
+          {
+            "bottom": 329,
+            "class_id": 16,
+            "class_name": "dog",
+            "labels": [
+              "dog 0.9149"
+            ],
+            "left": 110,
+            "objectness": 0.9157084226608276,
+            "right": 167,
+            "score": 0.9148906469345093,
+            "top": 278
+          },
+          {
+            "bottom": 346,
+            "class_id": 16,
+            "class_name": "dog",
+            "labels": [
+              "dog 0.8102"
+            ],
+            "left": 76,
+            "objectness": 0.8168538808822632,
+            "right": 199,
+            "score": 0.8101768493652344,
+            "top": 265
+          },
+          {
+            "bottom": 329,
+            "class_id": 17,
+            "class_name": "horse",
+            "labels": [
+              "horse 0.7572"
+            ],
+            "left": 403,
+            "objectness": 0.8977380394935608,
+            "right": 609,
+            "score": 0.7571994662284851,
+            "top": 133
+          },
+          {
+            "bottom": 327,
+            "class_id": 0,
+            "class_name": "person",
+            "labels": [
+              "person 0.7097"
+            ],
+            "left": 212,
+            "objectness": 0.7106896638870239,
+            "right": 249,
+            "score": 0.7096788883209229,
+            "top": 133
+          }
+        ]
+      },
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "failure_type": "",
+      "fitted_cycle_ms_est": 434.61130350700114,
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/yolo_pool1_to_dual_pre18_14/pipeline.log",
+      "mean_total_latency_ms": 2513.2132697,
+      "measured_cycle_ms": 310.23915436842105,
+      "mode": "pipeline",
+      "needs_route_input": false,
+      "passes_correctness_gate": true,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "pipeline_throughput_fps": 3.223319770954704,
+      "predicted_cycle_ms": 330.4915714322989,
+      "predicted_fps": 3.0257957734478858,
+      "raw_gate_passed": false,
+      "raw_mismatch_summary": {
+        "max_mean_abs_delta": 0.5200830395587006,
+        "max_sum_abs_delta": 89651.914554347,
+        "output_count_match": true,
+        "passes_raw_output_gate": false,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 0.5200830395587006,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 89651.914554347,
+            "sum_rel_delta": 1.0435740577784234
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 0.00019773979275512776,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 8.521576067156275,
+            "sum_rel_delta": 0.010248196369898568
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "4b181980c0c259c5",
+          "index": 0,
+          "max": 1.542059183,
+          "mean": 0.021715879,
+          "min": -1.690734386,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": 3743.383304347
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "ec0ca3a99cf64eeb",
+          "index": 4,
+          "max": 1.179515719,
+          "mean": 0.019097297,
+          "min": -1.512302876,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 822.998016218
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "resource_cycle_ms": 201.29559272727275,
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/yolo_pool1_to_dual_pre18_14/native_pipeline_result.jsonl",
+      "run_kind": "pipeline",
+      "small_island_count": 0.0,
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_pool1_to_dual_pre18_14",
+        "end_name": "dual_pre18_14",
+        "end_output_names": [
+          "route23",
+          "small42",
+          "big64"
+        ],
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "d04bb90b6a171f94",
+                "index": 0,
+                "max": 23.534864426,
+                "mean": 0.948156469,
+                "min": -5.474978447,
+                "nbytes": 1384448,
+                "shape": [
+                  1,
+                  32,
+                  104,
+                  104
+                ],
+                "size": 346112,
+                "sum": 328168.331691308
+              }
+            ],
+            "stage_index": 0
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "7f78a3aa3ff9fa6f",
+                "index": 0,
+                "max": 16.53125,
+                "mean": -0.030636776,
+                "min": -2.048437595,
+                "nbytes": 692224,
+                "shape": [
+                  1,
+                  256,
+                  26,
+                  26
+                ],
+                "size": 173056,
+                "sum": -5301.877878526
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "94bdf6f847e431bb",
+                "index": 1,
+                "max": 8.265625,
+                "mean": 0.462866427,
+                "min": -0.736718774,
+                "nbytes": 86528,
+                "shape": [
+                  1,
+                  128,
+                  13,
+                  13
+                ],
+                "size": 21632,
+                "sum": 10012.726554345
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "a361f8a00ed780ca",
+                "index": 2,
+                "max": 7.7265625,
+                "mean": 0.477369681,
+                "min": -0.862500012,
+                "nbytes": 346112,
+                "shape": [
+                  1,
+                  512,
+                  13,
+                  13
+                ],
+                "size": 86528,
+                "sum": 41305.843721999
+              }
+            ],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "4b181980c0c259c5",
+                "index": 0,
+                "max": 1.542059183,
+                "mean": 0.021715879,
+                "min": -1.690734386,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": 3743.383304347
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "ec0ca3a99cf64eeb",
+                "index": 4,
+                "max": 1.179515719,
+                "mean": 0.019097297,
+                "min": -1.512302876,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 822.998016218
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": "pool1"
+      },
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 83.06688,
+      "stage1_vta_ms_est": 115.76659781818181,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "stage_get_mean_ms": [
+        2.2425990000000002,
+        4.43083115,
+        0.6699233
+      ],
+      "stage_imbalance_ms": 120.15447609999998,
+      "stage_mean_ms": [
+        184.9074986,
+        185.0419927,
+        305.1964688
+      ],
+      "stage_raw_outputs": [
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "d04bb90b6a171f94",
+              "index": 0,
+              "max": 23.534864426,
+              "mean": 0.948156469,
+              "min": -5.474978447,
+              "nbytes": 1384448,
+              "shape": [
+                1,
+                32,
+                104,
+                104
+              ],
+              "size": 346112,
+              "sum": 328168.331691308
+            }
+          ],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "7f78a3aa3ff9fa6f",
+              "index": 0,
+              "max": 16.53125,
+              "mean": -0.030636776,
+              "min": -2.048437595,
+              "nbytes": 692224,
+              "shape": [
+                1,
+                256,
+                26,
+                26
+              ],
+              "size": 173056,
+              "sum": -5301.877878526
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "94bdf6f847e431bb",
+              "index": 1,
+              "max": 8.265625,
+              "mean": 0.462866427,
+              "min": -0.736718774,
+              "nbytes": 86528,
+              "shape": [
+                1,
+                128,
+                13,
+                13
+              ],
+              "size": 21632,
+              "sum": 10012.726554345
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "a361f8a00ed780ca",
+              "index": 2,
+              "max": 7.7265625,
+              "mean": 0.477369681,
+              "min": -0.862500012,
+              "nbytes": 346112,
+              "shape": [
+                1,
+                512,
+                13,
+                13
+              ],
+              "size": 86528,
+              "sum": 41305.843721999
+            }
+          ],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "4b181980c0c259c5",
+              "index": 0,
+              "max": 1.542059183,
+              "mean": 0.021715879,
+              "min": -1.690734386,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": 3743.383304347
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "ec0ca3a99cf64eeb",
+              "index": 4,
+              "max": 1.179515719,
+              "mean": 0.019097297,
+              "min": -1.512302876,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 822.998016218
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_run_mean_ms": [
+        181.47015855,
+        175.05933755,
+        303.5850476
+      ],
+      "stage_set_mean_ms": [
+        1.19474105,
+        5.551824,
+        0.9414979
+      ],
+      "stage_times_ms": [
+        184.9074986,
+        185.0419927,
+        305.1964688
+      ],
+      "start_name": "pool1",
+      "status": "ok",
+      "tail_cpu_ms": 201.29559272727275,
+      "throughput_fps": 3.223319770954704,
+      "vta_convs": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    }
+  ],
+  "top10": [
+    {
+      "balance_imbalance_ms_est": 85.52899490909094,
+      "balanced_cycle_ms_est": 274.42710031515156,
+      "bottleneck_stage": 2,
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "boundary_reasons": "",
+      "boundary_status": "safe",
+      "boundary_valid": true,
+      "boundary_warnings": "per_stage_quantization_experimental;non_pool4_start_boundary_experimental;cpu_tail_requires_serial_raw_gate;concat_route_cpu_tail_boundary;cpu_to_vta_boundary_requires_pack_quant:pool1;vta_to_cpu_boundary_requires_unpack_dequant:route23;vta_to_cpu_boundary_requires_unpack_dequant:small42;vta_to_cpu_boundary_requires_unpack_dequant:big64",
+      "candidate_id": "yolo_pool1_to_dual_pre18_14",
+      "correctness": {
+        "detection_gate": {
+          "candidate_detection_count": 5,
+          "compared_topk": 3,
+          "passes_detection_gate": true,
+          "reference_detection_count": 3,
+          "rows": [
+            {
+              "candidate_class_id": 0,
+              "candidate_rank": 0,
+              "class_match": true,
+              "iou": 0.8754563894523326,
+              "passes": true,
+              "rank": 0,
+              "ref_class_id": 0,
+              "score_delta": 0.042338788509368896
+            },
+            {
+              "candidate_class_id": 16,
+              "candidate_rank": 2,
+              "class_match": true,
+              "iou": 0.5260103626943006,
+              "passes": true,
+              "rank": 1,
+              "ref_class_id": 16,
+              "score_delta": 0.10094434022903442
+            },
+            {
+              "candidate_class_id": 17,
+              "candidate_rank": 3,
+              "class_match": true,
+              "iou": 0.8823012736056214,
+              "passes": true,
+              "rank": 2,
+              "ref_class_id": 17,
+              "score_delta": 0.04721921682357788
+            }
+          ]
+        },
+        "raw_output_gate": {
+          "max_mean_abs_delta": 0.5200830395587006,
+          "max_sum_abs_delta": 89651.914554347,
+          "output_count_match": true,
+          "passes_raw_output_gate": false,
+          "rows": [
+            {
+              "index": 0,
+              "mean_abs_delta": 0.5200830395587006,
+              "passes": false,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 89651.914554347,
+              "sum_rel_delta": 1.0435740577784234
+            },
+            {
+              "index": 1,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 2,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 3,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 4,
+              "mean_abs_delta": 0.00019773979275512776,
+              "passes": false,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 8.521576067156275,
+              "sum_rel_delta": 0.010248196369898568
+            },
+            {
+              "index": 5,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 6,
+              "mean_abs_delta": 0.0,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            },
+            {
+              "index": 7,
+              "mean_abs_delta": 3.333369136271358e-10,
+              "passes": true,
+              "same_dtype": true,
+              "same_hash": false,
+              "same_shape": true,
+              "sum_abs_delta": 0.0,
+              "sum_rel_delta": 0.0
+            }
+          ]
+        }
+      },
+      "correctness_policy": "detection_gate",
+      "cpu_prefix_convs": [
+        0,
+        1
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "detection_gate_passed": true,
+      "detection_summary": {
+        "detection_count": 5,
+        "image_shape_hwc": [
+          416,
+          416,
+          3
+        ],
+        "net_shape_hw": [
+          416,
+          416
+        ],
+        "nms_threshold": 0.45,
+        "threshold": 0.56,
+        "top_detections": [
+          {
+            "bottom": 367,
+            "class_id": 0,
+            "class_name": "person",
+            "labels": [
+              "person 0.9196"
+            ],
+            "left": 195,
+            "objectness": 0.9198002815246582,
+            "right": 273,
+            "score": 0.919562041759491,
+            "top": 118
+          },
+          {
+            "bottom": 329,
+            "class_id": 16,
+            "class_name": "dog",
+            "labels": [
+              "dog 0.9149"
+            ],
+            "left": 110,
+            "objectness": 0.9157084226608276,
+            "right": 167,
+            "score": 0.9148906469345093,
+            "top": 278
+          },
+          {
+            "bottom": 346,
+            "class_id": 16,
+            "class_name": "dog",
+            "labels": [
+              "dog 0.8102"
+            ],
+            "left": 76,
+            "objectness": 0.8168538808822632,
+            "right": 199,
+            "score": 0.8101768493652344,
+            "top": 265
+          },
+          {
+            "bottom": 329,
+            "class_id": 17,
+            "class_name": "horse",
+            "labels": [
+              "horse 0.7572"
+            ],
+            "left": 403,
+            "objectness": 0.8977380394935608,
+            "right": 609,
+            "score": 0.7571994662284851,
+            "top": 133
+          },
+          {
+            "bottom": 327,
+            "class_id": 0,
+            "class_name": "person",
+            "labels": [
+              "person 0.7097"
+            ],
+            "left": 212,
+            "objectness": 0.7106896638870239,
+            "right": 249,
+            "score": 0.7096788883209229,
+            "top": 133
+          }
+        ]
+      },
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "failure_type": "",
+      "fitted_cycle_ms_est": 434.61130350700114,
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/yolo_pool1_to_dual_pre18_14/pipeline.log",
+      "mean_total_latency_ms": 2513.2132697,
+      "measured_cycle_ms": 310.23915436842105,
+      "mode": "pipeline",
+      "needs_route_input": false,
+      "passes_correctness_gate": true,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "pipeline_throughput_fps": 3.223319770954704,
+      "predicted_cycle_ms": 330.4915714322989,
+      "predicted_fps": 3.0257957734478858,
+      "raw_gate_passed": false,
+      "raw_mismatch_summary": {
+        "max_mean_abs_delta": 0.5200830395587006,
+        "max_sum_abs_delta": 89651.914554347,
+        "output_count_match": true,
+        "passes_raw_output_gate": false,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 0.5200830395587006,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 89651.914554347,
+            "sum_rel_delta": 1.0435740577784234
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 0.00019773979275512776,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 8.521576067156275,
+            "sum_rel_delta": 0.010248196369898568
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "4b181980c0c259c5",
+          "index": 0,
+          "max": 1.542059183,
+          "mean": 0.021715879,
+          "min": -1.690734386,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": 3743.383304347
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "ec0ca3a99cf64eeb",
+          "index": 4,
+          "max": 1.179515719,
+          "mean": 0.019097297,
+          "min": -1.512302876,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 822.998016218
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "resource_cycle_ms": 201.29559272727275,
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/yolo_pool1_to_dual_pre18_14/native_pipeline_result.jsonl",
+      "run_kind": "pipeline",
+      "small_island_count": 0.0,
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_pool1_to_dual_pre18_14",
+        "end_name": "dual_pre18_14",
+        "end_output_names": [
+          "route23",
+          "small42",
+          "big64"
+        ],
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "d04bb90b6a171f94",
+                "index": 0,
+                "max": 23.534864426,
+                "mean": 0.948156469,
+                "min": -5.474978447,
+                "nbytes": 1384448,
+                "shape": [
+                  1,
+                  32,
+                  104,
+                  104
+                ],
+                "size": 346112,
+                "sum": 328168.331691308
+              }
+            ],
+            "stage_index": 0
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "7f78a3aa3ff9fa6f",
+                "index": 0,
+                "max": 16.53125,
+                "mean": -0.030636776,
+                "min": -2.048437595,
+                "nbytes": 692224,
+                "shape": [
+                  1,
+                  256,
+                  26,
+                  26
+                ],
+                "size": 173056,
+                "sum": -5301.877878526
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "94bdf6f847e431bb",
+                "index": 1,
+                "max": 8.265625,
+                "mean": 0.462866427,
+                "min": -0.736718774,
+                "nbytes": 86528,
+                "shape": [
+                  1,
+                  128,
+                  13,
+                  13
+                ],
+                "size": 21632,
+                "sum": 10012.726554345
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "a361f8a00ed780ca",
+                "index": 2,
+                "max": 7.7265625,
+                "mean": 0.477369681,
+                "min": -0.862500012,
+                "nbytes": 346112,
+                "shape": [
+                  1,
+                  512,
+                  13,
+                  13
+                ],
+                "size": 86528,
+                "sum": 41305.843721999
+              }
+            ],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "4b181980c0c259c5",
+                "index": 0,
+                "max": 1.542059183,
+                "mean": 0.021715879,
+                "min": -1.690734386,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": 3743.383304347
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "ec0ca3a99cf64eeb",
+                "index": 4,
+                "max": 1.179515719,
+                "mean": 0.019097297,
+                "min": -1.512302876,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 822.998016218
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": "pool1"
+      },
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 83.06688,
+      "stage1_vta_ms_est": 115.76659781818181,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "stage_get_mean_ms": [
+        2.2425990000000002,
+        4.43083115,
+        0.6699233
+      ],
+      "stage_imbalance_ms": 120.15447609999998,
+      "stage_mean_ms": [
+        184.9074986,
+        185.0419927,
+        305.1964688
+      ],
+      "stage_raw_outputs": [
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "d04bb90b6a171f94",
+              "index": 0,
+              "max": 23.534864426,
+              "mean": 0.948156469,
+              "min": -5.474978447,
+              "nbytes": 1384448,
+              "shape": [
+                1,
+                32,
+                104,
+                104
+              ],
+              "size": 346112,
+              "sum": 328168.331691308
+            }
+          ],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "7f78a3aa3ff9fa6f",
+              "index": 0,
+              "max": 16.53125,
+              "mean": -0.030636776,
+              "min": -2.048437595,
+              "nbytes": 692224,
+              "shape": [
+                1,
+                256,
+                26,
+                26
+              ],
+              "size": 173056,
+              "sum": -5301.877878526
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "94bdf6f847e431bb",
+              "index": 1,
+              "max": 8.265625,
+              "mean": 0.462866427,
+              "min": -0.736718774,
+              "nbytes": 86528,
+              "shape": [
+                1,
+                128,
+                13,
+                13
+              ],
+              "size": 21632,
+              "sum": 10012.726554345
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "a361f8a00ed780ca",
+              "index": 2,
+              "max": 7.7265625,
+              "mean": 0.477369681,
+              "min": -0.862500012,
+              "nbytes": 346112,
+              "shape": [
+                1,
+                512,
+                13,
+                13
+              ],
+              "size": 86528,
+              "sum": 41305.843721999
+            }
+          ],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "4b181980c0c259c5",
+              "index": 0,
+              "max": 1.542059183,
+              "mean": 0.021715879,
+              "min": -1.690734386,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": 3743.383304347
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "ec0ca3a99cf64eeb",
+              "index": 4,
+              "max": 1.179515719,
+              "mean": 0.019097297,
+              "min": -1.512302876,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 822.998016218
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_run_mean_ms": [
+        181.47015855,
+        175.05933755,
+        303.5850476
+      ],
+      "stage_set_mean_ms": [
+        1.19474105,
+        5.551824,
+        0.9414979
+      ],
+      "stage_times_ms": [
+        184.9074986,
+        185.0419927,
+        305.1964688
+      ],
+      "start_name": "pool1",
+      "status": "ok",
+      "tail_cpu_ms": 201.29559272727275,
+      "throughput_fps": 3.223319770954704,
+      "vta_convs": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    }
+  ]
+}
