@@ -58,8 +58,25 @@ def _pack_batch_channel(data, dshape, bfactor, cfactor):
 
 def _unpack_batch_channel(data, old_shape, unpack_transpose=False):
     """Unpack the data channel dimension."""
+    old_shape = tuple(int(dim) for dim in old_shape)
     if unpack_transpose:
         data = op.transpose(data, axes=(0, 4, 1, 5, 2, 3))
+    channel = old_shape[1]
+    packed_channel = channel
+    if len(old_shape) == 4:
+        packed_cfactor = None
+        try:
+            data_shape = _get_tensor_shape(data)
+            packed_cfactor = int(data_shape[3] if unpack_transpose else data_shape[5])
+        except Exception:  # pylint: disable=broad-except
+            packed_cfactor = 16
+        if packed_cfactor and channel % packed_cfactor != 0:
+            packed_channel = channel + (packed_cfactor - channel % packed_cfactor)
+    if packed_channel != channel:
+        padded_shape = (old_shape[0], packed_channel, old_shape[2], old_shape[3])
+        data = op.reshape(data, newshape=padded_shape)
+        data = op.strided_slice(data, begin=(0, 0, 0, 0), end=old_shape)
+        return data
     data = op.reshape(data, newshape=old_shape)
     return data
 

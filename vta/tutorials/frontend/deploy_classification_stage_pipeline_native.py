@@ -23,6 +23,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import os
 import shlex
 import shutil
@@ -53,6 +54,7 @@ from profile_split_resnet18_stages import (  # pylint: disable=wrong-import-posi
 )
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png"}
+CAT_EQUIVALENT_TOP1 = {281, 282, 283, 284, 285}
 
 
 def repo_root():
@@ -74,6 +76,17 @@ def parse_args():
         "--remote-dir",
         default="/mnt/sd/vta_stage_pipeline",
         help="Board deploy directory",
+    )
+    parser.add_argument(
+        "--remote-min-free-mb",
+        type=int,
+        default=128,
+        help="Require this much free space on the remote filesystem before upload; 0 disables",
+    )
+    parser.add_argument(
+        "--cleanup-remote-after-run",
+        action="store_true",
+        help="Remove --remote-dir and temporary tarball on the board after results are fetched",
     )
     parser.add_argument(
         "--deploy-mode",
@@ -115,9 +128,30 @@ def parse_args():
     parser.add_argument("--runs", type=int, default=20, help="Total frame requests")
     parser.add_argument("--queue-depth", type=int, default=2)
     parser.add_argument("--runtime-num-threads", type=int, default=4)
+    parser.add_argument(
+        "--stage-runtime-num-threads",
+        default="",
+        help="Comma-separated runtime threads for all stages; overrides stage0/1/2 options",
+    )
     parser.add_argument("--stage0-runtime-num-threads", type=int, default=0)
     parser.add_argument("--stage1-runtime-num-threads", type=int, default=0)
     parser.add_argument("--stage2-runtime-num-threads", type=int, default=0)
+    parser.add_argument(
+        "--scheme-config-json",
+        default="",
+        help="Optional JSON file containing scheme_name and scheme_cfg for generated N-stage cuts",
+    )
+    parser.add_argument("--candidate-id", default="", help="Search candidate identifier for manifest")
+    parser.add_argument(
+        "--vta-islands-json",
+        default="",
+        help="Search metadata JSON for VTA islands",
+    )
+    parser.add_argument(
+        "--unit-assignment-json",
+        default="",
+        help="Search metadata JSON for unit-to-device assignment",
+    )
     parser.add_argument("--serial", action="store_true", help="Run stages serially for correctness")
     parser.add_argument(
         "--run-serial-before-pipeline",
@@ -134,13 +168,34 @@ def parse_args():
         default="",
         help="Optional RPC all_vta baseline JSONL/CSV with input_index and top1 columns",
     )
+    parser.add_argument(
+        "--correctness-policy",
+        default="exact",
+        choices=["exact", "cat_equivalent"],
+        help="RPC baseline policy: exact top1 match or ImageNet cat-class equivalence",
+    )
     parser.add_argument("--serial-output-jsonl", default="stage_serial_result.jsonl")
     parser.add_argument("--pipeline-output-jsonl", default="native_result.jsonl")
     parser.add_argument("--build-dir", default="", help="Host build/package directory")
+    parser.add_argument(
+        "--reuse-package-dir",
+        default="",
+        help="Existing host package directory to deploy without rebuilding stage artifacts",
+    )
+    parser.add_argument(
+        "--stage-build-cache-dir",
+        default="",
+        help="Optional cache for compiled per-stage graph/lib/params artifacts",
+    )
     parser.add_argument("--keep-build-dir", action="store_true", help="Keep temporary host build dir")
     parser.add_argument("--package-only", action="store_true", help="Build package only")
     parser.add_argument("--skip-copy", action="store_true", help="Do not scp package to board")
     parser.add_argument("--skip-run", action="store_true", help="Do not ssh-run deployed package")
+    parser.add_argument("--ssh-command-timeout-s", type=int, default=60)
+    parser.add_argument("--scp-timeout-s", type=int, default=600)
+    parser.add_argument("--serial-timeout-s", type=int, default=180)
+    parser.add_argument("--pipeline-timeout-s", type=int, default=180)
+    parser.add_argument("--fetch-timeout-s", type=int, default=120)
     parser.add_argument(
         "--fetch-results-dir",
         default="",
@@ -156,21 +211,36 @@ def parse_args():
     return parser.parse_args()
 
 
-def run(cmd, cwd=None):
+def run(cmd, cwd=None, timeout=None, timeout_label="command"):
     print("[CMD]", " ".join(shlex.quote(str(x)) for x in cmd))
-    subprocess.check_call([str(x) for x in cmd], cwd=str(cwd) if cwd else None)
+    try:
+        subprocess.check_call(
+            [str(x) for x in cmd],
+            cwd=str(cwd) if cwd else None,
+            timeout=int(timeout) if timeout else None,
+        )
+    except subprocess.TimeoutExpired as err:
+        raise RuntimeError(
+            "timeout while running {} after {}s".format(timeout_label, int(timeout or 0))
+        ) from err
 
 
-def run_capture(cmd, cwd=None, check=True):
+def run_capture(cmd, cwd=None, check=True, timeout=None, timeout_label="command"):
     print("[CMD]", " ".join(shlex.quote(str(x)) for x in cmd))
-    proc = subprocess.run(
-        [str(x) for x in cmd],
-        cwd=str(cwd) if cwd else None,
-        check=False,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
+    try:
+        proc = subprocess.run(
+            [str(x) for x in cmd],
+            cwd=str(cwd) if cwd else None,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=int(timeout) if timeout else None,
+        )
+    except subprocess.TimeoutExpired as err:
+        raise RuntimeError(
+            "timeout while running {} after {}s".format(timeout_label, int(timeout or 0))
+        ) from err
     if check and proc.returncode != 0:
         if proc.stdout:
             print(proc.stdout, end="")
@@ -192,6 +262,92 @@ def write_bytes(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "wb") as out:
         out.write(data)
+
+
+def parse_json_arg(text, default):
+    if not text:
+        return default
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError as err:
+        raise RuntimeError("Invalid JSON argument: {}".format(text[:160])) from err
+
+
+def load_scheme_config_json(path):
+    path = Path(path)
+    with path.open(encoding="utf-8") as inp:
+        payload = json.load(inp)
+    scheme_cfg = payload.get("scheme_cfg")
+    if not isinstance(scheme_cfg, list) or not scheme_cfg:
+        raise RuntimeError("--scheme-config-json must contain a non-empty scheme_cfg list")
+    scheme_name = payload.get("scheme_name") or payload.get("candidate_id") or path.stem
+    return str(scheme_name), scheme_cfg
+
+
+def stage_build_cache_key(args, env, stage, input_schema, output_schema, use_graph_pack):
+    payload = {
+        "version": 2,
+        "target": env.TARGET,
+        "target_host": str(env.target_host),
+        "target_vta_cpu": str(env.target_vta_cpu),
+        "device": stage["device"],
+        "unit_names": list(stage.get("unit_names", [])),
+        "image_size": int(args.image_size),
+        "batch": int(env.BATCH),
+        "vta_bridge_mode": "all_vta_graph_pack" if use_graph_pack else "boundary_bridge",
+        "input_schema": input_schema,
+        "output_schema": output_schema,
+    }
+    text = json.dumps(payload, sort_keys=True)
+    return hashlib.sha256(text.encode("utf-8")).hexdigest(), payload
+
+
+def try_copy_stage_from_cache(cache_dir, cache_key, stage_dir):
+    if not cache_dir:
+        return False
+    cache_stage_dir = Path(cache_dir) / cache_key
+    required = ["graph.json", "graphlib.so", "params.params", "stage_cache.json"]
+    if not all((cache_stage_dir / name).exists() for name in required):
+        return False
+    shutil.copy2(cache_stage_dir / "graph.json", stage_dir / "graph.json")
+    shutil.copy2(cache_stage_dir / "graphlib.so", stage_dir / "graphlib.so")
+    shutil.copy2(cache_stage_dir / "params.params", stage_dir / "params.params")
+    return True
+
+
+def save_stage_to_cache(cache_dir, cache_key, cache_payload, stage_dir):
+    if not cache_dir:
+        return
+    cache_stage_dir = Path(cache_dir) / cache_key
+    cache_stage_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(stage_dir / "graph.json", cache_stage_dir / "graph.json")
+    shutil.copy2(stage_dir / "graphlib.so", cache_stage_dir / "graphlib.so")
+    shutil.copy2(stage_dir / "params.params", cache_stage_dir / "params.params")
+    write_text(
+        cache_stage_dir / "stage_cache.json",
+        json.dumps(cache_payload, indent=2, sort_keys=True) + "\n",
+    )
+
+
+def parse_stage_runtime_threads_csv(text, expected_count=None):
+    if not text:
+        return []
+    parts = [item.strip() for item in text.split(",")]
+    if any(not item for item in parts):
+        raise RuntimeError("--stage-runtime-num-threads contains an empty field")
+    try:
+        values = [int(item) for item in parts]
+    except ValueError as err:
+        raise RuntimeError("--stage-runtime-num-threads values must be integers") from err
+    if any(value <= 0 for value in values):
+        raise RuntimeError("--stage-runtime-num-threads values must be positive")
+    if expected_count is not None and len(values) != int(expected_count):
+        raise RuntimeError(
+            "--stage-runtime-num-threads expected {} values, got {}".format(
+                int(expected_count), len(values)
+            )
+        )
+    return values
 
 
 def default_image_path():
@@ -305,17 +461,21 @@ def build_stage_modules(args, package_dir):
     output_block = full_model.output
     unit_blocks = build_resnet18_unit_blocks(feature_blocks, output_block)
     unit_metadata = build_resnet18_unit_metadata(unit_blocks, env.BATCH, args.image_size)
-    scheme_cfg, selected, _ = resolve_scheme_config(
-        args.scheme,
-        feature_blocks,
-        output_block,
-        env.BATCH,
-        args.image_size,
-        print_resource_aware=(args.scheme == AUTO_RESOURCE_AWARE_SCHEME),
-        selected_candidate_name=args.resource_aware_candidate_name or None,
-        candidate_top_k=args.resource_aware_top_k,
-    )
-    resolved_scheme_name = selected["scheme_name"] if selected is not None else args.scheme
+    if args.scheme_config_json:
+        resolved_scheme_name, scheme_cfg = load_scheme_config_json(args.scheme_config_json)
+        selected = None
+    else:
+        scheme_cfg, selected, _ = resolve_scheme_config(
+            args.scheme,
+            feature_blocks,
+            output_block,
+            env.BATCH,
+            args.image_size,
+            print_resource_aware=(args.scheme == AUTO_RESOURCE_AWARE_SCHEME),
+            selected_candidate_name=args.resource_aware_candidate_name or None,
+            candidate_top_k=args.resource_aware_top_k,
+        )
+        resolved_scheme_name = selected["scheme_name"] if selected is not None else args.scheme
     validate_scheme(feature_blocks, scheme_cfg, unit_blocks)
     devices = [stage["device"] for stage in scheme_cfg]
     if len(scheme_cfg) < 3 or devices[0] != "cpu" or devices[-1] != "cpu" or "vta" not in devices:
@@ -342,24 +502,33 @@ def build_stage_modules(args, package_dir):
         print("[STAGE] input_schema =", input_schema)
         print("[STAGE] output_schema=", output_schema)
 
-        if stage["device"] == "cpu":
-            graph, lib, lowered_params = build_cpu_stage(stage_name, mod, params, cpu_target)
-        else:
-            graph, lib, lowered_params = build_vta_stage(
-                stage_name,
-                mod["main"],
-                params,
-                env,
-                use_graph_pack=(resolved_scheme_name == "all_vta"),
-            )
-
         graph_path = stage_dir / "graph.json"
         lib_path = stage_dir / "graphlib.so"
         params_path = stage_dir / "params.params"
-        write_text(graph_path, graph)
-        write_bytes(params_path, tvm.runtime.save_param_dict(lowered_params))
-        print("[BUILD] export {} -> {}".format(stage_name, lib_path))
-        export_stage_lib(lib, lib_path)
+        use_graph_pack = resolved_scheme_name == "all_vta"
+        cache_key, cache_payload = stage_build_cache_key(
+            args, env, stage, input_schema, output_schema, use_graph_pack
+        )
+        cache_hit = try_copy_stage_from_cache(args.stage_build_cache_dir, cache_key, stage_dir)
+        if cache_hit:
+            print("[BUILD-CACHE] hit {} key={}".format(stage_name, cache_key[:16]))
+        else:
+            print("[BUILD-CACHE] miss {} key={}".format(stage_name, cache_key[:16]))
+            if stage["device"] == "cpu":
+                graph, lib, lowered_params = build_cpu_stage(stage_name, mod, params, cpu_target)
+            else:
+                graph, lib, lowered_params = build_vta_stage(
+                    stage_name,
+                    mod["main"],
+                    params,
+                    env,
+                    use_graph_pack=use_graph_pack,
+                )
+            write_text(graph_path, graph)
+            write_bytes(params_path, tvm.runtime.save_param_dict(lowered_params))
+            print("[BUILD] export {} -> {}".format(stage_name, lib_path))
+            export_stage_lib(lib, lib_path)
+            save_stage_to_cache(args.stage_build_cache_dir, cache_key, cache_payload, stage_dir)
 
         stage_records.append(
             {
@@ -374,6 +543,8 @@ def build_stage_modules(args, package_dir):
                 "graph": str(graph_path.relative_to(package_dir)),
                 "lib": str(lib_path.relative_to(package_dir)),
                 "params": str(params_path.relative_to(package_dir)),
+                "stage_build_cache_key": cache_key,
+                "stage_build_cache_hit": bool(cache_hit),
             }
         )
 
@@ -391,6 +562,18 @@ def compile_runner(package_dir):
 
     source = root / "vta" / "apps" / "native_deploy" / "vta_stage_pipeline_runner.cc"
     output = package_dir / "vta_stage_pipeline_runner"
+    source_sha = file_sha256(source)
+    if len(package_dir.parents) >= 3 and package_dir.parents[1].name == "buildability":
+        runner_cache_dir = package_dir.parents[2] / "runner_cache" / source_sha
+    else:
+        runner_cache_dir = package_dir.parent / "runner_cache" / source_sha
+    cached_output = runner_cache_dir / "vta_stage_pipeline_runner"
+    if cached_output.exists():
+        print("[RUNNER-CACHE] hit", cached_output)
+        shutil.copy2(cached_output, output)
+        return output
+
+    runner_cache_dir.mkdir(parents=True, exist_ok=True)
     cmd = [
         cxx,
         "-std=c++17",
@@ -408,7 +591,7 @@ def compile_runner(package_dir):
         root / "vta" / "include",
         source,
         "-o",
-        output,
+        cached_output,
         "-L",
         root / "build_axu_aarch64",
         "-Wl,-rpath-link,{}/lib".format(sysroot),
@@ -419,6 +602,7 @@ def compile_runner(package_dir):
         "-pthread",
     ]
     run(cmd)
+    shutil.copy2(cached_output, output)
     return output
 
 
@@ -448,6 +632,12 @@ def _stage_cli(stage_record, prefix):
 
 def resolve_stage_runtime_threads(args, serial, stage_records=None):
     stage_records = stage_records or [{"device": "cpu"}, {"device": "vta"}, {"device": "cpu"}]
+    csv_threads = parse_stage_runtime_threads_csv(
+        args.stage_runtime_num_threads, expected_count=len(stage_records)
+    )
+    if csv_threads:
+        return {"stage{}".format(idx): int(value) for idx, value in enumerate(csv_threads)}
+
     explicit = [
         int(args.stage0_runtime_num_threads or 0),
         int(args.stage1_runtime_num_threads or 0),
@@ -539,13 +729,39 @@ exec ./vta_stage_pipeline_runner \\
 
 
 def write_manifest(args, package_dir, env, resolved_scheme_name, stage_records, image, input_records):
+    serial_threads = resolve_stage_runtime_threads(args, serial=True, stage_records=stage_records)
+    pipeline_threads = resolve_stage_runtime_threads(args, serial=False, stage_records=stage_records)
+    vta_islands = parse_json_arg(args.vta_islands_json, [])
+    if not vta_islands:
+        vta_islands = [
+            {
+                "stage": record["name"],
+                "start_unit": record["unit_names"][0] if record.get("unit_names") else "",
+                "end_unit": record["unit_names"][-1] if record.get("unit_names") else "",
+                "unit_names": list(record.get("unit_names", [])),
+            }
+            for record in stage_records
+            if record.get("device") == "vta"
+        ]
+    unit_assignment = parse_json_arg(args.unit_assignment_json, [])
+    if not unit_assignment:
+        unit_assignment = [
+            {
+                "stage": record["name"],
+                "device": record["device"],
+                "unit_names": list(record.get("unit_names", [])),
+            }
+            for record in stage_records
+        ]
     manifest = {
         "kind": "resnet18_native_stage_pipeline",
         "model": args.model,
         "target": env.TARGET,
         "scheme": resolved_scheme_name,
         "requested_scheme": args.scheme,
+        "candidate_id": args.candidate_id,
         "resource_aware_candidate_name": args.resource_aware_candidate_name,
+        "stage_count": len(stage_records),
         "image_size": int(args.image_size),
         "input_shape": list(image.shape),
         "input_dtype": str(image.dtype),
@@ -556,17 +772,19 @@ def write_manifest(args, package_dir, env, resolved_scheme_name, stage_records, 
         "runs": int(args.runs),
         "queue_depth": int(args.queue_depth),
         "runtime_num_threads": int(args.runtime_num_threads),
-        "serial_stage_runtime_threads": resolve_stage_runtime_threads(
-            args, serial=True, stage_records=stage_records
-        ),
-        "pipeline_stage_runtime_threads": resolve_stage_runtime_threads(
-            args, serial=False, stage_records=stage_records
-        ),
+        "stage_runtime_threads": {
+            "serial": serial_threads,
+            "pipeline": pipeline_threads,
+        },
+        "serial_stage_runtime_threads": serial_threads,
+        "pipeline_stage_runtime_threads": pipeline_threads,
         "serial": bool(args.serial),
         "run_serial_before_pipeline": bool(args.run_serial_before_pipeline),
         "serial_output_jsonl": args.serial_output_jsonl,
         "pipeline_output_jsonl": args.pipeline_output_jsonl,
         "rpc_baseline_result": args.rpc_baseline_result,
+        "vta_islands": vta_islands,
+        "unit_assignment": unit_assignment,
         "stages": stage_records,
         "runner": "vta_stage_pipeline_runner",
         "runtime_libs": ["libtvm_runtime.so", "libvta.so"],
@@ -625,9 +843,136 @@ def build_deploy_manifest(package_dir):
     return {"version": 1, "files": entries}
 
 
+def directory_size_bytes(path):
+    total = 0
+    for item in Path(path).rglob("*"):
+        if item.is_file():
+            total += int(item.stat().st_size)
+    return total
+
+
+def check_remote_free_space(args, ssh_options, remote_dir, package_dir):
+    min_free_mb = int(args.remote_min_free_mb)
+    if min_free_mb <= 0 or args.skip_copy:
+        return
+    remote_parent = str(Path(remote_dir).parent)
+    package_mb = int(math.ceil(float(directory_size_bytes(package_dir)) / (1024.0 * 1024.0)))
+    required_mb = min_free_mb + package_mb
+    quoted_parent = shlex.quote(remote_parent)
+    mkdir_proc = run_capture(
+        ["ssh"] + ssh_options + [args.board, "mkdir -p {}".format(quoted_parent)],
+        check=False,
+        timeout=args.ssh_command_timeout_s,
+        timeout_label="mkdir remote free-space parent",
+    )
+    if mkdir_proc.returncode != 0:
+        raise RuntimeError(
+            "Could not create remote free-space parent {}: returncode={} stdout={!r} stderr={!r}".format(
+                remote_parent,
+                mkdir_proc.returncode,
+                mkdir_proc.stdout[-400:],
+                mkdir_proc.stderr[-400:],
+            )
+        )
+    cmd = "df -Pm -P {} 2>/dev/null | tail -n 1 | awk '{{print $4}}'".format(
+        quoted_parent
+    )
+    proc = run_capture(
+        ["ssh"] + ssh_options + [args.board, cmd],
+        check=False,
+        timeout=args.ssh_command_timeout_s,
+        timeout_label="remote free-space check",
+    )
+    text = proc.stdout.strip()
+    try:
+        available_mb = int(text.splitlines()[-1])
+    except (IndexError, ValueError) as err:
+        raise RuntimeError(
+            "Could not read remote free space for {}: returncode={} stdout={!r} stderr={!r}".format(
+                remote_parent,
+                proc.returncode,
+                proc.stdout[-400:],
+                proc.stderr[-400:],
+            )
+        ) from err
+    print(
+        "[REMOTE] available={} MB package={} MB min_free={} MB".format(
+            available_mb, package_mb, min_free_mb
+        )
+    )
+    if available_mb < required_mb:
+        raise RuntimeError(
+            "Remote filesystem free space is too low: available={} MB, required={} MB "
+            "(package={} MB + min_free={} MB)".format(
+                available_mb, required_mb, package_mb, min_free_mb
+            )
+        )
+
+
+def cleanup_remote_package(args, ssh_options, remote_dir, remote_tar):
+    cleanup_cmd = "rm -rf -- {remote_dir} {remote_tar}".format(
+        remote_dir=shlex.quote(remote_dir),
+        remote_tar=shlex.quote(remote_tar),
+    )
+    proc = run_capture(
+        ["ssh"] + ssh_options + [args.board, cleanup_cmd],
+        check=False,
+        timeout=args.ssh_command_timeout_s,
+        timeout_label="remote cleanup",
+    )
+    if proc.returncode == 0:
+        print("[REMOTE] cleaned", remote_dir)
+    else:
+        print("[REMOTE] cleanup failed for {}".format(remote_dir), file=sys.stderr)
+
+
+def kill_remote_runners(args, ssh_options, remote_dir):
+    quoted_dir = shlex.quote(remote_dir.rstrip("/"))
+    cmd = (
+        "remote_dir={remote_dir}; "
+        "for p in /proc/[0-9]*; do "
+        "  [ -r \"$p/cmdline\" ] || continue; "
+        "  cmdline=$(tr '\\0' ' ' < \"$p/cmdline\" 2>/dev/null || true); "
+        "  case \"$cmdline\" in *vta_stage_pipeline_runner*) ;; *) continue ;; esac; "
+        "  cwd=$(readlink \"$p/cwd\" 2>/dev/null || true); "
+        "  pid=$(basename \"$p\" 2>/dev/null || true); "
+        "  case \"$cwd\" in \"$remote_dir\"|\"$remote_dir\"/*) [ -n \"$pid\" ] && kill \"$pid\" 2>/dev/null || true ;; esac; "
+        "done"
+    ).format(remote_dir=quoted_dir)
+    proc = run_capture(
+        ["ssh"] + ssh_options + [args.board, cmd],
+        check=False,
+        timeout=args.ssh_command_timeout_s,
+        timeout_label="kill remote runner",
+    )
+    if proc.returncode == 0:
+        print("[REMOTE] killed stale runners under", remote_dir)
+    else:
+        print("[REMOTE] failed to kill stale runners under {}".format(remote_dir), file=sys.stderr)
+
+
+def run_remote_stage_script(args, ssh_options, remote_dir, script_name, timeout_s):
+    try:
+        run(
+            ["ssh"]
+            + ssh_options
+            + [args.board, "cd {} && ./{}".format(shlex.quote(remote_dir), script_name)],
+            timeout=timeout_s,
+            timeout_label=script_name,
+        )
+    except Exception:
+        kill_remote_runners(args, ssh_options, remote_dir)
+        raise
+
+
 def read_remote_deploy_manifest(args, ssh_options, remote_dir):
     cmd = "cat {}/.deploy_manifest.json 2>/dev/null || true".format(shlex.quote(remote_dir))
-    proc = run_capture(["ssh"] + ssh_options + [args.board, cmd], check=False)
+    proc = run_capture(
+        ["ssh"] + ssh_options + [args.board, cmd],
+        check=False,
+        timeout=args.ssh_command_timeout_s,
+        timeout_label="read remote manifest",
+    )
     data = proc.stdout.strip()
     if not data:
         return {"version": 1, "files": {}}
@@ -647,23 +992,76 @@ def sync_changed_files(args, package_dir, ssh_options, remote_dir):
         if remote_files.get(rel, {}) != meta
     ]
 
-    run(["ssh"] + ssh_options + [args.board, "mkdir -p {}".format(shlex.quote(remote_dir))])
+    run(
+        ["ssh"] + ssh_options + [args.board, "mkdir -p {}".format(shlex.quote(remote_dir))],
+        timeout=args.ssh_command_timeout_s,
+        timeout_label="mkdir remote dir",
+    )
+    remote_parent = str(Path(remote_dir).parent)
+    remote_file_cache_dir = remote_parent.rstrip("/") + "/_file_cache"
+    cached_file_min_bytes = 64 * 1024
+
     if not changed:
         print("[SYNC] remote package is up to date; no files uploaded")
     else:
         dirs = sorted({str(Path(rel).parent).replace("\\", "/") for rel in changed})
         dirs = [d for d in dirs if d and d != "."]
-        if dirs:
-            mkdir_cmd = "mkdir -p " + " ".join(
-                shlex.quote(remote_dir + "/" + rel_dir) for rel_dir in dirs
+        mkdir_targets = [remote_file_cache_dir]
+        mkdir_targets.extend(remote_dir + "/" + rel_dir for rel_dir in dirs)
+        if mkdir_targets:
+            mkdir_cmd = "mkdir -p " + " ".join(shlex.quote(path) for path in mkdir_targets)
+            run(
+                ["ssh"] + ssh_options + [args.board, mkdir_cmd],
+                timeout=args.ssh_command_timeout_s,
+                timeout_label="mkdir remote package dirs",
             )
-            run(["ssh"] + ssh_options + [args.board, mkdir_cmd])
         total_bytes = sum(local_manifest["files"][rel]["size"] for rel in changed)
-        print("[SYNC] uploading {} changed file(s), {} bytes".format(len(changed), total_bytes))
+        print(
+            "[SYNC] syncing {} changed file(s), {} bytes; remote file cache={}".format(
+                len(changed), total_bytes, remote_file_cache_dir
+            )
+        )
         for rel in changed:
             local_path = package_dir / rel
-            remote_path = "{}:{}/{}".format(args.board, remote_dir, rel)
-            run(["scp"] + ssh_options + [str(local_path), remote_path])
+            meta = local_manifest["files"][rel]
+            remote_file_path = remote_dir.rstrip("/") + "/" + rel
+            if int(meta.get("size", 0)) >= cached_file_min_bytes:
+                cache_key = meta["sha256"]
+                remote_cache_path = remote_file_cache_dir + "/" + cache_key
+                probe = "test -f {}".format(shlex.quote(remote_cache_path))
+                proc = run_capture(
+                    ["ssh"] + ssh_options + [args.board, probe],
+                    check=False,
+                    timeout=args.ssh_command_timeout_s,
+                    timeout_label="probe remote file cache {}".format(rel),
+                )
+                if proc.returncode == 0:
+                    print("[SYNC-CACHE] hit {} {}".format(rel, cache_key[:12]))
+                else:
+                    print("[SYNC-CACHE] upload {} {}".format(rel, cache_key[:12]))
+                    run(
+                        ["scp"]
+                        + ssh_options
+                        + [str(local_path), "{}:{}".format(args.board, remote_cache_path)],
+                        timeout=args.scp_timeout_s,
+                        timeout_label="upload cached {}".format(rel),
+                    )
+                link_cmd = "rm -f {dst} && ln -s {src} {dst}".format(
+                    src=shlex.quote(remote_cache_path),
+                    dst=shlex.quote(remote_file_path),
+                )
+                run(
+                    ["ssh"] + ssh_options + [args.board, link_cmd],
+                    timeout=args.ssh_command_timeout_s,
+                    timeout_label="link cached {}".format(rel),
+                )
+            else:
+                remote_path = "{}:{}".format(args.board, remote_file_path)
+                run(
+                    ["scp"] + ssh_options + [str(local_path), remote_path],
+                    timeout=args.scp_timeout_s,
+                    timeout_label="upload {}".format(rel),
+                )
 
     manifest_path = package_dir / ".deploy_manifest.json"
     write_text(manifest_path, json.dumps(local_manifest, indent=2, sort_keys=True) + "\n")
@@ -671,6 +1069,9 @@ def sync_changed_files(args, package_dir, ssh_options, remote_dir):
         ["scp"]
         + ssh_options
         + [str(manifest_path), "{}:{}/.deploy_manifest.json".format(args.board, remote_dir)]
+        ,
+        timeout=args.scp_timeout_s,
+        timeout_label="upload deploy manifest",
     )
 
 
@@ -680,89 +1081,106 @@ def deploy_and_run(args, package_dir, tar_path):
     remote_dir = args.remote_dir.rstrip("/")
     remote_tar = "/tmp/{}".format(tar_path.name)
     ssh_options = build_ssh_options(args)
+    try:
+        check_remote_free_space(args, ssh_options, remote_dir, package_dir)
 
-    if not args.skip_copy:
-        if args.deploy_mode == "sync":
-            sync_changed_files(args, package_dir, ssh_options, remote_dir)
-        else:
-            run(["scp"] + ssh_options + [str(tar_path), "{}:{}".format(args.board, remote_tar)])
-            remote_cmd = (
-                "rm -rf {remote_dir} && mkdir -p {remote_dir} && "
-                "tar -xzf {remote_tar} -C {remote_dir}"
-            ).format(remote_dir=shlex.quote(remote_dir), remote_tar=shlex.quote(remote_tar))
-            run(["ssh"] + ssh_options + [args.board, remote_cmd])
+        if not args.skip_copy:
+            if args.deploy_mode == "sync":
+                sync_changed_files(args, package_dir, ssh_options, remote_dir)
+            else:
+                run(
+                    ["scp"] + ssh_options + [str(tar_path), "{}:{}".format(args.board, remote_tar)],
+                    timeout=args.scp_timeout_s,
+                    timeout_label="upload package tar",
+                )
+                remote_cmd = (
+                    "rm -rf {remote_dir} && mkdir -p {remote_dir} && "
+                    "tar -xzf {remote_tar} -C {remote_dir}"
+                ).format(remote_dir=shlex.quote(remote_dir), remote_tar=shlex.quote(remote_tar))
+                run(
+                    ["ssh"] + ssh_options + [args.board, remote_cmd],
+                    timeout=args.ssh_command_timeout_s,
+                    timeout_label="extract package tar",
+                )
 
-    if not args.skip_run:
-        if args.run_serial_before_pipeline:
-            run(
-                ["ssh"]
-                + ssh_options
-                + [args.board, "cd {} && ./run_stage_serial.sh".format(shlex.quote(remote_dir))]
-            )
-            run(
-                ["ssh"]
-                + ssh_options
-                + [args.board, "cd {} && ./run_stage_pipeline.sh".format(shlex.quote(remote_dir))]
-            )
-        elif args.serial:
-            run(
-                ["ssh"]
-                + ssh_options
-                + [args.board, "cd {} && ./run_stage_serial.sh".format(shlex.quote(remote_dir))]
-            )
-        else:
-            run(
-                ["ssh"]
-                + ssh_options
-                + [args.board, "cd {} && ./run_stage_pipeline.sh".format(shlex.quote(remote_dir))]
-            )
+        if not args.skip_run:
+            if args.run_serial_before_pipeline:
+                run_remote_stage_script(
+                    args, ssh_options, remote_dir, "run_stage_serial.sh", args.serial_timeout_s
+                )
+                run_remote_stage_script(
+                    args, ssh_options, remote_dir, "run_stage_pipeline.sh", args.pipeline_timeout_s
+                )
+            elif args.serial:
+                run_remote_stage_script(
+                    args, ssh_options, remote_dir, "run_stage_serial.sh", args.serial_timeout_s
+                )
+            else:
+                run_remote_stage_script(
+                    args, ssh_options, remote_dir, "run_stage_pipeline.sh", args.pipeline_timeout_s
+                )
 
-    if args.fetch_results_dir:
-        local_dir = Path(args.fetch_results_dir)
-        local_dir.mkdir(parents=True, exist_ok=True)
-        if args.run_serial_before_pipeline or args.serial:
+        if args.fetch_results_dir and not args.skip_run:
+            local_dir = Path(args.fetch_results_dir)
+            local_dir.mkdir(parents=True, exist_ok=True)
+            if args.run_serial_before_pipeline or args.serial:
+                run(
+                    ["scp"]
+                    + ssh_options
+                    + [
+                        "-r",
+                        "{}:{}/{}".format(args.board, remote_dir, args.serial_output_jsonl),
+                        str(local_dir),
+                    ],
+                    timeout=args.fetch_timeout_s,
+                    timeout_label="fetch serial results",
+                )
+            if args.run_serial_before_pipeline or not args.serial:
+                run(
+                    ["scp"]
+                    + ssh_options
+                    + [
+                        "-r",
+                        "{}:{}/{}".format(args.board, remote_dir, args.pipeline_output_jsonl),
+                        str(local_dir),
+                    ],
+                    timeout=args.fetch_timeout_s,
+                    timeout_label="fetch pipeline results",
+                )
             run(
                 ["scp"]
                 + ssh_options
-                + [
-                    "-r",
-                    "{}:{}/{}".format(args.board, remote_dir, args.serial_output_jsonl),
-                    str(local_dir),
-                ]
+                + ["-r", "{}:{}/manifest.json".format(args.board, remote_dir), str(local_dir)],
+                timeout=args.fetch_timeout_s,
+                timeout_label="fetch manifest",
             )
-        if args.run_serial_before_pipeline or not args.serial:
-            run(
-                ["scp"]
-                + ssh_options
-                + [
-                    "-r",
-                    "{}:{}/{}".format(args.board, remote_dir, args.pipeline_output_jsonl),
-                    str(local_dir),
-                ]
-            )
-        run(
-            ["scp"]
-            + ssh_options
-            + ["-r", "{}:{}/manifest.json".format(args.board, remote_dir), str(local_dir)]
-        )
-        if args.vta_runtime_profile_dir:
-            run(
-                ["scp"]
-                + ssh_options
-                + [
-                    "-r",
-                    "{}:{}/{}".format(args.board, remote_dir, args.vta_runtime_profile_dir),
-                    str(local_dir),
-                ]
-            )
-        if args.compare_serial_pipeline:
-            compare_jsonl_top1(
-                local_dir / args.serial_output_jsonl,
-                local_dir / args.pipeline_output_jsonl,
-            )
-        if args.rpc_baseline_result:
-            native_name = args.serial_output_jsonl if (args.run_serial_before_pipeline or args.serial) else args.pipeline_output_jsonl
-            compare_rpc_baseline_top1(Path(args.rpc_baseline_result), local_dir / native_name)
+            if args.vta_runtime_profile_dir:
+                run(
+                    ["scp"]
+                    + ssh_options
+                    + [
+                        "-r",
+                        "{}:{}/{}".format(args.board, remote_dir, args.vta_runtime_profile_dir),
+                        str(local_dir),
+                    ],
+                    timeout=args.fetch_timeout_s,
+                    timeout_label="fetch runtime profile",
+                )
+            if args.compare_serial_pipeline:
+                compare_jsonl_top1(
+                    local_dir / args.serial_output_jsonl,
+                    local_dir / args.pipeline_output_jsonl,
+                )
+            if args.rpc_baseline_result:
+                native_name = args.serial_output_jsonl if (args.run_serial_before_pipeline or args.serial) else args.pipeline_output_jsonl
+                compare_rpc_baseline_top1(
+                    Path(args.rpc_baseline_result),
+                    local_dir / native_name,
+                    args.correctness_policy,
+                )
+    finally:
+        if args.cleanup_remote_after_run:
+            cleanup_remote_package(args, ssh_options, remote_dir, remote_tar)
 
 
 def _read_jsonl_by_frame(path):
@@ -835,12 +1253,25 @@ def _read_baseline_top1_by_input(path):
     return rows
 
 
-def compare_rpc_baseline_top1(baseline_path, native_path):
+def top1_passes_policy(baseline_top1, native_top1, correctness_policy):
+    if int(native_top1) == int(baseline_top1):
+        return True, "exact_match"
+    if (
+        correctness_policy == "cat_equivalent"
+        and int(native_top1) in CAT_EQUIVALENT_TOP1
+        and int(baseline_top1) in CAT_EQUIVALENT_TOP1
+    ):
+        return True, "cat_equivalent"
+    return False, "top1_mismatch"
+
+
+def compare_rpc_baseline_top1(baseline_path, native_path, correctness_policy="exact"):
     baseline = _read_baseline_top1_by_input(baseline_path)
     native_rows = _read_jsonl_by_frame(native_path)
     if not baseline:
         raise RuntimeError("No top1 rows found in RPC baseline {}".format(baseline_path))
     mismatches = []
+    relaxed_count = 0
     for frame_id, native_row in sorted(native_rows.items()):
         input_index = int(native_row["input_index"])
         if input_index not in baseline:
@@ -852,13 +1283,19 @@ def compare_rpc_baseline_top1(baseline_path, native_path):
                 }
             )
             continue
-        if int(native_row["top1"]) != int(baseline[input_index]):
+        ok, reason = top1_passes_policy(
+            int(baseline[input_index]), int(native_row["top1"]), correctness_policy
+        )
+        if reason == "cat_equivalent":
+            relaxed_count += 1
+        if not ok:
             mismatches.append(
                 {
                     "frame_id": frame_id,
                     "input_index": input_index,
                     "baseline_top1": int(baseline[input_index]),
                     "native_top1": int(native_row["top1"]),
+                    "correctness_policy": correctness_policy,
                 }
             )
     if mismatches:
@@ -867,7 +1304,14 @@ def compare_rpc_baseline_top1(baseline_path, native_path):
                 json.dumps(mismatches[:10], sort_keys=True)
             )
         )
-    print("[COMPARE] RPC baseline vs native top1 matched for {} frame(s)".format(len(native_rows)))
+    if relaxed_count:
+        print(
+            "[COMPARE] RPC baseline vs native top1 cat-equivalent for {}/{} frame(s)".format(
+                relaxed_count, len(native_rows)
+            )
+        )
+    else:
+        print("[COMPARE] RPC baseline vs native top1 matched for {} frame(s)".format(len(native_rows)))
 
 
 def check_package(package_dir, image_dir_used, stage_records):
@@ -901,6 +1345,61 @@ def check_package(package_dir, image_dir_used, stage_records):
         raise RuntimeError("Package missing {}".format(package_dir / "input.bin"))
 
 
+def refresh_reused_package(args, package_dir):
+    manifest_path = package_dir / "manifest.json"
+    if not manifest_path.exists():
+        raise RuntimeError("Reused package missing manifest.json: {}".format(package_dir))
+    manifest = json.loads(manifest_path.read_text())
+    stage_records = manifest.get("stages") or []
+    if not stage_records:
+        raise RuntimeError("Reused package manifest has no stages: {}".format(manifest_path))
+
+    compile_runner(package_dir)
+    copy_runtime_libs(package_dir)
+
+    write_run_script(
+        args,
+        package_dir,
+        stage_records,
+        serial=True,
+        output_jsonl=args.serial_output_jsonl,
+        script_name="run_stage_serial.sh",
+    )
+    write_run_script(
+        args,
+        package_dir,
+        stage_records,
+        serial=False,
+        output_jsonl=args.pipeline_output_jsonl,
+        script_name="run_stage_pipeline.sh",
+    )
+
+    serial_threads = resolve_stage_runtime_threads(args, serial=True, stage_records=stage_records)
+    pipeline_threads = resolve_stage_runtime_threads(args, serial=False, stage_records=stage_records)
+    manifest.update(
+        {
+            "candidate_id": args.candidate_id or manifest.get("candidate_id", ""),
+            "runs": int(args.runs),
+            "queue_depth": int(args.queue_depth),
+            "runtime_num_threads": int(args.runtime_num_threads),
+            "stage_runtime_threads": {
+                "serial": serial_threads,
+                "pipeline": pipeline_threads,
+            },
+            "serial_stage_runtime_threads": serial_threads,
+            "pipeline_stage_runtime_threads": pipeline_threads,
+            "serial": bool(args.serial),
+            "run_serial_before_pipeline": bool(args.run_serial_before_pipeline),
+            "serial_output_jsonl": args.serial_output_jsonl,
+            "pipeline_output_jsonl": args.pipeline_output_jsonl,
+            "rpc_baseline_result": args.rpc_baseline_result,
+            "correctness_policy": args.correctness_policy,
+        }
+    )
+    write_text(manifest_path, json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+    check_package(package_dir, bool(manifest.get("input_list")), stage_records)
+
+
 def main():
     args = parse_args()
     if args.model != "resnet18_v1":
@@ -915,6 +1414,16 @@ def main():
         raise RuntimeError("--image and --image-dir are mutually exclusive")
     if args.runtime_num_threads < 0:
         raise RuntimeError("--runtime-num-threads must be non-negative")
+    for name in [
+        "ssh_command_timeout_s",
+        "scp_timeout_s",
+        "serial_timeout_s",
+        "pipeline_timeout_s",
+        "fetch_timeout_s",
+    ]:
+        if int(getattr(args, name)) <= 0:
+            raise RuntimeError("--{} must be positive".format(name.replace("_", "-")))
+    parse_stage_runtime_threads_csv(args.stage_runtime_num_threads)
     if (
         args.stage0_runtime_num_threads < 0
         or args.stage1_runtime_num_threads < 0
@@ -927,6 +1436,19 @@ def main():
         raise RuntimeError("--compare-serial-pipeline requires --run-serial-before-pipeline")
     if args.rpc_baseline_result and not args.fetch_results_dir:
         raise RuntimeError("--rpc-baseline-result requires --fetch-results-dir")
+    if args.reuse_package_dir and args.package_only:
+        raise RuntimeError("--reuse-package-dir is only valid for board deployment runs")
+
+    if args.reuse_package_dir:
+        package_dir = Path(args.reuse_package_dir).resolve()
+        if not package_dir.is_dir():
+            raise RuntimeError("--reuse-package-dir does not exist: {}".format(package_dir))
+        refresh_reused_package(args, package_dir)
+        tar_path = package_tar(package_dir)
+        print("[PACKAGE-REUSE]", package_dir)
+        print("[PACKAGE]", tar_path)
+        deploy_and_run(args, package_dir, tar_path)
+        return
 
     if args.build_dir:
         work_dir = Path(args.build_dir).resolve()

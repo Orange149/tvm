@@ -59,6 +59,7 @@ struct StageArgs {
   std::string lib;
   std::string params;
   std::vector<std::string> input_names{"data0"};
+  std::vector<std::string> input_sources;
   int runtime_num_threads = -1;
 };
 
@@ -67,6 +68,8 @@ struct Args {
   std::string input;
   std::string input_list;
   std::string output_jsonl = "native_result.jsonl";
+  std::string output_mode = "classification";
+  std::string output_dump_dir;
   std::string profile_dir;
   int runs = 1;
   int queue_depth = 2;
@@ -173,6 +176,7 @@ void Usage(const char* prog) {
       << "Usage: " << prog << " [options]\n"
       << "  --stageN-graph PATH --stageN-lib PATH --stageN-params PATH\n"
       << "  --stageN-input-names data0[,data1]\n"
+      << "  --stageN-input-sources input:0|stageM:K[,stageM:K]\n"
       << "  --stageN-device cpu|vta\n"
       << "  --stageN-name NAME\n"
       << "  --input PATH | --input-list PATH\n"
@@ -181,7 +185,9 @@ void Usage(const char* prog) {
       << "  --runtime-num-threads N\n"
       << "  --stageN-runtime-num-threads N\n"
       << "  --serial\n"
+      << "  --output-mode classification|raw|raw_all_stages\n"
       << "  --output-jsonl PATH\n"
+      << "  --output-dump-dir DIR\n"
       << "  --vta-runtime-profile-dir DIR\n"
       << "  --vta-runtime-profile-events-limit N\n"
       << "  --vta-runtime-profile-checkpoint-every N\n";
@@ -238,6 +244,8 @@ Args ParseArgs(int argc, char** argv) {
         stage.params = need_value(key);
       } else if (stage_suffix == "input-names") {
         stage.input_names = SplitCSV(need_value(key));
+      } else if (stage_suffix == "input-sources") {
+        stage.input_sources = SplitCSV(need_value(key));
       } else if (stage_suffix == "device") {
         stage.device = need_value(key);
       } else if (stage_suffix == "name") {
@@ -259,6 +267,10 @@ Args ParseArgs(int argc, char** argv) {
       args.runtime_num_threads = std::stoi(need_value(key));
     } else if (key == "--output-jsonl") {
       args.output_jsonl = need_value(key);
+    } else if (key == "--output-mode") {
+      args.output_mode = need_value(key);
+    } else if (key == "--output-dump-dir") {
+      args.output_dump_dir = need_value(key);
     } else if (key == "--serial") {
       args.serial = true;
     } else if (key == "--vta-runtime-profile-dir") {
@@ -292,6 +304,10 @@ Args ParseArgs(int argc, char** argv) {
     if (stage.graph.empty() || stage.lib.empty() || stage.params.empty()) {
       throw std::runtime_error("all stage graph/lib/params arguments are required");
     }
+    if (!stage.input_sources.empty() && stage.input_sources.size() != stage.input_names.size()) {
+      throw std::runtime_error("--stage" + std::to_string(i) +
+                               "-input-sources must match --stage-input-names count");
+    }
     if (stage.runtime_num_threads < -1) {
       throw std::runtime_error("--stage*-runtime-num-threads must be >= -1");
     }
@@ -321,6 +337,10 @@ Args ParseArgs(int argc, char** argv) {
   }
   if (args.runtime_num_threads < 0) {
     throw std::runtime_error("--runtime-num-threads must be non-negative");
+  }
+  if (args.output_mode != "classification" && args.output_mode != "raw" &&
+      args.output_mode != "raw_all_stages") {
+    throw std::runtime_error("--output-mode must be classification, raw, or raw_all_stages");
   }
   if (args.events_limit < 0) {
     throw std::runtime_error("--vta-runtime-profile-events-limit must be non-negative");
@@ -353,6 +373,46 @@ size_t TensorNBytes(const DLTensor* tensor) {
   const size_t bits = static_cast<size_t>(tensor->dtype.bits) *
                       static_cast<size_t>(tensor->dtype.lanes);
   return (elems * bits + 7) / 8;
+}
+
+size_t TensorNElements(const DLTensor* tensor) {
+  size_t elems = 1;
+  for (int i = 0; i < tensor->ndim; ++i) {
+    elems *= static_cast<size_t>(tensor->shape[i]);
+  }
+  return elems;
+}
+
+const uint8_t* TensorDataBytes(const DLTensor* tensor) {
+  return static_cast<const uint8_t*>(tensor->data) + tensor->byte_offset;
+}
+
+std::string DTypeString(const DLDataType& dtype) {
+  std::string code = "unknown";
+  if (dtype.code == kDLFloat) {
+    code = "float";
+  } else if (dtype.code == kDLInt) {
+    code = "int";
+  } else if (dtype.code == kDLUInt) {
+    code = "uint";
+  } else if (dtype.code == kDLBfloat) {
+    code = "bfloat";
+  }
+  std::ostringstream os;
+  os << code << static_cast<int>(dtype.bits);
+  if (dtype.lanes != 1) {
+    os << "x" << static_cast<int>(dtype.lanes);
+  }
+  return os.str();
+}
+
+uint64_t FNV1a64(const uint8_t* data, size_t nbytes) {
+  uint64_t hash = 1469598103934665603ULL;
+  for (size_t i = 0; i < nbytes; ++i) {
+    hash ^= static_cast<uint64_t>(data[i]);
+    hash *= 1099511628211ULL;
+  }
+  return hash;
 }
 
 NDArray MakeCPUInputLike(DLTensor* input_tensor, const std::string& input_bytes) {
@@ -472,6 +532,142 @@ int Top1Float32(const NDArray& output_cpu) {
   return static_cast<int>(std::max_element(data, data + count) - data);
 }
 
+std::string ShapeJSON(const DLTensor* tensor) {
+  std::ostringstream os;
+  os << "[";
+  for (int i = 0; i < tensor->ndim; ++i) {
+    if (i) os << ",";
+    os << tensor->shape[i];
+  }
+  os << "]";
+  return os.str();
+}
+
+std::string UInt64Hex(uint64_t value) {
+  std::ostringstream os;
+  os << std::hex << std::setfill('0') << std::setw(16) << value;
+  return os.str();
+}
+
+std::string TensorSummaryJSON(const NDArray& array, int index) {
+  const DLTensor* tensor = array.operator->();
+  const size_t nbytes = TensorNBytes(tensor);
+  const size_t count = TensorNElements(tensor);
+  const uint8_t* bytes = TensorDataBytes(tensor);
+
+  double sum = 0.0;
+  double min_value = 0.0;
+  double max_value = 0.0;
+  bool numeric = false;
+
+  auto update_stats = [&](double value, size_t idx) {
+    if (idx == 0) {
+      min_value = value;
+      max_value = value;
+    } else {
+      min_value = std::min(min_value, value);
+      max_value = std::max(max_value, value);
+    }
+    sum += value;
+  };
+
+  if (tensor->dtype.lanes == 1 && tensor->dtype.code == kDLFloat && tensor->dtype.bits == 32) {
+    const float* data = reinterpret_cast<const float*>(bytes);
+    for (size_t i = 0; i < count; ++i) {
+      update_stats(static_cast<double>(data[i]), i);
+    }
+    numeric = true;
+  } else if (tensor->dtype.lanes == 1 && tensor->dtype.code == kDLFloat &&
+             tensor->dtype.bits == 64) {
+    const double* data = reinterpret_cast<const double*>(bytes);
+    for (size_t i = 0; i < count; ++i) {
+      update_stats(data[i], i);
+    }
+    numeric = true;
+  } else if (tensor->dtype.lanes == 1 && tensor->dtype.code == kDLInt &&
+             tensor->dtype.bits == 32) {
+    const int32_t* data = reinterpret_cast<const int32_t*>(bytes);
+    for (size_t i = 0; i < count; ++i) {
+      update_stats(static_cast<double>(data[i]), i);
+    }
+    numeric = true;
+  } else if (tensor->dtype.lanes == 1 && tensor->dtype.code == kDLInt &&
+             tensor->dtype.bits == 64) {
+    const int64_t* data = reinterpret_cast<const int64_t*>(bytes);
+    for (size_t i = 0; i < count; ++i) {
+      update_stats(static_cast<double>(data[i]), i);
+    }
+    numeric = true;
+  }
+
+  std::ostringstream os;
+  os << std::fixed << std::setprecision(9);
+  os << "{\"index\":" << index
+     << ",\"shape\":" << ShapeJSON(tensor)
+     << ",\"dtype\":\"" << JsonEscape(DTypeString(tensor->dtype)) << "\""
+     << ",\"size\":" << count
+     << ",\"nbytes\":" << nbytes
+     << ",\"fnv1a64\":\"" << UInt64Hex(FNV1a64(bytes, nbytes)) << "\"";
+  if (numeric) {
+    os << ",\"min\":" << min_value
+       << ",\"max\":" << max_value
+       << ",\"mean\":" << (count ? sum / static_cast<double>(count) : 0.0)
+       << ",\"sum\":" << sum;
+  }
+  os << "}";
+  return os.str();
+}
+
+std::string RawOutputsJSON(const std::vector<NDArray>& outputs) {
+  std::ostringstream os;
+  os << "[";
+  for (size_t i = 0; i < outputs.size(); ++i) {
+    if (i) os << ",";
+    os << TensorSummaryJSON(outputs[i], static_cast<int>(i));
+  }
+  os << "]";
+  return os.str();
+}
+
+std::string DumpOutputsJSON(const std::string& output_dump_dir,
+                            const std::vector<NDArray>& outputs,
+                            int completion_index,
+                            const std::string& tag) {
+  if (output_dump_dir.empty()) {
+    return "[]";
+  }
+  const std::filesystem::path run_dir =
+      std::filesystem::path(output_dump_dir) /
+      ("run_" + std::to_string(completion_index));
+  EnsureDir(run_dir.string());
+  std::ostringstream os;
+  os << "[";
+  for (size_t i = 0; i < outputs.size(); ++i) {
+    const DLTensor* tensor = outputs[i].operator->();
+    const size_t nbytes = TensorNBytes(tensor);
+    const uint8_t* bytes = TensorDataBytes(tensor);
+    const std::string file_name = tag + "_output_" + std::to_string(i) + ".bin";
+    const std::filesystem::path file_path = run_dir / file_name;
+    std::ofstream out(file_path, std::ios::out | std::ios::binary);
+    if (!out) {
+      throw std::runtime_error("failed to open output dump " + file_path.string());
+    }
+    out.write(reinterpret_cast<const char*>(bytes), static_cast<std::streamsize>(nbytes));
+    if (!out) {
+      throw std::runtime_error("failed to write output dump " + file_path.string());
+    }
+    if (i) os << ",";
+    os << "{\"index\":" << i
+       << ",\"path\":\"" << JsonEscape(file_path.string()) << "\""
+       << ",\"shape\":" << ShapeJSON(tensor)
+       << ",\"dtype\":\"" << JsonEscape(DTypeString(tensor->dtype)) << "\""
+       << ",\"nbytes\":" << nbytes
+       << "}";
+  }
+  os << "]";
+  return os.str();
+}
+
 struct StageTiming {
   double set_start_ms{0.0};
   double run_start_ms{0.0};
@@ -495,6 +691,62 @@ struct Frame {
   double done_ms{0.0};
   int top1{-1};
 };
+
+std::pair<int, int> ParseInputSource(const std::string& source) {
+  const size_t colon = source.find(':');
+  if (colon == std::string::npos) {
+    throw std::runtime_error("input source must be input:0 or stageN:K, got " + source);
+  }
+  const std::string owner = source.substr(0, colon);
+  const int index = std::stoi(source.substr(colon + 1));
+  if (index < 0) {
+    throw std::runtime_error("negative input source index in " + source);
+  }
+  if (owner == "input") {
+    return {-1, index};
+  }
+  const std::string prefix = "stage";
+  if (owner.rfind(prefix, 0) != 0 || owner.size() == prefix.size()) {
+    throw std::runtime_error("input source must be input:0 or stageN:K, got " + source);
+  }
+  return {std::stoi(owner.substr(prefix.size())), index};
+}
+
+const NDArray& ResolveInputSource(const Frame& frame, const std::string& source) {
+  const auto parsed = ParseInputSource(source);
+  const int stage_index = parsed.first;
+  const int output_index = parsed.second;
+  if (stage_index < 0) {
+    if (static_cast<size_t>(output_index) >= frame.stage_inputs.size()) {
+      throw std::runtime_error("input source out of range: " + source);
+    }
+    return frame.stage_inputs[static_cast<size_t>(output_index)];
+  }
+  if (static_cast<size_t>(stage_index) >= frame.stage_outputs.size()) {
+    throw std::runtime_error("stage source out of range: " + source);
+  }
+  const std::vector<NDArray>& outputs = frame.stage_outputs[static_cast<size_t>(stage_index)];
+  if (static_cast<size_t>(output_index) >= outputs.size()) {
+    throw std::runtime_error("stage output source out of range: " + source);
+  }
+  return outputs[static_cast<size_t>(output_index)];
+}
+
+std::vector<NDArray> ResolveStageInputs(const Args& args, const Frame& frame, size_t stage_index) {
+  const StageArgs& stage = args.stages[stage_index];
+  if (stage.input_sources.empty()) {
+    if (stage_index == 0) {
+      return frame.stage_inputs;
+    }
+    return frame.stage_outputs[stage_index - 1];
+  }
+  std::vector<NDArray> inputs;
+  inputs.reserve(stage.input_sources.size());
+  for (const std::string& source : stage.input_sources) {
+    inputs.push_back(ResolveInputSource(frame, source));
+  }
+  return inputs;
+}
 
 std::vector<NDArray> RunStage(StageExecutor* stage, const std::vector<NDArray>& inputs,
                               StageTiming* timing) {
@@ -606,8 +858,8 @@ void DumpProfileSnapshot(const std::string& profile_dir, const std::string& name
   WriteFile(profile_dir + "/" + name + "_meta.json", MetaJSON(name, run_index, events_limit));
 }
 
-std::string ResultJSON(const Frame& frame, int completion_index, const std::string& mode,
-                       double benchmark_start_ms) {
+std::string ResultJSON(const Args& args, const Frame& frame, int completion_index,
+                       const std::string& mode, double benchmark_start_ms) {
   auto rel = [&](double value) { return value - benchmark_start_ms; };
   std::ostringstream os;
   os << std::fixed << std::setprecision(6);
@@ -616,7 +868,27 @@ std::string ResultJSON(const Frame& frame, int completion_index, const std::stri
      << ",\"frame_id\":" << frame.frame_id
      << ",\"input_index\":" << frame.input_index
      << ",\"input_file\":\"" << JsonEscape(frame.input_file) << "\""
-     << ",\"top1\":" << frame.top1
+     << ",\"output_mode\":\"" << JsonEscape(args.output_mode) << "\"";
+  if (args.output_mode == "classification") {
+    os << ",\"top1\":" << frame.top1;
+  } else {
+    os << ",\"raw_outputs\":" << RawOutputsJSON(frame.stage_outputs.back());
+    if (!args.output_dump_dir.empty()) {
+      os << ",\"raw_output_files\":"
+         << DumpOutputsJSON(args.output_dump_dir, frame.stage_outputs.back(),
+                            completion_index, "final");
+    }
+    if (args.output_mode == "raw_all_stages") {
+      os << ",\"stage_raw_outputs\":[";
+      for (size_t i = 0; i < frame.stage_outputs.size(); ++i) {
+        if (i != 0) os << ",";
+        os << "{\"stage_index\":" << i << ",\"outputs\":" << RawOutputsJSON(frame.stage_outputs[i])
+           << "}";
+      }
+      os << "]";
+    }
+  }
+  os
      << ",\"total_latency_ms\":" << (frame.done_ms - frame.enqueue_ms)
      << ",\"stage_count\":" << frame.stage_timings.size();
   for (size_t i = 0; i < frame.stage_timings.size(); ++i) {
@@ -699,7 +971,7 @@ int main(int argc, char** argv) {
     int completed = 0;
 
     auto write_completed = [&](const Frame& frame, const std::string& mode) {
-      result << ResultJSON(frame, completed, mode, benchmark_start_ms) << "\n";
+      result << ResultJSON(args, frame, completed, mode, benchmark_start_ms) << "\n";
       result.flush();
       ++completed;
       const bool allow_intermediate_profile = args.serial;
@@ -729,16 +1001,17 @@ int main(int argc, char** argv) {
         frame.stage_inputs = {input.data};
         frame.stage_outputs.resize(stages.size());
         frame.stage_timings.resize(stages.size());
-        const std::vector<NDArray>* current_inputs = &frame.stage_inputs;
         for (size_t stage_index = 0; stage_index < stages.size(); ++stage_index) {
           ConfigureThreadPool(args.stages[stage_index].runtime_num_threads,
                               "serial.stage" + std::to_string(stage_index));
+          const std::vector<NDArray> current_inputs = ResolveStageInputs(args, frame, stage_index);
           frame.stage_outputs[stage_index] =
-              RunStage(&stages[stage_index], *current_inputs, &frame.stage_timings[stage_index]);
-          current_inputs = &frame.stage_outputs[stage_index];
+              RunStage(&stages[stage_index], current_inputs, &frame.stage_timings[stage_index]);
         }
         frame.done_ms = NowMillis();
-        frame.top1 = Top1Float32(frame.stage_outputs.back()[0]);
+        if (args.output_mode == "classification") {
+          frame.top1 = Top1Float32(frame.stage_outputs.back()[0]);
+        }
         write_completed(frame, "serial");
       }
     } else {
@@ -749,6 +1022,7 @@ int main(int argc, char** argv) {
             std::make_unique<BoundedQueue<std::shared_ptr<Frame>>>(args.queue_depth));
       }
       std::mutex error_mutex;
+      std::mutex vta_run_mutex;
       std::exception_ptr first_error = nullptr;
 
       auto record_error = [&](std::exception_ptr err) {
@@ -770,16 +1044,20 @@ int main(int argc, char** argv) {
                                 "pipeline.stage" + std::to_string(stage_index));
             std::shared_ptr<Frame> frame;
             while (queues[stage_index]->Pop(&frame)) {
-              const std::vector<NDArray>& stage_inputs =
-                  stage_index == 0 ? frame->stage_inputs : frame->stage_outputs[stage_index - 1];
-              frame->stage_outputs[stage_index] = RunStage(
-                  &stages[stage_index], stage_inputs, &frame->stage_timings[stage_index]);
-              if (stage_index > 0) {
-                frame->stage_outputs[stage_index - 1].clear();
+              const std::vector<NDArray> stage_inputs = ResolveStageInputs(args, *frame, stage_index);
+              if (stages[stage_index].device == "vta") {
+                std::lock_guard<std::mutex> lock(vta_run_mutex);
+                frame->stage_outputs[stage_index] = RunStage(
+                    &stages[stage_index], stage_inputs, &frame->stage_timings[stage_index]);
+              } else {
+                frame->stage_outputs[stage_index] = RunStage(
+                    &stages[stage_index], stage_inputs, &frame->stage_timings[stage_index]);
               }
               if (stage_index + 1 == stages.size()) {
                 frame->done_ms = NowMillis();
-                frame->top1 = Top1Float32(frame->stage_outputs[stage_index][0]);
+                if (args.output_mode == "classification") {
+                  frame->top1 = Top1Float32(frame->stage_outputs[stage_index][0]);
+                }
               }
               if (!queues[stage_index + 1]->Push(frame)) break;
             }
