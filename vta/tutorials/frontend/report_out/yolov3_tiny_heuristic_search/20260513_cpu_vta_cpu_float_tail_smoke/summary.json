@@ -1,0 +1,697 @@
+{
+  "aborted": "all_serial_smoke_failed",
+  "rows": [
+    {
+      "balance_imbalance_ms_est": "2.5958399999999813",
+      "balanced_cycle_ms_est": "218.96973187878785",
+      "bottleneck_stage": 2,
+      "boundary_bytes_est": "1124864",
+      "boundary_conv_outputs": "[4, 8, 11]",
+      "boundary_ms": "0.7499093333333333",
+      "boundary_reasons": "",
+      "boundary_status": "safe",
+      "boundary_valid": "True",
+      "boundary_warnings": "per_stage_quantization_experimental;non_pool4_start_boundary_experimental;cpu_tail_requires_serial_raw_gate;concat_route_cpu_tail_boundary;cpu_to_vta_boundary_requires_pack_quant:pool3;vta_to_cpu_boundary_requires_unpack_dequant:route23;vta_to_cpu_boundary_requires_unpack_dequant:small42;vta_to_cpu_boundary_requires_unpack_dequant:big64",
+      "candidate_id": "yolo_pool3_to_dual_pre18_14",
+      "correctness": {
+        "max_mean_abs_delta": 0.5199687985587006,
+        "max_sum_abs_delta": 89632.221601814,
+        "output_count_match": true,
+        "passes_raw_output_gate": false,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 0.5199687985587006,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 89632.221601814,
+            "sum_rel_delta": 1.0433448261497777
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 0.0002763707927551269,
+            "passes": false,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 11.91018321715626,
+            "sum_rel_delta": 0.014323394575015441
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "cpu_prefix_convs": "[0, 1, 2, 3]",
+      "cpu_tail_convs": "[9, 10, 12]",
+      "dma_fragmentation_ms": "0.06",
+      "effective_segment_count": "3.0",
+      "end_name": "dual_pre18_14",
+      "end_output_names": "['route23', 'small42', 'big64']",
+      "error_summary": "serial raw-output correctness gate failed",
+      "failure_type": "serial_correctness_failed",
+      "fitted_cycle_ms_est": "435.86297081717237",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260513_cpu_vta_cpu_float_tail_smoke/yolo_pool3_to_dual_pre18_14/serial.log",
+      "mean_total_latency_ms": 521.046095,
+      "measured_cycle_ms": 521.046095,
+      "mode": "serial",
+      "needs_route_input": "False",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260513_cpu_vta_cpu_float_tail_smoke/packages/yolo_pool3_to_dual_pre18_14",
+      "passes_correctness_gate": false,
+      "pattern_cpu_vta_cpu": "1.0",
+      "pattern_cpu_vta_cpu_vta_cpu": "0.0",
+      "predicted_cycle_ms": "294.8823655072224",
+      "predicted_fps": "3.3911827798855185",
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "81fd0a5658127098",
+          "index": 0,
+          "max": 1.53170979,
+          "mean": 0.021601638,
+          "min": -1.603386521,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": 3723.690351814
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "9fdd7377c3f94813",
+          "index": 4,
+          "max": 1.134677529,
+          "mean": 0.019018666,
+          "min": -1.497687101,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 819.609409068
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "resource_cycle_ms": "203.89143272727273",
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260513_cpu_vta_cpu_float_tail_smoke/yolo_pool3_to_dual_pre18_14/native_serial_result.jsonl",
+      "run_kind": "serial_smoke",
+      "small_island_count": "0.0",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_pool3_to_dual_pre18_14",
+        "end_name": "dual_pre18_14",
+        "end_output_names": "['route23', 'small42', 'big64']",
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "6ae412286f034503",
+                "index": 0,
+                "max": 16.398448944,
+                "mean": 0.495341744,
+                "min": -1.84052372,
+                "nbytes": 346112,
+                "shape": [
+                  1,
+                  128,
+                  26,
+                  26
+                ],
+                "size": 86528,
+                "sum": 42860.930436792
+              }
+            ],
+            "stage_index": 0
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "d3b879e778d2b77f",
+                "index": 0,
+                "max": 16.53125,
+                "mean": -0.04113118,
+                "min": -2.084375143,
+                "nbytes": 692224,
+                "shape": [
+                  1,
+                  256,
+                  26,
+                  26
+                ],
+                "size": 173056,
+                "sum": -7117.997426769
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "99fd50c622f03b84",
+                "index": 1,
+                "max": 8.265625,
+                "mean": 0.45780441,
+                "min": -0.772656262,
+                "nbytes": 86528,
+                "shape": [
+                  1,
+                  128,
+                  13,
+                  13
+                ],
+                "size": 21632,
+                "sum": 9903.224992109
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1dec67d27f8e8137",
+                "index": 2,
+                "max": 7.3671875,
+                "mean": 0.480931326,
+                "min": -0.8984375,
+                "nbytes": 346112,
+                "shape": [
+                  1,
+                  512,
+                  13,
+                  13
+                ],
+                "size": 86528,
+                "sum": 41614.025752319
+              }
+            ],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "81fd0a5658127098",
+                "index": 0,
+                "max": 1.53170979,
+                "mean": 0.021601638,
+                "min": -1.603386521,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": 3723.690351814
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "9fdd7377c3f94813",
+                "index": 4,
+                "max": 1.134677529,
+                "mean": 0.019018666,
+                "min": -1.497687101,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 819.609409068
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": "pool3"
+      },
+      "sram_risk_ms": "0.0",
+      "stage0_ms_est": "203.89143272727273",
+      "stage1_vta_ms_est": "90.84653381818183",
+      "stage2_ms_est": "201.29559272727275",
+      "stage_count": "3.0",
+      "stage_devices": "cpu/vta/cpu",
+      "stage_get_mean_ms": [
+        0.187697,
+        3.4313145,
+        0.490355
+      ],
+      "stage_imbalance_ms": 9.404179500000026,
+      "stage_mean_ms": [
+        208.408784,
+        94.6234215,
+        217.81296350000002
+      ],
+      "stage_raw_outputs": [
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "6ae412286f034503",
+              "index": 0,
+              "max": 16.398448944,
+              "mean": 0.495341744,
+              "min": -1.84052372,
+              "nbytes": 346112,
+              "shape": [
+                1,
+                128,
+                26,
+                26
+              ],
+              "size": 86528,
+              "sum": 42860.930436792
+            }
+          ],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "d3b879e778d2b77f",
+              "index": 0,
+              "max": 16.53125,
+              "mean": -0.04113118,
+              "min": -2.084375143,
+              "nbytes": 692224,
+              "shape": [
+                1,
+                256,
+                26,
+                26
+              ],
+              "size": 173056,
+              "sum": -7117.997426769
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "99fd50c622f03b84",
+              "index": 1,
+              "max": 8.265625,
+              "mean": 0.45780441,
+              "min": -0.772656262,
+              "nbytes": 86528,
+              "shape": [
+                1,
+                128,
+                13,
+                13
+              ],
+              "size": 21632,
+              "sum": 9903.224992109
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1dec67d27f8e8137",
+              "index": 2,
+              "max": 7.3671875,
+              "mean": 0.480931326,
+              "min": -0.8984375,
+              "nbytes": 346112,
+              "shape": [
+                1,
+                512,
+                13,
+                13
+              ],
+              "size": 86528,
+              "sum": 41614.025752319
+            }
+          ],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "81fd0a5658127098",
+              "index": 0,
+              "max": 1.53170979,
+              "mean": 0.021601638,
+              "min": -1.603386521,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": 3723.690351814
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "9fdd7377c3f94813",
+              "index": 4,
+              "max": 1.134677529,
+              "mean": 0.019018666,
+              "min": -1.497687101,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 819.609409068
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_run_mean_ms": [
+        206.67994149999998,
+        90.01164,
+        216.7704525
+      ],
+      "stage_set_mean_ms": [
+        1.5411454999999998,
+        1.180467,
+        0.5521560000000001
+      ],
+      "start_name": "pool3",
+      "status": "serial_correctness_failed",
+      "tail_cpu_ms": "201.29559272727275",
+      "throughput_fps": 1.9192159956596546,
+      "vta_convs": "[4, 5, 6, 7, 8, 11]",
+      "vta_dma_ms": "0.5113018181818182"
+    }
+  ]
+}

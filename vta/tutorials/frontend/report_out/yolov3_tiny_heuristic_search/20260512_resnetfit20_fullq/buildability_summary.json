@@ -1,0 +1,1617 @@
+{
+  "rows": [
+    {
+      "boundary_bytes_est": 861900,
+      "boundary_conv_outputs": [
+        10,
+        12
+      ],
+      "boundary_ms": 0.5746,
+      "candidate_id": "yolo_pool2_to_logits",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2
+      ],
+      "cpu_tail_convs": [],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "logits",
+      "end_output_names": [
+        "small_logits51",
+        "big_logits66"
+      ],
+      "error_summary": "bda(tvm::runtime::TVMArgs const&, tvm::runtime::TVMRetValue*)#1}> >::Call(tvm::runtime::PackedFuncObj const*, tvm::runtime::TVMArgs, tvm::runtime::TVMRetValue*)+0x15) [0x7c3c5e0264e5]\n  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2025aab) [0x7c3c5e025aab]\n  [bt] (2) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ReshapeRel(tvm::runtime::Array<tvm::Type, void> const&, int, tvm::Attrs const&, tvm::TypeReporter const&)+0xd2a) [0x7c3c5e3c9d5a]\n  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7c3c5c99d3ab]\n  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7c3c5edfbd95]\n  File \"/home/orange/code/tvm/src/relay/analysis/type_solver.cc\", line 643\nInternalError: Check failed: (false) is false: [20:21:19] /home/orange/code/tvm/src/relay/op/tensor/transform.cc:794: InternalError: Check failed: oshape_sum == data_shape_sum (172380 vs. 173056) : Input tensor shape(1,1,16,16,26,26) and reshaped shape(1,255,26,26) are not compatible!\n",
+      "failure_type": "build_failed",
+      "needs_route_input": false,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 361.00724688313596,
+      "predicted_fps": 2.7700274956633115,
+      "resource_cycle_ms": 144.31248,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 143.47915636363638,
+      "stage1_vta_ms_est": 144.70425272727272,
+      "stage2_ms_est": 0.0,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool2",
+      "status": "build_failed",
+      "tail_cpu_ms": 0.0,
+      "vta_convs": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vta_dma_ms": 0.3917727272727273
+    },
+    {
+      "boundary_bytes_est": 861900,
+      "boundary_conv_outputs": [
+        10,
+        12
+      ],
+      "boundary_ms": 0.5746,
+      "candidate_id": "yolo_pool1_to_logits",
+      "cpu_prefix_convs": [
+        0,
+        1
+      ],
+      "cpu_tail_convs": [],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "logits",
+      "end_output_names": [
+        "small_logits51",
+        "big_logits66"
+      ],
+      "error_summary": "bda(tvm::runtime::TVMArgs const&, tvm::runtime::TVMRetValue*)#1}> >::Call(tvm::runtime::PackedFuncObj const*, tvm::runtime::TVMArgs, tvm::runtime::TVMRetValue*)+0x15) [0x7c3c5e0264e5]\n  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2025aab) [0x7c3c5e025aab]\n  [bt] (2) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ReshapeRel(tvm::runtime::Array<tvm::Type, void> const&, int, tvm::Attrs const&, tvm::TypeReporter const&)+0xd2a) [0x7c3c5e3c9d5a]\n  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7c3c5c99d3ab]\n  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7c3c5edfbd95]\n  File \"/home/orange/code/tvm/src/relay/analysis/type_solver.cc\", line 643\nInternalError: Check failed: (false) is false: [20:21:22] /home/orange/code/tvm/src/relay/op/tensor/transform.cc:794: InternalError: Check failed: oshape_sum == data_shape_sum (172380 vs. 173056) : Input tensor shape(1,1,16,16,26,26) and reshaped shape(1,255,26,26) are not compatible!\n",
+      "failure_type": "build_failed",
+      "needs_route_input": false,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 367.015249971958,
+      "predicted_fps": 2.7246824214427208,
+      "resource_cycle_ms": 156.772512,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 83.06688,
+      "stage1_vta_ms_est": 157.16428472727273,
+      "stage2_ms_est": 0.0,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool1",
+      "status": "build_failed",
+      "tail_cpu_ms": 0.0,
+      "vta_convs": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vta_dma_ms": 0.3917727272727273
+    },
+    {
+      "boundary_bytes_est": 861900,
+      "boundary_conv_outputs": [
+        10,
+        12
+      ],
+      "boundary_ms": 0.5746,
+      "candidate_id": "yolo_pool0_to_logits",
+      "cpu_prefix_convs": [
+        0
+      ],
+      "cpu_tail_convs": [],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "logits",
+      "end_output_names": [
+        "small_logits51",
+        "big_logits66"
+      ],
+      "error_summary": "bda(tvm::runtime::TVMArgs const&, tvm::runtime::TVMRetValue*)#1}> >::Call(tvm::runtime::PackedFuncObj const*, tvm::runtime::TVMArgs, tvm::runtime::TVMRetValue*)+0x15) [0x7c3c5e0264e5]\n  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2025aab) [0x7c3c5e025aab]\n  [bt] (2) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ReshapeRel(tvm::runtime::Array<tvm::Type, void> const&, int, tvm::Attrs const&, tvm::TypeReporter const&)+0xd2a) [0x7c3c5e3c9d5a]\n  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7c3c5c99d3ab]\n  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7c3c5edfbd95]\n  File \"/home/orange/code/tvm/src/relay/analysis/type_solver.cc\", line 643\nInternalError: Check failed: (false) is false: [20:21:23] /home/orange/code/tvm/src/relay/op/tensor/transform.cc:794: InternalError: Check failed: oshape_sum == data_shape_sum (172380 vs. 173056) : Input tensor shape(1,1,16,16,26,26) and reshaped shape(1,255,26,26) are not compatible!\n",
+      "failure_type": "build_failed",
+      "needs_route_input": false,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 373.02325306078,
+      "predicted_fps": 2.6807980247737024,
+      "resource_cycle_ms": 169.23254400000002,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 22.65460363636364,
+      "stage1_vta_ms_est": 169.62431672727274,
+      "stage2_ms_est": 0.0,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool0",
+      "status": "build_failed",
+      "tail_cpu_ms": 0.0,
+      "vta_convs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vta_dma_ms": 0.3917727272727273
+    },
+    {
+      "boundary_bytes_est": 861900,
+      "boundary_conv_outputs": [
+        10,
+        12
+      ],
+      "boundary_ms": 0.5746,
+      "candidate_id": "yolo_data_to_logits",
+      "cpu_prefix_convs": [],
+      "cpu_tail_convs": [],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "logits",
+      "end_output_names": [
+        "small_logits51",
+        "big_logits66"
+      ],
+      "error_summary": "",
+      "failure_type": "build_failed",
+      "needs_route_input": false,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 383.2762542190882,
+      "predicted_fps": 2.609084150118991,
+      "resource_cycle_ms": 173.905056,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 0.0,
+      "stage1_vta_ms_est": 174.29682872727273,
+      "stage2_ms_est": 0.0,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "data",
+      "status": "build_failed",
+      "tail_cpu_ms": 0.0,
+      "vta_convs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vta_dma_ms": 0.3917727272727273
+    },
+    {
+      "boundary_bytes_est": 861900,
+      "boundary_conv_outputs": [
+        10,
+        12
+      ],
+      "boundary_ms": 0.5746,
+      "candidate_id": "yolo_pool3_to_logits",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "cpu_tail_convs": [],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "logits",
+      "end_output_names": [
+        "small_logits51",
+        "big_logits66"
+      ],
+      "error_summary": "bda(tvm::runtime::TVMArgs const&, tvm::runtime::TVMRetValue*)#1}> >::Call(tvm::runtime::PackedFuncObj const*, tvm::runtime::TVMArgs, tvm::runtime::TVMRetValue*)+0x15) [0x7c3c5e0264e5]\n  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2025aab) [0x7c3c5e025aab]\n  [bt] (2) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ReshapeRel(tvm::runtime::Array<tvm::Type, void> const&, int, tvm::Attrs const&, tvm::TypeReporter const&)+0xd2a) [0x7c3c5e3c9d5a]\n  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7c3c5c99d3ab]\n  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7c3c5edfbd95]\n  File \"/home/orange/code/tvm/src/relay/analysis/type_solver.cc\", line 643\nInternalError: Check failed: (false) is false: [20:21:27] /home/orange/code/tvm/src/relay/op/tensor/transform.cc:794: InternalError: Check failed: oshape_sum == data_shape_sum (172380 vs. 173056) : Input tensor shape(1,1,16,16,26,26) and reshaped shape(1,255,26,26) are not compatible!\n",
+      "failure_type": "build_failed",
+      "needs_route_input": false,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 389.73514517539024,
+      "predicted_fps": 2.5658450678087443,
+      "resource_cycle_ms": 203.89143272727273,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 203.89143272727273,
+      "stage1_vta_ms_est": 132.24422072727273,
+      "stage2_ms_est": 0.0,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool3",
+      "status": "build_failed",
+      "tail_cpu_ms": 0.0,
+      "vta_convs": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vta_dma_ms": 0.3917727272727273
+    },
+    {
+      "boundary_bytes_est": 865280,
+      "boundary_conv_outputs": [
+        4,
+        7
+      ],
+      "boundary_ms": 0.5768533333333333,
+      "candidate_id": "yolo_pool0_to_shared13",
+      "cpu_prefix_convs": [
+        0
+      ],
+      "cpu_tail_convs": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "shared13",
+      "end_output_names": [
+        "route23",
+        "shared38"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool0_to_shared13",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 393.42234847618374,
+      "predicted_fps": 2.541797647930354,
+      "resource_cycle_ms": 263.38598787878794,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 22.65460363636364,
+      "stage1_vta_ms_est": 115.30249309090908,
+      "stage2_ms_est": 263.38598787878794,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool0",
+      "status": "buildable",
+      "tail_cpu_ms": 263.38598787878794,
+      "vta_convs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "vta_dma_ms": 0.3933090909090909
+    },
+    {
+      "boundary_bytes_est": 865280,
+      "boundary_conv_outputs": [
+        4,
+        7
+      ],
+      "boundary_ms": 0.5768533333333333,
+      "candidate_id": "yolo_pool1_to_shared13",
+      "cpu_prefix_convs": [
+        0,
+        1
+      ],
+      "cpu_tail_convs": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "shared13",
+      "end_output_names": [
+        "route23",
+        "shared38"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool1_to_shared13",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 393.42234847618374,
+      "predicted_fps": 2.541797647930354,
+      "resource_cycle_ms": 263.38598787878794,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 83.06688,
+      "stage1_vta_ms_est": 102.84246109090908,
+      "stage2_ms_est": 263.38598787878794,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool1",
+      "status": "buildable",
+      "tail_cpu_ms": 263.38598787878794,
+      "vta_convs": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "vta_dma_ms": 0.3933090909090909
+    },
+    {
+      "boundary_bytes_est": 865280,
+      "boundary_conv_outputs": [
+        4,
+        7
+      ],
+      "boundary_ms": 0.5768533333333333,
+      "candidate_id": "yolo_pool2_to_shared13",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2
+      ],
+      "cpu_tail_convs": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "shared13",
+      "end_output_names": [
+        "route23",
+        "shared38"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool2_to_shared13",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 393.42234847618374,
+      "predicted_fps": 2.541797647930354,
+      "resource_cycle_ms": 263.38598787878794,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 143.47915636363638,
+      "stage1_vta_ms_est": 90.38242909090908,
+      "stage2_ms_est": 263.38598787878794,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool2",
+      "status": "buildable",
+      "tail_cpu_ms": 263.38598787878794,
+      "vta_convs": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "vta_dma_ms": 0.3933090909090909
+    },
+    {
+      "boundary_bytes_est": 865280,
+      "boundary_conv_outputs": [
+        4,
+        7
+      ],
+      "boundary_ms": 0.5768533333333333,
+      "candidate_id": "yolo_pool3_to_shared13",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "cpu_tail_convs": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "shared13",
+      "end_output_names": [
+        "route23",
+        "shared38"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool3_to_shared13",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 393.42234847618374,
+      "predicted_fps": 2.541797647930354,
+      "resource_cycle_ms": 263.38598787878794,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 203.89143272727273,
+      "stage1_vta_ms_est": 77.92239709090909,
+      "stage2_ms_est": 263.38598787878794,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool3",
+      "status": "buildable",
+      "tail_cpu_ms": 263.38598787878794,
+      "vta_convs": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "vta_dma_ms": 0.3933090909090909
+    },
+    {
+      "boundary_bytes_est": 865280,
+      "boundary_conv_outputs": [
+        4,
+        7
+      ],
+      "boundary_ms": 0.5768533333333333,
+      "candidate_id": "yolo_pool4_route_to_shared13",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "cpu_tail_convs": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "shared13",
+      "end_output_names": [
+        "route23",
+        "shared38"
+      ],
+      "needs_route_input": true,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool4_route_to_shared13",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 393.86485712119384,
+      "predicted_fps": 2.538941928734444,
+      "resource_cycle_ms": 264.30370909090914,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 264.30370909090914,
+      "stage1_vta_ms_est": 65.46236509090909,
+      "stage2_ms_est": 263.38598787878794,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool4_route",
+      "status": "buildable",
+      "tail_cpu_ms": 263.38598787878794,
+      "vta_convs": [
+        5,
+        6,
+        7
+      ],
+      "vta_dma_ms": 0.3933090909090909
+    },
+    {
+      "boundary_bytes_est": 1384448,
+      "boundary_conv_outputs": [
+        4,
+        6
+      ],
+      "boundary_ms": 0.9229653333333333,
+      "candidate_id": "yolo_pool0_to_trunk12",
+      "cpu_prefix_convs": [
+        0
+      ],
+      "cpu_tail_convs": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "trunk12",
+      "end_output_names": [
+        "route23",
+        "trunk34"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool0_to_trunk12",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 399.8956177974734,
+      "predicted_fps": 2.5006525590546698,
+      "resource_cycle_ms": 276.8109381818182,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 22.65460363636364,
+      "stage1_vta_ms_est": 112.76958254545454,
+      "stage2_ms_est": 276.8109381818182,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool0",
+      "status": "buildable",
+      "tail_cpu_ms": 276.8109381818182,
+      "vta_convs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "vta_dma_ms": 0.6292945454545454
+    },
+    {
+      "boundary_bytes_est": 1384448,
+      "boundary_conv_outputs": [
+        4,
+        6
+      ],
+      "boundary_ms": 0.9229653333333333,
+      "candidate_id": "yolo_pool1_to_trunk12",
+      "cpu_prefix_convs": [
+        0,
+        1
+      ],
+      "cpu_tail_convs": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "trunk12",
+      "end_output_names": [
+        "route23",
+        "trunk34"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool1_to_trunk12",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 399.8956177974734,
+      "predicted_fps": 2.5006525590546698,
+      "resource_cycle_ms": 276.8109381818182,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 83.06688,
+      "stage1_vta_ms_est": 100.30955054545454,
+      "stage2_ms_est": 276.8109381818182,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool1",
+      "status": "buildable",
+      "tail_cpu_ms": 276.8109381818182,
+      "vta_convs": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "vta_dma_ms": 0.6292945454545454
+    },
+    {
+      "boundary_bytes_est": 1384448,
+      "boundary_conv_outputs": [
+        4,
+        6
+      ],
+      "boundary_ms": 0.9229653333333333,
+      "candidate_id": "yolo_pool2_to_trunk12",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2
+      ],
+      "cpu_tail_convs": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "trunk12",
+      "end_output_names": [
+        "route23",
+        "trunk34"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool2_to_trunk12",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 399.8956177974734,
+      "predicted_fps": 2.5006525590546698,
+      "resource_cycle_ms": 276.8109381818182,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 143.47915636363638,
+      "stage1_vta_ms_est": 87.84951854545454,
+      "stage2_ms_est": 276.8109381818182,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool2",
+      "status": "buildable",
+      "tail_cpu_ms": 276.8109381818182,
+      "vta_convs": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "vta_dma_ms": 0.6292945454545454
+    },
+    {
+      "boundary_bytes_est": 1384448,
+      "boundary_conv_outputs": [
+        4,
+        6
+      ],
+      "boundary_ms": 0.9229653333333333,
+      "candidate_id": "yolo_pool3_to_trunk12",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "cpu_tail_convs": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "trunk12",
+      "end_output_names": [
+        "route23",
+        "trunk34"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool3_to_trunk12",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 399.8956177974734,
+      "predicted_fps": 2.5006525590546698,
+      "resource_cycle_ms": 276.8109381818182,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 203.89143272727273,
+      "stage1_vta_ms_est": 75.38948654545455,
+      "stage2_ms_est": 276.8109381818182,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool3",
+      "status": "buildable",
+      "tail_cpu_ms": 276.8109381818182,
+      "vta_convs": [
+        4,
+        5,
+        6
+      ],
+      "vta_dma_ms": 0.6292945454545454
+    },
+    {
+      "boundary_bytes_est": 865280,
+      "boundary_conv_outputs": [
+        4,
+        7
+      ],
+      "boundary_ms": 0.5768533333333333,
+      "candidate_id": "yolo_data_to_shared13",
+      "cpu_prefix_convs": [],
+      "cpu_tail_convs": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "shared13",
+      "end_output_names": [
+        "route23",
+        "shared38"
+      ],
+      "error_summary": "",
+      "failure_type": "build_failed",
+      "needs_route_input": false,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 401.42234847618374,
+      "predicted_fps": 2.4911418205688904,
+      "resource_cycle_ms": 263.38598787878794,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 0.0,
+      "stage1_vta_ms_est": 119.9750050909091,
+      "stage2_ms_est": 263.38598787878794,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "data",
+      "status": "build_failed",
+      "tail_cpu_ms": 263.38598787878794,
+      "vta_convs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "vta_dma_ms": 0.3933090909090909
+    },
+    {
+      "boundary_bytes_est": 1384448,
+      "boundary_conv_outputs": [
+        4,
+        6
+      ],
+      "boundary_ms": 0.9229653333333333,
+      "candidate_id": "yolo_data_to_trunk12",
+      "cpu_prefix_convs": [],
+      "cpu_tail_convs": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "trunk12",
+      "end_output_names": [
+        "route23",
+        "trunk34"
+      ],
+      "error_summary": "",
+      "failure_type": "build_failed",
+      "needs_route_input": false,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 407.8956177974734,
+      "predicted_fps": 2.451607608337964,
+      "resource_cycle_ms": 276.8109381818182,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 0.0,
+      "stage1_vta_ms_est": 117.44209454545454,
+      "stage2_ms_est": 276.8109381818182,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "data",
+      "status": "build_failed",
+      "tail_cpu_ms": 276.8109381818182,
+      "vta_convs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "vta_dma_ms": 0.6292945454545454
+    },
+    {
+      "boundary_bytes_est": 861900,
+      "boundary_conv_outputs": [
+        10,
+        12
+      ],
+      "boundary_ms": 0.5746,
+      "candidate_id": "yolo_pool4_route_to_logits",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "cpu_tail_convs": [],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "logits",
+      "end_output_names": [
+        "small_logits51",
+        "big_logits66"
+      ],
+      "error_summary": " [bt] (6) /home/orange/code/tvm/build/libtvm.so(tvm::transform::Pass::operator()(tvm::IRModule, tvm::transform::PassContext const&) const+0x3d4) [0x7c3c5cdce3f4]\n  [bt] (5) /home/orange/code/tvm/build/libtvm.so(tvm::transform::ModulePassNode::operator()(tvm::IRModule, tvm::transform::PassContext const&) const+0x1bf) [0x7c3c5cdd76df]\n  [bt] (4) /home/orange/code/tvm/build/libtvm.so(+0x287c5f7) [0x7c3c5e87c5f7]\n  [bt] (3) /home/orange/code/tvm/build/libtvm.so(tvm::relay::TypeInferencer::Infer(tvm::GlobalVar, tvm::relay::Function)+0xc9) [0x7c3c5e874119]\n  [bt] (2) /home/orange/code/tvm/build/libtvm.so(+0x24f2629) [0x7c3c5e4f2629]\n  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7c3c5c99d3ab]\n  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7c3c5edfbd95]\n  File \"/home/orange/code/tvm/src/relay/analysis/type_solver.cc\", line 643\nInternalError: Check failed: (false) is false: relay.concatenate requires all tensors have the same ndim",
+      "failure_type": "build_failed",
+      "needs_route_input": true,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 418.86485712119384,
+      "predicted_fps": 2.3874048705658333,
+      "resource_cycle_ms": 264.30370909090914,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 264.30370909090914,
+      "stage1_vta_ms_est": 119.78418872727272,
+      "stage2_ms_est": 0.0,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool4_route",
+      "status": "build_failed",
+      "tail_cpu_ms": 0.0,
+      "vta_convs": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "vta_dma_ms": 0.3917727272727273
+    },
+    {
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "candidate_id": "yolo_pool0_to_dual_pre18_14",
+      "cpu_prefix_convs": [
+        0
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool0_to_dual_pre18_14",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 434.61130350700114,
+      "predicted_fps": 2.3009065616350015,
+      "resource_cycle_ms": 201.29559272727275,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 22.65460363636364,
+      "stage1_vta_ms_est": 128.2266298181818,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool0",
+      "status": "buildable",
+      "tail_cpu_ms": 201.29559272727275,
+      "vta_convs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    },
+    {
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "candidate_id": "yolo_pool1_to_dual_pre18_14",
+      "cpu_prefix_convs": [
+        0,
+        1
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool1_to_dual_pre18_14",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 434.61130350700114,
+      "predicted_fps": 2.3009065616350015,
+      "resource_cycle_ms": 201.29559272727275,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 83.06688,
+      "stage1_vta_ms_est": 115.76659781818181,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool1",
+      "status": "buildable",
+      "tail_cpu_ms": 201.29559272727275,
+      "vta_convs": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    },
+    {
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "candidate_id": "yolo_pool2_to_dual_pre18_14",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool2_to_dual_pre18_14",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 434.61130350700114,
+      "predicted_fps": 2.3009065616350015,
+      "resource_cycle_ms": 201.29559272727275,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 143.47915636363638,
+      "stage1_vta_ms_est": 103.30656581818182,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool2",
+      "status": "buildable",
+      "tail_cpu_ms": 201.29559272727275,
+      "vta_convs": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    },
+    {
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "candidate_id": "yolo_pool3_to_dual_pre18_14",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool3_to_dual_pre18_14",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 435.86297081717237,
+      "predicted_fps": 2.294299050284456,
+      "resource_cycle_ms": 203.89143272727273,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 203.89143272727273,
+      "stage1_vta_ms_est": 90.84653381818183,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool3",
+      "status": "buildable",
+      "tail_cpu_ms": 201.29559272727275,
+      "vta_convs": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    },
+    {
+      "boundary_bytes_est": 1384448,
+      "boundary_conv_outputs": [
+        4,
+        6
+      ],
+      "boundary_ms": 0.9229653333333333,
+      "candidate_id": "yolo_pool4_route_to_trunk12",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "cpu_tail_convs": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "trunk12",
+      "end_output_names": [
+        "route23",
+        "trunk34"
+      ],
+      "needs_route_input": true,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool4_route_to_trunk12",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 439.8956177974734,
+      "predicted_fps": 2.273266564934041,
+      "resource_cycle_ms": 276.8109381818182,
+      "small_island_count": 1.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 264.30370909090914,
+      "stage1_vta_ms_est": 62.92945454545455,
+      "stage2_ms_est": 276.8109381818182,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool4_route",
+      "status": "buildable",
+      "tail_cpu_ms": 276.8109381818182,
+      "vta_convs": [
+        5,
+        6
+      ],
+      "vta_dma_ms": 0.6292945454545454
+    },
+    {
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "candidate_id": "yolo_data_to_dual_pre18_14",
+      "cpu_prefix_convs": [],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "error_summary": "",
+      "failure_type": "build_failed",
+      "needs_route_input": false,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 442.61130350700114,
+      "predicted_fps": 2.259318711647368,
+      "resource_cycle_ms": 201.29559272727275,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 0.0,
+      "stage1_vta_ms_est": 132.89914181818182,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "data",
+      "status": "build_failed",
+      "tail_cpu_ms": 201.29559272727275,
+      "vta_convs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    },
+    {
+      "boundary_bytes_est": 951808,
+      "boundary_conv_outputs": [
+        4,
+        7,
+        8
+      ],
+      "boundary_ms": 0.6345386666666667,
+      "candidate_id": "yolo_pool0_to_small_pre18",
+      "cpu_prefix_convs": [
+        0
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "small_pre18",
+      "end_output_names": [
+        "route23",
+        "shared38",
+        "small42"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool0_to_small_pre18",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 463.7410154528046,
+      "predicted_fps": 2.1563760087590764,
+      "resource_cycle_ms": 261.70786909090907,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 22.65460363636364,
+      "stage1_vta_ms_est": 115.687936,
+      "stage2_ms_est": 261.70786909090907,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool0",
+      "status": "buildable",
+      "tail_cpu_ms": 261.70786909090907,
+      "vta_convs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "vta_dma_ms": 0.43263999999999997
+    },
+    {
+      "boundary_bytes_est": 951808,
+      "boundary_conv_outputs": [
+        4,
+        7,
+        8
+      ],
+      "boundary_ms": 0.6345386666666667,
+      "candidate_id": "yolo_pool1_to_small_pre18",
+      "cpu_prefix_convs": [
+        0,
+        1
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "small_pre18",
+      "end_output_names": [
+        "route23",
+        "shared38",
+        "small42"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool1_to_small_pre18",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 463.7410154528046,
+      "predicted_fps": 2.1563760087590764,
+      "resource_cycle_ms": 261.70786909090907,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 83.06688,
+      "stage1_vta_ms_est": 103.22790400000001,
+      "stage2_ms_est": 261.70786909090907,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool1",
+      "status": "buildable",
+      "tail_cpu_ms": 261.70786909090907,
+      "vta_convs": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "vta_dma_ms": 0.43263999999999997
+    },
+    {
+      "boundary_bytes_est": 951808,
+      "boundary_conv_outputs": [
+        4,
+        7,
+        8
+      ],
+      "boundary_ms": 0.6345386666666667,
+      "candidate_id": "yolo_pool2_to_small_pre18",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "small_pre18",
+      "end_output_names": [
+        "route23",
+        "shared38",
+        "small42"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool2_to_small_pre18",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 463.7410154528046,
+      "predicted_fps": 2.1563760087590764,
+      "resource_cycle_ms": 261.70786909090907,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 143.47915636363638,
+      "stage1_vta_ms_est": 90.76787200000001,
+      "stage2_ms_est": 261.70786909090907,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool2",
+      "status": "buildable",
+      "tail_cpu_ms": 261.70786909090907,
+      "vta_convs": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "vta_dma_ms": 0.43263999999999997
+    },
+    {
+      "boundary_bytes_est": 951808,
+      "boundary_conv_outputs": [
+        4,
+        7,
+        8
+      ],
+      "boundary_ms": 0.6345386666666667,
+      "candidate_id": "yolo_pool3_to_small_pre18",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "small_pre18",
+      "end_output_names": [
+        "route23",
+        "shared38",
+        "small42"
+      ],
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool3_to_small_pre18",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 463.7410154528046,
+      "predicted_fps": 2.1563760087590764,
+      "resource_cycle_ms": 261.70786909090907,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 203.89143272727273,
+      "stage1_vta_ms_est": 78.30784000000001,
+      "stage2_ms_est": 261.70786909090907,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool3",
+      "status": "buildable",
+      "tail_cpu_ms": 261.70786909090907,
+      "vta_convs": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "vta_dma_ms": 0.43263999999999997
+    },
+    {
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "candidate_id": "yolo_pool4_route_to_dual_pre18_14",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "needs_route_input": true,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool4_route_to_dual_pre18_14",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 464.99268276297596,
+      "predicted_fps": 2.1505714757875816,
+      "resource_cycle_ms": 264.30370909090914,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 264.30370909090914,
+      "stage1_vta_ms_est": 78.38650181818183,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool4_route",
+      "status": "buildable",
+      "tail_cpu_ms": 201.29559272727275,
+      "vta_convs": [
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    },
+    {
+      "boundary_bytes_est": 951808,
+      "boundary_conv_outputs": [
+        4,
+        7,
+        8
+      ],
+      "boundary_ms": 0.6345386666666667,
+      "candidate_id": "yolo_pool4_route_to_small_pre18",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "small_pre18",
+      "end_output_names": [
+        "route23",
+        "shared38",
+        "small42"
+      ],
+      "needs_route_input": true,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260512_resnetfit20_fullq/packages/yolo_pool4_route_to_small_pre18",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 464.99268276297596,
+      "predicted_fps": 2.1505714757875816,
+      "resource_cycle_ms": 264.30370909090914,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 264.30370909090914,
+      "stage1_vta_ms_est": 65.847808,
+      "stage2_ms_est": 261.70786909090907,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool4_route",
+      "status": "buildable",
+      "tail_cpu_ms": 261.70786909090907,
+      "vta_convs": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "vta_dma_ms": 0.43263999999999997
+    },
+    {
+      "boundary_bytes_est": 951808,
+      "boundary_conv_outputs": [
+        4,
+        7,
+        8
+      ],
+      "boundary_ms": 0.6345386666666667,
+      "candidate_id": "yolo_data_to_small_pre18",
+      "cpu_prefix_convs": [],
+      "cpu_tail_convs": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "small_pre18",
+      "end_output_names": [
+        "route23",
+        "shared38",
+        "small42"
+      ],
+      "error_summary": "",
+      "failure_type": "build_failed",
+      "needs_route_input": false,
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 471.7410154528046,
+      "predicted_fps": 2.1198071976848176,
+      "resource_cycle_ms": 261.70786909090907,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 0.0,
+      "stage1_vta_ms_est": 120.360448,
+      "stage2_ms_est": 261.70786909090907,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "data",
+      "status": "build_failed",
+      "tail_cpu_ms": 261.70786909090907,
+      "vta_convs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "vta_dma_ms": 0.43263999999999997
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+candidate_id,start_name,end_name,end_output_names,needs_route_input,cpu_prefix_convs,vta_convs,cpu_tail_convs,boundary_conv_outputs,stage_devices,resource_cycle_ms,vta_dma_ms,boundary_ms,dma_fragmentation_ms,sram_risk_ms,tail_cpu_ms,stage_count,effective_segment_count,small_island_count,pattern_cpu_vta_cpu,pattern_cpu_vta_cpu_vta_cpu,stage0_ms_est,stage1_vta_ms_est,stage2_ms_est,boundary_bytes_est,predicted_cycle_ms,predicted_fps,status,failure_type,error_summary,package_dir
+yolo_pool2_to_logits,pool2,logits,"['small_logits51', 'big_logits66']",False,"[0, 1, 2]","[3, 4, 5, 6, 7, 8, 9, 10, 11, 12]",[],"[10, 12]",cpu/vta/cpu,144.31248,0.3917727272727273,0.5746,0.04,0.0,0.0,3.0,3.0,0.0,1.0,0.0,143.47915636363638,144.70425272727272,0.0,861900,361.00724688313596,2.7700274956633115,build_failed,build_failed,"bda(tvm::runtime::TVMArgs const&, tvm::runtime::TVMRetValue*)#1}> >::Call(tvm::runtime::PackedFuncObj const*, tvm::runtime::TVMArgs, tvm::runtime::TVMRetValue*)+0x15) [0x7b44862264e5]
+  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2025aab) [0x7b4486225aab]
+  [bt] (2) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ReshapeRel(tvm::runtime::Array<tvm::Type, void> const&, int, tvm::Attrs const&, tvm::TypeReporter const&)+0xd2a) [0x7b44865c9d5a]
+  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7b4484b9d3ab]
+  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7b4486ffbd95]
+  File ""/home/orange/code/tvm/src/relay/analysis/type_solver.cc"", line 643
+InternalError: Check failed: (false) is false: [15:43:29] /home/orange/code/tvm/src/relay/op/tensor/transform.cc:794: InternalError: Check failed: oshape_sum == data_shape_sum (172380 vs. 173056) : Input tensor shape(1,1,16,16,26,26) and reshaped shape(1,255,26,26) are not compatible!
+",
+yolo_pool1_to_logits,pool1,logits,"['small_logits51', 'big_logits66']",False,"[0, 1]","[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]",[],"[10, 12]",cpu/vta/cpu,156.772512,0.3917727272727273,0.5746,0.04,0.0,0.0,3.0,3.0,0.0,1.0,0.0,83.06688,157.16428472727273,0.0,861900,367.015249971958,2.7246824214427208,build_failed,build_failed,"bda(tvm::runtime::TVMArgs const&, tvm::runtime::TVMRetValue*)#1}> >::Call(tvm::runtime::PackedFuncObj const*, tvm::runtime::TVMArgs, tvm::runtime::TVMRetValue*)+0x15) [0x7b44862264e5]
+  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2025aab) [0x7b4486225aab]
+  [bt] (2) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ReshapeRel(tvm::runtime::Array<tvm::Type, void> const&, int, tvm::Attrs const&, tvm::TypeReporter const&)+0xd2a) [0x7b44865c9d5a]
+  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7b4484b9d3ab]
+  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7b4486ffbd95]
+  File ""/home/orange/code/tvm/src/relay/analysis/type_solver.cc"", line 643
+InternalError: Check failed: (false) is false: [15:43:31] /home/orange/code/tvm/src/relay/op/tensor/transform.cc:794: InternalError: Check failed: oshape_sum == data_shape_sum (172380 vs. 173056) : Input tensor shape(1,1,16,16,26,26) and reshaped shape(1,255,26,26) are not compatible!
+",
+yolo_pool0_to_logits,pool0,logits,"['small_logits51', 'big_logits66']",False,[0],"[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]",[],"[10, 12]",cpu/vta/cpu,169.23254400000002,0.3917727272727273,0.5746,0.04,0.0,0.0,3.0,3.0,0.0,1.0,0.0,22.65460363636364,169.62431672727274,0.0,861900,373.02325306078,2.6807980247737024,build_failed,build_failed,"bda(tvm::runtime::TVMArgs const&, tvm::runtime::TVMRetValue*)#1}> >::Call(tvm::runtime::PackedFuncObj const*, tvm::runtime::TVMArgs, tvm::runtime::TVMRetValue*)+0x15) [0x7b44862264e5]
+  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2025aab) [0x7b4486225aab]
+  [bt] (2) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ReshapeRel(tvm::runtime::Array<tvm::Type, void> const&, int, tvm::Attrs const&, tvm::TypeReporter const&)+0xd2a) [0x7b44865c9d5a]
+  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7b4484b9d3ab]
+  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7b4486ffbd95]
+  File ""/home/orange/code/tvm/src/relay/analysis/type_solver.cc"", line 643
+InternalError: Check failed: (false) is false: [15:43:32] /home/orange/code/tvm/src/relay/op/tensor/transform.cc:794: InternalError: Check failed: oshape_sum == data_shape_sum (172380 vs. 173056) : Input tensor shape(1,1,16,16,26,26) and reshaped shape(1,255,26,26) are not compatible!
+",
+yolo_data_to_logits,data,logits,"['small_logits51', 'big_logits66']",False,[],"[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]",[],"[10, 12]",cpu/vta/cpu,173.905056,0.3917727272727273,0.5746,0.04,0.0,0.0,3.0,3.0,0.0,1.0,0.0,0.0,174.29682872727273,0.0,861900,383.2762542190882,2.609084150118991,build_failed,build_failed,,
+yolo_pool3_to_logits,pool3,logits,"['small_logits51', 'big_logits66']",False,"[0, 1, 2, 3]","[4, 5, 6, 7, 8, 9, 10, 11, 12]",[],"[10, 12]",cpu/vta/cpu,203.89143272727273,0.3917727272727273,0.5746,0.04,0.0,0.0,3.0,3.0,0.0,1.0,0.0,203.89143272727273,132.24422072727273,0.0,861900,389.73514517539024,2.5658450678087443,build_failed,build_failed,"bda(tvm::runtime::TVMArgs const&, tvm::runtime::TVMRetValue*)#1}> >::Call(tvm::runtime::PackedFuncObj const*, tvm::runtime::TVMArgs, tvm::runtime::TVMRetValue*)+0x15) [0x7b44862264e5]
+  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2025aab) [0x7b4486225aab]
+  [bt] (2) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ReshapeRel(tvm::runtime::Array<tvm::Type, void> const&, int, tvm::Attrs const&, tvm::TypeReporter const&)+0xd2a) [0x7b44865c9d5a]
+  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7b4484b9d3ab]
+  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7b4486ffbd95]
+  File ""/home/orange/code/tvm/src/relay/analysis/type_solver.cc"", line 643
+InternalError: Check failed: (false) is false: [15:43:36] /home/orange/code/tvm/src/relay/op/tensor/transform.cc:794: InternalError: Check failed: oshape_sum == data_shape_sum (172380 vs. 173056) : Input tensor shape(1,1,16,16,26,26) and reshaped shape(1,255,26,26) are not compatible!
+",
+yolo_pool0_to_shared13,pool0,shared13,"['route23', 'shared38']",False,[0],"[1, 2, 3, 4, 5, 6, 7]","[8, 9, 10, 11, 12]","[4, 7]",cpu/vta/cpu,263.38598787878794,0.3933090909090909,0.5768533333333333,0.04,0.0,263.38598787878794,3.0,3.0,0.0,1.0,0.0,22.65460363636364,115.30249309090908,263.38598787878794,865280,393.42234847618374,2.541797647930354,buildable,,,vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260513_fullq_cpu_tail_fix_probe/packages/yolo_pool0_to_shared13

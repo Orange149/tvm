@@ -1,0 +1,141 @@
+{
+  "boundary_bw_GBps": 1.5,
+  "cpu_eff_gops": {
+    "add_relu_tail_elementwise": {
+      "1": 2.8,
+      "2": 4.8,
+      "3": 6.4,
+      "4": 8.0,
+      "estimated_from": "default_static_estimate"
+    },
+    "head_pool_dense": {
+      "1": 2.8,
+      "2": 4.8,
+      "3": 6.4,
+      "4": 8.0,
+      "estimated_from": "default_static_estimate"
+    },
+    "residual_3x3_conv": {
+      "1": 2.8,
+      "2": 4.8,
+      "3": 6.4,
+      "4": 8.0,
+      "estimated_from": "default_static_estimate"
+    },
+    "skip_proj_1x1_conv": {
+      "1": 2.8,
+      "2": 4.8,
+      "3": 6.4,
+      "4": 8.0,
+      "estimated_from": "default_static_estimate"
+    },
+    "stem_large_input_conv": {
+      "1": 2.8,
+      "2": 4.8,
+      "3": 6.4,
+      "4": 8.0,
+      "estimated_from": "default_static_estimate"
+    }
+  },
+  "dma": {
+    "large_contiguous_load_store": {
+      "avg_bytes_per_call": 4096.0,
+      "estimated_from": "default_static_estimate",
+      "fragmentation_penalty_ms_per_call": 0.01,
+      "padded_call_ratio": 0.0,
+      "ps_pl_load_bw_GBps": 1.5,
+      "ps_pl_store_bw_GBps": 1.5,
+      "small_call_ratio": 0.0,
+      "strided_call_ratio": 0.0
+    },
+    "padded_load": {
+      "avg_bytes_per_call": 4096.0,
+      "estimated_from": "default_static_estimate",
+      "fragmentation_penalty_ms_per_call": 0.08,
+      "padded_call_ratio": 0.0,
+      "ps_pl_load_bw_GBps": 1.5,
+      "ps_pl_store_bw_GBps": 1.5,
+      "small_call_ratio": 0.0,
+      "strided_call_ratio": 0.0
+    },
+    "small_tensor_load_store": {
+      "avg_bytes_per_call": 4096.0,
+      "estimated_from": "default_static_estimate",
+      "fragmentation_penalty_ms_per_call": 0.04,
+      "padded_call_ratio": 0.0,
+      "ps_pl_load_bw_GBps": 1.5,
+      "ps_pl_store_bw_GBps": 1.5,
+      "small_call_ratio": 0.0,
+      "strided_call_ratio": 0.0
+    },
+    "strided_load": {
+      "avg_bytes_per_call": 4096.0,
+      "estimated_from": "default_static_estimate",
+      "fragmentation_penalty_ms_per_call": 0.08,
+      "padded_call_ratio": 0.0,
+      "ps_pl_load_bw_GBps": 1.5,
+      "ps_pl_store_bw_GBps": 1.5,
+      "small_call_ratio": 0.0,
+      "strided_call_ratio": 0.0
+    }
+  },
+  "source": "default_static_estimate_no_calibration_host",
+  "stage_overheads": {
+    "cpu": {
+      "bridge_pack_ms": 0.0,
+      "bridge_unpack_ms": 0.0,
+      "estimated_from": "default_static_estimate",
+      "get_output_ms": 0.05,
+      "run_ms": 0.0,
+      "runner_submit_ms": 0.05,
+      "set_input_ms": 0.05,
+      "sync_wait_ms": 0.05
+    },
+    "vta": {
+      "bridge_pack_ms": 0.0,
+      "bridge_unpack_ms": 0.0,
+      "estimated_from": "default_static_estimate",
+      "get_output_ms": 0.05,
+      "run_ms": 0.0,
+      "runner_submit_ms": 0.05,
+      "set_input_ms": 0.05,
+      "sync_wait_ms": 0.05
+    }
+  },
+  "units": {
+    "dma_bytes": "B",
+    "gops": "GOP/s",
+    "ops": "OP",
+    "ps_pl_bw": "decimal GB/s",
+    "time": "ms"
+  },
+  "version": 1,
+  "vta_eff_gops": {
+    "conv1x1": {
+      "estimated_from": "default_static_estimate",
+      "gops": 12.0
+    },
+    "conv3x3_c_large": {
+      "estimated_from": "default_static_estimate",
+      "gops": 16.0
+    },
+    "conv3x3_c_small": {
+      "estimated_from": "default_static_estimate",
+      "gops": 11.2
+    },
+    "skip_proj": {
+      "estimated_from": "default_static_estimate",
+      "gops": 12.0
+    },
+    "stride2_downsample": {
+      "estimated_from": "default_static_estimate",
+      "gops": 16.0
+    }
+  },
+  "weights": {
+    "boundary": 1.0,
+    "dma_fragmentation": 1.0,
+    "imbalance": 0.25,
+    "sram_risk": 0.15
+  }
+}

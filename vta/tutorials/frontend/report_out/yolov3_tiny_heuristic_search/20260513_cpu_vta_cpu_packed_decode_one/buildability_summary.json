@@ -1,0 +1,244 @@
+{
+  "buildable_count": 1,
+  "candidate_count": 1,
+  "rejected_candidate_count": 0,
+  "rows": [
+    {
+      "boundary_bytes_est": 3677440,
+      "boundary_ms_est": 1.6715636363636364,
+      "boundary_node_ids": "5,25,51,63",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta25_51_63_cpu_heads",
+      "cpu_resource_ms_est": 132.0,
+      "description": "CPU prefix, VTA body through both logits tensors, CPU final decode heads.",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/20260513_cpu_vta_cpu_packed_decode_one/packages/yolo_hetero_cpu5_vta25_51_63_cpu_heads",
+      "predicted_cycle_ms": 308.0715636363637,
+      "predicted_fps": 3.2459990406007195,
+      "resource_cycle_ms_est": 260.0,
+      "split_backend": "packed_hetero",
+      "stage_balance_ms_est": 128.0,
+      "stage_count": 3,
+      "stage_devices": "cpu/vta/cpu",
+      "stage_devices_json": "[\"cpu\",\"vta\",\"cpu\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63
+          ],
+          "ops_proxy": 9320607875072.0,
+          "output_bytes": 908544,
+          "output_node_ids": [
+            25,
+            51,
+            63
+          ],
+          "runtime_proxy_ms": 291282.25618133333,
+          "tvm_op_count": 30
+        },
+        {
+          "boundary_input_node_ids": [
+            25,
+            51,
+            63
+          ],
+          "node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 1723800.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 0.8975187499999999,
+          "tvm_op_count": 2
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[25,51,63],[52,53,54,55,64,65,66,67]]",
+      "stage_runtime_proxy_ms_json": "[52.0, 260.0, 80.0]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            25,
+            51,
+            63
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 30,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23,
+            27,
+            28,
+            32,
+            33,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            57,
+            58,
+            61,
+            62
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            25,
+            51,
+            63
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 2,
+          "tvm_op_count": 2,
+          "used_null_node_ids": [
+            25,
+            51,
+            53,
+            54,
+            55,
+            63,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "buildable",
+      "vta_occupied_ms_est": 260.0,
+      "vta_split_penalty_ms": 0.0
+    }
+  ],
+  "safe_candidate_count": 1,
+  "split_backend": "packed_hetero"
+}

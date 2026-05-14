@@ -1,0 +1,7243 @@
+{
+  "baselines": {
+    "packed_graph_smoke_fps": 6.52152984603568,
+    "rpc_all_vta_fps": 3.724346058177234
+  },
+  "best": {
+    "boundary_bytes_est": 3634176,
+    "boundary_ms_est": 1.6518981818181817,
+    "boundary_node_ids": "5,25,35",
+    "boundary_reasons": "",
+    "boundary_valid": true,
+    "candidate_id": "yolo_hetero_cpu5_vta25_35_heads",
+    "correctness": {
+      "max_mean_abs_delta": 7.14412994318181e-08,
+      "max_sum_abs_delta": 0.012134566000895575,
+      "output_count_match": true,
+      "passes_raw_output_gate": true,
+      "rows": [
+        {
+          "index": 0,
+          "mean_abs_delta": 7.14412994318181e-08,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.012134566000895575,
+          "sum_rel_delta": 1.4124983659170141e-07
+        },
+        {
+          "index": 1,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 2,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 3,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 4,
+          "mean_abs_delta": 1.2072448735134245e-09,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 5.410684377693542e-05,
+          "sum_rel_delta": 6.506983633210695e-08
+        },
+        {
+          "index": 5,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 6,
+          "mean_abs_delta": 0.0,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        },
+        {
+          "index": 7,
+          "mean_abs_delta": 3.333369136271358e-10,
+          "passes": true,
+          "same_dtype": true,
+          "same_hash": false,
+          "same_shape": true,
+          "sum_abs_delta": 0.0,
+          "sum_rel_delta": 0.0
+        }
+      ]
+    },
+    "description": "CPU prefix node5, VTA body split after route node25 and trunk node35.",
+    "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_35_heads/pipeline.log",
+    "mean_total_latency_ms": 2083.23202745,
+    "mode": "pipeline",
+    "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta25_35_heads",
+    "passes_correctness_gate": true,
+    "predicted_cycle_ms": 328931.67983250815,
+    "predicted_fps": 0.003040144994575164,
+    "raw_outputs": [
+      {
+        "dtype": "float32",
+        "fnv1a64": "c00e52702c78d283",
+        "index": 0,
+        "max": 3.234375,
+        "mean": -0.498367232,
+        "min": -19.9453125,
+        "nbytes": 689520,
+        "shape": [
+          1,
+          255,
+          26,
+          26
+        ],
+        "size": 172380,
+        "sum": -85908.543384566
+      },
+      {
+        "dtype": "int32",
+        "fnv1a64": "6437c9a572635250",
+        "index": 1,
+        "max": 2.0,
+        "mean": 1.0,
+        "min": 0.0,
+        "nbytes": 12,
+        "shape": [
+          3
+        ],
+        "size": 3,
+        "sum": 3.0
+      },
+      {
+        "dtype": "float32",
+        "fnv1a64": "1634dd673862fe48",
+        "index": 2,
+        "max": 344.0,
+        "mean": 108.25,
+        "min": 10.0,
+        "nbytes": 48,
+        "shape": [
+          12
+        ],
+        "size": 12,
+        "sum": 1299.0
+      },
+      {
+        "dtype": "int32",
+        "fnv1a64": "b619ac38b449dc99",
+        "index": 3,
+        "max": 255.0,
+        "mean": 66.0,
+        "min": 3.0,
+        "nbytes": 24,
+        "shape": [
+          6
+        ],
+        "size": 6,
+        "sum": 396.0
+      },
+      {
+        "dtype": "float32",
+        "fnv1a64": "154641ceb2076cca",
+        "index": 4,
+        "max": 1.078125,
+        "mean": 0.019295038,
+        "min": -1.6171875,
+        "nbytes": 172380,
+        "shape": [
+          1,
+          255,
+          13,
+          13
+        ],
+        "size": 43095,
+        "sum": 831.519646392
+      },
+      {
+        "dtype": "int32",
+        "fnv1a64": "7f5875e9426f5e51",
+        "index": 5,
+        "max": 5.0,
+        "mean": 4.0,
+        "min": 3.0,
+        "nbytes": 12,
+        "shape": [
+          3
+        ],
+        "size": 3,
+        "sum": 12.0
+      },
+      {
+        "dtype": "float32",
+        "fnv1a64": "1634dd673862fe48",
+        "index": 6,
+        "max": 344.0,
+        "mean": 108.25,
+        "min": 10.0,
+        "nbytes": 48,
+        "shape": [
+          12
+        ],
+        "size": 12,
+        "sum": 1299.0
+      },
+      {
+        "dtype": "int32",
+        "fnv1a64": "85777e194f56eaa9",
+        "index": 7,
+        "max": 255.0,
+        "mean": 61.666666667,
+        "min": 3.0,
+        "nbytes": 24,
+        "shape": [
+          6
+        ],
+        "size": 6,
+        "sum": 370.0
+      }
+    ],
+    "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_35_heads/native_pipeline_result.jsonl",
+    "run_kind": "pipeline",
+    "split_backend": "packed_hetero",
+    "split_boundary_diagnostics": {
+      "candidate_id": "yolo_hetero_cpu5_vta25_35_heads",
+      "end_name": null,
+      "end_output_names": null,
+      "stage_count": 3,
+      "stage_raw_outputs": [
+        {
+          "outputs": [],
+          "stage_index": 0
+        },
+        {
+          "outputs": [],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_raw_outputs_available": true,
+      "start_name": null
+    },
+    "stage_balance_ms_est": 185465.7518013055,
+    "stage_count": 3,
+    "stage_devices": "cpu/vta/vta",
+    "stage_devices_json": "[\"cpu\",\"vta\",\"vta\"]",
+    "stage_metrics": [
+      {
+        "boundary_input_node_ids": [],
+        "node_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "ops_proxy": 49840128.0,
+        "output_bytes": 2768896,
+        "output_node_ids": [
+          5
+        ],
+        "runtime_proxy_ms": 6.760847999999999,
+        "tvm_op_count": 3
+      },
+      {
+        "boundary_input_node_ids": [
+          5
+        ],
+        "node_ids": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "ops_proxy": 9041713594368.0,
+        "output_bytes": 865280,
+        "output_node_ids": [
+          25,
+          35
+        ],
+        "runtime_proxy_ms": 282562.38998399995,
+        "tvm_op_count": 18
+      },
+      {
+        "boundary_input_node_ids": [
+          25,
+          35
+        ],
+        "node_ids": [
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67
+        ],
+        "ops_proxy": 278896004504.0,
+        "output_bytes": 862068,
+        "output_node_ids": [
+          52,
+          53,
+          54,
+          55,
+          64,
+          65,
+          66,
+          67
+        ],
+        "runtime_proxy_ms": 8720.763716083333,
+        "tvm_op_count": 14
+      }
+    ],
+    "stage_output_nodes_json": "[[5],[25,35],[52,53,54,55,64,65,66,67]]",
+    "stage_raw_outputs": [
+      {
+        "outputs": [],
+        "stage_index": 0
+      },
+      {
+        "outputs": [],
+        "stage_index": 1
+      },
+      {
+        "outputs": [
+          {
+            "dtype": "float32",
+            "fnv1a64": "c00e52702c78d283",
+            "index": 0,
+            "max": 3.234375,
+            "mean": -0.498367232,
+            "min": -19.9453125,
+            "nbytes": 689520,
+            "shape": [
+              1,
+              255,
+              26,
+              26
+            ],
+            "size": 172380,
+            "sum": -85908.543384566
+          },
+          {
+            "dtype": "int32",
+            "fnv1a64": "6437c9a572635250",
+            "index": 1,
+            "max": 2.0,
+            "mean": 1.0,
+            "min": 0.0,
+            "nbytes": 12,
+            "shape": [
+              3
+            ],
+            "size": 3,
+            "sum": 3.0
+          },
+          {
+            "dtype": "float32",
+            "fnv1a64": "1634dd673862fe48",
+            "index": 2,
+            "max": 344.0,
+            "mean": 108.25,
+            "min": 10.0,
+            "nbytes": 48,
+            "shape": [
+              12
+            ],
+            "size": 12,
+            "sum": 1299.0
+          },
+          {
+            "dtype": "int32",
+            "fnv1a64": "b619ac38b449dc99",
+            "index": 3,
+            "max": 255.0,
+            "mean": 66.0,
+            "min": 3.0,
+            "nbytes": 24,
+            "shape": [
+              6
+            ],
+            "size": 6,
+            "sum": 396.0
+          },
+          {
+            "dtype": "float32",
+            "fnv1a64": "154641ceb2076cca",
+            "index": 4,
+            "max": 1.078125,
+            "mean": 0.019295038,
+            "min": -1.6171875,
+            "nbytes": 172380,
+            "shape": [
+              1,
+              255,
+              13,
+              13
+            ],
+            "size": 43095,
+            "sum": 831.519646392
+          },
+          {
+            "dtype": "int32",
+            "fnv1a64": "7f5875e9426f5e51",
+            "index": 5,
+            "max": 5.0,
+            "mean": 4.0,
+            "min": 3.0,
+            "nbytes": 12,
+            "shape": [
+              3
+            ],
+            "size": 3,
+            "sum": 12.0
+          },
+          {
+            "dtype": "float32",
+            "fnv1a64": "1634dd673862fe48",
+            "index": 6,
+            "max": 344.0,
+            "mean": 108.25,
+            "min": 10.0,
+            "nbytes": 48,
+            "shape": [
+              12
+            ],
+            "size": 12,
+            "sum": 1299.0
+          },
+          {
+            "dtype": "int32",
+            "fnv1a64": "85777e194f56eaa9",
+            "index": 7,
+            "max": 255.0,
+            "mean": 61.666666667,
+            "min": 3.0,
+            "nbytes": 24,
+            "shape": [
+              6
+            ],
+            "size": 6,
+            "sum": 370.0
+          }
+        ],
+        "stage_index": 2
+      }
+    ],
+    "stage_runtime_proxy_ms_json": "[6.760847999999999, 282562.38998399995, 8720.763716083333]",
+    "stage_validations": [
+      {
+        "boundary_input_node_ids": [],
+        "extra_hidden_boundary_node_ids": [],
+        "hidden_data_node_ids": [],
+        "output_node_ids": [
+          5
+        ],
+        "stage_index": 0,
+        "tvm_op_count": 3,
+        "used_null_node_ids": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "boundary_input_node_ids": [
+          5
+        ],
+        "extra_hidden_boundary_node_ids": [],
+        "hidden_data_node_ids": [],
+        "output_node_ids": [
+          25,
+          35
+        ],
+        "stage_index": 1,
+        "tvm_op_count": 18,
+        "used_null_node_ids": [
+          5,
+          7,
+          8,
+          12,
+          13,
+          17,
+          18,
+          22,
+          23,
+          27,
+          28,
+          32,
+          33
+        ]
+      },
+      {
+        "boundary_input_node_ids": [
+          25,
+          35
+        ],
+        "extra_hidden_boundary_node_ids": [],
+        "hidden_data_node_ids": [],
+        "output_node_ids": [
+          52,
+          53,
+          54,
+          55,
+          64,
+          65,
+          66,
+          67
+        ],
+        "stage_index": 2,
+        "tvm_op_count": 14,
+        "used_null_node_ids": [
+          25,
+          35,
+          36,
+          37,
+          41,
+          42,
+          45,
+          46,
+          49,
+          50,
+          53,
+          54,
+          55,
+          57,
+          58,
+          61,
+          62,
+          65,
+          66,
+          67
+        ]
+      }
+    ],
+    "status": "ok",
+    "throughput_fps": 3.9770586827831518
+  },
+  "buildable_count": 3,
+  "candidate_count": 3,
+  "generated_at": "2026-05-13T20:31:08",
+  "measure_count": 3,
+  "pipeline_ok_count": 3,
+  "rows": [
+    {
+      "boundary_bytes_est": 2768896,
+      "boundary_ms_est": 1.2585890909090909,
+      "boundary_node_ids": "5",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta_heads",
+      "correctness": {
+        "max_mean_abs_delta": 7.14412994318181e-08,
+        "max_sum_abs_delta": 0.012134566000895575,
+        "output_count_match": true,
+        "passes_raw_output_gate": true,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 7.14412994318181e-08,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.012134566000895575,
+            "sum_rel_delta": 1.4124983659170141e-07
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 1.2072448735134245e-09,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 5.410684377693542e-05,
+            "sum_rel_delta": 6.506983633210695e-08
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "description": "CPU prefix through float maxpool node5, VTA body to final heads.",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta_heads/serial.log",
+      "mean_total_latency_ms": 317.1551915,
+      "mode": "serial",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta_heads",
+      "passes_correctness_gate": true,
+      "predicted_cycle_ms": 327694.56139568466,
+      "predicted_fps": 0.0030516222049609175,
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "c00e52702c78d283",
+          "index": 0,
+          "max": 3.234375,
+          "mean": -0.498367232,
+          "min": -19.9453125,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": -85908.543384566
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "154641ceb2076cca",
+          "index": 4,
+          "max": 1.078125,
+          "mean": 0.019295038,
+          "min": -1.6171875,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 831.519646392
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta_heads/native_serial_result.jsonl",
+      "run_kind": "serial_smoke",
+      "split_backend": "packed_hetero",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_hetero_cpu5_vta_heads",
+        "end_name": null,
+        "end_output_names": null,
+        "stage_count": 2,
+        "stage_raw_outputs": [
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "b91c5cc490fa29bb",
+                "index": 0,
+                "max": 49.692024231,
+                "mean": 1.142295271,
+                "min": -3.445055008,
+                "nbytes": 2768896,
+                "shape": [
+                  1,
+                  16,
+                  208,
+                  208
+                ],
+                "size": 692224,
+                "sum": 790724.20174466
+              }
+            ],
+            "stage_index": 0
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "c00e52702c78d283",
+                "index": 0,
+                "max": 3.234375,
+                "mean": -0.498367232,
+                "min": -19.9453125,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": -85908.543384566
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "154641ceb2076cca",
+                "index": 4,
+                "max": 1.078125,
+                "mean": 0.019295038,
+                "min": -1.6171875,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 831.519646392
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 1
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": null
+      },
+      "stage_balance_ms_est": 145638.1964260417,
+      "stage_count": 2,
+      "stage_devices": "cpu/vta",
+      "stage_devices_json": "[\"cpu\",\"vta\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 9320609598872.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 291283.1537000834,
+          "tvm_op_count": 32
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[52,53,54,55,64,65,66,67]]",
+      "stage_raw_outputs": [
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "b91c5cc490fa29bb",
+              "index": 0,
+              "max": 49.692024231,
+              "mean": 1.142295271,
+              "min": -3.445055008,
+              "nbytes": 2768896,
+              "shape": [
+                1,
+                16,
+                208,
+                208
+              ],
+              "size": 692224,
+              "sum": 790724.20174466
+            }
+          ],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 1
+        }
+      ],
+      "stage_runtime_proxy_ms_json": "[6.760847999999999, 291283.1537000834]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 32,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23,
+            27,
+            28,
+            32,
+            33,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            53,
+            54,
+            55,
+            57,
+            58,
+            61,
+            62,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "ok",
+      "throughput_fps": 3.1530305251206965
+    },
+    {
+      "boundary_bytes_est": 2768896,
+      "boundary_ms_est": 1.2585890909090909,
+      "boundary_node_ids": "5",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta_heads",
+      "correctness": {
+        "max_mean_abs_delta": 7.14412994318181e-08,
+        "max_sum_abs_delta": 0.012134566000895575,
+        "output_count_match": true,
+        "passes_raw_output_gate": true,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 7.14412994318181e-08,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.012134566000895575,
+            "sum_rel_delta": 1.4124983659170141e-07
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 1.2072448735134245e-09,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 5.410684377693542e-05,
+            "sum_rel_delta": 6.506983633210695e-08
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "description": "CPU prefix through float maxpool node5, VTA body to final heads.",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta_heads/pipeline.log",
+      "mean_total_latency_ms": 1563.28589465,
+      "mode": "pipeline",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta_heads",
+      "passes_correctness_gate": true,
+      "predicted_cycle_ms": 327694.56139568466,
+      "predicted_fps": 0.0030516222049609175,
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "c00e52702c78d283",
+          "index": 0,
+          "max": 3.234375,
+          "mean": -0.498367232,
+          "min": -19.9453125,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": -85908.543384566
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "154641ceb2076cca",
+          "index": 4,
+          "max": 1.078125,
+          "mean": 0.019295038,
+          "min": -1.6171875,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 831.519646392
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta_heads/native_pipeline_result.jsonl",
+      "run_kind": "pipeline",
+      "split_backend": "packed_hetero",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_hetero_cpu5_vta_heads",
+        "end_name": null,
+        "end_output_names": null,
+        "stage_count": 2,
+        "stage_raw_outputs": [
+          {
+            "outputs": [],
+            "stage_index": 0
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "c00e52702c78d283",
+                "index": 0,
+                "max": 3.234375,
+                "mean": -0.498367232,
+                "min": -19.9453125,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": -85908.543384566
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "154641ceb2076cca",
+                "index": 4,
+                "max": 1.078125,
+                "mean": 0.019295038,
+                "min": -1.6171875,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 831.519646392
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 1
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": null
+      },
+      "stage_balance_ms_est": 145638.1964260417,
+      "stage_count": 2,
+      "stage_devices": "cpu/vta",
+      "stage_devices_json": "[\"cpu\",\"vta\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 9320609598872.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 291283.1537000834,
+          "tvm_op_count": 32
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[52,53,54,55,64,65,66,67]]",
+      "stage_raw_outputs": [
+        {
+          "outputs": [],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 1
+        }
+      ],
+      "stage_runtime_proxy_ms_json": "[6.760847999999999, 291283.1537000834]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 32,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23,
+            27,
+            28,
+            32,
+            33,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            53,
+            54,
+            55,
+            57,
+            58,
+            61,
+            62,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "ok",
+      "throughput_fps": 3.838331498275191
+    },
+    {
+      "boundary_bytes_est": 3461120,
+      "boundary_ms_est": 1.5732363636363635,
+      "boundary_node_ids": "5,25",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta25_heads",
+      "correctness": {
+        "max_mean_abs_delta": 7.14412994318181e-08,
+        "max_sum_abs_delta": 0.012134566000895575,
+        "output_count_match": true,
+        "passes_raw_output_gate": true,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 7.14412994318181e-08,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.012134566000895575,
+            "sum_rel_delta": 1.4124983659170141e-07
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 1.2072448735134245e-09,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 5.410684377693542e-05,
+            "sum_rel_delta": 6.506983633210695e-08
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "description": "CPU prefix node5, VTA body split after route node25.",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_heads/serial.log",
+      "mean_total_latency_ms": 318.2048565,
+      "mode": "serial",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta25_heads",
+      "passes_correctness_gate": true,
+      "predicted_cycle_ms": 323185.0467306901,
+      "predicted_fps": 0.003094202563255655,
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "c00e52702c78d283",
+          "index": 0,
+          "max": 3.234375,
+          "mean": -0.498367232,
+          "min": -19.9453125,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": -85908.543384566
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "154641ceb2076cca",
+          "index": 4,
+          "max": 1.078125,
+          "mean": 0.019295038,
+          "min": -1.6171875,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 831.519646392
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_heads/native_serial_result.jsonl",
+      "run_kind": "serial_smoke",
+      "split_backend": "packed_hetero",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_hetero_cpu5_vta25_heads",
+        "end_name": null,
+        "end_output_names": null,
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "b91c5cc490fa29bb",
+                "index": 0,
+                "max": 49.692024231,
+                "mean": 1.142295271,
+                "min": -3.445055008,
+                "nbytes": 2768896,
+                "shape": [
+                  1,
+                  16,
+                  208,
+                  208
+                ],
+                "size": 692224,
+                "sum": 790724.20174466
+              }
+            ],
+            "stage_index": 0
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "f576666bce029c5d",
+                "index": 0,
+                "max": 14.734375,
+                "mean": -0.024656987,
+                "min": -1.958593726,
+                "nbytes": 692224,
+                "shape": [
+                  1,
+                  16,
+                  26,
+                  26,
+                  1,
+                  16
+                ],
+                "size": 173056,
+                "sum": -4267.039585108
+              }
+            ],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "c00e52702c78d283",
+                "index": 0,
+                "max": 3.234375,
+                "mean": -0.498367232,
+                "min": -19.9453125,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": -85908.543384566
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "154641ceb2076cca",
+                "index": 4,
+                "max": 1.078125,
+                "mean": 0.019295038,
+                "min": -1.6171875,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 831.519646392
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": null
+      },
+      "stage_balance_ms_est": 180868.5082493056,
+      "stage_count": 3,
+      "stage_devices": "cpu/vta/vta",
+      "stage_devices_json": "[\"cpu\",\"vta\",\"vta\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25
+          ],
+          "ops_proxy": 8894674141184.0,
+          "output_bytes": 692224,
+          "output_node_ids": [
+            25
+          ],
+          "runtime_proxy_ms": 277965.14643200004,
+          "tvm_op_count": 12
+        },
+        {
+          "boundary_input_node_ids": [
+            25
+          ],
+          "node_ids": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 425935457688.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 13318.007268083333,
+          "tvm_op_count": 20
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[25],[52,53,54,55,64,65,66,67]]",
+      "stage_raw_outputs": [
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "b91c5cc490fa29bb",
+              "index": 0,
+              "max": 49.692024231,
+              "mean": 1.142295271,
+              "min": -3.445055008,
+              "nbytes": 2768896,
+              "shape": [
+                1,
+                16,
+                208,
+                208
+              ],
+              "size": 692224,
+              "sum": 790724.20174466
+            }
+          ],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "f576666bce029c5d",
+              "index": 0,
+              "max": 14.734375,
+              "mean": -0.024656987,
+              "min": -1.958593726,
+              "nbytes": 692224,
+              "shape": [
+                1,
+                16,
+                26,
+                26,
+                1,
+                16
+              ],
+              "size": 173056,
+              "sum": -4267.039585108
+            }
+          ],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_runtime_proxy_ms_json": "[6.760847999999999, 277965.14643200004, 13318.007268083333]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            25
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 12,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            25
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 2,
+          "tvm_op_count": 20,
+          "used_null_node_ids": [
+            25,
+            27,
+            28,
+            32,
+            33,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            53,
+            54,
+            55,
+            57,
+            58,
+            61,
+            62,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "ok",
+      "throughput_fps": 3.142629597169583
+    },
+    {
+      "boundary_bytes_est": 3461120,
+      "boundary_ms_est": 1.5732363636363635,
+      "boundary_node_ids": "5,25",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta25_heads",
+      "correctness": {
+        "max_mean_abs_delta": 7.14412994318181e-08,
+        "max_sum_abs_delta": 0.012134566000895575,
+        "output_count_match": true,
+        "passes_raw_output_gate": true,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 7.14412994318181e-08,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.012134566000895575,
+            "sum_rel_delta": 1.4124983659170141e-07
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 1.2072448735134245e-09,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 5.410684377693542e-05,
+            "sum_rel_delta": 6.506983633210695e-08
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "description": "CPU prefix node5, VTA body split after route node25.",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_heads/pipeline.log",
+      "mean_total_latency_ms": 1827.0553048,
+      "mode": "pipeline",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta25_heads",
+      "passes_correctness_gate": true,
+      "predicted_cycle_ms": 323185.0467306901,
+      "predicted_fps": 0.003094202563255655,
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "c00e52702c78d283",
+          "index": 0,
+          "max": 3.234375,
+          "mean": -0.498367232,
+          "min": -19.9453125,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": -85908.543384566
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "154641ceb2076cca",
+          "index": 4,
+          "max": 1.078125,
+          "mean": 0.019295038,
+          "min": -1.6171875,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 831.519646392
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_heads/native_pipeline_result.jsonl",
+      "run_kind": "pipeline",
+      "split_backend": "packed_hetero",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_hetero_cpu5_vta25_heads",
+        "end_name": null,
+        "end_output_names": null,
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [],
+            "stage_index": 0
+          },
+          {
+            "outputs": [],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "c00e52702c78d283",
+                "index": 0,
+                "max": 3.234375,
+                "mean": -0.498367232,
+                "min": -19.9453125,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": -85908.543384566
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "154641ceb2076cca",
+                "index": 4,
+                "max": 1.078125,
+                "mean": 0.019295038,
+                "min": -1.6171875,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 831.519646392
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": null
+      },
+      "stage_balance_ms_est": 180868.5082493056,
+      "stage_count": 3,
+      "stage_devices": "cpu/vta/vta",
+      "stage_devices_json": "[\"cpu\",\"vta\",\"vta\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25
+          ],
+          "ops_proxy": 8894674141184.0,
+          "output_bytes": 692224,
+          "output_node_ids": [
+            25
+          ],
+          "runtime_proxy_ms": 277965.14643200004,
+          "tvm_op_count": 12
+        },
+        {
+          "boundary_input_node_ids": [
+            25
+          ],
+          "node_ids": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 425935457688.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 13318.007268083333,
+          "tvm_op_count": 20
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[25],[52,53,54,55,64,65,66,67]]",
+      "stage_raw_outputs": [
+        {
+          "outputs": [],
+          "stage_index": 0
+        },
+        {
+          "outputs": [],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_runtime_proxy_ms_json": "[6.760847999999999, 277965.14643200004, 13318.007268083333]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            25
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 12,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            25
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 2,
+          "tvm_op_count": 20,
+          "used_null_node_ids": [
+            25,
+            27,
+            28,
+            32,
+            33,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            53,
+            54,
+            55,
+            57,
+            58,
+            61,
+            62,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "ok",
+      "throughput_fps": 3.832185716946133
+    },
+    {
+      "boundary_bytes_est": 3634176,
+      "boundary_ms_est": 1.6518981818181817,
+      "boundary_node_ids": "5,25,35",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta25_35_heads",
+      "correctness": {
+        "max_mean_abs_delta": 7.14412994318181e-08,
+        "max_sum_abs_delta": 0.012134566000895575,
+        "output_count_match": true,
+        "passes_raw_output_gate": true,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 7.14412994318181e-08,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.012134566000895575,
+            "sum_rel_delta": 1.4124983659170141e-07
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 1.2072448735134245e-09,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 5.410684377693542e-05,
+            "sum_rel_delta": 6.506983633210695e-08
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "description": "CPU prefix node5, VTA body split after route node25 and trunk node35.",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_35_heads/serial.log",
+      "mean_total_latency_ms": 320.7737525,
+      "mode": "serial",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta25_35_heads",
+      "passes_correctness_gate": true,
+      "predicted_cycle_ms": 328931.67983250815,
+      "predicted_fps": 0.003040144994575164,
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "c00e52702c78d283",
+          "index": 0,
+          "max": 3.234375,
+          "mean": -0.498367232,
+          "min": -19.9453125,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": -85908.543384566
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "154641ceb2076cca",
+          "index": 4,
+          "max": 1.078125,
+          "mean": 0.019295038,
+          "min": -1.6171875,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 831.519646392
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_35_heads/native_serial_result.jsonl",
+      "run_kind": "serial_smoke",
+      "split_backend": "packed_hetero",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_hetero_cpu5_vta25_35_heads",
+        "end_name": null,
+        "end_output_names": null,
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "b91c5cc490fa29bb",
+                "index": 0,
+                "max": 49.692024231,
+                "mean": 1.142295271,
+                "min": -3.445055008,
+                "nbytes": 2768896,
+                "shape": [
+                  1,
+                  16,
+                  208,
+                  208
+                ],
+                "size": 692224,
+                "sum": 790724.20174466
+              }
+            ],
+            "stage_index": 0
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "f576666bce029c5d",
+                "index": 0,
+                "max": 14.734375,
+                "mean": -0.024656987,
+                "min": -1.958593726,
+                "nbytes": 692224,
+                "shape": [
+                  1,
+                  16,
+                  26,
+                  26,
+                  1,
+                  16
+                ],
+                "size": 173056,
+                "sum": -4267.039585108
+              },
+              {
+                "dtype": "int8",
+                "fnv1a64": "f70bf996b4c594a6",
+                "index": 1,
+                "nbytes": 173056,
+                "shape": [
+                  1,
+                  64,
+                  13,
+                  13,
+                  1,
+                  16
+                ],
+                "size": 173056
+              }
+            ],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "c00e52702c78d283",
+                "index": 0,
+                "max": 3.234375,
+                "mean": -0.498367232,
+                "min": -19.9453125,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": -85908.543384566
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "154641ceb2076cca",
+                "index": 4,
+                "max": 1.078125,
+                "mean": 0.019295038,
+                "min": -1.6171875,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 831.519646392
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": null
+      },
+      "stage_balance_ms_est": 185465.7518013055,
+      "stage_count": 3,
+      "stage_devices": "cpu/vta/vta",
+      "stage_devices_json": "[\"cpu\",\"vta\",\"vta\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ],
+          "ops_proxy": 9041713594368.0,
+          "output_bytes": 865280,
+          "output_node_ids": [
+            25,
+            35
+          ],
+          "runtime_proxy_ms": 282562.38998399995,
+          "tvm_op_count": 18
+        },
+        {
+          "boundary_input_node_ids": [
+            25,
+            35
+          ],
+          "node_ids": [
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 278896004504.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 8720.763716083333,
+          "tvm_op_count": 14
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[25,35],[52,53,54,55,64,65,66,67]]",
+      "stage_raw_outputs": [
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "b91c5cc490fa29bb",
+              "index": 0,
+              "max": 49.692024231,
+              "mean": 1.142295271,
+              "min": -3.445055008,
+              "nbytes": 2768896,
+              "shape": [
+                1,
+                16,
+                208,
+                208
+              ],
+              "size": 692224,
+              "sum": 790724.20174466
+            }
+          ],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "f576666bce029c5d",
+              "index": 0,
+              "max": 14.734375,
+              "mean": -0.024656987,
+              "min": -1.958593726,
+              "nbytes": 692224,
+              "shape": [
+                1,
+                16,
+                26,
+                26,
+                1,
+                16
+              ],
+              "size": 173056,
+              "sum": -4267.039585108
+            },
+            {
+              "dtype": "int8",
+              "fnv1a64": "f70bf996b4c594a6",
+              "index": 1,
+              "nbytes": 173056,
+              "shape": [
+                1,
+                64,
+                13,
+                13,
+                1,
+                16
+              ],
+              "size": 173056
+            }
+          ],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_runtime_proxy_ms_json": "[6.760847999999999, 282562.38998399995, 8720.763716083333]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            25,
+            35
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 18,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23,
+            27,
+            28,
+            32,
+            33
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            25,
+            35
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 2,
+          "tvm_op_count": 14,
+          "used_null_node_ids": [
+            25,
+            35,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            53,
+            54,
+            55,
+            57,
+            58,
+            61,
+            62,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "ok",
+      "throughput_fps": 3.1174620498290304
+    },
+    {
+      "boundary_bytes_est": 3634176,
+      "boundary_ms_est": 1.6518981818181817,
+      "boundary_node_ids": "5,25,35",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta25_35_heads",
+      "correctness": {
+        "max_mean_abs_delta": 7.14412994318181e-08,
+        "max_sum_abs_delta": 0.012134566000895575,
+        "output_count_match": true,
+        "passes_raw_output_gate": true,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 7.14412994318181e-08,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.012134566000895575,
+            "sum_rel_delta": 1.4124983659170141e-07
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 1.2072448735134245e-09,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 5.410684377693542e-05,
+            "sum_rel_delta": 6.506983633210695e-08
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "description": "CPU prefix node5, VTA body split after route node25 and trunk node35.",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_35_heads/pipeline.log",
+      "mean_total_latency_ms": 2083.23202745,
+      "mode": "pipeline",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta25_35_heads",
+      "passes_correctness_gate": true,
+      "predicted_cycle_ms": 328931.67983250815,
+      "predicted_fps": 0.003040144994575164,
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "c00e52702c78d283",
+          "index": 0,
+          "max": 3.234375,
+          "mean": -0.498367232,
+          "min": -19.9453125,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": -85908.543384566
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "154641ceb2076cca",
+          "index": 4,
+          "max": 1.078125,
+          "mean": 0.019295038,
+          "min": -1.6171875,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 831.519646392
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_35_heads/native_pipeline_result.jsonl",
+      "run_kind": "pipeline",
+      "split_backend": "packed_hetero",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_hetero_cpu5_vta25_35_heads",
+        "end_name": null,
+        "end_output_names": null,
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [],
+            "stage_index": 0
+          },
+          {
+            "outputs": [],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "c00e52702c78d283",
+                "index": 0,
+                "max": 3.234375,
+                "mean": -0.498367232,
+                "min": -19.9453125,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": -85908.543384566
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "154641ceb2076cca",
+                "index": 4,
+                "max": 1.078125,
+                "mean": 0.019295038,
+                "min": -1.6171875,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 831.519646392
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": null
+      },
+      "stage_balance_ms_est": 185465.7518013055,
+      "stage_count": 3,
+      "stage_devices": "cpu/vta/vta",
+      "stage_devices_json": "[\"cpu\",\"vta\",\"vta\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ],
+          "ops_proxy": 9041713594368.0,
+          "output_bytes": 865280,
+          "output_node_ids": [
+            25,
+            35
+          ],
+          "runtime_proxy_ms": 282562.38998399995,
+          "tvm_op_count": 18
+        },
+        {
+          "boundary_input_node_ids": [
+            25,
+            35
+          ],
+          "node_ids": [
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 278896004504.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 8720.763716083333,
+          "tvm_op_count": 14
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[25,35],[52,53,54,55,64,65,66,67]]",
+      "stage_raw_outputs": [
+        {
+          "outputs": [],
+          "stage_index": 0
+        },
+        {
+          "outputs": [],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_runtime_proxy_ms_json": "[6.760847999999999, 282562.38998399995, 8720.763716083333]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            25,
+            35
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 18,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23,
+            27,
+            28,
+            32,
+            33
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            25,
+            35
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 2,
+          "tvm_op_count": 14,
+          "used_null_node_ids": [
+            25,
+            35,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            53,
+            54,
+            55,
+            57,
+            58,
+            61,
+            62,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "ok",
+      "throughput_fps": 3.9770586827831518
+    }
+  ],
+  "split_backend": "packed_hetero",
+  "top10": [
+    {
+      "boundary_bytes_est": 3634176,
+      "boundary_ms_est": 1.6518981818181817,
+      "boundary_node_ids": "5,25,35",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta25_35_heads",
+      "correctness": {
+        "max_mean_abs_delta": 7.14412994318181e-08,
+        "max_sum_abs_delta": 0.012134566000895575,
+        "output_count_match": true,
+        "passes_raw_output_gate": true,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 7.14412994318181e-08,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.012134566000895575,
+            "sum_rel_delta": 1.4124983659170141e-07
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 1.2072448735134245e-09,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 5.410684377693542e-05,
+            "sum_rel_delta": 6.506983633210695e-08
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "description": "CPU prefix node5, VTA body split after route node25 and trunk node35.",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_35_heads/pipeline.log",
+      "mean_total_latency_ms": 2083.23202745,
+      "mode": "pipeline",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta25_35_heads",
+      "passes_correctness_gate": true,
+      "predicted_cycle_ms": 328931.67983250815,
+      "predicted_fps": 0.003040144994575164,
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "c00e52702c78d283",
+          "index": 0,
+          "max": 3.234375,
+          "mean": -0.498367232,
+          "min": -19.9453125,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": -85908.543384566
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "154641ceb2076cca",
+          "index": 4,
+          "max": 1.078125,
+          "mean": 0.019295038,
+          "min": -1.6171875,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 831.519646392
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_35_heads/native_pipeline_result.jsonl",
+      "run_kind": "pipeline",
+      "split_backend": "packed_hetero",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_hetero_cpu5_vta25_35_heads",
+        "end_name": null,
+        "end_output_names": null,
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [],
+            "stage_index": 0
+          },
+          {
+            "outputs": [],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "c00e52702c78d283",
+                "index": 0,
+                "max": 3.234375,
+                "mean": -0.498367232,
+                "min": -19.9453125,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": -85908.543384566
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "154641ceb2076cca",
+                "index": 4,
+                "max": 1.078125,
+                "mean": 0.019295038,
+                "min": -1.6171875,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 831.519646392
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": null
+      },
+      "stage_balance_ms_est": 185465.7518013055,
+      "stage_count": 3,
+      "stage_devices": "cpu/vta/vta",
+      "stage_devices_json": "[\"cpu\",\"vta\",\"vta\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ],
+          "ops_proxy": 9041713594368.0,
+          "output_bytes": 865280,
+          "output_node_ids": [
+            25,
+            35
+          ],
+          "runtime_proxy_ms": 282562.38998399995,
+          "tvm_op_count": 18
+        },
+        {
+          "boundary_input_node_ids": [
+            25,
+            35
+          ],
+          "node_ids": [
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 278896004504.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 8720.763716083333,
+          "tvm_op_count": 14
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[25,35],[52,53,54,55,64,65,66,67]]",
+      "stage_raw_outputs": [
+        {
+          "outputs": [],
+          "stage_index": 0
+        },
+        {
+          "outputs": [],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_runtime_proxy_ms_json": "[6.760847999999999, 282562.38998399995, 8720.763716083333]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            25,
+            35
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 18,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23,
+            27,
+            28,
+            32,
+            33
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            25,
+            35
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 2,
+          "tvm_op_count": 14,
+          "used_null_node_ids": [
+            25,
+            35,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            53,
+            54,
+            55,
+            57,
+            58,
+            61,
+            62,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "ok",
+      "throughput_fps": 3.9770586827831518
+    },
+    {
+      "boundary_bytes_est": 2768896,
+      "boundary_ms_est": 1.2585890909090909,
+      "boundary_node_ids": "5",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta_heads",
+      "correctness": {
+        "max_mean_abs_delta": 7.14412994318181e-08,
+        "max_sum_abs_delta": 0.012134566000895575,
+        "output_count_match": true,
+        "passes_raw_output_gate": true,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 7.14412994318181e-08,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.012134566000895575,
+            "sum_rel_delta": 1.4124983659170141e-07
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 1.2072448735134245e-09,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 5.410684377693542e-05,
+            "sum_rel_delta": 6.506983633210695e-08
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "description": "CPU prefix through float maxpool node5, VTA body to final heads.",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta_heads/pipeline.log",
+      "mean_total_latency_ms": 1563.28589465,
+      "mode": "pipeline",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta_heads",
+      "passes_correctness_gate": true,
+      "predicted_cycle_ms": 327694.56139568466,
+      "predicted_fps": 0.0030516222049609175,
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "c00e52702c78d283",
+          "index": 0,
+          "max": 3.234375,
+          "mean": -0.498367232,
+          "min": -19.9453125,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": -85908.543384566
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "154641ceb2076cca",
+          "index": 4,
+          "max": 1.078125,
+          "mean": 0.019295038,
+          "min": -1.6171875,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 831.519646392
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta_heads/native_pipeline_result.jsonl",
+      "run_kind": "pipeline",
+      "split_backend": "packed_hetero",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_hetero_cpu5_vta_heads",
+        "end_name": null,
+        "end_output_names": null,
+        "stage_count": 2,
+        "stage_raw_outputs": [
+          {
+            "outputs": [],
+            "stage_index": 0
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "c00e52702c78d283",
+                "index": 0,
+                "max": 3.234375,
+                "mean": -0.498367232,
+                "min": -19.9453125,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": -85908.543384566
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "154641ceb2076cca",
+                "index": 4,
+                "max": 1.078125,
+                "mean": 0.019295038,
+                "min": -1.6171875,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 831.519646392
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 1
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": null
+      },
+      "stage_balance_ms_est": 145638.1964260417,
+      "stage_count": 2,
+      "stage_devices": "cpu/vta",
+      "stage_devices_json": "[\"cpu\",\"vta\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 9320609598872.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 291283.1537000834,
+          "tvm_op_count": 32
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[52,53,54,55,64,65,66,67]]",
+      "stage_raw_outputs": [
+        {
+          "outputs": [],
+          "stage_index": 0
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 1
+        }
+      ],
+      "stage_runtime_proxy_ms_json": "[6.760847999999999, 291283.1537000834]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 32,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23,
+            27,
+            28,
+            32,
+            33,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            53,
+            54,
+            55,
+            57,
+            58,
+            61,
+            62,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "ok",
+      "throughput_fps": 3.838331498275191
+    },
+    {
+      "boundary_bytes_est": 3461120,
+      "boundary_ms_est": 1.5732363636363635,
+      "boundary_node_ids": "5,25",
+      "boundary_reasons": "",
+      "boundary_valid": true,
+      "candidate_id": "yolo_hetero_cpu5_vta25_heads",
+      "correctness": {
+        "max_mean_abs_delta": 7.14412994318181e-08,
+        "max_sum_abs_delta": 0.012134566000895575,
+        "output_count_match": true,
+        "passes_raw_output_gate": true,
+        "rows": [
+          {
+            "index": 0,
+            "mean_abs_delta": 7.14412994318181e-08,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.012134566000895575,
+            "sum_rel_delta": 1.4124983659170141e-07
+          },
+          {
+            "index": 1,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 2,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 3,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 4,
+            "mean_abs_delta": 1.2072448735134245e-09,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 5.410684377693542e-05,
+            "sum_rel_delta": 6.506983633210695e-08
+          },
+          {
+            "index": 5,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 6,
+            "mean_abs_delta": 0.0,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          },
+          {
+            "index": 7,
+            "mean_abs_delta": 3.333369136271358e-10,
+            "passes": true,
+            "same_dtype": true,
+            "same_hash": false,
+            "same_shape": true,
+            "sum_abs_delta": 0.0,
+            "sum_rel_delta": 0.0
+          }
+        ]
+      },
+      "description": "CPU prefix node5, VTA body split after route node25.",
+      "log": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_heads/pipeline.log",
+      "mean_total_latency_ms": 1827.0553048,
+      "mode": "pipeline",
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/packages/yolo_hetero_cpu5_vta25_heads",
+      "passes_correctness_gate": true,
+      "predicted_cycle_ms": 323185.0467306901,
+      "predicted_fps": 0.003094202563255655,
+      "raw_outputs": [
+        {
+          "dtype": "float32",
+          "fnv1a64": "c00e52702c78d283",
+          "index": 0,
+          "max": 3.234375,
+          "mean": -0.498367232,
+          "min": -19.9453125,
+          "nbytes": 689520,
+          "shape": [
+            1,
+            255,
+            26,
+            26
+          ],
+          "size": 172380,
+          "sum": -85908.543384566
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "6437c9a572635250",
+          "index": 1,
+          "max": 2.0,
+          "mean": 1.0,
+          "min": 0.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 3.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 2,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "b619ac38b449dc99",
+          "index": 3,
+          "max": 255.0,
+          "mean": 66.0,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 396.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "154641ceb2076cca",
+          "index": 4,
+          "max": 1.078125,
+          "mean": 0.019295038,
+          "min": -1.6171875,
+          "nbytes": 172380,
+          "shape": [
+            1,
+            255,
+            13,
+            13
+          ],
+          "size": 43095,
+          "sum": 831.519646392
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "7f5875e9426f5e51",
+          "index": 5,
+          "max": 5.0,
+          "mean": 4.0,
+          "min": 3.0,
+          "nbytes": 12,
+          "shape": [
+            3
+          ],
+          "size": 3,
+          "sum": 12.0
+        },
+        {
+          "dtype": "float32",
+          "fnv1a64": "1634dd673862fe48",
+          "index": 6,
+          "max": 344.0,
+          "mean": 108.25,
+          "min": 10.0,
+          "nbytes": 48,
+          "shape": [
+            12
+          ],
+          "size": 12,
+          "sum": 1299.0
+        },
+        {
+          "dtype": "int32",
+          "fnv1a64": "85777e194f56eaa9",
+          "index": 7,
+          "max": 255.0,
+          "mean": 61.666666667,
+          "min": 3.0,
+          "nbytes": 24,
+          "shape": [
+            6
+          ],
+          "size": 6,
+          "sum": 370.0
+        }
+      ],
+      "result_jsonl": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260513_packed_hetero_smoke3_cpu_prefix_v2/yolo_hetero_cpu5_vta25_heads/native_pipeline_result.jsonl",
+      "run_kind": "pipeline",
+      "split_backend": "packed_hetero",
+      "split_boundary_diagnostics": {
+        "candidate_id": "yolo_hetero_cpu5_vta25_heads",
+        "end_name": null,
+        "end_output_names": null,
+        "stage_count": 3,
+        "stage_raw_outputs": [
+          {
+            "outputs": [],
+            "stage_index": 0
+          },
+          {
+            "outputs": [],
+            "stage_index": 1
+          },
+          {
+            "outputs": [
+              {
+                "dtype": "float32",
+                "fnv1a64": "c00e52702c78d283",
+                "index": 0,
+                "max": 3.234375,
+                "mean": -0.498367232,
+                "min": -19.9453125,
+                "nbytes": 689520,
+                "shape": [
+                  1,
+                  255,
+                  26,
+                  26
+                ],
+                "size": 172380,
+                "sum": -85908.543384566
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "6437c9a572635250",
+                "index": 1,
+                "max": 2.0,
+                "mean": 1.0,
+                "min": 0.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 3.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 2,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "b619ac38b449dc99",
+                "index": 3,
+                "max": 255.0,
+                "mean": 66.0,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 396.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "154641ceb2076cca",
+                "index": 4,
+                "max": 1.078125,
+                "mean": 0.019295038,
+                "min": -1.6171875,
+                "nbytes": 172380,
+                "shape": [
+                  1,
+                  255,
+                  13,
+                  13
+                ],
+                "size": 43095,
+                "sum": 831.519646392
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "7f5875e9426f5e51",
+                "index": 5,
+                "max": 5.0,
+                "mean": 4.0,
+                "min": 3.0,
+                "nbytes": 12,
+                "shape": [
+                  3
+                ],
+                "size": 3,
+                "sum": 12.0
+              },
+              {
+                "dtype": "float32",
+                "fnv1a64": "1634dd673862fe48",
+                "index": 6,
+                "max": 344.0,
+                "mean": 108.25,
+                "min": 10.0,
+                "nbytes": 48,
+                "shape": [
+                  12
+                ],
+                "size": 12,
+                "sum": 1299.0
+              },
+              {
+                "dtype": "int32",
+                "fnv1a64": "85777e194f56eaa9",
+                "index": 7,
+                "max": 255.0,
+                "mean": 61.666666667,
+                "min": 3.0,
+                "nbytes": 24,
+                "shape": [
+                  6
+                ],
+                "size": 6,
+                "sum": 370.0
+              }
+            ],
+            "stage_index": 2
+          }
+        ],
+        "stage_raw_outputs_available": true,
+        "start_name": null
+      },
+      "stage_balance_ms_est": 180868.5082493056,
+      "stage_count": 3,
+      "stage_devices": "cpu/vta/vta",
+      "stage_devices_json": "[\"cpu\",\"vta\",\"vta\"]",
+      "stage_metrics": [
+        {
+          "boundary_input_node_ids": [],
+          "node_ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "ops_proxy": 49840128.0,
+          "output_bytes": 2768896,
+          "output_node_ids": [
+            5
+          ],
+          "runtime_proxy_ms": 6.760847999999999,
+          "tvm_op_count": 3
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "node_ids": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25
+          ],
+          "ops_proxy": 8894674141184.0,
+          "output_bytes": 692224,
+          "output_node_ids": [
+            25
+          ],
+          "runtime_proxy_ms": 277965.14643200004,
+          "tvm_op_count": 12
+        },
+        {
+          "boundary_input_node_ids": [
+            25
+          ],
+          "node_ids": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ],
+          "ops_proxy": 425935457688.0,
+          "output_bytes": 862068,
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "runtime_proxy_ms": 13318.007268083333,
+          "tvm_op_count": 20
+        }
+      ],
+      "stage_output_nodes_json": "[[5],[25],[52,53,54,55,64,65,66,67]]",
+      "stage_raw_outputs": [
+        {
+          "outputs": [],
+          "stage_index": 0
+        },
+        {
+          "outputs": [],
+          "stage_index": 1
+        },
+        {
+          "outputs": [
+            {
+              "dtype": "float32",
+              "fnv1a64": "c00e52702c78d283",
+              "index": 0,
+              "max": 3.234375,
+              "mean": -0.498367232,
+              "min": -19.9453125,
+              "nbytes": 689520,
+              "shape": [
+                1,
+                255,
+                26,
+                26
+              ],
+              "size": 172380,
+              "sum": -85908.543384566
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "6437c9a572635250",
+              "index": 1,
+              "max": 2.0,
+              "mean": 1.0,
+              "min": 0.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 3.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 2,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "b619ac38b449dc99",
+              "index": 3,
+              "max": 255.0,
+              "mean": 66.0,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 396.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "154641ceb2076cca",
+              "index": 4,
+              "max": 1.078125,
+              "mean": 0.019295038,
+              "min": -1.6171875,
+              "nbytes": 172380,
+              "shape": [
+                1,
+                255,
+                13,
+                13
+              ],
+              "size": 43095,
+              "sum": 831.519646392
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "7f5875e9426f5e51",
+              "index": 5,
+              "max": 5.0,
+              "mean": 4.0,
+              "min": 3.0,
+              "nbytes": 12,
+              "shape": [
+                3
+              ],
+              "size": 3,
+              "sum": 12.0
+            },
+            {
+              "dtype": "float32",
+              "fnv1a64": "1634dd673862fe48",
+              "index": 6,
+              "max": 344.0,
+              "mean": 108.25,
+              "min": 10.0,
+              "nbytes": 48,
+              "shape": [
+                12
+              ],
+              "size": 12,
+              "sum": 1299.0
+            },
+            {
+              "dtype": "int32",
+              "fnv1a64": "85777e194f56eaa9",
+              "index": 7,
+              "max": 255.0,
+              "mean": 61.666666667,
+              "min": 3.0,
+              "nbytes": 24,
+              "shape": [
+                6
+              ],
+              "size": 6,
+              "sum": 370.0
+            }
+          ],
+          "stage_index": 2
+        }
+      ],
+      "stage_runtime_proxy_ms_json": "[6.760847999999999, 277965.14643200004, 13318.007268083333]",
+      "stage_validations": [
+        {
+          "boundary_input_node_ids": [],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            5
+          ],
+          "stage_index": 0,
+          "tvm_op_count": 3,
+          "used_null_node_ids": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            5
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            25
+          ],
+          "stage_index": 1,
+          "tvm_op_count": 12,
+          "used_null_node_ids": [
+            5,
+            7,
+            8,
+            12,
+            13,
+            17,
+            18,
+            22,
+            23
+          ]
+        },
+        {
+          "boundary_input_node_ids": [
+            25
+          ],
+          "extra_hidden_boundary_node_ids": [],
+          "hidden_data_node_ids": [],
+          "output_node_ids": [
+            52,
+            53,
+            54,
+            55,
+            64,
+            65,
+            66,
+            67
+          ],
+          "stage_index": 2,
+          "tvm_op_count": 20,
+          "used_null_node_ids": [
+            25,
+            27,
+            28,
+            32,
+            33,
+            36,
+            37,
+            41,
+            42,
+            45,
+            46,
+            49,
+            50,
+            53,
+            54,
+            55,
+            57,
+            58,
+            61,
+            62,
+            65,
+            66,
+            67
+          ]
+        }
+      ],
+      "status": "ok",
+      "throughput_fps": 3.832185716946133
+    }
+  ]
+}

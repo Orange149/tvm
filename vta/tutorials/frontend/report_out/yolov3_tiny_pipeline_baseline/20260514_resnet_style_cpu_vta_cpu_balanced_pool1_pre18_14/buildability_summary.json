@@ -1,0 +1,70 @@
+{
+  "candidate_count": 1,
+  "rejected_candidate_count": 0,
+  "rows": [
+    {
+      "balance_imbalance_ms_est": 85.52899490909094,
+      "balanced_cycle_ms_est": 274.42710031515156,
+      "boundary_bytes_est": 1124864,
+      "boundary_conv_outputs": [
+        4,
+        8,
+        11
+      ],
+      "boundary_ms": 0.7499093333333333,
+      "boundary_reasons": "",
+      "boundary_status": "safe",
+      "boundary_valid": true,
+      "boundary_warnings": "per_stage_quantization_experimental;non_pool4_start_boundary_experimental;cpu_tail_requires_serial_raw_gate;concat_route_cpu_tail_boundary;cpu_to_vta_boundary_requires_pack_quant:pool1;vta_to_cpu_boundary_requires_unpack_dequant:route23;vta_to_cpu_boundary_requires_unpack_dequant:small42;vta_to_cpu_boundary_requires_unpack_dequant:big64",
+      "candidate_id": "yolo_pool1_to_dual_pre18_14",
+      "cpu_prefix_convs": [
+        0,
+        1
+      ],
+      "cpu_tail_convs": [
+        9,
+        10,
+        12
+      ],
+      "dma_fragmentation_ms": 0.06,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre18_14",
+      "end_output_names": [
+        "route23",
+        "small42",
+        "big64"
+      ],
+      "failure_type": "",
+      "fitted_cycle_ms_est": 434.61130350700114,
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_balanced_pool1_pre18_14/packages/yolo_pool1_to_dual_pre18_14",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 330.4915714322989,
+      "predicted_fps": 3.0257957734478858,
+      "resource_cycle_ms": 201.29559272727275,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 83.06688,
+      "stage1_vta_ms_est": 115.76659781818181,
+      "stage2_ms_est": 201.29559272727275,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool1",
+      "status": "buildable",
+      "tail_cpu_ms": 201.29559272727275,
+      "vta_convs": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11
+      ],
+      "vta_dma_ms": 0.5113018181818182
+    }
+  ],
+  "safe_candidate_count": 1
+}

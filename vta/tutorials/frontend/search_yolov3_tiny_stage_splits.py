@@ -50,6 +50,14 @@ from test_yolov3_tiny_pipeline_baseline import (  # pylint: disable=import-error
 from profile_split_resnet18_stages import wrap_stage_with_explicit_pack  # pylint: disable=import-error
 
 
+def read_json(path, default=None):
+    path = Path(path)
+    if not path.exists():
+        return default
+    with path.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
 DEFAULT_OUTPUT_ROOT = (
     "vta/tutorials/frontend/report_out/yolov3_tiny_heuristic_search/"
     "20260512_resnetfit20"
@@ -124,6 +132,15 @@ def parse_modes(text):
     return modes or ["fit", "build", "measure"]
 
 
+def parse_int_csv(text):
+    values = []
+    for item in str(text).split(","):
+        item = item.strip()
+        if item:
+            values.append(int(item))
+    return values
+
+
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", type=parse_modes, default=parse_modes("fit,build,measure"))
@@ -166,6 +183,18 @@ def parse_args():
     parser.add_argument("--serial-runs", type=int, default=2)
     parser.add_argument("--queue-depth", type=int, default=2)
     parser.add_argument("--runtime-num-threads", type=int, default=4)
+    parser.add_argument(
+        "--runtime-config-search-count",
+        type=int,
+        default=0,
+        help="Expand Relay split candidates into this many split+runtime configs.",
+    )
+    parser.add_argument("--max-runtime-configs-per-split", type=int, default=6)
+    parser.add_argument("--stage0-thread-options", default="2,3,4")
+    parser.add_argument("--stage2-thread-options", default="2,3,4")
+    parser.add_argument("--queue-depth-options", default="1,2")
+    parser.add_argument("--poll-sleep-ns-options", default="1000,5000")
+    parser.add_argument("--post-start-sleep-ns-options", default="1000")
     parser.add_argument("--threshold", type=float, default=0.560)
     parser.add_argument("--nms-threshold", type=float, default=0.45)
     parser.add_argument("--topk-detections", type=int, default=20)
@@ -907,7 +936,148 @@ def enumerate_candidates(params, count):
     ]
 
 
+def runtime_config_grid(args):
+    configs = []
+    for stage0_threads in parse_int_csv(args.stage0_thread_options):
+        for stage2_threads in parse_int_csv(args.stage2_thread_options):
+            for queue_depth in parse_int_csv(args.queue_depth_options):
+                for poll_sleep_ns in parse_int_csv(args.poll_sleep_ns_options):
+                    for post_start_sleep_ns in parse_int_csv(args.post_start_sleep_ns_options):
+                        configs.append(
+                            {
+                                "stage0_threads": stage0_threads,
+                                "stage2_threads": stage2_threads,
+                                "queue_depth": queue_depth,
+                                "poll_sleep_ns": poll_sleep_ns,
+                                "post_start_sleep_ns": post_start_sleep_ns,
+                            }
+                        )
+    return configs
+
+
+def runtime_config_label(config):
+    return "s0{}_s2{}_q{}_poll{}_post{}".format(
+        int(config["stage0_threads"]),
+        int(config["stage2_threads"]),
+        int(config["queue_depth"]),
+        int(config["poll_sleep_ns"]),
+        int(config["post_start_sleep_ns"]),
+    )
+
+
+def runtime_config_penalty(candidate, config):
+    stage0_cost = 0.0
+    for idx in candidate.get("cpu_prefix_convs", []):
+        stage0_cost += conv_ops([idx]) / 1e9
+    tail_cost = 0.0
+    for idx in candidate.get("cpu_tail_convs", []):
+        tail_cost += conv_ops([idx]) / 1e9
+    stage0_threads = max(int(config["stage0_threads"]), 1)
+    stage2_threads = max(int(config["stage2_threads"]), 1)
+    cpu_balance = abs((stage0_cost / stage0_threads) - (tail_cost / stage2_threads))
+    queue_bonus = -2.0 if int(config["queue_depth"]) == 2 else 0.0
+    poll_penalty = 0.0 if int(config["poll_sleep_ns"]) <= 1000 else 1.5
+    return cpu_balance * 0.01 + queue_bonus + poll_penalty
+
+
+def expand_runtime_configs(args, candidates):
+    target = int(args.runtime_config_search_count or 0)
+    if target <= 0:
+        return candidates
+    configs = runtime_config_grid(args)
+    expanded = []
+    for candidate in candidates:
+        for config in configs:
+            row = dict(candidate)
+            split_id = candidate["candidate_id"]
+            label = runtime_config_label(config)
+            row["split_candidate_id"] = split_id
+            row["runtime_config"] = config
+            row["runtime_config_label"] = label
+            row["candidate_id"] = "{}__rt_{}".format(split_id, label)
+            row["predicted_cycle_ms"] = float(candidate["predicted_cycle_ms"]) + runtime_config_penalty(
+                candidate, config
+            )
+            row["predicted_fps"] = 1000.0 / max(float(row["predicted_cycle_ms"]), 1e-9)
+            expanded.append(row)
+    expanded.sort(key=lambda item: (float(item["predicted_cycle_ms"]), item["candidate_id"]))
+    selected = []
+    per_split = {}
+    max_per_split = int(args.max_runtime_configs_per_split or 0)
+    for item in expanded:
+        split_id = item.get("split_candidate_id") or item["candidate_id"]
+        if max_per_split > 0 and per_split.get(split_id, 0) >= max_per_split:
+            continue
+        selected.append(item)
+        per_split[split_id] = per_split.get(split_id, 0) + 1
+        if len(selected) >= target:
+            return selected
+    for item in expanded:
+        if item["candidate_id"] in {row["candidate_id"] for row in selected}:
+            continue
+        selected.append(item)
+        if len(selected) >= target:
+            break
+    return selected
+
+
 def package_candidate(args, out_dir, candidate, env, func, params, named, data):
+    split_candidate_id = candidate.get("split_candidate_id")
+    if split_candidate_id and split_candidate_id != candidate["candidate_id"]:
+        package_dir = Path(out_dir) / "packages" / candidate["candidate_id"]
+        base_failure_path = Path(out_dir) / "packages" / (split_candidate_id + ".build_failed.json")
+        if base_failure_path.exists():
+            failure = read_json(base_failure_path, default={})
+            raise RuntimeError(
+                "base split package failed for {}: {}".format(
+                    split_candidate_id, failure.get("error_summary", "unknown")
+                )
+            )
+        if (
+            package_dir.exists()
+            and (package_dir / "manifest.json").exists()
+            and (package_dir / "vta_stage_pipeline_runner").exists()
+        ):
+            try:
+                manifest = json.load(open(package_dir / "manifest.json", encoding="utf-8"))
+                if manifest.get("runtime_config_label") == candidate.get("runtime_config_label"):
+                    return package_dir
+            except Exception:
+                pass
+        base_candidate = dict(candidate)
+        base_candidate["candidate_id"] = split_candidate_id
+        base_candidate.pop("split_candidate_id", None)
+        base_candidate.pop("runtime_config", None)
+        base_candidate.pop("runtime_config_label", None)
+        try:
+            base_dir = package_candidate(args, out_dir, base_candidate, env, func, params, named, data)
+        except Exception as err:
+            write_json(
+                base_failure_path,
+                {
+                    "candidate_id": split_candidate_id,
+                    "failure_type": "build_failed",
+                    "error_summary": str(err)[-1000:],
+                },
+            )
+            raise
+        if package_dir.exists():
+            shutil.rmtree(str(package_dir))
+        shutil.copytree(str(base_dir), str(package_dir))
+        manifest = json.load(open(package_dir / "manifest.json", encoding="utf-8"))
+        manifest.update(
+            {
+                "candidate_id": candidate["candidate_id"],
+                "split_candidate_id": split_candidate_id,
+                "runtime_config": candidate.get("runtime_config", {}),
+                "runtime_config_label": candidate.get("runtime_config_label", ""),
+            }
+        )
+        write_json(package_dir / "manifest.json", manifest)
+        write_run_script(args, package_dir, manifest["stages"], serial=True, runtime_config=candidate.get("runtime_config"))
+        write_run_script(args, package_dir, manifest["stages"], serial=False, runtime_config=candidate.get("runtime_config"))
+        return package_dir
+
     package_dir = Path(out_dir) / "packages" / candidate["candidate_id"]
     if (
         package_dir.exists()
@@ -990,8 +1160,8 @@ def package_candidate(args, out_dir, candidate, env, func, params, named, data):
     (package_dir / "input.bin").write_bytes(data.tobytes(order="C"))
     compile_runner(package_dir)
     copy_runtime_libs(package_dir)
-    write_run_script(args, package_dir, stage_records, serial=True)
-    write_run_script(args, package_dir, stage_records, serial=False)
+    write_run_script(args, package_dir, stage_records, serial=True, runtime_config=candidate.get("runtime_config"))
+    write_run_script(args, package_dir, stage_records, serial=False, runtime_config=candidate.get("runtime_config"))
     manifest = dict(candidate)
     manifest.update(
         {
@@ -1836,10 +2006,16 @@ def package_packed_graph_candidate(args, output_root, candidate=None, full_graph
     return candidate, package_dir
 
 
-def write_run_script(args, package_dir, stage_records, serial):
+def write_run_script(args, package_dir, stage_records, serial, runtime_config=None):
     output_jsonl = "native_serial_result.jsonl" if serial else "native_pipeline_result.jsonl"
     script_name = "run_native_serial.sh" if serial else "run_native_pipeline.sh"
     serial_arg = " \\\n  --serial" if serial else ""
+    runtime_config = runtime_config or {}
+    stage0_threads = int(runtime_config.get("stage0_threads", 3))
+    stage2_threads = int(runtime_config.get("stage2_threads", 4))
+    queue_depth = int(runtime_config.get("queue_depth", args.queue_depth))
+    poll_sleep_ns = int(runtime_config.get("poll_sleep_ns", 1000))
+    post_start_sleep_ns = int(runtime_config.get("post_start_sleep_ns", 1000))
     stage_parts = []
     for idx, stage in enumerate(stage_records):
         prefix = "stage{}".format(idx)
@@ -1866,7 +2042,9 @@ def write_run_script(args, package_dir, stage_records, serial):
                 source_line=source_line,
                 name=shlex.quote(stage["name"]),
                 device=stage["device"],
-                threads=3 if stage["device"] == "cpu" and idx == 0 else (4 if stage["device"] == "cpu" else 1),
+                threads=stage0_threads
+                if stage["device"] == "cpu" and idx == 0
+                else (stage2_threads if stage["device"] == "cpu" else 1),
             )
         )
     script = """#!/bin/sh
@@ -1876,8 +2054,8 @@ export LD_LIBRARY_PATH="$PWD${{LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}}"
 export LD_PRELOAD="$PWD/libtvm_runtime.so:$PWD/libvta.so"
 export TVM_NUM_THREADS={threads}
 : "${{TVM_THREAD_POOL_SPIN_COUNT:=0}}"
-: "${{AXU5EVB_DRIVER_POST_START_SLEEP_NS:=1000}}"
-: "${{AXU5EVB_DRIVER_POLL_SLEEP_NS:=1000}}"
+: "${{AXU5EVB_DRIVER_POST_START_SLEEP_NS:={post_start_sleep_ns}}}"
+: "${{AXU5EVB_DRIVER_POLL_SLEEP_NS:={poll_sleep_ns}}}"
 export TVM_THREAD_POOL_SPIN_COUNT
 export AXU5EVB_DRIVER_POST_START_SLEEP_NS
 export AXU5EVB_DRIVER_POLL_SLEEP_NS
@@ -1894,9 +2072,11 @@ exec ./vta_stage_pipeline_runner \\
 """.format(
         stage_cli=" \\\n".join(stage_parts),
         runs=int(args.serial_runs if serial else args.runs),
-        queue_depth=int(args.queue_depth),
+        queue_depth=queue_depth,
         runtime_threads=int(args.runtime_num_threads),
         threads=int(args.runtime_num_threads),
+        post_start_sleep_ns=post_start_sleep_ns,
+        poll_sleep_ns=poll_sleep_ns,
         output_mode=shlex.quote(args.runner_output_mode),
         dump_dir=shlex.quote(("native_serial" if serial else "native_pipeline").replace("native_", "") + "_output_dumps"),
         output_jsonl=output_jsonl,
@@ -2371,9 +2551,18 @@ def main():
     else:
         heuristic = json.load(open(heuristic_path, encoding="utf-8"))
 
-    candidates = enumerate_candidates(heuristic, int(args.candidate_count))
+    base_candidate_count = int(args.candidate_count)
+    if int(args.runtime_config_search_count or 0) > 0:
+        base_candidate_count = max(base_candidate_count, len(START_SPECS) * len(END_SPECS))
+    candidates = enumerate_candidates(heuristic, base_candidate_count)
+    candidates = expand_runtime_configs(args, candidates)
     if args.candidate_id:
-        candidates = [item for item in candidates if item["candidate_id"] == args.candidate_id]
+        candidates = [
+            item
+            for item in candidates
+            if item["candidate_id"] == args.candidate_id
+            or item.get("split_candidate_id") == args.candidate_id
+        ]
         if not candidates:
             raise RuntimeError("candidate id not found: {}".format(args.candidate_id))
 

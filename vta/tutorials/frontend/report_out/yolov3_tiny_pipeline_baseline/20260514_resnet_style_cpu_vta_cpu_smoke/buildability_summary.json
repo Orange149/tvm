@@ -1,0 +1,68 @@
+{
+  "candidate_count": 1,
+  "rejected_candidate_count": 0,
+  "rows": [
+    {
+      "balance_imbalance_ms_est": 2.831825454545452,
+      "balanced_cycle_ms_est": 158.62562909090911,
+      "boundary_bytes_est": 1038336,
+      "boundary_conv_outputs": [
+        9,
+        11
+      ],
+      "boundary_ms": 0.692224,
+      "boundary_reasons": "",
+      "boundary_status": "safe",
+      "boundary_valid": true,
+      "boundary_warnings": "per_stage_quantization_experimental;non_pool4_start_boundary_experimental;cpu_tail_requires_serial_raw_gate;cpu_to_vta_boundary_requires_pack_quant:pool2;vta_to_cpu_boundary_requires_unpack_dequant:small_pre26;vta_to_cpu_boundary_requires_unpack_dequant:big64",
+      "candidate_id": "yolo_pool2_to_dual_pre_logits",
+      "cpu_prefix_convs": [
+        0,
+        1,
+        2
+      ],
+      "cpu_tail_convs": [
+        10,
+        12
+      ],
+      "dma_fragmentation_ms": 0.04,
+      "effective_segment_count": 3.0,
+      "end_name": "dual_pre_logits",
+      "end_output_names": [
+        "small_pre26",
+        "big64"
+      ],
+      "failure_type": "",
+      "fitted_cycle_ms_est": 335.60543322958677,
+      "needs_route_input": false,
+      "package_dir": "vta/tutorials/frontend/report_out/yolov3_tiny_pipeline_baseline/20260514_resnet_style_cpu_vta_cpu_smoke/packages/yolo_pool2_to_dual_pre_logits",
+      "pattern_cpu_vta_cpu": 1.0,
+      "pattern_cpu_vta_cpu_vta_cpu": 0.0,
+      "predicted_cycle_ms": 220.56856053944628,
+      "predicted_fps": 4.533737707469696,
+      "resource_cycle_ms": 143.47915636363638,
+      "small_island_count": 0.0,
+      "sram_risk_ms": 0.0,
+      "stage0_ms_est": 143.47915636363638,
+      "stage1_vta_ms_est": 140.64733090909093,
+      "stage2_ms_est": 20.05876363636364,
+      "stage_count": 3.0,
+      "stage_devices": "cpu/vta/cpu",
+      "start_name": "pool2",
+      "status": "buildable",
+      "tail_cpu_ms": 20.05876363636364,
+      "vta_convs": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11
+      ],
+      "vta_dma_ms": 0.4719709090909091
+    }
+  ],
+  "safe_candidate_count": 1
+}

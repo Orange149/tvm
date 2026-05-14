@@ -1,0 +1,37 @@
+{
+  "board": "",
+  "correctness": {
+    "detection_gate": null,
+    "notes": [
+      "RPC baseline is missing or failed.",
+      "native_serial is not implemented yet.",
+      "native_pipeline is not implemented yet."
+    ],
+    "raw_output_gate": null,
+    "status": "no_comparisons"
+  },
+  "generated_at": "2026-05-12T15:58:12",
+  "host": "",
+  "model": "yolov3-tiny",
+  "modes": [
+    "native_serial",
+    "native_pipeline"
+  ],
+  "port": 9090,
+  "results": {
+    "native_pipeline": {
+      "mode": "native_pipeline",
+      "next_step": "Implement YOLO coarse units and stage input/output schemas, then connect them to the existing native runner/package path.",
+      "passes_correctness_gate": false,
+      "reason": "YOLOv3-tiny native stage pipeline needs a detection graph stage splitter. The existing ResNet18 stage splitter cannot be reused directly because it depends on ResNet unit metadata and MXNet block boundaries.",
+      "status": "not_implemented"
+    },
+    "native_serial": {
+      "mode": "native_serial",
+      "next_step": "Implement YOLO coarse units and stage input/output schemas, then connect them to the existing native runner/package path.",
+      "passes_correctness_gate": false,
+      "reason": "YOLOv3-tiny native stage pipeline needs a detection graph stage splitter. The existing ResNet18 stage splitter cannot be reused directly because it depends on ResNet unit metadata and MXNet block boundaries.",
+      "status": "not_implemented"
+    }
+  }
+}

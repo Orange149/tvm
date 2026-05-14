@@ -1,0 +1,22 @@
+# Keep generated packages, raw dumps, and persistent build caches out of git.
+# Commit only lightweight experiment summaries, manifests, and analysis notes.
+
+native_stage_pipeline_build_cache/
+
+packages/
+**/packages/
+**/serial_output_dumps/
+**/pipeline_output_dumps/
+
+*.tar.gz
+*.params
+*.so
+*.o
+*.a
+
+# Very large static calibration summaries are kept locally.
+**/calibration_b20/summary.json
+**/calibration_b20/summary.csv
+**/theory_build100_static_check/summary.json
+**/theory_build100_static_check/summary.csv
+
