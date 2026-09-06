@@ -10,6 +10,7 @@ from __future__ import absolute_import, print_function
 
 import argparse
 import csv
+import itertools
 import json
 import math
 import os
@@ -17,6 +18,7 @@ from pathlib import Path
 import shlex
 import shutil
 import statistics
+import sys
 import tarfile
 import time
 
@@ -118,6 +120,37 @@ END_SPECS = [
         ["small_logits51", "big_logits66"],
     ),
 ]
+SPLIT_POINT_SPECS = [
+    {"name": "data", "convs": [], "outputs": ["data"]},
+    {"name": "pool0", "convs": [0], "outputs": ["pool0"]},
+    {"name": "pool1", "convs": [0, 1], "outputs": ["pool1"]},
+    {"name": "pool2", "convs": [0, 1, 2], "outputs": ["pool2"]},
+    {"name": "pool3", "convs": [0, 1, 2, 3], "outputs": ["pool3"]},
+    {"name": "pool4_route", "convs": [0, 1, 2, 3, 4], "outputs": ["pool4_route", "route23"]},
+    {"name": "trunk12", "convs": [0, 1, 2, 3, 4, 5, 6], "outputs": ["route23", "trunk34"]},
+    {"name": "shared13", "convs": [0, 1, 2, 3, 4, 5, 6, 7], "outputs": ["route23", "shared38"]},
+    {
+        "name": "small_pre18",
+        "convs": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "outputs": ["route23", "shared38", "small42"],
+    },
+    {
+        "name": "dual_pre18_14",
+        "convs": [0, 1, 2, 3, 4, 5, 6, 7, 8, 11],
+        "outputs": ["route23", "small42", "big64"],
+    },
+    {
+        "name": "dual_pre_logits",
+        "convs": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11],
+        "outputs": ["small_pre26", "big64"],
+    },
+    {
+        "name": "logits",
+        "convs": list(range(len(YOLO_CONVS))),
+        "outputs": ["small_logits51", "big_logits66"],
+    },
+]
+SPLIT_POINT_BY_NAME = {item["name"]: item for item in SPLIT_POINT_SPECS}
 
 
 def parse_modes(text):
@@ -146,6 +179,33 @@ def parse_args():
     parser.add_argument("--mode", type=parse_modes, default=parse_modes("fit,build,measure"))
     parser.add_argument("--output-root", default=DEFAULT_OUTPUT_ROOT)
     parser.add_argument("--heuristic-params-json", default=DEFAULT_HEURISTIC_JSON)
+    parser.add_argument(
+        "--resource-model-json",
+        default="",
+        help="Frozen RAMPS model used to risk-rank enumerated Relay candidates.",
+    )
+    parser.add_argument(
+        "--candidate-prior-file",
+        default="",
+        help="Ordered candidate ids to build; candidates not listed are excluded.",
+    )
+    parser.add_argument(
+        "--exclude-candidate-id-file",
+        action="append",
+        default=[],
+        help="Candidate id file to exclude. May be repeated.",
+    )
+    parser.add_argument(
+        "--measurement-order-file",
+        default="",
+        help="Ordered candidate ids for board measurement after packages are built.",
+    )
+    parser.add_argument(
+        "--cpu-thread-policy",
+        default="tuned",
+        choices=["tuned", "single"],
+        help="Use tuned/default CPU threads or force every CPU stage to one thread.",
+    )
     parser.add_argument("--candidate-count", type=int, default=20)
     parser.add_argument(
         "--candidate-id",
@@ -180,6 +240,12 @@ def parse_args():
     )
     parser.add_argument("--remote-dir", default="/var/volatile/yolov3_tiny_pipeline_search")
     parser.add_argument("--runs", type=int, default=20)
+    parser.add_argument(
+        "--warmup-runs",
+        type=int,
+        default=0,
+        help="Pipeline rows discarded before throughput and stage statistics.",
+    )
     parser.add_argument("--serial-runs", type=int, default=2)
     parser.add_argument("--queue-depth", type=int, default=2)
     parser.add_argument("--runtime-num-threads", type=int, default=4)
@@ -190,6 +256,36 @@ def parse_args():
         help="Expand Relay split candidates into this many split+runtime configs.",
     )
     parser.add_argument("--max-runtime-configs-per-split", type=int, default=6)
+    parser.add_argument(
+        "--max-vta-islands",
+        type=int,
+        default=1,
+        help="Relay split search may enumerate up to this many non-overlapping VTA islands.",
+    )
+    parser.add_argument(
+        "--fine-search-policy",
+        default="static",
+        choices=["static", "adaptive_balance"],
+        help="adaptive_balance builds a ResNet18-style multi-island YOLO shortlist.",
+    )
+    parser.add_argument(
+        "--fine-search-initial-batch-n",
+        type=int,
+        default=20,
+        help="Number of mixed-granularity candidates used for adaptive balance diagnostics.",
+    )
+    parser.add_argument(
+        "--raw-sanity-max-mean-abs-delta",
+        type=float,
+        default=2.0,
+        help="Detection-gate runs still reject raw outputs whose max mean absolute delta exceeds this.",
+    )
+    parser.add_argument(
+        "--raw-sanity-max-sum-rel-delta",
+        type=float,
+        default=5.0,
+        help="Detection-gate runs still reject raw outputs whose max relative sum delta exceeds this.",
+    )
     parser.add_argument("--stage0-thread-options", default="2,3,4")
     parser.add_argument("--stage2-thread-options", default="2,3,4")
     parser.add_argument("--queue-depth-options", default="1,2")
@@ -247,6 +343,136 @@ def parse_args():
 
 def safe_name(text):
     return "".join(c if c.isalnum() or c in "_.-" else "_" for c in str(text)).strip("_")
+
+
+def read_candidate_id_file(path_text):
+    if not path_text:
+        return []
+    path = Path(path_text)
+    if not path.exists():
+        raise FileNotFoundError("candidate id file not found: {}".format(path))
+    result = []
+    seen = set()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        candidate_id = line.strip()
+        if not candidate_id or candidate_id.startswith("#") or candidate_id in seen:
+            continue
+        result.append(candidate_id)
+        seen.add(candidate_id)
+    return result
+
+
+def candidate_matches_id(candidate, candidate_id):
+    return candidate.get("candidate_id") == candidate_id or candidate.get(
+        "split_candidate_id"
+    ) == candidate_id
+
+
+def apply_resource_model(candidates, model_path):
+    if not model_path:
+        return list(candidates)
+    frontend = Path(__file__).resolve().parent
+    if str(frontend) not in sys.path:
+        sys.path.insert(0, str(frontend))
+    from resource_aware_dataset import yolo_record_from_candidate  # pylint: disable=import-outside-toplevel
+    from resource_aware_maxplus import predict_record  # pylint: disable=import-outside-toplevel
+
+    model = json.loads(Path(model_path).read_text(encoding="utf-8"))
+    if not model.get("frozen"):
+        raise RuntimeError("--resource-model-json must point to a frozen RAMPS model")
+    ranked = []
+    for candidate in candidates:
+        row = dict(candidate)
+        prediction = predict_record(
+            yolo_record_from_candidate(
+                row,
+                calibration=model.get("hardware_calibration") or None,
+                legacy_analysis=True,
+            ),
+            model,
+        )
+        row.update(
+            {
+                "ramps_predicted_cycle_ms": prediction["predicted_cycle_ms"],
+                "ramps_predicted_fps": prediction["predicted_fps"],
+                "ramps_predicted_std_ms": prediction["predicted_std_ms"],
+                "ramps_risk_score_ms": prediction["risk_score_ms"],
+                "ramps_bottleneck_cycle": (
+                    prediction.get("bottleneck_cycle") or {}
+                ).get("name", ""),
+                "ramps_cycle_constraints_json": json.dumps(
+                    prediction.get("cycle_constraints") or [], sort_keys=True
+                ),
+            }
+        )
+        ranked.append(row)
+    ranked.sort(key=lambda item: (float(item["ramps_risk_score_ms"]), item["candidate_id"]))
+    return ranked
+
+
+def apply_candidate_selection(args, candidates):
+    selected = apply_resource_model(candidates, args.resource_model_json)
+    excluded = set()
+    for path in args.exclude_candidate_id_file:
+        excluded.update(read_candidate_id_file(path))
+    selected = [
+        item
+        for item in selected
+        if item.get("candidate_id") not in excluded
+        and item.get("split_candidate_id") not in excluded
+    ]
+    prior = read_candidate_id_file(args.candidate_prior_file)
+    if prior:
+        ordered = []
+        used = set()
+        for candidate_id in prior:
+            if candidate_id in excluded:
+                continue
+            matches = [item for item in selected if candidate_matches_id(item, candidate_id)]
+            if not matches:
+                raise RuntimeError("candidate prior id is not enumerated: {}".format(candidate_id))
+            for item in matches:
+                if item["candidate_id"] not in used:
+                    ordered.append(item)
+                    used.add(item["candidate_id"])
+        selected = ordered
+    if args.cpu_thread_policy == "single":
+        forced = []
+        for candidate in selected:
+            row = dict(candidate)
+            runtime = dict(row.get("runtime_config") or {})
+            runtime.update({"stage0_threads": 1, "stage2_threads": 1})
+            runtime.setdefault("queue_depth", int(args.queue_depth))
+            runtime.setdefault("poll_sleep_ns", 1000)
+            runtime.setdefault("post_start_sleep_ns", 1000)
+            row["runtime_config"] = runtime
+            row["cpu_thread_policy"] = "single"
+            forced.append(row)
+        selected = forced
+    else:
+        for item in selected:
+            item["cpu_thread_policy"] = "tuned"
+    return selected[: int(args.candidate_count)]
+
+
+def order_measurement_rows(rows, order_path):
+    order = read_candidate_id_file(order_path)
+    if not order:
+        return list(rows)
+    by_id = {str(row.get("candidate_id")): row for row in rows}
+    ordered = []
+    used = set()
+    for candidate_id in order:
+        if candidate_id not in by_id:
+            raise RuntimeError(
+                "measurement-order candidate is not buildable in this run: {}".format(
+                    candidate_id
+                )
+            )
+        ordered.append(by_id[candidate_id])
+        used.add(candidate_id)
+    ordered.extend(row for row in rows if str(row.get("candidate_id")) not in used)
+    return ordered
 
 
 def conv_ops(conv_indices):
@@ -505,7 +731,7 @@ def yolo_relay(args):
     return env, assets, func, params, named, data, data_hwc
 
 
-def make_stage_funcs(func, named, candidate, tail_device="cpu"):
+def make_single_island_stage_funcs(func, named, candidate, tail_device="cpu"):
     start_name = candidate["start_name"]
     end_outputs = candidate["end_output_names"]
     start_expr = named[start_name]
@@ -550,6 +776,95 @@ def make_stage_funcs(func, named, candidate, tail_device="cpu"):
             "input_names": stage2_input_names,
         },
     ]
+
+
+def split_point_outputs(named, point_name):
+    return [named[name] for name in SPLIT_POINT_BY_NAME[point_name]["outputs"]]
+
+
+def make_multisplit_stage_plan(candidate):
+    if candidate.get("stage_plan"):
+        return list(candidate["stage_plan"])
+    islands = list(candidate.get("islands") or [])
+    if not islands:
+        return []
+    stages = []
+    cursor = 0
+    for island in islands:
+        start = int(island["start_point_idx"])
+        end = int(island["end_point_idx"])
+        if start > cursor:
+            stages.append(
+                {
+                    "device": "cpu",
+                    "input_point": SPLIT_POINT_SPECS[cursor]["name"],
+                    "output_point": SPLIT_POINT_SPECS[start]["name"],
+                }
+            )
+        stages.append(
+            {
+                "device": "vta",
+                "input_point": SPLIT_POINT_SPECS[start]["name"],
+                "output_point": SPLIT_POINT_SPECS[end]["name"],
+            }
+        )
+        cursor = end
+    stages.append(
+        {
+            "device": "cpu",
+            "input_point": SPLIT_POINT_SPECS[cursor]["name"],
+            "output_point": "output",
+            "is_tail": True,
+        }
+    )
+    return stages
+
+
+def make_multisplit_stage_funcs(func, named, candidate, tail_device="cpu"):
+    stages = []
+    for idx, spec in enumerate(make_multisplit_stage_plan(candidate)):
+        input_point = spec["input_point"]
+        output_point = spec["output_point"]
+        input_exprs = split_point_outputs(named, input_point)
+        replacements = []
+        input_names = []
+        for input_idx, expr in enumerate(input_exprs):
+            if idx == 0 and input_point == "data" and input_idx == 0:
+                input_names.append("data")
+                continue
+            var = expr_var_like(expr, "stage{}_in{}".format(idx, input_idx))
+            replacements.append((expr, var))
+            input_names.append(var.name_hint)
+
+        if output_point == "output":
+            body = func.body
+        else:
+            output_exprs = split_point_outputs(named, output_point)
+            body = relay.Tuple(output_exprs) if len(output_exprs) > 1 else output_exprs[0]
+        if replacements:
+            body = ReplaceExprMutator(replacements).visit(body)
+        stage_func = infer_func(relay.Function(relay.analysis.free_vars(body), body))
+        device = spec["device"]
+        if spec.get("is_tail"):
+            device = tail_device
+        stages.append(
+            {
+                "name": "stage{}_{}_{}_to_{}".format(idx, device, input_point, output_point),
+                "device": device,
+                "func": stage_func,
+                "input_names": input_names,
+                "input_point": input_point,
+                "output_point": output_point,
+                "is_tail": bool(spec.get("is_tail")),
+            }
+        )
+    return stages
+
+
+def make_stage_funcs(func, named, candidate, tail_device="cpu"):
+    if candidate.get("islands"):
+        return make_multisplit_stage_funcs(func, named, candidate, tail_device=tail_device)
+    return make_single_island_stage_funcs(func, named, candidate, tail_device=tail_device)
 
 
 def build_cpu_stage(stage_name, relay_func, params, env):
@@ -705,6 +1020,27 @@ def boundary_contract_for_expr(name, expr, producer_device, consumer_device, env
 
 
 def boundary_contracts_for_candidate(candidate, named, env, tail_device):
+    if candidate.get("islands"):
+        contracts = []
+        stages = make_multisplit_stage_plan(candidate)
+        for prev, nxt in zip(stages[:-1], stages[1:]):
+            output_point = prev["output_point"]
+            if output_point == "output":
+                continue
+            producer_device = prev["device"]
+            consumer_device = nxt["device"] if not nxt.get("is_tail") else tail_device
+            for name in SPLIT_POINT_BY_NAME[output_point]["outputs"]:
+                contracts.append(
+                    boundary_contract_for_expr(
+                        name,
+                        named[name],
+                        producer_device=producer_device,
+                        consumer_device=consumer_device,
+                        env=env,
+                    )
+                )
+        return contracts
+
     contracts = []
     stage0_outputs = [candidate["start_name"]]
     if candidate.get("needs_route_input"):
@@ -884,7 +1220,261 @@ def score_candidate(candidate, params):
     return candidate["predicted_cycle_ms"]
 
 
-def enumerate_candidates(params, count):
+def split_point_conv_set(index):
+    return set(SPLIT_POINT_SPECS[int(index)]["convs"])
+
+
+def span_convs(start_index, end_index):
+    return sorted(split_point_conv_set(end_index) - split_point_conv_set(start_index))
+
+
+def split_point_boundary_bytes(point_index):
+    output_to_conv = {
+        "pool0": 0,
+        "pool1": 1,
+        "pool2": 2,
+        "pool3": 3,
+        "pool4_route": 4,
+        "route23": 4,
+        "trunk34": 6,
+        "shared38": 7,
+        "small42": 8,
+        "small_pre26": 9,
+        "small_logits51": 10,
+        "big64": 11,
+        "big_logits66": 12,
+    }
+    conv_outputs = []
+    outputs = SPLIT_POINT_SPECS[int(point_index)]["outputs"]
+    for name in outputs:
+        if name in output_to_conv:
+            conv_outputs.append(output_to_conv[name])
+        elif name == "data":
+            return int(1 * 3 * 416 * 416 * 4)
+    return sum(conv_output_bytes(idx) for idx in sorted(set(conv_outputs)))
+
+
+def make_multisplit_candidate(islands):
+    islands = [
+        {
+            "start_point_idx": int(start),
+            "end_point_idx": int(end),
+            "start_name": SPLIT_POINT_SPECS[int(start)]["name"],
+            "end_name": SPLIT_POINT_SPECS[int(end)]["name"],
+            "vta_convs": span_convs(start, end),
+        }
+        for start, end in islands
+    ]
+    stage_plan = []
+    cursor = 0
+    cpu_stage_convs = []
+    vta_stage_convs = []
+    boundary_points = []
+    for island in islands:
+        start = island["start_point_idx"]
+        end = island["end_point_idx"]
+        if start > cursor:
+            convs = span_convs(cursor, start)
+            cpu_stage_convs.append(convs)
+            stage_plan.append(
+                {
+                    "device": "cpu",
+                    "input_point": SPLIT_POINT_SPECS[cursor]["name"],
+                    "output_point": SPLIT_POINT_SPECS[start]["name"],
+                    "convs": convs,
+                }
+            )
+            boundary_points.append(start)
+        vta_stage_convs.append(island["vta_convs"])
+        stage_plan.append(
+            {
+                "device": "vta",
+                "input_point": SPLIT_POINT_SPECS[start]["name"],
+                "output_point": SPLIT_POINT_SPECS[end]["name"],
+                "convs": island["vta_convs"],
+            }
+        )
+        boundary_points.append(end)
+        cursor = end
+    tail_convs = span_convs(cursor, len(SPLIT_POINT_SPECS) - 1)
+    cpu_stage_convs.append(tail_convs)
+    stage_plan.append(
+        {
+            "device": "cpu",
+            "input_point": SPLIT_POINT_SPECS[cursor]["name"],
+            "output_point": "output",
+            "convs": tail_convs,
+            "is_tail": True,
+        }
+    )
+    eff = [stage["device"] for stage in stage_plan]
+    island_label = "__".join("{}_{}".format(item["start_name"], item["end_name"]) for item in islands)
+    candidate = {
+        "candidate_id": "yolo_multi_{}".format(island_label),
+        "start_name": islands[0]["start_name"],
+        "end_name": islands[-1]["end_name"],
+        "end_output_names": SPLIT_POINT_BY_NAME[islands[-1]["end_name"]]["outputs"],
+        "needs_route_input": any(item["start_point_idx"] >= 5 for item in islands),
+        "islands": islands,
+        "island_count": len(islands),
+        "stage_plan": stage_plan,
+        "stage_count": len(stage_plan),
+        "stage_devices": "/".join(eff),
+        "cpu_prefix_convs": cpu_stage_convs[0] if cpu_stage_convs else [],
+        "cpu_tail_convs": tail_convs,
+        "cpu_stage_convs": cpu_stage_convs,
+        "vta_stage_convs": vta_stage_convs,
+        "vta_convs": sorted(set(itertools.chain.from_iterable(vta_stage_convs))),
+        "boundary_points": boundary_points,
+        "boundary_conv_outputs": sorted(
+            set(itertools.chain.from_iterable(split_point_conv_set(point) for point in boundary_points))
+        ),
+    }
+    return candidate
+
+
+def score_multisplit_candidate(candidate, params):
+    weights = params["weights"]
+    cpu_gops = 6.6
+    vta_gops = 32.0
+    cpu_stage_ms = [conv_ops(convs) / 1e9 / cpu_gops * 1000.0 for convs in candidate["cpu_stage_convs"]]
+    vta_stage_ms = [conv_ops(convs) / 1e9 / vta_gops * 1000.0 for convs in candidate["vta_stage_convs"]]
+    boundary_bytes = sum(split_point_boundary_bytes(point) for point in sorted(set(candidate["boundary_points"])))
+    boundary_ms = boundary_bytes / (1.5 * 1e9) * 1000.0
+    dma_ms = boundary_bytes / (2.2 * 1e9) * 1000.0
+    resource_cycle = max(max(cpu_stage_ms) if cpu_stage_ms else 0.0, sum(vta_stage_ms))
+    median_resource = statistics.median([value for value in cpu_stage_ms + [sum(vta_stage_ms)] if value > 0.0])
+    imbalance = max(0.0, resource_cycle - median_resource)
+    small_islands = sum(1 for convs in candidate["vta_stage_convs"] if len(convs) <= 1)
+    short_islands = sum(1 for convs in candidate["vta_stage_convs"] if len(convs) <= 2)
+    effective_segment_count = len(candidate["stage_plan"])
+    feats = {
+        "resource_cycle_ms": resource_cycle,
+        "vta_dma_ms": dma_ms,
+        "boundary_ms": boundary_ms,
+        "dma_fragmentation_ms": 0.04 * len(candidate["boundary_points"]),
+        "sram_risk_ms": 0.0,
+        "tail_cpu_ms": cpu_stage_ms[-1] if cpu_stage_ms else 0.0,
+        "stage_count": float(candidate["stage_count"]),
+        "effective_segment_count": float(effective_segment_count),
+        "small_island_count": float(short_islands),
+        "pattern_cpu_vta_cpu": 1.0 if candidate["stage_devices"] == "cpu/vta/cpu" else 0.0,
+        "pattern_cpu_vta_cpu_vta_cpu": 1.0 if candidate["stage_devices"] == "cpu/vta/cpu/vta/cpu" else 0.0,
+    }
+    fitted_score = float(weights.get("intercept", 0.0))
+    for key, value in feats.items():
+        fitted_score += float(weights.get(key, 0.0)) * float(value)
+    segment_penalty = {3: 0.0, 5: 10.0, 7: 34.0}.get(effective_segment_count, 48.0)
+    balanced_score = (
+        resource_cycle
+        + boundary_ms
+        + dma_ms
+        + 0.65 * imbalance
+        + segment_penalty
+        + 28.0 * small_islands
+        + 12.0 * max(0, short_islands - small_islands)
+    )
+    if candidate["start_name"] == "data":
+        balanced_score += 200.0
+    if feats["tail_cpu_ms"] > 260.0:
+        balanced_score += (feats["tail_cpu_ms"] - 260.0) * 0.9
+    if boundary_bytes > 5 * 1024 * 1024:
+        balanced_score += 35.0
+    score = 0.25 * fitted_score + 0.75 * balanced_score
+    candidate.update(feats)
+    candidate.update(
+        {
+            "stage_cpu_ms_est": cpu_stage_ms,
+            "stage_vta_ms_est": vta_stage_ms,
+            "total_vta_occupied_ms_est": sum(vta_stage_ms),
+            "boundary_bytes_est": boundary_bytes,
+            "balance_imbalance_ms_est": imbalance,
+            "balanced_cycle_ms_est": balanced_score,
+            "fitted_cycle_ms_est": fitted_score,
+            "predicted_cycle_ms": max(1.0, score),
+        }
+    )
+    candidate["predicted_fps"] = 1000.0 / candidate["predicted_cycle_ms"]
+    return candidate["predicted_cycle_ms"]
+
+
+def valid_vta_span(start, end):
+    if start <= 0:
+        return False
+    if end <= start:
+        return False
+    convs = span_convs(start, end)
+    if not convs:
+        return False
+    # Avoid the known fragile whole-input family and pure logits-only VTA tails
+    # in this first multi-island run.
+    if SPLIT_POINT_SPECS[start]["name"] == "data":
+        return False
+    if SPLIT_POINT_SPECS[end]["name"] == "logits" and len(convs) <= 2:
+        return False
+    return True
+
+
+def enumerate_island_sets(max_islands):
+    points = range(len(SPLIT_POINT_SPECS))
+    spans = [(start, end) for start in points for end in points if valid_vta_span(start, end)]
+    results = []
+
+    def rec(cursor, chosen, remaining):
+        if chosen:
+            results.append(tuple(chosen))
+        if remaining <= 0:
+            return
+        for start, end in spans:
+            if start <= cursor:
+                continue
+            rec(end, chosen + [(start, end)], remaining - 1)
+
+    rec(0, [], max(1, int(max_islands)))
+    return results
+
+
+def enumerate_multisplit_candidates(params, count, max_islands):
+    candidates = []
+    for islands in enumerate_island_sets(max_islands):
+        candidate = make_multisplit_candidate(islands)
+        score_multisplit_candidate(candidate, params)
+        candidates.append(candidate)
+    candidates.sort(key=lambda item: (float(item["predicted_cycle_ms"]), item["candidate_id"]))
+    one = [item for item in candidates if int(item["island_count"]) == 1]
+    two = [item for item in candidates if int(item["island_count"]) == 2]
+    three = [item for item in candidates if int(item["island_count"]) >= 3]
+    selected = []
+
+    def add(rows, limit):
+        for row in rows:
+            if row["candidate_id"] in {item["candidate_id"] for item in selected}:
+                continue
+            selected.append(row)
+            if len(selected) >= int(count):
+                return
+            limit -= 1
+            if limit <= 0:
+                return
+
+    if int(count) >= 100:
+        add(one, 8)
+        add(two, 8)
+        add(three, 4)
+        add(one, 22)
+        add(two, 37)
+        add(three, 16)
+    elif int(count) >= 20:
+        add(one, 8)
+        add(two, 8)
+        add(three, 4)
+    add(candidates, int(count) - len(selected))
+    return selected[: int(count)]
+
+
+def enumerate_candidates(params, count, max_vta_islands=1, fine_search_policy="static"):
+    if int(max_vta_islands or 1) > 1 or fine_search_policy == "adaptive_balance":
+        return enumerate_multisplit_candidates(params, count, max_vta_islands)
     candidates = []
     for start_name, start_idx, prefix_convs in START_SPECS:
         for end_name, end_convs, output_names in END_SPECS:
@@ -1100,6 +1690,13 @@ def package_candidate(args, out_dir, candidate, env, func, params, named, data):
     package_dir.mkdir(parents=True)
     stages = make_stage_funcs(func, named, candidate, tail_device=args.tail_device)
     def stage_input_sources(stage_index, stage):
+        if candidate.get("islands"):
+            if stage_index == 0:
+                return ["input:0"]
+            return [
+                "stage{}:{}".format(stage_index - 1, index)
+                for index, _ in enumerate(stage["input_names"])
+            ]
         if stage_index == 0:
             return ["input:0"]
         if stage_index == 1:
@@ -1124,7 +1721,7 @@ def package_candidate(args, out_dir, candidate, env, func, params, named, data):
         print("[BUILD] {} {}".format(candidate["candidate_id"], stage["name"]))
         if stage["device"] == "cpu":
             graph, lib, lowered_params = build_cpu_stage(stage["name"], stage["func"], params, env)
-        elif idx == 2:
+        elif stage.get("is_tail"):
             graph, lib, lowered_params = build_vta_tail_stage(
                 stage["name"],
                 stage["func"],
@@ -1138,7 +1735,7 @@ def package_candidate(args, out_dir, candidate, env, func, params, named, data):
                 stage["func"],
                 params,
                 env,
-                skip_first_conv=(candidate["start_name"] == "data"),
+                skip_first_conv=(stage.get("input_point", candidate.get("start_name")) == "data"),
                 already_quantized=(args.split_quantization_mode == "full_graph"),
             )
         (stage_dir / "graph.json").write_text(graph, encoding="utf-8")
@@ -1166,9 +1763,11 @@ def package_candidate(args, out_dir, candidate, env, func, params, named, data):
     manifest.update(
         {
             "kind": "yolov3_tiny_native_cpu_vta_cpu_candidate",
-            "stage_count": 3,
+            "stage_count": len(stage_records),
             "split_quantization_mode": args.split_quantization_mode,
             "tail_device": args.tail_device,
+            "max_vta_islands": int(args.max_vta_islands),
+            "fine_search_policy": args.fine_search_policy,
             "cpu_build_config": "vta_disabled_alter_layout",
             "runner_output_mode": args.runner_output_mode,
             "input_shape": [int(x) for x in data.shape],
@@ -2071,7 +2670,7 @@ exec ./vta_stage_pipeline_runner \\
   --output-jsonl {output_jsonl}{serial_arg}
 """.format(
         stage_cli=" \\\n".join(stage_parts),
-        runs=int(args.serial_runs if serial else args.runs),
+        runs=int(args.serial_runs if serial else args.runs + args.warmup_runs),
         queue_depth=queue_depth,
         runtime_threads=int(args.runtime_num_threads),
         threads=int(args.runtime_num_threads),
@@ -2210,11 +2809,36 @@ def compare_detection_outputs(reference, candidate, topk=3):
     }
 
 
+def raw_sanity_result(args, raw_gate):
+    rows = raw_gate.get("rows") or []
+    max_sum_rel = max([float(row.get("sum_rel_delta", 0.0)) for row in rows] or [0.0])
+    max_mean = float(raw_gate.get("max_mean_abs_delta", 0.0))
+    output_count_match = bool(raw_gate.get("output_count_match"))
+    shape_dtype_ok = all(bool(row.get("same_shape")) and bool(row.get("same_dtype")) for row in rows)
+    passes = (
+        output_count_match
+        and shape_dtype_ok
+        and max_mean <= float(args.raw_sanity_max_mean_abs_delta)
+        and max_sum_rel <= float(args.raw_sanity_max_sum_rel_delta)
+    )
+    return {
+        "passes_raw_sanity_gate": bool(passes),
+        "output_count_match": output_count_match,
+        "shape_dtype_ok": shape_dtype_ok,
+        "max_mean_abs_delta": max_mean,
+        "max_sum_rel_delta": max_sum_rel,
+        "max_mean_abs_delta_limit": float(args.raw_sanity_max_mean_abs_delta),
+        "max_sum_rel_delta_limit": float(args.raw_sanity_max_sum_rel_delta),
+    }
+
+
 def apply_yolo_correctness(args, baseline, result, detection_context, candidate_output_dir):
     raw_gate = compare_raw_outputs(baseline, result)
     result["raw_gate_passed"] = bool(raw_gate.get("passes_raw_output_gate"))
     result["raw_mismatch_summary"] = raw_gate
-    result["correctness"] = {"raw_output_gate": raw_gate}
+    raw_sanity = raw_sanity_result(args, raw_gate)
+    result["raw_sanity_passed"] = bool(raw_sanity.get("passes_raw_sanity_gate"))
+    result["correctness"] = {"raw_output_gate": raw_gate, "raw_sanity_gate": raw_sanity}
     if detection_context is not None:
         net, assets, data_hwc = detection_context
         arrays = load_dumped_output_arrays(result.get("_last_row", {}), candidate_output_dir)
@@ -2233,7 +2857,9 @@ def apply_yolo_correctness(args, baseline, result, detection_context, candidate_
     if args.correctness_policy == "raw_gate":
         result["passes_correctness_gate"] = bool(result["raw_gate_passed"])
     else:
-        result["passes_correctness_gate"] = bool(result["detection_gate_passed"])
+        result["passes_correctness_gate"] = bool(
+            result["detection_gate_passed"] and result["raw_sanity_passed"]
+        )
     result["correctness_policy"] = args.correctness_policy
     result.pop("_last_row", None)
     return result
@@ -2279,14 +2905,23 @@ def run_package(args, candidate, package_dir, serial, output_root, baseline, det
         rows = [json.loads(line) for line in local_jsonl.read_text(encoding="utf-8").splitlines() if line]
         if not rows:
             raise RuntimeError("no result rows")
-        completion_key = "stage{}_end_ms".format(int(rows[0].get("stage_count", 3)) - 1)
-        completion = [float(row.get(completion_key, 0.0)) for row in rows]
-        latencies = [float(row.get("total_latency_ms", 0.0)) for row in rows]
+        measured_rows = rows
+        if not serial and int(args.warmup_runs) > 0:
+            measured_rows = rows[int(args.warmup_runs) :]
+            if len(measured_rows) != int(args.runs):
+                raise RuntimeError(
+                    "expected {} post-warmup rows, found {}".format(
+                        args.runs, len(measured_rows)
+                    )
+                )
+        completion_key = "stage{}_end_ms".format(int(measured_rows[0].get("stage_count", 3)) - 1)
+        completion = [float(row.get(completion_key, 0.0)) for row in measured_rows]
+        latencies = [float(row.get("total_latency_ms", 0.0)) for row in measured_rows]
         if (not serial) and len(completion) > 1 and completion[-1] > completion[0]:
             fps = (len(completion) - 1) * 1000.0 / (completion[-1] - completion[0])
         else:
             fps = 1000.0 / statistics.mean(latencies)
-        stage_count = int(rows[0].get("stage_count", candidate.get("stage_count", 0)) or 0)
+        stage_count = int(measured_rows[0].get("stage_count", candidate.get("stage_count", 0)) or 0)
         stage_mean_ms = []
         stage_set_mean_ms = []
         stage_run_mean_ms = []
@@ -2294,22 +2929,22 @@ def run_package(args, candidate, package_dir, serial, output_root, baseline, det
         for stage_index in range(stage_count):
             stage_mean_ms.append(
                 statistics.mean(
-                    float(row.get("stage{}_ms".format(stage_index), 0.0)) for row in rows
+                    float(row.get("stage{}_ms".format(stage_index), 0.0)) for row in measured_rows
                 )
             )
             stage_set_mean_ms.append(
                 statistics.mean(
-                    float(row.get("stage{}_set_ms".format(stage_index), 0.0)) for row in rows
+                    float(row.get("stage{}_set_ms".format(stage_index), 0.0)) for row in measured_rows
                 )
             )
             stage_run_mean_ms.append(
                 statistics.mean(
-                    float(row.get("stage{}_run_ms".format(stage_index), 0.0)) for row in rows
+                    float(row.get("stage{}_run_ms".format(stage_index), 0.0)) for row in measured_rows
                 )
             )
             stage_get_mean_ms.append(
                 statistics.mean(
-                    float(row.get("stage{}_get_ms".format(stage_index), 0.0)) for row in rows
+                    float(row.get("stage{}_get_ms".format(stage_index), 0.0)) for row in measured_rows
                 )
             )
         bottleneck_stage = None
@@ -2332,6 +2967,8 @@ def run_package(args, candidate, package_dir, serial, output_root, baseline, det
             "stage_get_mean_ms": stage_get_mean_ms,
             "bottleneck_stage": bottleneck_stage,
             "stage_imbalance_ms": stage_imbalance_ms,
+            "warmup_runs": int(args.warmup_runs) if not serial else 0,
+            "measured_runs": len(measured_rows),
             "raw_outputs": rows[-1].get("raw_outputs", []),
             "stage_raw_outputs": rows[-1].get("stage_raw_outputs", []),
             "_last_row": rows[-1],
@@ -2537,6 +3174,8 @@ def run_packed_graph_flow(args, output_root):
 
 def main():
     args = parse_args()
+    if int(args.warmup_runs) < 0:
+        raise RuntimeError("--warmup-runs must be non-negative")
     output_root = Path(args.output_root)
     output_root.mkdir(parents=True, exist_ok=True)
 
@@ -2552,10 +3191,20 @@ def main():
         heuristic = json.load(open(heuristic_path, encoding="utf-8"))
 
     base_candidate_count = int(args.candidate_count)
+    if args.resource_model_json or args.candidate_prior_file:
+        # RAMPS and frozen-prior selection must see the complete structural
+        # pool, not a shortlist pre-truncated by the legacy score.
+        base_candidate_count = 100000
     if int(args.runtime_config_search_count or 0) > 0:
         base_candidate_count = max(base_candidate_count, len(START_SPECS) * len(END_SPECS))
-    candidates = enumerate_candidates(heuristic, base_candidate_count)
+    candidates = enumerate_candidates(
+        heuristic,
+        base_candidate_count,
+        max_vta_islands=args.max_vta_islands,
+        fine_search_policy=args.fine_search_policy,
+    )
     candidates = expand_runtime_configs(args, candidates)
+    candidates = apply_candidate_selection(args, candidates)
     if args.candidate_id:
         candidates = [
             item
@@ -2638,9 +3287,16 @@ def main():
     (output_root / "board_preflight.txt").write_text(preflight_text, encoding="utf-8")
 
     measure_rows = []
-    buildable = [row for row in build_rows if row.get("status") == "buildable"][
-        : int(args.measure_count)
-    ]
+    active_candidate_ids = {item["candidate_id"] for item in candidates}
+    buildable = order_measurement_rows(
+        [
+            row
+            for row in build_rows
+            if row.get("status") == "buildable"
+            and row.get("candidate_id") in active_candidate_ids
+        ],
+        args.measurement_order_file,
+    )[: int(args.measure_count)]
     if not buildable:
         raise RuntimeError("no buildable YOLO candidates")
 
@@ -2690,11 +3346,19 @@ def main():
         write_csv(output_root / "summary.csv", measure_rows)
         write_json(output_root / "summary.json", {"rows": measure_rows})
 
-    ok = [row for row in measure_rows if row.get("run_kind") == "pipeline" and row.get("status") == "ok"]
+    ok = [
+        row
+        for row in measure_rows
+        if row.get("run_kind") == "pipeline"
+        and row.get("status") == "ok"
+        and row.get("passes_correctness_gate")
+    ]
     ok.sort(key=lambda row: float(row.get("throughput_fps") or 0.0), reverse=True)
     summary = {
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "heuristic_params_json": str(heuristic_path),
+        "max_vta_islands": int(args.max_vta_islands),
+        "fine_search_policy": args.fine_search_policy,
         "candidate_count": len(candidates),
         "buildable_count": len(buildable),
         "measure_count": int(args.measure_count),
@@ -2710,12 +3374,37 @@ def main():
         },
     }
     write_json(output_root / "summary.json", summary)
+    measured_ids = [
+        row.get("candidate_id")
+        for row in measure_rows
+        if row.get("run_kind") in ("serial_smoke", "pipeline") and row.get("candidate_id")
+    ]
+    (output_root / "measured_ids_cumulative.txt").write_text(
+        "\n".join(dict.fromkeys(measured_ids)) + ("\n" if measured_ids else ""),
+        encoding="utf-8",
+    )
+    by_pattern = {}
+    for row in ok:
+        pattern = row.get("stage_devices", "")
+        by_pattern.setdefault(pattern, []).append(float(row.get("throughput_fps") or 0.0))
+    pattern_lines = []
+    for pattern, values in sorted(by_pattern.items()):
+        pattern_lines.append(
+            "- `{}` count={} best={:.4f} mean={:.4f}".format(
+                pattern,
+                len(values),
+                max(values),
+                statistics.mean(values),
+            )
+        )
     readme = [
-        "# YOLOv3-tiny ResNet-Style CPU/VTA/CPU Smoke",
+        "# YOLOv3-tiny Multi-Island Relay Split Search",
         "",
         "- Candidates: {}".format(len(candidates)),
         "- Buildable: {}".format(len(buildable)),
         "- Pipeline OK: {}".format(len(ok)),
+        "- Max VTA islands: {}".format(int(args.max_vta_islands)),
+        "- Fine search policy: {}".format(args.fine_search_policy),
         "- Best: {} fps={:.4f}".format(
             ok[0]["candidate_id"], float(ok[0].get("throughput_fps", 0.0))
         )
@@ -2734,9 +3423,10 @@ def main():
                 "## Best Details",
                 "",
                 "- Candidate: `{}`".format(best.get("candidate_id")),
-                "- Split: `stage0_cpu -> stage1_vta -> stage2_cpu`",
+                "- Split: `{}`".format(best.get("stage_devices")),
                 "- Stage mean ms: {}".format(best.get("stage_mean_ms")),
                 "- Raw gate passed: {}".format(best.get("raw_gate_passed")),
+                "- Raw sanity passed: {}".format(best.get("raw_sanity_passed")),
                 "- Detection gate passed: {}".format(best.get("detection_gate_passed")),
                 "- Raw mismatch max mean delta: {}".format(
                     (best.get("raw_mismatch_summary") or {}).get("max_mean_abs_delta")
@@ -2744,6 +3434,22 @@ def main():
                 "",
             ]
         )
+    if pattern_lines:
+        readme.extend(["## Pattern Summary", ""] + pattern_lines + [""])
+    if ok:
+        readme.extend(["## Top 10", ""])
+        for rank, row in enumerate(ok[:10], 1):
+            readme.append(
+                "{}. `{}` {:.4f} fps split=`{}` raw_sanity={} detection={}".format(
+                    rank,
+                    row.get("candidate_id"),
+                    float(row.get("throughput_fps") or 0.0),
+                    row.get("stage_devices"),
+                    row.get("raw_sanity_passed"),
+                    row.get("detection_gate_passed"),
+                )
+            )
+        readme.append("")
     (output_root / "README.md").write_text("\n".join(readme), encoding="utf-8")
 
 

@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+set -euo pipefail
+AXU5EVB_DRIVER_POST_START_SLEEP_NS=1000 \
+AXU5EVB_DRIVER_POLL_SLEEP_NS=1000 \
+TEST_DATA_ROOT_PATH=${TEST_DATA_ROOT_PATH:-/tmp/tvm_test_data} \
+MPLCONFIGDIR=${MPLCONFIGDIR:-/tmp/mpl} \
+PYTHONUNBUFFERED=1 \
+  /home/orange/miniconda3/envs/vta-resnet/bin/python \
+  /home/orange/code/tvm/vta/tutorials/frontend/deploy_classification_stage_pipeline_native.py \
+  --board \
+  root@192.168.1.185 \
+  --remote-dir \
+  /var/volatile/vta_stage_pipeline_search/islands_3_7__10_12__13_15_threads_3_1_1_1_1_4_poll_poll_1us_default \
+  --remote-min-free-mb \
+  128 \
+  --scheme \
+  three_stage_a \
+  --scheme-config-json \
+  vta/tutorials/frontend/report_out/native_stage_pipeline_searches/20260512_theory_build100_board/batch005/scheme_configs/islands_3_7__10_12__13_15.json \
+  --candidate-id \
+  islands_3_7__10_12__13_15 \
+  --vta-islands-json \
+  '[{"end_idx": 7, "end_unit": "layer2_block0_add_relu_tail", "start_idx": 3, "start_unit": "layer1_block1_main_preadd", "unit_names": ["layer1_block1_main_preadd", "layer1_block1_add_relu_tail", "layer2_block0_main_preadd", "layer2_block0_skip_proj", "layer2_block0_add_relu_tail"]}, {"end_idx": 12, "end_unit": "layer3_block0_add_relu_tail", "start_idx": 10, "start_unit": "layer3_block0_main_preadd", "unit_names": ["layer3_block0_main_preadd", "layer3_block0_skip_proj", "layer3_block0_add_relu_tail"]}, {"end_idx": 15, "end_unit": "layer4_block0_main_preadd", "start_idx": 13, "start_unit": "layer3_block1_main_preadd", "unit_names": ["layer3_block1_main_preadd", "layer3_block1_add_relu_tail", "layer4_block0_main_preadd"]}]' \
+  --unit-assignment-json \
+  '[{"device": "cpu", "stage": "stage0_cpu", "unit_name": "stem"}, {"device": "cpu", "stage": "stage0_cpu", "unit_name": "layer1_block0_main_preadd"}, {"device": "cpu", "stage": "stage0_cpu", "unit_name": "layer1_block0_add_relu_tail"}, {"device": "vta", "stage": "stage1_vta", "unit_name": "layer1_block1_main_preadd"}, {"device": "vta", "stage": "stage1_vta", "unit_name": "layer1_block1_add_relu_tail"}, {"device": "vta", "stage": "stage1_vta", "unit_name": "layer2_block0_main_preadd"}, {"device": "vta", "stage": "stage1_vta", "unit_name": "layer2_block0_skip_proj"}, {"device": "vta", "stage": "stage1_vta", "unit_name": "layer2_block0_add_relu_tail"}, {"device": "cpu", "stage": "stage2_cpu", "unit_name": "layer2_block1_main_preadd"}, {"device": "cpu", "stage": "stage2_cpu", "unit_name": "layer2_block1_add_relu_tail"}, {"device": "vta", "stage": "stage3_vta", "unit_name": "layer3_block0_main_preadd"}, {"device": "vta", "stage": "stage3_vta", "unit_name": "layer3_block0_skip_proj"}, {"device": "vta", "stage": "stage3_vta", "unit_name": "layer3_block0_add_relu_tail"}, {"device": "vta", "stage": "stage4_vta", "unit_name": "layer3_block1_main_preadd"}, {"device": "vta", "stage": "stage4_vta", "unit_name": "layer3_block1_add_relu_tail"}, {"device": "vta", "stage": "stage4_vta", "unit_name": "layer4_block0_main_preadd"}, {"device": "cpu", "stage": "stage5_cpu", "unit_name": "layer4_block0_skip_proj"}, {"device": "cpu", "stage": "stage5_cpu", "unit_name": "layer4_block0_add_relu_tail"}, {"device": "cpu", "stage": "stage5_cpu", "unit_name": "layer4_block1_main_preadd"}, {"device": "cpu", "stage": "stage5_cpu", "unit_name": "layer4_block1_add_relu_tail"}, {"device": "cpu", "stage": "stage5_cpu", "unit_name": "head"}]' \
+  --runs \
+  20 \
+  --queue-depth \
+  2 \
+  --runtime-num-threads \
+  4 \
+  --stage-runtime-num-threads \
+  3,1,1,1,1,4 \
+  --stage-build-cache-dir \
+  vta/tutorials/frontend/report_out/native_stage_pipeline_build_cache/v23_20260506/stages \
+  --fetch-results-dir \
+  vta/tutorials/frontend/report_out/native_stage_pipeline_searches/20260512_theory_build100_board/batch005/islands_3_7__10_12__13_15_threads_3_1_1_1_1_4_poll_poll_1us_default \
+  --vta-runtime-profile-dir \
+  profile \
+  --vta-runtime-profile-events-limit \
+  200 \
+  --ssh-command-timeout-s \
+  60 \
+  --scp-timeout-s \
+  600 \
+  --serial-timeout-s \
+  180 \
+  --pipeline-timeout-s \
+  180 \
+  --fetch-timeout-s \
+  120 \
+  --correctness-policy \
+  cat_equivalent \
+  --run-serial-before-pipeline \
+  --no-ssh-control-master \
+  --cleanup-remote-after-run \
+  --reuse-package-dir \
+  vta/tutorials/frontend/report_out/native_stage_pipeline_build_cache/v23_20260506/buildability/islands_3_7__10_12__13_15/package \
+  --compare-serial-pipeline \
+  --ssh-option \
+  HostKeyAlgorithms=+ssh-rsa \
+  --ssh-option \
+  PubkeyAcceptedAlgorithms=+ssh-rsa \
+  --image-size \
+  224 \
+  --rpc-baseline-result \
+  vta/tutorials/frontend/report_out/native_stage_pipeline_searches/20260512_theory_build100_board/artifacts/rpc_all_vta_baseline.jsonl

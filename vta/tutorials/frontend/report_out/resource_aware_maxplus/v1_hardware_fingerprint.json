@@ -1,0 +1,108 @@
+{
+  "artifact_sha256": "957d2e836a69097d431c5b47ffb6247e117598c173bec61a943c69f07507606a",
+  "connection": {
+    "included_in_stable_hardware_identity": false,
+    "rpc_host": "192.168.1.234",
+    "rpc_port": 9090,
+    "ssh_options": [
+      "HostKeyAlgorithms=+ssh-rsa",
+      "PubkeyAcceptedAlgorithms=+ssh-rsa"
+    ],
+    "ssh_target": "root@192.168.1.234"
+  },
+  "kind": "cpu_vta_pipeline_v1_hardware_fingerprint",
+  "local_build_fingerprint_sha256": "21e3d93a1e08bdc8b0b4f9f112a65af57fd0e4e2b751712c314b12e6277392d5",
+  "missing_required_evidence": [],
+  "preflight_evidence_artifact_sha256": "cdf31e884728b6a262883ee918be0a40dcf988ba41b40d7b208462961564d427",
+  "profile_allowed": true,
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "schema_version": 1,
+  "stable_hardware_fingerprint_sha256": "d2f71ace156b9e4c1e5858db0ec89ff82d069a394123a786c267593a9a1a0fbe",
+  "stable_identity": {
+    "compiler": {
+      "cross_build_cmake_cache_sha256": "d5b474ffa67da40d89dc915f78aa4104c3187ab10b1a4de4b1d41fca6542d3f0",
+      "cross_compiler_version": "aarch64-xilinx-linux-g++ (GCC) 9.2.0\nCopyright (C) 2019 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+      "cross_sysroot": "/home/orange/alinx_plsdk/install/sysroots/aarch64-xilinx-linux",
+      "source_sha256": {
+        "apps/vta_rpc/start_axu5evb_cpp_rpc.sh": "9111b26d41a0d34f0d216e3f804e4d1c07db324064282b8ed9c3cdab5b845766",
+        "apps/vta_rpc/start_axu5evb_hpc_rpc.sh": "68ec243453d74c125ca93a18d85ddcb5ed74249cf94065b63731a71509cc8cc5",
+        "python/tvm/relay/quantize/quantize.py": "16493bbc8e3dc43591f569d8e13f2d9d57cf73a8f569dc4203430e86a72264eb",
+        "src/runtime/thread_pool.cc": "f04d3cc16cc21f2af7a01db230221819b9a6881fafcd31898eeb913109e84f8d",
+        "src/runtime/threading_backend.cc": "67858a992b2a994f742168c603d1b7fcb6fe12c7fc9f4bb63963460593b4dc72",
+        "vta/apps/native_deploy/vta_stage_pipeline_runner.cc": "bd1c86732d39cb82ad8862c46ca9687b5241a71bd6301d0ff6dda9a53cf1ba31",
+        "vta/python/vta/build_module.py": "547462b8d594838f525e6c8c3f454e128a16403fb2cfbb935db7a5903b9bc9cb",
+        "vta/python/vta/top/graphpack.py": "554f2a7133203d3d0457169e30e55a6cfa5f1c0de0971a066359b3ec607452f7",
+        "vta/python/vta/top/op.py": "4f5efecd6b487bbe2d73b405e881c631313d0b73563a0e7278fb40dabc31e9f2",
+        "vta/python/vta/top/vta_conv2d.py": "b7fc752b5c41974c0e68fcf7d1bd6b6ca12229920c213c7cbae12f2a96ad4645",
+        "vta/tutorials/frontend/deploy_classification_stage_pipeline_native.py": "9c7932b5fa1bda1b787005965acee9cb898bce0ea94e3646549fd0549d7f9258",
+        "vta/tutorials/frontend/profile_split_resnet18_stages.py": "f724a8efdf2b5496c76abfc40c24dc3a08bc72ca62e9abd67393c3e54918523b",
+        "vta/tutorials/frontend/split_resnet18_stages.py": "ad7056d0c02aecb03069661ca5b0610fd7eff9fa366f35a10bba737af183d294"
+      },
+      "target_host": "llvm -keys=arm_cpu,cpu -mtriple=aarch64-linux-gnu",
+      "target_vta_cpu": "llvm -keys=arm_cpu,cpu -device=arm_cpu -model=axu5evb",
+      "tvm_git_head": "2a36ebf3759005efdb01f0a59c0402d58790f995",
+      "tvm_python_version": "0.13.0",
+      "vta_hw_git_head": "2fc44f4b8d0c517a8d1881a8399f983fe64c4f6c"
+    },
+    "expected_target": "axu5evb",
+    "frozen_lowering": {
+      "disabled_passes": [
+        "AlterOpLayout",
+        "tir.CommonSubexprElimTIR"
+      ],
+      "graph_pack_batch": 1,
+      "graph_pack_block_out": 16,
+      "graph_pack_mode": "boundary_bridge",
+      "graph_pack_weight_width": 8,
+      "quantize_global_scale": 8.0,
+      "quantize_skip_conv_layers": [],
+      "relay_pass_opt_level": 3,
+      "status": "configuration_frozen; actual_segment_tir_and_module_hashes_required_in_V1-P1",
+      "vta_build_opt_level": 3
+    },
+    "remote_identity": {
+      "bitstream_name": "vta_hpc.bit",
+      "bitstream_sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+      "board_instance_proxy": {
+        "boot_image_sha256": "unavailable",
+        "device_tree_model": "unavailable",
+        "ethernet_mac": "00:0a:35:00:22:01",
+        "identity_strength": "board_instance_proxy_not_silicon_serial"
+      },
+      "cpu_frequencies_khz": "1066666,1066666,1066666,1066666",
+      "cpu_governors": "userspace,userspace,userspace,userspace",
+      "cpu_topology": "four_homogeneous_cores",
+      "fpga_state": "operating",
+      "runtime_components_sha256": {
+        "libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+        "libvta.so": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+        "tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa"
+      }
+    },
+    "runtime_policy": {
+      "cpu_affinity_policy": "independent [0,threads) masks; overlap allowed",
+      "cpu_thread_parameter_scope": "independent per CPU stage; sums are not constrained",
+      "cpu_topology": "four homogeneous cores; no big.LITTLE assumption",
+      "poll_sleep_ns": 1000,
+      "queue_depth": 2,
+      "single_vta_mutex": true,
+      "stage_workers": "one persistent host thread per stage",
+      "threadpool_affinity_mode": -3
+    },
+    "vta_config": {
+      "HW_VER": "0.0.2",
+      "LOG_ACC_BUFF_SIZE": 17,
+      "LOG_ACC_WIDTH": 5,
+      "LOG_BATCH": 0,
+      "LOG_BLOCK": 4,
+      "LOG_INP_BUFF_SIZE": 15,
+      "LOG_INP_WIDTH": 3,
+      "LOG_UOP_BUFF_SIZE": 15,
+      "LOG_WGT_BUFF_SIZE": 18,
+      "LOG_WGT_WIDTH": 3,
+      "TARGET": "axu5evb"
+    },
+    "vta_config_sha256": "7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d"
+  },
+  "status": "complete"
+}

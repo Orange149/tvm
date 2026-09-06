@@ -1,0 +1,58 @@
+{
+  "artifact_sha256": "f74f949ce50934c566fa04cc188af1d7df03a4cd67ed1ef3a76d21d1d85f4f03",
+  "budget": {
+    "all_gate_passing_candidates_are_measured": true,
+    "failure_or_timeout_consumes_budget": true,
+    "oracle_based_early_stopping_allowed": false,
+    "unique_candidate_board_limit": 20,
+    "unique_candidate_compile_limit": 20
+  },
+  "correctness_gate": {
+    "compile_before_board": true,
+    "native_only_no_fallback": true,
+    "p5a_independent_expected_tensor_and_comparator_required": true,
+    "p5b_board_native_vs_reference_required_before_timing": true,
+    "serial_pipeline_equivalence_required": true,
+    "stable_output_hash_alone_is_sufficient": false
+  },
+  "decision_rule": "P5B may start only after every candidate has a local compile/package audit and an independent expected-tensor comparator is available; each candidate must then pass board native-vs-reference correctness before timing. P4R itself does not authorize board execution",
+  "execution_policy": {
+    "board_host": "192.168.1.234",
+    "candidate_order_changes_after_outcomes": false,
+    "cpu_affinity": "independent_overlapping_prefix_masks_v1",
+    "frozen_order_seed": 20260902,
+    "performance_runs": 20,
+    "poll_sleep_ns": 1000,
+    "queue_depth": 2,
+    "rpc_port": 9090,
+    "warmup_frames": 2
+  },
+  "kind": "cpu_vta_pipeline_v1_p4r_prospective_plan",
+  "legal_execution_candidate_count": 972528,
+  "local_cost_table_artifact_sha256": "f33f81add7b47605ea988dbf14f1eda0b5617a398ac5360a6e7db5dd191d00d6",
+  "p4b_report_artifact_sha256": "d34b455a0db45c1e6888c5bc36f4dba2d1fff177ad71969161c59a5f6c095514",
+  "primary_comparison": {
+    "arms": [
+      "B0_uniform_random",
+      "B2_single_frame",
+      "B3_pipeline_max_load",
+      "B4_v1"
+    ],
+    "claim_scope": "pilot evidence only; not the global 972528-configuration oracle",
+    "metric": "throughput_regret_at_3",
+    "oracle_scope": "best measured throughput in the frozen 20-candidate P4R pool",
+    "primary_k": 3
+  },
+  "profile_manifest_artifact_sha256": "1b618da74a1430ee03251a6ae520d54e9470381ddf001c36236638623e82d31f",
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "schema_version": 1,
+  "scope": "current_runtime_prospective_pilot",
+  "secondary_metrics": [
+    "regret_at_1",
+    "best_measured_fps_in_each_arm_at_3",
+    "paired_thread_control_speedup_and_rank_consistency",
+    "compile_reference_failure_rate",
+    "profile_build_search_board_wall_clock"
+  ],
+  "unit_schema_artifact_sha256": "4ef28d59d36ad33d32f4b0b5fce35dd4cb8dd63be7de7cdacdcd9f2e303fa237"
+}

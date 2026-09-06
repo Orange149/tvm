@@ -40,6 +40,11 @@ Recommended layout:
 At startup, the script checks `/lib/firmware/<bitstream>` first. If missing, it
 copies the matching file from `/mnt/sd/tvm_deploy/firmware/`.
 
+The shared launcher also verifies `/sys/class/u-dma-buf/udmabuf0/size`. After a
+reboot it loads `u-dma-buf.ko` with the frozen 192 MiB allocation before starting
+RPC. An RPC process being reachable is not sufficient evidence that native VTA
+memory allocation is ready.
+
 ## Commands
 
 On the board:

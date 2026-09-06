@@ -1,0 +1,82 @@
+{
+  "artifact_sha256": "14b90a7b23087d67875d91fe589cb2a7210d748fb7700b85c0b99fb32ebdb345",
+  "budget_governance": {
+    "full_candidate_board_enumeration_forbidden": true,
+    "performance_experiment_requires_user_confirmation": true,
+    "profile_budget": "freeze after P1 signature deduplication and user review",
+    "prospective_top_k_max": 20
+  },
+  "constraints": {
+    "adjacent_same_device_stages": "canonical merge",
+    "compiler_validity_required": true,
+    "cpu_stage_threads_independent": true,
+    "cpu_thread_sum_is_a_constraint": false,
+    "native_pipeline_pattern": "cpu,(vta,cpu){1,3}",
+    "shared_ddr_accounting": "unique transaction ids; aggregate demand lower bound",
+    "single_physical_vta": true
+  },
+  "correctness": {
+    "fallback_allowed": false,
+    "independent_reference_required": true,
+    "serial_pipeline_equivalence_required": true
+  },
+  "decision_variables": {
+    "cpu_stage_affinity": "each stage independently uses [0,threads); overlap allowed",
+    "cpu_stage_threads": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "stage_cuts": "legal positions from unit schema",
+    "unit_device": [
+      "cpu",
+      "vta"
+    ]
+  },
+  "fixed_variables": {
+    "cpu_affinity_policy": "independent_overlapping_prefix_masks_v1",
+    "maximum_vta_islands": 3,
+    "poll_sleep_ns": 1000,
+    "quantization_and_graph_pack": "frozen_lowering in hardware fingerprint",
+    "queue_depth": 2,
+    "runtime_policy": "one worker per stage; one global VTA mutex",
+    "vta_schedule_and_tile": "frozen_lowering in hardware fingerprint"
+  },
+  "hardware": {
+    "stable_hardware_fingerprint_sha256": "d2f71ace156b9e4c1e5858db0ec89ff82d069a394123a786c267593a9a1a0fbe"
+  },
+  "kind": "cpu_vta_pipeline_v1_protocol",
+  "metrics": {
+    "global_oracle_claim_allowed": false,
+    "primary": [
+      "throughput_regret_at_1_3_5_10_20",
+      "board_evaluations_to_95_percent_measured_pool_oracle",
+      "top_k_recall",
+      "profile_build_search_wall_clock"
+    ],
+    "throughput_regret_formula": "1-best_fps_in_top_k/measured_pool_oracle_fps"
+  },
+  "model": {
+    "atomic_unit_count": 21,
+    "name": "resnet18_v1",
+    "unit_schema_artifact_sha256": "4ef28d59d36ad33d32f4b0b5fce35dd4cb8dd63be7de7cdacdcd9f2e303fa237"
+  },
+  "objective": {
+    "formula": "max(max_cpu_stage_ms,single_vta_service_plus_mutex_boundary_ms,total_host_core_ms/4,shared_ddr_demand_ms)",
+    "maximize": "predicted_fps=1000/predicted_pipeline_initiation_interval_ms",
+    "name": "predicted_pipeline_initiation_interval_ms"
+  },
+  "profile_allowed": true,
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "required_gates": {
+    "P0": [
+      "auditable preflight evidence",
+      "TVM thread parameter semantics without static core partition",
+      "stable hardware fingerprint"
+    ],
+    "P1": "segment native lowering validity and actual TIR/module hashes"
+  },
+  "schema_version": 1,
+  "status": "frozen"
+}

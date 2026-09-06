@@ -1649,6 +1649,13 @@ def summarize_run(
     profile_metrics = profile_bandwidth_metrics(pipeline_status)
     dma_metrics = profile_dma_fragmentation_metrics(pipeline_status)
     stages = stage_summary_from_rows(candidate, pipeline_rows, args)
+    serial_core_demands = [
+        mean_value(serial_rows, "stage{}_process_cpu_ms".format(index), args.skip_first)
+        for index in range(len(stages))
+    ]
+    serial_cpu_time_scope = (
+        str(serial_rows[0].get("stage_cpu_time_scope") or "") if serial_rows else ""
+    )
     serial_pipeline_match = top1_match(serial_rows, pipeline_rows)
     rpc_gate = rpc_correctness_summary(args, serial_rows if serial_rows else pipeline_rows)
     stage_values = [item["ms"] for item in stages if item["ms"] > 0.0]
@@ -1706,6 +1713,13 @@ def summarize_run(
                 pipeline_rows, "total_latency_ms", args.skip_first
             ),
             "stage_ms_summary": json.dumps(stages, sort_keys=True),
+            "stage_core_demand_ms_json": json.dumps(serial_core_demands),
+            "stage_core_demand_source": (
+                "serial_process_cpu_time"
+                if serial_cpu_time_scope == "exclusive_process_cpu_time"
+                else ""
+            ),
+            "stage_cpu_time_scope": serial_cpu_time_scope,
             "stage_balance_imbalance_ratio": (
                 (max_stage_ms - min_stage_ms) / max_stage_ms if max_stage_ms > 0.0 else 0.0
             ),

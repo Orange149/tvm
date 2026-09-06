@@ -1,0 +1,103 @@
+{
+  "artifact_sha256": "34ba06a14210ca27f78802dafe38a4b726adcde83bfc9f3e2f19b534971bceae",
+  "board_instance_proxy": {
+    "boot_image_sha256": "unavailable",
+    "device_tree_model": "unavailable",
+    "ethernet_mac": "00:0a:35:00:22:01",
+    "identity_strength": "board_instance_proxy_not_silicon_serial"
+  },
+  "component_hashes": {
+    "local": {
+      "bitstream": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+      "libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+      "libvta.so": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+      "tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa"
+    },
+    "matches": {
+      "bitstream": true,
+      "libtvm_runtime.so": true,
+      "libvta.so": true,
+      "tvm_rpc": true
+    },
+    "remote": {
+      "bitstream": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+      "libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+      "libvta.so": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+      "tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa"
+    }
+  },
+  "endpoint": {
+    "rpc_host": "192.168.1.247",
+    "rpc_port": 9090,
+    "ssh_options": [
+      "-o",
+      "HostKeyAlgorithms=+ssh-rsa",
+      "-o",
+      "PubkeyAcceptedAlgorithms=+ssh-rsa",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10"
+    ],
+    "ssh_target": "root@192.168.1.247"
+  },
+  "expected_runtime": {
+    "bitstream_name": "vta_hpc.bit",
+    "bitstream_path": "/mnt/sd/tvm_deploy/firmware/vta_hpc.bit",
+    "runtime_dir": "/mnt/sd/tvm_deploy/hpc"
+  },
+  "gate_checks": {
+    "all_component_hashes_match": true,
+    "four_homogeneous_cpu_cores": true,
+    "hpc_runtime_and_fpga_operating": true,
+    "native_vta_udmabuf_ready": true,
+    "required_rpc_functions_available": true,
+    "runtime_num_threads_four": true,
+    "sd_space_and_current_boot_log_healthy": true
+  },
+  "kind": "cpu_vta_pipeline_v1_preflight_evidence",
+  "observed_at_utc": "2026-09-06T04:08:49.884466+00:00",
+  "passed": true,
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "remote": {
+    "bitstream_sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+    "board_model": "unavailable",
+    "boot_image_sha256": "unavailable",
+    "cpu_count": "4",
+    "cpu_frequencies_khz": "1066666,1066666,1066666,1066666",
+    "cpu_governors": "userspace,userspace,userspace,userspace",
+    "current_boot_storage_error_count": "0",
+    "current_boot_storage_errors": "",
+    "ethernet_mac": "00:0a:35:00:22:01",
+    "fpga_firmware": "unavailable",
+    "fpga_state": "operating",
+    "libtvm_runtime_sha256": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+    "libvta_sha256": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+    "rpc_runtime_cwd": "/media/sd-mmcblk1p2/tvm_deploy/hpc",
+    "sd_available_kb": "305716",
+    "sd_filesystem_device": "/dev/mmcblk1p2",
+    "sd_mount": "/media/sd-mmcblk1p2",
+    "sd_requested_path": "/mnt/sd",
+    "sd_resolved_path": "/media/sd-mmcblk1p2",
+    "tvm_rpc_sha256": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa",
+    "udmabuf0_device": "present",
+    "udmabuf0_size": "201326592",
+    "uname": "Linux 5.4.0 aarch64"
+  },
+  "rpc": {
+    "required_functions": {
+      "runtime.NumThreads": true,
+      "runtime.config_threadpool": true,
+      "vta.runtime.profiler_clear": true,
+      "vta.runtime.profiler_events": true,
+      "vta.runtime.profiler_status": true
+    },
+    "runtime_num_threads": 4,
+    "status": "connected"
+  },
+  "schema_version": 1,
+  "ssh": {
+    "status": "connected",
+    "stderr": "sh: line 6: /sys/firmware/devicetree/base/model: No such file or directory"
+  }
+}

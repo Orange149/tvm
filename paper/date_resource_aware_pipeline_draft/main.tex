@@ -1,0 +1,287 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,total={184mm,239mm}]{geometry}
+
+\newcommand{\framework}{RASP}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\cpu}{\textsc{cpu}}
+\newcommand{\vta}{\textsc{vta}}
+
+\begin{document}
+
+\title{Resource-Aware Stage Partitioning for Pipelined Neural Network Inference on Embedded CPU--FPGA Systems}
+
+% TODO: Replace the anonymous block with the final author list and affiliations.
+\author{\IEEEauthorblockN{Anonymous Author(s)}
+\IEEEauthorblockA{Anonymous Institution\\
+Anonymous City, Country\\
+anonymous@example.com}}
+
+\maketitle
+
+\begin{abstract}
+Embedded CPU--FPGA systems expose heterogeneous compute and memory resources, yet assigning the largest possible subgraph to the accelerator does not necessarily maximize inference throughput. Pipeline throughput is instead limited by the slowest CPU stage, serialized FPGA occupancy, and the cost of crossing CPU--FPGA boundaries. This paper presents \framework, a resource-aware stage-partitioning framework for pipelined deep neural network inference with TVM and the Versatile Tensor Accelerator (VTA). \framework{} enumerates coarse accelerator islands, estimates CPU and VTA time using operation-class calibration, and accounts for PS--PL transfer bandwidth, DMA fragmentation, on-chip memory pressure, boundary conversion, and stage imbalance. A native runtime executes separately compiled CPU and VTA stages with bounded queues, persistent packages, correctness gates, timeout isolation, and failure-tolerant board measurement. On an embedded Zynq UltraScale+ platform, we generate 400 candidate partitions for ResNet18 and YOLOv3-tiny and obtain 369 correctness-passing native pipeline measurements. The best ResNet18 and YOLOv3-tiny partitions reach 10.532 and 5.440 frames/s, respectively, improving over their measured all-VTA references by 86.1\% and 46.1\%. Across both networks, the best rule is not maximum accelerator coverage or maximum stage count, but the fewest boundaries that balance the largest CPU stage against total serialized VTA occupancy. A robust fit on 200 ResNet18 measurements improves Top-20 recall within the first 50 predictions from 0.15 for the initial static score to 0.70, demonstrating that measured resource effects can guide subsequent model searches.
+\end{abstract}
+
+\begin{IEEEkeywords}
+heterogeneous computing, CPU--FPGA, neural network inference, pipeline parallelism, graph partitioning, VTA, TVM
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Modern embedded systems combine general-purpose CPU cores with programmable accelerators. Such systems can improve both latency and energy efficiency, but only when computation and communication are assigned to the appropriate resource. For deep neural network (DNN) inference, a common strategy is to offload every supported operator to an accelerator. This maximizes accelerator coverage, but it can leave unsupported, memory-sensitive, or branch-heavy operators on the CPU and create an imbalanced execution pipeline. It can also introduce layout conversion, quantization, synchronization, and data-transfer costs at every device boundary.
+
+TVM provides graph compilation and device-specific operator lowering~\cite{chen2018tvm}, while VTA offers a programmable tensor accelerator and a hardware--software stack for quantized inference~\cite{moreau2019vta}. TVM's graph executor normally presents a synchronous input--run--output interface. Its pipeline executor can compose already partitioned modules~\cite{tvm_pipeline_executor}, but it does not decide where an embedded CPU--FPGA graph should be partitioned, nor does it model VTA-specific DMA, packed layouts, on-chip buffers, and serialized accelerator submission. Consequently, the central question remains: \emph{which subgraphs should execute on CPU and which should execute on VTA to maximize steady-state throughput?}
+
+This question is difficult for three reasons. First, operator performance is heterogeneous: a high-resolution stem, a residual convolution, a projection, and a detection head have different CPU and VTA efficiency. Second, stage execution is not independent. The VTA runtime in our stable native configuration is protected by a global mutex, so multiple VTA stages share one serialized resource. Third, graph boundaries carry architecture-specific costs. Sequential ResNet boundaries and YOLO route/concat/upsample boundaries cannot be valued using bytes alone.
+
+We address these issues with \framework, a resource-aware search and measurement framework. It treats a partition as a sequence of coarse CPU and VTA stages, predicts the pipeline cycle from calibrated compute, communication, and memory terms, and uses the model to select a diverse shortlist for package-only buildability and native board measurement. The framework preserves failures as typed records rather than terminating the search, making larger experimental searches reproducible on a capacity-constrained board.
+
+This paper makes the following contributions:
+
+\begin{itemize}
+  \item We formulate embedded CPU--VTA partitioning around the maximum CPU stage and \emph{total serialized VTA occupancy}, rather than accelerator coverage or nominal stage count.
+  \item We develop an interpretable cost model calibrated by CPU operation class, VTA operation class, PS--PL DMA behavior, boundary overhead, and on-chip SRAM risk.
+  \item We implement a native N-stage execution and measurement path with separately compiled CPU/VTA modules, bounded pipeline queues, correctness gates, persistent build/file caches, timeout containment, and per-stage timing.
+  \item We evaluate 400 generated candidates across ResNet18 and YOLOv3-tiny. The resulting 369 valid measurements expose transferable partitioning rules and quantify the benefit of measurement-corrected ranking.
+\end{itemize}
+
+\section{Background and Motivation}
+
+\subsection{Execution Model}
+
+An inference graph is divided into stages $S=\{s_0,\ldots,s_{n-1}\}$. Each stage is compiled either for the Arm CPU or for VTA. Frames move through bounded queues, allowing different CPU and VTA stages to process different frames concurrently. The steady-state objective is throughput, not single-frame latency.
+
+For one physical instance of VTA, concurrent submission from multiple stage threads caused unstable execution during early experiments. The stable runner therefore serializes each VTA stage's \texttt{set\_input}, \texttt{run}, and \texttt{get\_output} sequence with a global mutex. CPU stages remain parallel. This execution constraint changes the resource model: two VTA stages are graph stages, but they occupy the same physical resource and their occupied times add.
+
+\subsection{Why Accelerator Coverage Is Insufficient}
+
+Consider a coarse CPU/VTA/CPU pipeline. Its cycle time approaches the maximum of the two CPU stage times and the VTA occupied time. Moving another operator to VTA may reduce one CPU stage but can increase packing, DMA, or synchronization enough to worsen the cycle. Splitting a VTA region into several islands can improve CPU-stage balance, yet those VTA islands do not overlap with each other and every extra boundary adds overhead.
+
+The measured best YOLOv3-tiny partition illustrates the desired balance: the CPU prefix, VTA body, and CPU tail take 169.40, 176.03, and 5.16~ms. A poor partition takes 667.65, 70.72, and 804.70~ms; its small VTA stage cannot compensate for two dominant CPU stages. The relevant objective is therefore resource balance under communication constraints.
+
+\section{Framework Overview}
+
+Fig.~\ref{fig:workflow} summarizes the workflow. Calibration is performed separately from candidate measurement. Static enumeration remains inexpensive, while compilation and board execution are restricted to progressively smaller sets.
+
+\begin{figure*}[t]
+\centering
+\fbox{\begin{minipage}{0.96\textwidth}
+\centering
+\begin{tabular}{c@{\hspace{4mm}$\rightarrow$\hspace{4mm}}c@{\hspace{4mm}$\rightarrow$\hspace{4mm}}c@{\hspace{4mm}$\rightarrow$\hspace{4mm}}c}
+\textbf{Bucket calibration} & \textbf{Candidate enumeration} & \textbf{Static ranking} & \textbf{Controlled board search}\\
+CPU/VTA GOP/s, DMA BW & coarse nonoverlapping VTA islands & cycle, boundary, DMA, SRAM & buildability, serial gate, pipeline\\
+set/run/get overhead & alternating CPU/VTA stages & stratified shortlist & typed failures and summaries
+\end{tabular}
+\end{minipage}}
+\caption{\framework{} separates inexpensive enumeration and resource-aware prediction from package-only buildability and correctness-gated native measurement.}
+\label{fig:workflow}
+\end{figure*}
+
+\subsection{Candidate Representation}
+
+We first lower each network into coarse compute units rather than individual Relay operators. ResNet18 units follow the stem, residual main paths, projection paths, add/ReLU tails, and classification head. YOLOv3-tiny units follow convolution/pooling blocks, trunk and shared features, route/upsample points, pre-logit heads, and logits. A candidate contains up to three nonoverlapping VTA islands; intervening units form CPU stages. This representation supports CPU/VTA/CPU, CPU/VTA/CPU/VTA/CPU, and longer alternating patterns while avoiding unprofitable single-operator fragmentation.
+
+For ResNet18, exhaustive island enumeration produces 13,457 raw combinations and 7,374 native-compatible candidates. A stratified shortlist retains calibrated top-ranked candidates together with known baselines, one-, two-, and three-island diversity, stage-count diversity, and low-boundary controls. YOLOv3-tiny uses architecture-aware coarse boundaries because route and head dependencies make arbitrary linear cuts invalid.
+
+\subsection{Boundary-Safe Stage Construction}
+
+Every boundary records logical and physical shape, dtype, layout, channel padding, producer/consumer device, and quantization domain. CPU-to-VTA boundaries perform the required quantization and packed-layout conversion inside the compiled VTA stage. VTA-to-CPU boundaries unpack, dequantize, and slice padded channels. Branch consumers preserve all required tensors and input ordering. Unsupported schemas are rejected before measurement.
+
+ResNet18 correctness uses a classification reference. YOLOv3-tiny records raw tensor drift and requires shape/dtype sanity, finite outputs, and detection-level agreement with an all-VTA reference. This policy accommodates expected drift from per-stage quantization while preventing numerically invalid candidates from entering throughput rankings.
+
+\subsection{Native Runtime and Controlled Measurement}
+
+Each stage is independently compiled and packaged. A native C++ runner creates one worker thread per stage and connects workers with bounded queues. The runner reports stage-level \texttt{set\_input}, \texttt{run}, and \texttt{get\_output} times, frame completion timestamps, and output summaries. Persistent stage-build and remote file caches avoid repeatedly compiling or uploading invariant artifacts. Candidate-level timeouts, remote-space checks, and cleanup prevent one failure from blocking the search. Failures are classified as build, package, upload, serial, pipeline, correctness, profile, space, or timeout failures.
+
+\section{Resource-Aware Search}
+
+\subsection{Calibrated Stage Cost}
+
+CPU calibration separates the large-input stem, residual $3\times3$ convolution, $1\times1$ projection, elementwise tail, and pooling/dense head. For CPU stage $s$ with thread count $p$, the predicted time is
+
+\begin{equation}
+\widehat{T}^{\mathrm{CPU}}_s = t_{\mathrm{set},s}+t_{\mathrm{get},s}+
+\sum_k \frac{O_{s,k}/10^9}{P^{\mathrm{CPU}}_{k,p}}10^3,
+\label{eq:cpu}
+\end{equation}
+
+where $O_{s,k}$ is the operation count and $P^{\mathrm{CPU}}_{k,p}$ is measured efficiency in GOP/s.
+
+VTA calibration separates small- and large-channel $3\times3$ convolution, $1\times1$ convolution, stride-two downsampling, and skip projection. DMA calibration distinguishes large contiguous, small-tensor, strided, and padded transfers. A VTA stage is estimated as
+
+\begin{align}
+\widehat{T}^{\mathrm{VTA}}_s ={}&t_{\mathrm{pack},s}+t_{\mathrm{submit},s}+t_{\mathrm{sync},s}+t_{\mathrm{unpack},s}\nonumber\\
+&+\sum_k \frac{O_{s,k}/10^9}{P^{\mathrm{VTA}}_k}10^3
++\sum_d \frac{B_{s,d}}{\beta_d 10^9}10^3+F_s,
+\label{eq:vta}
+\end{align}
+
+where $B_{s,d}$ and $\beta_d$ are bytes and measured decimal GB/s for DMA class $d$, and $F_s$ is a fragmentation penalty derived from call count and access pattern.
+
+\subsection{Serialized-Resource Cycle Model}
+
+Let $\mathcal{C}$ and $\mathcal{V}$ be CPU and VTA stages. Because VTA submission is serialized, the resource cycle is
+
+\begin{equation}
+\widehat{T}_{\mathrm{resource}}=
+\max\left(\max_{s\in\mathcal{C}}\widehat{T}_s,
+\sum_{s\in\mathcal{V}}\widehat{T}_s\right).
+\label{eq:resource}
+\end{equation}
+
+The ranking score augments this term with measurable risks:
+
+\begin{align}
+\mathrm{score} ={}&\widehat{T}_{\mathrm{resource}}
++\lambda_b T_{\mathrm{boundary}}+\lambda_f T_{\mathrm{frag}}
++\lambda_m T_{\mathrm{SRAM}}\nonumber\\
+&+\lambda_t T_{\mathrm{tail}}+\lambda_i N_{\mathrm{small\ island}}
++\lambda_r N_{\mathrm{branch}}+\lambda_l N_{\mathrm{launch}}.
+\label{eq:score}
+\end{align}
+
+The SRAM term uses peak input, weight, accumulator, and output-buffer utilization and predicted tile spill. The branch term is stronger for YOLO route/concat/upsample boundaries than for sequential edges. Equation~\eqref{eq:score} is interpretable: each component corresponds to a profiled resource or an explicit runtime event.
+
+\subsection{Measurement-Corrected Ranking}
+
+The initial static model narrows the space but does not perfectly rank candidates because host scheduling, combined VTA set/run/get behavior, and boundary cache state remain difficult to predict. We therefore fit robust residuals against measured cycle time, $1000/\mathrm{FPS}$. On the 200 ResNet18 measurements, the fitted model achieves 7.047~ms mean absolute error and 9.905~ms RMSE. Its recall of the measured Top-20 candidates within the first 50 predictions is 0.70, compared with 0.15 for the initial static ranking. The fitted parameters serve as a prior for YOLOv3-tiny; model-specific branch penalties remain explicit.
+
+\section{Evaluation}
+
+\subsection{Experimental Setup}
+
+Experiments run on an ALINX AXU5EVB-class Zynq UltraScale+ embedded platform with four Arm CPU cores and the VTA HPC bitstream. VTA uses 8-bit inputs and weights and 32-bit accumulators. A 192~MiB contiguous user DMA buffer supports PS--PL transfers. TVM compiles CPU stages for AArch64 and VTA stages for the accelerator. Unless noted otherwise, each ranked result uses a warmed remote file cache, 20 pipeline frames, queue depth two, and candidate-local cleanup. \todo{Add exact CPU/FPGA clock frequencies, DRAM specification, TVM commit, compiler version, and measured power when available.}
+
+We evaluate ResNet18~\cite{he2016resnet} at $224\times224$ and YOLOv3-tiny~\cite{redmon2018yolov3} at $416\times416$. ResNet18 uses exact or class-equivalent Top-1 checking as recorded by the experiments. YOLO uses an all-VTA raw-output reference, raw sanity bounds, and matching top detections after decoding and nonmaximum suppression.
+
+\subsection{Search Coverage and Overall Throughput}
+
+Table~\ref{tab:coverage} summarizes the measured data. All 200 ResNet18 candidates complete successfully. For YOLO, 31 of 200 generated candidates fail package build because their experimental route/start boundaries are unsupported; the remaining 169 pass serial correctness and pipeline measurement.
+
+\begin{table}[t]
+\caption{Search Coverage}
+\label{tab:coverage}
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Model & Generated & Pipeline OK & Build failed\\
+\midrule
+ResNet18 & 200 & 200 & 0\\
+YOLOv3-tiny & 200 & 169 & 31\\
+\midrule
+Total & 400 & 369 & 31\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:throughput} compares all-VTA references, manually selected partitions, and search results. ResNet18 improves from 5.659 to 10.532 frames/s, an 86.1\% gain. Its best search result is only 2.0\% faster than the strongest manual split, indicating that the manual design already found a favorable region. YOLOv3-tiny improves from 3.724 to 5.440 frames/s, a 46.1\% gain and a 6.4\% improvement over the best earlier CPU/VTA/CPU split.
+
+\begin{table}[t]
+\caption{End-to-End Throughput Results}
+\label{tab:throughput}
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+Model & Configuration & FPS & Gain vs. all-VTA\\
+\midrule
+ResNet18 & all-VTA reference & 5.659 & --\\
+ & manual three-stage & 10.321 & 82.4\%\\
+ & searched best & \textbf{10.532} & \textbf{86.1\%}\\
+ & measured worst & 4.559 & $-$19.4\%\\
+\midrule
+YOLOv3-tiny & RPC all-VTA reference & 3.724 & --\\
+ & native single-stage all-VTA & 2.962 & $-$20.5\%\\
+ & manual/coarse best & 5.113 & 37.3\%\\
+ & searched best & \textbf{5.440} & \textbf{46.1\%}\\
+ & measured worst & 1.256 & $-$66.3\%\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Stage Balance Explains the Best Results}
+
+Table~\ref{tab:stages} reports measured stage times. The best ResNet18 graph contains two adjacent VTA graph stages. Since both use one serialized VTA resource, their combined 88.54~ms occupancy is the relevant quantity, closely matching the 82.48~ms CPU prefix. The best YOLO candidate similarly balances a 169.40~ms CPU prefix against 176.03~ms VTA occupancy. In contrast, the worst candidates leave large CPU bottlenecks that no amount of pipeline overlap can hide.
+
+\begin{table}[t]
+\caption{Measured Stage Balance of Representative Candidates}
+\label{tab:stages}
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lllr}
+\toprule
+Model & Candidate & Stage times (ms) & FPS\\
+\midrule
+ResNet18 & manual best & 57.35 / 86.72 / 40.63 & 10.321\\
+ & searched best & 82.48 / 46.07 / 42.46 / 2.93 & 10.532\\
+ & worst & 213.74 / 23.36 / 76.43 & 4.559\\
+\midrule
+YOLO & searched best & 169.40 / 176.03 / 5.16 & 5.440\\
+ & best two-island & 182.87 / 108.71 / 5.02 / 80.09 / 7.45 & 5.279\\
+ & worst & 667.65 / 70.72 / 804.70 & 1.256\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Granularity and Architecture Effects}
+
+Table~\ref{tab:granularity} shows that additional VTA islands improve median quality only when candidate filtering avoids poor coarse cuts; they do not improve peak throughput. For ResNet18, two-island candidates have the strongest median, but the top graph's VTA islands are adjacent and resource-equivalent to one VTA block. For YOLO, two- and three-island candidates have better medians than the broad one-island pool, yet the best one-island partition wins because it adds the fewest boundaries while achieving near-perfect balance.
+
+\begin{table}[t]
+\caption{Throughput by VTA-Island Count}
+\label{tab:granularity}
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+Model & Islands & $N$ & Best & Median\\
+\midrule
+ResNet18 & 1 & 47 & 10.532 & 7.427\\
+ & 2 & 140 & 10.242 & 8.171\\
+ & 3 & 13 & 8.225 & 7.928\\
+\midrule
+YOLOv3-tiny & 1 & 116 & 5.440 & 2.554\\
+ & 2 & 35 & 5.279 & 4.406\\
+ & 3 & 18 & 4.852 & 4.298\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The model-specific placements are consistent with the resource model. ResNet18 favors keeping the stem and early residual work on CPU, assigning the mid-to-late convolutional body to VTA, and retaining the small head on CPU. YOLO favors the CPU through \texttt{pool2}, VTA for the convolution-heavy body through logits, and CPU for final decode/NMS. YOLO route/concat boundaries are more fragile and deserve a stronger penalty than sequential ResNet boundaries.
+
+\subsection{Correctness and Search Robustness}
+
+All 200 ranked ResNet18 rows pass their recorded correctness gate. All 81 buildable candidates in the YOLO multi-island search pass serial detection and raw-sanity gates before completing pipeline measurement. Raw equality is not required for independently quantized YOLO stages; instead, exact shape/dtype, finite values, bounded drift, and detection agreement are recorded. No failed candidate terminates a batch. Persistent build and file caches also separate first-use deployment costs from warmed steady-state measurements.
+
+\section{Discussion and Limitations}
+
+The experiments support one transferable rule: choose the fewest boundaries that balance the largest CPU stage with total serialized VTA occupancy. This is more precise than either ``offload all supported operators'' or ``use more stages.'' However, several limitations remain.
+
+First, the current evaluation uses two networks on one CPU--FPGA board. A third architecture such as SqueezeNet and a second FPGA configuration are needed to establish broader portability. Second, the all-VTA reference and native stage pipeline use different executor paths in some experiments. The reported numbers reflect deployed systems, but a final evaluation should add an executor-matched native all-VTA baseline for every model. Third, the ResNet-fitted heuristic is promising, but the final paper should include leave-one-model-out validation and ablations for balance, boundary, DMA, SRAM, fragmentation, branch, and launch terms. Fourth, the global VTA mutex is a stability constraint of the present runtime. A future asynchronous runtime may permit overlap among VTA submissions and would require replacing the summed-occupancy model. Finally, power and energy measurements are not yet available.
+
+These limitations define concrete follow-up experiments rather than invalidating the central observation: partition quality depends on measured resource behavior, and a small number of balanced coarse stages can outperform maximal accelerator coverage.
+
+\section{Related Work}
+
+TVM provides end-to-end graph compilation and target-specific tensor optimization~\cite{chen2018tvm}. AutoTVM and Ansor search tensor programs and schedules within operators~\cite{chen2018autotvm,zheng2020ansor}; our work instead searches graph-stage placement and pipeline balance across CPU and FPGA resources. VTA provides a programmable accelerator and compiler/runtime stack for quantized DNN inference~\cite{moreau2019vta}. We build on VTA while explicitly modeling its DMA behavior, packed boundaries, on-chip memories, and serialized runtime occupancy.
+
+TVM's pipeline executor connects user-provided runtime modules into a pipeline~\cite{tvm_pipeline_executor}. Our native executor is narrower and board-specific; its purpose is controlled CPU--VTA measurement. The primary contribution lies upstream: selecting correct stage modules using resource-aware costs and feeding measurement residuals back into ranking. Collaborative and distributed partitioning systems such as Neurosurgeon optimize boundaries between mobile and cloud resources~\cite{kang2017neurosurgeon}. In contrast, our boundaries are local to an embedded SoC and must account for PS--PL transfer, FPGA SRAM, packed layout, and a shared accelerator runtime. General DNN accelerator surveys describe the importance of data reuse, memory hierarchy, and communication~\cite{sze2017efficient}; \framework{} exposes these factors directly in a graph-partitioning objective.
+
+\section{Conclusion}
+
+This paper presented \framework, a resource-aware framework for pipelined DNN partitioning on an embedded CPU--FPGA platform. The framework combines operation-class calibration, explicit communication and memory penalties, correctness-safe stage construction, native execution, and failure-tolerant board search. Across 400 generated ResNet18 and YOLOv3-tiny candidates, 369 partitions produce valid native pipeline measurements. The best results improve over measured all-VTA references by 86.1\% and 46.1\%, respectively. The experiments show that accelerator coverage and stage count are poor standalone objectives. The effective objective is to minimize boundaries while balancing the largest CPU stage against total serialized VTA occupancy. Future work will validate this rule on additional networks and hardware configurations and quantify each cost component through ablation.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

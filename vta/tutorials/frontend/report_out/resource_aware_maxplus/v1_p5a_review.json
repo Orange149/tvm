@@ -1,0 +1,52 @@
+{
+  "artifact_sha256": "c8e79a264da8291321bc9463d106fce1eac5b0ef8092906be80df69e91ea0947",
+  "compile_audit_artifact_sha256": "9b52bb532eee8a7f65715098f6e66e895240953dd5e68090d0f3319d66512791",
+  "cost": {
+    "cached_replay_is_not_reported_as_initial_compile_cost": true,
+    "final_cached_replay_and_audit_wall_clock_s": 0.8945795969921164,
+    "initial_cost_source": "captured first P5A process result before ABI audit correction",
+    "initial_full_build_and_first_audit_wall_clock_s": 626.3028669630003,
+    "package_storage": {
+      "hardlink_saved_bytes": 2624563335,
+      "logical_bytes": 3164754432,
+      "unique_inode_bytes": 540191097
+    }
+  },
+  "execution_state_artifact_sha256": "15919c026eedc0505b4822f7e464c4ae8cb670c4b2a5c37f50f1e6566a9b5d26",
+  "gate_passed": true,
+  "kind": "cpu_vta_pipeline_v1_p5a_review",
+  "next_stage": "V1-P5B",
+  "next_stage_requires_user_confirmation": true,
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "reference_artifact_sha256": "8f384ca84076b544037acd021160e69ba2f25060e9944735f3e9501d1c472f8f",
+  "remaining_limits": [
+    "P5A proves buildability and interface consistency, not board numerical correctness",
+    "tuple ABI is checked by ordinal, shape, and dtype; semantic order must pass P5B tensor checks",
+    "the MXNet float reference gate is a quantized semantic sanity check, not bit-exact equivalence",
+    "P5B must require serial-pipeline tensor equivalence and semantic-reference pass before timing",
+    "shared-DDR concurrent slowdown remains conditional D1 work and is not resolved by P5A"
+  ],
+  "resolved_issues": [
+    "20 frozen candidates all have native cross-compiled packages",
+    "VTA stage binaries reference native VTA GEMM or ALU runtime calls",
+    "stage threads and independent prefix affinities match the frozen P4R rows",
+    "serial and pipeline scripts dump complete final float32 logits",
+    "independent MXNet full-logits reference and comparator are frozen before P5B",
+    "package hashes remain valid after immutable-artifact hardlink deduplication"
+  ],
+  "result": {
+    "board_commands_run": 0,
+    "candidate_compile_audit_failure_count": 0,
+    "candidate_compile_audit_pass_count": 20,
+    "candidate_package_count": 20,
+    "manifest_stage_cache_hits": 59,
+    "manifest_stage_cache_misses": 29,
+    "performance_results_present": false,
+    "total_stage_references": 88,
+    "tuple_boundary_count": 7,
+    "unique_compiled_stage_keys": 33,
+    "unique_cpu_stage_keys": 15,
+    "unique_vta_stage_keys": 18
+  },
+  "schema_version": 1
+}

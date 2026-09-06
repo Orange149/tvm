@@ -1,0 +1,49 @@
+{
+  "archives": [
+    {
+      "archive": "stage4b_native_calibration",
+      "path": "vta/tutorials/frontend/report_out/resource_aware_maxplus/stage4b_native_calibration",
+      "reasons": [
+        "legacy bucket schema is not segment-lowering keyed",
+        "six VTA operator correctness groups failed determinism",
+        "runner/lowering source is not bound to the V1 stable fingerprint"
+      ],
+      "status": "stale"
+    },
+    {
+      "archive": "stage4a_q_qualification",
+      "path": "vta/tutorials/frontend/report_out/resource_aware_maxplus/stage4a_q_qualification",
+      "reasons": [
+        "DMA qualification used a different protocol and runtime fingerprint",
+        "usable as experiment-design evidence only"
+      ],
+      "status": "stale"
+    },
+    {
+      "archive": "stage4_native_three_stage_e",
+      "path": "vta/tutorials/frontend/report_out/resource_aware_maxplus/stage4_calibration_smoke/native_three_stage_e",
+      "reasons": [
+        "manifest predates Relay/module/source hashes",
+        "timing boundary and CPU affinity do not satisfy V1 protocol"
+      ],
+      "status": "stale"
+    },
+    {
+      "archive": "v1_p1_native_packages",
+      "path": "vta/tutorials/frontend/report_out/resource_aware_maxplus/v1_p1_packages",
+      "reasons": [
+        "compiled under current source-sensitive cache key",
+        "contains no board performance measurements"
+      ],
+      "status": "reusable_compile_only"
+    }
+  ],
+  "artifact_sha256": "6fcaa968979381e74030a9bf511391c75e1e3f5ed140c8a44086dee3bea3b758",
+  "conclusion": "P2 must collect one fresh minimal session; historical values remain diagnostics",
+  "kind": "cpu_vta_pipeline_v1_archive_reuse_audit",
+  "policy": "only exact fingerprint+correctness+timing-boundary matches may be reused",
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "reusable_timing_record_count": 0,
+  "schema_version": 1,
+  "stable_hardware_fingerprint_sha256": "d2f71ace156b9e4c1e5858db0ec89ff82d069a394123a786c267593a9a1a0fbe"
+}

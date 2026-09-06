@@ -1,0 +1,25 @@
+{
+  "artifact_sha256": "bfc5b4182ee7643ad63ce1aebd651d4ece2020b6493072c750c5ca7cf5ccca4a",
+  "decision_rule": {
+    "ranking_gate": "holdout must preserve bottleneck and candidate order",
+    "residual_policy": "record concurrent residual for V2; do not fit contention in V1"
+  },
+  "fit_groups": [
+    "three_stage_a",
+    "three_stage_e"
+  ],
+  "holdout_groups": [
+    "three_stage_b"
+  ],
+  "kind": "cpu_vta_pipeline_v1_grouped_holdout",
+  "leakage_rule": "no stage timing from three_stage_b may update V1 fit coefficients",
+  "metrics": [
+    "stage_additivity_ape",
+    "pipeline_cycle_ape",
+    "predicted_vs_measured_bottleneck",
+    "serial_pipeline_correctness"
+  ],
+  "profile_manifest_artifact_sha256": "1b618da74a1430ee03251a6ae520d54e9470381ddf001c36236638623e82d31f",
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "schema_version": 1
+}

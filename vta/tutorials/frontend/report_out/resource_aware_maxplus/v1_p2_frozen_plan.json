@@ -1,0 +1,128 @@
+{
+  "artifact_sha256": "43243a0e0756ebd1ffa4adde0a84d8eb01cdb81806a601f31623e4bc524c51e1",
+  "kind": "cpu_vta_pipeline_v1_p2_frozen_plan",
+  "memory_binary_sha256": "272a18bc29c789d6785f1f8f4619be4571f520c4d7f70f81efbed5c3679e924c",
+  "memory_case_count": 12,
+  "memory_cases": [
+    {
+      "case_id": "ddr_read_t1",
+      "operation": "read",
+      "threads": 1
+    },
+    {
+      "case_id": "ddr_read_t2",
+      "operation": "read",
+      "threads": 2
+    },
+    {
+      "case_id": "ddr_read_t3",
+      "operation": "read",
+      "threads": 3
+    },
+    {
+      "case_id": "ddr_read_t4",
+      "operation": "read",
+      "threads": 4
+    },
+    {
+      "case_id": "ddr_write_t1",
+      "operation": "write",
+      "threads": 1
+    },
+    {
+      "case_id": "ddr_write_t2",
+      "operation": "write",
+      "threads": 2
+    },
+    {
+      "case_id": "ddr_write_t3",
+      "operation": "write",
+      "threads": 3
+    },
+    {
+      "case_id": "ddr_write_t4",
+      "operation": "write",
+      "threads": 4
+    },
+    {
+      "case_id": "ddr_copy_t1",
+      "operation": "copy",
+      "threads": 1
+    },
+    {
+      "case_id": "ddr_copy_t2",
+      "operation": "copy",
+      "threads": 2
+    },
+    {
+      "case_id": "ddr_copy_t3",
+      "operation": "copy",
+      "threads": 3
+    },
+    {
+      "case_id": "ddr_copy_t4",
+      "operation": "copy",
+      "threads": 4
+    }
+  ],
+  "memory_inner_repeats": 2,
+  "memory_runs_per_case": 8,
+  "memory_warmup_per_case": 2,
+  "memory_working_set_bytes": 67108864,
+  "native_stage_case_count": 7,
+  "native_stage_invocation_count": 6,
+  "performance_path": "native_static_package_only",
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "reference": "independent MXNet pretrained model with identical input preprocessing",
+  "rpc_performance_allowed": false,
+  "schema_version": 1,
+  "session_count": 1,
+  "stage_cases": [
+    {
+      "case_id": "three_stage_e_t1",
+      "role": "fit_thread_sweep",
+      "run_serial_before_pipeline": false,
+      "scheme": "three_stage_e",
+      "threads": 1
+    },
+    {
+      "case_id": "three_stage_e_t2",
+      "role": "fit_thread_sweep",
+      "run_serial_before_pipeline": false,
+      "scheme": "three_stage_e",
+      "threads": 2
+    },
+    {
+      "case_id": "three_stage_e_t3",
+      "role": "fit_thread_sweep",
+      "run_serial_before_pipeline": false,
+      "scheme": "three_stage_e",
+      "threads": 3
+    },
+    {
+      "case_id": "three_stage_e_t4",
+      "role": "fit_thread_sweep",
+      "run_serial_before_pipeline": false,
+      "scheme": "three_stage_e",
+      "threads": 4
+    },
+    {
+      "case_id": "three_stage_a_t2",
+      "role": "fit_shape_anchor",
+      "run_serial_before_pipeline": false,
+      "scheme": "three_stage_a",
+      "threads": 2
+    },
+    {
+      "case_id": "three_stage_b_t2_matched",
+      "role": "grouped_holdout_matched_control",
+      "run_serial_before_pipeline": true,
+      "scheme": "three_stage_b",
+      "threads": 2
+    }
+  ],
+  "stage_runs_per_mode": 12,
+  "stage_scored_runs_per_mode": 10,
+  "stop_rule": "stop on correctness, affinity, or ownership failure",
+  "total_case_count": 19
+}

@@ -1,0 +1,1881 @@
+{
+  "artifact_sha256": "cea6029c11f51c4ccc345dd6a34462f23258ff956ae889ebd1c20c30c17ceeff",
+  "candidate_count": 20,
+  "candidate_outcome_fields_present": false,
+  "kind": "cpu_vta_pipeline_v1_p4r_candidate_manifest",
+  "prospective_plan_artifact_sha256": "f74f949ce50934c566fa04cc188af1d7df03a4cd67ed1ef3a76d21d1d85f4f03",
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "rows": [
+    {
+      "candidate_id": "cpu-00-00_t1__vta-01-03_t1__cpu-04-04_t1__vta-05-09_t1__cpu-10-14_t4__vta-15-19_t1__cpu-20-20_t2",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 18,
+      "path": [
+        [
+          "cpu:00:00",
+          1
+        ],
+        [
+          "vta:01:03",
+          1
+        ],
+        [
+          "cpu:04:04",
+          1
+        ],
+        [
+          "vta:05:09",
+          1
+        ],
+        [
+          "cpu:10:14",
+          4
+        ],
+        [
+          "vta:15:19",
+          1
+        ],
+        [
+          "cpu:20:20",
+          2
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 193.49068201632446,
+        "B3_pipeline_max_load": 82.86478036766827,
+        "B4_v1": 82.86478036766827
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B0_uniform_random",
+          "source_rank": 1
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail",
+            "layer1_block1_main_preadd"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer1_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage3",
+          "unit_names": [
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage4",
+          "unit_names": [
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage5",
+          "unit_names": [
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage6",
+          "unit_names": [
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        1,
+        1,
+        1,
+        1,
+        4,
+        1,
+        2
+      ],
+      "topology_id": "cpu-00-00__vta-01-03__cpu-04-04__vta-05-09__cpu-10-14__vta-15-19__cpu-20-20"
+    },
+    {
+      "candidate_id": "cpu-00-00_t1__vta-01-12_t1__cpu-13-14_t2__vta-15-17_t1__cpu-18-20_t2",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 4,
+      "path": [
+        [
+          "cpu:00:00",
+          1
+        ],
+        [
+          "vta:01:12",
+          1
+        ],
+        [
+          "cpu:13:14",
+          2
+        ],
+        [
+          "vta:15:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          2
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 232.45272180985884,
+        "B3_pipeline_max_load": 72.05460855185608,
+        "B4_v1": 72.05460855185608
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B4_topology_diversity_fill",
+          "source_rank": 28
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail",
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage3",
+          "unit_names": [
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage4",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        1,
+        1,
+        2,
+        1,
+        2
+      ],
+      "topology_id": "cpu-00-00__vta-01-12__cpu-13-14__vta-15-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-00_t4__vta-01-19_t1__cpu-20-20_t2",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 17,
+      "path": [
+        [
+          "cpu:00:00",
+          4
+        ],
+        [
+          "vta:01:19",
+          1
+        ],
+        [
+          "cpu:20:20",
+          2
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 112.82111212920611,
+        "B3_pipeline_max_load": 96.30034013962788,
+        "B4_v1": 96.30034013962788
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B2_single_frame",
+          "source_rank": 3
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail",
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        4,
+        1,
+        2
+      ],
+      "topology_id": "cpu-00-00__vta-01-19__cpu-20-20"
+    },
+    {
+      "candidate_id": "cpu-00-00_t4__vta-01-19_t1__cpu-20-20_t3",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 3,
+      "path": [
+        [
+          "cpu:00:00",
+          4
+        ],
+        [
+          "vta:01:19",
+          1
+        ],
+        [
+          "cpu:20:20",
+          3
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 112.80127711735604,
+        "B3_pipeline_max_load": 96.30034013962788,
+        "B4_v1": 96.30034013962788
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B2_single_frame",
+          "source_rank": 2
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail",
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        4,
+        1,
+        3
+      ],
+      "topology_id": "cpu-00-00__vta-01-19__cpu-20-20"
+    },
+    {
+      "candidate_id": "cpu-00-00_t4__vta-01-19_t1__cpu-20-20_t4",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 5,
+      "path": [
+        [
+          "cpu:00:00",
+          4
+        ],
+        [
+          "vta:01:19",
+          1
+        ],
+        [
+          "cpu:20:20",
+          4
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 112.77126068890166,
+        "B3_pipeline_max_load": 96.30034013962788,
+        "B4_v1": 96.30034013962788
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B1_type_fixed",
+          "source_rank": 1
+        },
+        {
+          "role": "B2_single_frame",
+          "source_rank": 1
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail",
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        4,
+        1,
+        4
+      ],
+      "topology_id": "cpu-00-00__vta-01-19__cpu-20-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t1__vta-03-17_t1__cpu-18-20_t2",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 1,
+      "path": [
+        [
+          "cpu:00:02",
+          1
+        ],
+        [
+          "vta:03:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          2
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 282.17440385557586,
+        "B3_pipeline_max_load": 158.13695696061268,
+        "B4_v1": 158.13695696061268
+      },
+      "requires_native_compile": false,
+      "roles": [
+        {
+          "role": "paired_thread_control"
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        1,
+        1,
+        2
+      ],
+      "topology_id": "cpu-00-02__vta-03-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t2__vta-03-06_t1__cpu-07-09_t1__vta-10-14_t1__cpu-15-17_t2__vta-18-19_t1__cpu-20-20_t1",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 7,
+      "path": [
+        [
+          "cpu:00:02",
+          2
+        ],
+        [
+          "vta:03:06",
+          1
+        ],
+        [
+          "cpu:07:09",
+          1
+        ],
+        [
+          "vta:10:14",
+          1
+        ],
+        [
+          "cpu:15:17",
+          2
+        ],
+        [
+          "vta:18:19",
+          1
+        ],
+        [
+          "cpu:20:20",
+          1
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 292.63044033501876,
+        "B3_pipeline_max_load": 104.67677601474801,
+        "B4_v1": 104.67677601474801
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B0_uniform_random",
+          "source_rank": 2
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage3",
+          "unit_names": [
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage4",
+          "unit_names": [
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage5",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage6",
+          "unit_names": [
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        2,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      "topology_id": "cpu-00-02__vta-03-06__cpu-07-09__vta-10-14__cpu-15-17__vta-18-19__cpu-20-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t2__vta-03-17_t1__cpu-18-20_t2",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 11,
+      "path": [
+        [
+          "cpu:00:02",
+          2
+        ],
+        [
+          "vta:03:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          2
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 204.81978510009694,
+        "B3_pipeline_max_load": 80.78233820513374,
+        "B4_v1": 80.78233820513374
+      },
+      "requires_native_compile": false,
+      "roles": [
+        {
+          "role": "paired_thread_control"
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        2,
+        1,
+        2
+      ],
+      "topology_id": "cpu-00-02__vta-03-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t3__vta-03-12_t1__cpu-13-14_t2__vta-15-19_t1__cpu-20-20_t1",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 20,
+      "path": [
+        [
+          "cpu:00:02",
+          3
+        ],
+        [
+          "vta:03:12",
+          1
+        ],
+        [
+          "cpu:13:14",
+          2
+        ],
+        [
+          "vta:15:19",
+          1
+        ],
+        [
+          "cpu:20:20",
+          1
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 193.09432154762604,
+        "B3_pipeline_max_load": 72.04493172150508,
+        "B4_v1": 72.04493172150508
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B4_topology_diversity_fill",
+          "source_rank": 12
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage3",
+          "unit_names": [
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage4",
+          "unit_names": [
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        3,
+        1,
+        2,
+        1,
+        1
+      ],
+      "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t3__vta-03-15_t1__cpu-16-20_t2",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 13,
+      "path": [
+        [
+          "cpu:00:02",
+          3
+        ],
+        [
+          "vta:03:15",
+          1
+        ],
+        [
+          "cpu:16:20",
+          2
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 193.3738916308864,
+        "B3_pipeline_max_load": 71.05931986777571,
+        "B4_v1": 71.05931986777571
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B4_v1",
+          "source_rank": 3
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        3,
+        1,
+        2
+      ],
+      "topology_id": "cpu-00-02__vta-03-15__cpu-16-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t3__vta-03-16_t1__cpu-17-20_t2",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 10,
+      "path": [
+        [
+          "cpu:00:02",
+          3
+        ],
+        [
+          "vta:03:16",
+          1
+        ],
+        [
+          "cpu:17:20",
+          2
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 191.91526803140468,
+        "B3_pipeline_max_load": 71.10962737775507,
+        "B4_v1": 71.10962737775507
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B4_topology_diversity_fill",
+          "source_rank": 4
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        3,
+        1,
+        2
+      ],
+      "topology_id": "cpu-00-02__vta-03-16__cpu-17-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t3__vta-03-17_t1__cpu-18-20_t1",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 19,
+      "path": [
+        [
+          "cpu:00:02",
+          3
+        ],
+        [
+          "vta:03:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          1
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 242.74659485601293,
+        "B3_pipeline_max_load": 104.40410589685352,
+        "B4_v1": 104.40410589685352
+      },
+      "requires_native_compile": false,
+      "roles": [
+        {
+          "role": "paired_thread_control"
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        3,
+        1,
+        1
+      ],
+      "topology_id": "cpu-00-02__vta-03-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t3__vta-03-17_t1__cpu-18-20_t2",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 9,
+      "path": [
+        [
+          "cpu:00:02",
+          3
+        ],
+        [
+          "vta:03:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          2
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 191.57251407203168,
+        "B3_pipeline_max_load": 70.80742178209094,
+        "B4_v1": 70.80742178209094
+      },
+      "requires_native_compile": false,
+      "roles": [
+        {
+          "role": "B4_v1",
+          "source_rank": 1
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        3,
+        1,
+        2
+      ],
+      "topology_id": "cpu-00-02__vta-03-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t3__vta-03-17_t1__cpu-18-20_t3",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 2,
+      "path": [
+        [
+          "cpu:00:02",
+          3
+        ],
+        [
+          "vta:03:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          3
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 182.80875919011018,
+        "B3_pipeline_max_load": 70.80742178209094,
+        "B4_v1": 70.80742178209094
+      },
+      "requires_native_compile": false,
+      "roles": [
+        {
+          "role": "B4_v1",
+          "source_rank": 2
+        },
+        {
+          "role": "paired_thread_control"
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        3,
+        1,
+        3
+      ],
+      "topology_id": "cpu-00-02__vta-03-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t3__vta-03-17_t1__cpu-18-20_t4",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 15,
+      "path": [
+        [
+          "cpu:00:02",
+          3
+        ],
+        [
+          "vta:03:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          4
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 169.54652252531505,
+        "B3_pipeline_max_load": 70.80742178209094,
+        "B4_v1": 71.64277883089184
+      },
+      "requires_native_compile": false,
+      "roles": [
+        {
+          "role": "paired_thread_control"
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        3,
+        1,
+        4
+      ],
+      "topology_id": "cpu-00-02__vta-03-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t4__vta-03-07_t1__cpu-08-09_t3__vta-10-12_t1__cpu-13-14_t3__vta-15-17_t1__cpu-18-20_t3",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 12,
+      "path": [
+        [
+          "cpu:00:02",
+          4
+        ],
+        [
+          "vta:03:07",
+          1
+        ],
+        [
+          "cpu:08:09",
+          3
+        ],
+        [
+          "vta:10:12",
+          1
+        ],
+        [
+          "cpu:13:14",
+          3
+        ],
+        [
+          "vta:15:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          3
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 230.1587258511288,
+        "B3_pipeline_max_load": 49.03532766881157,
+        "B4_v1": 124.10159516817494
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B3_pipeline_max_load",
+          "source_rank": 1
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage3",
+          "unit_names": [
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage4",
+          "unit_names": [
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage5",
+          "unit_names": [
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage6",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        4,
+        1,
+        3,
+        1,
+        3,
+        1,
+        3
+      ],
+      "topology_id": "cpu-00-02__vta-03-07__cpu-08-09__vta-10-12__cpu-13-14__vta-15-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t4__vta-03-07_t1__cpu-08-09_t3__vta-10-12_t1__cpu-13-14_t3__vta-15-17_t1__cpu-18-20_t4",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 6,
+      "path": [
+        [
+          "cpu:00:02",
+          4
+        ],
+        [
+          "vta:03:07",
+          1
+        ],
+        [
+          "cpu:08:09",
+          3
+        ],
+        [
+          "vta:10:12",
+          1
+        ],
+        [
+          "cpu:13:14",
+          3
+        ],
+        [
+          "vta:15:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          4
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 216.89648918633367,
+        "B3_pipeline_max_load": 49.03532766881157,
+        "B4_v1": 124.95933176975082
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B3_pipeline_max_load",
+          "source_rank": 2
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage3",
+          "unit_names": [
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage4",
+          "unit_names": [
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage5",
+          "unit_names": [
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage6",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        4,
+        1,
+        3,
+        1,
+        3,
+        1,
+        4
+      ],
+      "topology_id": "cpu-00-02__vta-03-07__cpu-08-09__vta-10-12__cpu-13-14__vta-15-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t4__vta-03-07_t1__cpu-08-09_t3__vta-10-12_t1__cpu-13-14_t4__vta-15-17_t1__cpu-18-20_t3",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 14,
+      "path": [
+        [
+          "cpu:00:02",
+          4
+        ],
+        [
+          "vta:03:07",
+          1
+        ],
+        [
+          "cpu:08:09",
+          3
+        ],
+        [
+          "vta:10:12",
+          1
+        ],
+        [
+          "cpu:13:14",
+          4
+        ],
+        [
+          "vta:15:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          3
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 216.92506998277804,
+        "B3_pipeline_max_load": 49.03532766881157,
+        "B4_v1": 124.95748330362615
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B3_pipeline_max_load",
+          "source_rank": 3
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage3",
+          "unit_names": [
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage4",
+          "unit_names": [
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage5",
+          "unit_names": [
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage6",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        4,
+        1,
+        3,
+        1,
+        4,
+        1,
+        3
+      ],
+      "topology_id": "cpu-00-02__vta-03-07__cpu-08-09__vta-10-12__cpu-13-14__vta-15-17__cpu-18-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t4__vta-03-11_t1__cpu-12-12_t4__vta-13-13_t1__cpu-14-17_t1__vta-18-18_t1__cpu-19-20_t3",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 16,
+      "path": [
+        [
+          "cpu:00:02",
+          4
+        ],
+        [
+          "vta:03:11",
+          1
+        ],
+        [
+          "cpu:12:12",
+          4
+        ],
+        [
+          "vta:13:13",
+          1
+        ],
+        [
+          "cpu:14:17",
+          1
+        ],
+        [
+          "vta:18:18",
+          1
+        ],
+        [
+          "cpu:19:20",
+          3
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 206.41668213541502,
+        "B3_pipeline_max_load": 81.20324354207183,
+        "B4_v1": 81.20324354207183
+      },
+      "requires_native_compile": true,
+      "roles": [
+        {
+          "role": "B0_uniform_random",
+          "source_rank": 3
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer3_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage3",
+          "unit_names": [
+            "layer3_block1_main_preadd"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage4",
+          "unit_names": [
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage5",
+          "unit_names": [
+            "layer4_block1_main_preadd"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage6",
+          "unit_names": [
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        4,
+        1,
+        4,
+        1,
+        1,
+        1,
+        3
+      ],
+      "topology_id": "cpu-00-02__vta-03-11__cpu-12-12__vta-13-13__cpu-14-17__vta-18-18__cpu-19-20"
+    },
+    {
+      "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t2",
+      "candidate_outcome_fields_present": false,
+      "frozen_execution_order": 8,
+      "path": [
+        [
+          "cpu:00:02",
+          4
+        ],
+        [
+          "vta:03:17",
+          1
+        ],
+        [
+          "cpu:18:20",
+          2
+        ]
+      ],
+      "predicted_scores_ms": {
+        "B2_single_frame": 171.525348684133,
+        "B3_pipeline_max_load": 70.80742178209094,
+        "B4_v1": 71.14079592073301
+      },
+      "requires_native_compile": false,
+      "roles": [
+        {
+          "role": "paired_thread_control"
+        }
+      ],
+      "scheme_cfg": [
+        {
+          "device": "cpu",
+          "name": "stage0",
+          "unit_names": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "name": "stage1",
+          "unit_names": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "name": "stage2",
+          "unit_names": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "stage_runtime_threads": [
+        4,
+        1,
+        2
+      ],
+      "topology_id": "cpu-00-02__vta-03-17__cpu-18-20"
+    }
+  ],
+  "schema_version": 1
+}

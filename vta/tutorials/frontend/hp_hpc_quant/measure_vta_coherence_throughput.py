@@ -49,6 +49,9 @@ DEFAULT_CASES = ",".join(
     ]
 )
 
+# VTA instruction width is fixed at 128 bits in the ISA spec.
+VTA_INS_ELEM_BYTES = 16
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
@@ -133,12 +136,41 @@ def summarize_case(case_row: Dict[str, object], case_profile_dir: Path, config_l
     after_run = read_json(case_profile_dir / "after_run_status.json")
     after_get_output = read_json(case_profile_dir / "after_get_output_status.json")
 
+    synchronize_insns = int(after_get_output.get("synchronize_insns", 0))
+    fetch_est_bytes = synchronize_insns * VTA_INS_ELEM_BYTES
+
+    load_uop_bytes_raw = int(after_get_output.get("load_buffer_2d_uop_bytes", 0))
+    load_inp_bytes = int(after_get_output.get("load_buffer_2d_inp_bytes", 0))
+    load_wgt_bytes = int(after_get_output.get("load_buffer_2d_wgt_bytes", 0))
+    load_acc_bytes = int(after_get_output.get("load_buffer_2d_acc_bytes", 0))
+    load_acc8_bytes = int(after_get_output.get("load_buffer_2d_acc8_bytes", 0))
+    load_unknown_bytes = int(after_get_output.get("load_buffer_2d_unknown_bytes", 0))
+    store_out_bytes = int(after_get_output.get("store_buffer_2d_out_bytes", 0))
+    store_acc_bytes = int(after_get_output.get("store_buffer_2d_acc_bytes", 0))
+    store_acc8_bytes = int(after_get_output.get("store_buffer_2d_acc8_bytes", 0))
+    store_unknown_bytes = int(after_get_output.get("store_buffer_2d_unknown_bytes", 0))
+
+    load_master_bytes_measured = load_inp_bytes + load_wgt_bytes
+    compute_uop_bytes_exact = int(after_get_output.get("uop_queue_bytes", 0))
+    compute_uop_available = "uop_queue_bytes" in after_get_output
+    compute_data_bytes = load_acc_bytes + load_acc8_bytes
+    compute_master_bytes_partial = compute_uop_bytes_exact + compute_data_bytes
+    store_master_bytes_measured = store_out_bytes + store_acc_bytes + store_acc8_bytes + store_unknown_bytes
+
     load_bytes = int(after_get_output.get("load_buffer_2d_bytes", 0))
     store_bytes = int(after_get_output.get("store_buffer_2d_bytes", 0))
     total_dma_bytes = load_bytes + store_bytes
+    total_master_bytes_partial = (
+        fetch_est_bytes
+        + load_master_bytes_measured
+        + compute_master_bytes_partial
+        + store_master_bytes_measured
+    )
     device_wait_us = float(after_get_output.get("device_run_wait_us", 0.0))
     driver_run_total_us = float(after_get_output.get("driver_run_total_us", 0.0))
     driver_submit_mmio_us = float(after_get_output.get("driver_submit_mmio_us", 0.0))
+    driver_post_start_sleep_us = float(after_get_output.get("driver_post_start_sleep_us", 0.0))
+    driver_poll_wait_us = float(after_get_output.get("driver_poll_wait_us", 0.0))
 
     flush_calls = int(after_get_output.get("flush_cache_calls", 0))
     flush_bytes = int(after_get_output.get("flush_cache_bytes", 0))
@@ -149,6 +181,13 @@ def summarize_case(case_row: Dict[str, object], case_profile_dir: Path, config_l
     coherence_us = flush_us + invalidate_us
 
     total_dma_mib = total_dma_bytes / float(1 << 20)
+    fetch_est_mib = fetch_est_bytes / float(1 << 20)
+    load_master_mib = load_master_bytes_measured / float(1 << 20)
+    compute_uop_mib = compute_uop_bytes_exact / float(1 << 20)
+    compute_data_mib = compute_data_bytes / float(1 << 20)
+    compute_master_mib = compute_master_bytes_partial / float(1 << 20)
+    store_master_mib = store_master_bytes_measured / float(1 << 20)
+    total_master_mib = total_master_bytes_partial / float(1 << 20)
     load_mib = load_bytes / float(1 << 20)
     store_mib = store_bytes / float(1 << 20)
 
@@ -164,6 +203,30 @@ def summarize_case(case_row: Dict[str, object], case_profile_dir: Path, config_l
         "d2h_ms": float(case_row["d2h_ms"]),
         "gops": float(case_row["gops"]),
         "ok": bool(case_row["ok"]),
+        "synchronize_insns": synchronize_insns,
+        "fetch_est_bytes": fetch_est_bytes,
+        "fetch_est_mib": fetch_est_mib,
+        "load_master_bytes_measured": load_master_bytes_measured,
+        "load_master_mib": load_master_mib,
+        "load_uop_bytes_raw": load_uop_bytes_raw,
+        "load_inp_bytes": load_inp_bytes,
+        "load_wgt_bytes": load_wgt_bytes,
+        "compute_uop_available": compute_uop_available,
+        "compute_uop_bytes_exact": compute_uop_bytes_exact,
+        "compute_uop_mib": compute_uop_mib,
+        "compute_data_bytes": compute_data_bytes,
+        "compute_data_mib": compute_data_mib,
+        "compute_acc_bytes": load_acc_bytes,
+        "compute_acc8_bytes": load_acc8_bytes,
+        "compute_master_bytes_partial": compute_master_bytes_partial,
+        "compute_master_mib": compute_master_mib,
+        "store_master_bytes_measured": store_master_bytes_measured,
+        "store_master_mib": store_master_mib,
+        "store_out_bytes": store_out_bytes,
+        "store_acc_bytes": store_acc_bytes,
+        "store_acc8_bytes": store_acc8_bytes,
+        "total_master_bytes_partial": total_master_bytes_partial,
+        "total_master_mib": total_master_mib,
         "load_bytes": load_bytes,
         "store_bytes": store_bytes,
         "total_dma_bytes": total_dma_bytes,
@@ -173,6 +236,15 @@ def summarize_case(case_row: Dict[str, object], case_profile_dir: Path, config_l
         "device_run_wait_us": device_wait_us,
         "driver_run_total_us": driver_run_total_us,
         "driver_submit_mmio_us": driver_submit_mmio_us,
+        "driver_post_start_sleep_us": driver_post_start_sleep_us,
+        "driver_poll_wait_us": driver_poll_wait_us,
+        "fetch_est_bw_gbps": bytes_per_us_to_gbps(fetch_est_bytes, device_wait_us),
+        "load_master_bw_gbps": bytes_per_us_to_gbps(load_master_bytes_measured, device_wait_us),
+        "compute_uop_bw_gbps": bytes_per_us_to_gbps(compute_uop_bytes_exact, device_wait_us),
+        "compute_data_bw_gbps": bytes_per_us_to_gbps(compute_data_bytes, device_wait_us),
+        "compute_master_bw_gbps": bytes_per_us_to_gbps(compute_master_bytes_partial, device_wait_us),
+        "store_master_bw_gbps": bytes_per_us_to_gbps(store_master_bytes_measured, device_wait_us),
+        "total_master_bw_gbps": bytes_per_us_to_gbps(total_master_bytes_partial, device_wait_us),
         "load_bw_gbps": bytes_per_us_to_gbps(load_bytes, device_wait_us),
         "store_bw_gbps": bytes_per_us_to_gbps(store_bytes, device_wait_us),
         "total_bw_gbps": bytes_per_us_to_gbps(total_dma_bytes, device_wait_us),
@@ -187,6 +259,9 @@ def summarize_case(case_row: Dict[str, object], case_profile_dir: Path, config_l
         "coherence_us_per_dma_mib": safe_ratio(coherence_us, total_dma_mib),
         "coherence_pct_of_driver_run": 100.0 * safe_ratio(coherence_us, driver_run_total_us),
         "coherence_pct_of_device_wait": 100.0 * safe_ratio(coherence_us, device_wait_us),
+        "driver_submit_pct_of_run": 100.0 * safe_ratio(driver_submit_mmio_us, driver_run_total_us),
+        "driver_sleep_pct_of_run": 100.0 * safe_ratio(driver_post_start_sleep_us, driver_run_total_us),
+        "driver_poll_pct_of_run": 100.0 * safe_ratio(driver_poll_wait_us, driver_run_total_us),
         "flush_pct_of_coherence": 100.0 * safe_ratio(flush_us, coherence_us),
         "invalidate_pct_of_coherence": 100.0 * safe_ratio(invalidate_us, coherence_us),
         "profile_dir": str(case_profile_dir),
@@ -208,9 +283,22 @@ def aggregate_summary(rows: List[Dict[str, object]]) -> Dict[str, object]:
         "load_bw_gbps",
         "store_bw_gbps",
         "total_bw_gbps",
+        "fetch_est_bw_gbps",
+        "load_master_bw_gbps",
+        "compute_uop_bw_gbps",
+        "compute_data_bw_gbps",
+        "compute_master_bw_gbps",
+        "store_master_bw_gbps",
+        "total_master_bw_gbps",
         "coherence_overhead_ms",
         "coherence_pct_of_driver_run",
         "coherence_pct_of_device_wait",
+        "driver_submit_mmio_us",
+        "driver_post_start_sleep_us",
+        "driver_poll_wait_us",
+        "driver_submit_pct_of_run",
+        "driver_sleep_pct_of_run",
+        "driver_poll_pct_of_run",
         "kernel_ms",
         "total_ms",
     ]
@@ -270,14 +358,21 @@ def main() -> None:
         summary_row = summarize_case(case_row, case_profile_dir, args.config_label)
         rows.append(summary_row)
         print(
-            "dma_mib={:.3f} total_bw={:.3f} load_bw={:.3f} store_bw={:.3f} "
-            "coh={:.3f} ms ({:.2f}% driver_run) ok={}".format(
-                summary_row["total_dma_mib"],
-                summary_row["total_bw_gbps"],
-                summary_row["load_bw_gbps"],
-                summary_row["store_bw_gbps"],
+            "master_partial_mib={:.3f} total_master_partial_bw={:.3f} fetch_est={:.3f} "
+            "load_measured={:.3f} compute_partial={:.3f} store_measured={:.3f} "
+            "coh={:.3f} ms ({:.2f}% driver_run) driver[submit={:.1f}us sleep={:.1f}us poll={:.1f}us] "
+            "ok={}".format(
+                summary_row["total_master_mib"],
+                summary_row["total_master_bw_gbps"],
+                summary_row["fetch_est_bw_gbps"],
+                summary_row["load_master_bw_gbps"],
+                summary_row["compute_master_bw_gbps"],
+                summary_row["store_master_bw_gbps"],
                 summary_row["coherence_overhead_ms"],
                 summary_row["coherence_pct_of_driver_run"],
+                summary_row["driver_submit_mmio_us"],
+                summary_row["driver_post_start_sleep_us"],
+                summary_row["driver_poll_wait_us"],
                 summary_row["ok"],
             )
         )
@@ -297,6 +392,30 @@ def main() -> None:
         "d2h_ms",
         "gops",
         "ok",
+        "synchronize_insns",
+        "fetch_est_bytes",
+        "fetch_est_mib",
+        "load_master_bytes_measured",
+        "load_master_mib",
+        "load_uop_bytes_raw",
+        "load_inp_bytes",
+        "load_wgt_bytes",
+        "compute_uop_available",
+        "compute_uop_bytes_exact",
+        "compute_uop_mib",
+        "compute_data_bytes",
+        "compute_data_mib",
+        "compute_acc_bytes",
+        "compute_acc8_bytes",
+        "compute_master_bytes_partial",
+        "compute_master_mib",
+        "store_master_bytes_measured",
+        "store_master_mib",
+        "store_out_bytes",
+        "store_acc_bytes",
+        "store_acc8_bytes",
+        "total_master_bytes_partial",
+        "total_master_mib",
         "load_bytes",
         "store_bytes",
         "total_dma_bytes",
@@ -306,6 +425,18 @@ def main() -> None:
         "device_run_wait_us",
         "driver_run_total_us",
         "driver_submit_mmio_us",
+        "driver_post_start_sleep_us",
+        "driver_poll_wait_us",
+        "driver_submit_pct_of_run",
+        "driver_sleep_pct_of_run",
+        "driver_poll_pct_of_run",
+        "fetch_est_bw_gbps",
+        "load_master_bw_gbps",
+        "compute_uop_bw_gbps",
+        "compute_data_bw_gbps",
+        "compute_master_bw_gbps",
+        "store_master_bw_gbps",
+        "total_master_bw_gbps",
         "load_bw_gbps",
         "store_bw_gbps",
         "total_bw_gbps",

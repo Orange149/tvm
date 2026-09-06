@@ -1,0 +1,39 @@
+{
+  "artifact_sha256": "8f384ca84076b544037acd021160e69ba2f25060e9944735f3e9501d1c472f8f",
+  "board_output_used": false,
+  "comparator": "/home/orange/code/tvm/vta/tutorials/frontend/compare_cpu_vta_pipeline_v1_reference.py",
+  "dtype": "float32",
+  "image": "/home/orange/code/tvm/build_axu_aarch64/cat.png",
+  "image_sha256": "e48bf623f0fc6a156639b46e76d79add4800ff617a96200d27b5db4be1c6dd81",
+  "input_file": "v1_p5a_reference/expected_input_float32.bin",
+  "input_sha256": "6c47e8c1099d6c3ababa1926b4d9c8ea3a2794ce1e8e24fde9a170145aa80d2e",
+  "kind": "cpu_vta_pipeline_v1_p5a_independent_tensor_reference",
+  "model": "mxnet.gluon.model_zoo.resnet18_v1_pretrained",
+  "preprocess": "resize224_rgb_subtract_123_117_104_divide_58.395_57.12_57.375_chw",
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "qualification_gate": {
+    "max_normalized_rmse": 0.5,
+    "min_cosine_similarity": 0.95,
+    "min_top_k_overlap": 5,
+    "name": "quantized_semantic_tensor_gate_v1",
+    "scope": "detect_wrong_graph_or_gross_quantized_output;_not_bit_exact_float_equivalence",
+    "thresholds_frozen_before_p5b_board_outputs": true,
+    "top1_match_required": false,
+    "top_k": 10
+  },
+  "reference_independence": "framework_model_and_full_float_logits_not_native_pipeline_hash",
+  "schema_version": 1,
+  "shape": [
+    1,
+    1000
+  ],
+  "summary": {
+    "max": 9.03182315826416,
+    "mean": 0.0003364958157762885,
+    "min": -3.758358955383301,
+    "sum": 0.3364958157762885,
+    "top1": 282
+  },
+  "tensor_file": "v1_p5a_reference/expected_logits_float32.bin",
+  "tensor_sha256": "000020f0ee36dd5c3b51490a3dbe2f12a572bc457f31f59fb955da87a6e537e4"
+}

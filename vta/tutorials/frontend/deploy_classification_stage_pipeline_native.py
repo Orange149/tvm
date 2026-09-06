@@ -126,6 +126,12 @@ def parse_args():
     parser.add_argument("--max-images", type=int, default=0, help="Maximum images to package")
     parser.add_argument("--image-size", type=int, default=224)
     parser.add_argument("--runs", type=int, default=20, help="Total frame requests")
+    parser.add_argument(
+        "--runner-warmup-runs",
+        type=int,
+        default=0,
+        help="Unscored runner warmups; P7 instrumentation requires one serial stage",
+    )
     parser.add_argument("--queue-depth", type=int, default=2)
     parser.add_argument("--runtime-num-threads", type=int, default=4)
     parser.add_argument(
@@ -176,6 +182,17 @@ def parse_args():
     )
     parser.add_argument("--serial-output-jsonl", default="stage_serial_result.jsonl")
     parser.add_argument("--pipeline-output-jsonl", default="native_result.jsonl")
+    parser.add_argument(
+        "--runner-output-mode",
+        default="classification",
+        choices=["classification", "raw", "raw_all_stages"],
+        help="Native runner output schema; calibration packages use raw",
+    )
+    parser.add_argument(
+        "--output-dump-dir",
+        default="",
+        help="Optional package-relative directory for raw final tensors; serial/pipeline use subdirs",
+    )
     parser.add_argument("--build-dir", default="", help="Host build/package directory")
     parser.add_argument(
         "--reuse-package-dir",
@@ -208,6 +225,15 @@ def parse_args():
     )
     parser.add_argument("--vta-runtime-profile-events-limit", type=int, default=200)
     parser.add_argument("--vta-runtime-profile-checkpoint-every", type=int, default=0)
+    parser.add_argument("--runner-ready-file", default="")
+    parser.add_argument("--runner-start-file", default="")
+    parser.add_argument("--runner-barrier-token", default="")
+    parser.add_argument("--runner-start-timeout-s", type=int, default=120)
+    parser.add_argument(
+        "--runner-profile-pmu",
+        action="store_true",
+        help="Collect process PMU counters for a single serial stage",
+    )
     return parser.parse_args()
 
 
@@ -285,8 +311,19 @@ def load_scheme_config_json(path):
 
 
 def stage_build_cache_key(args, env, stage, input_schema, output_schema, use_graph_pack):
+    root = repo_root()
+    lowering_sources = [
+        "vta/tutorials/frontend/split_resnet18_stages.py",
+        "vta/tutorials/frontend/profile_split_resnet18_stages.py",
+        "vta/python/vta/build_module.py",
+        "vta/python/vta/top/graphpack.py",
+        "vta/python/vta/top/op.py",
+        "vta/python/vta/top/vta_conv2d.py",
+        "python/tvm/relay/quantize/quantize.py",
+        "3rdparty/vta-hw/config/vta_config.json",
+    ]
     payload = {
-        "version": 2,
+        "version": 3,
         "target": env.TARGET,
         "target_host": str(env.target_host),
         "target_vta_cpu": str(env.target_vta_cpu),
@@ -297,6 +334,9 @@ def stage_build_cache_key(args, env, stage, input_schema, output_schema, use_gra
         "vta_bridge_mode": "all_vta_graph_pack" if use_graph_pack else "boundary_bridge",
         "input_schema": input_schema,
         "output_schema": output_schema,
+        "lowering_source_sha256": {
+            rel: file_sha256(root / rel) for rel in lowering_sources
+        },
     }
     text = json.dumps(payload, sort_keys=True)
     return hashlib.sha256(text.encode("utf-8")).hexdigest(), payload
@@ -304,18 +344,20 @@ def stage_build_cache_key(args, env, stage, input_schema, output_schema, use_gra
 
 def try_copy_stage_from_cache(cache_dir, cache_key, stage_dir):
     if not cache_dir:
-        return False
+        return None
     cache_stage_dir = Path(cache_dir) / cache_key
     required = ["graph.json", "graphlib.so", "params.params", "stage_cache.json"]
     if not all((cache_stage_dir / name).exists() for name in required):
-        return False
+        return None
     shutil.copy2(cache_stage_dir / "graph.json", stage_dir / "graph.json")
     shutil.copy2(cache_stage_dir / "graphlib.so", stage_dir / "graphlib.so")
     shutil.copy2(cache_stage_dir / "params.params", stage_dir / "params.params")
-    return True
+    shutil.copy2(cache_stage_dir / "stage_cache.json", stage_dir / "stage_cache.json")
+    with (cache_stage_dir / "stage_cache.json").open(encoding="utf-8") as inp:
+        return json.load(inp)
 
 
-def save_stage_to_cache(cache_dir, cache_key, cache_payload, stage_dir):
+def save_stage_to_cache(cache_dir, cache_key, cache_record, stage_dir):
     if not cache_dir:
         return
     cache_stage_dir = Path(cache_dir) / cache_key
@@ -325,8 +367,29 @@ def save_stage_to_cache(cache_dir, cache_key, cache_payload, stage_dir):
     shutil.copy2(stage_dir / "params.params", cache_stage_dir / "params.params")
     write_text(
         cache_stage_dir / "stage_cache.json",
-        json.dumps(cache_payload, indent=2, sort_keys=True) + "\n",
+        json.dumps(cache_record, indent=2, sort_keys=True) + "\n",
     )
+
+
+def compiled_module_source_manifest(lib):
+    modules = [lib] + list(lib.imported_modules)
+    records = []
+    for index, module in enumerate(modules):
+        try:
+            source = module.get_source()
+        except (AttributeError, RuntimeError, tvm.error.TVMError):
+            source = ""
+        records.append(
+            {
+                "index": int(index),
+                "type_key": str(module.type_key),
+                "source_bytes": len(source.encode("utf-8")),
+                "source_sha256": hashlib.sha256(source.encode("utf-8")).hexdigest()
+                if source
+                else None,
+            }
+        )
+    return records
 
 
 def parse_stage_runtime_threads_csv(text, expected_count=None):
@@ -442,6 +505,20 @@ def export_stage_lib(lib, out_path):
     )
 
 
+def validate_stage_device_sequence(devices, serial_only_profile=False):
+    """Keep pipeline candidates heterogeneous while allowing CPU calibration splits."""
+    if not devices or devices[0] != "cpu" or devices[-1] != "cpu":
+        raise RuntimeError(
+            "stage execution requires CPU first/last stages, got {}".format(devices)
+        )
+    if any(device not in ("cpu", "vta") for device in devices):
+        raise RuntimeError("unsupported stage device sequence: {}".format(devices))
+    if not serial_only_profile and (len(devices) < 3 or "vta" not in devices):
+        raise RuntimeError(
+            "pipeline execution requires cpu/.../vta/.../cpu scheme, got {}".format(devices)
+        )
+
+
 def build_stage_modules(args, package_dir):
     from mxnet.gluon.model_zoo import vision
 
@@ -478,10 +555,10 @@ def build_stage_modules(args, package_dir):
         resolved_scheme_name = selected["scheme_name"] if selected is not None else args.scheme
     validate_scheme(feature_blocks, scheme_cfg, unit_blocks)
     devices = [stage["device"] for stage in scheme_cfg]
-    if len(scheme_cfg) < 3 or devices[0] != "cpu" or devices[-1] != "cpu" or "vta" not in devices:
-        raise RuntimeError(
-            "stage pipeline requires cpu/.../vta/.../cpu scheme, got {}".format(devices)
-        )
+    validate_stage_device_sequence(
+        devices,
+        serial_only_profile=bool(args.serial and not args.run_serial_before_pipeline),
+    )
 
     stage_records = []
     for idx, stage in enumerate(scheme_cfg):
@@ -491,6 +568,9 @@ def build_stage_modules(args, package_dir):
         stage_inputs = relay_inputs_for_stage(stage, unit_metadata)
         stage_block = make_stage_block(feature_blocks, output_block, stage, unit_blocks=unit_blocks)
         mod, params = lower_stage_to_relay(stage_block, stage_inputs)
+        relay_ir_sha256 = hashlib.sha256(
+            mod.astext(show_meta_data=False).encode("utf-8")
+        ).hexdigest()
         output_schema = get_func_output_info(mod["main"]) or stage_output_schema_for_stage(
             stage, unit_metadata
         )
@@ -509,7 +589,8 @@ def build_stage_modules(args, package_dir):
         cache_key, cache_payload = stage_build_cache_key(
             args, env, stage, input_schema, output_schema, use_graph_pack
         )
-        cache_hit = try_copy_stage_from_cache(args.stage_build_cache_dir, cache_key, stage_dir)
+        cache_record = try_copy_stage_from_cache(args.stage_build_cache_dir, cache_key, stage_dir)
+        cache_hit = cache_record is not None
         if cache_hit:
             print("[BUILD-CACHE] hit {} key={}".format(stage_name, cache_key[:16]))
         else:
@@ -527,8 +608,28 @@ def build_stage_modules(args, package_dir):
             write_text(graph_path, graph)
             write_bytes(params_path, tvm.runtime.save_param_dict(lowered_params))
             print("[BUILD] export {} -> {}".format(stage_name, lib_path))
+            module_sources = compiled_module_source_manifest(lib)
             export_stage_lib(lib, lib_path)
-            save_stage_to_cache(args.stage_build_cache_dir, cache_key, cache_payload, stage_dir)
+            cache_record = {
+                "cache_key": cache_key,
+                "key_payload": cache_payload,
+                "relay_ir_sha256": relay_ir_sha256,
+                "compiled_module_sources": module_sources,
+                "artifacts": {
+                    "graph_sha256": file_sha256(graph_path),
+                    "lib_sha256": file_sha256(lib_path),
+                    "params_sha256": file_sha256(params_path),
+                },
+            }
+            save_stage_to_cache(args.stage_build_cache_dir, cache_key, cache_record, stage_dir)
+
+        artifact_hashes = {
+            "graph_sha256": file_sha256(graph_path),
+            "lib_sha256": file_sha256(lib_path),
+            "params_sha256": file_sha256(params_path),
+        }
+        if cache_record.get("relay_ir_sha256") != relay_ir_sha256:
+            raise RuntimeError("stage cache Relay hash mismatch for {}".format(stage_name))
 
         stage_records.append(
             {
@@ -545,6 +646,9 @@ def build_stage_modules(args, package_dir):
                 "params": str(params_path.relative_to(package_dir)),
                 "stage_build_cache_key": cache_key,
                 "stage_build_cache_hit": bool(cache_hit),
+                "relay_ir_sha256": relay_ir_sha256,
+                "compiled_module_sources": cache_record.get("compiled_module_sources", []),
+                "artifact_sha256": artifact_hashes,
             }
         )
 
@@ -648,28 +752,45 @@ def resolve_stage_runtime_threads(args, serial, stage_records=None):
         key = "stage{}".format(idx)
         if idx < len(explicit) and explicit[idx] > 0:
             threads[key] = explicit[idx]
-        elif serial:
-            threads[key] = int(args.runtime_num_threads if record.get("device") == "cpu" else 1)
-        elif idx == 0 and record.get("device") == "cpu":
-            threads[key] = 3
         else:
-            threads[key] = 1
+            threads[key] = int(args.runtime_num_threads if record.get("device") == "cpu" else 1)
     return threads
+
+
+def resolve_stage_cpu_affinities(stage_records, stage_threads, serial):
+    """Use an independent TVM prefix mask per CPU stage; overlap is intentional."""
+    affinities = {}
+    for idx, record in enumerate(stage_records):
+        key = "stage{}".format(idx)
+        if record.get("device") != "cpu":
+            affinities[key] = []
+            continue
+        thread_count = int(stage_threads[key])
+        if thread_count not in (1, 2, 3, 4):
+            raise RuntimeError("CPU stage {} has invalid TVM thread parameter".format(key))
+        affinities[key] = list(range(thread_count))
+    return affinities
 
 
 def write_run_script(args, package_dir, stage_records, serial, output_jsonl, script_name):
     input_args = "--input-list inputs.txt" if args.image_dir else "--input input.bin"
     serial_arg = " \\\n  --serial" if serial else ""
     stage_threads = resolve_stage_runtime_threads(args, serial, stage_records)
+    stage_affinities = resolve_stage_cpu_affinities(stage_records, stage_threads, serial)
     tvm_num_threads = max([int(args.runtime_num_threads)] + list(stage_threads.values()))
     stage_cli = []
     for idx, record in enumerate(stage_records):
         prefix = "stage{}".format(idx)
+        affinity_arg = ""
+        if stage_affinities[prefix]:
+            affinity_arg = " \\\n  --{}-cpu-affinity {}".format(
+                prefix, shlex.quote(",".join(str(cpu) for cpu in stage_affinities[prefix]))
+            )
         stage_cli.append(
             "{} \\\n"
             "  --{}-name {} \\\n"
             "  --{}-device {} \\\n"
-            "  --{}-runtime-num-threads {}".format(
+            "  --{}-runtime-num-threads {}{}".format(
                 _stage_cli(record, prefix),
                 prefix,
                 shlex.quote(record["name"]),
@@ -677,6 +798,7 @@ def write_run_script(args, package_dir, stage_records, serial, output_jsonl, scr
                 shlex.quote(record["device"]),
                 prefix,
                 stage_threads[prefix],
+                affinity_arg,
             )
         )
     stage_cli = " \\\n".join(stage_cli)
@@ -691,6 +813,53 @@ def write_run_script(args, package_dir, stage_records, serial, output_jsonl, scr
             + " \\\n  --vta-runtime-profile-checkpoint-every "
             + str(int(args.vta_runtime_profile_checkpoint_every))
         )
+    output_dump_args = ""
+    if args.output_dump_dir:
+        output_dump_dir = args.output_dump_dir.rstrip("/") + (
+            "/serial" if serial else "/pipeline"
+        )
+        output_dump_args = " \\\n  --output-dump-dir " + shlex.quote(output_dump_dir)
+
+    runner_warmup_runs = int(getattr(args, "runner_warmup_runs", 0))
+    runner_ready_file = getattr(args, "runner_ready_file", "")
+    runner_start_file = getattr(args, "runner_start_file", "")
+    runner_barrier_token = getattr(args, "runner_barrier_token", "")
+    runner_start_timeout_s = int(getattr(args, "runner_start_timeout_s", 120))
+    runner_profile_pmu = bool(getattr(args, "runner_profile_pmu", False))
+    instrumentation_requested = bool(
+        runner_warmup_runs
+        or runner_ready_file
+        or runner_start_file
+        or runner_barrier_token
+        or runner_profile_pmu
+    )
+    instrumentation_args = ""
+    if instrumentation_requested and serial:
+        if len(stage_records) != 1:
+            raise RuntimeError("P7 runner instrumentation requires exactly one serial stage")
+        barrier_values = (
+            runner_ready_file,
+            runner_start_file,
+            runner_barrier_token,
+        )
+        if any(barrier_values) and not all(barrier_values):
+            raise RuntimeError(
+                "runner ready/start files and barrier token must be specified together"
+            )
+        instrumentation_args = " \\\n  --warmup-runs {}".format(
+            runner_warmup_runs
+        )
+        if all(barrier_values):
+            instrumentation_args += (
+                " \\\n  --ready-file {} \\\n  --start-file {} \\\n  --barrier-token {} \\\n  --start-timeout-s {}".format(
+                    shlex.quote(runner_ready_file),
+                    shlex.quote(runner_start_file),
+                    shlex.quote(runner_barrier_token),
+                    runner_start_timeout_s,
+                )
+            )
+        if runner_profile_pmu:
+            instrumentation_args += " \\\n  --profile-pmu"
 
     script = """#!/bin/sh
 set -eu
@@ -711,7 +880,8 @@ exec ./vta_stage_pipeline_runner \\
   --runs {runs} \\
   --queue-depth {queue_depth} \\
   --runtime-num-threads {runtime_num_threads} \\
-  --output-jsonl {output_jsonl}{serial_arg}{profile_args}
+  --output-mode {output_mode} \\
+  --output-jsonl {output_jsonl}{serial_arg}{profile_args}{output_dump_args}{instrumentation_args}
 """.format(
         stage_cli=stage_cli,
         input_args=input_args,
@@ -719,18 +889,46 @@ exec ./vta_stage_pipeline_runner \\
         queue_depth=int(args.queue_depth),
         runtime_num_threads=int(args.runtime_num_threads),
         tvm_num_threads=tvm_num_threads,
+        output_mode=shlex.quote(args.runner_output_mode),
         output_jsonl=shlex.quote(output_jsonl),
         serial_arg=serial_arg,
         profile_args=profile_args,
+        output_dump_args=output_dump_args,
+        instrumentation_args=instrumentation_args,
     )
     path = package_dir / script_name
     write_text(path, script)
     path.chmod(0o755)
 
 
+def write_disabled_pipeline_script(package_dir):
+    path = package_dir / "run_stage_pipeline.sh"
+    write_text(
+        path,
+        "#!/bin/sh\n"
+        "echo 'Pipeline execution was not configured for this serial-only profile package' >&2\n"
+        "exit 2\n",
+    )
+    path.chmod(0o755)
+
+
+def pipeline_execution_configured(args):
+    return not bool(args.serial) or bool(args.run_serial_before_pipeline)
+
+
 def write_manifest(args, package_dir, env, resolved_scheme_name, stage_records, image, input_records):
     serial_threads = resolve_stage_runtime_threads(args, serial=True, stage_records=stage_records)
-    pipeline_threads = resolve_stage_runtime_threads(args, serial=False, stage_records=stage_records)
+    serial_affinities = resolve_stage_cpu_affinities(stage_records, serial_threads, serial=True)
+    pipeline_configured = pipeline_execution_configured(args)
+    pipeline_threads = None
+    pipeline_affinities = None
+    if pipeline_configured:
+        pipeline_threads = resolve_stage_runtime_threads(
+            args, serial=False, stage_records=stage_records
+        )
+        pipeline_affinities = resolve_stage_cpu_affinities(
+            stage_records, pipeline_threads, serial=False
+        )
     vta_islands = parse_json_arg(args.vta_islands_json, [])
     if not vta_islands:
         vta_islands = [
@@ -778,17 +976,40 @@ def write_manifest(args, package_dir, env, resolved_scheme_name, stage_records, 
         },
         "serial_stage_runtime_threads": serial_threads,
         "pipeline_stage_runtime_threads": pipeline_threads,
+        "stage_cpu_affinity": {
+            "policy": "independent_overlapping_prefix_masks_v1",
+            "serial": serial_affinities,
+            "pipeline": pipeline_affinities,
+        },
         "serial": bool(args.serial),
         "run_serial_before_pipeline": bool(args.run_serial_before_pipeline),
         "serial_output_jsonl": args.serial_output_jsonl,
         "pipeline_output_jsonl": args.pipeline_output_jsonl,
+        "runner_output_mode": args.runner_output_mode,
+        "output_dump_dir": args.output_dump_dir,
+        "instrumentation": {
+            "warmup_runs": int(getattr(args, "runner_warmup_runs", 0)),
+            "ready_file": getattr(args, "runner_ready_file", "") or None,
+            "start_file": getattr(args, "runner_start_file", "") or None,
+            "barrier_token_configured": bool(getattr(args, "runner_barrier_token", "")),
+            "start_timeout_s": int(getattr(args, "runner_start_timeout_s", 120)),
+            "process_pmu_requested": bool(getattr(args, "runner_profile_pmu", False)),
+            "scope": "single_serial_stage_only",
+        },
         "rpc_baseline_result": args.rpc_baseline_result,
+        "correctness_policy": args.correctness_policy,
+        "deployment": {
+            "ssh_target": args.board,
+            "remote_dir": args.remote_dir if args.board else "",
+            "deploy_mode": args.deploy_mode if args.board else "package_only",
+        },
+        "pipeline_configured": pipeline_configured,
         "vta_islands": vta_islands,
         "unit_assignment": unit_assignment,
         "stages": stage_records,
         "runner": "vta_stage_pipeline_runner",
         "runtime_libs": ["libtvm_runtime.so", "libvta.so"],
-        "baseline": "RPC all_vta",
+        "baseline": "RPC all_vta" if args.rpc_baseline_result else "none",
     }
     write_text(package_dir / "manifest.json", json.dumps(manifest, indent=2, sort_keys=True) + "\n")
 
@@ -849,6 +1070,91 @@ def directory_size_bytes(path):
         if item.is_file():
             total += int(item.stat().st_size)
     return total
+
+
+def ext4_error_lines(dmesg_text, device_path):
+    """Return target-device ext4 corruption lines from the current boot log."""
+    device = Path(str(device_path).strip()).name
+    if not device:
+        return []
+    markers = (
+        "ext4-fs error",
+        "bad block bitmap",
+        "bad extra_isize",
+        "delayed block allocation failed",
+        "data will be lost",
+    )
+    return [
+        line
+        for line in str(dmesg_text).splitlines()
+        if device in line.lower()
+        and "ext4-fs" in line.lower()
+        and any(marker in line.lower() for marker in markers)
+    ]
+
+
+def parse_df_device(df_text):
+    """Extract a filesystem source from one ``df -P`` data row."""
+    lines = [line.strip() for line in str(df_text).splitlines() if line.strip()]
+    if not lines:
+        raise RuntimeError("df returned no filesystem row")
+    fields = lines[-1].split()
+    if len(fields) < 6 or fields[0].lower() == "filesystem":
+        raise RuntimeError("df did not return a filesystem data row: {!r}".format(lines[-1]))
+    return fields[0]
+
+
+def check_remote_filesystem_health(args, ssh_options, remote_dir):
+    """Fail before the first remote write when the target ext4 is corrupted."""
+    remote_parent = str(Path(remote_dir).parent)
+    quoted_parent = shlex.quote(remote_parent)
+    # The deployment directory often does not exist yet. Resolve its nearest
+    # existing ancestor so df cannot silently return only its header.
+    resolve_command = (
+        "target={parent}; "
+        "while [ ! -e \"$target\" ] && [ \"$target\" != / ]; do "
+        "target=$(dirname \"$target\"); "
+        "done; "
+        "df -P \"$target\" 2>/dev/null"
+    ).format(parent=quoted_parent)
+    df_proc = run_capture(
+        ["ssh"]
+        + ssh_options
+        + [args.board, resolve_command],
+        check=False,
+        timeout=args.ssh_command_timeout_s,
+        timeout_label="remote filesystem device check",
+    )
+    try:
+        device = parse_df_device(df_proc.stdout)
+    except RuntimeError as err:
+        raise RuntimeError(
+            "Could not identify the remote filesystem for {} without writing to it: {}".format(
+                remote_parent, err
+            )
+        ) from err
+    if df_proc.returncode != 0:
+        raise RuntimeError(
+            "Could not identify the remote filesystem for {} without writing to it".format(
+                remote_parent
+            )
+        )
+    dmesg_proc = run_capture(
+        ["ssh"] + ssh_options + [args.board, "dmesg"],
+        check=False,
+        timeout=args.ssh_command_timeout_s,
+        timeout_label="remote filesystem kernel-log check",
+    )
+    if dmesg_proc.returncode != 0:
+        raise RuntimeError("Could not read remote kernel log before deployment")
+    errors = ext4_error_lines(dmesg_proc.stdout, device)
+    if errors:
+        raise RuntimeError(
+            "Remote filesystem {} has ext4 corruption errors in the current boot; "
+            "refusing to write. Repair it offline with fsck or replace the storage, then "
+            "reboot. Latest error: {}".format(device, errors[-1].strip())
+        )
+    print("[REMOTE] filesystem health check passed for", device)
 
 
 def check_remote_free_space(args, ssh_options, remote_dir, package_dir):
@@ -1082,6 +1388,7 @@ def deploy_and_run(args, package_dir, tar_path):
     remote_tar = "/tmp/{}".format(tar_path.name)
     ssh_options = build_ssh_options(args)
     try:
+        check_remote_filesystem_health(args, ssh_options, remote_dir)
         check_remote_free_space(args, ssh_options, remote_dir, package_dir)
 
         if not args.skip_copy:
@@ -1165,6 +1472,18 @@ def deploy_and_run(args, package_dir, tar_path):
                     ],
                     timeout=args.fetch_timeout_s,
                     timeout_label="fetch runtime profile",
+                )
+            if args.output_dump_dir:
+                run(
+                    ["scp"]
+                    + ssh_options
+                    + [
+                        "-r",
+                        "{}:{}/{}".format(args.board, remote_dir, args.output_dump_dir),
+                        str(local_dir),
+                    ],
+                    timeout=args.fetch_timeout_s,
+                    timeout_label="fetch raw output tensors",
                 )
             if args.compare_serial_pipeline:
                 compare_jsonl_top1(
@@ -1354,6 +1673,32 @@ def refresh_reused_package(args, package_dir):
     if not stage_records:
         raise RuntimeError("Reused package manifest has no stages: {}".format(manifest_path))
 
+    legacy_stage_threads = (
+        int(args.stage0_runtime_num_threads or 0),
+        int(args.stage1_runtime_num_threads or 0),
+        int(args.stage2_runtime_num_threads or 0),
+    )
+    if not args.stage_runtime_num_threads and not any(legacy_stage_threads):
+        inherited = manifest.get("pipeline_stage_runtime_threads")
+        if inherited is None:
+            inherited = (manifest.get("stage_runtime_threads") or {}).get("pipeline")
+        if not isinstance(inherited, dict):
+            raise RuntimeError(
+                "Reused package has no pipeline stage-thread map; pass "
+                "--stage-runtime-num-threads explicitly"
+            )
+        try:
+            values = [int(inherited["stage{}".format(index)]) for index in range(len(stage_records))]
+        except (KeyError, TypeError, ValueError) as err:
+            raise RuntimeError(
+                "Reused package has an invalid pipeline stage-thread map; pass "
+                "--stage-runtime-num-threads explicitly"
+            ) from err
+        if any(value <= 0 for value in values):
+            raise RuntimeError("Reused package stage-thread values must be positive")
+        args.stage_runtime_num_threads = ",".join(str(value) for value in values)
+        print("[PACKAGE-REUSE] inherited stage threads", args.stage_runtime_num_threads)
+
     compile_runner(package_dir)
     copy_runtime_libs(package_dir)
 
@@ -1365,17 +1710,30 @@ def refresh_reused_package(args, package_dir):
         output_jsonl=args.serial_output_jsonl,
         script_name="run_stage_serial.sh",
     )
-    write_run_script(
-        args,
-        package_dir,
-        stage_records,
-        serial=False,
-        output_jsonl=args.pipeline_output_jsonl,
-        script_name="run_stage_pipeline.sh",
-    )
+    pipeline_configured = pipeline_execution_configured(args)
+    if pipeline_configured:
+        write_run_script(
+            args,
+            package_dir,
+            stage_records,
+            serial=False,
+            output_jsonl=args.pipeline_output_jsonl,
+            script_name="run_stage_pipeline.sh",
+        )
+    else:
+        write_disabled_pipeline_script(package_dir)
 
     serial_threads = resolve_stage_runtime_threads(args, serial=True, stage_records=stage_records)
-    pipeline_threads = resolve_stage_runtime_threads(args, serial=False, stage_records=stage_records)
+    serial_affinities = resolve_stage_cpu_affinities(stage_records, serial_threads, serial=True)
+    pipeline_threads = None
+    pipeline_affinities = None
+    if pipeline_configured:
+        pipeline_threads = resolve_stage_runtime_threads(
+            args, serial=False, stage_records=stage_records
+        )
+        pipeline_affinities = resolve_stage_cpu_affinities(
+            stage_records, pipeline_threads, serial=False
+        )
     manifest.update(
         {
             "candidate_id": args.candidate_id or manifest.get("candidate_id", ""),
@@ -1388,16 +1746,42 @@ def refresh_reused_package(args, package_dir):
             },
             "serial_stage_runtime_threads": serial_threads,
             "pipeline_stage_runtime_threads": pipeline_threads,
+            "stage_cpu_affinity": {
+                "policy": "independent_overlapping_prefix_masks_v1",
+                "serial": serial_affinities,
+                "pipeline": pipeline_affinities,
+            },
+            "pipeline_configured": pipeline_configured,
             "serial": bool(args.serial),
             "run_serial_before_pipeline": bool(args.run_serial_before_pipeline),
             "serial_output_jsonl": args.serial_output_jsonl,
             "pipeline_output_jsonl": args.pipeline_output_jsonl,
+            "runner_output_mode": args.runner_output_mode,
+            "output_dump_dir": args.output_dump_dir,
             "rpc_baseline_result": args.rpc_baseline_result,
             "correctness_policy": args.correctness_policy,
+            "deployment": {
+                "ssh_target": args.board,
+                "remote_dir": args.remote_dir,
+                "deploy_mode": args.deploy_mode,
+            },
         }
     )
     write_text(manifest_path, json.dumps(manifest, indent=2, sort_keys=True) + "\n")
     check_package(package_dir, bool(manifest.get("input_list")), stage_records)
+
+
+def stage_reused_package(source_dir):
+    """Copy a reusable package before refreshing scripts and runtime binaries."""
+    source_dir = Path(source_dir).resolve()
+    work_dir = Path(tempfile.mkdtemp(prefix="vta_stage_pipeline_reuse_"))
+    package_dir = work_dir / "package"
+    try:
+        shutil.copytree(source_dir, package_dir, copy_function=shutil.copy2)
+    except Exception:
+        shutil.rmtree(work_dir, ignore_errors=True)
+        raise
+    return work_dir, package_dir
 
 
 def main():
@@ -1440,14 +1824,21 @@ def main():
         raise RuntimeError("--reuse-package-dir is only valid for board deployment runs")
 
     if args.reuse_package_dir:
-        package_dir = Path(args.reuse_package_dir).resolve()
-        if not package_dir.is_dir():
-            raise RuntimeError("--reuse-package-dir does not exist: {}".format(package_dir))
-        refresh_reused_package(args, package_dir)
-        tar_path = package_tar(package_dir)
-        print("[PACKAGE-REUSE]", package_dir)
-        print("[PACKAGE]", tar_path)
-        deploy_and_run(args, package_dir, tar_path)
+        source_dir = Path(args.reuse_package_dir).resolve()
+        if not source_dir.is_dir():
+            raise RuntimeError("--reuse-package-dir does not exist: {}".format(source_dir))
+        work_dir, package_dir = stage_reused_package(source_dir)
+        try:
+            refresh_reused_package(args, package_dir)
+            tar_path = package_dir.parent / (package_dir.name + ".tar.gz")
+            if args.deploy_mode == "tar":
+                tar_path = package_tar(package_dir)
+            print("[PACKAGE-REUSE-SOURCE]", source_dir)
+            print("[PACKAGE-REUSE-STAGED]", package_dir)
+            print("[PACKAGE]", tar_path if args.deploy_mode == "tar" else "sync-no-tar")
+            deploy_and_run(args, package_dir, tar_path)
+        finally:
+            shutil.rmtree(work_dir, ignore_errors=True)
         return
 
     if args.build_dir:
@@ -1476,14 +1867,17 @@ def main():
             output_jsonl=args.serial_output_jsonl,
             script_name="run_stage_serial.sh",
         )
-        write_run_script(
-            args,
-            package_dir,
-            stage_records,
-            serial=False,
-            output_jsonl=args.pipeline_output_jsonl,
-            script_name="run_stage_pipeline.sh",
-        )
+        if pipeline_execution_configured(args):
+            write_run_script(
+                args,
+                package_dir,
+                stage_records,
+                serial=False,
+                output_jsonl=args.pipeline_output_jsonl,
+                script_name="run_stage_pipeline.sh",
+            )
+        else:
+            write_disabled_pipeline_script(package_dir)
         write_manifest(args, package_dir, env, resolved_scheme_name, stage_records, image, input_records)
         check_package(package_dir, bool(args.image_dir), stage_records)
         tar_path = package_tar(package_dir)

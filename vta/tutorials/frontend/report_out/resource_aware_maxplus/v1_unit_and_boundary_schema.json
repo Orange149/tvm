@@ -1,0 +1,2619 @@
+{
+  "artifact_sha256": "4ef28d59d36ad33d32f4b0b5fce35dd4cb8dd63be7de7cdacdcd9f2e303fa237",
+  "candidate_grammar": {
+    "all_cpu_baseline_separate_from_search": true,
+    "all_vta_baseline_separate_from_search": true,
+    "canonicalization": "merge adjacent stages on the same device",
+    "coverage": "all units exactly once in UNIT_ORDER",
+    "cpu_affinity_policy": {
+      "big_little_assumption": false,
+      "pipeline": "each CPU stage independently uses [0,threads); masks may overlap",
+      "serial": "each CPU stage independently uses [0,threads)",
+      "tvm_affinity_mode": -3
+    },
+    "cpu_thread_choices": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "cpu_thread_parameter_scope": "independent TVM runtime parameter per CPU stage",
+    "cpu_thread_sum_is_a_constraint": false,
+    "cpu_topology": "four_homogeneous_cores",
+    "cut_legality_level": "static tensor contract; native lowering required in V1-P1",
+    "first_stage_device": "cpu",
+    "last_stage_device": "cpu",
+    "maximum_stage_count": 7,
+    "maximum_vta_islands": 3,
+    "minimum_vta_islands": 1,
+    "required_device_pattern": "cpu,(vta,cpu){1,3}",
+    "stage_shape": "nonempty contiguous unit interval",
+    "vta_window_rules": {
+      "allowed_end_kinds": [
+        "main_preadd",
+        "skip_proj",
+        "add_relu_tail"
+      ],
+      "allowed_start_kinds": [
+        "main_preadd"
+      ],
+      "must_contain_kind": "main_preadd"
+    }
+  },
+  "kind": "cpu_vta_pipeline_v1_unit_and_boundary_schema",
+  "legal_cut_positions": [
+    {
+      "consumer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "consumer_unit": "layer1_block0_main_preadd",
+      "contract_compatible": true,
+      "cut_position": 1,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "producer_unit": "stem"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer1_block0_add_relu_tail",
+      "contract_compatible": true,
+      "cut_position": 2,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer1_block0_main_preadd"
+    },
+    {
+      "consumer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "consumer_unit": "layer1_block1_main_preadd",
+      "contract_compatible": true,
+      "cut_position": 3,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "producer_unit": "layer1_block0_add_relu_tail"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer1_block1_add_relu_tail",
+      "contract_compatible": true,
+      "cut_position": 4,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer1_block1_main_preadd"
+    },
+    {
+      "consumer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "consumer_unit": "layer2_block0_main_preadd",
+      "contract_compatible": true,
+      "cut_position": 5,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "producer_unit": "layer1_block1_add_relu_tail"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer2_block0_skip_proj",
+      "contract_compatible": true,
+      "cut_position": 6,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer2_block0_main_preadd"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer2_block0_add_relu_tail",
+      "contract_compatible": true,
+      "cut_position": 7,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer2_block0_skip_proj"
+    },
+    {
+      "consumer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "consumer_unit": "layer2_block1_main_preadd",
+      "contract_compatible": true,
+      "cut_position": 8,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "producer_unit": "layer2_block0_add_relu_tail"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer2_block1_add_relu_tail",
+      "contract_compatible": true,
+      "cut_position": 9,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer2_block1_main_preadd"
+    },
+    {
+      "consumer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "consumer_unit": "layer3_block0_main_preadd",
+      "contract_compatible": true,
+      "cut_position": 10,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "producer_unit": "layer2_block1_add_relu_tail"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer3_block0_skip_proj",
+      "contract_compatible": true,
+      "cut_position": 11,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer3_block0_main_preadd"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer3_block0_add_relu_tail",
+      "contract_compatible": true,
+      "cut_position": 12,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer3_block0_skip_proj"
+    },
+    {
+      "consumer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "consumer_unit": "layer3_block1_main_preadd",
+      "contract_compatible": true,
+      "cut_position": 13,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "producer_unit": "layer3_block0_add_relu_tail"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer3_block1_add_relu_tail",
+      "contract_compatible": true,
+      "cut_position": 14,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer3_block1_main_preadd"
+    },
+    {
+      "consumer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "consumer_unit": "layer4_block0_main_preadd",
+      "contract_compatible": true,
+      "cut_position": 15,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "producer_unit": "layer3_block1_add_relu_tail"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer4_block0_skip_proj",
+      "contract_compatible": true,
+      "cut_position": 16,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer4_block0_main_preadd"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer4_block0_add_relu_tail",
+      "contract_compatible": true,
+      "cut_position": 17,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer4_block0_skip_proj"
+    },
+    {
+      "consumer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "consumer_unit": "layer4_block1_main_preadd",
+      "contract_compatible": true,
+      "cut_position": 18,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "producer_unit": "layer4_block0_add_relu_tail"
+    },
+    {
+      "consumer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "consumer_unit": "layer4_block1_add_relu_tail",
+      "contract_compatible": true,
+      "cut_position": 19,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "producer_unit": "layer4_block1_main_preadd"
+    },
+    {
+      "consumer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "consumer_unit": "head",
+      "contract_compatible": true,
+      "cut_position": 20,
+      "heterogeneous_transfer": {
+        "accounting_id_templates": {
+          "host_adapter": "boundary:{cut_position}:host_adapter:{ordinal}",
+          "ps_pl_load": "vta_stage:{stage_index}:load_instruction:{ordinal}",
+          "ps_pl_store": "vta_stage:{stage_index}:store_instruction:{ordinal}"
+        },
+        "boundary_owner": "host_adapter_set_get_copy",
+        "ps_pl_owner": "lowered_vta_load_store",
+        "transfer_resource": "stage_dma"
+      },
+      "native_lowering_status": "not_checked_until_V1-P1",
+      "producer_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "producer_unit": "layer4_block1_add_relu_tail"
+    }
+  ],
+  "model": {
+    "atomic_unit_count": 21,
+    "batch": 1,
+    "cut_position_count": 20,
+    "image_size": 224,
+    "name": "resnet18_v1",
+    "unit_order": [
+      "stem",
+      "layer1_block0_main_preadd",
+      "layer1_block0_add_relu_tail",
+      "layer1_block1_main_preadd",
+      "layer1_block1_add_relu_tail",
+      "layer2_block0_main_preadd",
+      "layer2_block0_skip_proj",
+      "layer2_block0_add_relu_tail",
+      "layer2_block1_main_preadd",
+      "layer2_block1_add_relu_tail",
+      "layer3_block0_main_preadd",
+      "layer3_block0_skip_proj",
+      "layer3_block0_add_relu_tail",
+      "layer3_block1_main_preadd",
+      "layer3_block1_add_relu_tail",
+      "layer4_block0_main_preadd",
+      "layer4_block0_skip_proj",
+      "layer4_block0_add_relu_tail",
+      "layer4_block1_main_preadd",
+      "layer4_block1_add_relu_tail",
+      "head"
+    ]
+  },
+  "protocol_id": "cpu_vta_pipeline_v1",
+  "resource_ownership": {
+    "additive_spill_penalty": false,
+    "boundary": "host adapter and set/get copy only",
+    "cpu_stage": "CPU compute and stage-local memory service",
+    "shared_ddr": "unique per-frame physical traffic by accounting id",
+    "single_vta_mutex": "one token shared by all VTA stages",
+    "submit_sync": "VTA device-run service",
+    "vta_dma": "lowered VTA LOAD/STORE including fixed-schedule spill",
+    "vta_mutex_scope": "native RunStage set_input/run/get_output"
+  },
+  "schema_version": 1,
+  "units": [
+    {
+      "candidate_device_support": [
+        "cpu"
+      ],
+      "index": 0,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "stem",
+      "name": "stem",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.23783424,
+        "compute_macs_est": 118013952,
+        "compute_ops_est": 237834240,
+        "element_ops_est": 1806336
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 1,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "main_preadd",
+      "name": "layer1_block0_main_preadd",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.462422016,
+        "compute_macs_est": 231211008,
+        "compute_ops_est": 462422016,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 2,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "add_relu_tail",
+      "name": "layer1_block0_add_relu_tail",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.000401408,
+        "compute_macs_est": 0,
+        "compute_ops_est": 401408,
+        "element_ops_est": 401408
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 3,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "main_preadd",
+      "name": "layer1_block1_main_preadd",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.462422016,
+        "compute_macs_est": 231211008,
+        "compute_ops_est": 462422016,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 4,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "add_relu_tail",
+      "name": "layer1_block1_add_relu_tail",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.000401408,
+        "compute_macs_est": 0,
+        "compute_ops_est": 401408,
+        "element_ops_est": 401408
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 5,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "main_preadd",
+      "name": "layer2_block0_main_preadd",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.346816512,
+        "compute_macs_est": 173408256,
+        "compute_ops_est": 346816512,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 6,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "skip_proj",
+      "name": "layer2_block0_skip_proj",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.012845056,
+        "compute_macs_est": 6422528,
+        "compute_ops_est": 12845056,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 7,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "add_relu_tail",
+      "name": "layer2_block0_add_relu_tail",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.000200704,
+        "compute_macs_est": 0,
+        "compute_ops_est": 200704,
+        "element_ops_est": 200704
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 8,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "main_preadd",
+      "name": "layer2_block1_main_preadd",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.462422016,
+        "compute_macs_est": 231211008,
+        "compute_ops_est": 462422016,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 9,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "add_relu_tail",
+      "name": "layer2_block1_add_relu_tail",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.000200704,
+        "compute_macs_est": 0,
+        "compute_ops_est": 200704,
+        "element_ops_est": 200704
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 10,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "main_preadd",
+      "name": "layer3_block0_main_preadd",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.346816512,
+        "compute_macs_est": 173408256,
+        "compute_ops_est": 346816512,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 11,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              128,
+              28,
+              28
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "skip_proj",
+      "name": "layer3_block0_skip_proj",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.012845056,
+        "compute_macs_est": 6422528,
+        "compute_ops_est": 12845056,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 12,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "add_relu_tail",
+      "name": "layer3_block0_add_relu_tail",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.000100352,
+        "compute_macs_est": 0,
+        "compute_ops_est": 100352,
+        "element_ops_est": 100352
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 13,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "main_preadd",
+      "name": "layer3_block1_main_preadd",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.462422016,
+        "compute_macs_est": 231211008,
+        "compute_ops_est": 462422016,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 14,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "add_relu_tail",
+      "name": "layer3_block1_add_relu_tail",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.000100352,
+        "compute_macs_est": 0,
+        "compute_ops_est": 100352,
+        "element_ops_est": 100352
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 15,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "main_preadd",
+      "name": "layer4_block0_main_preadd",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.346816512,
+        "compute_macs_est": 173408256,
+        "compute_ops_est": 346816512,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 16,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "skip_proj",
+      "name": "layer4_block0_skip_proj",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.012845056,
+        "compute_macs_est": 6422528,
+        "compute_ops_est": 12845056,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 17,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "add_relu_tail",
+      "name": "layer4_block0_add_relu_tail",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 5.0176e-05,
+        "compute_macs_est": 0,
+        "compute_ops_est": 50176,
+        "element_ops_est": 50176
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 18,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "main_preadd",
+      "name": "layer4_block1_main_preadd",
+      "output_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.462422016,
+        "compute_macs_est": 231211008,
+        "compute_ops_est": 462422016,
+        "element_ops_est": 0
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu",
+        "vta"
+      ],
+      "index": 19,
+      "input_contract": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "kind": "add_relu_tail",
+      "name": "layer4_block1_add_relu_tail",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 5.0176e-05,
+        "compute_macs_est": 0,
+        "compute_ops_est": 50176,
+        "element_ops_est": 50176
+      }
+    },
+    {
+      "candidate_device_support": [
+        "cpu"
+      ],
+      "index": 20,
+      "input_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "kind": "head",
+      "name": "head",
+      "output_contract": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              1000
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "static_compute": {
+        "compute_gops_est": 0.001049088,
+        "compute_macs_est": 512000,
+        "compute_ops_est": 1049088,
+        "element_ops_est": 25088
+      }
+    }
+  ]
+}
