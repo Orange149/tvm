@@ -25,6 +25,9 @@
    当前正文严格将其标为单 boot stress-case 观察。
 5. 当前没有能耗数据，不在摘要和结论中声称能效提升；当前静态模型的绝对吞吐预测 gate 未通过，
    不把资源下界倒数表述为预测 FPS。
+6. Stage–tile 一次反馈的 2×2 流水线只是在一组新编译 schedule 内部比较，尚未超过原 Top-20
+   的高性能调度；若将其升格为第一创新点的正式性能证据，必须先把历史 incumbent 纳入候选门槛，
+   完成其余唯一 VTA segment 的 DMA 对照，再补独立 boot 和 topology-diverse holdout。
 
 # 摘要
 
@@ -42,7 +45,7 @@ VTA 同时访问 DDR，框架还可能在共享物理内存上重复物化同一
 联合搜索 CPU/VTA 连续 segment、VTA island 数和每个 CPU stage 的 TVM 线程参数。成本函数由
 CPU stage 服务、单物理 VTA 串行服务、CPU core-time、CPU-VTA 复合边界与共享 DDR demand 构成，
 使用各稳态资源负载的最大值估计流水线启动间隔。随后，利用非负服务需求形成的单调下界实现
-k-best 动态规划，只输出 Top-K 候选供编译和上板验证。其次，针对普通 `get_output/set_input`
+k-best 动态规划，只输出 Top-K 候选供编译和上板验证。补充的有界 tile 测量与编译/DMA 审计用于检查成本输入和调优记录的复用范围，不作为超过 AutoTVM 或 stage–tile 联合优化有效的证据。其次，针对普通 `get_output/set_input`
 在跨 GraphExecutor 边界产生的重复物化，本文复用 TVM 已有 zero-copy 接口，设计 manifest 驱动的
 有界共享 slot 协议：从 u-dma-buf 预分配同址 CPU/VTA 视图，队列仅传递 slot 标识和帧代次，
 通过所有权状态机及双 slot 防止跨帧覆盖，并支持残差边界的多张量原子交接。
@@ -58,6 +61,7 @@ API 服务由 1.446899 ms 降至 0.041830 ms，减少 97.11%；但启动间隔�
 优化 `memcpy` 基线，边界 API 服务减少 4.373 ms，单帧中位时延由 167.399 ms 降至 162.662 ms，
 观察下降 2.83%；该结果来自一个 boot，仅作为机制观察。实验由此揭示：零拷贝可稳定消除边界内存
 工作，但只有被消除的工作位于关键路径或超过流水线余量时，才会转化为端到端吞吐提升。
+另外，有界 stage–tile 反馈在同一 board boot 的 2×2 pilot 中使两种新编译切图的优劣发生反转：切图 D 相对 B 由固定 tile 时的 FPS 低 8.32% 变为调优后高 18.09%。但恢复原 Top-20 的 topology B 高性能二进制后，其流水吞吐为 10.724 FPS，明显高于当前 bounded-tuned B 的 3.482 FPS；后者每帧 LOAD 请求数、LOAD payload 和设备等待分别为旧调度的 14.91、3.78 和 3.39 倍。该结果说明有限调优必须保留历史 incumbent，并将请求碎片与重复载入纳入筛选；当前仅跑通技术闭环，不声称已经获得正向 stage--tile 优化、完成全空间联合搜索或直接测得硬件 compute stall。
 
 **关键词：** 深度神经网络；CPU-FPGA 异构计算；共享内存；流水线并行；图划分；动态规划；零拷贝
 
@@ -78,8 +82,10 @@ closed compute units. With VTA scheduling, tiling, and quantization fixed, the m
 contiguous CPU/VTA segments, the number of VTA islands, and the TVM thread parameter of every CPU stage. Its
 cost objective combines CPU-stage service, serialized demand on the single VTA, CPU core-time, composite
 CPU-VTA boundary service, and shared-DDR demand; the maximum steady-state resource load estimates the pipeline
-initiation interval. A monotonic-bound k-best dynamic program emits only a Top-K shortlist. The runtime part
-uses TVM's existing zero-copy APIs but adds a manifest-driven bounded-slot protocol: u-dma-buf storage is
+initiation interval. A monotonic-bound k-best dynamic program emits only a Top-K shortlist. Supplementary
+bounded tile measurements and compiler/DMA audits qualify cost inputs and the scope of tuning-record reuse;
+they do not establish superiority to AutoTVM or a benefit from joint stage–tile optimization. The runtime part uses TVM's existing
+zero-copy APIs but adds a manifest-driven bounded-slot protocol: u-dma-buf storage is
 exposed as same-address CPU/VTA tensor views, queues carry slot and generation tokens rather than tensor data,
 and an ownership state machine with two slots prevents cross-frame overwrite and supports multi-tensor residual
 boundaries.
@@ -97,6 +103,14 @@ state throughput gain is claimed. In a one-boot serial stress case with three VT
 boundaries, zero-copy reduces median latency from 167.399 ms to 162.662 ms (2.83%) against an optimized memcpy
 baseline. These results show that zero-copy reliably removes boundary memory work, but affects throughput only
 when the removed work lies on the critical resource path or exceeds available pipeline slack.
+In a separate same-boot 2-by-2 pilot over newly compiled schedules, bounded stage--tile feedback reverses the
+ordering of two partitions: partition D changes from 8.32% lower FPS than B under the pilot baseline to 18.09%
+higher FPS after tuning. However, replaying the preserved high-performance topology-B binary from the original
+Top-20 yields 10.724 FPS, versus 3.482 FPS for the current bounded-tuned B. The latter issues 14.91 times as many
+LOAD requests, requests 3.78 times the LOAD payload, and spends 3.39 times the device-wait time per frame.
+Therefore the completed loop is a diagnostic pilot: it motivates incumbent preservation and DMA-fragmentation
+filters, but does not yet establish a positive stage--tile optimization, global co-optimization, or hardware
+compute-stall measurements.
 
 **Keywords:** deep neural network; CPU-FPGA heterogeneous computing; shared memory; pipeline parallelism;
 graph partitioning; dynamic programming; zero-copy
@@ -182,7 +196,7 @@ slot 消除框架冗余复制。
 2. 建立中小粒度、依赖闭合的计算单元和 tensor contract，从编译结果生成合法 segment、boundary
    与资源 manifest。
 3. 通过组件 profile 构建 CPU stage、单 VTA、CPU core-time、复合边界和共享 DDR demand 组成的
-   资源下界，使用 k-best 动态规划生成 Top-20。
+   资源下界，使用 k-best 动态规划生成 Top-20；有限 tile 测量和编译/DMA 审计作为成本输入与复用范围的补充检查。
 4. 基于 u-dma-buf 和 TVM zero-copy API 实现跨 Executor 共享 slot，增加 generation、owner、
    completion 与双 slot 状态机，并处理残差边界的多张量原子所有权。
 5. 使用完整枚举、200 条历史 ResNet18 记录、自然 Top-20、三 boot 零拷贝实验、三-island 串行
@@ -192,11 +206,11 @@ slot 消除框架冗余复制。
 
 本文形成两项主要创新和一项工程化贡献。
 
-1. **面向单 VTA 共享资源 SoC 的编译约束 Top-K 流水线划分方法。** 本文使用中小粒度依赖闭合
+1. **面向单物理 VTA 与共享 CPU 核心的资源及边界代价感知 Top-K 流水线划分方法。** 本文使用中小粒度依赖闭合
    单元，在同一搜索中联合决定连续 CPU/VTA segment、VTA island 数和每个 CPU stage 的 TVM
    线程参数；成本函数显式累加单物理 VTA demand，并加入共享四核 core-time、方向化复合边界和
    DDR demand。利用非负资源服务形成的单调下界实现 k-best 标签搜索，在 972528 个 ResNet18
-   配置上用完整枚举验证 Top-20 精确性。与仅按节点执行时间或独立设备最大负载建模相比，该方法
+   配置上用完整枚举验证 Top-20 精确性。FuseOps 负责给定图内的 primitive 融合，量化/packing 负责数值和布局，AutoTVM 调整模板暴露的 schedule 参数；这些是复用的编译基础，不是本文新增能力。当前搜索不联合决定 dtype/layout、copy/shared 或 slot 深度。与仅按节点执行时间或独立设备最大负载建模相比，该方法
    针对的是逻辑 stage 多于物理设备、CPU/VTA 共享资源的嵌入式运行时。
 2. **面向固定 CPU-VTA 流水线的 manifest 驱动共享 slot 零拷贝机制。** TVM 已提供单个 Executor
    的 zero-copy 绑定接口，双缓冲也不是本文单独提出的概念；本文的增量在于把切图 manifest、
@@ -210,7 +224,7 @@ slot 消除框架冗余复制。
    II”的适用规律。
 
 本文不声称首次提出 CPU-FPGA 流水线、动态规划、zero-copy API 或双缓冲。当前实验也未证明准确
-的绝对 FPS 预测、完整 DDR contention、tile 联合搜索和跨网络前瞻泛化。论文的创新边界是上述
+的绝对 FPS 预测、完整 DDR contention、全空间 tile 联合搜索和跨网络前瞻泛化。论文的创新边界是上述
 机制在固定 CPU-VTA 共享 DDR 流水线中的联合设计、实现与实证。
 
 ## 1.5 论文结构
@@ -226,7 +240,7 @@ slot 消除框架冗余复制。
 
 TVM 将前端网络转换为 Relay 中间表示，并通过算子融合、量化、调度和代码生成面向不同后端生成可执行模块[11]。VTA 是与 TVM 集成的可参数化深度学习加速器，使用显式 LOAD、计算和 STORE 任务以及依赖队列组织数据搬运和执行[10]。这一结构意味着 VTA 的阶段时间不仅取决于逻辑运算量，还取决于物理通道填充、片上 buffer、LOAD/STORE 指令和 host runtime。
 
-本文不搜索 VTA 硬件参数，也不在 V1 中联合搜索 tile。实验固定 bitstream、量化、graph packing、schedule 和 runtime policy，只改变网络划分与 CPU 线程配置。这一选择先隔离系统划分问题，并避免把 AutoTVM 的调度空间与图划分空间一次性做笛卡尔积。
+本文不搜索 VTA 硬件参数。V1 主实验固定 bitstream、量化、graph packing、schedule 和 tile，只改变网络划分与 CPU 线程配置，先隔离系统划分问题。补充实验不展开 AutoTVM 与图划分的完整笛卡尔积，而是在冻结 Top-20 上对去重 workload 做一次有界 tile 反馈，用于验证片上分块是否会改变切图决策。
 
 ## 2.2 DNN 图放置与划分
 
@@ -698,6 +712,42 @@ boundary host core work
 2. topology-diverse Top-K：每种 topology 先保留最佳线程配置，再加入少量预注册 thread control；
 3. compile/reference failure 仍消耗预算，不依据中途吞吐替换候选。
 
+## 5.7 内存感知的有界 stage–tile 反馈
+
+若直接将所有切图与 AutoTVM 完整调度空间做笛卡尔积，编译和上板成本不可接受。本文在主要固定-tile 搜索之外实现一次有界反馈，具体流程为：
+
+1. 冻结静态 Top-20，将其合并为 4 种 topology、5 个唯一 VTA segment 和 10 类实际 `conv2d_packed.vta` workload；
+2. 对每类 workload 只测量最多 3 个临近合法配置，并为初始候选全部失败的 1×1 stride-2 workload 最多增加 2 个诊断性 repair 探针；
+3. 每个配置须在板端通过独立 NumPy 卷积校验，整个 VTA segment 还须与同一量化 Relay 图的 LLVM 输出逐元素一致；
+4. 在 CPU、边界和 VTA host core-work 成本冻结的条件下，用新的 segment 时间替换 VTA 成本，对原 Top-20 重排；
+5. 选取反馈前后的两种 Top-1 topology，在原生流水线上做“切图×schedule”的 2×2 验证。
+
+该方法不把 AutoTVM 本身作为创新，而是将少量实际 workload 的片上缓冲分块结果反馈给 segment 代价。除了时间，profile 还记录 LOAD/STORE 请求数、payload、小请求、带 stride 请求和权重/输入类别，用于辨别过细 DMA 请求与随空间块重复载入。这些是 runtime 请求口径，不等同于 DDR 控制器的实际 AXI traffic，也不直接给出 compute 等待 LOAD/STORE 的 stall cycle。
+
+为使这些指标实际参与 stage 决策，本文进一步构造相邻切点的内存增量向量。以固定起点 unit 03、候选终点 15/16/17 为例：从 `03..15` 扩展到 `03..16` 会把 layer4 的 1×1 projection 移入 VTA。由 TopHub tile 的 lowered TIR 可在编译期得出新增卷积 LOAD 为 64 次、217600 B，板端完整 stage 实测为 66 次、219648 B，二者差异仅为 2 次、2048 B 的图级 ACC LOAD；STORE 同时增加 25088 B。另一方面，图的 live-tensor contract 表明 VTA→CPU 边界由 301056 B 降为 200704 B，即减少一个 100352 B 张量。因此该扩展不是单向优劣，而是“新增 DDR--SRAM 搬运与减少共享边界物化”的向量权衡。
+
+继续从 `03..16` 扩展到 `03..17` 只将 add-ReLU tail 移入 VTA，不新增卷积 workload。静态提取和完整 stage profile 均显示 LOAD/STORE 请求数及 payload 增量为 0，而 VTA→CPU 边界由两个 100352 B 张量变为一个，继续减少 100352 B。这提供切点间的内存工作量对照，但不是已实现的安全剪枝：共同数值语义、完整 service 以及流水资源条件仍须满足。后续 E3 已发现独立量化边界可改变数值结果，不能只按字节判定等价或支配。当前保留两端候选，静态 DMA 用作描述和受限成本输入，不宣称无需完整流水验证即可保证性能排名。
+
+受控 stage 分裂实验进一步固定 layer4 的五个单元与 TopHub config `203/243/203`，只在两个残差块之间插入 GraphExecutor 边界。单 Executor、向独立 ext_dev DDR buffer 物化一次、上下游共享同一 buffer 的 30 次交错测量中位分别为 20.327、22.929 和 22.065 ms。物化路径被 profiler 记录为 1 次、100352 B 的 framework copy，共享路径为 0；两种双 stage 路径输出逐元素相同，各自也与独立切分的量化 LLVM 参考相同。物化减共享的配对时延中位为 1.290 ms，27/30 次为正；共享路径相对单 Executor 仍慢 1.407 ms，说明零拷贝不能消除 Executor 调用与交接开销。
+
+更关键的是，三种路径均产生 522 次 LOAD、8736256 B LOAD、10 次 STORE、125440 B STORE 和 939 条 driver 指令。这说明该 block-aligned cut 不改变已调优卷积的 DDR--SRAM 逻辑搬运，`D_stage-cut` 在此处应取 0，而边界物化字节与 Executor service 必须另行计费。独立编译的双 stage 结果相对单图有 30/25088 个元素变化，但两者分别逐元素匹配自己的 LLVM 参考，故该差异属于独立量化/编译的 stage 语义效应，不是共享 buffer 交接错误。该实验支持“workload DMA 可复用聚合 + 外层显式边界成本”的模型，而不是强行假设每个切点都会使 DMA 变碎。
+
+在完整流水层面，本文进一步统一分析 Top-20 的四种代表 topology。A/B/C/D 的实测周期为 91.977/96.990/90.962/95.233 ms，VTA DMA 与框架物化的合并逻辑 demand 为 14.158/14.114/14.259/17.750 MB/帧。A 与 C 的 VTA LOAD/STORE 完全相同；C 虽多 100352 B 框架物化，周期仍低 1.015 ms。双 island 的 D 相比 B，LOAD payload 高 29.30%、权重 payload 高 49.61%，VTA mutex wait 多 20.336 ms，但周期低 1.757 ms。这些对照不表示额外内存活动可以忽略，而是表明 CPU stage 的重排可能使内存工作退出关键瓶颈，或者以更好的 CPU 平衡抵消其代价。因此内存特征应进入 `max(T_CPU,T_single-VTA,T_shared-DDR,T_longest-stage)` 的资源约束，而不能作为总字节惩罚无条件串行相加。由于当前仅有四个 topology 且变量混杂，本文不利用它们拟合自由的 DDR 系数；首轮结果只用于机制识别和确定模型结构。
+
+第二次独立启动后，本文使用相同 bitstream、runtime、192 MiB u-dma-buf 和冻结 graphlib 重放四种 topology。每类先完成串行正确性与 22 帧流水，再在同一 boot 补一次 22 帧和一次反向顺序的 62 帧流水。四类输出哈希以及 LOAD/STORE 请求和 payload 在全部运行中完全一致，证明前述 DMA 与边界机制规律可重复。第二 boot 的 62 帧 FPS 为 A/B/C/D=`10.955/10.020/10.818/10.840`；然而第一 boot 的顺序 `C>A>D>B` 变为 `A>D>C>B`，周期排序 Spearman 只有 0.400。两次 22 帧运行中 B/C 也有明显波动，且 B 在 62 帧中的 completion interval P95 达 136.753 ms。
+
+第三次独立启动采用 4×4 Latin-square 顺序 `A-B-C-D / B-C-D-A / C-D-A-B / D-A-B-C`，使每个 topology 在四个执行位置各完成一次 62 帧测量，共运行 992 帧。A/B/C/D 的四次中位 FPS 分别为 10.896、10.091、10.756 和 10.489，最小至最大范围分别为 10.567--10.928、9.973--10.404、10.383--10.851 和 10.463--10.588。D 在 4/4 轮快于 B，中位差为 0.444 FPS；A 在 3/4 轮快于 C，但中位差只有 0.125 FPS，四轮细粒度排序仍不完全一致。三次 boot 中，每种 topology 的输出哈希和每帧 LOAD/STORE 请求数、input/weight/store payload 均保持完全相同。
+
+因此本文将可重复的逻辑 DMA 描述用于比较相邻切点的增量、建立受限资源下界，不将其作为已实现的安全支配剪枝，而不把这四个变量混杂的 topology 拟合成独立 DDR 时间系数。实测 VTA service time 已经包含 VTA 内部 LOAD/compute/STORE，额外串加由相同 DMA 推导的时间还会造成重复计费。论文不声称亚 1 FPS 的 topology 差异具有普适显著性；较稳健的结论是 B 相对 D 的流水劣势和不同切法所产生的确定性内存需求差异，而 A/C 的微小先后只作为运行时波动范围报告。
+
+最后，本文在完整的 972528 个执行配置和 4623 种 topology 上完成三级消融。M0 只包含 CPU stage、单物理 VTA 串行和四核 CPU 容量下界；M1 增加 CPU--VTA 边界所有权服务、边界 host-core work 与 VTA mutex 边界服务；M2 再用 87 个合法 VTA segment 的 incumbent-tile TIR LOAD/STORE 字节和独立 DMA component qualification 带宽建立共享 DDR 并行资源下界，请求数与小请求数只作为确定性比较特征。85 个 CPU segment 统一使用通过 23 个 grouped holdout 的 P5B 原子 CPU 成本，完整 topology 的 FPS 从未用于拟合上述参数。
+
+在三 boot 的 A/B/C/D 四个冻结代表上，M0、M1、M2 的描述性 Spearman 分别为 -0.400、0.400 和 0.400，regret@1 分别为 7.39%、0 和 0；M0 预测顺序为 `B>C>A>D`，M1/M2 为 `A>B>C>D`，而第三 boot 中位实测顺序为 `A>C>D>B`。M1 使预测 Top-1 从 B 变为实际最优 A，并将搜索 Top-20 的 topology 多样性从 1 种提高到 4 种。M2 与 M1 的 Top-20 则 20/20 完全相同：精确 DDR 下界在全部 972528 个配置中均未成为最大资源项，最接近的配置也只达到 M1 下界的 17.27%。这只说明当前 DMA 带宽下界在模型中不活跃，不能据此证明实际 DDR 争用不影响吞吐，也不能人为放大系数制造正结果。最终排序按预注册规则回退到 M1，精确 DMA 保留为切点增量和局部 tile 的描述证据；额外安全剪枝未作为本轮主方法实现。M1/M2 所用边界服务来自原 set/get copy 口径，不是重新标定的 shared-K2 成本。
+
+该分层过程也直接降低了实验预算。四种冻结 topology 中共有 39 个 workload-stage placement；若每个 placement 都重复相同的 8 个配置，需要 312 次测量。实验 A 证明相同 workload 的 incumbent tile 跨 stage 不变后，只需对 10 个唯一 workload 完成 80 次测量，避免 232 次，即减少 74.36%。其中 32 次通过正确性、41 次编译失败、7 次数值失败，没有候选满足至少提升 2% 的安全覆盖条件。该负结果不构成吞吐加速，但证明了“内层 workload/tile 去重、外层内存感知 stage 搜索”的有界闭环和预算优势。
+
+这一轮是 shortlist refinement，不具有全局联合搜索保证：原 Top-20 之外的切图可能在调优后进入前列，repair 规则也是诊断后形成的启发式。因此它用来检验“tile 是否会改变切图决策”，而不是宣称已穷尽两层空间。
+
 # 第6章 原型系统设计与实现
 
 ## 6.1 系统流程
@@ -841,18 +891,20 @@ II_{block}=\frac{t_{last\ completion}-t_{first\ completion}}{N-1}.
 4. **RQ4：** 当前模型在历史 ResNet18 池和 YOLOv3-tiny 上能提供多强的筛选证据？
 5. **RQ5：** 组件 profile 能否解释当前静态模型遗漏的固定残差和 DDR contention？
 6. **RQ6：** 共享 slot 能消除多少边界内存工作，并在什么条件下改善 latency 或 throughput？
+7. **RQ7：** 在冻结 shortlist 上做一次有界 tile 反馈，是否会减少碎片化/重复搬运并改变切图排序？
 
 ## 7.2 实验设置
 
-ResNet18 输入为单张图像，并在多帧流水线中重复使用。VTA schedule、tile、量化和 bitstream 全部固定。主要搜索预算为 Top-20；性能试验运行 native-only package，先做 correctness，再测 22 帧并丢弃 2 帧 warmup。
+ResNet18 输入为单张图像，并在多帧流水线中重复使用。主实验的 VTA schedule、tile、量化和 bitstream 全部固定；RQ7 另做一次有界 tile 反馈。主要搜索预算为 Top-20；性能试验运行 native-only package，先做 correctness，再测 22 帧并丢弃 2 帧 warmup。RQ7 的 pilot 为与历史数据分离的同 boot 20 帧对照，不与主实验的绝对 FPS 横向混用。
 
-实验数据分为五类：
+实验数据分为六类：
 
 1. 200 条历史 ResNet18 pipeline profile，用于通信机制消融和离线回放；
 2. 当前 runtime 下新测的 ResNet18 线程对照与自然 Top-20，用于候选筛选和细排检查；
 3. 169 条历史 YOLOv3-tiny pipeline 记录及 6 组串行组件 profile，用于回顾性跨模型分析；
 4. P7 CPU 并发、runtime 固定开销和 CPU-VTA 共享 DDR matched control，用于物理公式重建；
 5. P8 三 boot B0/B2、自然 Top-20 单 boot 扫描和三-island 串行 stress case，用于共享 slot 消融。
+6. stage–tile 一次反馈的 32 条候选配置、5 个完整 VTA stage 及 4 组原生流水线记录，用于 RQ7 的初步验证。
 
 这些数据的 runtime 指纹和候选语法并不完全相同，本文只在明确兼容的层级做比较。
 
@@ -1174,7 +1226,123 @@ II=\max_r D_r,
 改变 II。只有边界或 DDR 已位于关键资源路径，或被消除时间超过该余量时，zero-copy 才提高 FPS。
 这一规律解释了“串行 stress case 时延下降”和“自然 Top-20 吞吐无显著变化”同时成立。
 
-## 7.11 Profile、构建与搜索成本
+## 7.11 RQ7：有界 stage–tile 反馈与搬运规律
+
+### 7.11.1 搜索覆盖与正确性门槛
+
+冻结的自然 Top-20 共合并为 4 种切图 topology、5 个唯一 VTA stage 和 10 类实际编译 workload。本轮对每类 workload 最多试验 3 个初始候选；其中两类 1×1 stride-2 投影在初始候选上均未通过数值门槛，随后各增加不超过 2 个 full-width/shallow-height repair 探针。总计进行 32 次候选测量，得到 10/10 workload 的可用日志。
+
+调试过程中发现，TVM 当前自动 fallback 在一个完整 VTA stage 上与量化 LLVM 参考有 8097/25088 个元素不一致，最大绝对误差为 7.8125，而调优日志逐元素一致。因此本文没有把错误 fallback 用作加速基线，而是对每类 workload 选择已通过独立卷积校验的原配置或 repair 配置，形成“正确的固定-tile baseline”。五个 VTA stage 在 baseline 与 tuned 两条路径下均与同一量化 LLVM 参考逐元素一致。
+
+### 7.11.2 新编译候选内部的 Stage 代价反馈与切图反转
+
+与反馈前后 Top-1 相关的三个 VTA stage 实测如下：
+
+| VTA stage | 正确的固定 tile | 有界调优 | 变化 |
+|---|---:|---:|---:|
+| units 03..15（topology B） | 552.975 ms | 267.063 ms | -51.70% |
+| units 03..12（topology D 前段） | 338.188 ms | 182.738 ms | -45.97% |
+| units 15..19（topology D 后段） | 275.996 ms | 56.643 ms | -79.48% |
+
+不同 segment 获得的改善幅度明显不同。将这些时间回填后，Top-1 由 topology B（CPU 00..02 / VTA 03..15 / CPU 16..20）变为 topology D（CPU 00..02 / VTA 03..12 / CPU 13..14 / VTA 15..19 / CPU 20），静态 score 分别由反馈前的 556.412 ms 和反馈后的 243.450 ms 占据首位。
+
+为避免只用同一成本模型自证，本文在同一次板卡启动中独立编译 B/D 的 baseline/tuned 原生流水线。每组运行 20 帧、无 warmup，FPS 定义为 `(N-1)/(last_completion-first_completion)`。四组串行与流水输出 top-1 一致，同一 topology 的 baseline/tuned 最终输出逐字节一致。
+
+| Topology | Schedule | 串行中位时延 | 流水完成间隔 FPS |
+|---|---|---:|---:|
+| B | 固定 tile | 684.027 ms | 1.746 |
+| D | 固定 tile | 751.094 ms | 1.601 |
+| B | 有界调优 | 395.584 ms | 3.482 |
+| D | 有界调优 | 369.450 ms | 4.112 |
+
+固定 tile 时，D 相对 B 的 FPS 低 8.32%，串行时延高 9.80%；调优后，D 的 FPS 相对 B 高 18.09%，串行时延低 6.61%。因此在这四个新编译包内部，切图优劣在实际流水线上发生反转。这表明 tile 可能以不同幅度改变不同 VTA segment 的服务时间；但由于该 2×2 候选集未包含原 Top-20 的高性能调度，它不能证明当前调优得到新的全局或局部最优。
+
+### 7.11.3 DMA 请求粒度与重复载入
+
+原生流水线中 20 帧聚合的 VTA runtime profile 如下：
+
+| 指标 | B：tuned 相对 baseline | D：tuned 相对 baseline |
+|---|---:|---:|
+| LOAD 请求数 | -61.41% | -72.29% |
+| LOAD 请求 payload | -48.20% | -60.34% |
+| 小 LOAD 请求数 | -62.76% | -73.36% |
+| 带 stride 的 LOAD 请求数 | -62.76% | -80.86% |
+| 权重 LOAD payload | -59.31% | -72.65% |
+| 输入 LOAD payload | -22.98% | -26.18% |
+| STORE 请求数 | -58.59% | -63.94% |
+| STORE payload | 0% | 0% |
+
+这组结果给出两个层次的规律。第一，tile 增大空间块后，同一权重不再随更多空间块重复载入，因而权重 payload 降幅明显大于输入 payload。第二，STORE 总 payload 不变而请求数下降，说明收益来自更粗粒度的请求，不是丢弃输出。一个局部对照中，同一 C2 卷积仅将 tile width 由 1 改为 2，耗时从 39.723 ms 降至 20.775 ms，LOAD 请求由 1792 降至 896，权重 payload 由 2064384 B 降至 1032192 B，而 STORE payload 保持 200704 B。
+
+上述 profile 是软件 runtime 看到的 DMA API 请求和 payload，不是 DDR 控制器实测的 AXI burst 数或总字节。`driver_poll_wait_us` 表示 host 轮询设备完成，不能等同于 compute 等待 LOAD/STORE；本次未改动硬件，也没有 compute-stall cycle 计数器。因此可支持的结论是“搬运请求更少、更粗，重复权重请求 payload 降低，且伴随 stage 和流水时间下降”，尚不能声称已直接测得 compute stall 或实际 DDR traffic。
+
+### 7.11.4 历史高性能 incumbent 恢复
+
+为解决 2×2 pilot 与自然 Top-20 的绝对 FPS 不一致问题，本文从冻结 stage cache 恢复 topology B 的原 VTA 二进制，并在同一块板上使用当前 runner 重放。测量前重新写入哈希为 `7bf1ac...28d6` 的固定 HPC bitstream；串行与流水各 22 帧均得到唯一输出哈希 `a8c613584e081e5f`，与历史包一致。丢弃前 2 帧后流水吞吐为 10.724 FPS，历史 rank05 为 10.656 FPS，说明原 10--11 FPS 结果可复现，且 runner 版本并非性能缺口来源。
+
+旧高性能调度与当前 bounded-tuned B 的每帧 profile 对比如下：
+
+| 指标 | 旧 topology B incumbent | 当前 bounded-tuned B | 新/旧 |
+|---|---:|---:|---:|
+| 流水完成间隔 FPS | 10.724 | 3.482 | 0.325× |
+| VTA stage 中位 run | 73.291 ms | 272.365 ms | 3.72× |
+| LOAD 请求数 | 1532 | 22840 | 14.91× |
+| LOAD payload | 11.806 MB | 44.656 MB | 3.78× |
+| 小 LOAD 请求数 | 444 | 22040 | 49.64× |
+| 输入 LOAD payload | 4.388 MB | 20.306 MB | 4.63× |
+| 权重 LOAD payload | 7.397 MB | 24.281 MB | 3.28× |
+| STORE 请求数 | 92 | 1080 | 11.74× |
+| STORE payload | 1.204 MB | 1.204 MB | 1.00× |
+| synchronize 次数 | 14 | 14 | 1.00× |
+| device run wait | 62.799 ms | 212.626 ms | 3.39× |
+
+STORE payload 和 synchronize 次数不变，说明新候选没有减少输出或改变高层调用次数，而是把同样输出拆成更多请求，并随更细分块重复加载输入和权重。这个反例比“调优版优于本轮较差 baseline”更直接地回答了 DMA 过碎问题，也暴露出当前仅试 3--5 个候选的预算不足：后续搜索必须把已验证历史二进制作为 incumbent，候选只有在正确性、stage 时延和实际流水吞吐不退化时才允许替换；LOAD/STORE 小请求、输入/权重重复 payload 可作为提前排除和同速候选 tie-break 特征。
+
+进一步审计确认，本轮较差新构建不是完整 AutoTVM 搜索的结论，而是审计 context 改变了 Relay 的 dispatch 判断：外层 `DispatchAudit` 使 `relay.build` 不再观察到根 `FallbackContext`，从而跳过自动 TopHub。修复后构建入口显式安装 TopHub，并在内层记录实际命中；同时把 TopHub 文件路径、版本、大小与 SHA-256 纳入 stage manifest 和 cache key。源码重编 topology B 得到的 VTA 二进制 SHA-256 与旧 incumbent 完全相同，9/9 packed-conv workload 命中且无 fallback；板卡重启后重载 192 MiB u-dma-buf 和固定 HPC bitstream，第二次 22 帧流水丢弃前两帧后达到 10.430 FPS，距旧复测 10.724 FPS 为 -2.74%，输出哈希一致。冻结 Top-20 的 10 类唯一 workload 也已全部解析出 TopHub incumbent。下一轮因此以 TopHub/history 配置为不可删除的搜索起点，而不再以弱 fallback 为 baseline。
+
+进一步对原 Top-20 的四种 topology 做同协议重放，得到以下聚合结果：
+
+| 拓扑 | VTA island | FPS | LOAD 次数/帧 | LOAD payload/帧 | 权重 LOAD/帧 | H→V/帧 | VTA mutex wait 中位和 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| A：VTA 03..17 | 1 | 10.872 | 1598 | 12.026 MB | 7.528 MB | 0.803 MB | 0.001 ms |
+| B：VTA 03..15 | 1 | 10.310 | 1532 | 11.806 MB | 7.397 MB | 0.803 MB | 0.001 ms |
+| C：VTA 03..16 | 1 | 10.994 | 1598 | 12.026 MB | 7.528 MB | 0.803 MB | 0.001 ms |
+| D：VTA 03..12 + 15..19 | 2 | 10.501 | 1594 | 15.266 MB | 11.067 MB | 1.004 MB | 20.337 ms |
+
+A 与 C 的 VTA 内部计数完全相同，说明某些切点只改变边界张量，可按相同 VTA workload signature 合并而不重复调 tile。D 相对 B 的 LOAD 请求只增加 4.05%，但 LOAD payload 增加 29.30%、权重 payload 增加 49.61%，同时因第二次 CPU→VTA 进入使 H→V 字节增加 25%，并在单物理 VTA 上出现互斥等待。因此一个可执行的剪枝条件是：若新增 VTA island 没有降低 VTA run demand，却增加边界字节、权重重复载入或 mutex scheduled service，则提前淘汰；请求数、payload 和输入/权重类别必须联合使用，不能压成单一 DMA 次数。
+
+### 7.11.5 TopHub incumbent 邻域的一次有界 AutoTVM 反馈
+
+在恢复强基线后，本文将自然 Top-20 合并为 4 种 topology、5 个唯一 VTA stage 和 10 类 packed-convolution workload。每类 workload 保留 TopHub 配置，并在 `tile_h`、`tile_w`、`tile_ci`、`tile_co`、`oc_nthread` 与 `h_nthread` 六个轴上选取最近的单轴邻居，每类最多 8 个配置，总计完成 80 次板端编译、数值校验、计时与 runtime DMA profile。其中 32 次通过、41 次编译失败、7 次数值失败。
+
+候选接受采用保守的稀疏覆盖：只有 TopHub incumbent 与候选在同一 direct runner 中均通过，且候选平均时间至少降低 2%，才把候选写入覆盖日志；其余 workload 继续从带路径和 SHA-256 的 TopHub 日志取得配置。两类 stride-2 projection 的 TopHub 配置在 isolated runner 中失败，但重载固定 bitstream 后，包含它们的完整 Relay stage 均与量化 LLVM 参考逐元素一致，因此不能用局部 repair 配置替换完整 stage 已验证的 incumbent。该规则避免了局部模板结论破坏整体部署基线。
+
+| 单轴变化 | 通过 | 编译失败 | 数值失败 | 运行时间中位比 | LOAD 请求中位比 | LOAD payload 中位比 |
+|---|---:|---:|---:|---:|---:|---:|
+| `tile_w` | 4 | 5 | 1 | 3.374× | 4.500× | 4.173× |
+| `tile_h` | 7 | 6 | 1 | 1.068× | 2.000× | 1.486× |
+| `tile_co` | 5 | 10 | 1 | 1.078× | 2.000× | 1.254× |
+| `tile_ci` | 0 | 10 | 0 | -- | -- | -- |
+| `oc_nthread` | 7 | 2 | 1 | 1.302× | 1.000× | 1.000× |
+| `h_nthread` | 1 | 8 | 1 | 1.236× | 1.000× | 1.000× |
+
+因此在本硬件指纹和当前 incumbent 邻域内，缩小空间宽块是最明显的 DMA 碎片化方向；缩小高度块和输出通道块也会增加请求与重复 payload；`tile_ci` 邻域可先按编译合法性剪去；virtual-thread 变化没有降低 DMA，且其额外调度使运行更慢。本轮没有候选越过 2% 门槛，安全覆盖数为 0，故 Top-20 重排不变。这个负结果表明 TopHub 在所测单轴邻域内是局部最优，但不声称其为全局最优；方法贡献在于用片上搬运反馈排除退化 tile，同时保证 stage 与切图排名不会因弱 baseline 或局部错误而倒退。
+
+连续测量非法 AutoTVM 候选还会影响后续 VTA 状态：未重新配置 PL 的第一次复验出现完整 stage 数值错误；重新写入哈希为 `7bf1ac...28d6` 的固定 bitstream并重启 RPC 后，五个 TopHub stage 全部恢复逐元素正确，耗时为 68.201、67.528、68.342、48.649 和 19.599 ms。因此正式实验协议把“候选搜索后重载 bitstream，再做完整 stage 与流水验证”列为强制门槛。
+
+为进一步区分 workload 局部调优与 stage 全局影响，本文对 4 种 topology 导出各 VTA stage 的 workload occurrence、TopHub config 和 tile 因子。10 类 workload 在所有出现位置均命中同一配置，说明在当前静态 shape、layout 和量化不变的 ResNet18 候选集中，stage 名称本身不改变 AutoTVM task；因此内层可按唯一 workload 调优一次，外层切图复用其配置与搬运描述，无需展开 stage×tile 完整笛卡尔积。
+
+随后将 TopHub 单 workload 的 runtime DMA 描述按 stage 内实际卷积次数相加，并与 5 个完整 VTA stage 比较。两个在裸模板 checker 中失败的 stride-2 projection 改用完整 Relay unit 单独编译和上板，均与量化 LLVM 参考逐元素一致，耗时分别为 3.350 ms 和 1.847 ms。结果显示，5 个 stage 的 input LOAD payload、weight LOAD payload 和 STORE payload 均与逐 workload 聚合值完全一致，LOAD 总 payload 的相对误差仅为 -0.12% 至 -0.16%；LOAD 请求数误差为 -1.92% 至 -6.34%，driver 指令也存在约 -4.90% 至 -9.78% 的残差。检查内存类型后可见，该残差主要来自 conv-only workload 聚合没有描述的 ACC LOAD、ALU 和图级控制工作。
+
+在受控的嵌套 stage 对照中，从 VTA 03..15 扩展到 03..16 只增加 layer4 的 1×1 projection。完整 stage 观测到的 input、weight 和 STORE 增量与 isolated projection 完全相同；额外残差仅为 2 个 ACC LOAD、2048 B ACC payload、2 个 ALU push 和 6 条 driver 指令。这表明已调优卷积的主要 DDR–SRAM payload 在当前图中高度可加，但完整 stage 仍需要小规模的 ACC/ALU 图级修正。后续切图模型因此不为每个 stage 重做 AutoTVM，而是采用“去重 workload 搬运和 + stage 图级修正 + CPU/VTA 边界与共享 DDR 竞争”的分层结构。
+
+为避免对每个切图都进行板端 profile，本文进一步在 TopHub config 实例化后的 lowered TIR 上静态展开循环，统计 `VTALoadBuffer2D` 和 `VTAStoreBuffer2D` 的请求尺寸、次数、内存类型与 payload。对 8 个通过裸模板独立校验的 workload，静态得到的 LOAD/STORE calls、总 LOAD payload、input payload、weight payload 和 STORE payload 与板端 runtime profile 全部精确一致；两个 projection 的卷积 input、weight 和 STORE 指标也精确一致，完整 Relay unit 仅额外产生 ACC/图级请求。10 类 workload 的输入重复载入倍数为 1.72--4.29，权重重复载入倍数为 1.00--7.00，输出写回倍数均为 1.00。由此，切图搜索可在编译期查询每个已调优 workload 的逻辑 DMA 描述并按 occurrence 聚合；板端 profile 只用于校准 DMA service time、共享 DDR 争用和验证图级残差，而非逐候选获取搬运计数。
+
+### 7.11.6 有效性边界
+
+本轮只有一个 board boot，2×2 每组 20 帧且无 warmup；因此其对照属于 pilot，不作为跨 boot 显著性结论。固定 Top-20 使这一轮可在有限预算下完成，但可能漏掉调优后从池外进入前列的切图；当前 repair 启发式也未在新 workload 上做 holdout。更重要的是，2×2 baseline/tuned 都来自本轮新编译，未把历史高性能 incumbent 纳入候选门槛；其内部排序反转只能生成下一轮待测假设，不能作为优化有效性或模型精度的独立证明。
+
+## 7.12 Profile、构建与搜索成本
 
 | 已完整计时的阶段 | 当前成本或规模 |
 |---|---:|
@@ -1193,17 +1361,17 @@ C_{method}(m)=\frac{C_{profile}}{m}+C_{static}+K C_{board},
 
 其中 `m` 是同一硬件 profile 被多少个 DNN 复用。只有当跨 DNN 复用成立，且 Top-K regret 足够低时，复杂 profile 才真正具有成本优势。
 
-## 7.12 实验结论
+## 7.13 实验结论
 
 为避免把“实现完成”“局部指标改善”和“端到端性能提升”混为一谈，本文将两项主要创新及其证据
 边界汇总如下。
 
 | 创新点 | 主要对比基线 | 已完成证据 | 可支持的结论 | 尚不能支持的结论 |
 |---|---|---|---|---|
-| 资源感知 k-best 图划分 | 仅计算成本、完整枚举、历史人工方案 | 通信消融、DP/枚举一致性、自然 Top-20 上板、YOLO 历史回放 | 通信项改善历史池估计；DP 精确恢复静态目标 Top-20；shortlist 覆盖 ResNet18 高性能区域 | 已找到硬件全局最优；绝对 FPS 已准确预测；零样本跨网络泛化 |
+| 资源与内存感知 k-best 图划分 | 仅计算成本、完整枚举、历史人工方案、正确的固定-tile baseline | 通信消融、DP/枚举一致性、自然 Top-20 上板、YOLO 历史回放、有界 stage–tile 一次反馈及 2×2 流水验证 | 通信项改善历史池估计；DP 精确恢复静态目标 Top-20；shortlist 覆盖 ResNet18 高性能区域；少量 tile 反馈能减少 runtime 搬运请求并在 pilot 中改变切图优劣 | 已找到硬件全局最优；绝对 FPS 已准确预测；已完成全空间 stage–tile 联合搜索；零样本跨网络泛化 |
 | 固定映射共享 slot 零拷贝 | 普通 GraphExecutor `get_output/set_input` 物化路径 | 三 boot B0/B2 配对、Top-20 扫描、三-island串行压力方案 | 框架物化字节降为 0，边界 API 服务显著下降；边界密集串行方案时延下降 | 自然 Top-20 稳态吞吐显著提高；VTA 内部 DDR-SRAM 流量被消除 |
 
-其中，第一项回答“哪些阶段放到 CPU/VTA、CPU stage 使用多少线程”，第二项回答“划分确定后，
+其中，第一项回答“哪些阶段放到 CPU/VTA、CPU stage 使用多少线程，以及有限 tile 反馈是否会改变这一决策”，第二项回答“划分确定后，
 相邻 Executor 如何在共享 DDR 上交接张量”。二者属于同一流水线运行时流程，但优化对象和评价
 指标不同，论文不以零拷贝结果反向证明划分模型，也不以 shortlist 质量替代内存路径消融。
 
@@ -1219,16 +1387,18 @@ C_{method}(m)=\frac{C_{profile}}{m}+C_{static}+K C_{board},
 6. YOLOv3-tiny 需要少量目标域组件校准；校准后历史最优 topology 进入静态前 6，但仍是回顾性证据。
 7. 共享 slot 在三个 boot 中消除 100% 框架物化并减少 97.11% 边界 API 服务，但自然候选的吞吐
    区间不支持正提升；三-island串行压力方案观察到 2.83% 单帧时延下降。
+8. 在冻结 Top-20 上已跑通一次有界 tile 反馈；2×2 新编译候选内部出现 B/D 顺序反转，但当前 tuned B 仅为 3.482 FPS，未超过可复现的历史 B incumbent 10.724 FPS。反向 DMA 对照定位到 tuned B 的 LOAD 请求、payload 和设备等待分别放大 14.91、3.78 和 3.39 倍，证明 incumbent 保留与碎片化约束是下一轮搜索的必要组成。
 
 当前实验不能支持以下结论：
 
 1. 已经找到完整搜索空间的硬件全局最优；
 2. 已经证明比随机搜索更少上板；
 3. 已经建立准确的 CPU-VTA 并发 DDR slowdown 模型；
-4. 已经完成 tile 与切图联合优化；
+4. 已经完成全候选、全 AutoTVM 空间的 tile 与切图全局联合优化；
 5. 已经完成 YOLOv3-tiny 前瞻板端泛化验证；
 6. zero-copy 已消除 VTA 内部 DDR-SRAM LOAD/STORE，或对所有切图都提高 FPS；
 7. 单 boot 的 2.83% 串行时延下降已经具备跨 boot 统计显著性。
+8. 当前有界 AutoTVM 已经优于原 Top-20 的固定 schedule，或其 3--4 FPS 可以替换原 Top-20 的 10--11 FPS。
 
 # 第8章 总结与展望
 
@@ -1242,6 +1412,7 @@ C_{method}(m)=\frac{C_{profile}}{m}+C_{static}+K C_{board},
 方向化边界和共享 DDR demand；搜索部分利用单调资源下界从近百万配置中精确生成 Top-20；共享
 内存部分没有把 TVM zero-copy API 本身作为创新，而是在 API 上增加编译 manifest 驱动的物理
 slot、双视图、帧代次和所有权协议，使多个 Executor 能够安全复用同一中间缓冲区。
+在主要固定-tile 搜索之外，本文还跑通了一次有界 stage–tile 反馈：仅对冻结 Top-20 中去重后的 workload 分配少量上板预算，用严格正确性门槛筛选 tile，再将 VTA segment 成本反馈给切图排名。历史二进制重放同时表明，这一候选预算尚不足以超过原高性能 schedule；因此该部分当前贡献是闭环实现、DMA 失效模式定位和下一轮 incumbent-aware 筛选规则，而不是已经取得正向调优收益。
 
 本文采用分层证据：算法最优性由完整枚举验证，候选质量由冻结 Top-20 上板验证，通信项由 200 条
 历史 profile 做消融，zero-copy 由物化字节、边界 API、串行时延和流水线 II 分层验证。这一方法
@@ -1255,12 +1426,13 @@ slot、双视图、帧代次和所有权协议，使多个 Executor 能够安全
    到 10.449 FPS，且不是简单线性加速。
 3. k-best DP 在当前固定 tile 问题上精确恢复完整枚举 Top-20。自然 Top-20 的板端吞吐集中在
    10.220--11.511 FPS，说明 shortlist 能覆盖高性能区域；Spearman 仅 0.155，说明细排仍不足。
-4. 跨 Executor 共享 slot 将固定候选的框架物化从 1806336 B/frame 降到 0，三 boot 边界 API
+4. 一次有界 stage–tile 反馈表明，不同 tile 会改变 VTA segment 的重复输入/权重载入和 DMA 请求粒度。新编译 2×2 pilot 内部出现 B/D 顺序反转，但恢复的旧 B incumbent 达到 10.724 FPS，仍显著快于当前 tuned B 的 3.482 FPS；后者 LOAD 请求数为前者 14.91 倍。因此当前结果证明片上搬运必须进入切图与 tile 筛选，并要求保留历史 incumbent，但尚未证明正向联合优化。
+5. 跨 Executor 共享 slot 将固定候选的框架物化从 1806336 B/frame 降到 0，三 boot 边界 API
    service 减少 97.11%，证明冗余内存工作可被稳定消除。
-5. 减少边界工作不等于必然提高吞吐。自然候选 B0/B2 的 II 差值区间包含 0；当 copy 位于流水线
+6. 减少边界工作不等于必然提高吞吐。自然候选 B0/B2 的 II 差值区间包含 0；当 copy 位于流水线
    slack 内时，只降低内存工作而不改变瓶颈。串行三-island方案中边界均在关键路径，因而观察到
    4.737 ms、2.83% 的单帧时延下降。
-6. 可迁移的是计算单元、资源 owner、搜索和 slot 协议，不是单一 GOP/s。YOLOv3-tiny 经 6 组目标
+7. 可迁移的是计算单元、资源 owner、搜索和 slot 协议，不是单一 GOP/s。YOLOv3-tiny 经 6 组目标
    组件 profile 后，历史最优 topology 进入 105696 个配置的静态第 6，但仍需前瞻验证。
 
 ## 8.3 局限性
@@ -1271,8 +1443,7 @@ slot、双视图、帧代次和所有权协议，使多个 Executor 能够安全
 第二，`D_DDR` 只表达每帧聚合服务需求。P7C 单 boot 观察到 streaming CPU 压力下 VTA 约
 1.052--1.066 倍 slowdown，但尚未形成跨 boot、可准入的 contention 函数。
 
-第三，V1 固定 VTA tile、queue depth、poll policy 和 HPC/coherent 数据通路。当前结论不能外推到
-切图与 tile 联合搜索，也不能代表 HP/non-coherent 路径。
+第三，V1 主实验固定 VTA tile、queue depth、poll policy 和 HPC/coherent 数据通路。补充的 stage–tile 实验只完成冻结 Top-20 内的一次反馈和单 boot 2×2 验证，不能外推为全局联合搜索、可泛化的 tile 剪枝规则，也不能代表 HP/non-coherent 路径。
 
 第四，ResNet18 历史 200-case 池并非从 97 万配置均匀采样。自然 Top-20 虽全部实测，但主要由
 4 种 topology 的线程变体构成；不能据此声称已找到整个空间的硬件全局最优。
@@ -1293,8 +1464,7 @@ slot、双视图、帧代次和所有权协议，使多个 Executor 能够安全
    改善 Spearman 和 regret 时才纳入正式模型。
 4. 为 YOLOv3-tiny 实现 branch-aware k-best DP，并以 105696 配置完整枚举验证，再对未参与六组
    组件校准的 topology-diverse shortlist 做 native compile/reference 和前瞻测量。
-5. 在划分排序稳定后，为每个 VTA segment 引入小型合法 tile 集，采用分层搜索避免一次展开切图与
-   AutoTVM 全空间；只有它减少真实 DDR traffic 或改善 Top-K 才保留。
+5. 将已跑通的一次有界 stage–tile 反馈扩展到至少三个 boot、topology-diverse holdout 与原 Top-20 之外的探索候选，比较“固定 tile”“只调 tile 不重排”和“有界反馈”的配对置信区间；若条件允许，再增加 AXI performance monitor 或 VTA 硬件 stall counter，区分 runtime 请求与真实 DDR traffic。
 6. 研究 adapter direct-write：当 dtype/layout 不匹配时直接把转换结果写入 consumer slot，减少
    一次中间物化；该机制需与纯 zero-copy 分开消融。
 7. 增加功耗、峰值共享内存占用和 profile 摊销成本，形成 latency、throughput、memory footprint
@@ -1356,6 +1526,10 @@ slot、双视图、帧代次和所有权协议，使多个 Executor 能够安全
 | `v1_p8c_cross_boot_summary.json` | 三 boot B0/B2 边界服务与 II 配对统计 |
 | `v1_p8_top20_zero_copy/v1_p8_top20_summary.json` | 自然 Top-20 零拷贝外部扫描 |
 | `v1_p8_latency_island_scaling/three_island_sessions/` | 三-island优化复制基线串行时延实验 |
+| `stage_tile_cotuning/iteration2_validated/iteration_summary.json` | Top-20 内一次 stage–tile 反馈、正确性和重排摘要 |
+| `stage_tile_cotuning/pipeline_validation/summary.json` | 同 boot 切图×schedule 2×2 原生流水线 pilot |
+| `stage_tile_cotuning/legacy_baseline_recovery/summary.json` | 旧 Top-20 高性能 B 基线复现及与当前 tuned B 的 DMA 碎片对照 |
+| `stage_tile_cotuning/legacy_topology_profiles/summary.json` | 原 Top-20 四种 topology 的标准化 FPS、边界与聚合 VTA DMA 对照 |
 
 # 附录B 论文结论用语检查表
 
@@ -1369,6 +1543,9 @@ slot、双视图、帧代次和所有权协议，使多个 Executor 能够安全
 | “共享 DDR 下界已进入目标函数” | “共享 DDR contention 已被精确建模” |
 | “三 boot 边界 API 服务减少 97.11%” | “zero-copy 稳态 FPS 提升 4.42%” |
 | “三-island单 boot观察到时延下降 2.83%” | “zero-copy 已稳定提升端到端时延 2.83%” |
+| “单 boot 2×2 pilot 观察到 tile 反馈使 B/D 优劣反转” | “已完成全局 stage–tile 联合搜索并找到硬件最优” |
+| “runtime LOAD 请求数下降 61.41%--72.29%” | “实测 DDR traffic 或 compute stall 下降 61.41%--72.29%” |
+| “旧 B incumbent 为 10.724 FPS；当前 tuned B 的 LOAD 请求为其 14.91 倍” | “当前 bounded tuning 已超过原 Top-20” |
 
 # 致谢
 

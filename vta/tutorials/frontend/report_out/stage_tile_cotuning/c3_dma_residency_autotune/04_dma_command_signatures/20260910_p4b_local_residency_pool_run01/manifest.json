@@ -1,0 +1,40 @@
+{
+  "schema": "c3_p4b_local_manifest_v1",
+  "date": "2026-09-10",
+  "mode": "local_lower_and_static_dma_only",
+  "environment": {
+    "python": "/home/orange/miniconda3/envs/vta-resnet/bin/python",
+    "python_version": "3.10.20",
+    "tvm_version": "0.13.0",
+    "vta_target": "axu5evb",
+    "board_contacted": false,
+    "fsim_timing_used": false
+  },
+  "inputs": {
+    "selected_tasks": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration6_safe_overlay_final/selected_tasks.json",
+      "sha256": "3f4abe7ca36cbc4a729718f17066f5e757547a0b716d15e9086b273e653b5087"
+    },
+    "hardware_manifest": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4_local_identity_adapter_run01/manifest.json",
+      "sha256": "e1835ead01e608e3cfbc278b44bf297b31148ae711f061146107fbc41dcd1fcd"
+    }
+  },
+  "sources": {
+    "generator": "/home/orange/code/tvm/vta/tutorials/frontend/generate_vta_residency_candidates.py",
+    "generator_sha256": "52c4cf62aa8378a793eaf07ec47c8c2a41d5cf3eba20d183ab4f35c65f5f6b63",
+    "original_schedule": "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py",
+    "residency_template": "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py",
+    "original_schedule_version": "vta_conv2d.py@b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+    "residency_schedule_version": "vta_residency@5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f+b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0"
+  },
+  "results": {
+    "workload_count": 10,
+    "historical_source_candidates": 80,
+    "mapped_unique_tile_entities": 60,
+    "deduplicated_historical_sources": 20,
+    "protected_original_incumbents": 10,
+    "experimental_modes_per_tile": 3,
+    "experimental_candidates": 180
+  }
+}

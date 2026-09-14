@@ -1,0 +1,432 @@
+{
+  "capacity_model": "one live instruction queue plus one live UOP queue; each peak rounded up to 4096 bytes",
+  "claim_boundary": "host command backing only; not tensor SRAM, physical fragmentation, concurrency, replay, FPS, or FPGA area",
+  "inputs": {
+    "command_signatures": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4j_full_pool_fsim_command_run02/results.jsonl",
+      "sha256": "7a875ed1d4d9404187e7976e53851fdea35c8b94117711d79200e5382499e179"
+    },
+    "contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7q_qualified_timing_contract_run01/contract.json",
+      "sha256": "dbed44f6260f6acade9dd723875f86f53b843402603447c4a927b7fb618f2246"
+    },
+    "timing_summaries": {
+      "W01": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7q1_w01_timing_run01/summary.json",
+        "sha256": "873b1e96d831c4bb2253049f7d8f0bef442421ba46e1cc23ea74b479410c1827"
+      },
+      "W04": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7q2_w04_timing_run01/summary.json",
+        "sha256": "69e804ba953fdf9f0f1727c603b9e87adedb94206fcc642ad6dc0907385c25e4"
+      },
+      "W07": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7q3_w07_timing_run01/summary.json",
+        "sha256": "5314b1dce547243a7e716ecacc32c88707898f54ce81d11d82ca2958146853d7"
+      },
+      "W08": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7q4_w08_timing_run01/summary.json",
+        "sha256": "916d9b0d52ccd39a2d21d8177ca403bd0ef04befc455759eb9f010ab3e8edaea"
+      }
+    }
+  },
+  "schema": "c3_p7q_latency_command_pareto_v1",
+  "status": "development_only_not_prospective_confirmation",
+  "workloads": {
+    "W01": {
+      "candidate_count": 19,
+      "equivalence_bands_percent": {
+        "0": {
+          "candidate_id": "a3400a47ccb307df1025e029f1695d4a3e8e70269bf9b6640d77b8df8fea985d",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2592,
+            "raw_uop_peak_bytes": 752,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 681,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 3.048571,
+          "residence_mode": "original"
+        },
+        "10": {
+          "candidate_id": "a3400a47ccb307df1025e029f1695d4a3e8e70269bf9b6640d77b8df8fea985d",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2592,
+            "raw_uop_peak_bytes": 752,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 681,
+          "eligible_count": 2,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 3.048571,
+          "residence_mode": "original"
+        },
+        "2": {
+          "candidate_id": "a3400a47ccb307df1025e029f1695d4a3e8e70269bf9b6640d77b8df8fea985d",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2592,
+            "raw_uop_peak_bytes": 752,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 681,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 3.048571,
+          "residence_mode": "original"
+        },
+        "5": {
+          "candidate_id": "a3400a47ccb307df1025e029f1695d4a3e8e70269bf9b6640d77b8df8fea985d",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2592,
+            "raw_uop_peak_bytes": 752,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 681,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 3.048571,
+          "residence_mode": "original"
+        }
+      },
+      "oracle": {
+        "candidate_id": "a3400a47ccb307df1025e029f1695d4a3e8e70269bf9b6640d77b8df8fea985d",
+        "command_backing": {
+          "instruction_bytes": 4096,
+          "raw_instruction_peak_bytes": 2592,
+          "raw_uop_peak_bytes": 752,
+          "submissions": 1,
+          "total_bytes": 8192,
+          "uop_bytes": 4096
+        },
+        "config_index": 681,
+        "median_ms": 3.048571,
+        "residence_mode": "original"
+      },
+      "pareto_front": [
+        {
+          "candidate_id": "a3400a47ccb307df1025e029f1695d4a3e8e70269bf9b6640d77b8df8fea985d",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2592,
+            "raw_uop_peak_bytes": 752,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 681,
+          "median_ms": 3.048571,
+          "residence_mode": "original"
+        }
+      ]
+    },
+    "W04": {
+      "candidate_count": 18,
+      "equivalence_bands_percent": {
+        "0": {
+          "candidate_id": "9176dd899e96464a7e6dd8e35be57682bcd4557bcf5f2a9c9b4d3204a7fdc27c",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2208,
+            "raw_uop_peak_bytes": 1480,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 463,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 2.772418,
+          "residence_mode": "original"
+        },
+        "10": {
+          "candidate_id": "9176dd899e96464a7e6dd8e35be57682bcd4557bcf5f2a9c9b4d3204a7fdc27c",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2208,
+            "raw_uop_peak_bytes": 1480,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 463,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 2.772418,
+          "residence_mode": "original"
+        },
+        "2": {
+          "candidate_id": "9176dd899e96464a7e6dd8e35be57682bcd4557bcf5f2a9c9b4d3204a7fdc27c",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2208,
+            "raw_uop_peak_bytes": 1480,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 463,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 2.772418,
+          "residence_mode": "original"
+        },
+        "5": {
+          "candidate_id": "9176dd899e96464a7e6dd8e35be57682bcd4557bcf5f2a9c9b4d3204a7fdc27c",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2208,
+            "raw_uop_peak_bytes": 1480,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 463,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 2.772418,
+          "residence_mode": "original"
+        }
+      },
+      "oracle": {
+        "candidate_id": "9176dd899e96464a7e6dd8e35be57682bcd4557bcf5f2a9c9b4d3204a7fdc27c",
+        "command_backing": {
+          "instruction_bytes": 4096,
+          "raw_instruction_peak_bytes": 2208,
+          "raw_uop_peak_bytes": 1480,
+          "submissions": 1,
+          "total_bytes": 8192,
+          "uop_bytes": 4096
+        },
+        "config_index": 463,
+        "median_ms": 2.772418,
+        "residence_mode": "original"
+      },
+      "pareto_front": [
+        {
+          "candidate_id": "9176dd899e96464a7e6dd8e35be57682bcd4557bcf5f2a9c9b4d3204a7fdc27c",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 2208,
+            "raw_uop_peak_bytes": 1480,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 463,
+          "median_ms": 2.772418,
+          "residence_mode": "original"
+        }
+      ]
+    },
+    "W07": {
+      "candidate_count": 21,
+      "equivalence_bands_percent": {
+        "0": {
+          "candidate_id": "737031afaccfc64215271e42576ac1266460617c3cf22dc0744da61f07397a7a",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 1936,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 203,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 2.653857,
+          "residence_mode": "original"
+        },
+        "10": {
+          "candidate_id": "737031afaccfc64215271e42576ac1266460617c3cf22dc0744da61f07397a7a",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 1936,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 203,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 2.653857,
+          "residence_mode": "original"
+        },
+        "2": {
+          "candidate_id": "737031afaccfc64215271e42576ac1266460617c3cf22dc0744da61f07397a7a",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 1936,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 203,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 2.653857,
+          "residence_mode": "original"
+        },
+        "5": {
+          "candidate_id": "737031afaccfc64215271e42576ac1266460617c3cf22dc0744da61f07397a7a",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 1936,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 203,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 2.653857,
+          "residence_mode": "original"
+        }
+      },
+      "oracle": {
+        "candidate_id": "737031afaccfc64215271e42576ac1266460617c3cf22dc0744da61f07397a7a",
+        "command_backing": {
+          "instruction_bytes": 4096,
+          "raw_instruction_peak_bytes": 1936,
+          "raw_uop_peak_bytes": 2768,
+          "submissions": 1,
+          "total_bytes": 8192,
+          "uop_bytes": 4096
+        },
+        "config_index": 203,
+        "median_ms": 2.653857,
+        "residence_mode": "original"
+      },
+      "pareto_front": [
+        {
+          "candidate_id": "737031afaccfc64215271e42576ac1266460617c3cf22dc0744da61f07397a7a",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 1936,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 203,
+          "median_ms": 2.653857,
+          "residence_mode": "original"
+        }
+      ]
+    },
+    "W08": {
+      "candidate_count": 21,
+      "equivalence_bands_percent": {
+        "0": {
+          "candidate_id": "4b4af0d6f04325b3e89f09347288e0bd427d164b2477067783562cc29e573db8",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 3472,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 243,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 5.027001,
+          "residence_mode": "original"
+        },
+        "10": {
+          "candidate_id": "4b4af0d6f04325b3e89f09347288e0bd427d164b2477067783562cc29e573db8",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 3472,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 243,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 5.027001,
+          "residence_mode": "original"
+        },
+        "2": {
+          "candidate_id": "4b4af0d6f04325b3e89f09347288e0bd427d164b2477067783562cc29e573db8",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 3472,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 243,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 5.027001,
+          "residence_mode": "original"
+        },
+        "5": {
+          "candidate_id": "4b4af0d6f04325b3e89f09347288e0bd427d164b2477067783562cc29e573db8",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 3472,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 243,
+          "eligible_count": 1,
+          "latency_over_oracle_percent": 0.0,
+          "median_ms": 5.027001,
+          "residence_mode": "original"
+        }
+      },
+      "oracle": {
+        "candidate_id": "4b4af0d6f04325b3e89f09347288e0bd427d164b2477067783562cc29e573db8",
+        "command_backing": {
+          "instruction_bytes": 4096,
+          "raw_instruction_peak_bytes": 3472,
+          "raw_uop_peak_bytes": 2768,
+          "submissions": 1,
+          "total_bytes": 8192,
+          "uop_bytes": 4096
+        },
+        "config_index": 243,
+        "median_ms": 5.027001,
+        "residence_mode": "original"
+      },
+      "pareto_front": [
+        {
+          "candidate_id": "4b4af0d6f04325b3e89f09347288e0bd427d164b2477067783562cc29e573db8",
+          "command_backing": {
+            "instruction_bytes": 4096,
+            "raw_instruction_peak_bytes": 3472,
+            "raw_uop_peak_bytes": 2768,
+            "submissions": 1,
+            "total_bytes": 8192,
+            "uop_bytes": 4096
+          },
+          "config_index": 243,
+          "median_ms": 5.027001,
+          "residence_mode": "original"
+        }
+      ]
+    }
+  }
+}

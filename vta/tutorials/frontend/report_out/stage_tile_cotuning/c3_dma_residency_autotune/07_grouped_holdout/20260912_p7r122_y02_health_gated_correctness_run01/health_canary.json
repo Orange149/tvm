@@ -1,0 +1,202 @@
+{
+  "identity": {
+    "candidate_id": "6374bca35bb59bb20cbb07532e5ba29ca3a56225023cf8d632b80063818d5d77",
+    "debug": {
+      "config_index": 575
+    },
+    "identity": {
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "historical_candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "historical_tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060",
+      "implementation": "conv2d_packed_residency.vta mode0 original branch",
+      "schema": "c3_p7r122_w05_health_canary_identity_v1",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W05"
+    },
+    "implementation_mode": 0,
+    "performance_measurement": "not_collected",
+    "public_mode": "original",
+    "role": "health_gate_only"
+  },
+  "performance_measurement": "not_collected",
+  "seeds": [
+    {
+      "actual_range": [
+        0,
+        67
+      ],
+      "actual_sha256": "f7def58e15ec57c9c7f16d43bd7fd6a9840018839eea6b58b91e1a8458d8caf3",
+      "correct": true,
+      "expected_range": [
+        0,
+        67
+      ],
+      "expected_sha256": "f7def58e15ec57c9c7f16d43bd7fd6a9840018839eea6b58b91e1a8458d8caf3",
+      "mismatch_count": 0,
+      "mismatch_examples_first8": [],
+      "runtime_profile": {
+        "driver_run_insns": 234,
+        "load_buffer_2d_bytes": 790528,
+        "load_buffer_2d_calls": 128,
+        "load_buffer_2d_inp_bytes": 200704,
+        "load_buffer_2d_wgt_bytes": 589824,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 4,
+        "synchronize_insns": 234
+      },
+      "seed": 0,
+      "status": "passed"
+    },
+    {
+      "actual_range": [
+        0,
+        67
+      ],
+      "actual_sha256": "1a7b9414e7f45285a8c3112825292a1828351ac9ffd3cf45d4d09de9dda0ec4f",
+      "correct": true,
+      "expected_range": [
+        0,
+        67
+      ],
+      "expected_sha256": "1a7b9414e7f45285a8c3112825292a1828351ac9ffd3cf45d4d09de9dda0ec4f",
+      "mismatch_count": 0,
+      "mismatch_examples_first8": [],
+      "runtime_profile": {
+        "driver_run_insns": 234,
+        "load_buffer_2d_bytes": 790528,
+        "load_buffer_2d_calls": 128,
+        "load_buffer_2d_inp_bytes": 200704,
+        "load_buffer_2d_wgt_bytes": 589824,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 4,
+        "synchronize_insns": 234
+      },
+      "seed": 20250901,
+      "status": "passed"
+    },
+    {
+      "actual_range": [
+        0,
+        69
+      ],
+      "actual_sha256": "e8a5cdda56ad9f19e074dea8e782a9c41723f0c4cca38deb6ba8ab6ee442e6dd",
+      "correct": true,
+      "expected_range": [
+        0,
+        69
+      ],
+      "expected_sha256": "e8a5cdda56ad9f19e074dea8e782a9c41723f0c4cca38deb6ba8ab6ee442e6dd",
+      "mismatch_count": 0,
+      "mismatch_examples_first8": [],
+      "runtime_profile": {
+        "driver_run_insns": 234,
+        "load_buffer_2d_bytes": 790528,
+        "load_buffer_2d_calls": 128,
+        "load_buffer_2d_inp_bytes": 200704,
+        "load_buffer_2d_wgt_bytes": 589824,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 4,
+        "synchronize_insns": 234
+      },
+      "seed": 20260910,
+      "status": "passed"
+    }
+  ],
+  "status": "passed"
+}

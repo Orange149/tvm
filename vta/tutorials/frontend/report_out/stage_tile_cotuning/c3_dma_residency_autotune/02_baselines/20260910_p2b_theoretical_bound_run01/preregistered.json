@@ -1,0 +1,26 @@
+{
+  "schema": "c3_p2b_theoretical_bound_protocol_v1",
+  "scope": "offline idealized single-operator analysis",
+  "hardware": {
+    "block_in": 16,
+    "block_out": 16,
+    "fpga_freq_mhz": 100,
+    "axi_data_bits": 128
+  },
+  "formulas": {
+    "peak_macs_per_second": "BLOCK_IN*BLOCK_OUT*FREQ",
+    "optimistic_bandwidth_per_direction": "AXI_DATA_BITS*FREQ/8",
+    "full_duplex_perfect_overlap": "max(Tcompute,Tread,Twrite)",
+    "full_duplex_no_overlap": "Tcompute+Tread+Twrite",
+    "shared_serial_scenario": "max(Tcompute,(read_bytes+write_bytes)/Bshared)"
+  },
+  "unique_traffic": "input once + weight once + output once",
+  "current_traffic": "frozen static lowered-TIR DMA totals",
+  "historical_latency_policy": "only selected 80-point artifacts with correct=true and non-empty costs_s",
+  "forbidden_claims": [
+    "measured AXI bandwidth",
+    "new board performance measurement",
+    "end-to-end network FPS upper bound",
+    "runtime DMA counters as pre-dispatch features"
+  ]
+}

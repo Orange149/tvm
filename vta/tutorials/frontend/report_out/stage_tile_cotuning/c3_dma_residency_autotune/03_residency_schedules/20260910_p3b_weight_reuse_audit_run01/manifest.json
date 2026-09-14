@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "run_id": "20260910_p3b_weight_reuse_audit_run01",
+  "date": "2026-09-10",
+  "status": "completed_read_only",
+  "git_head": "55ec5feac39db09e9fee3f0ae6300afa04d23bd7",
+  "board_used": false,
+  "ssh_used": false,
+  "source_modified_by_run": false,
+  "rtl_modified_by_run": false,
+  "evidence": {
+    "failed_log": "../failed_outer_cache_fsim.log",
+    "prior_results": "../p3_local_results.json",
+    "report": "WEIGHT_REUSE_FEASIBILITY.md"
+  },
+  "source_sha256": {
+    "vta/python/vta/top/vta_conv2d.py": "b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+    "vta/python/vta/environment.py": "934eed959d86be17ae1d1b4bf71c22d356bc95188809459b4d707a536d4e6ec0",
+    "vta/python/vta/build_module.py": "547462b8d594838f525e6c8c3f454e128a16403fb2cfbb935db7a5903b9bc9cb",
+    "vta/python/vta/transform.py": "767b0e5d985c97cd8c67524bedbc16d9eb81a501e19753dd06c7586e4f17eba9",
+    "vta/python/vta/intrin.py": "0211ab500bc1f871fed7daac7a310d862758cab2ba76d86aec81849d02b8c11e",
+    "vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711",
+    "vta/runtime/runtime.h": "1a93243089077425f834305a38235b4e3f557460f87e78b511bb92d56608085f",
+    "src/tir/transforms/coproc_sync.cc": "f99bdbf056a16246d284e8a16c9c00df5f63ee031428a0a09108aa5281b63b6d",
+    "3rdparty/vta-hw/include/vta/hw_spec.h": "f21aa4988aa1fb92e63cd04b5dda5d9b30e4f4e789239398c4754b814116c2a5",
+    "3rdparty/vta-hw/include/vta/sim_tlpp.h": "6fce719fd22b7f3f1e852188e876fc388cf3937ff2e8981bdc42738c63c25a9b",
+    "3rdparty/vta-hw/src/sim/sim_tlpp.cc": "2697496ff959ac9e597e1884c20664f2697f526b29365ead1c7d658db90be1b5",
+    "3rdparty/vta-hw/src/sim/sim_driver.cc": "da7916fc6ef043c10bbbcef8a1d2e477de7937cc82106498b1dff0492efdf5b2",
+    "tests/python/unittest/test_tir_transform_coproc_sync.py": "41b588e2a938ea3e3f4b56ad86f20b9337a31282fab6e92f589c7a34394259c4",
+    "vta/tutorials/frontend/test_vta_residency_schedule.py": "7ac95e769f450e763ced73703582797495feb60ae92c19951f3ffde22505114e"
+  },
+  "claims": {
+    "root_cause": "outer weight-cache lifetime creates unsupported loop-carried STORE(3)->LOAD(1)",
+    "plain_schedule_only": "no_go",
+    "explicit_drain_probe": "go_with_performance_risk",
+    "compiler_legalization": "recommended",
+    "fps_claim": null,
+    "paper_layer_identification": "inference_only"
+  }
+}

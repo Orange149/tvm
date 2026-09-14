@@ -1,0 +1,27 @@
+P3-local failed design evidence, 2026-09-10
+
+Design: move ckernel.compute_at from the conv reduction tile to an outer output loop.
+Static outcome: lower succeeded and reported fewer weight LOAD calls/bytes.
+FSim outcome: rejected during execution.
+
+Initial pytest progress before interruption:
+  original: W00 PASS, W02 PASS, W09 PASS
+  input_stationary: W00 PASS, W02 PASS, W09 PASS
+  weight_stationary: W00 FAIL, W02 FAIL, W09 FAIL
+  paper_inspired_hybrid: W00 FAIL, W02 FAIL, W09 interrupted after excessive runtime
+
+First error (W00 weight_stationary):
+  TVMError: Check failed: (from != kStoreStage || to != kLoadStage) is false
+  location: vta/runtime/runtime.cc:1023, VTADepPop
+  interpretation: unsupported STORE -> LOAD dependency created by crossing a VTA task boundary.
+
+Recovery applied:
+  Keep cdata and ckernel DMA producers at conv2d_stage/k_o.  This restores FSim
+  correctness but removes the observed weight-DMA reduction.  The failure therefore
+  remains a negative result and G3 is not passed.
+
+Other rejected local variants:
+  - Promoting padded input outside conv: "Do not support pad on the innermost block".
+  - W02 large input region: ACC allocation 1605632 bits exceeds 1048576 bits.
+  - Narrower width representatives: DMA injection failed compact/2D-pattern proof,
+    including "cannot detect 2d pattern" and "Cannot prove compact".

@@ -1,0 +1,56 @@
+{
+  "schema": "c3_p7r_vthread_residency_space_v1",
+  "scope": "local lowering and logical DMA only; no FSim, RPC, board, latency, or FPS",
+  "attempted": 400,
+  "locally_eligible": 2,
+  "reject_reasons": {
+    "analytic_acc_capacity": 15,
+    "analytic_input_capacity": 15,
+    "analytic_no_cross_context_reuse": 160,
+    "analytic_weight_capacity": 12,
+    "no_input_dma_reduction": 17,
+    "other_lower": 14,
+    "same_tile_original_rejected": 165
+  },
+  "workloads": {
+    "W05": {
+      "incumbent_index": 575,
+      "attempted": 400,
+      "locally_eligible": 2,
+      "top_label_free_candidates": [
+        {
+          "candidate_id": "43af42294e51f4d7933a689ba0e14ae8fbc31736eb3add30cb3d5471d89ae648",
+          "config_index": 400,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 1,
+            "tile_w": 1,
+            "tile_ci": 1,
+            "tile_co": 1,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.35,
+          "original_input_bytes": 6553600,
+          "residency_input_bytes": 4259840
+        },
+        {
+          "candidate_id": "41e5a7bdd5aa001e124571b3c819d207e56479edc9b0a47de7542fb9a1cf2aae",
+          "config_index": 408,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 1,
+            "tile_w": 7,
+            "tile_ci": 1,
+            "tile_co": 1,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.125,
+          "original_input_bytes": 2621440,
+          "residency_input_bytes": 2293760
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema": "c3_budgeted_process_execution_v1",
+  "status": "completed",
+  "budget_seconds": 300,
+  "elapsed_seconds": 211.9374191550014,
+  "overrun_seconds": 0.0,
+  "budget_eligible_completed_candidates": [
+    "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+    "f8f29556798ce40fdd440ec94f358db21479cd06cafd33137e7cb5398f8e7ccf"
+  ],
+  "steps": [
+    {
+      "index": 0,
+      "name": "prepare_model_and_stock_once",
+      "kind": "prepare",
+      "candidate_id": null,
+      "started_seconds": 0.015148239996051416,
+      "returncode": 0,
+      "completion_verified": false,
+      "finished_seconds": 84.53422265299741,
+      "elapsed_seconds": 84.51907441300136,
+      "finished_within_budget": true,
+      "overrun_seconds": 0.0
+    },
+    {
+      "index": 1,
+      "name": "build_0",
+      "kind": "build",
+      "candidate_id": "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+      "started_seconds": 84.53453278199595,
+      "returncode": 0,
+      "completion_verified": false,
+      "finished_seconds": 115.49027327699878,
+      "elapsed_seconds": 30.95574049500283,
+      "finished_within_budget": true,
+      "overrun_seconds": 0.0
+    },
+    {
+      "index": 2,
+      "name": "measure_0",
+      "kind": "measure",
+      "candidate_id": "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+      "started_seconds": 115.49050222500227,
+      "returncode": 0,
+      "completion_verified": true,
+      "receipt_sha256": "898cc8312e604cbd00f2688ed7b18ccc18664c1848d8173490c8d9c012250067",
+      "finished_seconds": 145.3188033740007,
+      "elapsed_seconds": 29.828301148998435,
+      "finished_within_budget": true,
+      "overrun_seconds": 0.0
+    },
+    {
+      "index": 3,
+      "name": "build_1",
+      "kind": "build",
+      "candidate_id": "f8f29556798ce40fdd440ec94f358db21479cd06cafd33137e7cb5398f8e7ccf",
+      "started_seconds": 145.31904006600234,
+      "returncode": 0,
+      "completion_verified": false,
+      "finished_seconds": 177.1762922889975,
+      "elapsed_seconds": 31.857252222995157,
+      "finished_within_budget": true,
+      "overrun_seconds": 0.0
+    },
+    {
+      "index": 4,
+      "name": "measure_1",
+      "kind": "measure",
+      "candidate_id": "f8f29556798ce40fdd440ec94f358db21479cd06cafd33137e7cb5398f8e7ccf",
+      "started_seconds": 177.176539494998,
+      "returncode": 0,
+      "completion_verified": true,
+      "receipt_sha256": "e9ec3f4261130b842eca5e0fcd401a9ad25146a9050b1db702e1815281aeab58",
+      "finished_seconds": 211.9373038229969,
+      "elapsed_seconds": 34.76076432799891,
+      "finished_within_budget": true,
+      "overrun_seconds": 0.0
+    }
+  ],
+  "unstarted_steps": 0,
+  "deadline_policy": "soft admission; drain active step; charge overrun; exclude late label",
+  "clock_scope": "wrapper entry through execution and receipt checks; excludes interpreter startup and final report serialization",
+  "oracle_used": false,
+  "plan_sha256": "a30a6b1fa6d4c59c7d260a64d1911837b7484e170cecd9d9fd68022f6e523bd4",
+  "executor_sha256": "1d3fa6a9c38768274035e22d4bde66fc4304c57c6f1cc5e9a4fd2107064aa625"
+}

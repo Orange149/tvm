@@ -1,0 +1,13 @@
+{
+  "seeds": [
+    {
+      "correct": false,
+      "exception_type": "InternalError",
+      "message": "Traceback (most recent call last):\n  [bt] (5) /home/orange/code/tvm/build/libtvm.so(TVMFuncCall+0x60) [0x7a55ecfcaaf0]\n  [bt] (4) /home/orange/code/tvm/build/libtvm.so(+0x2eb70cd) [0x7a55ed0b70cd]\n  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2ea7c86) [0x7a55ed0a7c86]\n  [bt] (2) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::RPCEndpoint::CallFunc(void*, TVMValue const*, int const*, int, std::function<void (tvm::runtime::TVMArgs)>)+0x388) [0x7a55ed0a7bb8]\n  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d42b) [0x7a55eab9d42b]\n  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7a55ecffc955]\n  File \"/home/orange/code/tvm/src/runtime/rpc/rpc_endpoint.cc\", line 808\nInternalError: Check failed: (code == RPCCode::kReturn) is false: code=kShutdown",
+      "runtime_profile_error": "Traceback (most recent call last):\n  [bt] (8) /home/orange/code/tvm/build/libtvm.so(TVMFuncCall+0x60) [0x7a55ecfcaaf0]\n  [bt] (7) /home/orange/code/tvm/build/libtvm.so(+0x2eb70cd) [0x7a55ed0b70cd]\n  [bt] (6) /home/orange/code/tvm/build/libtvm.so(+0x2ea7c86) [0x7a55ed0a7c86]\n  [bt] (5) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::RPCEndpoint::CallFunc(void*, TVMValue const*, int const*, int, std::function<void (tvm::runtime::TVMArgs)>)+0x1cf) [0x7a55ed0a79ff]\n  [bt] (4) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::RPCEndpoint::HandleUntilReturnEvent(bool, std::function<void (tvm::runtime::TVMArgs)>)+0x187) [0x7a55ed0a6377]\n  [bt] (3) /home/orange/code/tvm/build/libtvm.so(+0x2ec5130) [0x7a55ed0c5130]\n  [bt] (2) /home/orange/code/tvm/build/libtvm.so(+0x2ec4f34) [0x7a55ed0c4f34]\n  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d42b) [0x7a55eab9d42b]\n  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7a55ecffc955]\n  File \"/home/orange/code/tvm/src/runtime/rpc/../../support/socket.h\", line 362\nTVMError: Socket SockChannel::Send Error:Broken pipe",
+      "seed": 0,
+      "status": "execution_failed"
+    }
+  ],
+  "status": "failed_stop"
+}

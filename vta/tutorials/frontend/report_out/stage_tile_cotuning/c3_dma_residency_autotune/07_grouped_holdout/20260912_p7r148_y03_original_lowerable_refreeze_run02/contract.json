@@ -1,0 +1,100 @@
+{
+  "claim_boundary": "original lowering-valid identity refreeze only; no mode legality, FSim, FPGA, latency, or search claim",
+  "geometry_signature": [
+    1,
+    128,
+    26,
+    26,
+    256,
+    3,
+    3,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "hardware_fingerprint": {
+    "acc_buff_size": 131072,
+    "batch": 1,
+    "block_in": 16,
+    "block_out": 16,
+    "inp_buff_size": 32768,
+    "target": "axu5evb",
+    "uop_buff_size": 32768,
+    "wgt_buff_size": 262144
+  },
+  "input": {
+    "artifact_ledger_sha256": "8f2cf8b73df89ffaa6eb1ec1214f296572220684b24525c9544669e3e01dfca9",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r146_y03_conv8_label_isolated_contract_run01"
+  },
+  "schema": "c3_p7r148_y03_lowerable_refreeze_v1",
+  "selected_candidate_ids": [
+    "3d24e7a585ee3130ff891aa95a5d4c37843fad9d061ae3fcd405e4028329a66e",
+    "2138f25c1cb8e02e2b5328c1ed6dce42c3549152b321a42e54ecf7a232a4e070",
+    "359837fd7248bb20fea65c86a7043edbcc2150bb019ca4c08539d44a08f35722",
+    "190f1be26e8e79aee7a3c331a364f5d22fef616e2b2ba329ee18492d094b83de",
+    "64bab476c85ce9a2c4560d60c0518676fbf610c81a6f370a7bee742a90cd1adf",
+    "624109d3a46f16f551fe8093cf9d7ba78bef637d22efcf6b965d274f17d1f192",
+    "36de346138fae2a1e3a679afe84d717f1be53e9fc67a1190aef61463d26dcc2d",
+    "7b5e10e4fb2e5cfb9282c8701744096bad1acb96f408be7c84f8cbb8eb7b3e65"
+  ],
+  "selection": {
+    "failure_policy": "all scanned failures retained; P7R146/P7R147 remain immutable negative evidence",
+    "gross_hardware_eligible_considered": 73,
+    "original_lowering_fail": 65,
+    "original_lowering_pass": 8,
+    "rule": "frozen hash order; accept only original schedule with successful actual lowering; stop after eight",
+    "scan_wall_ms": 57320.827703000075,
+    "uses_board_or_performance_label": false,
+    "uses_dma_magnitude_or_shape_for_ordering": false,
+    "uses_fsim": false,
+    "uses_tophub": false
+  },
+  "status": "refrozen_after_original_lowering_before_mode_lowering_fsim_fpga_or_performance",
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        8,
+        26,
+        26,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        16,
+        8,
+        3,
+        3,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "workload_id": "Y03"
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "c3_p7r_w04_board_contract_v1",
+  "status": "frozen_before_p7r_board_labels",
+  "purpose": "development-only paired correctness for hardware-certified input-residency x oc_nthread=2 candidates; no timing",
+  "workload_id": "W04",
+  "workload": [
+    "conv2d_packed.vta",
+    ["TENSOR", [1, 8, 28, 28, 1, 16], "int8"],
+    ["TENSOR", [16, 8, 3, 3, 16, 16], "int8"],
+    [2, 2],
+    [1, 1, 1, 1],
+    [1, 1],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "seeds": [0, 20250901, 20260910],
+  "selection_rule": {
+    "uses_board_latency_labels": false,
+    "candidate_330": "minimum input+weight LOAD bytes and LOAD calls among locally eligible W04 candidates",
+    "candidate_455_461": "same tile volume and channel tile; horizontal/vertical orientation pair",
+    "excluded_463": "protected incumbent residency transform rejected locally by accumulator SRAM certificate",
+    "timing_gate": "no timing unless every execution-order record passes all three seeds"
+  },
+  "execution_order": [
+    {"role": "incumbent_sentinel_before", "mode": "original", "config_index": 463},
+    {"role": "same_tile_original", "mode": "original", "config_index": 330},
+    {"role": "joint_candidate", "mode": "input_stationary", "config_index": 330, "candidate_id": "1e07885929f62cdefea73d9bc18a145f5e23e2ebbada88835fe55d17e90b04f4", "tir_sha256": "4409625fbf93aef019f90c03defe2c830fe12b1241b307b1c5ee70e3b18564f8"},
+    {"role": "same_tile_original", "mode": "original", "config_index": 455},
+    {"role": "joint_candidate", "mode": "input_stationary", "config_index": 455, "candidate_id": "02768348bfdbabda155c4ea5ebb099abc1f4cd3d565cb2b08b89698018634a53", "tir_sha256": "cbc27aad1be773574fff2d5bfbeaba31ef06e17eaa9da0d9623d678d93766141"},
+    {"role": "same_tile_original", "mode": "original", "config_index": 461},
+    {"role": "joint_candidate", "mode": "input_stationary", "config_index": 461, "candidate_id": "a59ac95592ee324f5823ef027e7648efaf5f24fd80d2d2c0cbef7c5c3f165265", "tir_sha256": "2725d118840080d050b4e97014bcc618bb6022068ac7c0901a9c938ece4cf51d"},
+    {"role": "incumbent_sentinel_after", "mode": "original", "config_index": 463}
+  ],
+  "board": {
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "fpga_state": "operating",
+    "udmabuf_bytes": 201326592,
+    "rpc_cwd_requirement": "/var/volatile/vta_c3_ram/runtime",
+    "sd_mount": "/media/sd-mmcblk1p2",
+    "sd_used_percent_at_freeze": 78,
+    "dmesg_error_cutoff_seconds": 4057.401259,
+    "safety": "abort on new storage error, boot change, FPGA state change, wrong answer, or shell timeout; never reboot or power off"
+  },
+  "source_guards_sha256": {
+    "vta/tutorials/frontend/run_vta_p7r_joint_correctness.py": "ee129ee84a0491c26201d12134bd69d52169f557434127af90f15d229147d862",
+    "vta/python/vta/top/vta_conv2d.py": "676ff21166871fdc30f0e42dfaf0067fbf6b8f866fe77ebc308f872f50e64926",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "vta/tutorials/frontend/qualify_vta_residency_fsim.py": "1b869cc9fa6e109c9742dcb82d2f0ccca6193981f589af70b4fb8428ddabec57"
+  },
+  "input_guards_sha256": {
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/selected_tasks.json": "3f4abe7ca36cbc4a729718f17066f5e757547a0b716d15e9086b273e653b5087",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r1_w04_joint_local_run02/results.jsonl": "4f84c28f20cd5cbee356833571bc4535945973333ac05da7803262f321d7322c",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r2_w04_joint_fsim_run01/results.jsonl": "5bbc1b5e372fa991b438629b75ebaae999794e2782dbbfad964e2127fb4f7d71"
+  }
+}

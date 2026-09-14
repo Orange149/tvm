@@ -1,0 +1,88 @@
+{
+  "aggregate": {
+    "actual_peeling_expansion_holdouts": 1,
+    "available_complete_outer_wall_seconds": 526.4686696919889,
+    "candidate_dispatch_reduction_percent": 72.0,
+    "complete_outer_wall_available_holdouts": 2,
+    "exact_oracle_holdouts": 2,
+    "fpga_correct_candidates": 23,
+    "fpga_invalid_candidates": 2,
+    "holdout_count": 3,
+    "online_candidate_dispatches": 7,
+    "oracle_plus_2pct_holdouts": 3,
+    "pool_candidates": 25
+  },
+  "aggregator_source_sha256": "96424bd95826d7b576a706719a6c0272a5598f89aad5358e5996e01af28b3015",
+  "bound_analysis_manifests": {
+    "20260913_p7r398_r50g_invalid_dominator_peeling_analysis_run01": "ff67955687b8f9bf64d05a4260318d243436899f80de55e5594513cf51c654ee",
+    "20260913_p7r408_r50h_invalid_dominator_peeling_analysis_run01": "cc7f42c2fa163f10924bd16260610bcd307c70a5640de9faa4903c2869973490",
+    "20260913_p7r418_r50i_invalid_dominator_peeling_analysis_run01": "9d984198b031480bc290a5ab32fd5a18ad2dc1e91149fe22253dcd82cc20c473"
+  },
+  "claim_boundary": "Three source-consistent ResNet50-v2 layer holdouts selected and frozen before their target labels. R50G lacks serialized complete outer-process wall. R50H is the only holdout whose initial front contains an FPGA-invalid dominator and therefore the only direct peeling-expansion validation. This is three workloads within one model family, not cross-model or statistical universal validity.",
+  "holdouts": [
+    {
+      "component_savings": null,
+      "exact_oracle": false,
+      "fpga_correct": 5,
+      "fpga_invalid": 0,
+      "online_dispatches": 1,
+      "oracle_plus_2pct": true,
+      "outer_process_seconds": null,
+      "peeling_expanded": false,
+      "pool_size": 5,
+      "regret_percent": 0.7142270947162466,
+      "workload_id": "R50G"
+    },
+    {
+      "component_savings": {
+        "candidate_dispatches_reduction_percent": 73.33333333333334,
+        "complete_candidate_build_action_seconds_reduction_percent": 76.12442163045682,
+        "fpga_kernel_invocations_reduction_percent": 77.46478873239437,
+        "invocation_host_wall_ms_reduction_percent": 78.13646311423996,
+        "logical_dma_bytes_reduction_percent": 78.42975711051066,
+        "logical_dma_calls_reduction_percent": 78.12388818327584,
+        "logical_load_bytes_reduction_percent": 78.49121683616178,
+        "logical_store_bytes_reduction_percent": 77.91666666666667
+      },
+      "exact_oracle": true,
+      "fpga_correct": 14,
+      "fpga_invalid": 1,
+      "online_dispatches": 4,
+      "oracle_plus_2pct": true,
+      "outer_process_seconds": 312.94171245299367,
+      "peeling_expanded": true,
+      "pool_size": 15,
+      "regret_percent": 0.0,
+      "workload_id": "R50H"
+    },
+    {
+      "component_savings": {
+        "candidate_dispatches_reduction_percent": 60.0,
+        "complete_candidate_build_action_seconds_reduction_percent": 63.406353880516775,
+        "fpga_kernel_invocations_reduction_percent": 51.21951219512195,
+        "invocation_host_wall_ms_reduction_percent": 51.341794832482194,
+        "logical_dma_bytes_reduction_percent": 52.218212389078914,
+        "logical_dma_calls_reduction_percent": 51.97869985055645,
+        "logical_load_bytes_reduction_percent": 52.38150355923374,
+        "logical_store_bytes_reduction_percent": 50.72463768115942
+      },
+      "exact_oracle": true,
+      "fpga_correct": 4,
+      "fpga_invalid": 1,
+      "online_dispatches": 2,
+      "oracle_plus_2pct": true,
+      "outer_process_seconds": 213.52695723899524,
+      "peeling_expanded": false,
+      "pool_size": 5,
+      "regret_percent": 0.0,
+      "workload_id": "R50I"
+    }
+  ],
+  "schema": "c3_vta_invalid_dominator_peeling_three_holdout_aggregate_v1",
+  "status": "three_prospective_peeling_holdouts_aggregate_complete",
+  "verified_artifact_counts": {
+    "20260913_p7r398_r50g_invalid_dominator_peeling_analysis_run01": 2,
+    "20260913_p7r408_r50h_invalid_dominator_peeling_analysis_run01": 2,
+    "20260913_p7r418_r50i_invalid_dominator_peeling_analysis_run01": 2
+  }
+}

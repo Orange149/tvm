@@ -1,0 +1,183 @@
+{
+  "schema": "c3_p7r_vthread_residency_space_v1",
+  "scope": "local lowering and logical DMA only; no FSim, RPC, board, latency, or FPS",
+  "attempted": 400,
+  "locally_eligible": 19,
+  "reject_reasons": {
+    "analytic_acc_capacity": 15,
+    "analytic_input_capacity": 15,
+    "analytic_no_cross_context_reuse": 160,
+    "analytic_weight_capacity": 12,
+    "other_lower": 14,
+    "same_tile_original_rejected": 165
+  },
+  "workloads": {
+    "W05": {
+      "incumbent_index": 575,
+      "attempted": 400,
+      "locally_eligible": 19,
+      "top_label_free_candidates": [
+        {
+          "candidate_id": "53c8cf8881be934ebf590be4b1249b1326751c2ba8de42d270da392412d3c2b9",
+          "config_index": 400,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 1,
+            "tile_w": 1,
+            "tile_ci": 1,
+            "tile_co": 1,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.675,
+          "original_input_bytes": 6553600,
+          "residency_input_bytes": 2129920
+        },
+        {
+          "candidate_id": "0c68d854e8272906af493840b4d4f6d47b1877e4ac04f6890be052681d29b063",
+          "config_index": 408,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 1,
+            "tile_w": 7,
+            "tile_ci": 1,
+            "tile_co": 1,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.5625,
+          "original_input_bytes": 2621440,
+          "residency_input_bytes": 1146880
+        },
+        {
+          "candidate_id": "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061",
+          "config_index": 574,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 7,
+            "tile_w": 14,
+            "tile_ci": 1,
+            "tile_co": 4,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.5,
+          "original_input_bytes": 229376,
+          "residency_input_bytes": 114688
+        },
+        {
+          "candidate_id": "c4286196b3971d4fdfc2cfec52ed2a4e76c4b2de2cbd74bdaa2e6da41f06fb31",
+          "config_index": 494,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 7,
+            "tile_w": 14,
+            "tile_ci": 1,
+            "tile_co": 2,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.5,
+          "original_input_bytes": 458752,
+          "residency_input_bytes": 229376
+        },
+        {
+          "candidate_id": "1581101ab03812bd75e5129cbafac16e1c6cbc92858473353c32acb2d934a101",
+          "config_index": 567,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 14,
+            "tile_w": 2,
+            "tile_ci": 1,
+            "tile_co": 4,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.5,
+          "original_input_bytes": 372736,
+          "residency_input_bytes": 186368
+        },
+        {
+          "candidate_id": "035ed0cc8a5fc56957ce633c467f31155010bba62a17c97c367a106b0a7c64ae",
+          "config_index": 573,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 2,
+            "tile_w": 14,
+            "tile_ci": 1,
+            "tile_co": 4,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.5,
+          "original_input_bytes": 372736,
+          "residency_input_bytes": 186368
+        },
+        {
+          "candidate_id": "6977792a0f27aaaf957ce59fd55484a54b9a21f9cdbfeeeebfab4a52534f9d48",
+          "config_index": 414,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 7,
+            "tile_w": 14,
+            "tile_ci": 1,
+            "tile_co": 1,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.5,
+          "original_input_bytes": 917504,
+          "residency_input_bytes": 458752
+        },
+        {
+          "candidate_id": "dee546183aa3a70c24cc9504e5ac5824bd766f77ad44d18ccf06e983d0973172",
+          "config_index": 487,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 14,
+            "tile_w": 2,
+            "tile_ci": 1,
+            "tile_co": 2,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.5,
+          "original_input_bytes": 745472,
+          "residency_input_bytes": 372736
+        },
+        {
+          "candidate_id": "755b142e1db50eb531284f5b2f8964e6f171ea903e008ab54f04f4d2689067a6",
+          "config_index": 493,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 2,
+            "tile_w": 14,
+            "tile_ci": 1,
+            "tile_co": 2,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.5,
+          "original_input_bytes": 745472,
+          "residency_input_bytes": 372736
+        },
+        {
+          "candidate_id": "4cd03efd14d416f5103ba7020f95447bf0e5c79edc5fe22e2028b4efac71cc2c",
+          "config_index": 572,
+          "knobs": {
+            "tile_b": 1,
+            "tile_h": 1,
+            "tile_w": 14,
+            "tile_ci": 1,
+            "tile_co": 4,
+            "oc_nthread": 2,
+            "h_nthread": 1
+          },
+          "input_dma_reduction_fraction": 0.5,
+          "original_input_bytes": 573440,
+          "residency_input_bytes": 286720
+        }
+      ]
+    }
+  }
+}

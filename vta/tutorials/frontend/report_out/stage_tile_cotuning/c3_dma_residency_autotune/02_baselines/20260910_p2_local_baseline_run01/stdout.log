@@ -1,0 +1,30 @@
+P2-local evidence log. No board access occurred.
+
+[environment] exit=0
+Python 3.10.20; TVM 0.13.0; NumPy 1.23.5; TVM source /home/orange/code/tvm/python/tvm; VTA source /home/orange/code/tvm/vta/python/vta.
+
+[initial hashes] exit=0
+schedule=b7fc752b5c41974c0e68fcf7d1bd6b6ca12229920c213c7cbae12f2a96ad4645
+tophub=8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc
+
+[TopHub ApplyHistoryBest audit] exit=0
+10 workloads queried; indices 828,681,1330,1113,463,575,526,203,243,203; 0 fallback; all resolved inner entities match the frozen ConfigSpace entities. Resolved TopHub entities and ConfigSpace -1 placeholders lower to structurally equal TIR for each queried workload.
+
+[static DMA extractor] exit=0
+workloads=10 exact_direct_profiles=8
+Generated static_dma.json is byte-identical to the frozen artifact; sha256=ff154ced1154c54fdd168597a1ab23433854c06652004538b821bd96fb48a3a5.
+
+[VTA instruction FSim] exit=0
+test_runtime_array, test_save_load_out, test_padded_load, test_gemm, test_alu, test_relu and test_shift_and_scale completed without assertion failure.
+
+[10-workload FSim/reference] exit=0
+10 TopHub workloads x seeds [0,20250901,20260910] = 30 elementwise comparisons; all correct, mismatch_count=0. simulator_enabled=True.
+
+[AXU5EVB cross compile] exit=0
+10/10 TopHub workloads compiled and exported with aarch64-xilinx-linux-g++ 9.2.0. Binary sizes are recorded in results.jsonl.
+
+[stage_tile_cotuning pytest] exit=0
+19 passed, 25 warnings in 1.06s.
+
+[source guard] stop
+At 22:42:44 another task modified vta/python/vta/top/vta_conv2d.py. Final hash=6f9bb140f701deda147a084d22a257aabb9337b55326b032da0e7d077775274d. This agent did not modify the source. No further baseline validation was started after detection.

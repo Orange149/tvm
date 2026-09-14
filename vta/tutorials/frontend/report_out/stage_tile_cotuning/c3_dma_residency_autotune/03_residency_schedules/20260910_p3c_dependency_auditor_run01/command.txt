@@ -1,0 +1,27 @@
+# C3-P3c command ledger
+
+All commands ran from `/home/orange/code/tvm` with no SSH or board access.
+
+1. Initial pytest invocation using parameter name `target` — collection exit 1. TVM's pytest plugin reserves `target` for hardware targets and attempted to interpret integer stage IDs as `Target` objects. The new test parameter was renamed to `target_stage`; no auditor logic changed.
+
+2. Final tests — exit 0:
+
+```sh
+TEST_DATA_ROOT_PATH=/tmp/tvm_test_data MPLCONFIGDIR=/tmp/mpl PYTHONPATH=/home/orange/code/tvm/python:/home/orange/code/tvm/vta/python:/home/orange/code/tvm/vta/tutorials/frontend /home/orange/miniconda3/envs/vta-resnet/bin/python -m pytest -q vta/tutorials/frontend/test_vta_coproc_dependencies.py
+```
+
+Result: `10 passed, 15 warnings in 0.64s`. Raw output is under `logs/`.
+
+3. W00 audit capture — exit 0. A Python/API invocation instantiated the four current safe residency modes at representative config index 252, lowered them, called `audit_vta_coproc_dependencies(module)`, and wrote `w00_safe_modes_audit.json`.
+
+4. Legal CLI round trip — exit 0:
+
+```sh
+python vta/tutorials/frontend/audit_vta_coproc_dependencies.py --ir-json <run>/legal_ir.json --output <run>/legal_cli_audit.json --fail-on-invalid
+```
+
+5. Forbidden 3→1 CLI round trip — expected exit 2 using the same command shape and `forbidden_ir.json`. The output report has `valid=false` and `forbidden_direct_load_store`.
+
+6. `python -m py_compile` on the auditor and test — exit 0. `python -m json.tool` on the formal `.jsonschema` file and CLI reports — exit 0.
+
+7. Optional external JSON-Schema validation was not run because the environment lacks the `jsonschema` package (`ModuleNotFoundError`). No dependency was installed. Report structure is covered directly by tests and the formal schema is syntactically valid JSON.

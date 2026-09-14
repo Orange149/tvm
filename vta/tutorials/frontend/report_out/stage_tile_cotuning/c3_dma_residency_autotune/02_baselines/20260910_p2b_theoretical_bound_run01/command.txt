@@ -1,0 +1,5 @@
+/home/orange/miniconda3/envs/vta-resnet/bin/python vta/tutorials/frontend/analyze_vta_theoretical_bound.py --static-dma vta/tutorials/frontend/report_out/stage_tile_cotuning/stage_memory_experiments/static_workload_dma.json --vta-config 3rdparty/vta-hw/config/vta_config.json --fpga-freq-mhz 100 --axi-data-bits 128 --selected-tasks vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/selected_tasks.json --artifacts-dir vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/tuning_artifacts --output-dir vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/02_baselines/20260910_p2b_theoretical_bound_run01
+
+/home/orange/miniconda3/envs/vta-resnet/bin/python -m py_compile vta/tutorials/frontend/analyze_vta_theoretical_bound.py vta/tutorials/frontend/test_analyze_vta_theoretical_bound.py
+
+/home/orange/miniconda3/envs/vta-resnet/bin/python -m unittest discover -s vta/tutorials/frontend -p 'test_analyze_vta_theoretical_bound.py' -v

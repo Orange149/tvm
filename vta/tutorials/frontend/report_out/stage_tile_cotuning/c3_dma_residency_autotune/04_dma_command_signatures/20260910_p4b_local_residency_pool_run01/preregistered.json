@@ -1,0 +1,21 @@
+{
+  "schema": "c3_p4b_preregistered_v1",
+  "modes": [
+    "input_stationary",
+    "weight_stationary",
+    "paper_inspired_hybrid"
+  ],
+  "forced_knobs": {
+    "oc_nthread": 1,
+    "h_nthread": 1
+  },
+  "mapping_rule": "complete semantic ConfigEntity exact match after forcing knobs; then deduplicate",
+  "baseline_rule": "same mapped tile entity under residency mode original",
+  "incumbent_protection": "one untouched original-template incumbent per workload",
+  "performance_rule": "no FSim timing and no static-DMA-to-FPS claim",
+  "target_dma": {
+    "input_stationary": "input_load_bytes",
+    "weight_stationary": "weight_load_bytes",
+    "paper_inspired_hybrid": "input_plus_weight_load_bytes"
+  }
+}

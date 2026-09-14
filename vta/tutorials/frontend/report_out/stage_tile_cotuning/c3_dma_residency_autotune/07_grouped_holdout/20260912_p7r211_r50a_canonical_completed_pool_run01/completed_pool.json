@@ -1,0 +1,1341 @@
+{
+  "claim_status": "oracle_completion_after_prospective_first_wave",
+  "delta_feature_sets": {
+    "bytes_calls": [
+      "input_dma_bytes",
+      "weight_dma_bytes",
+      "output_dma_bytes",
+      "input_dma_calls",
+      "weight_dma_calls",
+      "output_dma_calls"
+    ],
+    "command": [
+      "input_dma_bytes",
+      "weight_dma_bytes",
+      "output_dma_bytes",
+      "input_dma_calls",
+      "weight_dma_calls",
+      "output_dma_calls",
+      "small_dma_calls",
+      "strided_dma_calls",
+      "padded_dma_calls",
+      "input_reload",
+      "weight_reload",
+      "output_reload",
+      "insn_peak_bytes",
+      "uop_peak_bytes",
+      "submissions",
+      "residency_drains"
+    ],
+    "request": [
+      "input_dma_bytes",
+      "weight_dma_bytes",
+      "output_dma_bytes",
+      "input_dma_calls",
+      "weight_dma_calls",
+      "output_dma_calls",
+      "small_dma_calls",
+      "strided_dma_calls",
+      "padded_dma_calls",
+      "input_reload",
+      "weight_reload",
+      "output_reload"
+    ]
+  },
+  "frozen_before_target_labels": true,
+  "pool_id": "r50a_full_fsim_pass_pool",
+  "schema": "c3_no_leak_search_pool_v1",
+  "source_bindings": {
+    "board": {
+      "ledger_sha256": "4a5cd67667c43318b748e8386fc85581d02707982ea0a05e1d2b555a7099fc63",
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r210_r50a_full_board_oracle_completion_run01"
+    },
+    "local": {
+      "ledger_sha256": "d7c017c3a723492860f96713f85076e1cb0db0f9eb9378a30f6c7bf2768ccd0b",
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r209_r50a_full_local_oracle_completion_run01"
+    }
+  },
+  "workloads": {
+    "R50A": {
+      "candidates": [
+        {
+          "candidate_id": "02f17ab72e57ba8767cb30afc7072640199f73eaa409e5c0d448034e727212e0",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 8.334834,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 143.45718500044313
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 408.0,
+                  "logical_vta_load_bytes": 3194880.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 296.6792339939275
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 169.84705300274072
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 62.40551800146932
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 272.0,
+                  "logical_vta_load_bytes": 2129920.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 106.460271999822
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": 0.0,
+              "input_dma_calls": 0.0,
+              "input_reload": 0.0,
+              "insn_peak_bytes": 0.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": 0.0,
+              "strided_dma_calls": 0.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 0.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": 0.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 4.0,
+              "tile_co": 4.0,
+              "tile_h": 28.0,
+              "tile_w": 7.0
+            },
+            "rule_score": 1165312.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 1264.0,
+              "static_accumulator_sram_required_vectors": 784.0,
+              "static_dma_total_bytes": 1165312.0,
+              "static_dma_total_calls": 136.0,
+              "static_input_dma_bytes": 802816.0,
+              "static_input_dma_calls": 64.0,
+              "static_input_reload": 2.0,
+              "static_input_sram_headroom_vectors": 1264.0,
+              "static_input_sram_required_vectors": 784.0,
+              "static_insn_peak_bytes": 4016.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 8.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 0.0,
+              "static_strided_dma_calls": 136.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 572.0,
+              "static_weight_dma_bytes": 262144.0,
+              "static_weight_dma_calls": 64.0,
+              "static_weight_reload": 4.0,
+              "static_weight_sram_headroom_vectors": 1008.0,
+              "static_weight_sram_required_vectors": 16.0,
+              "tile_b": 1.0,
+              "tile_ci": 4.0,
+              "tile_co": 4.0,
+              "tile_h": 28.0,
+              "tile_w": 7.0
+            }
+          },
+          "residence_mode": "original",
+          "same_tile_control_id": "02f17ab72e57ba8767cb30afc7072640199f73eaa409e5c0d448034e727212e0",
+          "workload_id": "R50A"
+        },
+        {
+          "candidate_id": "0dd4fc7e5e4d255c4a29ebb14a9aa7c5cf45befc72f33a517c43fe65593e6b0e",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 14.500105,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 138.82865099731134
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 1512.0,
+                  "logical_vta_load_bytes": 3956736.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 306.44765500255744
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 173.39763099880656
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 128.08199299979606
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 1008.0,
+                  "logical_vta_load_bytes": 2637824.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 116.72305699903518
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": -1204224.0,
+              "input_dma_calls": -672.0,
+              "input_reload": -3.0,
+              "insn_peak_bytes": -35616.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": -1568.0,
+              "strided_dma_calls": -1344.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 672.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": -672.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 2.0,
+              "tile_co": 2.0,
+              "tile_h": 28.0,
+              "tile_w": 2.0
+            },
+            "rule_score": 1419264.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 1936.0,
+              "static_accumulator_sram_required_vectors": 112.0,
+              "static_dma_total_bytes": 1419264.0,
+              "static_dma_total_calls": 504.0,
+              "static_input_dma_bytes": 401408.0,
+              "static_input_dma_calls": 224.0,
+              "static_input_reload": 1.0,
+              "static_input_sram_headroom_vectors": 1936.0,
+              "static_input_sram_required_vectors": 112.0,
+              "static_insn_peak_bytes": 12944.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 56.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 280.0,
+              "static_strided_dma_calls": 504.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 1020.0,
+              "static_weight_dma_bytes": 917504.0,
+              "static_weight_dma_calls": 224.0,
+              "static_weight_reload": 14.0,
+              "static_weight_sram_headroom_vectors": 1020.0,
+              "static_weight_sram_required_vectors": 4.0,
+              "tile_b": 1.0,
+              "tile_ci": 2.0,
+              "tile_co": 2.0,
+              "tile_h": 28.0,
+              "tile_w": 2.0
+            }
+          },
+          "residence_mode": "input_stationary",
+          "same_tile_control_id": "4fc238b539be31aeb0e64ea85a64e1a031e34056b0848a7153bdfa34395e5fa1",
+          "workload_id": "R50A"
+        },
+        {
+          "candidate_id": "4fc238b539be31aeb0e64ea85a64e1a031e34056b0848a7153bdfa34395e5fa1",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 39.398224,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 140.75510700058658
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 5544.0,
+                  "logical_vta_load_bytes": 7569408.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 382.42338400232256
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 172.83371300072758
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 411.2915299992892
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 3696.0,
+                  "logical_vta_load_bytes": 5046272.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 169.15502799747628
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": 0.0,
+              "input_dma_calls": 0.0,
+              "input_reload": 0.0,
+              "insn_peak_bytes": 0.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": 0.0,
+              "strided_dma_calls": 0.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 0.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": 0.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 2.0,
+              "tile_co": 2.0,
+              "tile_h": 28.0,
+              "tile_w": 2.0
+            },
+            "rule_score": 2623488.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 1936.0,
+              "static_accumulator_sram_required_vectors": 112.0,
+              "static_dma_total_bytes": 2623488.0,
+              "static_dma_total_calls": 1848.0,
+              "static_input_dma_bytes": 1605632.0,
+              "static_input_dma_calls": 896.0,
+              "static_input_reload": 4.0,
+              "static_input_sram_headroom_vectors": 1936.0,
+              "static_input_sram_required_vectors": 112.0,
+              "static_insn_peak_bytes": 48560.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 56.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 1848.0,
+              "static_strided_dma_calls": 1848.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 348.0,
+              "static_weight_dma_bytes": 917504.0,
+              "static_weight_dma_calls": 896.0,
+              "static_weight_reload": 14.0,
+              "static_weight_sram_headroom_vectors": 1020.0,
+              "static_weight_sram_required_vectors": 4.0,
+              "tile_b": 1.0,
+              "tile_ci": 2.0,
+              "tile_co": 2.0,
+              "tile_h": 28.0,
+              "tile_w": 2.0
+            }
+          },
+          "residence_mode": "original",
+          "same_tile_control_id": "4fc238b539be31aeb0e64ea85a64e1a031e34056b0848a7153bdfa34395e5fa1",
+          "workload_id": "R50A"
+        },
+        {
+          "candidate_id": "5dd7a442cff1fb6565284948c9996c64c86410d19ec8508e9a59ab4e97eccc1e",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 40.357904,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 141.99306199952844
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 12096.0,
+                  "logical_vta_load_bytes": 12214272.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 611.9194669954595
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 179.7189860008075
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 838.6643140001979
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 8064.0,
+                  "logical_vta_load_bytes": 8142848.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 172.81310799808125
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": -2809856.0,
+              "input_dma_calls": -12544.0,
+              "input_reload": -7.0,
+              "insn_peak_bytes": -633472.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": -25088.0,
+              "strided_dma_calls": -10752.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 0.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": -12544.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 1.0,
+              "tile_co": 1.0,
+              "tile_h": 14.0,
+              "tile_w": 1.0
+            },
+            "rule_score": 4171776.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 2034.0,
+              "static_accumulator_sram_required_vectors": 14.0,
+              "static_dma_total_bytes": 4171776.0,
+              "static_dma_total_calls": 4032.0,
+              "static_input_dma_bytes": 401408.0,
+              "static_input_dma_calls": 1792.0,
+              "static_input_reload": 1.0,
+              "static_input_sram_headroom_vectors": 2034.0,
+              "static_input_sram_required_vectors": 14.0,
+              "static_insn_peak_bytes": 97840.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 448.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 4032.0,
+              "static_strided_dma_calls": 4032.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 20.0,
+              "static_weight_dma_bytes": 3670016.0,
+              "static_weight_dma_calls": 1792.0,
+              "static_weight_reload": 56.0,
+              "static_weight_sram_headroom_vectors": 1023.0,
+              "static_weight_sram_required_vectors": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 1.0,
+              "tile_co": 1.0,
+              "tile_h": 14.0,
+              "tile_w": 1.0
+            }
+          },
+          "residence_mode": "input_stationary",
+          "same_tile_control_id": "e6473088a7dfdba7328a50f0cd0735819794144b1d7a666d7513ae40cd74d906",
+          "workload_id": "R50A"
+        },
+        {
+          "candidate_id": "7287117f119111d13738774f2c338dd863cc1475159849efd51038b7b52698ca",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 5.90718,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 139.53244100048323
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 216.0,
+                  "logical_vta_load_bytes": 1990656.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 275.3548379987478
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 175.3728850017069
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 47.41704500338528
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 144.0,
+                  "logical_vta_load_bytes": 1327104.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 100.09442499722354
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": -401408.0,
+              "input_dma_calls": -32.0,
+              "input_reload": -1.0,
+              "insn_peak_bytes": -1856.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": 0.0,
+              "strided_dma_calls": -64.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 448.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": -32.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 4.0,
+              "tile_co": 4.0,
+              "tile_h": 28.0,
+              "tile_w": 7.0
+            },
+            "rule_score": 763904.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 1264.0,
+              "static_accumulator_sram_required_vectors": 784.0,
+              "static_dma_total_bytes": 763904.0,
+              "static_dma_total_calls": 72.0,
+              "static_input_dma_bytes": 401408.0,
+              "static_input_dma_calls": 32.0,
+              "static_input_reload": 1.0,
+              "static_input_sram_headroom_vectors": 1264.0,
+              "static_input_sram_required_vectors": 784.0,
+              "static_insn_peak_bytes": 2160.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 8.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 0.0,
+              "static_strided_dma_calls": 72.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 1020.0,
+              "static_weight_dma_bytes": 262144.0,
+              "static_weight_dma_calls": 32.0,
+              "static_weight_reload": 4.0,
+              "static_weight_sram_headroom_vectors": 1008.0,
+              "static_weight_sram_required_vectors": 16.0,
+              "tile_b": 1.0,
+              "tile_ci": 4.0,
+              "tile_co": 4.0,
+              "tile_h": 28.0,
+              "tile_w": 7.0
+            }
+          },
+          "residence_mode": "input_stationary",
+          "same_tile_control_id": "02f17ab72e57ba8767cb30afc7072640199f73eaa409e5c0d448034e727212e0",
+          "workload_id": "R50A"
+        },
+        {
+          "candidate_id": "73aa97bd1989108f0d1fe089241ca12f3ffc07756c42f6d78cf2ca173afe969c",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 33.98689,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 152.29954900132725
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 12096.0,
+                  "logical_vta_load_bytes": 26836992.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 373.37456100431154
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 189.2927189983311
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 865.4573189996881
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 8064.0,
+                  "logical_vta_load_bytes": 17891328.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 158.56108000298264
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": 0.0,
+              "input_dma_calls": 0.0,
+              "input_reload": 0.0,
+              "insn_peak_bytes": 0.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": 0.0,
+              "strided_dma_calls": 0.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 0.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": 0.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 8.0,
+              "tile_co": 2.0,
+              "tile_h": 1.0,
+              "tile_w": 7.0
+            },
+            "rule_score": 9046016.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 2034.0,
+              "static_accumulator_sram_required_vectors": 14.0,
+              "static_dma_total_bytes": 9046016.0,
+              "static_dma_total_calls": 4032.0,
+              "static_input_dma_bytes": 1605632.0,
+              "static_input_dma_calls": 1792.0,
+              "static_input_reload": 4.0,
+              "static_input_sram_headroom_vectors": 1992.0,
+              "static_input_sram_required_vectors": 56.0,
+              "static_insn_peak_bytes": 129200.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 448.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 2240.0,
+              "static_strided_dma_calls": 4032.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 24.0,
+              "static_weight_dma_bytes": 7340032.0,
+              "static_weight_dma_calls": 1792.0,
+              "static_weight_reload": 112.0,
+              "static_weight_sram_headroom_vectors": 1008.0,
+              "static_weight_sram_required_vectors": 16.0,
+              "tile_b": 1.0,
+              "tile_ci": 8.0,
+              "tile_co": 2.0,
+              "tile_h": 1.0,
+              "tile_w": 7.0
+            }
+          },
+          "residence_mode": "original",
+          "same_tile_control_id": "73aa97bd1989108f0d1fe089241ca12f3ffc07756c42f6d78cf2ca173afe969c",
+          "workload_id": "R50A"
+        },
+        {
+          "candidate_id": "c06670ea00dc0bd1e434ac2247a6b5e1fa78147e861cd48348bba7adbb66dd4c",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 16.374014,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 135.20807899840293
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 2856.0,
+                  "logical_vta_load_bytes": 3956736.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 310.51383600060944
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 170.29215499860584
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 214.3797739990987
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 1904.0,
+                  "logical_vta_load_bytes": 2637824.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 123.40529200082528
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": -1204224.0,
+              "input_dma_calls": -1344.0,
+              "input_reload": -3.0,
+              "insn_peak_bytes": -67872.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": -2688.0,
+              "strided_dma_calls": -2688.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 0.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": -1344.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 1.0,
+              "tile_co": 2.0,
+              "tile_h": 28.0,
+              "tile_w": 2.0
+            },
+            "rule_score": 1419264.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 1936.0,
+              "static_accumulator_sram_required_vectors": 112.0,
+              "static_dma_total_bytes": 1419264.0,
+              "static_dma_total_calls": 952.0,
+              "static_input_dma_bytes": 401408.0,
+              "static_input_dma_calls": 448.0,
+              "static_input_reload": 1.0,
+              "static_input_sram_headroom_vectors": 1992.0,
+              "static_input_sram_required_vectors": 56.0,
+              "static_insn_peak_bytes": 23696.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 56.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 952.0,
+              "static_strided_dma_calls": 952.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 236.0,
+              "static_weight_dma_bytes": 917504.0,
+              "static_weight_dma_calls": 448.0,
+              "static_weight_reload": 14.0,
+              "static_weight_sram_headroom_vectors": 1022.0,
+              "static_weight_sram_required_vectors": 2.0,
+              "tile_b": 1.0,
+              "tile_ci": 1.0,
+              "tile_co": 2.0,
+              "tile_h": 28.0,
+              "tile_w": 2.0
+            }
+          },
+          "residence_mode": "input_stationary",
+          "same_tile_control_id": "c134deda5b2f724ea11ba97488d3778cbb5f703cfc80afc96542a48183318eb4",
+          "workload_id": "R50A"
+        },
+        {
+          "candidate_id": "c134deda5b2f724ea11ba97488d3778cbb5f703cfc80afc96542a48183318eb4",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 44.01557,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 149.18266699896776
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 10920.0,
+                  "logical_vta_load_bytes": 7569408.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 605.5518479988677
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 177.9127959998732
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 785.2607749991876
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 7280.0,
+                  "logical_vta_load_bytes": 5046272.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 179.55061400061822
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": 0.0,
+              "input_dma_calls": 0.0,
+              "input_reload": 0.0,
+              "insn_peak_bytes": 0.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": 0.0,
+              "strided_dma_calls": 0.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 0.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": 0.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 1.0,
+              "tile_co": 2.0,
+              "tile_h": 28.0,
+              "tile_w": 2.0
+            },
+            "rule_score": 2623488.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 1936.0,
+              "static_accumulator_sram_required_vectors": 112.0,
+              "static_dma_total_bytes": 2623488.0,
+              "static_dma_total_calls": 3640.0,
+              "static_input_dma_bytes": 1605632.0,
+              "static_input_dma_calls": 1792.0,
+              "static_input_reload": 4.0,
+              "static_input_sram_headroom_vectors": 1992.0,
+              "static_input_sram_required_vectors": 56.0,
+              "static_insn_peak_bytes": 91568.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 56.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 3640.0,
+              "static_strided_dma_calls": 3640.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 236.0,
+              "static_weight_dma_bytes": 917504.0,
+              "static_weight_dma_calls": 1792.0,
+              "static_weight_reload": 14.0,
+              "static_weight_sram_headroom_vectors": 1022.0,
+              "static_weight_sram_required_vectors": 2.0,
+              "tile_b": 1.0,
+              "tile_ci": 1.0,
+              "tile_co": 2.0,
+              "tile_h": 28.0,
+              "tile_w": 2.0
+            }
+          },
+          "residence_mode": "original",
+          "same_tile_control_id": "c134deda5b2f724ea11ba97488d3778cbb5f703cfc80afc96542a48183318eb4",
+          "workload_id": "R50A"
+        },
+        {
+          "candidate_id": "e6473088a7dfdba7328a50f0cd0735819794144b1d7a666d7513ae40cd74d906",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 192.916629,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 138.6224960006075
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 87360.0,
+                  "logical_vta_load_bytes": 20643840.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 904.9937480012886
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 193.63845599946217
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 6493.78805699962
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 58240.0,
+                  "logical_vta_load_bytes": 13762560.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 491.82692000249517
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": 0.0,
+              "input_dma_calls": 0.0,
+              "input_reload": 0.0,
+              "insn_peak_bytes": 0.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": 0.0,
+              "strided_dma_calls": 0.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 0.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": 0.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 1.0,
+              "tile_co": 1.0,
+              "tile_h": 14.0,
+              "tile_w": 1.0
+            },
+            "rule_score": 6981632.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 2034.0,
+              "static_accumulator_sram_required_vectors": 14.0,
+              "static_dma_total_bytes": 6981632.0,
+              "static_dma_total_calls": 29120.0,
+              "static_input_dma_bytes": 3211264.0,
+              "static_input_dma_calls": 14336.0,
+              "static_input_reload": 8.0,
+              "static_input_sram_headroom_vectors": 2034.0,
+              "static_input_sram_required_vectors": 14.0,
+              "static_insn_peak_bytes": 731312.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 448.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 29120.0,
+              "static_strided_dma_calls": 14784.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 20.0,
+              "static_weight_dma_bytes": 3670016.0,
+              "static_weight_dma_calls": 14336.0,
+              "static_weight_reload": 56.0,
+              "static_weight_sram_headroom_vectors": 1023.0,
+              "static_weight_sram_required_vectors": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 1.0,
+              "tile_co": 1.0,
+              "tile_h": 14.0,
+              "tile_w": 1.0
+            }
+          },
+          "residence_mode": "original",
+          "same_tile_control_id": "e6473088a7dfdba7328a50f0cd0735819794144b1d7a666d7513ae40cd74d906",
+          "workload_id": "R50A"
+        },
+        {
+          "candidate_id": "ea09328abc3e1e14129d29da989026db9a714762ae6c39c81c3f0def741440d2",
+          "oracle": {
+            "correctness_seed_checks": 3,
+            "delta_t_ms": null,
+            "latency_ms": 19.604056,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 135.15692399960244
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 4032.0,
+                  "logical_vta_load_bytes": 23224320.0,
+                  "logical_vta_store_bytes": 301056.0
+                },
+                "status": "ok",
+                "wall_ms": 323.2574600006046
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 167.5668579991907
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "status": "ok",
+                "wall_ms": 279.79011999923387
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 2688.0,
+                  "logical_vta_load_bytes": 15482880.0,
+                  "logical_vta_store_bytes": 200704.0
+                },
+                "status": "ok",
+                "wall_ms": 128.33165999836638
+              }
+            }
+          },
+          "predispatch": {
+            "delta_t": {
+              "input_dma_bytes": -1204224.0,
+              "input_dma_calls": -1344.0,
+              "input_reload": -3.0,
+              "insn_peak_bytes": -91392.0,
+              "output_dma_bytes": 0.0,
+              "output_dma_calls": 0.0,
+              "output_reload": 0.0,
+              "padded_dma_calls": 0.0,
+              "residency_drains": 0.0,
+              "small_dma_calls": -1344.0,
+              "strided_dma_calls": -2688.0,
+              "submissions": 0.0,
+              "uop_peak_bytes": 24.0,
+              "weight_dma_bytes": 0.0,
+              "weight_dma_calls": -1344.0,
+              "weight_reload": 0.0
+            },
+            "feature_provenance": "frozen_before_target_labels",
+            "knobs": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "tile_b": 1.0,
+              "tile_ci": 8.0,
+              "tile_co": 2.0,
+              "tile_h": 1.0,
+              "tile_w": 7.0
+            },
+            "rule_score": 7841792.0,
+            "validity": {
+              "h_nthread": 1.0,
+              "oc_nthread": 1.0,
+              "static_accumulator_sram_headroom_vectors": 2034.0,
+              "static_accumulator_sram_required_vectors": 14.0,
+              "static_dma_total_bytes": 7841792.0,
+              "static_dma_total_calls": 1344.0,
+              "static_input_dma_bytes": 401408.0,
+              "static_input_dma_calls": 448.0,
+              "static_input_reload": 1.0,
+              "static_input_sram_headroom_vectors": 1992.0,
+              "static_input_sram_required_vectors": 56.0,
+              "static_insn_peak_bytes": 37808.0,
+              "static_output_dma_bytes": 100352.0,
+              "static_output_dma_calls": 448.0,
+              "static_output_reload": 1.0,
+              "static_padded_dma_calls": 0.0,
+              "static_residency_drains": 0.0,
+              "static_small_dma_calls": 896.0,
+              "static_strided_dma_calls": 1344.0,
+              "static_submissions": 1.0,
+              "static_uop_peak_bytes": 48.0,
+              "static_weight_dma_bytes": 7340032.0,
+              "static_weight_dma_calls": 448.0,
+              "static_weight_reload": 112.0,
+              "static_weight_sram_headroom_vectors": 1008.0,
+              "static_weight_sram_required_vectors": 16.0,
+              "tile_b": 1.0,
+              "tile_ci": 8.0,
+              "tile_co": 2.0,
+              "tile_h": 1.0,
+              "tile_w": 7.0
+            }
+          },
+          "residence_mode": "input_stationary",
+          "same_tile_control_id": "73aa97bd1989108f0d1fe089241ca12f3ffc07756c42f6d78cf2ca173afe969c",
+          "workload_id": "R50A"
+        }
+      ],
+      "sealed_reference": {
+        "exact_identity": false,
+        "latency_ms": null,
+        "reference_id": null,
+        "reference_kind": "full_pool_oracle",
+        "role": "derived_only_after_all_correct_candidates_are_timed"
+      }
+    }
+  }
+}

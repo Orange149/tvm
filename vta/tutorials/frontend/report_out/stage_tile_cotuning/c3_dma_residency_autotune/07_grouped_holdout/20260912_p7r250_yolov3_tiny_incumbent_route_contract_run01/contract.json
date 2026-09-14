@@ -1,0 +1,120 @@
+{
+  "schema": "c3_incumbent_protected_route_contract_v1",
+  "status": "frozen_before_route_composition",
+  "workspace_root": "/home/orange/code/tvm",
+  "policy": {
+    "algorithm": "greedy_sequential_incumbent_protection",
+    "minimum_paired_rounds": 7,
+    "minimum_win_fraction": 1.0,
+    "minimum_improvement_ms": 0.0,
+    "candidate_order_basis": "existing search-selected Y00 route followed by independently qualified Y02 mechanism candidate",
+    "failure_policy": "fail closed on stale baseline, evidence hash/assertion mismatch, output mismatch, live-memory failure, insufficient wins, or non-improving median"
+  },
+  "protected_incumbent": {
+    "model": "yolov3-tiny",
+    "route_candidate_ids": [],
+    "description": "stock TopHub full graph before explicit residency routes"
+  },
+  "proposals": [
+    {
+      "route": {
+        "candidate_id": "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c",
+        "workload_id": "Y00",
+        "public_mode": "input_stationary",
+        "implementation_mode": 1,
+        "candidate_source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r132_y00_search_confirmation_contract_run02/board_collection_contract.json",
+        "candidate_source_sha256": "2d1701a24e44318566a62fd6c6d3c53f10546ddd3d5d042691a4f643bec23c82"
+      },
+      "baseline_route_candidate_ids": [],
+      "proposed_route_candidate_ids": [
+        "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c"
+      ],
+      "evaluation": {
+        "graph_outputs_equal": true,
+        "live_memory_fit": true,
+        "paired_rounds": 7,
+        "proposed_paired_wins": 7,
+        "median_paired_delta_ms": -3.413404000000014
+      },
+      "evidence": [
+        {
+          "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r249_yolov3_tiny_route_factorial_analysis_run01/summary.json",
+          "sha256": "56cf48cc2756d6a4d0367e5c9897ee93acad4fbe51f9cedec38aae89dce10a19",
+          "assertions": [
+            {"path": "edges.y00_without_y02.all_outputs_equal", "equals": true},
+            {"path": "edges.y00_without_y02.paired_rounds", "equals": 7},
+            {"path": "edges.y00_without_y02.rhs_paired_wins", "equals": 7},
+            {"path": "edges.y00_without_y02.median_paired_delta_ms", "equals": -3.413404000000014}
+          ]
+        },
+        {
+          "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r238_yolov3_tiny_stock_selected_board_run01/summary.json",
+          "sha256": "f8cb04a625416d9450affe54d3f0643b3383442e5fa0830cc902822258993244",
+          "assertions": [
+            {"path": "all_paired_outputs_equal", "equals": true},
+            {"path": "all_correctness_outputs_nonzero", "equals": true},
+            {"path": "board_after.UDMABUF", "equals": "201326592"},
+            {"path": "board_after.STORAGE_ERRORS", "equals": []}
+          ]
+        },
+        {
+          "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r132_y00_search_confirmation_contract_run02/board_collection_contract.json",
+          "sha256": "2d1701a24e44318566a62fd6c6d3c53f10546ddd3d5d042691a4f643bec23c82",
+          "assertions": []
+        }
+      ]
+    },
+    {
+      "route": {
+        "candidate_id": "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "workload_id": "Y02",
+        "public_mode": "weight_resident_barrier",
+        "implementation_mode": 4,
+        "candidate_source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r123_y02_b00_paired_timing_run01/contract.json",
+        "candidate_source_sha256": "7192f316ca4a4649e2d70f05d60eb9edf836ae3813bbb72a3f4b677c5e6667aa"
+      },
+      "baseline_route_candidate_ids": [
+        "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c"
+      ],
+      "proposed_route_candidate_ids": [
+        "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c",
+        "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861"
+      ],
+      "evaluation": {
+        "graph_outputs_equal": true,
+        "live_memory_fit": true,
+        "paired_rounds": 7,
+        "proposed_paired_wins": 0,
+        "median_paired_delta_ms": 78.35502300000002
+      },
+      "evidence": [
+        {
+          "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r249_yolov3_tiny_route_factorial_analysis_run01/summary.json",
+          "sha256": "56cf48cc2756d6a4d0367e5c9897ee93acad4fbe51f9cedec38aae89dce10a19",
+          "assertions": [
+            {"path": "edges.y02_with_y00.all_outputs_equal", "equals": true},
+            {"path": "edges.y02_with_y00.paired_rounds", "equals": 7},
+            {"path": "edges.y02_with_y00.rhs_paired_wins", "equals": 0},
+            {"path": "edges.y02_with_y00.median_paired_delta_ms", "equals": 78.35502300000002}
+          ]
+        },
+        {
+          "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r241_yolov3_tiny_multi_residency_board_run01/summary.json",
+          "sha256": "c4275eac46acfa4a7d0cb292f9dbc85704bf7d2918eeaca04661fb741c11c724",
+          "assertions": [
+            {"path": "all_paired_outputs_equal", "equals": true},
+            {"path": "all_correctness_outputs_nonzero", "equals": true},
+            {"path": "board_after.UDMABUF", "equals": "201326592"},
+            {"path": "board_after.STORAGE_ERRORS", "equals": []}
+          ]
+        },
+        {
+          "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r123_y02_b00_paired_timing_run01/contract.json",
+          "sha256": "7192f316ca4a4649e2d70f05d60eb9edf836ae3813bbb72a3f4b677c5e6667aa",
+          "assertions": []
+        }
+      ]
+    }
+  ],
+  "claim_boundary": "Post-search deployment composition on exposed full-graph evidence; not a new holdout and not a global subset optimizer"
+}

@@ -1,0 +1,182 @@
+{
+  "clock_and_completeness": {
+    "required_run_header": [
+      "schema",
+      "trace_version",
+      "trace_complete",
+      "event_count",
+      "dropped_event_count",
+      "monotonic_clock",
+      "process_id",
+      "boot_id",
+      "runtime_binary_sha256",
+      "manifest_id",
+      "topology",
+      "pipeline_depth",
+      "warmup_frames",
+      "measured_frame_ids"
+    ],
+    "requirements": [
+      "single monotonic event_seq with no gaps for all participating threads",
+      "timestamps in one monotonic ns clock domain",
+      "trace_complete=true and dropped_event_count=0",
+      "all measured frames plus pipeline fill and drain are present"
+    ]
+  },
+  "command_submit": {
+    "required_fields": [
+      "queue_id",
+      "submit_id",
+      "frame_id",
+      "stage_id",
+      "invocation_id",
+      "insn_resource_id",
+      "uop_resource_id",
+      "insn_used_bytes",
+      "uop_used_bytes",
+      "insn_capacity_bytes",
+      "uop_capacity_bytes",
+      "decoded_finish_count",
+      "finish_last_index",
+      "dependency_closure_passed",
+      "submit_ts_ns",
+      "device_done_ts_ns",
+      "timeout"
+    ],
+    "safety_rules": [
+      "decode the finalized submitted bytes and require exactly one last FINISH",
+      "resource death is no earlier than device_done, never host submit return by assumption",
+      "validate instruction and UOP used ranges before either copy or device launch"
+    ]
+  },
+  "event_record": {
+    "event_kinds": [
+      "alloc",
+      "bind",
+      "read_begin",
+      "read_end",
+      "write_begin",
+      "write_end",
+      "submit_begin",
+      "device_done",
+      "release",
+      "free",
+      "replay_capture_begin",
+      "replay_capture_end",
+      "replay_use_begin",
+      "replay_use_end",
+      "invalidate"
+    ],
+    "required_fields": [
+      "event_seq",
+      "ts_ns",
+      "event_kind",
+      "frame_id",
+      "stage_id",
+      "executor_id",
+      "invocation_id",
+      "queue_id",
+      "submit_id",
+      "resource_id",
+      "generation",
+      "byte_offset",
+      "byte_length",
+      "access_mode"
+    ]
+  },
+  "fail_closed_conditions": [
+    "missing required field or unknown resource_id",
+    "event_seq gap, truncated trace, dropped event, or clock-domain ambiguity",
+    "physical overlap without an explicit legal alias relation",
+    "allocation without release/free semantics or access without matching begin/end",
+    "submit without separately observed device_done",
+    "FINISH not decoded from the exact submitted instruction bytes",
+    "enabled replay without complete retained-resource and invalidation events",
+    "dynamic shape exceeds its recorded bound"
+  ],
+  "failure_action": "do not build the conflict graph and do not report naive-sum/per-queue-max/lifetime-packing savings as comparable results",
+  "graph_mapping": {
+    "required_fields": [
+      "graph_node_id",
+      "node_entry_id",
+      "storage_id",
+      "alias_group",
+      "resource_id",
+      "physical_offset",
+      "capacity_bytes",
+      "producer_nodes",
+      "consumer_nodes",
+      "read_write_byte_ranges",
+      "topological_order",
+      "dynamic_shape_upper_bound"
+    ]
+  },
+  "lifetime_and_conflict_rules": {
+    "birth": "first alloc/bind/write that makes the resource generation live",
+    "conflict": "two logical resources conflict when their closed-open live intervals overlap and they cannot legally alias the same physical byte range",
+    "death": "last read/write completion, device_done, replay invalidation, or free, whichever is latest",
+    "packing_inputs": [
+      "validated resource capacities and alignments",
+      "complete conflict edges",
+      "fixed/non-relocatable allocations",
+      "alias legality and physical pool bounds"
+    ]
+  },
+  "minimum_collection": {
+    "frames": "warmup plus at least pipeline_depth + 2 measured frames and complete drain",
+    "instrumentation_points": [
+      "src/runtime/graph_executor/graph_executor.cc: SetupStorage, SetupOpExecs, and op invocation",
+      "3rdparty/vta-hw/src/axu5evb/axu5evb_driver.cc: VTAMemAlloc/VTAMemFree/GetPhyAddr",
+      "vta/runtime/runtime.cc: command append/finalize, Synchronize, DeviceRun completion, capture/replay/invalidate",
+      "native pipeline runner: slot acquire/release and frame/stage/invocation correlation context"
+    ],
+    "scope": "one frozen topology and manifest before expanding to A/B/C/D",
+    "trace_limit": "unbounded for this qualification run"
+  },
+  "purpose": "construct and validate a unified data/control birth-death conflict graph",
+  "replay": {
+    "disabled_policy_rule": "when replay_policy=disabled, capture and replay APIs must reject before retaining or launching any template resource",
+    "required_fields": [
+      "replay_policy",
+      "template_id",
+      "template_hash",
+      "source_candidate_id",
+      "retained_resource_ids",
+      "retained_insn_bytes",
+      "retained_uop_bytes",
+      "capture_event_range",
+      "replay_event_ranges",
+      "fallback_events",
+      "invalidation_events"
+    ]
+  },
+  "resource_declaration": {
+    "required_fields": [
+      "resource_id",
+      "resource_class",
+      "device",
+      "owner",
+      "allocation_id",
+      "virtual_address",
+      "physical_address",
+      "physical_offset",
+      "capacity_bytes",
+      "alignment_bytes",
+      "alias_group",
+      "queue_id",
+      "executor_id",
+      "stage_id"
+    ],
+    "resource_classes": [
+      "graph_storage",
+      "parameter",
+      "pipeline_slot",
+      "insn_queue",
+      "uop_queue",
+      "replay_template_insn",
+      "replay_template_uop",
+      "other_workspace"
+    ]
+  },
+  "schema": "c3_p7r114_lifetime_trace_contract_v1"
+}

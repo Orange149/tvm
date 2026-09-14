@@ -1,0 +1,74 @@
+{
+  "counts": {
+    "correctness_canary_only": 1,
+    "protected_incumbent": 1,
+    "reject_hardware": 1
+  },
+  "inputs": {
+    "candidates": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r42_e03_pareto_contract_run01/shortlist.jsonl",
+      "sha256": "39627712188eca87fd10861872a03f9dd339d46012020053d9ea49ab851520ac"
+    },
+    "contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r46_e03_board_contract_run01/e03_contract.json",
+      "sha256": "35fb54ff901c5701b1a1fa20cde3b9ce657fda2d306cbbdcea669706604ed79a"
+    },
+    "ledger": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r48_hardware_certificate_ledger_run01/ledger.json",
+      "sha256": "b5ef55355db5be4fceaeeff3c3f28811193f78be7b78235e70c61c5aac1e7a6a"
+    }
+  },
+  "performance_labels_used": false,
+  "policy_order": [
+    "protected incumbent",
+    "static and DMA-Pareto certificate",
+    "exact hardware-certificate lookup",
+    "unknown identities receive correctness only",
+    "timing only after exact pass"
+  ],
+  "records": [
+    {
+      "reason": "zero-regret fallback is dispatched before experimental candidates",
+      "route": "protected_incumbent",
+      "workload_id": "E03"
+    },
+    {
+      "candidate_id": "4a853b894789102a390882be471030d796007644e845c81a684b1f7a89997782",
+      "config_index": 576,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.004910265697660832,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "16ff2b77baaf36ae36fcc29250850d436d3f44ca3a1251c068c209f3a8a1d5d9",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "a3923e7995b5274dedddf4960eaf2148c09dc890a8e922edfd410e46f5b1b78c",
+      "workload_id": "E03"
+    },
+    {
+      "candidate_id": "57d1e9ab9c1162cc156168efd688441bac848576c0f77daaf2415213c46afb4e",
+      "config_index": 17,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9166666666666666,
+          "total_dma_bytes": 0.4612159329140461,
+          "total_dma_calls": 0.8627450980392157
+        }
+      },
+      "hardware_certificate_key": "7b863eab1193e39a4add0a2cf5c5ff0ebf45e409b0285fa6b05922ac40fa08e1",
+      "mode": "input_stationary",
+      "reason": "exact_hardware_certificate_failed",
+      "route": "reject_hardware",
+      "tir_sha256": "3742e558661339200ca9f3fdff1f88987f19043ee811ecc42d9828d2b507e4d5",
+      "workload_id": "E03"
+    }
+  ],
+  "schema": "c3_vta_hardware_certified_dispatch_v1",
+  "status": "completed"
+}

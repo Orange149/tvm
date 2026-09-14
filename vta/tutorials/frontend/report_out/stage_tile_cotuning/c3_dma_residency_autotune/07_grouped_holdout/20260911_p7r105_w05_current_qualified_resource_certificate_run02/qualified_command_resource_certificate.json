@@ -1,0 +1,327 @@
+{
+  "architecture_fingerprint": {
+    "config": {
+      "HW_VER": "0.0.2",
+      "LOG_ACC_BUFF_SIZE": 17,
+      "LOG_ACC_WIDTH": 5,
+      "LOG_BATCH": 0,
+      "LOG_BLOCK": 4,
+      "LOG_INP_BUFF_SIZE": 15,
+      "LOG_INP_WIDTH": 3,
+      "LOG_UOP_BUFF_SIZE": 15,
+      "LOG_WGT_BUFF_SIZE": 18,
+      "LOG_WGT_WIDTH": 3,
+      "TARGET": "axu5evb"
+    },
+    "key": "c115f6b33672edd34e6f0abedf068d4ceb334a9d582eb111ffb54eb5e8cb0e55",
+    "schema": "vta_architecture_fingerprint_v1"
+  },
+  "board_qualification": {
+    "board_claim_boundary": "same boot, one queue instance, two exact W05 identities; correctness, command capacity, manifest ID, and replay policy only; no timing, FPS, replay, SD, or cross-boot claim",
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "boot_id_bound": true,
+    "capacity_runtime_sha256": {
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/libvta.so": "0c39d5f6fcfb1efec6bad715e3cea2279282e3bf887433cd2013b89fff1f4ba4",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/start_axu5evb_cpp_rpc.sh": "2f42f2d37d5199fa2b66336b61869d2015f8ec5f0264bc57307789b4c6a5b194",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa"
+    },
+    "command_manifest_id": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+    "correctness": [
+      {
+        "binary_sha256": "c6eb7e376243053efd91f7363aa9f5f7dcc39c494b914f587f2ce36a4fb34ef3",
+        "candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+        "mismatch_count": 0,
+        "passed_seed_count": 3,
+        "seed_ids": [
+          0,
+          20250901,
+          20260910
+        ]
+      },
+      {
+        "binary_sha256": "2838551066c71d1db8c70b48ed97e7433aed280bd903badb9a46a4dea8d2f21c",
+        "candidate_id": "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061",
+        "mismatch_count": 0,
+        "passed_seed_count": 3,
+        "seed_ids": [
+          0,
+          20250901,
+          20260910
+        ]
+      }
+    ],
+    "fpga_state": "operating",
+    "performance_measurement": "not_collected",
+    "qualification_key": "34fa40fdc68dcca6c4e077e58e0b70ba8a38b1cf7c3bbab4ec9ce3f7f3edfd81",
+    "qualifier_sha256": "a88e22c0c9ebde542a81b2ee64855928b4d4fc3d5775b46d7afc62c4404d3110",
+    "queue_capacity_status": {
+      "command_manifest_id": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+      "insn_capacity_bytes": 4096,
+      "insn_peak_bytes": 3808,
+      "insn_submit_threshold_bytes": 33554432,
+      "insn_submit_threshold_configured": false,
+      "replay_policy": "disabled",
+      "schema": "vta_queue_capacity_status_v1",
+      "submissions": 6,
+      "uop_capacity_bytes": 4096,
+      "uop_peak_bytes": 1480
+    },
+    "replay_observed": false,
+    "replay_policy": "disabled",
+    "resource_certificate_key": "0994e12dce454f4e3e86a70d894e862638632e05fc11882ec9fc7f5903ccff8c",
+    "schema": "c3_vta_command_resource_board_qualification_v1",
+    "udmabuf_bytes": 201326592
+  },
+  "boot_id_bound": false,
+  "certificate_key": "0994e12dce454f4e3e86a70d894e862638632e05fc11882ec9fc7f5903ccff8c",
+  "claim_boundary": "exact single-queue W05 deployment allowlist under the bound FPGA/runtime evidence; no replay, allocator-fragmentation, latency, FPS, concurrent-queue, or cross-boot claim",
+  "derivation": {
+    "alignment_bytes": 4096,
+    "formula": "C_q(S)=align_A(max_{c in S,b in submits(c)} B_q(c,b))",
+    "insn_capacity_bytes": 4096,
+    "insn_peak_bytes": 3808,
+    "total_capacity_bytes": 8192,
+    "uop_capacity_bytes": 4096,
+    "uop_peak_bytes": 1480
+  },
+  "fsim_execution_runtime": {
+    "binding": "actual /proc/self/maps entry in each isolated execution worker",
+    "sha256": "9f310416ae1e955e8465aaaa5acf0deb091a089bbd439d6be4e804f1de853285"
+  },
+  "identities": [
+    {
+      "candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "command_signature_sha256": "cb5ae369a4a82f2d7ee1c8afb1e41aa89963c5f839d456b6fe694bbeecce1181",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 575
+      },
+      "config_index": 575,
+      "finish_count": 1,
+      "fsim_execution_runtime_sha256": "9f310416ae1e955e8465aaaa5acf0deb091a089bbd439d6be4e804f1de853285",
+      "insn_peak_bytes": 3744,
+      "residence_mode": "original",
+      "submissions": 1,
+      "tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060",
+      "uop_peak_bytes": 1480,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061",
+      "command_signature_sha256": "8558b79c32c7a079e86bf879fbc9a46e343d4becee5d3646213740c1c3227820",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 574
+      },
+      "config_index": 574,
+      "finish_count": 1,
+      "fsim_execution_runtime_sha256": "9f310416ae1e955e8465aaaa5acf0deb091a089bbd439d6be4e804f1de853285",
+      "insn_peak_bytes": 3808,
+      "residence_mode": "paper_inspired_hybrid",
+      "submissions": 1,
+      "tir_sha256": "349b968ae66b96c37262339867f1424016c54bf1b2c1e620d11f47062ae70a14",
+      "uop_peak_bytes": 1424,
+      "workload_id": "W05"
+    }
+  ],
+  "identity_set_key": "c0495e3fe6eb674cb283ab19078cf8c1de83a569335489487648423be2cb22db",
+  "inputs": {
+    "architecture_config": {
+      "path": "/home/orange/code/tvm/3rdparty/vta-hw/config/vta_config.json",
+      "sha256": "7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d"
+    },
+    "candidates": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r98_w05_manifest_command_signatures_run01/candidates.jsonl",
+      "sha256": "c72895d438fbf9cf691ff3f6f71d54db04c0be1932c0c7d32fe1c2ec9addf7e1"
+    },
+    "dispatch": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r92_w05_semantic_dispatch_run01/dispatch.json",
+      "sha256": "ba26498d0765e78937bbc228981774429fafb941c5be31f2599e50b57149bd28"
+    },
+    "signatures": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r98_w05_manifest_command_signatures_run01/results.jsonl",
+      "sha256": "b5cd1ffeb8440dc42fcfc962df6eec302e14bdc8b96b296b879778927853abd4"
+    }
+  },
+  "invalidation_material": {
+    "allocation_abi": {
+      "alignment_bytes": 4096,
+      "capacity_policy": "align(max exact per-submit peak over deployment allowlist)",
+      "queues": [
+        "instruction",
+        "uop"
+      ]
+    },
+    "architecture_fingerprint_key": "c115f6b33672edd34e6f0abedf068d4ceb334a9d582eb111ffb54eb5e8cb0e55",
+    "fsim_execution_runtime_sha256": "9f310416ae1e955e8465aaaa5acf0deb091a089bbd439d6be4e804f1de853285",
+    "identity_set_key": "c0495e3fe6eb674cb283ab19078cf8c1de83a569335489487648423be2cb22db",
+    "source_guards_sha256": {
+      "vta/python/vta/top/vta_conv2d.py": "cdffe82fdc55df4bb8661421ba98f712b10b3b0ade95020129d0d6c246fb29ce",
+      "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+      "vta/runtime/queue_capacity.h": "81643e7584d5375c268dfaef6f6b88d6402a4d08ca4f2a1c50b68f04d0b224e4",
+      "vta/runtime/runtime.cc": "036ce52832c414d8dfd765e78ebe0fc1c991734657a82a4b947ec4ec95cc9f1d",
+      "vta/tutorials/frontend/build_vta_command_resource_certificate.py": "e75cb4ff2e0135c0d2317a156c56bf28efb88ca7c4ee2de8ecafffef1a5f7ea5",
+      "vta/tutorials/frontend/tune_resnet18_vta.py": "c8fe2bfa263ea762732cffac0adfd35802211c1ffffd43cbc7e790ff35e5342b"
+    }
+  },
+  "invalidation_rule": "rebuild when the FPGA architecture config, deployment identity set, lowered TIR, complete ConfigEntity, schedule/runtime source, or allocation alignment changes",
+  "qualification_inputs": {
+    "board_contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r103_w05_manifest_attestation_contract_run01/contract.json",
+      "sha256": "575faf85a2d2eae1c34e4ddd2133fcf872a23daa8bae4ed44bc4d6c1e531e307"
+    },
+    "board_summary": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r104_w05_manifest_attestation_board_run01/summary.json",
+      "sha256": "c887f93bf7541194c9eea80cbaf3525c724e3af692dee117f92d0c484fc01290"
+    },
+    "certificate": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r100_w05_current_final_resource_certificate_run01/command_resource_certificate.json",
+      "sha256": "d3bf10f2a7c4e65a5270d2dda80401c2a4f715815b0c8bf6ac35db78950909d6"
+    },
+    "correctness": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r104_w05_manifest_attestation_board_run01/correctness/correctness.jsonl",
+      "sha256": "37e3d29a6c793f796cf96054f5f80048bcb0472a1e477506162046a37b9862ec"
+    },
+    "preregistered": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r104_w05_manifest_attestation_board_run01/preregistered.json",
+      "sha256": "fade04db3830328abda549acd6f187f600851e0eff94290a4b8b360869a2c05f"
+    },
+    "queue_status": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r104_w05_manifest_attestation_board_run01/queue_capacity_status.json",
+      "sha256": "f3d229bfbc5b7f13988314a53db33a4a9430011c3660bbf2a3fe23071b1088ef"
+    }
+  },
+  "replay_policy": {
+    "deployment_requirement": "VTA replay APIs must not be used under this certificate",
+    "mode": "disabled",
+    "reason": "capture/replay command-resource records are not yet observable in the frozen evidence"
+  },
+  "runtime_contract": {
+    "environment": {
+      "VTA_INSN_BUFFER_BYTES": "4096",
+      "VTA_UOP_BUFFER_BYTES": "4096"
+    },
+    "requirements": [
+      "runtime-reported capacities equal the certificate",
+      "runtime-reported peaks do not exceed the certificate",
+      "all deployed candidate IDs are covered by the certificate"
+    ],
+    "status_function": "vta.runtime.queue_capacity_status",
+    "status_schema": "vta_queue_capacity_status_v1"
+  },
+  "schema": "c3_vta_command_resource_certificate_v1",
+  "source_guards_sha256": {
+    "vta/python/vta/top/vta_conv2d.py": "cdffe82fdc55df4bb8661421ba98f712b10b3b0ade95020129d0d6c246fb29ce",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "vta/runtime/queue_capacity.h": "81643e7584d5375c268dfaef6f6b88d6402a4d08ca4f2a1c50b68f04d0b224e4",
+    "vta/runtime/runtime.cc": "036ce52832c414d8dfd765e78ebe0fc1c991734657a82a4b947ec4ec95cc9f1d",
+    "vta/tutorials/frontend/build_vta_command_resource_certificate.py": "e75cb4ff2e0135c0d2317a156c56bf28efb88ca7c4ee2de8ecafffef1a5f7ea5",
+    "vta/tutorials/frontend/tune_resnet18_vta.py": "c8fe2bfa263ea762732cffac0adfd35802211c1ffffd43cbc7e790ff35e5342b"
+  },
+  "status": "qualified_reduced_capacity"
+}

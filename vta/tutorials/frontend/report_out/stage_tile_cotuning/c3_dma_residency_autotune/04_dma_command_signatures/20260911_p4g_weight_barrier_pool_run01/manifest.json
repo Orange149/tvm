@@ -1,0 +1,114 @@
+{
+  "date": "2026-09-11",
+  "environment": {
+    "board_contacted": false,
+    "performance_timing_collected": false,
+    "python": "/home/orange/miniconda3/envs/vta-resnet/bin/python",
+    "python_version": "3.10.20",
+    "tvm_version": "0.13.0",
+    "vta_target": "sim"
+  },
+  "inputs": {
+    "p3e_positive_local_proof": {
+      "artifact_hashes_sha256": "a456bd6f1b0a06f4e3560747310bc9fd92340315d0dc53f78c7edc639e449076",
+      "decision": "go_local_compiler_explicit_drain_proof",
+      "manifest_sha256": "f9ddaa17a235cd1bae0d00d481b4e27180e21a186827ac2cf23d23e48ecf8ba2",
+      "run_dir": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/03_residency_schedules/20260910_p3e_weight_barrier_legalizer_run01",
+      "summary_sha256": "3ce1c3fc0a7943b9e02d024f2dce998dd19be63dda427d140bf615f2d43a21e6"
+    },
+    "p4b_candidate_pool": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/candidate_pool.json",
+      "sha256": "1593c1870d60d9401c8bd7e245f44d8586da1c474c0adce0852833a15ba8f708"
+    },
+    "p4b_results": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/results.jsonl",
+      "sha256": "cddcdc503163e1f4cfda1a53933d4577c804b6842be818e0bbb616a431b9d2d9"
+    }
+  },
+  "results": {
+    "board_contacted": false,
+    "candidate_count": 60,
+    "dependency_valid": 32,
+    "failure_subcategories": {
+      "allocation_capacity": 13,
+      "dma_2d_pattern": 3,
+      "dma_compact_buffer": 7,
+      "dma_pad_innermost": 5
+    },
+    "forbidden_1_3_present": 0,
+    "frozen_seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "fsim_requested": true,
+    "fsim_status_counts": {
+      "not_attempted": 28,
+      "passed": 32
+    },
+    "implementation_mode": 4,
+    "lower_and_dependency_ok": 32,
+    "lower_or_dependency_failed": 28,
+    "mode": "weight_stationary_barrier",
+    "performance_measurement": "not_collected",
+    "residency_drain_expanded_executions": {
+      "count": 32,
+      "max": 8.0,
+      "median": 2.0,
+      "min": 1.0,
+      "negative": 0,
+      "p25": 2.0,
+      "p75": 4.0,
+      "positive": 32,
+      "zero": 0
+    },
+    "schema": "c3_weight_barrier_summary_v1",
+    "scope": "local static lowering/dependency audit and optional FSim correctness; no board or timing",
+    "status": "completed",
+    "sync_expanded_executions": {
+      "count": 32,
+      "max": 9.0,
+      "median": 3.0,
+      "min": 2.0,
+      "negative": 0,
+      "p25": 3.0,
+      "p75": 5.0,
+      "positive": 32,
+      "zero": 0
+    },
+    "sync_static_callsites": {
+      "count": 32,
+      "max": 2.0,
+      "median": 2.0,
+      "min": 2.0,
+      "negative": 0,
+      "p25": 2.0,
+      "p75": 2.0,
+      "positive": 32,
+      "zero": 0
+    },
+    "weight_dma_reduction_fraction": {
+      "count": 32,
+      "max": 0.875,
+      "median": 0.5,
+      "min": 0.0,
+      "negative": 0,
+      "p25": 0.0,
+      "p75": 0.75,
+      "positive": 22,
+      "zero": 10
+    }
+  },
+  "schema": "c3_p4g_local_manifest_v1",
+  "sources": {
+    "generator": "/home/orange/code/tvm/vta/tutorials/frontend/generate_vta_weight_barrier_candidates.py",
+    "generator_sha256": "a72c4d59dfed30c9f6353af7faf3f4e98f06df46d53a5f7a5413761493d6866c",
+    "schedule_source_sha256": {
+      "coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+      "transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+      "vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+      "vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+    },
+    "schedule_version": "weight_stationary_barrier@coproc_sync.cc=edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999+transform.py=3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c+vta_conv2d.py=8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc+vta_conv2d_residency.py=0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+  }
+}

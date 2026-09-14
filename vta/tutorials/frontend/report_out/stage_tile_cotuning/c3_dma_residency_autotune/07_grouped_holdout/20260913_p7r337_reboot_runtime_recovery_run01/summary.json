@@ -1,0 +1,36 @@
+{
+  "schema": "c3_vta_reboot_runtime_recovery_v1",
+  "status": "board_runtime_recovered_and_verified",
+  "board": {
+    "host": "192.168.1.247",
+    "boot_id": "737f64bf-de64-4daa-9fa8-a216db9042eb",
+    "fpga_state": "operating",
+    "udmabuf_bytes": 201326592,
+    "udmabuf_phys_addr": "0x0000000068500000",
+    "rpc_pid_at_verification": 791,
+    "rpc_cwd": "/var/volatile/vta_c3_ram/runtime",
+    "rpc_port": 9090
+  },
+  "runtime_sha256": {
+    "u-dma-buf.ko": "4c0aa5713225cd9b29548d9c1cd6e6127aeaafcc1f7d8650d68e3a0a527042c0",
+    "tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa",
+    "libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+    "libvta.so": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+    "start_axu5evb_cpp_rpc.sh": "2f42f2d37d5199fa2b66336b61869d2015f8ec5f0264bc57307789b4c6a5b194"
+  },
+  "storage": {
+    "rootfs_partition": "/dev/mmcblk1p2",
+    "rootfs_mount": "/media/sd-mmcblk1p2",
+    "rootfs_mount_mode": "rw",
+    "new_ext4_or_mmc_errors_seen": false,
+    "fat_partition_warning": "mmcblk1p1 was not cleanly unmounted; this experiment does not store artifacts there"
+  },
+  "recovery": {
+    "source": "host-side files with frozen hashes",
+    "destination": "/var/volatile/vta_c3_ram/runtime",
+    "writes_sd_card": false,
+    "host_key_fingerprint": "SHA256:nnluJjQzevLt3RqbraYCgc921TRDpU56UdkScY8nXUg",
+    "known_hosts": "/tmp/vta_c3_known_hosts_20260913_reboot2"
+  },
+  "claim_boundary": "This is a reboot recovery and hardware-contract check, not a performance experiment."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "c3_p3d_preregistered_v1",
+  "probe_mode": {
+    "number": 4,
+    "name": "weight_stationary_sync_probe",
+    "production_candidate": false
+  },
+  "representatives": {
+    "W00": 252,
+    "W02": 177,
+    "W09": 83
+  },
+  "gates": {
+    "weight_dma_reduction": "at least one representative >= 20%",
+    "dependency": "no direct 1<->3 pair and push/pop balanced",
+    "correctness": "three frozen seeds exactly match NumPy reference",
+    "regression": "original frozen TIR and modes 0-3 pass"
+  },
+  "stop_rule": "freeze a negative result if explicit-sync API cannot form legal TIR or FSim fails",
+  "performance_rule": "FSim time is never a performance result"
+}

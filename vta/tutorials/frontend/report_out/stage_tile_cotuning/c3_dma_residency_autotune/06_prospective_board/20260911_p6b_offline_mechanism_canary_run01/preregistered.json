@@ -1,0 +1,827 @@
+{
+  "claims_forbidden": [
+    "board execution by this run",
+    "latency measured by this run",
+    "P4g static DMA proves speed",
+    "pending P4i AXU qualification treated as passed",
+    "generic B7 effectiveness",
+    "G6 passed"
+  ],
+  "contract_kind": "mechanism canary, explicitly not generic B7 exploration",
+  "future_protocol": {
+    "correctness": {
+      "failed_candidate_policy": "record failure and do not use latency as valid",
+      "oracle": "independent NumPy reference",
+      "requirement": "exact output equality for every seed before timing",
+      "seeds": [
+        0,
+        20250901,
+        20260910
+      ]
+    },
+    "decision_rule": {
+      "comparison": "within-workload mechanism candidate versus original incumbent median latency",
+      "correctness_precondition": "all three board seeds pass",
+      "equivalent": "absolute relative latency difference <= 0.02",
+      "improved": "relative improvement >= 0.05",
+      "indeterminate_band": "all remaining values; do not round into a claim",
+      "regressed": "relative improvement <= -0.05",
+      "relative_improvement": "(incumbent_median - candidate_median) / incumbent_median"
+    },
+    "ordering": {
+      "balance": "all six candidate permutations and all six workload permutations repeated five times",
+      "rounds": [
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 0,
+          "workload_order": [
+            "W00",
+            "W09",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 1,
+          "workload_order": [
+            "W02",
+            "W09",
+            "W00"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 2,
+          "workload_order": [
+            "W00",
+            "W09",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 3,
+          "workload_order": [
+            "W09",
+            "W02",
+            "W00"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 4,
+          "workload_order": [
+            "W02",
+            "W00",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 5,
+          "workload_order": [
+            "W00",
+            "W09",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 6,
+          "workload_order": [
+            "W02",
+            "W09",
+            "W00"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 7,
+          "workload_order": [
+            "W09",
+            "W02",
+            "W00"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 8,
+          "workload_order": [
+            "W00",
+            "W02",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 9,
+          "workload_order": [
+            "W00",
+            "W02",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 10,
+          "workload_order": [
+            "W02",
+            "W00",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 11,
+          "workload_order": [
+            "W00",
+            "W02",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 12,
+          "workload_order": [
+            "W02",
+            "W00",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 13,
+          "workload_order": [
+            "W02",
+            "W09",
+            "W00"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 14,
+          "workload_order": [
+            "W09",
+            "W02",
+            "W00"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 15,
+          "workload_order": [
+            "W02",
+            "W09",
+            "W00"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 16,
+          "workload_order": [
+            "W00",
+            "W09",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 17,
+          "workload_order": [
+            "W09",
+            "W00",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 18,
+          "workload_order": [
+            "W09",
+            "W00",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 19,
+          "workload_order": [
+            "W02",
+            "W00",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 20,
+          "workload_order": [
+            "W00",
+            "W02",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 21,
+          "workload_order": [
+            "W09",
+            "W02",
+            "W00"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 22,
+          "workload_order": [
+            "W09",
+            "W00",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 23,
+          "workload_order": [
+            "W00",
+            "W02",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 24,
+          "workload_order": [
+            "W09",
+            "W00",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 25,
+          "workload_order": [
+            "W00",
+            "W09",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22"
+            ]
+          },
+          "round": 26,
+          "workload_order": [
+            "W02",
+            "W09",
+            "W00"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2"
+            ],
+            "W02": [
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f"
+            ],
+            "W09": [
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846"
+            ]
+          },
+          "round": 27,
+          "workload_order": [
+            "W02",
+            "W00",
+            "W09"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 28,
+          "workload_order": [
+            "W09",
+            "W00",
+            "W02"
+          ]
+        },
+        {
+          "candidate_order_by_workload": {
+            "W00": [
+              "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+              "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+              "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908"
+            ],
+            "W02": [
+              "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+              "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+              "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a"
+            ],
+            "W09": [
+              "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+              "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+              "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c"
+            ]
+          },
+          "round": 29,
+          "workload_order": [
+            "W09",
+            "W02",
+            "W00"
+          ]
+        }
+      ],
+      "seed": 20260911,
+      "strategy": "seeded randomized complete crossover",
+      "timed_rounds": 30
+    },
+    "preflight": {
+      "actual_board_fingerprint": "must be recorded and matched before execution",
+      "barrier_axu_qualification": "must be passed before dispatch; pending contracts are not executable"
+    },
+    "runtime_counters": {
+      "collection": "snapshot deltas normalized per inference for every timed round",
+      "required": [
+        "load_buffer_2d_calls",
+        "load_buffer_2d_bytes",
+        "load_buffer_2d_inp_bytes",
+        "load_buffer_2d_wgt_bytes",
+        "load_buffer_2d_small_calls",
+        "load_buffer_2d_strided_calls",
+        "load_buffer_2d_padded_calls",
+        "store_buffer_2d_calls",
+        "store_buffer_2d_bytes",
+        "driver_run_insns",
+        "synchronize_insns"
+      ]
+    },
+    "timing": {
+      "compile_upload_setup_excluded": true,
+      "primary_statistic": "median latency_ms",
+      "record_all_samples": true,
+      "timed_repeats_per_candidate": 30,
+      "timer_number": 1,
+      "warmup_runs_per_candidate": 3
+    }
+  },
+  "schema": "c3_p6b_preregistered_v1",
+  "selection_rule": {
+    "roles": [
+      "protected original incumbent",
+      "qualified input-stationary with maximum static input-byte reduction",
+      "qualified mode-4 barrier with maximum static weight-byte reduction"
+    ],
+    "tie_break": "fewer target LOAD calls, then stable candidate_id"
+  }
+}

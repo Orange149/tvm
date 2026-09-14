@@ -1,0 +1,51 @@
+{
+  "claim_boundary": "offline full-label replay is development evidence, not prospective confirmation; only an immutable sequential prospective history can support a future confirmation claim",
+  "gross_budgets": [
+    4,
+    8,
+    12
+  ],
+  "metrics": [
+    "gross dispatches and lower/compile/FPGA-invalid counts at every budget",
+    "known lower/compile/FPGA/measure wall-ms sums plus completeness rate",
+    "non-reference full-pool oracle simple regret at every budget",
+    "success@2%/5% and trials-to-2%/5% against the post-run sealed reference",
+    "median, Q1, Q3, and IQR over workload-seed runs"
+  ],
+  "no_leak": [
+    "selector receives public_candidate projection; oracle is revealed only after selection",
+    "target workload is excluded from prior training records",
+    "invalid gross dispatches consume budget and are not latency/XGB/delta labels",
+    "sealed reference identity is forbidden in candidate lists and all training records",
+    "sealed reference latency is read only by post-run 2%/5% threshold metrics"
+  ],
+  "policies": [
+    "random",
+    "stock_knob_xgb",
+    "rules_only",
+    "validity_v",
+    "v_plus_delta_t",
+    "v_plus_delta_t_request",
+    "v_plus_delta_t_command"
+  ],
+  "rules_only": "ascending frozen label-free rule_score",
+  "schema": "c3_equal_gross_budget_search_protocol_v1",
+  "seeds": 20,
+  "v_plus_delta_t": {
+    "acquisition": "equal Borda-rank fusion of predicted invalidity risk and same-tile delta-T",
+    "compatibility_alias": "v_plus_delta_t means the bytes_calls feature boundary",
+    "constraint": "delta physical coefficients are non-negative",
+    "frozen_ablations": {
+      "v_plus_delta_t": "bytes_calls",
+      "v_plus_delta_t_command": "command",
+      "v_plus_delta_t_request": "request"
+    }
+  },
+  "validity_v": "logistic probability from other-workload exposed labels plus already revealed target outcomes",
+  "xgb": {
+    "features": "seven ConfigEntity knob leaves only",
+    "model": "64-tree depth-3 XGBRegressor, seed fixed; dispatch seed affects warmup/ties",
+    "training": "successful current-target observations revealed before the next dispatch only",
+    "warmup": "4 seeded gross dispatches"
+  }
+}

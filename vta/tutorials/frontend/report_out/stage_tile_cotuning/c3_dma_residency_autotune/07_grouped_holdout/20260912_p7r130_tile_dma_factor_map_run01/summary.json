@@ -1,0 +1,102 @@
+{
+  "board_execution_state": "W05 seed0 health canary timed out on current boot; no new candidate dispatched",
+  "by_workload": {
+    "Y00": {
+      "fpga_observed": 0,
+      "fpga_pass": 0,
+      "fsim_pass": 11,
+      "identities": 24,
+      "static_failure_categories": {
+        "dma_compact_buffer": 6
+      },
+      "static_pass": 18,
+      "timed": 0
+    },
+    "Y01": {
+      "fpga_observed": 23,
+      "fpga_pass": 0,
+      "fsim_pass": 24,
+      "identities": 24,
+      "static_failure_categories": {},
+      "static_pass": 24,
+      "timed": 0
+    },
+    "Y02": {
+      "fpga_observed": 6,
+      "fpga_pass": 2,
+      "fsim_pass": 8,
+      "identities": 9,
+      "static_failure_categories": {
+        "allocation_capacity": 1
+      },
+      "static_pass": 8,
+      "timed": 2
+    }
+  },
+  "frozen_search_rule_v3": {
+    "evaluation": "gross-budget trials/regret to frozen full-pool oracle",
+    "hard_gates": [
+      "static tensorize/SRAM/padding/compact/UOP checks",
+      "three-seed FSim",
+      "FPGA correctness fail-fast; pass requires three seeds"
+    ],
+    "performance_labels_used_to_define_rule": false,
+    "priority": "within each geometry, keep the nondominated set over total LOAD bytes, LOAD calls, padded calls and synchronization drains; order by normalized LOAD bytes then calls; preserve one candidate per residence mode before repeats",
+    "tophub_used_by_selector": false
+  },
+  "identities": 57,
+  "one_knob_pairs": 40,
+  "same_tile_effects": {
+    "Y00:input_stationary": {
+      "command_backing_delta_fraction_median": -0.4,
+      "fpga_pass_pairs": 0,
+      "load_bytes_delta_fraction_median": -0.3050537887750499,
+      "load_calls_delta_fraction_median": -0.5,
+      "pair_count": 8,
+      "timed_pairs": 0
+    },
+    "Y00:weight_resident_barrier": {
+      "command_backing_delta_fraction_median": null,
+      "fpga_pass_pairs": 0,
+      "load_bytes_delta_fraction_median": -0.40158260829917003,
+      "load_calls_delta_fraction_median": -0.7490985576923077,
+      "pair_count": 8,
+      "timed_pairs": 0
+    },
+    "Y01:input_stationary": {
+      "command_backing_delta_fraction_median": -0.5804816223067174,
+      "fpga_pass_pairs": 0,
+      "load_bytes_delta_fraction_median": -0.050623174801835646,
+      "load_calls_delta_fraction_median": -0.6875,
+      "pair_count": 8,
+      "timed_pairs": 0
+    },
+    "Y01:weight_resident_barrier": {
+      "command_backing_delta_fraction_median": -0.7177862272919306,
+      "fpga_pass_pairs": 0,
+      "load_bytes_delta_fraction_median": -0.8379705400981997,
+      "load_calls_delta_fraction_median": -0.49805843195266275,
+      "pair_count": 8,
+      "timed_pairs": 0
+    },
+    "Y02:input_stationary": {
+      "command_backing_delta_fraction_median": -0.7878787878787878,
+      "fpga_pass_pairs": 0,
+      "load_bytes_delta_fraction_median": null,
+      "load_calls_delta_fraction_median": null,
+      "pair_count": 3,
+      "timed_pairs": 0
+    },
+    "Y02:weight_resident_barrier": {
+      "command_backing_delta_fraction_median": -0.8554778554778555,
+      "fpga_pass_pairs": 1,
+      "load_bytes_delta_fraction_median": null,
+      "load_calls_delta_fraction_median": null,
+      "pair_count": 3,
+      "timed_pairs": 1
+    }
+  },
+  "same_tile_residence_pairs": 38,
+  "schema": "c3_p7r130_tile_dma_factor_map_v1",
+  "scope": "descriptive cross-geometry map; no universal causal or search-speed claim"
+}

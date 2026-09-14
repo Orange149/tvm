@@ -1,0 +1,92 @@
+{
+  "claim_boundary": "Two independent boots for one frozen pretrained ResNet50 pair; descriptive replication, not a cross-workload population confidence claim, ImageNet accuracy, or physical AXI measurement.",
+  "correctness_calls": 12,
+  "independent_boots": 2,
+  "paired_rounds": 14,
+  "paired_wins": 14,
+  "positive_boots": 2,
+  "runs": [
+    {
+      "absolute_reduction_ms": 16.40974399999999,
+      "artifact_count": 6,
+      "boot_id": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+      "correctness_calls": 6,
+      "directory": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r312_r50cf00_fullgraph_fused_tir_pair_board_run01",
+      "expected_dma_delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -30,
+        "load_buffer_2d_bytes": -3010560,
+        "load_buffer_2d_calls": -270,
+        "load_buffer_2d_inp_bytes": -3010560,
+        "load_buffer_2d_inp_calls": -120,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -120,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "ledger_sha256": "ff77704df9bb14be13e582f451a04f2dee0110dbffbee435694a1c0f1092b633",
+      "observed_dma_delta": {
+        "load_buffer_2d_acc_bytes": 0.0,
+        "load_buffer_2d_acc_calls": -30.0,
+        "load_buffer_2d_bytes": -3010560.0,
+        "load_buffer_2d_calls": -270.0,
+        "load_buffer_2d_inp_bytes": -3010560.0,
+        "load_buffer_2d_inp_calls": -120.0,
+        "load_buffer_2d_wgt_bytes": 0.0,
+        "load_buffer_2d_wgt_calls": -120.0,
+        "store_buffer_2d_bytes": 0.0,
+        "store_buffer_2d_calls": 0.0
+      },
+      "original_median_ms": 346.686947,
+      "paired_rounds": 7,
+      "paired_wins": 7,
+      "resident_median_ms": 330.277203,
+      "speedup_percent": 4.968476131850985,
+      "timing_calls": 14
+    },
+    {
+      "absolute_reduction_ms": 16.622087000000022,
+      "artifact_count": 6,
+      "boot_id": "4d232b6f-6e2a-4395-aafe-853a021403e8",
+      "correctness_calls": 6,
+      "directory": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r379_r50cf00_fullgraph_cross_boot_run01",
+      "expected_dma_delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -30,
+        "load_buffer_2d_bytes": -3010560,
+        "load_buffer_2d_calls": -270,
+        "load_buffer_2d_inp_bytes": -3010560,
+        "load_buffer_2d_inp_calls": -120,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -120,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "ledger_sha256": "f73f24a1ea936d592411e0a505aa9533e915e16feee9cbf26f112deabb2e315e",
+      "observed_dma_delta": {
+        "load_buffer_2d_acc_bytes": 0.0,
+        "load_buffer_2d_acc_calls": -30.0,
+        "load_buffer_2d_bytes": -3010560.0,
+        "load_buffer_2d_calls": -270.0,
+        "load_buffer_2d_inp_bytes": -3010560.0,
+        "load_buffer_2d_inp_calls": -120.0,
+        "load_buffer_2d_wgt_bytes": 0.0,
+        "load_buffer_2d_wgt_calls": -120.0,
+        "store_buffer_2d_bytes": 0.0,
+        "store_buffer_2d_calls": 0.0
+      },
+      "original_median_ms": 346.911649,
+      "paired_rounds": 7,
+      "paired_wins": 7,
+      "resident_median_ms": 330.289562,
+      "speedup_percent": 5.03258016976027,
+      "timing_calls": 14
+    }
+  ],
+  "schema": "c3_vta_resnet50_pair_cross_boot_v1",
+  "speedup_percent_max": 5.03258016976027,
+  "speedup_percent_mean": 5.000528150805628,
+  "speedup_percent_min": 4.968476131850985,
+  "status": "two_independent_boots_direction_and_magnitude_consistent",
+  "timing_calls": 28
+}

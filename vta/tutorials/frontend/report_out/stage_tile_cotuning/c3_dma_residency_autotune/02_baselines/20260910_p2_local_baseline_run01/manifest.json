@@ -1,0 +1,44 @@
+{
+  "schema": "c3_p2_local_manifest_v1",
+  "run_id": "20260910_p2_local_baseline_run01",
+  "status": "partial_completed_concurrent_source_change",
+  "repository_root": "/home/orange/code/tvm",
+  "tvm_commit": "55ec5feac39db09e9fee3f0ae6300afa04d23bd7",
+  "vta_hw_commit": "2fc44f4b8d0c517a8d1881a8399f983fe64c4f6c",
+  "platform": "Linux WSL2 x86_64",
+  "python": {
+    "executable": "/home/orange/miniconda3/envs/vta-resnet/bin/python",
+    "version": "3.10.20",
+    "tvm_version": "0.13.0",
+    "numpy_version": "1.23.5"
+  },
+  "hardware_config_used_for_tophub_static_and_cross_compile": {
+    "target": "axu5evb",
+    "target_string": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+    "config_path": "3rdparty/vta-hw/config/vta_config.json",
+    "config_sha256": "7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d"
+  },
+  "fsim": {
+    "temporary_config": "/tmp/vta-hw-fsim/config/vta_config.json",
+    "temporary_config_sha256": "8a99d1c4b68dd44cf4551cbdd599801c7079acdb3489bc4459507da3d14dbeb4",
+    "contract": "same widths, blocks and SRAM exponents as frozen axu5evb config; TARGET changed only to sim",
+    "library": "build/libvta_fsim.so",
+    "library_sha256": "ed08467bea6e82ecdc6ad161886ea2ccab0975b3636520c60ca4609a1e84345e"
+  },
+  "inputs": {
+    "tophub_path": "/home/orange/.tvm/tophub/vta_v0.10.log",
+    "tophub_sha256": "8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc",
+    "selected_tasks": "vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration6_safe_overlay_final/selected_tasks.json",
+    "selected_tasks_sha256": "3f4abe7ca36cbc4a729718f17066f5e757547a0b716d15e9086b273e653b5087",
+    "frozen_static_dma": "vta/tutorials/frontend/report_out/stage_tile_cotuning/stage_memory_experiments/static_workload_dma.json",
+    "frozen_static_dma_sha256": "ff154ced1154c54fdd168597a1ab23433854c06652004538b821bd96fb48a3a5"
+  },
+  "source_timeline": {
+    "run_start_schedule_sha256": "b7fc752b5c41974c0e68fcf7d1bd6b6ca12229920c213c7cbae12f2a96ad4645",
+    "concurrent_mtime": "2026-09-10T22:42:44.653688684+08:00",
+    "run_end_schedule_sha256": "6f9bb140f701deda147a084d22a257aabb9337b55326b032da0e7d077775274d",
+    "changed_by_this_agent": false
+  },
+  "board_access": false,
+  "source_files_modified_by_this_run": []
+}

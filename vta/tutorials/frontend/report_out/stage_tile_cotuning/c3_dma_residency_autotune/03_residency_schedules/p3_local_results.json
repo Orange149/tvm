@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-10",
+  "scope": "local_lower_and_fsim_only",
+  "gate": "G3",
+  "gate_decision": "NO_GO",
+  "paper_mode": "paper_inspired_hybrid",
+  "exact_reproduction_claimed": false,
+  "original_schedule": {
+    "ten_workload_pre_post_dma_sha256": "ff154ced1154c54fdd168597a1ab23433854c06652004538b821bd96fb48a3a5",
+    "frozen_incumbent_tir_sha256": {
+      "W00": "597666fdc6b1f366edd557e357ada30872bfddf1ea67eec47dec4e9c07be4bc1",
+      "W02": "1067810187559ffb7943426d76991d9cbd5791a2058643579198397c6924b047",
+      "W09": "483ed2916b9aef8d68fbf510ae740ce952d93a92a21b2b8676dd9ad68ccbdd08"
+    }
+  },
+  "dma_tuple_fields": ["load_calls", "input_bytes", "weight_bytes", "store_calls"],
+  "representative_config_indices": {"W00": 252, "W02": 177, "W09": 83},
+  "results": {
+    "W00": {
+      "original": {"dma": [112, 487424, 258048, 14], "tir_sha256": "1b2dddd357e962ec96186513d12392778020721ca4ad116dea801f3d630d4466"},
+      "input_stationary": {"dma": [56, 243712, 258048, 14], "tir_sha256": "00303a50da9bae92d846b2f0bb631a44cc3a6298ae9a7ad4dd97be220f12ab23"},
+      "weight_stationary": {"dma": [112, 487424, 258048, 14], "tir_sha256": "e0e132d8a35a63dd32b54b87e98c6fba22164239aa937f95eb87f8d2655258ae"},
+      "paper_inspired_hybrid": {"dma": [56, 243712, 258048, 14], "tir_sha256": "25fe49b50c4e740374720a8ff6aeb7aca929d91fe259e01a9a38d113abf69264"}
+    },
+    "W02": {
+      "original": {"dma": [256, 487424, 589824, 16], "tir_sha256": "77ea9ff57a32ae3c90f21f5c597f48c82e2dd1110cfae98f6f4f68936ac60fd4"},
+      "input_stationary": {"dma": [64, 121856, 589824, 16], "tir_sha256": "d5a49b515fd735eea341b6cfc2ca96da499f9e771d73197a861ecf2dbe28603b"},
+      "weight_stationary": {"dma": [256, 487424, 589824, 16], "tir_sha256": "643581daf5f11f6c36375959a1942538d7b8595a7a14c0fe235444adb0db2757"},
+      "paper_inspired_hybrid": {"dma": [128, 243712, 589824, 16], "tir_sha256": "28cc080587d22f2bd76bfa3e38c06cd03d03c42c24838f97914dc32c71007ebd"}
+    },
+    "W09": {
+      "original": {"dma": [64, 86528, 131072, 2], "tir_sha256": "06946a892b0cc8abf676dfc8ff4c5ccc3770d39e37f378b3ed6077a10c0b010b"},
+      "input_stationary": {"dma": [32, 43264, 131072, 2], "tir_sha256": "999806639e50ed4b0f032d81f7cf70336a9fae1b0139c0178521a57630a989dc"},
+      "weight_stationary": {"dma": [64, 86528, 131072, 2], "tir_sha256": "06946a892b0cc8abf676dfc8ff4c5ccc3770d39e37f378b3ed6077a10c0b010b"},
+      "paper_inspired_hybrid": {"dma": [32, 43264, 131072, 2], "tir_sha256": "6cbc55aabc314dddc10a23253cb813c114b5c0d01f667e79597569f1b542c2d2"}
+    }
+  },
+  "verification": {
+    "non_fsim": {"passed": 16, "deselected": 12, "exit_code": 0},
+    "fsim_reference": {"passed": 12, "deselected": 16, "exit_code": 0, "timeout_seconds": 30}
+  },
+  "claim_limits": [
+    "Static DMA counts are not AXI transaction counts.",
+    "No board latency or throughput was measured.",
+    "Weight-stationary and complete hybrid DMA reductions were not achieved."
+  ]
+}

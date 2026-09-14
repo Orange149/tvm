@@ -1,0 +1,277 @@
+{
+  "budgets": [
+    4,
+    8,
+    16
+  ],
+  "data_scope": "historical_development_retrospective_not_holdout",
+  "feature_availability": {
+    "compile_failure_label": {
+      "available": 41,
+      "meaning": "positive observations, unavailable before historical dispatch",
+      "total": 80
+    },
+    "correctness_failure_label": {
+      "available": 7,
+      "meaning": "positive observations, unavailable before historical dispatch",
+      "total": 80
+    },
+    "exact_dma_request_histogram": {
+      "available": 0,
+      "total": 80
+    },
+    "full_config_entity": {
+      "available": 80,
+      "total": 80
+    },
+    "historical_outcome_label": {
+      "available": 80,
+      "total": 80
+    },
+    "latency_and_runtime_dma_counters": {
+      "availability_condition": "archived correct=true measurement only",
+      "available": 32,
+      "total": 80
+    },
+    "lowered_tir_hash": {
+      "available": 0,
+      "total": 80
+    },
+    "maximum_dma_request_bytes": {
+      "available": 0,
+      "total": 80
+    },
+    "sram_working_set_estimate": {
+      "available": 0,
+      "total": 80
+    }
+  },
+  "limitations": [
+    "Outcome labels and runtime profiles are retrospective and cannot establish prospective trial avoidance.",
+    "Only B2 is evaluable here; every B4/B5/B6 number is stored under an explicitly leaky diagnostic namespace.",
+    "Two projection workloads have no direct-run passing candidate and therefore no latency oracle.",
+    "Archived candidates have no SRAM working-set estimate, TIR hash, exact request histogram, or max request size.",
+    "B6 is partial request-shape Pareto over available runtime counters, not the complete P4 feature contract.",
+    "Budget 16 saturates the eight-candidate-per-workload archive at effective budget 8.",
+    "The archive is development evidence, not grouped holdout or prospective validation."
+  ],
+  "method_results": {
+    "B2": {
+      "by_budget": {
+        "16": {
+          "mean_coverage_rate": 0.8,
+          "mean_near_oracle_2pct_rate": 0.8,
+          "mean_valid_trials_per_workload": 3.2,
+          "scorable_workloads": 8,
+          "total_positions_simulated": 80000,
+          "workloads": 10
+        },
+        "4": {
+          "mean_coverage_rate": 0.7716000000000001,
+          "mean_near_oracle_2pct_rate": 0.4229,
+          "mean_valid_trials_per_workload": 1.5994,
+          "scorable_workloads": 8,
+          "total_positions_simulated": 40000,
+          "workloads": 10
+        },
+        "8": {
+          "mean_coverage_rate": 0.8,
+          "mean_near_oracle_2pct_rate": 0.8,
+          "mean_valid_trials_per_workload": 3.2,
+          "scorable_workloads": 8,
+          "total_positions_simulated": 80000,
+          "workloads": 10
+        }
+      },
+      "evaluation_status": "evaluable_historical_random_baseline"
+    },
+    "B4": {
+      "diagnostic_oracle_upper_bound_by_budget": {
+        "16": {
+          "diagnostic_mean_regret_covered": 0.0,
+          "interpretation": "leaky diagnostic only; forbidden as a baseline effectiveness result",
+          "near_oracle_2pct_workloads": 8,
+          "oracle_discovered_workloads": 8,
+          "scorable_workloads": 8,
+          "total_attempted_positions": 80,
+          "total_compile": 41,
+          "total_pass": 32,
+          "total_wrong_answer": 7,
+          "workloads": 10
+        },
+        "4": {
+          "diagnostic_mean_regret_covered": 0.0,
+          "interpretation": "leaky diagnostic only; forbidden as a baseline effectiveness result",
+          "near_oracle_2pct_workloads": 8,
+          "oracle_discovered_workloads": 8,
+          "scorable_workloads": 8,
+          "total_attempted_positions": 40,
+          "total_compile": 6,
+          "total_pass": 28,
+          "total_wrong_answer": 6,
+          "workloads": 10
+        },
+        "8": {
+          "diagnostic_mean_regret_covered": 0.0,
+          "interpretation": "leaky diagnostic only; forbidden as a baseline effectiveness result",
+          "near_oracle_2pct_workloads": 8,
+          "oracle_discovered_workloads": 8,
+          "scorable_workloads": 8,
+          "total_attempted_positions": 80,
+          "total_compile": 41,
+          "total_pass": 32,
+          "total_wrong_answer": 7,
+          "workloads": 10
+        }
+      },
+      "evaluation_status": "diagnostic_oracle_upper_bound_leaky",
+      "leakage": "post-dispatch correctness outcomes rank pass before wrong-answer/compile"
+    },
+    "B5": {
+      "diagnostic_oracle_upper_bound_by_budget": {
+        "16": {
+          "diagnostic_mean_regret_covered": 0.0,
+          "interpretation": "leaky diagnostic only; forbidden as a baseline effectiveness result",
+          "near_oracle_2pct_workloads": 8,
+          "oracle_discovered_workloads": 8,
+          "scorable_workloads": 8,
+          "total_attempted_positions": 80,
+          "total_compile": 41,
+          "total_pass": 32,
+          "total_wrong_answer": 7,
+          "workloads": 10
+        },
+        "4": {
+          "diagnostic_mean_regret_covered": 0.0,
+          "interpretation": "leaky diagnostic only; forbidden as a baseline effectiveness result",
+          "near_oracle_2pct_workloads": 8,
+          "oracle_discovered_workloads": 8,
+          "scorable_workloads": 8,
+          "total_attempted_positions": 40,
+          "total_compile": 6,
+          "total_pass": 28,
+          "total_wrong_answer": 6,
+          "workloads": 10
+        },
+        "8": {
+          "diagnostic_mean_regret_covered": 0.0,
+          "interpretation": "leaky diagnostic only; forbidden as a baseline effectiveness result",
+          "near_oracle_2pct_workloads": 8,
+          "oracle_discovered_workloads": 8,
+          "scorable_workloads": 8,
+          "total_attempted_positions": 80,
+          "total_compile": 41,
+          "total_pass": 32,
+          "total_wrong_answer": 7,
+          "workloads": 10
+        }
+      },
+      "evaluation_status": "not_evaluable_missing_prefeatures",
+      "leakage": "post-dispatch correctness and runtime DMA counters exist only for passing candidates"
+    },
+    "B6": {
+      "diagnostic_oracle_upper_bound_by_budget": {
+        "16": {
+          "diagnostic_mean_regret_covered": 0.0,
+          "interpretation": "leaky diagnostic only; forbidden as a baseline effectiveness result",
+          "near_oracle_2pct_workloads": 8,
+          "oracle_discovered_workloads": 8,
+          "scorable_workloads": 8,
+          "total_attempted_positions": 80,
+          "total_compile": 41,
+          "total_pass": 32,
+          "total_wrong_answer": 7,
+          "workloads": 10
+        },
+        "4": {
+          "diagnostic_mean_regret_covered": 0.0,
+          "interpretation": "leaky diagnostic only; forbidden as a baseline effectiveness result",
+          "near_oracle_2pct_workloads": 8,
+          "oracle_discovered_workloads": 8,
+          "scorable_workloads": 8,
+          "total_attempted_positions": 40,
+          "total_compile": 6,
+          "total_pass": 28,
+          "total_wrong_answer": 6,
+          "workloads": 10
+        },
+        "8": {
+          "diagnostic_mean_regret_covered": 0.0,
+          "interpretation": "leaky diagnostic only; forbidden as a baseline effectiveness result",
+          "near_oracle_2pct_workloads": 8,
+          "oracle_discovered_workloads": 8,
+          "scorable_workloads": 8,
+          "total_attempted_positions": 80,
+          "total_compile": 41,
+          "total_pass": 32,
+          "total_wrong_answer": 7,
+          "workloads": 10
+        }
+      },
+      "evaluation_status": "not_evaluable_missing_prefeatures",
+      "leakage": "post-dispatch correctness and runtime request counters exist only for passing candidates"
+    }
+  },
+  "methods": {
+    "B2": "uniform random permutation of all archived positions",
+    "B4": "leaky diagnostic upper bound using retrospective correctness; no archived pre-dispatch SRAM estimate",
+    "B5": "not evaluable: total DMA bytes are runtime-observed only for passing candidates",
+    "B6": "not evaluable: request-shape fields are runtime-observed only for passing candidates"
+  },
+  "pool": {
+    "candidates": 80,
+    "candidates_per_workload": [
+      8
+    ],
+    "incumbents_retained": true,
+    "join_diagnostics": {
+      "autotvm_log_rows": 80,
+      "measurement_artifacts_total": 43,
+      "measurement_artifacts_used": 39,
+      "selected_candidates": 80,
+      "unused_autotvm_log_rows": 0
+    },
+    "outcomes": {
+      "compile": 41,
+      "environment": 0,
+      "lower": 0,
+      "pass": 32,
+      "rpc": 0,
+      "timeout": 0,
+      "wrong_answer": 7
+    },
+    "scorable_workloads": [
+      "W00",
+      "W01",
+      "W02",
+      "W04",
+      "W05",
+      "W07",
+      "W08",
+      "W09"
+    ],
+    "unscorable_workloads": [
+      "W03",
+      "W06"
+    ],
+    "workloads": 10
+  },
+  "primary_claim_eligible_methods": [
+    "B2"
+  ],
+  "random_permutations": 1000,
+  "results_sha256": "e667e7f8fdf1217c67ac5096250bfff05219c5ba574f1be02f89718ed31c6bba",
+  "schema": "c3_historical_replay_summary_v1",
+  "sources": {
+    "artifacts_dir": "vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/tuning_artifacts",
+    "autotvm_log": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/tuning_initial.log.tmp",
+      "sha256": "ef7ee12f8c510b928aae9b1a96e564d5e11a814fb33a2919c902f3d5f8f05cfe"
+    },
+    "selected_tasks": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/selected_tasks.json",
+      "sha256": "3f4abe7ca36cbc4a729718f17066f5e757547a0b716d15e9086b273e653b5087"
+    }
+  },
+  "status": "completed"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "c3_p4_local_preregistration_v1",
+  "task": "candidate identity and archived DMA adapter only",
+  "board_access_allowed": false,
+  "source_modification_allowlist": [
+    "vta/tutorials/frontend/c3_candidate_identity.py",
+    "vta/tutorials/frontend/extract_vta_candidate_features.py",
+    "vta/tutorials/frontend/test_c3_candidate_identity.py"
+  ],
+  "forbidden_modifications": [
+    "schedule",
+    "runtime",
+    "driver",
+    "hardware",
+    "vta/tutorials/frontend/tune_resnet18_vta.py",
+    "vta/tutorials/frontend/extract_static_vta_dma.py"
+  ],
+  "identity_contract": {
+    "hash": "sha256",
+    "canonical_json": "UTF-8; sorted keys; compact separators; finite JSON only",
+    "semantic_fields": [
+      "hardware_fingerprint",
+      "template_name",
+      "schedule_version",
+      "workload",
+      "residence_mode",
+      "complete_config_entity"
+    ],
+    "debug_only_fields": ["index", "config_index", "debug_index"]
+  },
+  "command_footprint_policy": "not_measured_only",
+  "expected_archived_records": 10
+}

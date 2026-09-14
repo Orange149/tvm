@@ -1,0 +1,53 @@
+{
+  "auditor_source_sha256": "595913157db0fb8935ce1e9cb9185c18552cb69b38761d0ca8b80ffdbaf1d1a6",
+  "boot_id": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+  "candidate_ids": [
+    "6f9d27406212db90645521fcda350778092d346815ffd8fc3a5c5f6cd53a792c",
+    "cbeec5d3c92de320929553a96df2989dd6e2d577ec27d14a8e72d9580b72ae61"
+  ],
+  "claim_boundary": "One new ResNet50 workload and one fixed tile, five full-graph call sites, one model and one boot; logical VTA DMA rather than physical AXI, and no ImageNet accuracy claim",
+  "claim_boundary_correction": "The board contract inherited an obsolete P7R273/R50A prose string from the genericized runner. The hash-linked evidence is a prospective R50CF00 five-occurrence full-graph latency holdout.",
+  "correctness_calls": 6,
+  "expected_and_observed_dma_delta": {
+    "load_buffer_2d_acc_bytes": 0,
+    "load_buffer_2d_acc_calls": -30,
+    "load_buffer_2d_bytes": -3010560,
+    "load_buffer_2d_calls": -270,
+    "load_buffer_2d_inp_bytes": -3010560,
+    "load_buffer_2d_inp_calls": -120,
+    "load_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_wgt_calls": -120,
+    "store_buffer_2d_bytes": 0,
+    "store_buffer_2d_calls": 0
+  },
+  "graph_nodes": [
+    118,
+    131,
+    144,
+    157,
+    170
+  ],
+  "graph_occurrence_count": 5,
+  "median_latency_ms": {
+    "input_stationary": 330.277203,
+    "original": 346.686947
+  },
+  "modes": [
+    "original",
+    "input_stationary"
+  ],
+  "paired_rounds": 7,
+  "residency_paired_wins": 7,
+  "residency_speedup_percent": 4.968476131850985,
+  "schema": "c3_vta_resnet50_fullgraph_latency_holdout_audit_v1",
+  "selected_family_id": "R50CF00",
+  "status": "prospective_fullgraph_holdout_chain_verified",
+  "timing_calls": 14,
+  "verified_artifact_counts": {
+    "board_run": 6,
+    "fused_contract": 2,
+    "holdout": 2,
+    "pair_build": 10,
+    "tir_audit": 282
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "builds_per_candidate": 1,
+  "candidate_timeout_seconds": 120,
+  "correctness": "exact elementwise equality for all three seeds",
+  "frozen_seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "oracle": "independent NumPy packed int8 convolution, shift-right 8, clip [0,127]",
+  "overall_timeout_seconds": 300,
+  "performance_rule": "FSim time is never collected or used",
+  "schema": "c3_p4c_preregistered_v1",
+  "selection": "P4b records with status=ok and candidate_role in ['p7r_hybrid_confirmation']"
+}

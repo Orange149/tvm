@@ -1,0 +1,4541 @@
+{
+  "candidate_order_for_unbiased_full_label_collection": [
+    "b49c1f592f3dceb25911bf8c658bfa3736335c267669635397037d7248b3bb48",
+    "8b9f097b026fd4d00dfcf2ee47de1233f2b3336016a04e1321df1b3137b8501e",
+    "bb587522557d39f852b2880615fa59715cc0c53d3c8558aa33082b5161bd6918",
+    "1d7d5f64461e6659a04dd0ab7396cf2c153bc6628fbecce0b320cb6767397dc8",
+    "ba8b06e46954215c0c68d7f852a7ebb7b0375a8b2df0bff45148364b9158293d",
+    "db147e203fbce8e9bb43503cd6ca5e9aeb9fd3a96d51477941b80d7e5be44a9e",
+    "c599ed5554d10ffca0713daf6b47620617153361d862da52dfefea8d914806bf",
+    "8920e1c846a075f1a304e9672c42c134acdfe335665d7a20ce1ec37025005799",
+    "3f843a4308e0b3f336e102fae620ae4ec467ea8a6426663ca470ce4852e63176",
+    "29ed8d08d84258b2ea85106cd6984929f1699a39ba862a7e2ce89c6d7b33755a",
+    "2c1dda77be18afc37a40e853066e3ed938aeca12bb3e1956367c325ce75bc94e",
+    "2dce1dc0d96c21c80ff882b5d7872df6149a99d930240a22a204906473e04346",
+    "0632653ebd1c8240d4ee3e2e77e8c474c0ada3da8f6c7541d7b229799b216c03",
+    "53f16568842c766a767b73cc330cdbbb68cb2e295371bb6917f7d049423f7eb2",
+    "e1ad0473123bfe915778e48a6725ad7fe0400fd3e00387eeff71a9dbea16005b",
+    "700df7611dd80ba8dcffcbb450a06ff4b2a90b229615a863c3e11c1378478405",
+    "3083a6f17ff353d5d1984816c191c651584f3a2fba6cdc7c9fa36f46aa3c01dc",
+    "7912ae15456211ec1f0e80c08560f37856688f9b755f7408a54633f8e9744992",
+    "f5fe1bad606de0f8632734eba9ca58e4d6e9b84ee847d0a290f6b98ea421f145",
+    "49ec0927bbe004aa41224117fa23d8ce9f77ef02a9b9832c1f66c26913214eeb",
+    "5c4a8b578e713ed546761e165afd16cae86ea6a8d1176dd9581d8da6cf10efc8",
+    "c177932c3afddd9e558bc8c74cc7566270b5c1321acb62582aa0d38004429002",
+    "49a2c50e63bd8325fa9f10f68dd421f1731dbfc13b3725fa3c4fd2d9982ea8f5",
+    "b142432fda56913995072678a5ab990fbe1584d1a3633222cc16ee59a76a8224"
+  ],
+  "candidates": [
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "b49c1f592f3dceb25911bf8c658bfa3736335c267669635397037d7248b3bb48",
+      "debug": {
+        "config_index": 45
+      },
+      "family_id": "Y01F00",
+      "family_ordinal": 0,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 8,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 26,
+          "input_vectors": 208,
+          "weight_vectors": 32
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                16
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 4,
+        "public_mode": "weight_resident_barrier",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 4,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 2,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "weight_resident_barrier",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "021ad24ca15c298ecaccf26ab5b5f96731fa63b81bad0b929eb5eca7666efa9c",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "8b9f097b026fd4d00dfcf2ee47de1233f2b3336016a04e1321df1b3137b8501e",
+      "debug": {
+        "config_index": 104
+      },
+      "family_id": "Y01F06",
+      "family_ordinal": 6,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 8,
+          "input_vectors": 32,
+          "weight_vectors": 256
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                32
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 32,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "16a05a4c2b3315a21173dda3522d3046ef256836fb2eb88a02d52a022eca0ded",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "bb587522557d39f852b2880615fa59715cc0c53d3c8558aa33082b5161bd6918",
+      "debug": {
+        "config_index": 37
+      },
+      "family_id": "Y01F05",
+      "family_ordinal": 5,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 8,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 26,
+          "input_vectors": 52,
+          "weight_vectors": 8
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                4
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 0,
+        "public_mode": "original",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 2,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "original",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "15dde5c7b1dee6e7c6e6b697ac59c5522f2a60df02c4ec253ee51f318dbc014d",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "1d7d5f64461e6659a04dd0ab7396cf2c153bc6628fbecce0b320cb6767397dc8",
+      "debug": {
+        "config_index": 29
+      },
+      "family_id": "Y01F01",
+      "family_ordinal": 1,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 8,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 26,
+          "input_vectors": 13,
+          "weight_vectors": 2
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 4,
+        "public_mode": "weight_resident_barrier",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 4,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 2,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "weight_resident_barrier",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "03e19f01051cd2bff1b8e107ad8579ba8623817b82c377d27aba9e82a065d0b3",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "ba8b06e46954215c0c68d7f852a7ebb7b0375a8b2df0bff45148364b9158293d",
+      "debug": {
+        "config_index": 84
+      },
+      "family_id": "Y01F04",
+      "family_ordinal": 4,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 8,
+          "input_vectors": 1,
+          "weight_vectors": 8
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 0,
+        "public_mode": "original",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "original",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "15541c00795db8f810efd855dd203751d8ee0dad0e7a069ead41ca7c8857ddd8",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "db147e203fbce8e9bb43503cd6ca5e9aeb9fd3a96d51477941b80d7e5be44a9e",
+      "debug": {
+        "config_index": 29
+      },
+      "family_id": "Y01F01",
+      "family_ordinal": 1,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 8,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 26,
+          "input_vectors": 13,
+          "weight_vectors": 2
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 0,
+        "public_mode": "original",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 2,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "original",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "03e19f01051cd2bff1b8e107ad8579ba8623817b82c377d27aba9e82a065d0b3",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "c599ed5554d10ffca0713daf6b47620617153361d862da52dfefea8d914806bf",
+      "debug": {
+        "config_index": 109
+      },
+      "family_id": "Y01F02",
+      "family_ordinal": 2,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 104,
+          "input_vectors": 832,
+          "weight_vectors": 512
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                64
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 4,
+        "public_mode": "weight_resident_barrier",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 4,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 64,
+        "tile_co": 8,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "weight_resident_barrier",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "06d45652c7c2ef6d30c39cee774fd8992bc9a8caa2ed11e6766c3f2691f7f3b6",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "8920e1c846a075f1a304e9672c42c134acdfe335665d7a20ce1ec37025005799",
+      "debug": {
+        "config_index": 29
+      },
+      "family_id": "Y01F01",
+      "family_ordinal": 1,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 8,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 26,
+          "input_vectors": 13,
+          "weight_vectors": 2
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 2,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "03e19f01051cd2bff1b8e107ad8579ba8623817b82c377d27aba9e82a065d0b3",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "3f843a4308e0b3f336e102fae620ae4ec467ea8a6426663ca470ce4852e63176",
+      "debug": {
+        "config_index": 109
+      },
+      "family_id": "Y01F02",
+      "family_ordinal": 2,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 104,
+          "input_vectors": 832,
+          "weight_vectors": 512
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                64
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 64,
+        "tile_co": 8,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "06d45652c7c2ef6d30c39cee774fd8992bc9a8caa2ed11e6766c3f2691f7f3b6",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "29ed8d08d84258b2ea85106cd6984929f1699a39ba862a7e2ce89c6d7b33755a",
+      "debug": {
+        "config_index": 84
+      },
+      "family_id": "Y01F04",
+      "family_ordinal": 4,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 8,
+          "input_vectors": 1,
+          "weight_vectors": 8
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 4,
+        "public_mode": "weight_resident_barrier",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 4,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "weight_resident_barrier",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "15541c00795db8f810efd855dd203751d8ee0dad0e7a069ead41ca7c8857ddd8",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "2c1dda77be18afc37a40e853066e3ed938aeca12bb3e1956367c325ce75bc94e",
+      "debug": {
+        "config_index": 84
+      },
+      "family_id": "Y01F04",
+      "family_ordinal": 4,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 8,
+          "input_vectors": 1,
+          "weight_vectors": 8
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "15541c00795db8f810efd855dd203751d8ee0dad0e7a069ead41ca7c8857ddd8",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "2dce1dc0d96c21c80ff882b5d7872df6149a99d930240a22a204906473e04346",
+      "debug": {
+        "config_index": 45
+      },
+      "family_id": "Y01F00",
+      "family_ordinal": 0,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 8,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 26,
+          "input_vectors": 208,
+          "weight_vectors": 32
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                16
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 2,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "021ad24ca15c298ecaccf26ab5b5f96731fa63b81bad0b929eb5eca7666efa9c",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "0632653ebd1c8240d4ee3e2e77e8c474c0ada3da8f6c7541d7b229799b216c03",
+      "debug": {
+        "config_index": 37
+      },
+      "family_id": "Y01F05",
+      "family_ordinal": 5,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 8,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 26,
+          "input_vectors": 52,
+          "weight_vectors": 8
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                4
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 4,
+        "public_mode": "weight_resident_barrier",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 4,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 2,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "weight_resident_barrier",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "15dde5c7b1dee6e7c6e6b697ac59c5522f2a60df02c4ec253ee51f318dbc014d",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "53f16568842c766a767b73cc330cdbbb68cb2e295371bb6917f7d049423f7eb2",
+      "debug": {
+        "config_index": 45
+      },
+      "family_id": "Y01F00",
+      "family_ordinal": 0,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 8,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 26,
+          "input_vectors": 208,
+          "weight_vectors": 32
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                16
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 0,
+        "public_mode": "original",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 2,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "original",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "021ad24ca15c298ecaccf26ab5b5f96731fa63b81bad0b929eb5eca7666efa9c",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "e1ad0473123bfe915778e48a6725ad7fe0400fd3e00387eeff71a9dbea16005b",
+      "debug": {
+        "config_index": 105
+      },
+      "family_id": "Y01F03",
+      "family_ordinal": 3,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 104,
+          "input_vectors": 416,
+          "weight_vectors": 256
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                32
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 32,
+        "tile_co": 8,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "1337f242e3d8e76d31b24f02da7d34ef1caa1e98a2a55e0a04f206149520f8b6",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "700df7611dd80ba8dcffcbb450a06ff4b2a90b229615a863c3e11c1378478405",
+      "debug": {
+        "config_index": 105
+      },
+      "family_id": "Y01F03",
+      "family_ordinal": 3,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 104,
+          "input_vectors": 416,
+          "weight_vectors": 256
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                32
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 4,
+        "public_mode": "weight_resident_barrier",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 4,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 32,
+        "tile_co": 8,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "weight_resident_barrier",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "1337f242e3d8e76d31b24f02da7d34ef1caa1e98a2a55e0a04f206149520f8b6",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "3083a6f17ff353d5d1984816c191c651584f3a2fba6cdc7c9fa36f46aa3c01dc",
+      "debug": {
+        "config_index": 104
+      },
+      "family_id": "Y01F06",
+      "family_ordinal": 6,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 8,
+          "input_vectors": 32,
+          "weight_vectors": 256
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                32
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 4,
+        "public_mode": "weight_resident_barrier",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 4,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 32,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "weight_resident_barrier",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "16a05a4c2b3315a21173dda3522d3046ef256836fb2eb88a02d52a022eca0ded",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "7912ae15456211ec1f0e80c08560f37856688f9b755f7408a54633f8e9744992",
+      "debug": {
+        "config_index": 105
+      },
+      "family_id": "Y01F03",
+      "family_ordinal": 3,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 104,
+          "input_vectors": 416,
+          "weight_vectors": 256
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                32
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 0,
+        "public_mode": "original",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 32,
+        "tile_co": 8,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "original",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "1337f242e3d8e76d31b24f02da7d34ef1caa1e98a2a55e0a04f206149520f8b6",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "f5fe1bad606de0f8632734eba9ca58e4d6e9b84ee847d0a290f6b98ea421f145",
+      "debug": {
+        "config_index": 104
+      },
+      "family_id": "Y01F06",
+      "family_ordinal": 6,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 8,
+          "input_vectors": 32,
+          "weight_vectors": 256
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                32
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 0,
+        "public_mode": "original",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 32,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "original",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "16a05a4c2b3315a21173dda3522d3046ef256836fb2eb88a02d52a022eca0ded",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "49ec0927bbe004aa41224117fa23d8ce9f77ef02a9b9832c1f66c26913214eeb",
+      "debug": {
+        "config_index": 37
+      },
+      "family_id": "Y01F05",
+      "family_ordinal": 5,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 8,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 26,
+          "input_vectors": 52,
+          "weight_vectors": 8
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                4
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 2,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "15dde5c7b1dee6e7c6e6b697ac59c5522f2a60df02c4ec253ee51f318dbc014d",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "5c4a8b578e713ed546761e165afd16cae86ea6a8d1176dd9581d8da6cf10efc8",
+      "debug": {
+        "config_index": 12
+      },
+      "family_id": "Y01F07",
+      "family_ordinal": 7,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 16,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 1,
+          "input_vectors": 8,
+          "weight_vectors": 8
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 0,
+        "public_mode": "original",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "original",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "17069ca6ccccc421b145441809ddb8f0c14d08edc032de29af74e900f671293a",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "c177932c3afddd9e558bc8c74cc7566270b5c1321acb62582aa0d38004429002",
+      "debug": {
+        "config_index": 12
+      },
+      "family_id": "Y01F07",
+      "family_ordinal": 7,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 16,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 1,
+          "input_vectors": 8,
+          "weight_vectors": 8
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 4,
+        "public_mode": "weight_resident_barrier",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 4,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "weight_resident_barrier",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "17069ca6ccccc421b145441809ddb8f0c14d08edc032de29af74e900f671293a",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "49a2c50e63bd8325fa9f10f68dd421f1731dbfc13b3725fa3c4fd2d9982ea8f5",
+      "debug": {
+        "config_index": 109
+      },
+      "family_id": "Y01F02",
+      "family_ordinal": 2,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 104,
+          "input_vectors": 832,
+          "weight_vectors": 512
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                64
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 0,
+        "public_mode": "original",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 64,
+        "tile_co": 8,
+        "tile_h": 13,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "original",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "06d45652c7c2ef6d30c39cee774fd8992bc9a8caa2ed11e6766c3f2691f7f3b6",
+      "workload_id": "Y01"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "b142432fda56913995072678a5ab990fbe1584d1a3633222cc16ee59a76a8224",
+      "debug": {
+        "config_index": 12
+      },
+      "family_id": "Y01F07",
+      "family_ordinal": 7,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 16,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 1,
+          "input_vectors": 8,
+          "weight_vectors": 8
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_p7r124_y01_v2_local_pool_v1",
+      "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "17069ca6ccccc421b145441809ddb8f0c14d08edc032de29af74e900f671293a",
+      "workload_id": "Y01"
+    }
+  ],
+  "claim_boundary": "latency-unseen recovery confirmation only: historical FPGA correctness outcomes were already exposed, but no target latency label existed; candidate identities and service-proxy weights remain frozen",
+  "fsim_pass_board_pool": 24,
+  "gross_config_identities": 24,
+  "health_canary": {
+    "candidate_id": "6374bca35bb59bb20cbb07532e5ba29ca3a56225023cf8d632b80063818d5d77",
+    "debug": {
+      "config_index": 575
+    },
+    "identity": {
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "historical_candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "historical_tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060",
+      "implementation": "conv2d_packed_residency.vta mode0 original branch",
+      "schema": "c3_p7r122_w05_health_canary_identity_v1",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W05"
+    },
+    "implementation_mode": 0,
+    "performance_measurement": "not_collected",
+    "public_mode": "original",
+    "role": "health_gate_only"
+  },
+  "protocol": {
+    "baselines": [
+      "random",
+      "stock_knob_xgb",
+      "paper_minimum_access",
+      "rules_only_bytes",
+      "shared_memory_lexicographic",
+      "shared_memory_service_proxy_64KiB_per_request_128KiB_per_extra_submission"
+    ],
+    "correctness": "all 24 candidates, frozen order, first-error stop per identity, pass requires three seeds",
+    "current_boot_result": "not observed at contract freeze",
+    "pool_oracle": "minimum median latency among all correctness-passed candidates",
+    "precondition": "stop default RPC, reload exact frozen bitstream, start a fresh default RPC, then require W05 config575 three-seed health pass before target allocation",
+    "search_replay": "20 seeds; budgets 1,2,4,8; target pool-oracle +2%/+5%",
+    "timing": "all correctness-passed candidates, seven balanced rotated rounds",
+    "tophub": "not used by selector and not required for the primary endpoint"
+  },
+  "qualification_bindings": {
+    "0632653ebd1c8240d4ee3e2e77e8c474c0ada3da8f6c7541d7b229799b216c03": {
+      "fsim_command_sha256": {
+        "0": "68ac7ea8a1f3df87afd3c4e45f55752e75d162d2e393f4ae7b4ea0c77702a9ee",
+        "20250901": "68ac7ea8a1f3df87afd3c4e45f55752e75d162d2e393f4ae7b4ea0c77702a9ee",
+        "20260910": "68ac7ea8a1f3df87afd3c4e45f55752e75d162d2e393f4ae7b4ea0c77702a9ee"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "47c9657e1865f75e74b96af61896740f883beadc8c83c5d2f34e18af3f6b3f79"
+    },
+    "1d7d5f64461e6659a04dd0ab7396cf2c153bc6628fbecce0b320cb6767397dc8": {
+      "fsim_command_sha256": {
+        "0": "158dd15e9b76c4980bb1875b17760ede015fe9168650bfacac12b712099f3957",
+        "20250901": "158dd15e9b76c4980bb1875b17760ede015fe9168650bfacac12b712099f3957",
+        "20260910": "158dd15e9b76c4980bb1875b17760ede015fe9168650bfacac12b712099f3957"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "54209ff552ab5f05ecb06140ce10c8603f0da87444d97c6d5282958d5ab19b78"
+    },
+    "29ed8d08d84258b2ea85106cd6984929f1699a39ba862a7e2ce89c6d7b33755a": {
+      "fsim_command_sha256": {
+        "0": "70a3e4c942442179a4e31dd7e830607d5bf44346875d28eb3623578e6990d864",
+        "20250901": "70a3e4c942442179a4e31dd7e830607d5bf44346875d28eb3623578e6990d864",
+        "20260910": "70a3e4c942442179a4e31dd7e830607d5bf44346875d28eb3623578e6990d864"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "68c5e7232e64d5c526f2c1834c7b10c3c2585995bba136e96a629a16465a5fcc"
+    },
+    "2c1dda77be18afc37a40e853066e3ed938aeca12bb3e1956367c325ce75bc94e": {
+      "fsim_command_sha256": {
+        "0": "1a2bcd1754a7712363a47d7d82f8b0c9b7f9956cb56b8cea9a57265b5c48cda8",
+        "20250901": "1a2bcd1754a7712363a47d7d82f8b0c9b7f9956cb56b8cea9a57265b5c48cda8",
+        "20260910": "1a2bcd1754a7712363a47d7d82f8b0c9b7f9956cb56b8cea9a57265b5c48cda8"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "42a90434a538bd5b1e4b2efe997b89908a43da4088908f5a8b455a55fb61b7af"
+    },
+    "2dce1dc0d96c21c80ff882b5d7872df6149a99d930240a22a204906473e04346": {
+      "fsim_command_sha256": {
+        "0": "368b124df1d116b5921e011b612a987db182a3e66fce131ec49ebda4f942ac87",
+        "20250901": "368b124df1d116b5921e011b612a987db182a3e66fce131ec49ebda4f942ac87",
+        "20260910": "368b124df1d116b5921e011b612a987db182a3e66fce131ec49ebda4f942ac87"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "df9c3515a80bab067341f96016fd3c24a31890b89e03c3888713c5d50213fc23"
+    },
+    "3083a6f17ff353d5d1984816c191c651584f3a2fba6cdc7c9fa36f46aa3c01dc": {
+      "fsim_command_sha256": {
+        "0": "c064b06c36585baa2d451c957bb7e4385b84c4088449e172ea059b9b9bab7e58",
+        "20250901": "c064b06c36585baa2d451c957bb7e4385b84c4088449e172ea059b9b9bab7e58",
+        "20260910": "c064b06c36585baa2d451c957bb7e4385b84c4088449e172ea059b9b9bab7e58"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "6ebb375f5a9e9bc10da87f71a424774b1496620d13c0592b9c611049ea6606c2"
+    },
+    "3f843a4308e0b3f336e102fae620ae4ec467ea8a6426663ca470ce4852e63176": {
+      "fsim_command_sha256": {
+        "0": "234d665593848a156570e21d278e5f28c7bce5ce26718568276b4935efb6dd16",
+        "20250901": "234d665593848a156570e21d278e5f28c7bce5ce26718568276b4935efb6dd16",
+        "20260910": "234d665593848a156570e21d278e5f28c7bce5ce26718568276b4935efb6dd16"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "b423c9951d8f6e7bd9ef0c98143928c82d9bff4ac05d88f774ba69c826181034"
+    },
+    "49a2c50e63bd8325fa9f10f68dd421f1731dbfc13b3725fa3c4fd2d9982ea8f5": {
+      "fsim_command_sha256": {
+        "0": "173865a2f0f66c776ef41334ac5f59e0516898ca22a65431ce0b9c1c19c4ad11",
+        "20250901": "173865a2f0f66c776ef41334ac5f59e0516898ca22a65431ce0b9c1c19c4ad11",
+        "20260910": "173865a2f0f66c776ef41334ac5f59e0516898ca22a65431ce0b9c1c19c4ad11"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "6bfb9b0dd0f452d9a3075c096537d3d8a481511684e61b0a37a24199ba5d9c62"
+    },
+    "49ec0927bbe004aa41224117fa23d8ce9f77ef02a9b9832c1f66c26913214eeb": {
+      "fsim_command_sha256": {
+        "0": "b8b2fb8b981d2e8781a18b4df4749958eec07f2481001f4ffe9a17b169e86927",
+        "20250901": "b8b2fb8b981d2e8781a18b4df4749958eec07f2481001f4ffe9a17b169e86927",
+        "20260910": "b8b2fb8b981d2e8781a18b4df4749958eec07f2481001f4ffe9a17b169e86927"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "20c54bbf72e410fee46f0a83822cc5ddd1714143f0abc9ab00a7f6b0b5eee057"
+    },
+    "53f16568842c766a767b73cc330cdbbb68cb2e295371bb6917f7d049423f7eb2": {
+      "fsim_command_sha256": {
+        "0": "2c46ceeea4ec63d459fd477f3a76a693fbdcc853f17d55bf04e662840da99d3e",
+        "20250901": "2c46ceeea4ec63d459fd477f3a76a693fbdcc853f17d55bf04e662840da99d3e",
+        "20260910": "2c46ceeea4ec63d459fd477f3a76a693fbdcc853f17d55bf04e662840da99d3e"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "3a50d2b1840f986eadc987d1b9aa69033c6203f423d8ca9e4e514afa2da0821e"
+    },
+    "5c4a8b578e713ed546761e165afd16cae86ea6a8d1176dd9581d8da6cf10efc8": {
+      "fsim_command_sha256": {
+        "0": "a2c747699765a9df00fa7d9d4825335212ae9539a8f017d263b2f6f9dc7c1099",
+        "20250901": "a2c747699765a9df00fa7d9d4825335212ae9539a8f017d263b2f6f9dc7c1099",
+        "20260910": "a2c747699765a9df00fa7d9d4825335212ae9539a8f017d263b2f6f9dc7c1099"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "33610f30110067d87113979fd2ea16494d19191ab1719982222a33cf2ec8ccce"
+    },
+    "700df7611dd80ba8dcffcbb450a06ff4b2a90b229615a863c3e11c1378478405": {
+      "fsim_command_sha256": {
+        "0": "b6fda690258853cbf75ae051cca0f6b363179df8aa02136f9c8daf9e642952d1",
+        "20250901": "b6fda690258853cbf75ae051cca0f6b363179df8aa02136f9c8daf9e642952d1",
+        "20260910": "b6fda690258853cbf75ae051cca0f6b363179df8aa02136f9c8daf9e642952d1"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "bcf04324d8e82f31d9dae7ad17dbcd8cefe998d09de3767361e760c088576c29"
+    },
+    "7912ae15456211ec1f0e80c08560f37856688f9b755f7408a54633f8e9744992": {
+      "fsim_command_sha256": {
+        "0": "b0da2b011f039f0045d57d614bcb29be4f90d7e39fd7a75fd7a01f55e29d4934",
+        "20250901": "b0da2b011f039f0045d57d614bcb29be4f90d7e39fd7a75fd7a01f55e29d4934",
+        "20260910": "b0da2b011f039f0045d57d614bcb29be4f90d7e39fd7a75fd7a01f55e29d4934"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "79504bcab21ced84bfeb9262775b722e508d88dd74790aeee060a8e80499412b"
+    },
+    "8920e1c846a075f1a304e9672c42c134acdfe335665d7a20ce1ec37025005799": {
+      "fsim_command_sha256": {
+        "0": "046d66bd6bc8468b58753fdd0268babed388a61e619b65fdef3c0c47a68f1a70",
+        "20250901": "046d66bd6bc8468b58753fdd0268babed388a61e619b65fdef3c0c47a68f1a70",
+        "20260910": "046d66bd6bc8468b58753fdd0268babed388a61e619b65fdef3c0c47a68f1a70"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "dccbe64daf96e90bda7b9ac8f2c6d3c20ee53153ae4e3a06610693b3cf89e3ef"
+    },
+    "8b9f097b026fd4d00dfcf2ee47de1233f2b3336016a04e1321df1b3137b8501e": {
+      "fsim_command_sha256": {
+        "0": "bb204e307470d54e34e8362489c4e2429cb25fef370f4e3d857d5da82ce8988b",
+        "20250901": "bb204e307470d54e34e8362489c4e2429cb25fef370f4e3d857d5da82ce8988b",
+        "20260910": "bb204e307470d54e34e8362489c4e2429cb25fef370f4e3d857d5da82ce8988b"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "66996533adfe0c60699eccdfddfde983e4096e5abd1b41ff7883889946ce1dad"
+    },
+    "b142432fda56913995072678a5ab990fbe1584d1a3633222cc16ee59a76a8224": {
+      "fsim_command_sha256": {
+        "0": "6a15a24e39c3379d752a30767d8f177d57ef4b15d56608725b844f56a415c06b",
+        "20250901": "6a15a24e39c3379d752a30767d8f177d57ef4b15d56608725b844f56a415c06b",
+        "20260910": "6a15a24e39c3379d752a30767d8f177d57ef4b15d56608725b844f56a415c06b"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "f1e4323dd8a3be0d90f91c19a2cda55f0c6c60a22f87add582a9136d8873743c"
+    },
+    "b49c1f592f3dceb25911bf8c658bfa3736335c267669635397037d7248b3bb48": {
+      "fsim_command_sha256": {
+        "0": "26eb5eab6feb687c1f80605950e49ea20dddbdaffe64b67b640fa8d055145a51",
+        "20250901": "26eb5eab6feb687c1f80605950e49ea20dddbdaffe64b67b640fa8d055145a51",
+        "20260910": "26eb5eab6feb687c1f80605950e49ea20dddbdaffe64b67b640fa8d055145a51"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "02a6c2ceafafa0125bd749cc2945aa19de815a98201c37359dc564b63772db31"
+    },
+    "ba8b06e46954215c0c68d7f852a7ebb7b0375a8b2df0bff45148364b9158293d": {
+      "fsim_command_sha256": {
+        "0": "20da3032d23c9cc70ca6da00125b2f20a9fe5cb9e04532bd5549c82bfdccf437",
+        "20250901": "20da3032d23c9cc70ca6da00125b2f20a9fe5cb9e04532bd5549c82bfdccf437",
+        "20260910": "20da3032d23c9cc70ca6da00125b2f20a9fe5cb9e04532bd5549c82bfdccf437"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "590ddfc2ec829a10315125cdc800a62b9b7ae7eabdaa9a5dd3cf3be0a24ec48a"
+    },
+    "bb587522557d39f852b2880615fa59715cc0c53d3c8558aa33082b5161bd6918": {
+      "fsim_command_sha256": {
+        "0": "9233123046957560a5e188045e8c570e7ca6484c33671d7a59257fb2f884183a",
+        "20250901": "9233123046957560a5e188045e8c570e7ca6484c33671d7a59257fb2f884183a",
+        "20260910": "9233123046957560a5e188045e8c570e7ca6484c33671d7a59257fb2f884183a"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "0dd2a9699b6fc67bce669c343b6d57a3f59a5bb5f619a144c45712343088dd65"
+    },
+    "c177932c3afddd9e558bc8c74cc7566270b5c1321acb62582aa0d38004429002": {
+      "fsim_command_sha256": {
+        "0": "014257a5a3b3547583cec9d8c0e38de2c8da357d9927e9d7e94580801f41aacb",
+        "20250901": "014257a5a3b3547583cec9d8c0e38de2c8da357d9927e9d7e94580801f41aacb",
+        "20260910": "014257a5a3b3547583cec9d8c0e38de2c8da357d9927e9d7e94580801f41aacb"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "4baae0b7bef8c25ef5b3e3754c10e9c80dc467336ff3ad54b81644e1c1dd7ed3"
+    },
+    "c599ed5554d10ffca0713daf6b47620617153361d862da52dfefea8d914806bf": {
+      "fsim_command_sha256": {
+        "0": "760695aea3b07d1b81fc1643c5eb5cb275958a00c5d13d2889677588f74b2d9f",
+        "20250901": "760695aea3b07d1b81fc1643c5eb5cb275958a00c5d13d2889677588f74b2d9f",
+        "20260910": "760695aea3b07d1b81fc1643c5eb5cb275958a00c5d13d2889677588f74b2d9f"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "c145644bed3b9f2ac925a80f12e9f41b0ee1959a885484edfab6ff8a7c74306b"
+    },
+    "db147e203fbce8e9bb43503cd6ca5e9aeb9fd3a96d51477941b80d7e5be44a9e": {
+      "fsim_command_sha256": {
+        "0": "cc14d53e52d6587acf7802114f1359abdf099fbde2f8db0716c5e06b793a9090",
+        "20250901": "cc14d53e52d6587acf7802114f1359abdf099fbde2f8db0716c5e06b793a9090",
+        "20260910": "cc14d53e52d6587acf7802114f1359abdf099fbde2f8db0716c5e06b793a9090"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "2fee3a3b7229b870c72b31ccd306913c42b8926215e0c701a50a17b19f5ce24e"
+    },
+    "e1ad0473123bfe915778e48a6725ad7fe0400fd3e00387eeff71a9dbea16005b": {
+      "fsim_command_sha256": {
+        "0": "682984da5fda04a23fef264075eb786541d3727ba1b32046d1ebe9d525185ad9",
+        "20250901": "682984da5fda04a23fef264075eb786541d3727ba1b32046d1ebe9d525185ad9",
+        "20260910": "682984da5fda04a23fef264075eb786541d3727ba1b32046d1ebe9d525185ad9"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "60ddf7181a3b3af4a6373e02455f9d1586cb08bfa081b99f92562227edcd6ae4"
+    },
+    "f5fe1bad606de0f8632734eba9ca58e4d6e9b84ee847d0a290f6b98ea421f145": {
+      "fsim_command_sha256": {
+        "0": "0641367f7c13db59bd2f286a3feaaa03ba302a23d20abd008314a4c8076599fa",
+        "20250901": "0641367f7c13db59bd2f286a3feaaa03ba302a23d20abd008314a4c8076599fa",
+        "20260910": "0641367f7c13db59bd2f286a3feaaa03ba302a23d20abd008314a4c8076599fa"
+      },
+      "fsim_seed_correctness": [
+        {
+          "correct": true,
+          "seed": 0
+        },
+        {
+          "correct": true,
+          "seed": 20250901
+        },
+        {
+          "correct": true,
+          "seed": 20260910
+        }
+      ],
+      "tir_sha256": "e386b89748e64763d93650656e7c3d262f667248f2291c65881b379c0278b480"
+    }
+  },
+  "schema": "c3_prospective_search_confirmation_contract_v2",
+  "shared_memory_lexicographic_order": [
+    "c599ed5554d10ffca0713daf6b47620617153361d862da52dfefea8d914806bf",
+    "700df7611dd80ba8dcffcbb450a06ff4b2a90b229615a863c3e11c1378478405",
+    "3083a6f17ff353d5d1984816c191c651584f3a2fba6cdc7c9fa36f46aa3c01dc",
+    "29ed8d08d84258b2ea85106cd6984929f1699a39ba862a7e2ce89c6d7b33755a",
+    "b49c1f592f3dceb25911bf8c658bfa3736335c267669635397037d7248b3bb48",
+    "0632653ebd1c8240d4ee3e2e77e8c474c0ada3da8f6c7541d7b229799b216c03",
+    "1d7d5f64461e6659a04dd0ab7396cf2c153bc6628fbecce0b320cb6767397dc8",
+    "c177932c3afddd9e558bc8c74cc7566270b5c1321acb62582aa0d38004429002",
+    "3f843a4308e0b3f336e102fae620ae4ec467ea8a6426663ca470ce4852e63176",
+    "e1ad0473123bfe915778e48a6725ad7fe0400fd3e00387eeff71a9dbea16005b",
+    "2dce1dc0d96c21c80ff882b5d7872df6149a99d930240a22a204906473e04346",
+    "49ec0927bbe004aa41224117fa23d8ce9f77ef02a9b9832c1f66c26913214eeb",
+    "8920e1c846a075f1a304e9672c42c134acdfe335665d7a20ce1ec37025005799",
+    "49a2c50e63bd8325fa9f10f68dd421f1731dbfc13b3725fa3c4fd2d9982ea8f5",
+    "7912ae15456211ec1f0e80c08560f37856688f9b755f7408a54633f8e9744992",
+    "53f16568842c766a767b73cc330cdbbb68cb2e295371bb6917f7d049423f7eb2",
+    "bb587522557d39f852b2880615fa59715cc0c53d3c8558aa33082b5161bd6918",
+    "db147e203fbce8e9bb43503cd6ca5e9aeb9fd3a96d51477941b80d7e5be44a9e",
+    "8b9f097b026fd4d00dfcf2ee47de1233f2b3336016a04e1321df1b3137b8501e",
+    "b142432fda56913995072678a5ab990fbe1584d1a3633222cc16ee59a76a8224",
+    "2c1dda77be18afc37a40e853066e3ed938aeca12bb3e1956367c325ce75bc94e",
+    "f5fe1bad606de0f8632734eba9ca58e4d6e9b84ee847d0a290f6b98ea421f145",
+    "ba8b06e46954215c0c68d7f852a7ebb7b0375a8b2df0bff45148364b9158293d",
+    "5c4a8b578e713ed546761e165afd16cae86ea6a8d1176dd9581d8da6cf10efc8"
+  ],
+  "static_pass": 24,
+  "status": "frozen_before_y01_latency_recovery_confirmation",
+  "workload_id": "Y01"
+}

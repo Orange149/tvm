@@ -1,0 +1,71 @@
+{
+  "analyzer_source_sha256": "1156844d1c4e5084d15a71295771501c12612ab29d8cff7aaec47ec5f82d296e",
+  "bound_inputs": {
+    "board_analysis_artifact_manifest_sha256": "2e853d25e1d7b1f8438895e48650d47b058829234e889a82c880dc33bb556535",
+    "fused_pool_artifact_manifest_sha256": "fbd8d396ea6576e5aae22c2868ee79c066d66515dd9b7056f4b944b38cc9d3e0",
+    "local_artifact_manifest_sha256": "ae082d5b2bca6788448aae55356a99fbfc8cb156480e6a99e35e28984bd42b9f"
+  },
+  "candidate_fullgraph_builds": {
+    "exhaustive": 18,
+    "proxy": 4,
+    "reduction_percent": 77.77777777777779
+  },
+  "claim_boundary": "R50D labels are exposed; this analysis only chooses a cheaper rule for a future workload and cannot be counted as another holdout or build-cost result.",
+  "exact_fused_front_candidate_ids": [
+    "50a497d5cae33f2f4f193c282fd3aeebcb9fd302675c8b3ff7dd8e19db650a17",
+    "5644d315444b6560ae75f2aa2cfd5ebbfd7a83f4a06c73f4560d3af41ed36350",
+    "58c047f4e5c7fa964c6dc543ed44b2130653f3e82e32afac2be9d30d34f0d63d",
+    "9a84abfc77308cb35781e90a72f3830b63c38341fc60efc47d62f82812800525"
+  ],
+  "exact_fused_front_size": 4,
+  "exact_only": [
+    "9a84abfc77308cb35781e90a72f3830b63c38341fc60efc47d62f82812800525"
+  ],
+  "front_overlap": [
+    "50a497d5cae33f2f4f193c282fd3aeebcb9fd302675c8b3ff7dd8e19db650a17",
+    "5644d315444b6560ae75f2aa2cfd5ebbfd7a83f4a06c73f4560d3af41ed36350",
+    "58c047f4e5c7fa964c6dc543ed44b2130653f3e82e32afac2be9d30d34f0d63d"
+  ],
+  "label_exposure": {
+    "interpretation": "development only; not prospective evidence",
+    "r50d_fpga_correctness_exposed": true,
+    "r50d_full_graph_latency_exposed": true
+  },
+  "next_holdout_rule": "After real operator lowering and three-seed FSim, form the three-axis operator proxy front without target latency, build final full graphs only for that front, then run FPGA correctness/latency; build and measure the remainder only after the prospective wave to reveal the complete oracle.",
+  "oracle_candidate_id": "58c047f4e5c7fa964c6dc543ed44b2130653f3e82e32afac2be9d30d34f0d63d",
+  "posthoc_actual_build_wall_seconds": {
+    "interpretation": "replay using exposed per-build costs, not prospective wall time",
+    "reduction_percent": 74.18161650270766,
+    "stock_plus_exhaustive": 656.8658600209892,
+    "stock_plus_proxy": 169.59214680300647
+  },
+  "proxy_axes": [
+    "operator_lowered_tir_expanded_load_plus_store_bytes",
+    "operator_lowered_tir_expanded_load_plus_store_calls",
+    "weight_barrier_indicator"
+  ],
+  "proxy_fpga_correct_candidate_ids": [
+    "043443c785cd197542ee037905f2979fc87e7d80fd969788632e29beccc4fde6",
+    "5644d315444b6560ae75f2aa2cfd5ebbfd7a83f4a06c73f4560d3af41ed36350",
+    "58c047f4e5c7fa964c6dc543ed44b2130653f3e82e32afac2be9d30d34f0d63d"
+  ],
+  "proxy_fpga_correct_count": 3,
+  "proxy_front_candidate_ids": [
+    "043443c785cd197542ee037905f2979fc87e7d80fd969788632e29beccc4fde6",
+    "50a497d5cae33f2f4f193c282fd3aeebcb9fd302675c8b3ff7dd8e19db650a17",
+    "5644d315444b6560ae75f2aa2cfd5ebbfd7a83f4a06c73f4560d3af41ed36350",
+    "58c047f4e5c7fa964c6dc543ed44b2130653f3e82e32afac2be9d30d34f0d63d"
+  ],
+  "proxy_front_size": 4,
+  "proxy_only": [
+    "043443c785cd197542ee037905f2979fc87e7d80fd969788632e29beccc4fde6"
+  ],
+  "proxy_retains_oracle": true,
+  "schema": "c3_vta_operator_proxy_pareto_development_v1",
+  "status": "posthoc_operator_proxy_retains_r50d_oracle_rule_ready_for_new_holdout",
+  "verified_artifact_counts": {
+    "board_analysis": 2,
+    "fused_pool": 2680,
+    "local": 9
+  }
+}

@@ -1,0 +1,813 @@
+{
+  "candidate_count": 96,
+  "candidate_pool_commitment_sha256": "f25c14291f93d01f2b489f7432f12eb93e33becec2dcf8f482b0db16fdde2eff",
+  "claim_limits": [
+    "N=3 is a P7R115 pilot and cannot support a final CCF-B search conclusion",
+    "hardware predicate is necessary-only and is not lowering proof",
+    "weight_stationary is the repository's bounded grouping feasibility mode; realized weight DMA reuse is not assumed",
+    "paper_inspired_hybrid is not claimed as an exact reproduction until its implementation/evidence says so",
+    "this local artifact contains no FPGA correctness, latency, FPS, or deployment result"
+  ],
+  "complete_domain_entity_count": 3920,
+  "confirmation_execution": {
+    "equal_gross_dispatch_budget": "three ConfigEntities per mode per geometry; no replacement after any failure",
+    "incumbent_protection": "replace sealed TopHub fallback only if correctness passes and preregistered threshold is beaten; otherwise retain fallback",
+    "minimum_timing_repeats": 7,
+    "primary_comparison": "within-family mechanism mode versus same-family original",
+    "stage_0": "verify artifact hashes, hardware fingerprint and exact gross candidate count",
+    "stage_1": "one bounded compile/lower call per gross candidate; failures stay charged",
+    "stage_2": "correctness on every buildable candidate before any timing; wrong answers never timed",
+    "stage_3": "time only correctness-passed candidates using preregistered balanced interleaving",
+    "timing_order": "for each repeat and geometry rotate mode order by repeat, then rotate family order by geometry+repeat; each surviving candidate exactly once per repeat"
+  },
+  "development_confirmation_isolation": {
+    "confirmation_failures_remain_in_gross_budget": true,
+    "confirmation_pool_is_immutable": true,
+    "development_inputs": "YOLO literal geometry, complete ConfigSpace entities, hardware fingerprint and capacity/reuse predicates only",
+    "forbidden_before_freeze": [
+      "TopHub ConfigEntity or index",
+      "TopHub latency threshold",
+      "prior board timing for Y00/Y01/Y02",
+      "candidate runtime labels"
+    ]
+  },
+  "geometries": [
+    {
+      "bounded_stage_timeouts_seconds": {
+        "compile_or_lower_per_candidate": 300,
+        "correctness_execution_per_candidate": 120
+      },
+      "complete_shared_domain_count": 800,
+      "config_domain": {
+        "input_stationary": {
+          "config_count": 800,
+          "ordered_domain_sha256": "389f75b75e38bf149d864795b74fb5ddf7ec8de87174005faf3d5d6e961ad1e8",
+          "set_domain_sha256": "6df868b0c5e9df838cf5f222d26bffc0886bbd4edecd929ab389fb769a037fbc"
+        },
+        "original": {
+          "config_count": 800,
+          "ordered_domain_sha256": "389f75b75e38bf149d864795b74fb5ddf7ec8de87174005faf3d5d6e961ad1e8",
+          "set_domain_sha256": "6df868b0c5e9df838cf5f222d26bffc0886bbd4edecd929ab389fb769a037fbc"
+        },
+        "paper_inspired_hybrid": {
+          "config_count": 800,
+          "ordered_domain_sha256": "389f75b75e38bf149d864795b74fb5ddf7ec8de87174005faf3d5d6e961ad1e8",
+          "set_domain_sha256": "6df868b0c5e9df838cf5f222d26bffc0886bbd4edecd929ab389fb769a037fbc"
+        },
+        "weight_stationary": {
+          "config_count": 800,
+          "ordered_domain_sha256": "389f75b75e38bf149d864795b74fb5ddf7ec8de87174005faf3d5d6e961ad1e8",
+          "set_domain_sha256": "6df868b0c5e9df838cf5f222d26bffc0886bbd4edecd929ab389fb769a037fbc"
+        }
+      },
+      "exposed_performance_label_collision": false,
+      "geometry_signature": [
+        1,
+        16,
+        208,
+        208,
+        32,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "label_free_cost_proxy": {
+        "input_bytes": 692224,
+        "latency_estimate_ms": null,
+        "latency_note": "withheld: no runtime label is permitted before pool freeze",
+        "macs": 199360512,
+        "operations_if_mac_is_two_ops": 398721024,
+        "weight_bytes": 4608
+      },
+      "label_free_eligible_count": 78,
+      "selected_family_ids": [
+        "Y00F00",
+        "Y00F01",
+        "Y00F02",
+        "Y00F03",
+        "Y00F04",
+        "Y00F05",
+        "Y00F06",
+        "Y00F07"
+      ],
+      "selection_rationale": "early packed convolution; large spatial map and low channels",
+      "source_conv": {
+        "ci": 16,
+        "co": 32,
+        "height": 208,
+        "kernel": 3,
+        "model_index": 1,
+        "name": "conv2",
+        "width": 208
+      },
+      "source_model": "yolov3-tiny",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            1,
+            208,
+            208,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            2,
+            1,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "Y00"
+    },
+    {
+      "bounded_stage_timeouts_seconds": {
+        "compile_or_lower_per_candidate": 300,
+        "correctness_execution_per_candidate": 120
+      },
+      "complete_shared_domain_count": 560,
+      "config_domain": {
+        "input_stationary": {
+          "config_count": 560,
+          "ordered_domain_sha256": "92e8e8ac137b97a304ec0ee4c991ff21a0cf21bb876cae9388cb8e2713da7c93",
+          "set_domain_sha256": "e68ac033c7339abf67e9a076f96b19cc828c73c8ad7f7ae16792917f5cf0d1b9"
+        },
+        "original": {
+          "config_count": 560,
+          "ordered_domain_sha256": "92e8e8ac137b97a304ec0ee4c991ff21a0cf21bb876cae9388cb8e2713da7c93",
+          "set_domain_sha256": "e68ac033c7339abf67e9a076f96b19cc828c73c8ad7f7ae16792917f5cf0d1b9"
+        },
+        "paper_inspired_hybrid": {
+          "config_count": 560,
+          "ordered_domain_sha256": "92e8e8ac137b97a304ec0ee4c991ff21a0cf21bb876cae9388cb8e2713da7c93",
+          "set_domain_sha256": "e68ac033c7339abf67e9a076f96b19cc828c73c8ad7f7ae16792917f5cf0d1b9"
+        },
+        "weight_stationary": {
+          "config_count": 560,
+          "ordered_domain_sha256": "92e8e8ac137b97a304ec0ee4c991ff21a0cf21bb876cae9388cb8e2713da7c93",
+          "set_domain_sha256": "e68ac033c7339abf67e9a076f96b19cc828c73c8ad7f7ae16792917f5cf0d1b9"
+        }
+      },
+      "exposed_performance_label_collision": false,
+      "geometry_signature": [
+        1,
+        1024,
+        13,
+        13,
+        256,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "label_free_cost_proxy": {
+        "input_bytes": 173056,
+        "latency_estimate_ms": null,
+        "latency_note": "withheld: no runtime label is permitted before pool freeze",
+        "macs": 44302336,
+        "operations_if_mac_is_two_ops": 88604672,
+        "weight_bytes": 262144
+      },
+      "label_free_eligible_count": 56,
+      "selected_family_ids": [
+        "Y01F00",
+        "Y01F01",
+        "Y01F02",
+        "Y01F03",
+        "Y01F04",
+        "Y01F05",
+        "Y01F06",
+        "Y01F07"
+      ],
+      "selection_rationale": "late 1x1 channel bottleneck; high input-channel pressure",
+      "source_conv": {
+        "ci": 1024,
+        "co": 256,
+        "height": 13,
+        "kernel": 1,
+        "model_index": 7,
+        "name": "conv13",
+        "width": 13
+      },
+      "source_model": "yolov3-tiny",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            64,
+            13,
+            13,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            64,
+            1,
+            1,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "Y01"
+    },
+    {
+      "bounded_stage_timeouts_seconds": {
+        "compile_or_lower_per_candidate": 300,
+        "correctness_execution_per_candidate": 120
+      },
+      "complete_shared_domain_count": 2560,
+      "config_domain": {
+        "input_stationary": {
+          "config_count": 2560,
+          "ordered_domain_sha256": "bb997b54e843aedb9a5bb0254a31550eb1e91bacd1a153ca98a408c2d78feec8",
+          "set_domain_sha256": "5798fa04c5f64a42d6fd62b58870bab045f85e2a04a0ea4923fd1f3e8735ec44"
+        },
+        "original": {
+          "config_count": 2560,
+          "ordered_domain_sha256": "bb997b54e843aedb9a5bb0254a31550eb1e91bacd1a153ca98a408c2d78feec8",
+          "set_domain_sha256": "5798fa04c5f64a42d6fd62b58870bab045f85e2a04a0ea4923fd1f3e8735ec44"
+        },
+        "paper_inspired_hybrid": {
+          "config_count": 2560,
+          "ordered_domain_sha256": "bb997b54e843aedb9a5bb0254a31550eb1e91bacd1a153ca98a408c2d78feec8",
+          "set_domain_sha256": "5798fa04c5f64a42d6fd62b58870bab045f85e2a04a0ea4923fd1f3e8735ec44"
+        },
+        "weight_stationary": {
+          "config_count": 2560,
+          "ordered_domain_sha256": "bb997b54e843aedb9a5bb0254a31550eb1e91bacd1a153ca98a408c2d78feec8",
+          "set_domain_sha256": "5798fa04c5f64a42d6fd62b58870bab045f85e2a04a0ea4923fd1f3e8735ec44"
+        }
+      },
+      "exposed_performance_label_collision": false,
+      "geometry_signature": [
+        1,
+        384,
+        26,
+        26,
+        256,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "label_free_cost_proxy": {
+        "input_bytes": 259584,
+        "latency_estimate_ms": null,
+        "latency_note": "withheld: no runtime label is permitted before pool freeze",
+        "macs": 598081536,
+        "operations_if_mac_is_two_ops": 1196163072,
+        "weight_bytes": 884736
+      },
+      "label_free_eligible_count": 343,
+      "selected_family_ids": [
+        "Y02F00",
+        "Y02F01",
+        "Y02F02",
+        "Y02F03",
+        "Y02F04",
+        "Y02F05",
+        "Y02F06",
+        "Y02F07"
+      ],
+      "selection_rationale": "route-concatenation convolution; irregular 384 input channels",
+      "source_conv": {
+        "ci": 384,
+        "co": 256,
+        "height": 26,
+        "kernel": 3,
+        "model_index": 9,
+        "name": "conv21",
+        "width": 26
+      },
+      "source_model": "yolov3-tiny",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            24,
+            26,
+            26,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            24,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "Y02"
+    }
+  ],
+  "hardware_fingerprint": {
+    "acc_buff_size": 131072,
+    "batch": 1,
+    "block_in": 16,
+    "block_out": 16,
+    "inp_buff_size": 32768,
+    "target": "axu5evb",
+    "uop_buff_size": 32768,
+    "wgt_buff_size": 262144
+  },
+  "network_geometry_source": {
+    "path": "vta/tutorials/frontend/search_yolov3_tiny_stage_splits.py",
+    "read_method": "AST literal only; model module is not imported",
+    "sha256": "ea3448f7fee86169722928eda4b3cde5cb377e320126af1dc698c55e51f391b9"
+  },
+  "post_commit_exact_tophub_audit": {
+    "all_exact_hits": true,
+    "audit_phase": "after_candidate_pool_commitment",
+    "disclosed_fields": "exact-hit count and target-model name only; no ConfigEntity/index/cost",
+    "network_download_attempted": false,
+    "package_path": "/home/orange/.tvm/tophub/vta_v0.10.log",
+    "package_sha256": "8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc",
+    "pool_commitment_sha256": "f25c14291f93d01f2b489f7432f12eb93e33becec2dcf8f482b0db16fdde2eff",
+    "status": "complete",
+    "workloads": {
+      "Y00": {
+        "exact_hit": true,
+        "exact_record_count": 1,
+        "target_models": [
+          "pynq_1x16_i8w8a32_15_15_18_17"
+        ]
+      },
+      "Y01": {
+        "exact_hit": true,
+        "exact_record_count": 1,
+        "target_models": [
+          "pynq_1x16_i8w8a32_15_15_18_17"
+        ]
+      },
+      "Y02": {
+        "exact_hit": true,
+        "exact_record_count": 1,
+        "target_models": [
+          "pynq_1x16_i8w8a32_15_15_18_17"
+        ]
+      }
+    }
+  },
+  "prior_performance_label_exposure": [
+    {
+      "geometry_signatures": [
+        [
+          1,
+          64,
+          56,
+          56,
+          64,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          64,
+          56,
+          56,
+          128,
+          1,
+          1,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          64,
+          56,
+          56,
+          128,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          128,
+          28,
+          28,
+          128,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          128,
+          28,
+          28,
+          256,
+          1,
+          1,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          128,
+          28,
+          28,
+          256,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          256,
+          14,
+          14,
+          256,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          256,
+          14,
+          14,
+          512,
+          1,
+          1,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          256,
+          14,
+          14,
+          512,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          512,
+          7,
+          7,
+          512,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "label_namespace": "W00_W09",
+      "source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/results.jsonl",
+      "source_sha256": "cddcdc503163e1f4cfda1a53933d4577c804b6842be818e0bbb616a431b9d2d9",
+      "unique_geometry_count": 10
+    },
+    {
+      "geometry_signatures": [
+        [
+          1,
+          64,
+          56,
+          56,
+          128,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          128,
+          28,
+          28,
+          256,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          256,
+          14,
+          14,
+          512,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          512,
+          7,
+          7,
+          512,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "label_namespace": "P7Q",
+      "source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7q_qualified_timing_contract_run01/contract.json",
+      "source_sha256": "dbed44f6260f6acade9dd723875f86f53b843402603447c4a927b7fb618f2246",
+      "unique_geometry_count": 4
+    },
+    {
+      "geometry_signatures": [
+        [
+          1,
+          96,
+          42,
+          42,
+          160,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "label_namespace": "E00",
+      "source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r16_unseen_board_contracts_run01/e00_contract.json",
+      "source_sha256": "0526d2cb6f2f4e1f5d28539eeefb0520ccc8017105a577a586d8a713b58301fb",
+      "unique_geometry_count": 1
+    },
+    {
+      "geometry_signatures": [
+        [
+          1,
+          192,
+          21,
+          21,
+          320,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "label_namespace": "E01",
+      "source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r16_unseen_board_contracts_run01/e01_contract.json",
+      "source_sha256": "7cc5f42e66bd5fb535c2a3304cbe303e534c3aa7c31edd2a35b9163ded8c09ba",
+      "unique_geometry_count": 1
+    },
+    {
+      "geometry_signatures": [
+        [
+          1,
+          320,
+          11,
+          11,
+          384,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "label_namespace": "E02",
+      "source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r16_unseen_board_contracts_run01/e02_contract.json",
+      "source_sha256": "04573afd7317d5db7f3050654ae77ecfd0de1d0d33e0079a89a9b149157228b3",
+      "unique_geometry_count": 1
+    },
+    {
+      "geometry_signatures": [
+        [
+          1,
+          128,
+          28,
+          28,
+          192,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "label_namespace": "E03",
+      "source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r46_e03_board_contract_run01/e03_contract.json",
+      "source_sha256": "35fb54ff901c5701b1a1fa20cde3b9ce657fda2d306cbbdcea669706604ed79a",
+      "unique_geometry_count": 1
+    }
+  ],
+  "purpose": "label-isolated multi-geometry confirmation of hardware-led residency scheduling",
+  "scale_up_contract": {
+    "command": "prepare_vta_p7r115_yolo_confirmation.py --families-per-geometry 8 --output-dir <new-immutable-directory>",
+    "final_ccf_b_claim_requires": "expanded confirmation plus preregistered statistics; pilot alone is insufficient",
+    "minimum_next_confirmation": "N=8 gives 32 candidates/geometry and 96 total",
+    "pilot_limit": "N=3 gives 12 candidates/geometry and 36 total; method-debug only",
+    "prefix_stability": "same seed and ascending-hash rule; N=3 pilot is an exact prefix of N=8"
+  },
+  "schedule_source_sha256": {
+    "vta/python/vta/top/vta_conv2d.py": "cdffe82fdc55df4bb8661421ba98f712b10b3b0ade95020129d0d6c246fb29ce",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+  },
+  "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+  "schema": "c3_p7r115_yolo_confirmation_contract_v1",
+  "sealed_reference_role": {
+    "allowed_roles": [
+      "hidden final acceptance threshold",
+      "final deployment fallback"
+    ],
+    "eligibility_basis": "all three original workloads have exact local TopHub log hits",
+    "exact_hit_metadata_read_after_commitment": true,
+    "included_in_confirmation_pool": false,
+    "kind": "exact-workload TopHub reference",
+    "may_be_revealed": "only after this candidate contract and all candidate measurements are frozen",
+    "prohibited_role": "first dispatch, candidate generation, pruning, ranking, or adaptation",
+    "reference_config_index_entity_or_cost_disclosed": false
+  },
+  "selection": {
+    "candidate_cap": 96,
+    "config_index_semantics": "audit/debug only; never part of identity or ranking",
+    "families_per_geometry": 8,
+    "mode_balance": {
+      "input_stationary": 24,
+      "original": 24,
+      "paper_inspired_hybrid": 24,
+      "weight_stationary": 24
+    },
+    "per_geometry_balance": {
+      "Y00": 32,
+      "Y01": 32,
+      "Y02": 32
+    },
+    "rule": "per geometry enumerate complete shared ConfigEntity domain; retain declared hardware predicate; ascending SHA256(seed|workload_id|semantic_config_sha256); first N; expand each over four modes",
+    "seed": "c3-p7r115-yolo-label-isolated-v1",
+    "uses_runtime_or_board_measurements": false,
+    "uses_static_dma_as_ranking_label": false,
+    "uses_tophub": false
+  },
+  "status": "frozen_local_expanded_contract_not_board_evidence",
+  "study_tier": "expanded_confirmation",
+  "sufficient_for_final_ccf_b_search_claim": false,
+  "template": "conv2d_packed_residency.vta"
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "c3_p5b_local_predispatch_protocol_v1",
+  "data_scope": "p4b_static_lowering_records_only",
+  "input_pool": "P4b frozen candidate_pool.json joined exactly by candidate_id to results.jsonl",
+  "methods": {
+    "B4": "protected original incumbent first; all lower-successful candidates eligible; stable candidate_id order for the remainder",
+    "B5": "B4 eligibility and incumbent protection; remainder sorted by total DMA bytes, load calls, candidate_id",
+    "B6": "B4 eligibility and incumbent protection; complete available static request-shape Pareto fronts with stable dense rank-sum and candidate_id tie-break",
+    "B7": "exploratory mode-diverse B6 order with protected incumbent first and best available input/weight/hybrid representatives before Pareto fill; no mode-benefit claim"
+  },
+  "budgets": [4, 8, 16],
+  "budget_unit": "unique_candidate_id_per_workload_and_strategy",
+  "feature_version": "c3_static_request_shape_v1",
+  "feature_set_sha256": "ee48faf94f166074777dfae0e22f157062ef0c7d34efd1876972c394e3cbf0c7",
+  "incumbent_policy": "protected original incumbent must remain first in every strategy and budget",
+  "failure_policy": "P4b lower failures are categorized and charged to local screening, but never enter board shortlists",
+  "label_firewall": {
+    "latency_used": false,
+    "correctness_used": false,
+    "regret_evaluated": false,
+    "unknown forbidden label keys cause planner failure": true
+  },
+  "claims_forbidden": [
+    "board performance measured by this run",
+    "correctness established by lower success",
+    "weight or hybrid mode benefit inferred from B7 diversity",
+    "strategy regret or effectiveness",
+    "G5 passed"
+  ]
+}

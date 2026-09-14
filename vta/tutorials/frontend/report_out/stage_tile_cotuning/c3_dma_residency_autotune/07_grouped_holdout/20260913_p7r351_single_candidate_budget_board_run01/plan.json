@@ -1,0 +1,54 @@
+{
+  "schema": "c3_budgeted_process_plan_v1",
+  "schedule": "one_candidate_build_then_measure",
+  "budget_seconds": 300,
+  "experiment_role": "exposed_R50E_identity_execution_integration_not_search_holdout",
+  "qualification_scope": "preexisting qualification is outside this integration budget; no search speed claim",
+  "steps": [
+    {
+      "name": "build_stock_and_single_candidate",
+      "kind": "build",
+      "candidate_id": "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+      "cwd": "/home/orange/code/tvm",
+      "argv": [
+        "/home/orange/miniconda3/envs/vta-resnet/bin/python",
+        "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_single_candidate_process.py",
+        "build",
+        "--candidate-id",
+        "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+        "--bundle",
+        "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r351_single_candidate_budget_board_run01/bundle",
+        "--target-contract",
+        "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r338_r50e_bottleneck_adaptive_holdout_contract_run01",
+        "--local-qualification",
+        "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r340_r50e_full_local_qualification_run01"
+      ]
+    },
+    {
+      "name": "measure_single_candidate",
+      "kind": "measure",
+      "candidate_id": "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+      "cwd": "/home/orange/code/tvm",
+      "argv": [
+        "/home/orange/miniconda3/envs/vta-resnet/bin/python",
+        "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_single_candidate_process.py",
+        "measure",
+        "--candidate-id",
+        "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+        "--bundle",
+        "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r351_single_candidate_budget_board_run01/bundle",
+        "--measure-output",
+        "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r351_single_candidate_budget_board_run01/board",
+        "--ssh-known-hosts",
+        "/tmp/vta_c3_known_hosts_20260913_reboot2"
+      ],
+      "completion_receipt": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r351_single_candidate_budget_board_run01/board/receipt.json",
+        "required_values": {
+          "candidate_id": "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+          "status": "qualified"
+        }
+      }
+    }
+  ]
+}

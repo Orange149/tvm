@@ -1,0 +1,304 @@
+{
+  "alias_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3_c3_callsite0",
+  "board_contacted": false,
+  "builder_source_sha256": "9e006eb2f288e6acb91621edcc1f6ca9697d8d6f17b0a0fa9f73dc89d03ff1f4",
+  "claim_boundary": "Four singleton and four full-context marginal edges only; correctness, DMA invariance, and latency interactions remain unmeasured",
+  "expected_per_edge_delta": {
+    "driver_run_calls": 16,
+    "load_buffer_2d_wgt_bytes": -393216,
+    "load_buffer_2d_wgt_calls": -432,
+    "synchronize_calls": 16
+  },
+  "matching_graph_nodes": [
+    57,
+    72,
+    85,
+    98
+  ],
+  "pairs": [
+    {
+      "baseline_mask": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_mask": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "context": "other_three_original",
+      "graph_node": 57,
+      "pair_id": "node57_isolated_add"
+    },
+    {
+      "baseline_mask": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "candidate_mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "context": "other_three_resident",
+      "graph_node": 57,
+      "pair_id": "node57_full_context_add"
+    },
+    {
+      "baseline_mask": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_mask": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "context": "other_three_original",
+      "graph_node": 72,
+      "pair_id": "node72_isolated_add"
+    },
+    {
+      "baseline_mask": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "candidate_mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "context": "other_three_resident",
+      "graph_node": 72,
+      "pair_id": "node72_full_context_add"
+    },
+    {
+      "baseline_mask": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_mask": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "context": "other_three_original",
+      "graph_node": 85,
+      "pair_id": "node85_isolated_add"
+    },
+    {
+      "baseline_mask": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "candidate_mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "context": "other_three_resident",
+      "graph_node": 85,
+      "pair_id": "node85_full_context_add"
+    },
+    {
+      "baseline_mask": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_mask": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "context": "other_three_original",
+      "graph_node": 98,
+      "pair_id": "node98_isolated_add"
+    },
+    {
+      "baseline_mask": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "candidate_mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "context": "other_three_resident",
+      "graph_node": 98,
+      "pair_id": "node98_full_context_add"
+    }
+  ],
+  "parameter_count": 120,
+  "parameter_semantic_sha256": "778eb4136dbd80dbba51a67f065c9dfe5a18988fae17584ffcfe790d5ff7e76a",
+  "schema": "c3_vta_resnet50_callsite_marginal_graphs_v1",
+  "source_artifact_hash_manifest_sha256": "3850be6a80505515862f5aea02a166a05342263feed645e4535cfeba6e12d418",
+  "source_build_manifest_sha256": "2a2e4aefaf883cc1af46d9526a316216c95e933e9b807064f6b9cc31a9d053c4",
+  "source_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+  "status": "eight_marginal_pairs_frozen_before_board",
+  "variants": [
+    {
+      "graph_file": "mask_0000.json",
+      "graph_sha256": "c5a94d69d034c133903a8546cc6a2e074c04657d4693c40a509486b0856386ed",
+      "mask": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "resident_graph_nodes": []
+    },
+    {
+      "graph_file": "mask_0001.json",
+      "graph_sha256": "9b40dff86bf954da01eb1388564247a273ac2f2a23890b326843a174d2708e90",
+      "mask": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "resident_graph_nodes": [
+        98
+      ]
+    },
+    {
+      "graph_file": "mask_0010.json",
+      "graph_sha256": "c154a748e1677a14f813832573c2c2052a00a1654d31d44ee672c00b0be7bda2",
+      "mask": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "resident_graph_nodes": [
+        85
+      ]
+    },
+    {
+      "graph_file": "mask_0100.json",
+      "graph_sha256": "0a9788ded591e32806b8afc130ba78c3a3a5936efbe7c18762642c940d774478",
+      "mask": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "resident_graph_nodes": [
+        72
+      ]
+    },
+    {
+      "graph_file": "mask_0111.json",
+      "graph_sha256": "bf434bb91e0783c0f5e59dbdc497d5f3e53fac509cb45938a369b26945817555",
+      "mask": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "resident_graph_nodes": [
+        72,
+        85,
+        98
+      ]
+    },
+    {
+      "graph_file": "mask_1000.json",
+      "graph_sha256": "cb4d4abdb6f3c3363d576cf9a1932607b1cea806138a30e5d8242e76d00e6747",
+      "mask": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "resident_graph_nodes": [
+        57
+      ]
+    },
+    {
+      "graph_file": "mask_1011.json",
+      "graph_sha256": "de92d38db15c66decad8a9d424c38fb13613c73d814b29f2835821f468fd8540",
+      "mask": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "resident_graph_nodes": [
+        57,
+        85,
+        98
+      ]
+    },
+    {
+      "graph_file": "mask_1101.json",
+      "graph_sha256": "45eb130ec94c74be697aeae3f6e0aa20a6d315ad0f8db0aeb494544bd3944191",
+      "mask": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "resident_graph_nodes": [
+        57,
+        72,
+        98
+      ]
+    },
+    {
+      "graph_file": "mask_1110.json",
+      "graph_sha256": "0d1ab97b0199b9cd073f028f17f80f82c63234565f8e57192a79591a5846e19f",
+      "mask": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "resident_graph_nodes": [
+        57,
+        72,
+        85
+      ]
+    },
+    {
+      "graph_file": "mask_1111.json",
+      "graph_sha256": "0b885d510eff464329eab42545b90e086bbd3a1d736f72b46ea47f5a0507054f",
+      "mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "resident_graph_nodes": [
+        57,
+        72,
+        85,
+        98
+      ]
+    }
+  ]
+}

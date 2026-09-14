@@ -1,0 +1,63 @@
+{
+  "four_mode_intersection_v1": {
+    "confusion": {
+      "accuracy": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "tn": 331,
+      "total": 343,
+      "tp": 12
+    },
+    "expression": "original_legality_v1 and (tile_w == 2 or (tile_co == 1 and tile_h == 1))",
+    "scope_limit": "empirically exact for Y02 and current mode-0..3 schedule sources"
+  },
+  "original_legality_v1": {
+    "confusion": {
+      "accuracy": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "tn": 314,
+      "total": 343,
+      "tp": 29
+    },
+    "expression": "tile_ci == 1 and (tile_co == 1 or tile_h in {1, output_height})",
+    "output_height": 26,
+    "scope_limit": "empirically exact for Y02 and current source hashes; compiler remains final authority"
+  },
+  "padding_rule_only": {
+    "confusion": {
+      "accuracy": 0.9475218658892128,
+      "fn": 0,
+      "fp": 18,
+      "precision": 0.6170212765957447,
+      "recall": 1.0,
+      "specificity": 0.9426751592356688,
+      "tn": 296,
+      "total": 343,
+      "tp": 29
+    },
+    "expression": "tile_ci == 1",
+    "interpretation": "eliminates all channel-inner padding failures but not unsupported 2-D DMA layouts"
+  },
+  "prior_hardware_predicate_only": {
+    "confusion": {
+      "accuracy": 0.08454810495626822,
+      "fn": 0,
+      "fp": 314,
+      "precision": 0.08454810495626822,
+      "recall": 1.0,
+      "specificity": 0.0,
+      "tn": 0,
+      "total": 343,
+      "tp": 29
+    },
+    "expression": "True within this already-filtered 343-point population",
+    "interpretation": "SRAM-vector/reuse necessary conditions alone do not predict DMA lowering legality"
+  }
+}

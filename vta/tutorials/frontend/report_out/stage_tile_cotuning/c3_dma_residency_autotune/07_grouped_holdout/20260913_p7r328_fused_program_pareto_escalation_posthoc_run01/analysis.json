@@ -1,0 +1,185 @@
+{
+  "aggregate": {
+    "bytes_only_oracle_hits": 2,
+    "conflict_escalations": 3,
+    "groups": 4,
+    "oracle_retained": 4,
+    "service_proxy_oracle_hits": 3,
+    "singleton_static_decisions": 1
+  },
+  "analyzer_source_sha256": "34dae8ac85a58554c21c683f108b1eae8abab8adc3d38199649e92cc7aa87338",
+  "board_contacted": false,
+  "bound_inputs": {
+    "p7r312_summary_sha256": "64b59fb95ab75563be4cecb89a692235e127a67950c1788bf0244c8e4774c627",
+    "p7r315_analysis_sha256": "86666c88b27cbc2e47da149a6183fe6bde0cf66ed16cdab80de0f04e38d42479",
+    "p7r326_summary_sha256": "1ebce0692744780cebf9c4d519e88ad5a93ec083ddc9748fcbeb1083261bb963",
+    "r50c_fused_sha256": [
+      "f8e533b12a4e930ddf1b263c76957f702e959647031844d00613e317b13b035c",
+      "c5f9d755bbf6e77848c097a50d40f904d80e523c8771f2316fc3115671abf9b8",
+      "cb4999b0f16ec4a3d78aa186372ec0050be57e2de18781b8acc6818d6930ea69"
+    ]
+  },
+  "claim_boundary": "Post-hoc design audit over exposed R50A/R50C labels. Four comparison groups are overlapping and are not independent trials; oracle containment does not prove future latency dominance or search-cost benefit.",
+  "groups": [
+    {
+      "action": "escalate_all_frontier_points",
+      "bytes_only_program": "R50AF01:original",
+      "candidate_count": 2,
+      "fpga_measurements_required_for_full_frontier_resolution": 2,
+      "group": "R50A_original_two_tile",
+      "oracle_program": "R50AF00:original",
+      "oracle_retained": true,
+      "pareto_front": [
+        "R50AF00:original",
+        "R50AF01:original"
+      ],
+      "pareto_front_size": 2,
+      "programs": [
+        {
+          "dma_bytes": 27310080,
+          "dma_calls": 13440,
+          "extra_residency_submissions": 0,
+          "family": "R50AF00",
+          "latency_ms": 422.291663,
+          "mode": "original",
+          "program_id": "R50AF00:original",
+          "service_score_byte_equivalent": 908113920
+        },
+        {
+          "dma_bytes": 21030912,
+          "dma_calls": 88704,
+          "extra_residency_submissions": 0,
+          "family": "R50AF01",
+          "latency_ms": 898.821468,
+          "mode": "original",
+          "program_id": "R50AF01:original",
+          "service_score_byte_equivalent": 5834336256
+        }
+      ],
+      "service_proxy_program": "R50AF00:original"
+    },
+    {
+      "action": "escalate_all_frontier_points",
+      "bytes_only_program": "R50AF01:residency",
+      "candidate_count": 2,
+      "fpga_measurements_required_for_full_frontier_resolution": 2,
+      "group": "R50A_residency_two_tile",
+      "oracle_program": "R50AF00:residency",
+      "oracle_retained": true,
+      "pareto_front": [
+        "R50AF00:residency",
+        "R50AF01:residency"
+      ],
+      "pareto_front_size": 2,
+      "programs": [
+        {
+          "dma_bytes": 23697408,
+          "dma_calls": 4368,
+          "extra_residency_submissions": 0,
+          "family": "R50AF00",
+          "latency_ms": 374.452164,
+          "mode": "residency",
+          "program_id": "R50AF00:residency",
+          "service_score_byte_equivalent": 309958656
+        },
+        {
+          "dma_bytes": 12601344,
+          "dma_calls": 12264,
+          "extra_residency_submissions": 0,
+          "family": "R50AF01",
+          "latency_ms": 435.519425,
+          "mode": "residency",
+          "program_id": "R50AF01:residency",
+          "service_score_byte_equivalent": 816334848
+        }
+      ],
+      "service_proxy_program": "R50AF00:residency"
+    },
+    {
+      "action": "static_select",
+      "bytes_only_program": "R50CF00:input_stationary",
+      "candidate_count": 3,
+      "fpga_measurements_required_for_full_frontier_resolution": 1,
+      "group": "R50C_input_three_tile",
+      "oracle_program": "R50CF00:input_stationary",
+      "oracle_retained": true,
+      "pareto_front": [
+        "R50CF00:input_stationary"
+      ],
+      "pareto_front_size": 1,
+      "programs": [
+        {
+          "candidate_id": "cbeec5d3c92de320929553a96df2989dd6e2d577ec27d14a8e72d9580b72ae61",
+          "dma_bytes": 3886080,
+          "dma_calls": 130,
+          "latency_ms": 330.277203,
+          "program_id": "R50CF00:input_stationary",
+          "service_score_byte_equivalent": 12405760
+        },
+        {
+          "candidate_id": "85a83262388fa22c68206ee0b7fc52d8dfa20b7276fc3c8f7daba4e58bf78b89",
+          "dma_bytes": 38097920,
+          "dma_calls": 980,
+          "latency_ms": 375.139952,
+          "program_id": "R50CF01:input_stationary",
+          "service_score_byte_equivalent": 102323200
+        },
+        {
+          "candidate_id": "b0d72f563d1d9aa186c8e7b244aeab2321491fad17af61e1c9d040bd1d52f470",
+          "dma_bytes": 6517760,
+          "dma_calls": 2900,
+          "latency_ms": 350.550236,
+          "program_id": "R50CF02:input_stationary",
+          "service_score_byte_equivalent": 196572160
+        }
+      ],
+      "service_proxy_program": "R50CF00:input_stationary"
+    },
+    {
+      "action": "escalate_all_frontier_points",
+      "bytes_only_program": "R50CF02:input_stationary",
+      "candidate_count": 2,
+      "fpga_measurements_required_for_full_frontier_resolution": 2,
+      "group": "R50C_input_F01_F02_conflict",
+      "oracle_program": "R50CF02:input_stationary",
+      "oracle_retained": true,
+      "pareto_front": [
+        "R50CF01:input_stationary",
+        "R50CF02:input_stationary"
+      ],
+      "pareto_front_size": 2,
+      "programs": [
+        {
+          "candidate_id": "85a83262388fa22c68206ee0b7fc52d8dfa20b7276fc3c8f7daba4e58bf78b89",
+          "dma_bytes": 38097920,
+          "dma_calls": 980,
+          "latency_ms": 375.139952,
+          "program_id": "R50CF01:input_stationary",
+          "service_score_byte_equivalent": 102323200
+        },
+        {
+          "candidate_id": "b0d72f563d1d9aa186c8e7b244aeab2321491fad17af61e1c9d040bd1d52f470",
+          "dma_bytes": 6517760,
+          "dma_calls": 2900,
+          "latency_ms": 350.550236,
+          "program_id": "R50CF02:input_stationary",
+          "service_score_byte_equivalent": 196572160
+        }
+      ],
+      "service_proxy_program": "R50CF01:input_stationary"
+    }
+  ],
+  "rule": "Eliminate a program only if another program is no worse in fused LOAD+STORE bytes and calls and strictly better in at least one; otherwise escalate every non-dominated point to the next fidelity. Submission count is an additional axis when it differs.",
+  "schema": "c3_vta_fused_program_pareto_escalation_analysis_v1",
+  "status": "posthoc_pareto_front_retains_four_oracles_and_exposes_conflict_cost",
+  "verified_artifact_counts": {
+    "p7r312": 6,
+    "p7r315": 2,
+    "p7r326": 7,
+    "r50c_fused": [
+      2,
+      2,
+      2
+    ]
+  }
+}

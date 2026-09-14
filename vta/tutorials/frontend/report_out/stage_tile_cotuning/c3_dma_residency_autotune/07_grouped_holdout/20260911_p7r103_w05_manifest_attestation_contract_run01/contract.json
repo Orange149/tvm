@@ -1,0 +1,144 @@
+{
+  "board": {
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "capacity_rpc_cwd": "/var/volatile/vta_c3_ram/p7r102_manifest_runtime",
+    "capacity_rpc_log": "/var/volatile/vta_c3_ram/p7r103_manifest_rpc.log",
+    "default_rpc_cwd": "/var/volatile/vta_c3_ram/runtime",
+    "dmesg_error_cutoff_seconds": 4057.401259,
+    "fpga_state": "operating",
+    "remote_capacity_runtime_sha256": {
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/libvta.so": "0c39d5f6fcfb1efec6bad715e3cea2279282e3bf887433cd2013b89fff1f4ba4",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/start_axu5evb_cpp_rpc.sh": "2f42f2d37d5199fa2b66336b61869d2015f8ec5f0264bc57307789b4c6a5b194",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa"
+    },
+    "remote_runtime_sha256": {
+      "/var/volatile/vta_c3_ram/runtime/libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+      "/var/volatile/vta_c3_ram/runtime/libvta.so": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+      "/var/volatile/vta_c3_ram/runtime/start_axu5evb_cpp_rpc.sh": "2f42f2d37d5199fa2b66336b61869d2015f8ec5f0264bc57307789b4c6a5b194",
+      "/var/volatile/vta_c3_ram/runtime/tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa"
+    },
+    "restored_default_rpc_log": "/var/volatile/vta_c3_ram/p7r103_restored_default_rpc.log",
+    "rpc_cwd_requirement": "/var/volatile/vta_c3_ram/p7r102_manifest_runtime",
+    "rpc_pid_at_freeze": 7905,
+    "safety": "isolated tmpfs only; exact PID replacement; always restore; never reboot/poweroff",
+    "tmpfs_at_freeze": "tmpfs 2019696 438836 1580860 22% /var/volatile",
+    "udmabuf_bytes": 201326592
+  },
+  "claim_boundary": "same boot, one queue instance, two exact W05 identities; correctness, command capacity, manifest ID, and replay policy only; no timing, FPS, replay, SD, or cross-boot claim",
+  "command_capacity": {
+    "diagnostics": "same-session capacity, peak, manifest ID, and replay-policy query",
+    "expected_submissions": 6,
+    "insn_bytes": 4096,
+    "legacy_total_bytes": 67108864,
+    "uop_bytes": 4096
+  },
+  "execution_order": [
+    {
+      "candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "config_index": 575,
+      "mode": "original",
+      "role": "manifest_primary",
+      "tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060"
+    },
+    {
+      "candidate_id": "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061",
+      "config_index": 574,
+      "mode": "paper_inspired_hybrid",
+      "role": "manifest_qualified_alternative",
+      "tir_sha256": "349b968ae66b96c37262339867f1424016c54bf1b2c1e620d11f47062ae70a14"
+    }
+  ],
+  "input_guards_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r100_w05_current_final_resource_certificate_run01/command_resource_certificate.json": "d3bf10f2a7c4e65a5270d2dda80401c2a4f715815b0c8bf6ac35db78950909d6",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r101_w05_pending_deployment_manifest_run01/deployment_manifest.json": "71449ef0da52efba0eb3e245d30f4a7c3cce7f2f5d6345022debfb49497d7fd0",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r102_manifest_runtime_cross_build_run01/build_manifest.json": "9d69948c2658808c6e64a363b4b05a40a2b89e2dd83f43e2f7438b504f3dd703",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r79_w05_t2_hybrid_board_contract_run01/w05_hybrid_contract.json": "b482083583e1fd58872be3931b2278c68875533344d8b8e87aed519d0bf1a0b4"
+  },
+  "launcher_environment": {
+    "VTA_COMMAND_MANIFEST_ID": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+    "VTA_INSN_BUFFER_BYTES": "4096",
+    "VTA_QUEUE_DIAGNOSTICS": "1",
+    "VTA_REPLAY_POLICY": "disabled",
+    "VTA_UOP_BUFFER_BYTES": "4096"
+  },
+  "manifest": {
+    "candidate_ids": [
+      "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061"
+    ],
+    "manifest_id": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+    "resource_certificate_key": "0994e12dce454f4e3e86a70d894e862638632e05fc11882ec9fc7f5903ccff8c"
+  },
+  "manifest_environment": {
+    "VTA_COMMAND_MANIFEST_ID": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+    "VTA_REPLAY_POLICY": "disabled"
+  },
+  "purpose": "prospective real-FPGA attestation of the exact deployment manifest and command backing",
+  "schema": "c3_p7r_manifest_attestation_contract_v1",
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "selection_rule": {
+    "capacity_formula": "C_q(S)=align_A(max_{c in S,b in submits(c)} B_q(c,b))",
+    "exact_manifest_identity_set": true,
+    "performance_labels_used": false
+  },
+  "source_guards_sha256": {
+    "vta/python/vta/top/vta_conv2d.py": "cdffe82fdc55df4bb8661421ba98f712b10b3b0ade95020129d0d6c246fb29ce",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "vta/runtime/queue_capacity.h": "81643e7584d5375c268dfaef6f6b88d6402a4d08ca4f2a1c50b68f04d0b224e4",
+    "vta/runtime/runtime.cc": "036ce52832c414d8dfd765e78ebe0fc1c991734657a82a4b947ec4ec95cc9f1d",
+    "vta/tutorials/frontend/build_vta_command_resource_certificate.py": "e75cb4ff2e0135c0d2317a156c56bf28efb88ca7c4ee2de8ecafffef1a5f7ea5",
+    "vta/tutorials/frontend/run_vta_p7r_board_command_capacity.py": "2f78c51775ccd6e8721dd728fe792a334426c21e4fc45bb763d24870d3092329",
+    "vta/tutorials/frontend/run_vta_p7r_joint_correctness.py": "6bd0fc7f1cb99f32d6b8f898cdeebf0cb12748c6c9499f19ee84b279f9243bde",
+    "vta/tutorials/frontend/tune_resnet18_vta.py": "c8fe2bfa263ea762732cffac0adfd35802211c1ffffd43cbc7e790ff35e5342b"
+  },
+  "status": "frozen_before_p7r_board_labels",
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        16,
+        14,
+        14,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        16,
+        16,
+        3,
+        3,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "workload_id": "W05"
+}

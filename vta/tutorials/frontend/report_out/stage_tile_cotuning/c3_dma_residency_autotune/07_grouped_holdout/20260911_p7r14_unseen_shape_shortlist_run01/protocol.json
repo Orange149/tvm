@@ -1,0 +1,112 @@
+{
+  "schema": "c3_p7r_unseen_shortlist_v1",
+  "status": "frozen_before_unseen_fsim_or_board_labels",
+  "development_calibration": "W04 config455 positive and config461 negative orientation pair",
+  "request_shape_score": "input_reduction * (1-estimated_input_row_contiguity) * tile_h*tile_w*tile_ci*tile_co",
+  "strata_per_workload": [
+    "maximum request_shape_score",
+    "maximum contiguous-row control"
+  ],
+  "candidate_count": 6,
+  "workloads": {
+    "E00": [
+      {
+        "candidate_id": "64cbd685eb22593605ffd0acf93658b8ed9b62ebe9b74cca718c7e3c0e104052",
+        "config_index": 1061,
+        "selection": {
+          "stratum": "request_shape",
+          "prediction_frozen_before_fsim_or_board": "larger_same_tile_speedup",
+          "features": {
+            "estimated_input_row_contiguity": 0.21428571428571427,
+            "tile_work_proxy": 98,
+            "request_shape_score": 61.6,
+            "residency_total_load_bytes": 4938240,
+            "residency_total_load_calls": 432
+          }
+        }
+      },
+      {
+        "candidate_id": "873de0278293a44465b82d0da62ad95d3cbb03b77bcbd7863006a30700d3e5b8",
+        "config_index": 1081,
+        "selection": {
+          "stratum": "contiguous_control",
+          "prediction_frozen_before_fsim_or_board": "smaller_or_negative_same_tile_speedup",
+          "features": {
+            "estimated_input_row_contiguity": 1.0,
+            "tile_work_proxy": 84,
+            "request_shape_score": 0.0,
+            "residency_total_load_bytes": 5886720,
+            "residency_total_load_calls": 504
+          }
+        }
+      }
+    ],
+    "E01": [
+      {
+        "candidate_id": "24b54318c048b1b03dd132d6f2f3ed544c1f36eb2f0c93e0c6ebfbaa3ba3183c",
+        "config_index": 951,
+        "selection": {
+          "stratum": "request_shape",
+          "prediction_frozen_before_fsim_or_board": "larger_same_tile_speedup",
+          "features": {
+            "estimated_input_row_contiguity": 0.14285714285714285,
+            "tile_work_proxy": 3780,
+            "request_shape_score": 1620.0000000000002,
+            "residency_total_load_bytes": 814464,
+            "residency_total_load_calls": 28
+          }
+        }
+      },
+      {
+        "candidate_id": "5f443c122ac8d764a4c1a0f3e9210f1e21e6a2c6d0b4b06b491f580b24a7a0b0",
+        "config_index": 957,
+        "selection": {
+          "stratum": "contiguous_control",
+          "prediction_frozen_before_fsim_or_board": "smaller_or_negative_same_tile_speedup",
+          "features": {
+            "estimated_input_row_contiguity": 1.0,
+            "tile_work_proxy": 3780,
+            "request_shape_score": 0.0,
+            "residency_total_load_bytes": 814464,
+            "residency_total_load_calls": 28
+          }
+        }
+      }
+    ],
+    "E02": [
+      {
+        "candidate_id": "43000a0a794c56a3480ed3c049d899e872a94507dcd91578e98b768df3c88fb0",
+        "config_index": 1163,
+        "selection": {
+          "stratum": "request_shape",
+          "prediction_frozen_before_fsim_or_board": "larger_same_tile_speedup",
+          "features": {
+            "estimated_input_row_contiguity": 0.6363636363636364,
+            "tile_work_proxy": 108,
+            "request_shape_score": 19.636363636363637,
+            "residency_total_load_bytes": 3402240,
+            "residency_total_load_calls": 160
+          }
+        }
+      },
+      {
+        "candidate_id": "7da978ba351436733da454093f98929e8185ebeacd2b5946d40bb4a64bdec2d0",
+        "config_index": 1167,
+        "selection": {
+          "stratum": "contiguous_control",
+          "prediction_frozen_before_fsim_or_board": "smaller_or_negative_same_tile_speedup",
+          "features": {
+            "estimated_input_row_contiguity": 1.0,
+            "tile_work_proxy": 216,
+            "request_shape_score": 0.0,
+            "residency_total_load_bytes": 1736320,
+            "residency_total_load_calls": 80
+          }
+        }
+      }
+    ]
+  },
+  "correctness_gate": "three fixed FSim seeds then three real-FPGA seeds for candidate and exact same-tile original",
+  "timing_gate": "all correctness checks pass before paired timing",
+  "claim_boundary": "prospective sign/ranking test on three unseen geometries; no ResNet stage or FPS claim"
+}

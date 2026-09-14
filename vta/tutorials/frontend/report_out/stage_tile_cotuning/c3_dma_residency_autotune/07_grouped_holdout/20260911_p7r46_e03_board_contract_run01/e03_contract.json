@@ -1,0 +1,132 @@
+{
+  "schema": "c3_p7r_unseen_board_contract_v1",
+  "status": "frozen_before_p7r_board_labels",
+  "purpose": "prospective E03 DMA-Pareto priority versus boundary test; correctness first",
+  "workload_id": "E03",
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        8,
+        28,
+        28,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        12,
+        8,
+        3,
+        3,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "selection_rule": {
+    "uses_this_workload_latency_labels": false,
+    "priority": {
+      "features": {
+        "certified": true,
+        "input_byte_reduction_fraction": 0.9166666666666666,
+        "total_byte_reduction_fraction": 0.4612159329140461,
+        "total_call_reduction_fraction": 0.8627450980392157
+      },
+      "prediction_frozen_before_fsim_or_board": "larger_same_tile_speedup",
+      "stratum": "pareto_priority"
+    },
+    "boundary": {
+      "features": {
+        "certified": true,
+        "input_byte_reduction_fraction": 0.5,
+        "total_byte_reduction_fraction": 0.004910265697660832,
+        "total_call_reduction_fraction": 0.47058823529411764
+      },
+      "prediction_frozen_before_fsim_or_board": "smaller_same_tile_speedup",
+      "stratum": "pareto_boundary"
+    },
+    "primary_hypothesis": "same-tile speedup(priority) > same-tile speedup(boundary)",
+    "final_choice": "minimum measured correct latency including original fallback"
+  },
+  "execution_order": [
+    {
+      "role": "request_shape_original_before",
+      "mode": "original",
+      "config_index": 17
+    },
+    {
+      "role": "request_shape_residency",
+      "mode": "input_stationary",
+      "config_index": 17,
+      "candidate_id": "57d1e9ab9c1162cc156168efd688441bac848576c0f77daaf2415213c46afb4e",
+      "tir_sha256": "3742e558661339200ca9f3fdff1f88987f19043ee811ecc42d9828d2b507e4d5"
+    },
+    {
+      "role": "contiguous_original",
+      "mode": "original",
+      "config_index": 576
+    },
+    {
+      "role": "contiguous_residency",
+      "mode": "input_stationary",
+      "config_index": 576,
+      "candidate_id": "4a853b894789102a390882be471030d796007644e845c81a684b1f7a89997782",
+      "tir_sha256": "a3923e7995b5274dedddf4960eaf2148c09dc890a8e922edfd410e46f5b1b78c"
+    },
+    {
+      "role": "request_shape_original_after",
+      "mode": "original",
+      "config_index": 17
+    }
+  ],
+  "board": {
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "fpga_state": "operating",
+    "udmabuf_bytes": 201326592,
+    "rpc_cwd_requirement": "/var/volatile/vta_c3_ram/runtime",
+    "sd_mount": "/media/sd-mmcblk1p2",
+    "sd_used_percent_at_freeze": 78,
+    "dmesg_error_cutoff_seconds": 4057.401259,
+    "safety": "abort without reboot/poweroff on mismatch, new storage error, fingerprint change, or timeout"
+  },
+  "source_guards_sha256": {
+    "vta/tutorials/frontend/run_vta_p7r_joint_correctness.py": "e70b8c3199a2d6cd589f7376641f5c4622655d041313172a2e9aff2ef2d2cab2",
+    "vta/tutorials/frontend/run_vta_p7r_unseen_timing.py": "7fd82e53b38f125cc86ac57a4825642c0a24d1e4a08642ec44e973273947f2b4",
+    "vta/python/vta/top/vta_conv2d.py": "676ff21166871fdc30f0e42dfaf0067fbf6b8f866fe77ebc308f872f50e64926",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+  },
+  "input_guards_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r42_e03_pareto_contract_run01/shortlist.jsonl": "39627712188eca87fd10861872a03f9dd339d46012020053d9ea49ab851520ac",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r43_e03_residency_fsim_run01/results.jsonl": "47926ad85681b568de1b4fe7d9703f0d256ecee3fec09d994722efe0df53e6de",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r44_e03_original_fsim_pool_run01/candidates.jsonl": "08979306b9a8207a6ff13a2376e9a176359d18f4e032ec31071a1769b3adae25",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r45_e03_original_fsim_run01/results.jsonl": "a723a9c676456e7d9fb2e2ab191277a33fa55d606625a3e6a958dd2fd1813b29"
+  }
+}

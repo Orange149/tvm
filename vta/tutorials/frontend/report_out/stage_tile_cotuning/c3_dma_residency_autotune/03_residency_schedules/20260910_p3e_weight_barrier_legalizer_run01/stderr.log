@@ -1,0 +1,9 @@
+The full rebuild emitted existing GCC 14 `-Wdangling-reference` warnings in TVM headers;
+there were no compiler errors and the link exit code was 0.
+
+Test collection emitted the existing target warning:
+Unable to detect CUDA version, default to "-arch=sm_50" instead
+
+VTA tests emitted the existing target_host deprecation and MXNet/NumPy deprecation
+warnings. No test wrote an exception, mismatch, runtime dependency CHECK failure, or
+unexpected stderr diagnostic.

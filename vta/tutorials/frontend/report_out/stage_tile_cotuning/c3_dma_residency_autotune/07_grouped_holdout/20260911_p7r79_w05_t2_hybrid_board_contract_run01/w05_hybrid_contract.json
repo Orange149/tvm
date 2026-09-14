@@ -1,0 +1,184 @@
+{
+  "schema": "c3_p7r_unseen_board_contract_v1",
+  "status": "frozen_before_p7r_board_labels",
+  "purpose": "bounded-hybrid t2 correctness gate before any latency",
+  "workload_id": "W05",
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        16,
+        14,
+        14,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        16,
+        16,
+        3,
+        3,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "selection_rule": {
+    "source_protocol": {
+      "schema": "c3_p7r_w05_hybrid_confirmation_v1",
+      "status": "frozen_before_hybrid_fsim_fpga_or_latency_labels",
+      "workload_id": "W05",
+      "mode": "paper_inspired_hybrid",
+      "oc_nthread": 2,
+      "selection_pool": {
+        "joint_space": 400,
+        "both_paths_lower_and_input_reduces": 19,
+        "dma_pareto_certified": 19,
+        "frozen_for_dynamic_gates": 2
+      },
+      "selection_rule": "DMA-Pareto first; then minimum log2 tile distance to TopHub config575, total-byte reduction tie-break",
+      "primary_hypothesis": "both candidates improve over exact same-tile original",
+      "secondary_hypothesis": "nearest-TopHub config574 has the best final latency",
+      "protected_hypothesis": "only a candidate faster than TopHub config575 may replace it",
+      "candidates": [
+        {
+          "candidate_id": "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061",
+          "config_index": 574,
+          "selection": {
+            "stratum": "nearest_tophub",
+            "prediction_frozen_before_fsim_fpga_or_latency": "best_final_latency",
+            "features": {
+              "input_byte_reduction_fraction": 0.5,
+              "total_byte_reduction_fraction": 0.07859649122807018,
+              "total_call_reduction_fraction": 0.48484848484848486,
+              "certified": true
+            },
+            "hardware_rule": "bounded co/width reuse with oc_nthread=2",
+            "incumbent_log2_distance": 1.0
+          }
+        },
+        {
+          "candidate_id": "c4286196b3971d4fdfc2cfec52ed2a4e76c4b2de2cbd74bdaa2e6da41f06fb31",
+          "config_index": 494,
+          "selection": {
+            "stratum": "next_nearest_tophub",
+            "prediction_frozen_before_fsim_fpga_or_latency": "second_best_final_latency",
+            "features": {
+              "input_byte_reduction_fraction": 0.5,
+              "total_byte_reduction_fraction": 0.13583990297149787,
+              "total_call_reduction_fraction": 0.48484848484848486,
+              "certified": true
+            },
+            "hardware_rule": "bounded co/width reuse with oc_nthread=2",
+            "incumbent_log2_distance": 2.0
+          }
+        }
+      ],
+      "source_scan": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r72_w05_t2_hybrid_group_bound_local_run01/results.jsonl",
+        "sha256": "72c615368030ca8ab52c687b7393a07fb322f5cd6433837aa8401a6d592903e3"
+      },
+      "script_sha256": "e035b59d7ab6831de4f432776d377f52181ce157acb390c7bf3daadd59788855",
+      "performance_labels_used": false,
+      "board_contacted": false
+    },
+    "performance_labels_used": false,
+    "frozen_configs": [
+      574,
+      494
+    ],
+    "protected_incumbent": 575
+  },
+  "execution_order": [
+    {
+      "role": "tophub_incumbent_before",
+      "mode": "original",
+      "config_index": 575,
+      "tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060"
+    },
+    {
+      "role": "hybrid_same_tile_original",
+      "mode": "original",
+      "config_index": 574,
+      "candidate_id": "68d13a0905cd721dcab7b77dd08a55b4052903c1da268d827ae48f6c2c7d63c1",
+      "tir_sha256": "16cc96ffa656f808ad5e619553bdc6442dcea637f0cb10f74140daf9b68edfdb"
+    },
+    {
+      "role": "bounded_hybrid_t2",
+      "mode": "paper_inspired_hybrid",
+      "config_index": 574,
+      "candidate_id": "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061",
+      "tir_sha256": "349b968ae66b96c37262339867f1424016c54bf1b2c1e620d11f47062ae70a14"
+    },
+    {
+      "role": "hybrid_same_tile_original",
+      "mode": "original",
+      "config_index": 494,
+      "candidate_id": "00bb16debf96eb9b1ba2a20833d672d3e29026eb8201296069b94669f5d06c18",
+      "tir_sha256": "e4311be26f646e204f6c75751dc5053ac0fcd8956101c403621eb8e048e0881e"
+    },
+    {
+      "role": "bounded_hybrid_t2",
+      "mode": "paper_inspired_hybrid",
+      "config_index": 494,
+      "candidate_id": "c4286196b3971d4fdfc2cfec52ed2a4e76c4b2de2cbd74bdaa2e6da41f06fb31",
+      "tir_sha256": "5825e7f0bf2e606ac168de96c3554aabbb124ab82bdcf0d98da933c9570085bb"
+    },
+    {
+      "role": "tophub_incumbent_after",
+      "mode": "original",
+      "config_index": 575,
+      "tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060"
+    }
+  ],
+  "board": {
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "fpga_state": "operating",
+    "udmabuf_bytes": 201326592,
+    "rpc_cwd_requirement": "/var/volatile/vta_c3_ram/runtime",
+    "sd_mount": "/media/sd-mmcblk1p2",
+    "sd_used_percent_at_freeze": 78,
+    "dmesg_error_cutoff_seconds": 4057.401259,
+    "safety": "abort without reboot/poweroff on mismatch, new storage error, fingerprint change, or timeout"
+  },
+  "source_guards_sha256": {
+    "vta/tutorials/frontend/run_vta_p7r_joint_correctness.py": "607cecbd55cb46495f3dbce9ff83f56b674622c87370e723d45abdda747bf400",
+    "vta/python/vta/top/vta_conv2d.py": "cdffe82fdc55df4bb8661421ba98f712b10b3b0ade95020129d0d6c246fb29ce",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+  },
+  "input_guards_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r74_w05_t2_hybrid_group_contract_run01/shortlist.jsonl": "79b0ce080701c0005381b6fd12074f6475295c38f614fc85df0018bc0bf231b9",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r75_w05_t2_hybrid_group_fsim_run01/results.jsonl": "baf97457886fe51f21bf518898078f3ae0b07c2fa056c1597ed4dd82e6a5f4d5",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r76_w05_t2_hybrid_original_pool_run01/candidates.jsonl": "216b1c92b630025251285bf5084ae495ef267eb172fa8ab7caeba17311abbc8b",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r77_w05_t2_hybrid_original_fsim_run01/results.jsonl": "708cde4a9f48bce3d9781c8a0e38feb83c150d0bd329ad4ae5945bebe7a2e976",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r78_w05_t2_hybrid_axu_cross_run01/results.jsonl": "4e74cc3917bb84ae128a656911839fc19ceefa34f077587de8fba0ec11c4b71f"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "board": {
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "dmesg_error_cutoff_seconds": 4057.401259,
+    "fpga_state": "operating",
+    "remote_runtime_sha256": {
+      "/var/volatile/vta_c3_ram/runtime/libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+      "/var/volatile/vta_c3_ram/runtime/libvta.so": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+      "/var/volatile/vta_c3_ram/runtime/start_axu5evb_cpp_rpc.sh": "2f42f2d37d5199fa2b66336b61869d2015f8ec5f0264bc57307789b4c6a5b194",
+      "/var/volatile/vta_c3_ram/runtime/tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa"
+    },
+    "rpc_cwd_requirement": "/var/volatile/vta_c3_ram/runtime",
+    "rpc_pid_at_freeze": 7579,
+    "safety": "tmpfs only; stop exact RPC PID; always restore default RPC; never reboot or poweroff",
+    "sd_mount": "/media/sd-mmcblk1p2",
+    "sd_used_percent_at_freeze": 78,
+    "udmabuf_bytes": 201326592
+  },
+  "claim_boundary": "single boot, two exact W05 identities; correctness/capacity only, no timing or FPS",
+  "command_capacity": {
+    "diagnostics": "retain structural fields only; discard all timing fields",
+    "expected_queue_records": 6,
+    "insn_bytes": 4096,
+    "legacy_total_bytes": 67108864,
+    "uop_bytes": 4096
+  },
+  "execution_order": [
+    {
+      "config_index": 575,
+      "mode": "original",
+      "role": "capacity_tophub575",
+      "tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060"
+    },
+    {
+      "candidate_id": "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061",
+      "config_index": 574,
+      "mode": "paper_inspired_hybrid",
+      "role": "capacity_hybrid574",
+      "tir_sha256": "349b968ae66b96c37262339867f1424016c54bf1b2c1e620d11f47062ae70a14"
+    }
+  ],
+  "input_guards_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r79_w05_t2_hybrid_board_contract_run01/w05_hybrid_contract.json": "b482083583e1fd58872be3931b2278c68875533344d8b8e87aed519d0bf1a0b4",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r80_w05_t2_hybrid_board_correctness_run01/summary.json": "39418fb7cbeacee6c1d01e97d9d4d48646e6c7c9cf5bd4d4de68b298517d097b",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r85_w05_command_resource_signatures_run02/results.jsonl": "6d08a57cb14938ce118332fc7439b74989745fb74ace2ee7393ab5b00aaffd78",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r86_w05_reduced_command_capacity_run02/resource_plan.json": "737cf57ffc7fcbe275a4dada17933d86248f78e81d1b58a2acfc9f58adfab974"
+  },
+  "purpose": "real u-dma-buf validation of W05 compile-derived command capacities",
+  "schema": "c3_p7r_unseen_board_contract_v1",
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "selection_rule": {
+    "capacity_derived_from_local_command_peaks": true,
+    "identities_already_fpga_correct": true,
+    "performance_labels_used": false
+  },
+  "source_guards_sha256": {
+    "vta/python/vta/top/vta_conv2d.py": "cdffe82fdc55df4bb8661421ba98f712b10b3b0ade95020129d0d6c246fb29ce",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "vta/runtime/queue_capacity.h": "81643e7584d5375c268dfaef6f6b88d6402a4d08ca4f2a1c50b68f04d0b224e4",
+    "vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711",
+    "vta/tutorials/frontend/run_vta_p7r_joint_correctness.py": "607cecbd55cb46495f3dbce9ff83f56b674622c87370e723d45abdda747bf400"
+  },
+  "status": "frozen_before_p7r_board_labels",
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        16,
+        14,
+        14,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        16,
+        16,
+        3,
+        3,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "workload_id": "W05"
+}

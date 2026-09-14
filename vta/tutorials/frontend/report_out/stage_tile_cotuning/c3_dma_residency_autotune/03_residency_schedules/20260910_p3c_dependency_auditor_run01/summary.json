@@ -1,0 +1,47 @@
+{
+  "schema": "c3_p3c_dependency_auditor_summary_v1",
+  "run_id": "20260910_p3c_dependency_auditor_run01",
+  "status": "completed_local_tooling",
+  "gate_result": "P3C_DEPENDENCY_AUDITOR_PASS",
+  "auditor_schema": "vta_coproc_dependency_audit_v1",
+  "tests": {
+    "passed": 10,
+    "failed": 0,
+    "warnings": 15,
+    "exit_code": 0,
+    "coverage": [
+      "all four legal directed stage edges",
+      "forbidden 1_to_3 and 3_to_1",
+      "directed push/pop imbalance",
+      "loop and branch traversal",
+      "nonconstant endpoint",
+      "W00 four safe residency modes"
+    ]
+  },
+  "cli": {
+    "legal_case": {"expected_valid": true, "exit_code": 0},
+    "forbidden_3_to_1": {
+      "expected_valid": false,
+      "exit_code": 2,
+      "error_code": "forbidden_direct_load_store"
+    }
+  },
+  "w00_safe_modes": {
+    "modes_audited": 4,
+    "valid": 4,
+    "per_mode_call_count": 12,
+    "per_mode_push_count": 6,
+    "per_mode_pop_count": 6,
+    "per_mode_edge_count": 4,
+    "forbidden_1_3_present": false,
+    "push_pop_balanced": true
+  },
+  "analysis_limits": {
+    "static_callsites": true,
+    "loop_multiplicity_expanded": false,
+    "path_sensitive": false,
+    "replaces_fsim_or_runtime": false
+  },
+  "board_access": false,
+  "production_source_modified": false
+}

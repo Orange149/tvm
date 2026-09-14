@@ -1,0 +1,71 @@
+{
+  "callsites": [
+    {
+      "from": 1,
+      "function": "main",
+      "index": 0,
+      "kind": "push",
+      "to": 2
+    },
+    {
+      "from": 1,
+      "function": "main",
+      "index": 1,
+      "kind": "pop",
+      "to": 2
+    }
+  ],
+  "edges": [
+    {
+      "allowed": true,
+      "balanced": true,
+      "forbidden_direct_load_store": false,
+      "from": 1,
+      "from_name": "load",
+      "function": "main",
+      "pop_count": 1,
+      "push_count": 1,
+      "to": 2,
+      "to_name": "compute"
+    }
+  ],
+  "errors": [],
+  "functions": [
+    "main"
+  ],
+  "schema": "vta_coproc_dependency_audit_v1",
+  "semantics": {
+    "balance_unit": "static_callsites_per_function_and_directed_edge",
+    "loop_multiplicity": "not_expanded",
+    "path_sensitive": false
+  },
+  "summary": {
+    "call_count": 2,
+    "edge_count": 1,
+    "forbidden_1_3_present": false,
+    "function_count": 1,
+    "only_supported_edges": true,
+    "pop_count": 1,
+    "push_count": 1,
+    "push_pop_balanced": true
+  },
+  "supported_edges": [
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      2
+    ]
+  ],
+  "valid": true
+}

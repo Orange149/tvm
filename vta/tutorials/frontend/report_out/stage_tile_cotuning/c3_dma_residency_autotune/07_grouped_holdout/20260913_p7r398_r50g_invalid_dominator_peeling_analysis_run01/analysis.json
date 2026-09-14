@@ -1,0 +1,251 @@
+{
+  "all_search_candidates_slower_than_stock_reference": false,
+  "analyzer_source_sha256": "6504a07311a898f3892f2e452138c235acb4614cd8dd526a13d8f76b89e7db08",
+  "boot_ids": {
+    "completion": "4d232b6f-6e2a-4395-aafe-853a021403e8",
+    "front": "4d232b6f-6e2a-4395-aafe-853a021403e8"
+  },
+  "bound_inputs": {
+    "complete_pool_artifact_manifest_sha256": "e7fee30d38830223f62adee8754568a793ab4201b27c277422f76b9270e68d24",
+    "completion_result_artifact_manifest_sha256": "3057c612b94b83714a6e8440696beff130798a86fb019eec9b773431fbff3145",
+    "front_pool_artifact_manifest_sha256": "1653f63116f4204b9573fb26c66238b0b10bed8ef26de759fd7ccf4f88a7dd19",
+    "front_result_artifact_manifest_sha256": "ed33b41288105addc1af1018ba9430c59f4ca5fe8d253ab2a1eb9f62a689aa50",
+    "local_artifact_manifest_sha256": "21c5743f8a3b71b36710e397da6922a10d03191a744c70e9f8c78cd01189bf56",
+    "proxy_front_contract_artifact_manifest_sha256": "6c0f34523afc8af7408319a8a91577ab79ead776853987cb108654aee8781969"
+  },
+  "build_cost": {
+    "candidate_build_count_savings_percent": 80.0,
+    "copy_front_artifacts_seconds": 0.07881539999652887,
+    "counterfactual_stock_plus_all_candidate_model_build_seconds": 160.81469645199104,
+    "model_build_wall_savings_percent": 68.6011006978634,
+    "oracle_completion_new_candidate_model_build_seconds": 110.32065184999374,
+    "oracle_completion_process_wall_seconds": 110.72195715099951,
+    "prospective_stock_plus_front_seconds": 50.4940446019973,
+    "stock_plus_candidate_build_count_savings_percent": 66.66666666666667
+  },
+  "candidate_table": [
+    {
+      "candidate_id": "1501a5a8fef6f5f49d646c8010f1ef6628d99beb6d4ba9b7363ec4574ff134e3",
+      "candidate_median_latency_ms": 667.300933,
+      "exact_fused_dma_bytes": 5852672,
+      "exact_fused_dma_calls": 1904,
+      "exact_fused_pareto_front_posthoc": false,
+      "extra_submissions": 0,
+      "family_id": "R50GF01",
+      "fpga_status": "passed",
+      "median_paired_latency_ratio": 0.8759795530813694,
+      "operator_dma_bytes": 5849088,
+      "operator_dma_calls": 1848,
+      "operator_proxy_front": false,
+      "public_mode": "original"
+    },
+    {
+      "candidate_id": "442c8afd773c00edf1f576adb36dbeccc381b9e26be2741e4dbf6e85b5e445b1",
+      "candidate_median_latency_ms": 637.961299,
+      "exact_fused_dma_bytes": 1023232,
+      "exact_fused_dma_calls": 287,
+      "exact_fused_pareto_front_posthoc": true,
+      "extra_submissions": 0,
+      "family_id": "R50GF01",
+      "fpga_status": "passed",
+      "median_paired_latency_ratio": 0.8371089827888288,
+      "operator_dma_bytes": 1019648,
+      "operator_dma_calls": 280,
+      "operator_proxy_front": true,
+      "public_mode": "input_stationary"
+    },
+    {
+      "candidate_id": "27437c9708117df4e5dfc3bda6c82abc7e28ac24610eac134d044a86492bebb1",
+      "candidate_median_latency_ms": 666.731557,
+      "exact_fused_dma_bytes": 5656064,
+      "exact_fused_dma_calls": 1016,
+      "exact_fused_pareto_front_posthoc": false,
+      "extra_submissions": 1,
+      "family_id": "R50GF01",
+      "fpga_status": "passed",
+      "median_paired_latency_ratio": 0.8743971396094795,
+      "operator_dma_bytes": 5652480,
+      "operator_dma_calls": 960,
+      "operator_proxy_front": false,
+      "public_mode": "weight_resident_barrier"
+    },
+    {
+      "candidate_id": "8eea2a131f7a39ebde4b26ac4e91b19c34e78a4705e2c495bb4642134265e3b6",
+      "candidate_median_latency_ms": 648.750547,
+      "exact_fused_dma_bytes": 6117376,
+      "exact_fused_dma_calls": 2176,
+      "exact_fused_pareto_front_posthoc": false,
+      "extra_submissions": 0,
+      "family_id": "R50GF06",
+      "fpga_status": "passed",
+      "median_paired_latency_ratio": 0.852384083481008,
+      "operator_dma_bytes": 6113280,
+      "operator_dma_calls": 2112,
+      "operator_proxy_front": false,
+      "public_mode": "original"
+    },
+    {
+      "candidate_id": "e27f589642fc3905e57fcbd03f026c6f355b4a0c81bb7a2449ed8c193a7e3986",
+      "candidate_median_latency_ms": 633.551375,
+      "exact_fused_dma_bytes": 1085440,
+      "exact_fused_dma_calls": 328,
+      "exact_fused_pareto_front_posthoc": false,
+      "extra_submissions": 0,
+      "family_id": "R50GF06",
+      "fpga_status": "passed",
+      "median_paired_latency_ratio": 0.8311725234227071,
+      "operator_dma_bytes": 1081344,
+      "operator_dma_calls": 320,
+      "operator_proxy_front": false,
+      "public_mode": "input_stationary"
+    }
+  ],
+  "claim_boundary": "One source-consistent Relay-testing ResNet50 layer and one board boot. The online selection is frozen before target labels; oracle completion is post-selection only. Logical VTA DMA is not physical AXI, randomized model parameters do not establish ImageNet accuracy, and this is not TopHub superiority.",
+  "common_operator_qualification_cost": {
+    "fsim_diagnostic_wall_seconds": 1.041145013005007,
+    "interpretation": "paid before the proxy front and never counted as saved",
+    "static_diagnostic_wall_seconds": 1.748013049000292
+  },
+  "exact_fused_pareto_front_candidate_ids_posthoc": [
+    "442c8afd773c00edf1f576adb36dbeccc381b9e26be2741e4dbf6e85b5e445b1"
+  ],
+  "exhaustive_full_pool_board_cost": {
+    "candidate_dispatches": 5,
+    "fpga_kernel_invocations": 8976,
+    "graph_api_invocations": 100,
+    "host_call_wall_ms": 120544.13211497013,
+    "logical_dma_bytes": 15549038848,
+    "logical_dma_calls": 9961167,
+    "logical_load_bytes": 13885704448,
+    "logical_store_bytes": 1663334400
+  },
+  "fpga_correct_count": 5,
+  "fpga_rejected_count": 0,
+  "front_best_regret_percent": 0.7142270947162466,
+  "front_best_within_oracle_2_percent": true,
+  "front_overlap": [
+    "442c8afd773c00edf1f576adb36dbeccc381b9e26be2741e4dbf6e85b5e445b1"
+  ],
+  "front_retains_full_fpga_correct_pool_oracle": false,
+  "invalid_dominator_peeling": {
+    "exact_oracle_discovered_online": false,
+    "fpga_invalid_count": 0,
+    "interpretation": "No invalid dominator was observed, so the frozen algorithm correctly stopped. Dominated candidates were measured only after the online result became immutable.",
+    "online_candidate_ids": [
+      "442c8afd773c00edf1f576adb36dbeccc381b9e26be2741e4dbf6e85b5e445b1"
+    ],
+    "online_dispatch_count": 1,
+    "oracle_2_percent_discovered_online": true,
+    "stop_reason": "completed_wave_had_no_fpga_invalid_candidate"
+  },
+  "operator_proxy_front_candidate_ids": [
+    "442c8afd773c00edf1f576adb36dbeccc381b9e26be2741e4dbf6e85b5e445b1"
+  ],
+  "operator_proxy_front_size": 1,
+  "oracle_candidate_id": "e27f589642fc3905e57fcbd03f026c6f355b4a0c81bb7a2449ed8c193a7e3986",
+  "oracle_candidate_median_latency_ms": 633.551375,
+  "oracle_family_id": "R50GF06",
+  "oracle_median_paired_latency_ratio": 0.8311725234227071,
+  "oracle_public_mode": "input_stationary",
+  "pool_size": 5,
+  "prelabel_infrastructure_failure": null,
+  "prospective_board_savings_percent": {
+    "candidate_dispatches": 80.0,
+    "fpga_kernel_invocations": 80.3030303030303,
+    "graph_api_invocations": 80.0,
+    "host_call_wall_ms": 80.16874943263383,
+    "logical_dma_bytes": 80.31965526670733,
+    "logical_dma_calls": 80.14595077062758
+  },
+  "prospective_front_board_cost": {
+    "candidate_dispatches": 1,
+    "fpga_kernel_invocations": 1768,
+    "graph_api_invocations": 20,
+    "host_call_wall_ms": 23905.408883976634,
+    "logical_dma_bytes": 3060104448,
+    "logical_dma_calls": 1977695,
+    "logical_load_bytes": 2727437568,
+    "logical_store_bytes": 332666880
+  },
+  "same_tile_pairs": [
+    {
+      "exact_fused_dma_bytes_change_percent": -82.51684017146357,
+      "exact_fused_dma_calls_change_percent": -84.92647058823529,
+      "family_id": "R50GF01",
+      "mode": "input_stationary",
+      "paired_ratio_latency_improvement_percent": 4.437383287750086,
+      "status": "passed"
+    },
+    {
+      "exact_fused_dma_bytes_change_percent": -3.359286151692764,
+      "exact_fused_dma_calls_change_percent": -46.63865546218487,
+      "family_id": "R50GF01",
+      "mode": "weight_resident_barrier",
+      "paired_ratio_latency_improvement_percent": 0.1806450237706536,
+      "status": "passed"
+    },
+    {
+      "exact_fused_dma_bytes_change_percent": -82.25644459323736,
+      "exact_fused_dma_calls_change_percent": -84.92647058823529,
+      "family_id": "R50GF06",
+      "mode": "input_stationary",
+      "paired_ratio_latency_improvement_percent": 2.4884979048032108,
+      "status": "passed"
+    }
+  ],
+  "schema": "c3_vta_operator_proxy_pareto_holdout_analysis_v1",
+  "source_layer": "stage2_unit1_conv1",
+  "source_model": "resnet50_v2",
+  "status": "prospective_invalid_peeling_retains_oracle_2pct_but_misses_exact_oracle",
+  "time_to_target_candidate_dispatches": {
+    "bytes_lazy": {
+      "exact_oracle": 2,
+      "oracle_plus_2_percent": 1,
+      "oracle_plus_5_percent": 1
+    },
+    "calls_lazy": {
+      "exact_oracle": 2,
+      "oracle_plus_2_percent": 1,
+      "oracle_plus_5_percent": 1
+    },
+    "exact_fused_dma_bytes_posthoc": {
+      "exact_oracle": 2,
+      "oracle_plus_2_percent": 1,
+      "oracle_plus_5_percent": 1
+    },
+    "fixed_front": {
+      "exact_oracle": null,
+      "oracle_plus_2_percent": 1,
+      "oracle_plus_5_percent": 1
+    },
+    "invalid_dominator_peeling_online": {
+      "exact_oracle": null,
+      "oracle_plus_2_percent": 1,
+      "oracle_plus_5_percent": 1
+    },
+    "operator_dma_bytes_fail_fast": {
+      "exact_oracle": 2,
+      "oracle_plus_2_percent": 1,
+      "oracle_plus_5_percent": 1
+    },
+    "operator_proxy_front_frozen_order": {
+      "exact_oracle": null,
+      "oracle_plus_2_percent": 1,
+      "oracle_plus_5_percent": 1
+    },
+    "random_lazy": {
+      "exact_oracle": 3,
+      "oracle_plus_2_percent": 3,
+      "oracle_plus_5_percent": 1
+    }
+  },
+  "verified_artifact_counts": {
+    "complete_pool": 631,
+    "completion_result": 5,
+    "front_pool": 211,
+    "front_result": 5,
+    "local_qualification": 9,
+    "proxy_front_contract": 2
+  },
+  "workload_id": "R50G"
+}

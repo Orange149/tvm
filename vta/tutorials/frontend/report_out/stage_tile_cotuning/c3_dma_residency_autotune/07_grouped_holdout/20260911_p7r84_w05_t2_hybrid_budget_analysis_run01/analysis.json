@@ -1,0 +1,79 @@
+{
+  "claim_boundary": {
+    "not_supported": [
+      "the new candidate beats TopHub",
+      "the unmeasured 400-point pool oracle is known",
+      "stage latency or FPS improves",
+      "same-boot blocks are independent replications"
+    ],
+    "supported": [
+      "hardware-derived filters reduce the candidate dispatch set from 400 to 2",
+      "both preselected candidates are FPGA-correct and improve exact same-tile originals",
+      "the nearest-TopHub candidate is within 2% of the protected incumbent",
+      "strict fallback prevents a final performance regression"
+    ]
+  },
+  "inputs": {
+    "board_correctness": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r80_w05_t2_hybrid_board_correctness_run01/summary.json",
+      "sha256": "39418fb7cbeacee6c1d01e97d9d4d48646e6c7c9cf5bd4d4de68b298517d097b"
+    },
+    "cross_summary": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r78_w05_t2_hybrid_axu_cross_run01/summary.json",
+      "sha256": "447350db9b5b3b862e179200c6866f1aabb88c1bf790582f98b89035e913b23b"
+    },
+    "final_dispatch": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r83_w05_t2_hybrid_certified_dispatch_run01/dispatch.json",
+      "sha256": "0275bd60db7a3de8cc6c2f0d075f6ca4849fc0cf2ed0949e2c04396a2ed42292"
+    },
+    "hybrid_contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r74_w05_t2_hybrid_group_contract_run01/protocol.json",
+      "sha256": "e1d88e93979dd5bb7581cd8a59a61d7b26c0d9f943fdd08947adb16e26fd2435"
+    },
+    "hybrid_fsim": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r75_w05_t2_hybrid_group_fsim_run01/summary.json",
+      "sha256": "6fde6e77634a052f3ef1b4822d67b50bf70b24759a460de7c7137d004bc0c19e"
+    },
+    "hybrid_scan": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r72_w05_t2_hybrid_group_bound_local_run01/summary.json",
+      "sha256": "962fb57b901aeba865e512e583af53fa75fa1b4d64b5893fa1a6a74891561462"
+    },
+    "pure_dispatch": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r67_w05_t2_certified_dispatch_run01/dispatch.json",
+      "sha256": "260a795a2df712510d4764e76ebe0f04cc6a766df9cdbca1479e10cb241b1f50"
+    },
+    "pure_scan": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r66_w05_tophub_neighborhood_local_run01/summary.json",
+      "sha256": "c84d70de557e7c20ee0be4c98968bd58cf64d7e6e6af54bb798c3adb9b3f3da3"
+    },
+    "timing": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r81_w05_t2_hybrid_timing_run01/summary.json",
+      "sha256": "1a0f0dd0be835b00f37ba261d4d104ae65f5cae466476eb5a06c55eb5ccbf930"
+    }
+  },
+  "performance": {
+    "best_new_gap_to_tophub_fraction": 0.0030634387082939243,
+    "best_new_within_2pct_of_tophub": true,
+    "config494_same_tile_paired_median_speedup_fraction": 0.09855789266547141,
+    "config494_same_tile_wins": 7,
+    "config574_same_tile_paired_median_speedup_fraction": 0.049603026497014174,
+    "config574_same_tile_wins": 7,
+    "incumbent_sentinel_range_over_median_fraction": 0.010308307398775095,
+    "nearest_tophub_prediction_correct": true,
+    "safe_dispatch_choice": "tophub_incumbent"
+  },
+  "schema": "c3_p7r_w05_hybrid_budget_analysis_v1",
+  "scope": "single-boot prospective operator experiment; no stage/FPS or full-pool oracle claim",
+  "search_funnel": {
+    "bounded_hybrid_input_reducing_and_dma_pareto": 19,
+    "candidate_dispatch_reduction_vs_raw_fraction": 0.995,
+    "exact_allow_timing_candidates": 2,
+    "fpga_correct_candidates": 2,
+    "frozen_dynamic_candidates": 2,
+    "interpretation": "counterfactual candidate-space reduction; the 398 unmeasured points have no latency/oracle labels",
+    "pure_input_stationary_dma_pareto": 0,
+    "pure_input_stationary_input_reducing": 27,
+    "raw_t2_configs": 400
+  },
+  "status": "completed"
+}

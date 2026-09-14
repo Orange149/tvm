@@ -1,0 +1,26 @@
+{
+  "schema": "c3_p6a_offline_dispatch_contract_protocol_v1",
+  "scope": "generate_and_freeze_only_no_board",
+  "workloads": ["W00", "W02", "W09"],
+  "strategy": "B7",
+  "requested_budget": 4,
+  "budget_unit": "ordered_unique_candidate_id_per_workload",
+  "incumbent_policy": "protected original incumbent must be dispatch order zero",
+  "admission_policy": {
+    "p4b_lower_status": "ok",
+    "p4e_local_status": "fsim_passed",
+    "p4e_required_seeds": [0, 20250901, 20260910],
+    "unqualified_lower_success_allowed": false
+  },
+  "future_board_correctness_seeds": [0, 20250901, 20260910],
+  "timing_policy": "placeholder only; concrete values must be separately frozen before board execution",
+  "board_fingerprint_policy": "actual fingerprint pending; must match expected target/config/bitstream before execution",
+  "immutability": "dispatch_manifest.json cannot be overwritten",
+  "claims_forbidden": [
+    "board execution occurred",
+    "board correctness established",
+    "latency or performance measured",
+    "weight/hybrid benefit inferred from B7 diversity",
+    "G6 passed"
+  ]
+}

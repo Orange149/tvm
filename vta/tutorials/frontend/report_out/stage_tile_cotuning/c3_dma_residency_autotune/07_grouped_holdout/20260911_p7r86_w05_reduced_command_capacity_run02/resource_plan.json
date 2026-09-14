@@ -1,0 +1,52 @@
+{
+  "alignment_bytes": 4096,
+  "alignment_rationale": "conservative page alignment; runtime minimum is 256-byte alignment",
+  "certified_dispatch_set": {
+    "insn_capacity_bytes": 4096,
+    "legacy_total_requested_bytes": 67108864,
+    "requested_byte_reduction_fraction": 0.9998779296875,
+    "roles": [
+      "protected_tophub_incumbent",
+      "bounded_hybrid_candidate"
+    ],
+    "total_requested_bytes": 8192,
+    "uop_capacity_bytes": 4096
+  },
+  "claim_boundary": "exact frozen W05 identities under the guarded runtime only; not a whole-model or arbitrary-shape bound",
+  "input_guards": {
+    "candidates": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r85_w05_command_resource_signatures_run02/candidates.jsonl",
+      "sha256": "dc85e7e514009880999779e8673a111e5ea87a3408b4a5c81cd0741dcadcdb80"
+    },
+    "signature_results": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r85_w05_command_resource_signatures_run02/results.jsonl",
+      "sha256": "6d08a57cb14938ce118332fc7439b74989745fb74ace2ee7393ab5b00aaffd78"
+    }
+  },
+  "observed_peaks_by_role": {
+    "bounded_hybrid_candidate": {
+      "insn_peak_bytes": 3808,
+      "uop_peak_bytes": 1424
+    },
+    "protected_tophub_incumbent": {
+      "insn_peak_bytes": 3744,
+      "uop_peak_bytes": 1480
+    },
+    "same_tile_original": {
+      "insn_peak_bytes": 7200,
+      "uop_peak_bytes": 752
+    }
+  },
+  "observed_peaks_include_finish": true,
+  "safety_rule": "capacity = align_up(max exact peak over allowed identities); runtime checks both queues before submission",
+  "same_tile_comparison_only": {
+    "insn_capacity_bytes": 8192,
+    "roles": [
+      "same_tile_original"
+    ],
+    "total_requested_bytes": 12288,
+    "uop_capacity_bytes": 4096
+  },
+  "schema": "c3_p7r_command_resource_plan_v1",
+  "status": "frozen_before_reduced_capacity_validation"
+}

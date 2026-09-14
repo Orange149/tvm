@@ -1,0 +1,373 @@
+{
+  "by_workload": {
+    "W00": {
+      "insn_capacity_bytes": 8192,
+      "insn_peak_bytes": 4768,
+      "uop_capacity_bytes": 4096,
+      "uop_peak_bytes": 1580
+    },
+    "W01": {
+      "insn_capacity_bytes": 8192,
+      "insn_peak_bytes": 4192,
+      "uop_capacity_bytes": 4096,
+      "uop_peak_bytes": 2756
+    },
+    "W02": {
+      "insn_capacity_bytes": 8192,
+      "insn_peak_bytes": 7840,
+      "uop_capacity_bytes": 8192,
+      "uop_peak_bytes": 5500
+    },
+    "W03": {
+      "insn_capacity_bytes": 8192,
+      "insn_peak_bytes": 4192,
+      "uop_capacity_bytes": 4096,
+      "uop_peak_bytes": 292
+    },
+    "W04": {
+      "insn_capacity_bytes": 4096,
+      "insn_peak_bytes": 4000,
+      "uop_capacity_bytes": 12288,
+      "uop_peak_bytes": 10820
+    },
+    "W05": {
+      "insn_capacity_bytes": 8192,
+      "insn_peak_bytes": 7072,
+      "uop_capacity_bytes": 12288,
+      "uop_peak_bytes": 10820
+    },
+    "W06": {
+      "insn_capacity_bytes": 4096,
+      "insn_peak_bytes": 4000,
+      "uop_capacity_bytes": 4096,
+      "uop_peak_bytes": 516
+    },
+    "W07": {
+      "insn_capacity_bytes": 12288,
+      "insn_peak_bytes": 12256,
+      "uop_capacity_bytes": 4096,
+      "uop_peak_bytes": 2768
+    },
+    "W08": {
+      "insn_capacity_bytes": 24576,
+      "insn_peak_bytes": 23008,
+      "uop_capacity_bytes": 4096,
+      "uop_peak_bytes": 2768
+    },
+    "W09": {
+      "insn_capacity_bytes": 12288,
+      "insn_peak_bytes": 12256,
+      "uop_capacity_bytes": 4096,
+      "uop_peak_bytes": 488
+    }
+  },
+  "claim_boundary": {
+    "not_supported": [
+      "arbitrary unseen shapes fit 36 KiB",
+      "board physical allocator consumption equals requested bytes",
+      "dynamic shapes, command replay, whole-stage latency, or FPS are qualified"
+    ],
+    "supported": [
+      "one set-derived 36 KiB capacity passed all 197 frozen identities across W00--W09",
+      "the method is parameterized by an allowlist and alignment rather than config-index constants",
+      "runtime capacity checks preserve fail-closed behavior before submission"
+    ]
+  },
+  "coverage": {
+    "candidates": 197,
+    "modes": [
+      "input_stationary",
+      "original",
+      "paper_inspired_hybrid",
+      "weight_stationary",
+      "weight_stationary_barrier"
+    ],
+    "reduced_capacity_validations_passed": 197,
+    "workloads": [
+      "W00",
+      "W01",
+      "W02",
+      "W03",
+      "W04",
+      "W05",
+      "W06",
+      "W07",
+      "W08",
+      "W09"
+    ]
+  },
+  "inputs": {
+    "baseline_results": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4j_full_pool_fsim_command_run02/results.jsonl",
+      "sha256": "7a875ed1d4d9404187e7976e53851fdea35c8b94117711d79200e5382499e179"
+    },
+    "capacity_plan": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r87_full_pool_reduced_command_capacity_run01/resource_plan.json",
+      "sha256": "19307f7b9b93e0d38d81ae25ffe8fefe4f4df1464c126aba51153b771bc3d8fb"
+    },
+    "validation_results": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r87_full_pool_reduced_command_capacity_run01/validation.jsonl",
+      "sha256": "b898675aa636f8a8fff1b7e70085ba9331cec7bf68c7144776a5f3506170d90f"
+    },
+    "validation_summary": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r87_full_pool_reduced_command_capacity_run01/summary.json",
+      "sha256": "7cf18120a114ec90e3aea4eaf1c994c0bfc5c347769d4a254dd738ebd3b1a6aa"
+    }
+  },
+  "leave_one_workload_out": {
+    "fit_count": 9,
+    "interpretation": "leave-one-out tests fixed-capacity transfer only; exact compilation remains the safety mechanism",
+    "results": {
+      "W00": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 0,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 8192,
+          "insn_peak_bytes": 4768,
+          "uop_capacity_bytes": 4096,
+          "uop_peak_bytes": 1580
+        },
+        "heldout_fits": true
+      },
+      "W01": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 0,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 8192,
+          "insn_peak_bytes": 4192,
+          "uop_capacity_bytes": 4096,
+          "uop_peak_bytes": 2756
+        },
+        "heldout_fits": true
+      },
+      "W02": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 0,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 8192,
+          "insn_peak_bytes": 7840,
+          "uop_capacity_bytes": 8192,
+          "uop_peak_bytes": 5500
+        },
+        "heldout_fits": true
+      },
+      "W03": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 0,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 8192,
+          "insn_peak_bytes": 4192,
+          "uop_capacity_bytes": 4096,
+          "uop_peak_bytes": 292
+        },
+        "heldout_fits": true
+      },
+      "W04": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 0,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 4096,
+          "insn_peak_bytes": 4000,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "heldout_fits": true
+      },
+      "W05": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 0,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 8192,
+          "insn_peak_bytes": 7072,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "heldout_fits": true
+      },
+      "W06": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 0,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 4096,
+          "insn_peak_bytes": 4000,
+          "uop_capacity_bytes": 4096,
+          "uop_peak_bytes": 516
+        },
+        "heldout_fits": true
+      },
+      "W07": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 0,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 12288,
+          "insn_peak_bytes": 12256,
+          "uop_capacity_bytes": 4096,
+          "uop_peak_bytes": 2768
+        },
+        "heldout_fits": true
+      },
+      "W08": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 12288,
+          "insn_peak_bytes": 12256,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 3,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 4096,
+          "uop_peak_bytes": 2768
+        },
+        "heldout_fits": false
+      },
+      "W09": {
+        "derived_from_other_nine": {
+          "insn_capacity_bytes": 24576,
+          "insn_peak_bytes": 23008,
+          "uop_capacity_bytes": 12288,
+          "uop_peak_bytes": 10820
+        },
+        "extra_insn_pages_if_not_fit": 0,
+        "extra_uop_pages_if_not_fit": 0,
+        "heldout": {
+          "insn_capacity_bytes": 12288,
+          "insn_peak_bytes": 12256,
+          "uop_capacity_bytes": 4096,
+          "uop_peak_bytes": 488
+        },
+        "heldout_fits": true
+      }
+    },
+    "total": 10
+  },
+  "peak_sources": {
+    "instruction": [
+      {
+        "candidate_id": "15a0bc0072179f6867310059d87ac82c0b20d184fa6bbec0b24435c6fe9e13b4",
+        "config_index": null,
+        "mode": "original",
+        "workload_id": "W08"
+      },
+      {
+        "candidate_id": "62a9febae299c2b3620b385fdd0a5e670bd106ad81e533d23a646bd17cfe1507",
+        "config_index": null,
+        "mode": "original",
+        "workload_id": "W08"
+      },
+      {
+        "candidate_id": "3be0eb2fe82fd5a4f05af5ae7da824fb438941268bb08a5d2a5dfedcce5cfb21",
+        "config_index": null,
+        "mode": "weight_stationary",
+        "workload_id": "W08"
+      },
+      {
+        "candidate_id": "a9e2a4bdbb6ca96a39e27b5f166b211c9371db011c789fc3b4daadeaa456230b",
+        "config_index": null,
+        "mode": "weight_stationary",
+        "workload_id": "W08"
+      }
+    ],
+    "uop": [
+      {
+        "candidate_id": "9e080bbf7e26bc73f3577a5e0a31fe808847700188e9982ccd173880488166e0",
+        "config_index": null,
+        "mode": "weight_stationary_barrier",
+        "workload_id": "W04"
+      },
+      {
+        "candidate_id": "e2e231251fa3710a6002c51195a63b76f2d9b0e3db4093af058454f9f94ca6e9",
+        "config_index": null,
+        "mode": "weight_stationary_barrier",
+        "workload_id": "W05"
+      }
+    ]
+  },
+  "per_identity_total_capacity_distribution_bytes": {
+    "max": 28672,
+    "median": 8192,
+    "min": 8192,
+    "p90": 12288
+  },
+  "pool_capacity": {
+    "insn_capacity_bytes": 24576,
+    "insn_peak_bytes": 23008,
+    "legacy_total_capacity_bytes": 67108864,
+    "requested_byte_reduction_fraction": 0.99945068359375,
+    "total_capacity_bytes": 36864,
+    "uop_capacity_bytes": 12288,
+    "uop_peak_bytes": 10820
+  },
+  "schema": "c3_full_pool_command_capacity_generality_analysis_v1",
+  "scope_correction": {
+    "correct_scope": "ten frozen workload identities W00--W09 and five schedule modes",
+    "reason": "the source phrase 'three workload families' was descriptive metadata only; its structured workload list contains W00--W09",
+    "source_text": "three workload families and 197 frozen static identities; local FSim capacity safety, not board allocator occupancy, dynamic-shape, stage latency, or FPS",
+    "validation_repeated": false
+  },
+  "set_level_rule": {
+    "alignment_bytes": 4096,
+    "concurrent_queue_extension": "M_cmd=sum_j(C_insn(S_j)+C_uop(S_j)); reuse is allowed only for non-overlapping lifetimes",
+    "formula": "C_q(S)=align_A(max_{c in S,b in submits(c)} B_q(c,b))",
+    "identity_invalidation": [
+      "hardware fingerprint",
+      "workload shape",
+      "residency mode",
+      "complete ConfigEntity",
+      "lowered TIR hash",
+      "runtime source hash"
+    ],
+    "meaning": "capacity follows the compiled allowlist, not a board-specific magic constant"
+  },
+  "status": "completed"
+}

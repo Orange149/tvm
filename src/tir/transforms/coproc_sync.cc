@@ -347,6 +347,7 @@ class CoProcInstDepDetector : public StmtVisitor {
  public:
   explicit CoProcInstDepDetector(const IterVar& coproc_axis, const std::string& coproc_name)
       : coproc_axis_(coproc_axis) {
+    sync_op_ = Op::Get("tir." + coproc_name + ".coproc_sync");
     sync_push_op_ = Op::Get("tir." + coproc_name + ".coproc_dep_push");
     sync_pop_op_ = Op::Get("tir." + coproc_name + ".coproc_dep_pop");
   }
@@ -371,6 +372,25 @@ class CoProcInstDepDetector : public StmtVisitor {
     } else {
       StmtVisitor::VisitStmt_(op);
     }
+  }
+
+  void VisitStmt_(const EvaluateNode* op) final {
+    const CallNode* call = op->value.as<CallNode>();
+    if (call != nullptr && call->op.same_as(sync_op_)) {
+      // A full coprocessor sync drains all queues.  Close any unmatched token
+      // bookkeeping in the segment before the barrier, then start a fresh
+      // dependence segment so no synthetic edge crosses the drain.
+      if (last_state_.node != nullptr) {
+        ICHECK(first_state_.node != nullptr);
+        MatchFixEnterPop(first_state_);
+        MatchFixExitPush(last_state_);
+      }
+      first_state_.clear();
+      last_state_.clear();
+      curr_state_.clear();
+      return;
+    }
+    StmtVisitor::VisitStmt_(op);
   }
 
   void VisitStmt_(const ForNode* op) final {
@@ -572,7 +592,7 @@ class CoProcInstDepDetector : public StmtVisitor {
   SyncState first_state_, last_state_, curr_state_;
   // Variables
   IterVar coproc_axis_;
-  Op sync_push_op_, sync_pop_op_;
+  Op sync_op_, sync_push_op_, sync_pop_op_;
 };
 
 class CoProcSyncInserter : public StmtMutator {

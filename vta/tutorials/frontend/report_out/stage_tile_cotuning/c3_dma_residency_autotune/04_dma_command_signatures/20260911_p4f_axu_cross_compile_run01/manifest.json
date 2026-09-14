@@ -1,0 +1,50 @@
+{
+  "date": "2026-09-11",
+  "environment": {
+    "board_contacted": false,
+    "cross_compiler": "aarch64-xilinx-linux-g++ (GCC) 9.2.0",
+    "python": "/home/orange/miniconda3/envs/vta-resnet/bin/python",
+    "python_version": "3.10.20",
+    "rpc_used": false,
+    "ssh_used": false,
+    "sysroot": "/home/orange/alinx_plsdk/install/sysroots/aarch64-xilinx-linux",
+    "target_host": "llvm -keys=arm_cpu,cpu -mtriple=aarch64-linux-gnu",
+    "tvm_version": "0.13.0",
+    "vta_target": "axu5evb"
+  },
+  "inputs": {
+    "p2_cross_results": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/02_baselines/20260910_p2_local_baseline_run02/cross_compile_results.json",
+      "sha256": "174a95c1876e297d0caba859d833c693b206b2c1a472fa6fe9956e72cc6dfc0d"
+    },
+    "p4b_results": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/results.jsonl",
+      "sha256": "cddcdc503163e1f4cfda1a53933d4577c804b6842be818e0bbb616a431b9d2d9"
+    },
+    "p4e_results": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4e_unified_local_qualification_run01/results.jsonl",
+      "sha256": "0ba3ab15b6bbdb45c36826891bcb601099376acfc626e9489788f5c40ebb1da4"
+    }
+  },
+  "schema": "c3_p4f_axu_cross_compile_manifest_v1",
+  "source": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/qualify_vta_axu_cross_compile.py",
+    "sha256": "a548f88c6cbd1620a82d2795f25c877f08d1b468640af78b5e205b716da65bb5"
+  },
+  "source_guards_after": {
+    "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+    "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+    "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+    "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+    "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+  },
+  "source_guards_before": {
+    "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+    "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+    "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+    "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+    "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+  }
+}

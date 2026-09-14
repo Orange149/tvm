@@ -1,0 +1,176 @@
+{
+  "adaptive_path": "sparse_family_wave",
+  "board_contacted": false,
+  "candidate_order": [
+    "d355ba40abc579a78ed0ab2895ed8a95860e1b4256c46d24ec393037d8dc9917"
+  ],
+  "candidate_records": [
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "d355ba40abc579a78ed0ab2895ed8a95860e1b4256c46d24ec393037d8dc9917",
+      "debug": {
+        "config_index": 80
+      },
+      "family_id": "Y07F05",
+      "family_ordinal": 5,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 13
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 16,
+          "input_vectors": 9,
+          "weight_vectors": 144
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                16
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              13,
+              13,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_y07_adaptive_multifidelity_candidate_v1",
+      "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "3461a14c1caf730c5a9218d5c91fa3d223f699e56072edf9935ccd68e6d0307d",
+      "workload_id": "Y07"
+    }
+  ],
+  "first_family": "Y07F03",
+  "first_family_lower_passes": 0,
+  "history_head_sha256": "731e6ae42db154fe72364395576a4218c5fe89c8df3ba6d681fb015d764cb045",
+  "performance_labels_used": false,
+  "service_scores": {
+    "d355ba40abc579a78ed0ab2895ed8a95860e1b4256c46d24ec393037d8dc9917": 576367360.0
+  },
+  "status": "frozen_after_adaptive_live_local_prefix_before_cross_or_board"
+}

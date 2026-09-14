@@ -1,0 +1,102 @@
+{
+  "auditor_source_sha256": "6d76516c580de2a44f520a3e3bd6056824918eaf9914bb4cc7d80e9f3ebd77a3",
+  "candidate_ids": [
+    "e6473088a7dfdba7328a50f0cd0735819794144b1d7a666d7513ae40cd74d906",
+    "5dd7a442cff1fb6565284948c9996c64c86410d19ec8508e9a59ab4e97eccc1e"
+  ],
+  "claim_boundary": "One additional tile on the same R50A workload, model and boot. This is a call-site/full-graph latency holdout, not a new operator workload, cross-boot result, ImageNet accuracy, native AutoTVM call-site identity, natural failed bundle, or physical AXI measurement",
+  "clean_start_count": 4,
+  "graph_nodes": [
+    67,
+    80,
+    93
+  ],
+  "group_accepted": true,
+  "group_execution_reduction_percent": 66.66666666666667,
+  "group_median_latency_ms": {
+    "incumbent": 898.821468,
+    "proposal": 435.519425
+  },
+  "group_model_execution_calls": 20,
+  "group_paired_delta_ms": -463.30204299999997,
+  "group_paired_rounds": 7,
+  "group_paired_wins": 7,
+  "group_speedup_percent": 106.37919146775138,
+  "grouped_selected_mask": [
+    1,
+    1,
+    1
+  ],
+  "knobs": {
+    "h_nthread": 1,
+    "oc_nthread": 1,
+    "tile_b": 1,
+    "tile_ci": 1,
+    "tile_co": 1,
+    "tile_h": 14,
+    "tile_w": 1
+  },
+  "prospective_full_graph_dma_delta": {
+    "load_buffer_2d_acc_bytes": 0,
+    "load_buffer_2d_acc_calls": -1176,
+    "load_buffer_2d_bytes": -8429568,
+    "load_buffer_2d_calls": -76440,
+    "load_buffer_2d_inp_bytes": -8429568,
+    "load_buffer_2d_inp_calls": -37632,
+    "load_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_wgt_calls": -37632,
+    "store_buffer_2d_bytes": 0,
+    "store_buffer_2d_calls": 0
+  },
+  "raw_metadata_correction": "The subset builder and board runner reused stale F00/development wording. Their immutable measurements are retained; pre-board content hashes and this audit establish the authoritative family-specific latency-holdout scope",
+  "schema": "c3_vta_r50a_callsite_latency_holdout_audit_v1",
+  "scope": {
+    "full_graph_latency_unseen_before_contract": true,
+    "new_model_or_workload": false,
+    "new_tile": true,
+    "operator_correctness_previously_known": true,
+    "operator_latency_used_for_selection": false,
+    "partial_mask_latency_unseen_before_contract": true
+  },
+  "selected_family_id": "R50AF01",
+  "singleton_model_execution_calls": 60,
+  "singleton_results": [
+    {
+      "accepted": true,
+      "graph_node": 67,
+      "paired_delta_ms": -153.47970499999997,
+      "paired_wins": 7
+    },
+    {
+      "accepted": true,
+      "graph_node": 80,
+      "paired_delta_ms": -154.78990699999997,
+      "paired_wins": 7
+    },
+    {
+      "accepted": true,
+      "graph_node": 93,
+      "paired_delta_ms": -154.19143100000002,
+      "paired_wins": 7
+    }
+  ],
+  "singleton_selected_mask": [
+    1,
+    1,
+    1
+  ],
+  "source_hashes": {
+    "board_contract": "2fad9b87607ea66615adce674c0fbce0f53894b4860925bf98b3cce58a2f31e8",
+    "board_summary": "cd86fb550cad9144ca6355c3d11c764c549c4dfd53f09f4bc9c988bd8c125c98",
+    "fused_contract": "ea56bf815a35ae7ddb9ba15b36ca4340e75e4a17f7bc0af0bc490f94923d9743",
+    "holdout_contract": "ea5bac80b519ced0f0b4918460acb51988fb50e1386fad20dd662016cb80cc13",
+    "subset_manifest": "2d25a1b715d6f2a110f3205777afcb9ea95003e410d7762dc302db7c8eeb1000"
+  },
+  "status": "callsite_and_full_graph_latency_holdout_pass",
+  "verified_artifact_counts": {
+    "board": 11,
+    "build": 14,
+    "fused": 2,
+    "holdout": 2
+  }
+}

@@ -17,6 +17,7 @@ from tvm.contrib import cc, download, graph_executor, utils
 from tvm.relay import op, transform
 
 import vta
+from vta_tuning_history import audited_history
 from vta.top import graphpack as vta_graphpack
 from vta.testing import simulator
 
@@ -60,6 +61,12 @@ def parse_args():
         help="Stage split scheme to build",
     )
     parser.add_argument("--model", default="resnet18_v1", choices=["resnet18_v1"])
+    parser.add_argument("--tune-log", default="", help="AutoTVM history to apply during VTA stage builds")
+    parser.add_argument(
+        "--require-tuned-vta",
+        action="store_true",
+        help="Require TopHub or explicit history coverage for all conv2d_packed.vta workloads",
+    )
     parser.add_argument("--batch", type=int, default=1)
     parser.add_argument("--image-size", type=int, default=224)
     parser.add_argument(
@@ -338,7 +345,7 @@ def annotate_all_ops_to_ext_dev(relay_func):
     return vta_graphpack.run_opt_pass(annotated, transform.InferType())
 
 
-def build_vta_stage(stage_name, relay_prog, params, env, use_graph_pack=False):
+def prepare_vta_stage(relay_prog, params, env, use_graph_pack=False, observer=None):
     # Unlike the official end-to-end VTA tutorial, this stage starts from an
     # ordinary 4D inter-stage tensor. We therefore make pack/unpack explicit
     # inside the stage instead of relying on graph_pack to discover a single
@@ -349,6 +356,8 @@ def build_vta_stage(stage_name, relay_prog, params, env, use_graph_pack=False):
             skip_conv_layers=[],
         ):
             qmod = relay.quantize.quantize(tvm.IRModule.from_expr(relay_prog), params=params)
+    if observer is not None:
+        observer("quantized", qmod)
 
     if use_graph_pack:
         packed = vta_graphpack.graph_pack(
@@ -385,9 +394,25 @@ def build_vta_stage(stage_name, relay_prog, params, env, use_graph_pack=False):
         }
     else:
         build_target = target_with_host
-    with vta.build_config(
+    if observer is not None:
+        observer("packed", tvm.IRModule.from_expr(packed))
+    return packed, build_target
+
+
+def build_vta_stage(stage_name, relay_prog, params, env, use_graph_pack=False,
+                    tune_log="", tuning_audit=None, require_tuned=False,
+                    compile_instruments=None, preparation_observer=None):
+    packed, build_target = prepare_vta_stage(relay_prog, params, env, use_graph_pack,
+                                           observer=preparation_observer)
+    with audited_history(
+        tune_log,
+        tuning_audit,
+        require_tuned,
+        tophub_targets=build_target,
+    ), vta.build_config(
         opt_level=3,
         disabled_pass={"AlterOpLayout", "tir.CommonSubexprElimTIR"},
+        instruments=compile_instruments,
     ):
         graph, lib, lowered_params = relay.build(
             packed,
@@ -939,6 +964,8 @@ def execute_scheme_run(
                     params,
                     env,
                     use_graph_pack=(resolved_scheme_name == "all_vta"),
+                    tune_log=getattr(args, "tune_log", ""),
+                    require_tuned=getattr(args, "require_tuned_vta", False),
                 )
 
         if args.run_stages:
@@ -1139,6 +1166,8 @@ def probe_scheme_buildability(args, env, feature_blocks, output_block, unit_bloc
                 params,
                 env,
                 use_graph_pack=(resolved_scheme_name == "all_vta"),
+                tune_log=getattr(args, "tune_log", ""),
+                require_tuned=getattr(args, "require_tuned_vta", False),
             )
     return True
 

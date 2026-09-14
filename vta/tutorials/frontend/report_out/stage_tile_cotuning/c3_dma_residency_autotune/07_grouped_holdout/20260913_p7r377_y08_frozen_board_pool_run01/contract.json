@@ -1,0 +1,66 @@
+{
+  "bindings": {
+    "candidate_order_source": "P7R357 random_lazy_build",
+    "orders_ledger": "b02c3fef2af5948f955abdea6c789c967476cdf8d8149375754b2dd70db3a682",
+    "protocol_ledger": "559a8ab650370670a7dfb5969d362e233351f343149bf8e358d1026814b896ad",
+    "qualification_ledger": "60be4955f377c9a7bd668ea1b5cfe51c646a4eee9c7cc3d13d1966c951bcf99a"
+  },
+  "buffer_policy": "health set then one output-data-weight Y08 set reused for all shape-compatible candidates",
+  "candidate_ids": [
+    "48b73b0e0d80df00be4067ff0db362fb2decb6969e55efa36ac78cf7c50b6a5f",
+    "54a7db0f1e42dd6a4f8db222e65b121a0ff58c3ae1d306a31709c1b4660f1225",
+    "caf0959f9ae8f85e6ca27130a698cee1098baf4bb89b3ec94733c13abdb48bde",
+    "2dea8705dcbfbb8972cd0d1cb97bf18d1a416a2e0e14a792760e17203f884e51",
+    "a8a824d5a569a6835deb5c5f3f4a098ba3c0548977d59edd2268ce04aa59439e",
+    "16968b8138a00d6e5bcdb8e44a4801a870d4d502a7a00c03b7743e9b517f1fb7"
+  ],
+  "candidate_order": [
+    "48b73b0e0d80df00be4067ff0db362fb2decb6969e55efa36ac78cf7c50b6a5f",
+    "54a7db0f1e42dd6a4f8db222e65b121a0ff58c3ae1d306a31709c1b4660f1225",
+    "caf0959f9ae8f85e6ca27130a698cee1098baf4bb89b3ec94733c13abdb48bde",
+    "2dea8705dcbfbb8972cd0d1cb97bf18d1a416a2e0e14a792760e17203f884e51",
+    "a8a824d5a569a6835deb5c5f3f4a098ba3c0548977d59edd2268ce04aa59439e",
+    "16968b8138a00d6e5bcdb8e44a4801a870d4d502a7a00c03b7743e9b517f1fb7"
+  ],
+  "failure_policy": "health fail stops; candidate first error rejects; timed error stops",
+  "health_candidate_id": "6374bca35bb59bb20cbb07532e5ba29ca3a56225023cf8d632b80063818d5d77",
+  "persistent_board_write": false,
+  "protocol": {
+    "baseline_scope": "Random/bytes/calls are explicit controls, not reproductions of Rieber, XGB or ML2Tuner",
+    "candidate_commitment": "29e2f0bed9b02b9426343b1b08a01a9b47993d6ce2788684feb074035d750ef6",
+    "deadline": "no new phase after deadline; running step drains; all overrun charged; late labels excluded",
+    "eligibility": "real lowering plus three seed FSim; candidate FPGA result admitted only after three seed correctness and seven paired rounds",
+    "failure": "preserve failures and no candidate replacement",
+    "oracle": "post-collection evaluation only, never online stopping",
+    "pareto_axes": [
+      "operator_LOAD_plus_STORE_bytes",
+      "operator_LOAD_plus_STORE_calls",
+      "weight_barrier_indicator"
+    ],
+    "policies": [
+      "random_lazy_build",
+      "operator_bytes_lazy_build",
+      "operator_calls_lazy_build",
+      "operator_pareto_hash_lazy_build",
+      "operator_pareto_hash_prebuild_ablation"
+    ],
+    "random_seed": 20260913,
+    "schema": "c3_y08_budget_search_policy_v1",
+    "scope": "new tile/residency candidate pool; historical full-network stock executions exposed",
+    "search_budget_seconds": 600,
+    "sort_ties": "candidate_id",
+    "status": "frozen_before_y08_local_qualification",
+    "status_if_no_candidates": "record real compiler/FSim failure reasons; no performance claims",
+    "target": "Y08 YOLOv3-tiny conv12 CI512 CO1024 H13 W13 K3",
+    "timing": "Each prospective policy must time a complete outer pipeline, including model preparation, qualification, selection, build, clean start, upload, allocation and measurement. Local qualification discovery run alone is not such a measurement."
+  },
+  "rounds": 7,
+  "schema": "c3_y08_frozen_board_pool_v1",
+  "search_policy_execution": "forbidden; full pool labels only; P7R355 policies evaluated later",
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "status": "frozen_before_current_board_observation"
+}

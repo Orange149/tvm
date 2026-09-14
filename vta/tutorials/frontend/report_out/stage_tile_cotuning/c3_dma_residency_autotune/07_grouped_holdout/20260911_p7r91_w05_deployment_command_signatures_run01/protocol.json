@@ -1,0 +1,43 @@
+{
+  "candidate_order": [
+    "protected_tophub_incumbent",
+    "same_tile_original_config574",
+    "bounded_hybrid_candidate_config574",
+    "same_tile_original_config494",
+    "bounded_hybrid_candidate_config494"
+  ],
+  "claim_boundary": "no board capacity, latency, FPS, full-model, or replay claim",
+  "hybrid_configs": [
+    574,
+    494
+  ],
+  "hypotheses": [
+    "all three frozen TIR/config identities pass seed-0 exact correctness",
+    "instruction and UOP peaks are far below the legacy 32 MiB per-queue backing",
+    "a later capacity plan must include FINISH and use 256-byte-aligned capacities"
+  ],
+  "inputs": {
+    "board_contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r79_w05_t2_hybrid_board_contract_run01/w05_hybrid_contract.json",
+      "sha256": "b482083583e1fd58872be3931b2278c68875533344d8b8e87aed519d0bf1a0b4"
+    },
+    "original_pool": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r76_w05_t2_hybrid_original_pool_run01/candidates.jsonl",
+      "sha256": "216b1c92b630025251285bf5084ae495ef267eb172fa8ab7caeba17311abbc8b"
+    },
+    "shortlist": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r74_w05_t2_hybrid_group_contract_run01/shortlist.jsonl",
+      "sha256": "79b0ce080701c0005381b6fd12074f6475295c38f614fc85df0018bc0bf231b9"
+    }
+  },
+  "schema": "c3_p7r_command_resource_contract_v1",
+  "scope": "W05 TopHub575 and exact original/hybrid config set [574, 494]; local FSim only",
+  "source_guards_sha256": {
+    "vta/python/vta/top/vta_conv2d.py": "cdffe82fdc55df4bb8661421ba98f712b10b3b0ade95020129d0d6c246fb29ce",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "vta/runtime/queue_capacity.h": "81643e7584d5375c268dfaef6f6b88d6402a4d08ca4f2a1c50b68f04d0b224e4",
+    "vta/runtime/runtime.cc": "09fedbb70a9a913b04b5148fa240d2c81dae3147466aa11a536bf54de41de2d2",
+    "vta/tutorials/frontend/collect_vta_full_pool_fsim_commands.py": "f5bdd98888f900dd2299786e00d12fdd1754e269ef2b46e4643ec2abe83cff7c"
+  },
+  "status": "frozen_before_command_signatures"
+}

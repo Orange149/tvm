@@ -1,0 +1,48 @@
+{
+  "schema": "c3_p2_local_summary_v2",
+  "run_id": "20260910_p2_local_baseline_run02",
+  "status": "completed_local_post_refactor",
+  "local_gate": "P2_LOCAL_BASELINE_PASS",
+  "static_dma": {
+    "workloads": 10,
+    "byte_identical_to_frozen": true,
+    "semantic_equal_to_frozen": true,
+    "sha256": "ff154ced1154c54fdd168597a1ab23433854c06652004538b821bd96fb48a3a5"
+  },
+  "correctness": {
+    "workloads": 10,
+    "seeds": [0, 20250901, 20260910],
+    "checks": 30,
+    "mismatches": 0,
+    "all_correct": true
+  },
+  "cross_compile": {
+    "target": "axu5evb",
+    "workloads": 10,
+    "successes": 10,
+    "compiler": "aarch64-xilinx-linux-g++ 9.2.0"
+  },
+  "tests": {
+    "stage_tile_cotuning": {"passed": 19, "failed": 0},
+    "candidate_identity": {"passed": 7, "failed": 0}
+  },
+  "tir_regression": {
+    "workloads": 10,
+    "ir_json_hashes_equal_to_run01_post_change": 10,
+    "all_equal": true
+  },
+  "source_guard": {
+    "vta_conv2d_start_sha256": "b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+    "vta_conv2d_end_sha256": "b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+    "vta_conv2d_residency_start_sha256": "5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f",
+    "vta_conv2d_residency_end_sha256": "5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f",
+    "production_inputs_unchanged_during_run": true,
+    "root_disclosed_comment_only_change": true
+  },
+  "board": {
+    "accessed": false,
+    "ssh_used": false,
+    "performance_measured": false
+  },
+  "full_g2": "not_evaluable_without_board"
+}

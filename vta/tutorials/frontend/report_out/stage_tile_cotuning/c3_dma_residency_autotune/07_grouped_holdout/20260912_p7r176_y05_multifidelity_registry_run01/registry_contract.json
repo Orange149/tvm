@@ -1,0 +1,79 @@
+{
+  "baselines": [
+    "exhaustive_then_service",
+    "random_frontier_service",
+    "validity_frontier_service",
+    "hardware_diverse_validity_frontier_service"
+  ],
+  "candidate_commitment_sha256": "f79802a476c49e8ebd79ac25acf405d3c07d8d97a765a2b01174243eed991f41",
+  "candidate_count": 24,
+  "candidate_order": [
+    "9e1ff66de181342ab9d34d3c47307a86bbd79e4eb23ca9d84a283d1f6ab62b39",
+    "537de5e0b563c34d3f851b32e0bd7167b8783ff7b4e5c0790f8ecb19eb2c54b4",
+    "1a6fc60de5207edb0a1577f7b5f8c02f15d4ca411f529afc5e4af8be251fb337",
+    "53250ddd2ab4eaf0248284e70c7b8b11c7647c181b6541f73ef57bff6f9a643e",
+    "8668f597ffe72188ce0b49fd602c2dcf39ceee152c6c80aff5a7d2f2ee92b7c4",
+    "673d3737c0f820b8ee6c7210586d9e12c3bcfe85149b705b629eb31edcecfe7f",
+    "ac6972d2146eab25424162228e9950b8ce328165d510d55184dcaaa7ff03e2df",
+    "41cae8809dfd4d356589c8a80a335afe963fa26a6ca509ba80b318f051ea35b2",
+    "a3af88abfd8f3447051537d68d7b8af489123d97046df221319cf278272065bf",
+    "9b691eb422ff09ba4c4faaa15ffbf3302e4523decf5190b14b063b62f6f04560",
+    "54af6917b4f8ebf9882978f30643521fc026467d07e1f6a36b8f7fdb841c339a",
+    "b0ec3b168822bc16427a4d3d3b2ed1a7bc7473c0caf2728799b3485bfdaae105",
+    "54bd79df828859eeeb54e21fd5e1891060b940f9d422ddb31813b6b534af506c",
+    "0d223028829002e06379a6c8d26898add6517828fb7f346c7f68f7a6a5d2080e",
+    "11722697400acea2acb27d4099b0dcea37d6eabd677b667741d058e28d3d953c",
+    "25d96c280288bc5616d36732ac372742578d9f898718ee199a00dffe0381c7ed",
+    "ee494ae205c0c472f7541d9a2bb0daa5f96d16da6483b62a564c1815fe3ec44d",
+    "98bd653fef6e27726639dd212e3f2c9681ea6914c27eec8eb352266ffc5cefe8",
+    "7a46c766684bc6418baa2ecbc38aca2c364e9ff8f67a304acadb2704b1e78299",
+    "83ac96c5c88360a5387febe21a66ed362908fd6eefc2cdb5166b01085af52ede",
+    "908af064673376c7c9cbd6d2d3078a1074b487425aa3edaff29bda6f14b10e11",
+    "7f0385ba4d8cd4e2fdb5860cba82fb26bd49f8f4556cbeb54deb9ce0f2fbfeca",
+    "f4a6ff145239f43d2f2fa1dc55832cdc470de58a3aa92f18e00957302c85c7f4",
+    "b20b6daf2503d7144aa3add2788fe269057886c57dda3a03948d1ddc7521c7e0"
+  ],
+  "candidate_source": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r175_y05_conv6_multifidelity_holdout_contract_run01/candidates.jsonl",
+    "sha256": "594847ca53de724a17d2cde49c5d5f7a5adadaf4e7c8b59b8458825a25b7bd62"
+  },
+  "claim_boundary": "candidate and online policy freeze only; no Y05 legality, correctness, latency, oracle, search saving, or generalization claim",
+  "clean_start_contract": "stop exact RPC, reload frozen bitstream, start fresh RPC before any target allocation; reuse one shape-compatible output-data-weight buffer set without changing layout",
+  "development_evidence": {
+    "artifact_hashes_sha256": "a20679b2df21eaf6f7252b0066a699760ed2af39c6a5201151259b1ae73d4268",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r174_multifidelity_development_replay_run02",
+    "status": "all workloads exposed; hyperparameter development only"
+  },
+  "failure_policy": "retain every failure; no candidate replacement or target-driven retuning",
+  "information_boundary": {
+    "F0": "candidate ConfigEntity, mode, parsed SRAM/opportunity features",
+    "F1": "exact DMA/request/TIR only after paid lowering",
+    "F2": "command peaks/submissions only after paid FSim",
+    "F3": "binary hash only after paid cross compile",
+    "F4": "correctness/runtime resources only after paid clean-start FPGA canary",
+    "F5": "latency only after paid measurement"
+  },
+  "policy": {
+    "correctness": "FPGA first-error stop; a pass requires all three frozen seeds",
+    "frontier_width": 4,
+    "initialization": "complete an opened same-tile family, otherwise choose the family with maximum minimum normalized Euclidean distance in knob/SRAM/opportunity space",
+    "name": "hardware_diverse_frontier_service",
+    "promotion": "lower four visible candidates; FSim candidates by currently visible service cost; compile two FSim-pass candidates; choose FPGA candidate by full service cost",
+    "promotion_width": 2,
+    "service_proxy": {
+      "extra_submission_equivalent_bytes": 131072,
+      "formula": "B_dma + 65536*N_dma + 131072*max(N_submit-1,0)",
+      "request_equivalent_bytes": 65536,
+      "semantics": "acquisition penalties, not physical AXI bytes or fitted latency constants"
+    },
+    "stop_for_confirmation": "record first online candidate reaching the target only after the complete pool oracle is constructed; continue with unbiased completion for oracle labels",
+    "validity_model_in_primary_policy": false
+  },
+  "schema": "c3_vta_multifidelity_registry_v1",
+  "source_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/prepare_vta_multifidelity_registry.py": "a12109f962f46fc49e9de9f859cc21b2253fc25d3678bd7f81b32ddb05524ac0",
+    "/home/orange/code/tvm/vta/tutorials/frontend/replay_vta_multifidelity_search.py": "fe66a479351b79854131ceb4f9b6d8b117b658e420e3582567a80b1c6755d6a9"
+  },
+  "status": "frozen_before_y05_lower_fsim_fpga_or_latency",
+  "workload_id": "Y05"
+}

@@ -1,0 +1,16 @@
+# Build (the first invocation rebuilt 657 Ninja steps; final incremental check is shown in stdout.log)
+cmake --build build --target tvm -j8
+
+# Pure TIR smoke immediately after linking
+/home/orange/miniconda3/envs/vta-resnet/bin/python -m pytest -q tests/python/unittest/test_tir_transform_coproc_sync_barrier.py tests/python/unittest/test_tir_transform_coproc_sync.py
+
+# Mode-4 static and three-seed FSim qualification
+VTA_HW_PATH=/tmp/vta-hw-fsim PYTHONPATH=/home/orange/code/tvm/python:/home/orange/code/tvm/vta/python /home/orange/miniconda3/envs/vta-resnet/bin/python -m pytest -q vta/tutorials/frontend/test_vta_weight_barrier_legalizer.py -vv
+
+# Final combined compiler, probe, original, and modes 0-3 regression
+VTA_HW_PATH=/tmp/vta-hw-fsim PYTHONPATH=/home/orange/code/tvm/python:/home/orange/code/tvm/vta/python PYTHONWARNINGS=ignore /home/orange/miniconda3/envs/vta-resnet/bin/python -m pytest -q --disable-warnings tests/python/unittest/test_tir_transform_coproc_sync.py tests/python/unittest/test_tir_transform_coproc_sync_barrier.py vta/tutorials/frontend/test_vta_weight_sync_probe.py vta/tutorials/frontend/test_vta_weight_barrier_legalizer.py vta/tutorials/frontend/test_vta_residency_schedule.py
+
+# Final incremental build/hash check
+cmake --build build --target tvm -j8
+stat -c '%y %s %n' build/libtvm.so
+sha256sum build/libtvm.so

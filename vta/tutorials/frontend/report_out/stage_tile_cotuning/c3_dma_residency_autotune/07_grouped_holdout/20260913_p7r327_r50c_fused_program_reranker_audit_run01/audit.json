@@ -1,0 +1,66 @@
+{
+  "auditor_source_sha256": "64693e21e5bf54e987d97146663b94fa2546569d3876c8a576fd036199cd90a0",
+  "board_evidence": {
+    "all_outputs_equal": true,
+    "all_outputs_nonzero": true,
+    "boot_id": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+    "correctness_calls": 6,
+    "fused_tir_prediction_exact": true,
+    "timing_calls": 14
+  },
+  "bound_inputs": {
+    "board_artifact_manifest_sha256": "2c4f14f285aafccad1cfd5397d0ecd9bdc2a5cc5049982f6a24a018672d64a50",
+    "board_summary_sha256": "1ebce0692744780cebf9c4d519e88ad5a93ec083ddc9748fcbeb1083261bb963",
+    "contract_artifact_manifest_sha256": "39b828847f3b6084a34c7464b81b42d32b49627e3553f1d6f616db8053897ac2",
+    "contract_sha256": "c4f7e2cb9e59950c1be9ffd2a53a73ba26bca7abbb01cb298037e8772787e9b5"
+  },
+  "claim_boundary": "One prospective conflict pair on one ResNet50 workload/model/boot. It rejects universal calibration of the P7R166 scalar but does not prove Pareto escalation optimal or characterize physical AXI service time.",
+  "failed_attempt_diagnosis": {
+    "correctness_delta_matches_one_execution": true,
+    "failed_artifact_sha256": {
+      "contract.json": "f1ee178a7138a833298919c2cd55dbaaa4e072099069572e779e00f4c0e68391",
+      "correctness.json": "cf16fb27eaa29b11579be0c5f64e38ff89cab0c0123d4b9463ed445d71c983f3",
+      "parameter_equivalence.json": "51db55464c465d16dd2af88b919ffadf0b7735a4b1a3d2582402120854a46ca6",
+      "timing.jsonl": "f47322f31e0579dd551f2c5ea0dec7cd0dbeed5f890aea2356cff90aa79cbc66"
+    },
+    "repair": "divide timed profiler counts by two; selection rule unchanged",
+    "timed_raw_delta_is_exactly_two_executions": true
+  },
+  "median_latency_ms": {
+    "tile_a:input_stationary": 375.139952,
+    "tile_b:input_stationary": 350.550236
+  },
+  "method_consequence": "Do not treat a frozen scalar request penalty as universally calibrated. When bytes and calls disagree, retain both Pareto-incomparable programs and escalate fidelity; static elimination is safe only under joint dominance.",
+  "program_static_metrics": [
+    {
+      "candidate_id": "85a83262388fa22c68206ee0b7fc52d8dfa20b7276fc3c8f7daba4e58bf78b89",
+      "dma_bytes": 38097920,
+      "dma_calls": 980,
+      "program_id": "tile_a:input_stationary",
+      "service_score_byte_equivalent": 102323200
+    },
+    {
+      "candidate_id": "b0d72f563d1d9aa186c8e7b244aeab2321491fad17af61e1c9d040bd1d52f470",
+      "dma_bytes": 6517760,
+      "dma_calls": 2900,
+      "program_id": "tile_b:input_stationary",
+      "service_score_byte_equivalent": 196572160
+    }
+  ],
+  "schema": "c3_vta_fused_program_reranker_holdout_audit_v1",
+  "selection": {
+    "bytes_only": "tile_b:input_stationary",
+    "bytes_only_correct": true,
+    "fpga_oracle": "tile_b:input_stationary",
+    "frozen_service_proxy": "tile_a:input_stationary",
+    "paired_rounds": 7,
+    "service_proxy_correct": false,
+    "service_proxy_paired_wins": 0,
+    "service_proxy_regret_percent": 7.01460546156929
+  },
+  "status": "prospective_fixed_proxy_failure_supports_conflict_escalation",
+  "verified_artifact_counts": {
+    "board_result": 7,
+    "contract": 2
+  }
+}

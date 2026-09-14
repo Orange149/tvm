@@ -1,0 +1,247 @@
+{
+  "all_correctness_outputs_nonzero": true,
+  "all_variant_outputs_equal": true,
+  "balanced_orders": [
+    [
+      "stock_all",
+      "y00_input_only",
+      "y02_weight_only",
+      "y00_input_y02_weight"
+    ],
+    [
+      "y00_input_only",
+      "y02_weight_only",
+      "y00_input_y02_weight",
+      "stock_all"
+    ],
+    [
+      "y02_weight_only",
+      "y00_input_y02_weight",
+      "stock_all",
+      "y00_input_only"
+    ],
+    [
+      "y00_input_y02_weight",
+      "stock_all",
+      "y00_input_only",
+      "y02_weight_only"
+    ],
+    [
+      "y00_input_y02_weight",
+      "y02_weight_only",
+      "y00_input_only",
+      "stock_all"
+    ],
+    [
+      "stock_all",
+      "y00_input_y02_weight",
+      "y02_weight_only",
+      "y00_input_only"
+    ],
+    [
+      "y00_input_only",
+      "stock_all",
+      "y00_input_y02_weight",
+      "y02_weight_only"
+    ],
+    [
+      "y02_weight_only",
+      "y00_input_only",
+      "stock_all",
+      "y00_input_y02_weight"
+    ]
+  ],
+  "board_after": {
+    "BOOT": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+    "FPGA": "operating",
+    "RPC_CWD": "/var/volatile/vta_c3_ram/runtime_allocdiag_v2",
+    "RPC_PID": "5476",
+    "STORAGE_ERRORS": [],
+    "UDMABUF": "201326592"
+  },
+  "boot_id": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+  "claim_boundary": "Full YOLO 2x2 route factorial; logical VTA DMA rather than physical AXI; no mAP and no cross-boot graph claim",
+  "correctness_calls": 12,
+  "factor_definition": {
+    "variant_bits": {
+      "stock_all": [
+        0,
+        0
+      ],
+      "y00_input_only": [
+        1,
+        0
+      ],
+      "y00_input_y02_weight": [
+        1,
+        1
+      ],
+      "y02_weight_only": [
+        0,
+        1
+      ]
+    },
+    "y00_input": {
+      "candidate_id": "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c",
+      "workload_id": "Y00"
+    },
+    "y02_weight": {
+      "candidate_id": "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+      "workload_id": "Y02"
+    }
+  },
+  "image_sha256": "cdcbab947e46110fc2b77784ac54ddbbab2640f1e44cb5e91fc8984a9793a7d1",
+  "latency_effects": {
+    "interaction_ms": 1.4509194999999409,
+    "y00_with_y02_ms": -2.846398000000022,
+    "y00_without_y02_ms": -4.297317499999963,
+    "y02_with_y00_ms": 79.27643799999998,
+    "y02_without_y00_ms": 77.82551850000004
+  },
+  "median_latency_ms": {
+    "stock_all": 272.75834699999996,
+    "y00_input_only": 268.4610295,
+    "y00_input_y02_weight": 347.7374675,
+    "y02_weight_only": 350.5838655
+  },
+  "median_runtime_profiles": {
+    "stock_all": {
+      "driver_run_calls": 24.0,
+      "driver_run_insns": 78520.0,
+      "load_buffer_2d_bytes": 86233856.0,
+      "load_buffer_2d_calls": 39876.0,
+      "load_buffer_2d_inp_bytes": 50925568.0,
+      "load_buffer_2d_inp_calls": 18484.0,
+      "load_buffer_2d_wgt_bytes": 35116032.0,
+      "load_buffer_2d_wgt_calls": 18484.0,
+      "store_buffer_2d_bytes": 6792448.0,
+      "store_buffer_2d_calls": 2908.0,
+      "synchronize_calls": 24.0
+    },
+    "y00_input_only": {
+      "driver_run_calls": 24.0,
+      "driver_run_insns": 72888.0,
+      "load_buffer_2d_bytes": 83269632.0,
+      "load_buffer_2d_calls": 38160.0,
+      "load_buffer_2d_inp_bytes": 49069568.0,
+      "load_buffer_2d_inp_calls": 17912.0,
+      "load_buffer_2d_wgt_bytes": 34037760.0,
+      "load_buffer_2d_wgt_calls": 17912.0,
+      "store_buffer_2d_bytes": 6792448.0,
+      "store_buffer_2d_calls": 2440.0,
+      "synchronize_calls": 24.0
+    },
+    "y00_input_y02_weight": {
+      "driver_run_calls": 56.0,
+      "driver_run_insns": 87064.0,
+      "load_buffer_2d_bytes": 84320256.0,
+      "load_buffer_2d_calls": 42320.0,
+      "load_buffer_2d_inp_bytes": 55410176.0,
+      "load_buffer_2d_inp_calls": 24824.0,
+      "load_buffer_2d_wgt_bytes": 28729344.0,
+      "load_buffer_2d_wgt_calls": 14872.0,
+      "store_buffer_2d_bytes": 6792448.0,
+      "store_buffer_2d_calls": 2728.0,
+      "synchronize_calls": 56.0
+    },
+    "y02_weight_only": {
+      "driver_run_calls": 56.0,
+      "driver_run_insns": 92696.0,
+      "load_buffer_2d_bytes": 87284480.0,
+      "load_buffer_2d_calls": 44036.0,
+      "load_buffer_2d_inp_bytes": 57266176.0,
+      "load_buffer_2d_inp_calls": 25396.0,
+      "load_buffer_2d_wgt_bytes": 29807616.0,
+      "load_buffer_2d_wgt_calls": 15444.0,
+      "store_buffer_2d_bytes": 6792448.0,
+      "store_buffer_2d_calls": 3196.0,
+      "synchronize_calls": 56.0
+    }
+  },
+  "model": "yolov3-tiny",
+  "output_count": 8,
+  "paired_wins": {
+    "y00_with_y02": 7,
+    "y00_without_y02": 8,
+    "y02_with_y00": 0,
+    "y02_without_y00": 0
+  },
+  "parameter_semantic_sha256": "e098f48c612ae953e5085dd6472b9b3c76ad1606ef5619ce67ec599782f62235",
+  "profile_counter_note": "The runtime time_evaluator path records two graph executions per timed call; divide counter values and effects by two for per-inference quantities",
+  "profile_effects": {
+    "y00_with_y02": {
+      "driver_run_calls": 0.0,
+      "driver_run_insns": -5632.0,
+      "load_buffer_2d_bytes": -2964224.0,
+      "load_buffer_2d_calls": -1716.0,
+      "load_buffer_2d_inp_bytes": -1856000.0,
+      "load_buffer_2d_inp_calls": -572.0,
+      "load_buffer_2d_wgt_bytes": -1078272.0,
+      "load_buffer_2d_wgt_calls": -572.0,
+      "store_buffer_2d_bytes": 0.0,
+      "store_buffer_2d_calls": -468.0,
+      "synchronize_calls": 0.0
+    },
+    "y00_without_y02": {
+      "driver_run_calls": 0.0,
+      "driver_run_insns": -5632.0,
+      "load_buffer_2d_bytes": -2964224.0,
+      "load_buffer_2d_calls": -1716.0,
+      "load_buffer_2d_inp_bytes": -1856000.0,
+      "load_buffer_2d_inp_calls": -572.0,
+      "load_buffer_2d_wgt_bytes": -1078272.0,
+      "load_buffer_2d_wgt_calls": -572.0,
+      "store_buffer_2d_bytes": 0.0,
+      "store_buffer_2d_calls": -468.0,
+      "synchronize_calls": 0.0
+    },
+    "y02_with_y00": {
+      "driver_run_calls": 32.0,
+      "driver_run_insns": 14176.0,
+      "load_buffer_2d_bytes": 1050624.0,
+      "load_buffer_2d_calls": 4160.0,
+      "load_buffer_2d_inp_bytes": 6340608.0,
+      "load_buffer_2d_inp_calls": 6912.0,
+      "load_buffer_2d_wgt_bytes": -5308416.0,
+      "load_buffer_2d_wgt_calls": -3040.0,
+      "store_buffer_2d_bytes": 0.0,
+      "store_buffer_2d_calls": 288.0,
+      "synchronize_calls": 32.0
+    },
+    "y02_without_y00": {
+      "driver_run_calls": 32.0,
+      "driver_run_insns": 14176.0,
+      "load_buffer_2d_bytes": 1050624.0,
+      "load_buffer_2d_calls": 4160.0,
+      "load_buffer_2d_inp_bytes": 6340608.0,
+      "load_buffer_2d_inp_calls": 6912.0,
+      "load_buffer_2d_wgt_bytes": -5308416.0,
+      "load_buffer_2d_wgt_calls": -3040.0,
+      "store_buffer_2d_bytes": 0.0,
+      "store_buffer_2d_calls": 288.0,
+      "synchronize_calls": 32.0
+    }
+  },
+  "profile_interaction": {
+    "driver_run_calls": 0.0,
+    "driver_run_insns": 0.0,
+    "load_buffer_2d_bytes": 0.0,
+    "load_buffer_2d_calls": 0.0,
+    "load_buffer_2d_inp_bytes": 0.0,
+    "load_buffer_2d_inp_calls": 0.0,
+    "load_buffer_2d_wgt_bytes": 0.0,
+    "load_buffer_2d_wgt_calls": 0.0,
+    "store_buffer_2d_bytes": 0.0,
+    "store_buffer_2d_calls": 0.0,
+    "synchronize_calls": 0.0
+  },
+  "rpc_environment": {
+    "VTA_INSN_BUFFER_BYTES": 155648,
+    "VTA_QUEUE_DIAGNOSTICS": 1,
+    "VTA_REPLAY_POLICY": "disabled",
+    "VTA_UOP_BUFFER_BYTES": 8192
+  },
+  "schema": "c3_vta_yolov3_tiny_route_factorial_board_v1",
+  "status": "yolov3_tiny_two_route_factorial_board_complete",
+  "timing_calls": 32
+}

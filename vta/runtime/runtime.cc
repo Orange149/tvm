@@ -25,6 +25,7 @@
  *  stream spec as specified in hw_spec.h
  */
 #include "runtime.h"
+#include "queue_capacity.h"
 
 #include <chrono>
 #include <dmlc/logging.h>
@@ -40,6 +41,7 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <cctype>
 #include <cstdint>
 #include <cstdarg>
 #include <cstdio>
@@ -52,6 +54,17 @@
 #include <thread>
 #include <unordered_map>
 #include <vector>
+
+// Optional AXU5EVB diagnostic ABI.  Other VTA drivers need not implement it;
+// querying the registered function then fails explicitly instead of imposing a
+// link-time dependency.  A successful query does not initialize or allocate
+// the u-dma-buf pool.
+#if defined(__GNUC__) || defined(__clang__)
+extern "C" int VTAMemAllocationSnapshotV1(uint64_t* fields, size_t count)
+    __attribute__((weak));
+#else
+extern "C" int VTAMemAllocationSnapshotV1(uint64_t* fields, size_t count);
+#endif
 
 namespace vta {
 
@@ -1285,6 +1298,12 @@ class UopKernel {
 template <class T>
 class BaseQueue {
  public:
+  struct TransferTiming {
+    double pack_us{0}, copy_us{0}, cache_us{0};
+  };
+  TransferTiming transfer_timing;
+  size_t capacity() const { return capacity_bytes_; }
+  void CheckCapacity(size_t bytes) const { queue_capacity::RequireFits(bytes, capacity_bytes_); }
   virtual ~BaseQueue() {
     if (fpga_buff_ != nullptr) {
       VTAMemFree(fpga_buff_);
@@ -1301,6 +1320,7 @@ class BaseQueue {
   bool pending() const { return sram_begin_ != sram_end_; }
   /*! \brief Initialize the space of the buffer. */
   void InitSpace(uint32_t elem_bytes, uint32_t max_bytes, bool coherent, bool always_cache) {
+    capacity_bytes_ = max_bytes;
     coherent_ = coherent;
     always_cache_ = always_cache;
     elem_bytes_ = elem_bytes;
@@ -1327,6 +1347,7 @@ class BaseQueue {
   }
 
  protected:
+  size_t capacity_bytes_{0};
   // Cache coherence access (shared memory only)
   bool coherent_{false};
   // Make the buffer cacheable
@@ -1351,7 +1372,15 @@ class BaseQueue {
 template <int kMaxBytes, bool kCoherent, bool kAlwaysCache>
 class UopQueue : public BaseQueue<VTAUop> {
  public:
-  void InitSpace() { BaseQueue::InitSpace(kElemBytes, kMaxBytes, kCoherent, kAlwaysCache); }
+  void InitSpace() {
+    BaseQueue::InitSpace(kElemBytes, queue_capacity::FromEnv("VTA_UOP_BUFFER_BYTES", kMaxBytes),
+                         kCoherent, kAlwaysCache);
+  }
+  size_t SerializedSize() const {
+    size_t bytes = 0;
+    for (const UopKernel* kernel : cache_) bytes += kernel->size() * kElemBytes;
+    return bytes;
+  }
   // Push data to the queue
   template <typename FAutoSync>
   void Push(UopKernel* kernel, FAutoSync fautosync) {
@@ -1432,6 +1461,10 @@ class UopQueue : public BaseQueue<VTAUop> {
   void ReadBarrier() {
     CHECK(fpga_buff_ != nullptr);
     CHECK(fpga_buff_phy_);
+    CheckCapacity(SerializedSize());
+    transfer_timing = {};
+    const bool diagnostic = queue_capacity::DiagnosticEnabled();
+    double phase_start = diagnostic ? NowMicros() : 0;
     // Iterate over caches; allocate buffer in FPGA-readable memory
     uint32_t buff_size = 0;
     for (uint32_t i = 0; i < cache_.size(); ++i) {
@@ -1453,14 +1486,19 @@ class UopQueue : public BaseQueue<VTAUop> {
       memcpy(lbuf + offset, cache_[i]->data(), ksize);
       offset += ksize;
     }
+    if (diagnostic) { transfer_timing.pack_us = NowMicros() - phase_start; phase_start = NowMicros(); }
     VTAMemCopyFromHost(static_cast<char*>(fpga_buff_), lbuf, total_size);
+    if (diagnostic) { transfer_timing.copy_us = NowMicros() - phase_start; phase_start = NowMicros(); }
     free(lbuf);
+    // Free is host preparation, not cache maintenance.
+    if (diagnostic) { transfer_timing.pack_us += NowMicros() - phase_start; phase_start = NowMicros(); }
 
     // Flush if we're using a shared memory system
     // and if interface is non-coherent
     if (!coherent_ && always_cache_) {
       VTAFlushCache(fpga_buff_, fpga_buff_phy_, offset);
     }
+    if (diagnostic) transfer_timing.cache_us = NowMicros() - phase_start;
   }
 
   std::vector<char> SerializeCacheBytes() const {
@@ -1479,6 +1517,7 @@ class UopQueue : public BaseQueue<VTAUop> {
   }
 
   void LoadSerializedBytes(const std::vector<char>& bytes) {
+    CheckCapacity(bytes.size());
     if (bytes.empty()) return;
     CHECK_LE(bytes.size(), static_cast<size_t>(kMaxBytes));
     VTAMemCopyFromHost(fpga_buff_, bytes.data(), bytes.size());
@@ -1528,7 +1567,8 @@ class InsnQueue : public BaseQueue<VTAGenericInsn> {
  public:
   /*! \brief Initialize the space. */
   void InitSpace() {
-    BaseQueue::InitSpace(kElemBytes, kMaxBytes, kCoherent, kAlwaysCache);
+    BaseQueue::InitSpace(kElemBytes, queue_capacity::FromEnv("VTA_INSN_BUFFER_BYTES", kMaxBytes),
+                         kCoherent, kAlwaysCache);
     // Initialize the stage
     std::fill(pending_pop_prev_, pending_pop_prev_ + 4, 0);
     std::fill(pending_pop_next_, pending_pop_next_ + 4, 0);
@@ -1842,6 +1882,37 @@ class InsnQueue : public BaseQueue<VTAGenericInsn> {
     }
     return false;
   }
+  bool DependencyTokensClosed() {
+    queue_capacity::DependencyBalance balance;
+    for (auto& generic : dram_buffer_) {
+      auto* insn = reinterpret_cast<VTAMemInsn*>(&generic);
+      int stage = insn->opcode == VTA_OPCODE_FINISH ? kComputeStage : GetPipelineStageAll(insn);
+      balance.Add(stage, insn->pop_prev_dep, insn->pop_next_dep,
+                  insn->push_prev_dep, insn->push_next_dep);
+    }
+    return balance.Closed();
+  }
+  // Host-only copy: fpga_buff_ stays null, so no u-dma-buf allocation/ownership alias.
+  // Mirrors normal (non-force-serial) Synchronize finalization. Closure alone is NOT safety.
+  bool ClosureAfterNormalDrain(size_t* finalized_bytes = nullptr, uint64_t* byte_hash = nullptr) {
+    InsnQueue scratch;
+    scratch.dram_buffer_.resize(dram_buffer_.size());
+    if (!dram_buffer_.empty()) {
+      std::memcpy(scratch.dram_buffer_.data(), dram_buffer_.data(),
+                  dram_buffer_.size() * sizeof(VTAGenericInsn));
+    }
+    std::copy(pending_pop_prev_, pending_pop_prev_ + 4, scratch.pending_pop_prev_);
+    std::copy(pending_pop_next_, pending_pop_next_ + 4, scratch.pending_pop_next_);
+    scratch.DepPush(kStoreStage, kComputeStage);
+    scratch.DepPush(kLoadStage, kComputeStage);
+    scratch.DepPop(kStoreStage, kComputeStage);
+    scratch.DepPop(kLoadStage, kComputeStage);
+    scratch.CommitPendingPop(kComputeStage);
+    scratch.CreateGemInsn()->opcode = VTA_OPCODE_FINISH;
+    if (finalized_bytes) *finalized_bytes = scratch.count() * sizeof(VTAGenericInsn);
+    if (byte_hash) *byte_hash = queue_capacity::ByteHash(scratch.data(), scratch.count() * sizeof(VTAGenericInsn));
+    return !scratch.PendingPop() && scratch.DependencyTokensClosed();
+  }
   void AutoReadBarrier() { ReadBarrier(); }
   /*! \brief Writer barrier to make sure that data written by CPU is visible to VTA. */
   void ReadBarrier() {
@@ -1849,13 +1920,19 @@ class InsnQueue : public BaseQueue<VTAGenericInsn> {
     CHECK(fpga_buff_phy_);
     uint32_t buff_size = dram_buffer_.size() * elem_bytes_;
     CHECK(buff_size <= kMaxBytes);
+    CheckCapacity(buff_size);
+    transfer_timing = {};
+    const bool diagnostic = queue_capacity::DiagnosticEnabled();
+    double phase_start = diagnostic ? NowMicros() : 0;
     // Copy contents of DRAM buffer to FPGA buff
     VTAMemCopyFromHost(fpga_buff_, dram_buffer_.data(), buff_size);
+    if (diagnostic) { transfer_timing.copy_us = NowMicros() - phase_start; phase_start = NowMicros(); }
     // Flush if we're using a shared memory system
     // and if interface is non-coherent
     if (!coherent_ && always_cache_) {
       VTAFlushCache(fpga_buff_, fpga_buff_phy_, buff_size);
     }
+    if (diagnostic) transfer_timing.cache_us = NowMicros() - phase_start;
   }
 
   std::vector<char> SerializeBytes() const {
@@ -1864,6 +1941,7 @@ class InsnQueue : public BaseQueue<VTAGenericInsn> {
   }
 
   void LoadSerializedBytes(const std::vector<char>& bytes) {
+    CheckCapacity(bytes.size());
     if (bytes.empty()) return;
     CHECK_EQ(bytes.size() % sizeof(VTAGenericInsn), 0U);
     CHECK_LE(bytes.size(), static_cast<size_t>(kMaxBytes));
@@ -1995,6 +2073,26 @@ class CommandQueue {
 
   CommandQueue() { this->InitSpace(); }
   void InitSpace() {
+    queue_capacity::FromEnv("VTA_UOP_BUFFER_BYTES", VTA_MAX_XFER);
+    queue_capacity::FromEnv("VTA_INSN_BUFFER_BYTES", VTA_MAX_XFER);
+    insn_submit_threshold_bytes_ = queue_capacity::SubmitThresholdFromEnv(
+        VTA_MAX_XFER, sizeof(VTAGenericInsn), &insn_submit_threshold_configured_);
+    const char* manifest_id = getenv("VTA_COMMAND_MANIFEST_ID");
+    command_manifest_id_ = manifest_id == nullptr ? "" : manifest_id;
+    if (!command_manifest_id_.empty()) {
+      CHECK_EQ(command_manifest_id_.size(), 64U) << "VTA_COMMAND_MANIFEST_ID must be SHA-256 hex";
+      CHECK(std::all_of(command_manifest_id_.begin(), command_manifest_id_.end(), [](char ch) {
+        return std::isdigit(static_cast<unsigned char>(ch)) || (ch >= 'a' && ch <= 'f');
+      })) << "VTA_COMMAND_MANIFEST_ID must be lowercase SHA-256 hex";
+    }
+    const char* replay_policy = getenv("VTA_REPLAY_POLICY");
+    replay_policy_ = replay_policy == nullptr ? "enabled" : replay_policy;
+    CHECK(replay_policy_ == "enabled" || replay_policy_ == "disabled")
+        << "VTA_REPLAY_POLICY must be enabled or disabled";
+    if (!command_manifest_id_.empty()) {
+      CHECK(replay_policy != nullptr)
+          << "manifest-bound execution requires an explicit VTA_REPLAY_POLICY";
+    }
     RuntimeTrace("CommandQueue::InitSpace begin");
     uop_queue_.InitSpace();
     RuntimeTrace("CommandQueue::InitSpace uop_queue done");
@@ -2006,6 +2104,22 @@ class CommandQueue {
   }
 
   ~CommandQueue() { VTADeviceFree(device_); }
+
+  std::string CapacityStatusJSON() const {
+    std::ostringstream os;
+    os << "{\"schema\":\"vta_queue_capacity_status_v1\""
+       << ",\"insn_capacity_bytes\":" << insn_queue_.capacity()
+       << ",\"uop_capacity_bytes\":" << uop_queue_.capacity()
+       << ",\"insn_peak_bytes\":" << queue_insn_peak_
+       << ",\"uop_peak_bytes\":" << queue_uop_peak_
+       << ",\"submissions\":" << queue_submit_count_
+       << ",\"insn_submit_threshold_bytes\":" << insn_submit_threshold_bytes_
+       << ",\"insn_submit_threshold_configured\":"
+       << (insn_submit_threshold_configured_ ? "true" : "false")
+       << ",\"command_manifest_id\":" << JSONQuote(command_manifest_id_)
+       << ",\"replay_policy\":" << JSONQuote(replay_policy_) << "}";
+    return os.str();
+  }
 
   uint32_t GetElemBytes(uint32_t memory_id) {
     uint32_t elem_bytes = 0;
@@ -2132,11 +2246,13 @@ class CommandQueue {
   void DepPush(int from_qid, int to_qid) {
     if (mode_ == ReplayMode::kReplay) return;
     insn_queue_.DepPush(from_qid, to_qid);
+    AuditBoundary();
   }
 
   void DepPop(int from_qid, int to_qid) {
     if (mode_ == ReplayMode::kReplay) return;
     insn_queue_.DepPop(from_qid, to_qid);
+    AuditBoundary();
   }
 
   void ReadBarrier(void* buffer, uint32_t elem_bits, uint32_t start, uint32_t extent) {
@@ -2168,6 +2284,34 @@ class CommandQueue {
       this->ResetTemplateMode();
       return;
     }
+    const bool queue_diagnostic = queue_capacity::DiagnosticEnabled();
+    uint64_t audited_final_hash = 0;
+    if (queue_capacity::BoundaryAuditEnabled()) {
+      CHECK_EQ(debug_flag_ & VTA_DEBUG_FORCE_SERIAL, 0) << "drain audit requires normal finalization";
+      size_t full_finalized_bytes = 0;
+      bool full_closed = insn_queue_.ClosureAfterNormalDrain(&full_finalized_bytes, &audited_final_hash);
+      for (size_t i = 0; i < 4; ++i) {
+        std::fprintf(stderr, "[VTA_BOUNDARY] {\"threshold\":%zu,\"raw_batch_bytes\":%zu,"
+                     "\"visited\":%llu,\"pending_pop\":%llu,\"open_tokens\":%llu,"
+                     "\"pending_uop\":%llu,\"closure_candidates\":%llu,\"drain_closed_candidates\":%llu,"
+                     "\"minimum_finalized_candidate_bytes\":%zu,\"full_finalized_bytes\":%zu,"
+                     "\"full_batch_drain_closed\":%s,\"runtime_qualified\":false}\n",
+                     audit_thresholds_[i], insn_queue_.count() * sizeof(VTAGenericInsn),
+                     static_cast<unsigned long long>(audit_visited_[i]),
+                     static_cast<unsigned long long>(audit_pending_pop_[i]),
+                     static_cast<unsigned long long>(audit_open_tokens_[i]),
+                     static_cast<unsigned long long>(audit_pending_uop_[i]),
+                     static_cast<unsigned long long>(audit_closed_[i]),
+                     static_cast<unsigned long long>(audit_drain_closed_[i]),
+                     audit_min_finalized_[i] == ~size_t(0) ? 0 : audit_min_finalized_[i],
+                     full_finalized_bytes, full_closed ? "true" : "false");
+      }
+      audit_visited_.fill(0); audit_pending_pop_.fill(0); audit_open_tokens_.fill(0);
+      audit_pending_uop_.fill(0); audit_closed_.fill(0);
+      audit_drain_closed_.fill(0);
+      audit_min_finalized_.fill(~size_t(0));
+    }
+    double finalize_start = queue_diagnostic ? NowMicros() : 0;
     // Insert dependences to force serialization
     if (debug_flag_ & VTA_DEBUG_FORCE_SERIAL) {
       insn_queue_.RewriteForceSerial();
@@ -2191,6 +2335,16 @@ class CommandQueue {
       return;
     }
     // Synchronization for the queues
+    const size_t serialized_uop_bytes = uop_queue_.SerializedSize();
+    const size_t serialized_insn_bytes = insn_queue_.count() * sizeof(VTAGenericInsn);
+    if (queue_capacity::BoundaryAuditEnabled()) {
+      CHECK_EQ(audited_final_hash, queue_capacity::ByteHash(insn_queue_.data(), serialized_insn_bytes))
+          << "host-only drain copy does not match actual Synchronize tail";
+    }
+    // Check BOTH buffers before writing either, including the appended FINISH.
+    uop_queue_.CheckCapacity(serialized_uop_bytes);
+    insn_queue_.CheckCapacity(serialized_insn_bytes);
+    double finalize_us = queue_diagnostic ? NowMicros() - finalize_start : 0;
     uop_queue_.AutoReadBarrier();
     insn_queue_.AutoReadBarrier();
     // Dump instructions if debug enabled
@@ -2208,8 +2362,31 @@ class CommandQueue {
     VTADriverProfilerStatus(&driver_before);
     double t0 = NowMicros();
     int timeout = VTADeviceRun(device_, insn_queue_.dram_phy_addr(), insn_count, wait_cycles);
+    double device_run_us = queue_diagnostic ? NowMicros() - t0 : 0;
     VTADriverProfilerStats driver_after{};
     VTADriverProfilerStatus(&driver_after);
+    if (queue_diagnostic) {
+      queue_insn_peak_ = std::max(queue_insn_peak_, serialized_insn_bytes);
+      queue_uop_peak_ = std::max(queue_uop_peak_, serialized_uop_bytes);
+      auto delta = DiffDriverStats(driver_after, driver_before);
+      std::fprintf(stderr, "[VTA_QUEUE] {\"submit\":%llu,\"queue_id\":\"%p\","
+          "\"reason\":\"%s\",\"insn_capacity\":%zu,\"uop_capacity\":%zu,"
+          "\"submit_threshold\":%zu,\"submit_threshold_configured\":%s,"
+          "\"insn_bytes\":%zu,\"uop_bytes\":%zu,\"insn_peak\":%zu,\"uop_peak\":%zu,"
+          "\"load_bytes\":%zu,\"store_bytes\":%zu,\"finalize_us\":%.3f,"
+          "\"uop_pack_us\":%.3f,\"uop_copy_us\":%.3f,\"insn_copy_us\":%.3f,"
+          "\"queue_cache_us\":%.3f,\"device_run_us\":%.3f,\"submit_mmio_us\":%.3f,"
+          "\"poll_wait_us\":%.3f,\"timeout\":%d}\n",
+          static_cast<unsigned long long>(++queue_submit_count_), static_cast<void*>(this),
+          queue_submit_reason_, insn_queue_.capacity(), uop_queue_.capacity(),
+          insn_submit_threshold_bytes_, insn_submit_threshold_configured_ ? "true" : "false",
+          serialized_insn_bytes, serialized_uop_bytes, queue_insn_peak_, queue_uop_peak_,
+          pending_load_bytes_, pending_store_bytes_, finalize_us,
+          uop_queue_.transfer_timing.pack_us, uop_queue_.transfer_timing.copy_us,
+          insn_queue_.transfer_timing.copy_us,
+          uop_queue_.transfer_timing.cache_us + insn_queue_.transfer_timing.cache_us,
+          device_run_us, delta.submit_mmio_us, delta.poll_wait_us, timeout);
+    }
     for (const auto& range : pending_store_ranges_) {
       if (std::get<0>(range) != nullptr) {
         std::get<0>(range)->MarkDeviceWrite(std::get<1>(range), std::get<2>(range));
@@ -2243,6 +2420,10 @@ class CommandQueue {
   void SetDebugFlag(int debug_flag) { debug_flag_ = debug_flag; }
 
   void BeginTemplateCapture(const std::string& label) {
+    CHECK_NE(replay_policy_, "disabled")
+        << "command-template capture is disabled by the deployment manifest";
+    CHECK(!insn_submit_threshold_configured_)
+        << "early submission and command-template capture cannot be combined";
     mode_ = ReplayMode::kCapture;
     active_template_label_ = label;
     current_first_load_handle_ = 0;
@@ -2250,6 +2431,10 @@ class CommandQueue {
   }
 
   void BeginTemplateReplay(const std::string& label) {
+    CHECK_NE(replay_policy_, "disabled")
+        << "command-template replay is disabled by the deployment manifest";
+    CHECK(!insn_submit_threshold_configured_)
+        << "early submission and command-template replay cannot be combined";
     active_template_label_ = label;
     auto it = captured_templates_.find(label);
     if (it == captured_templates_.end() || !it->second.valid()) {
@@ -2423,14 +2608,49 @@ class CommandQueue {
   }
 
   void CheckInsnOverFlow() {
+    AuditBoundary();
     // At each API call, we can at most commit:
     // at most: 2 NOP-COMPUTE-STAGE -> 2 NOP-MEMORY-STAGE -> 1 NOP-COMPUTE-STAGE -> 1 FINISH
-    if ((insn_queue_.count() + 6) * sizeof(VTAGenericInsn) > VTA_MAX_XFER) {
-      this->AutoSync();
+    const size_t required = (insn_queue_.count() + 6) * sizeof(VTAGenericInsn);
+    if (required > VTA_MAX_XFER) {
+      this->AutoSync("legacy_capacity_auto_sync");
+    } else if (queue_capacity::ShouldSubmitForThreshold(
+                   required, VTA_MAX_XFER, insn_submit_threshold_configured_,
+                   insn_submit_threshold_bytes_)) {
+      // Reuse the exact AutoSync path already required for queue overflow. The
+      // configurable threshold only changes when that established path fires.
+      this->AutoSync("threshold_auto_sync");
     }
   }
   // Auto sync when instruction overflow
-  void AutoSync() { this->Synchronize(1 << 31); }
+  void AutoSync(const char* reason = "legacy_uop_auto_sync") {
+    queue_submit_reason_ = reason;
+    this->Synchronize(1 << 31);
+    queue_submit_reason_ = "explicit_sync";
+  }
+
+  void AuditBoundary() {
+    if (!queue_capacity::BoundaryAuditEnabled() || mode_ != ReplayMode::kDisabled) return;
+    size_t bytes = insn_queue_.count() * sizeof(VTAGenericInsn);
+    if (bytes < audit_thresholds_.back()) return;
+    bool pending_pop = insn_queue_.PendingPop();
+    bool open = !insn_queue_.DependencyTokensClosed();
+    bool pending_uop = uop_queue_.pending();
+    size_t finalized_bytes = 0;
+    bool drain_closed = insn_queue_.ClosureAfterNormalDrain(&finalized_bytes);
+    for (size_t i = 0; i < 4; ++i) {
+      if (bytes < audit_thresholds_[i]) continue;
+      ++audit_visited_[i];
+      audit_pending_pop_[i] += pending_pop;
+      audit_open_tokens_[i] += open;
+      audit_pending_uop_[i] += pending_uop;
+      audit_closed_[i] += !pending_pop && !open && !pending_uop;
+      audit_drain_closed_[i] += drain_closed && !pending_uop;
+      if (drain_closed && !pending_uop) {
+        audit_min_finalized_[i] = std::min(audit_min_finalized_[i], finalized_bytes);
+      }
+    }
+  }
 
   void CaptureCurrentTemplate() {
     CapturedTemplate templ;
@@ -2451,6 +2671,8 @@ class CommandQueue {
     CHECK(it != captured_templates_.end());
     const CapturedTemplate& templ = it->second;
     CHECK(templ.valid());
+    uop_queue_.CheckCapacity(templ.uop_bytes.size());
+    insn_queue_.CheckCapacity(templ.insn_bytes.size());
     VTADriverProfilerStats driver_before{};
     VTADriverProfilerStatus(&driver_before);
     double t0 = NowMicros();
@@ -2484,6 +2706,19 @@ class CommandQueue {
   }
 
   // Internal debug flag
+  // Frozen Q0 peak 5312 B / (2,4,8,16), rounded down to 16-byte instructions.
+  const std::array<size_t, 4> audit_thresholds_{{2656, 1328, 656, 320}};
+  std::array<uint64_t, 4> audit_visited_{}, audit_pending_pop_{}, audit_open_tokens_{};
+  std::array<uint64_t, 4> audit_pending_uop_{}, audit_closed_{};
+  std::array<uint64_t, 4> audit_drain_closed_{};
+  std::array<size_t, 4> audit_min_finalized_{{~size_t(0), ~size_t(0), ~size_t(0), ~size_t(0)}};
+  size_t queue_insn_peak_{0}, queue_uop_peak_{0};
+  uint64_t queue_submit_count_{0};
+  const char* queue_submit_reason_{"explicit_sync"};
+  size_t insn_submit_threshold_bytes_{VTA_MAX_XFER};
+  bool insn_submit_threshold_configured_{false};
+  std::string command_manifest_id_;
+  std::string replay_policy_{"enabled"};
   int debug_flag_{0};
   // The kernel we are currently recording
   UopKernel* record_kernel_{nullptr};
@@ -2664,6 +2899,31 @@ TVM_REGISTER_GLOBAL("vta.runtime.replay_reset").set_body_typed([]() {
 
 TVM_REGISTER_GLOBAL("vta.runtime.replay_status").set_body_typed([]() {
   return vta::CommandQueue::ThreadLocal()->TemplateReplayStatusJSON();
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.queue_capacity_status").set_body_typed([]() {
+  return vta::CommandQueue::ThreadLocal()->CapacityStatusJSON();
+});
+
+TVM_REGISTER_GLOBAL("vta.runtime.udmabuf_allocation_snapshot").set_body_typed([]() {
+  uint64_t fields[8] = {};
+#if defined(__GNUC__) || defined(__clang__)
+  ICHECK(VTAMemAllocationSnapshotV1 != nullptr)
+      << "the active VTA driver does not expose the u-dma-buf allocation snapshot ABI";
+#endif
+  ICHECK_EQ(VTAMemAllocationSnapshotV1(fields, 8), 0)
+      << "VTAMemAllocationSnapshotV1 rejected the v1 field layout";
+  std::ostringstream os;
+  os << "{\"schema\":\"vta_udmabuf_allocation_snapshot_v1\""
+     << ",\"initialized\":" << fields[0]
+     << ",\"capacity_bytes\":" << fields[1]
+     << ",\"high_water_bytes\":" << fields[2]
+     << ",\"requested_bytes\":" << fields[3]
+     << ",\"padding_bytes\":" << fields[4]
+     << ",\"allocation_count\":" << fields[5]
+     << ",\"virtual_base\":" << fields[6]
+     << ",\"physical_base\":" << fields[7] << "}";
+  return os.str();
 });
 
 TVM_REGISTER_GLOBAL("vta.runtime.push_copy_scope").set_body_typed([](std::string scope) {

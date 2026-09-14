@@ -1,0 +1,162 @@
+{
+  "actual_geometry_reserved_source_count": 1,
+  "actual_geometry_reserved_sources": [
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/results.jsonl"
+  ],
+  "actual_geometry_signature": [
+    1,
+    128,
+    28,
+    28,
+    128,
+    3,
+    3,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "bindings": {
+    "local_manifest_sha256": "a2a6fb2bd8f3e5605e95d0750c7d5746aba72417c259b2cd1d0cbdf46eb785b1",
+    "policy_manifest_sha256": "48a3c3a43ef70f450dd8ac4f456fa3f63007e7b6f2714d054aba64a6d6841d50",
+    "resnet_source_sha256": "c2a33719c5e532df3577a72d6712bff82ffade203d4ff92e4b8c22d634d74191",
+    "target_manifest_sha256": "ec1b18ea23af0462acd9eb12992b87f7ee4e715dde65cd6f74434ae3f549465b"
+  },
+  "board_contacted": false,
+  "claim_boundary": "Derivation audit only. It creates no board, latency, correctness, search, or replacement-target result.",
+  "declared_explicit_conv": {
+    "ci": 128,
+    "co": 128,
+    "height": 56,
+    "kernel": 3,
+    "padding": 1,
+    "stride": 2,
+    "width": 56
+  },
+  "descendant_disposition": {
+    "local_qualification": "synthetic operator-only local evidence; must not be dispatched or reported as ResNet50",
+    "policy_contract": "must not be executed; bound to invalid target",
+    "target_contract": "invalid for a true ResNet50 layer claim; retained immutably"
+  },
+  "invalidated_source_layer": "stage2_unit1_conv2",
+  "invalidated_workload_id": "R50F",
+  "mismatches": {
+    "height": {
+      "declared": 56,
+      "model": 28
+    },
+    "stride": {
+      "declared": 2,
+      "model": 1
+    },
+    "width": {
+      "declared": 56,
+      "model": 28
+    }
+  },
+  "performance_labels_used": false,
+  "relay_infertype_geometry": {
+    "ci": 128,
+    "co": 128,
+    "height": 28,
+    "input_shape_nchw": [
+      1,
+      128,
+      28,
+      28
+    ],
+    "kernel": 3,
+    "output_shape_nchw": [
+      1,
+      128,
+      28,
+      28
+    ],
+    "padding": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "stride": 1,
+    "strides": [
+      1,
+      1
+    ],
+    "symmetric_padding": 1,
+    "weight_parameter": "stage2_unit1_conv2_weight",
+    "weight_shape_oihw": [
+      128,
+      128,
+      3,
+      3
+    ],
+    "width": 28
+  },
+  "replacement_geometry_signature": [
+    1,
+    256,
+    56,
+    56,
+    128,
+    1,
+    1,
+    2,
+    2,
+    0,
+    0,
+    0,
+    0
+  ],
+  "replacement_layer": "stage2_unit1_conv1",
+  "replacement_relay_infertype_geometry": {
+    "ci": 256,
+    "co": 128,
+    "height": 56,
+    "input_shape_nchw": [
+      1,
+      256,
+      56,
+      56
+    ],
+    "kernel": 1,
+    "output_shape_nchw": [
+      1,
+      128,
+      28,
+      28
+    ],
+    "padding": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "stride": 2,
+    "strides": [
+      2,
+      2
+    ],
+    "symmetric_padding": 0,
+    "weight_parameter": "stage2_unit1_conv1_weight",
+    "weight_shape_oihw": [
+      128,
+      256,
+      1,
+      1
+    ],
+    "width": 56
+  },
+  "replacement_reserved_source_count_before_new_freeze": 0,
+  "replacement_reserved_sources_before_new_freeze": [],
+  "schema": "c3_resnet50_geometry_misderivation_audit_v1",
+  "source_sha256": "17eb376aa949fa40196d847045257c4e1dea4eea42a5da1c98c8c5bff7c93e17",
+  "status": "target_invalidated_before_board_due_model_geometry_mismatch",
+  "verified_artifact_counts": {
+    "local": 9,
+    "policy": 2,
+    "target": 4
+  }
+}

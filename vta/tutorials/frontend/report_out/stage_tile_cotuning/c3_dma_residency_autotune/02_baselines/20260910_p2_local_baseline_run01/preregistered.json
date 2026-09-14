@@ -1,0 +1,26 @@
+{
+  "schema": "c3_p2_local_preregistration_v1",
+  "run_id": "20260910_p2_local_baseline_run01",
+  "phase": "P2_LOCAL",
+  "board_access": false,
+  "source_modification": false,
+  "claims_allowed": [
+    "TopHub file identity and frozen 10-workload coverage",
+    "original-template ConfigEntity recovery",
+    "local lowering/static-DMA reproducibility",
+    "local simulator or reference correctness where runnable",
+    "original schedule hash stability"
+  ],
+  "claims_forbidden": [
+    "current-board TopHub canary passed",
+    "topology-B 10.724 FPS recovered",
+    "G2 passed",
+    "board performance improvement"
+  ],
+  "stop_conditions": [
+    "TopHub hash differs from frozen manifest",
+    "any of 10 frozen workloads lacks an exact TopHub/config mapping",
+    "original schedule hash changes during the run",
+    "local dependency or simulator failure that requires source modification"
+  ]
+}

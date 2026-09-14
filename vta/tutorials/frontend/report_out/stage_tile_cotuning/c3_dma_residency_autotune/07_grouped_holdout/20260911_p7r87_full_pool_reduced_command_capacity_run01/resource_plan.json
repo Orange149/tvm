@@ -1,0 +1,70 @@
+{
+  "claim_boundary": "three workload families and 197 frozen static identities; local FSim capacity safety, not board allocator occupancy, dynamic-shape, stage latency, or FPS",
+  "finish_rule": "baseline peaks include the runtime-appended FINISH for every submission",
+  "formula": "C_q(S)=align_4KiB(max_{candidate in S, submit in candidate} bytes_q(candidate, submit))",
+  "identity_set_size": 197,
+  "input_guards": {
+    "baseline": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4j_full_pool_fsim_command_run02/results.jsonl",
+      "sha256": "7a875ed1d4d9404187e7976e53851fdea35c8b94117711d79200e5382499e179"
+    },
+    "p4b": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/results.jsonl",
+      "sha256": "cddcdc503163e1f4cfda1a53933d4577c804b6842be818e0bbb616a431b9d2d9"
+    },
+    "p4e": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4e_unified_local_qualification_run01/results.jsonl",
+      "sha256": "0ba3ab15b6bbdb45c36826891bcb601099376acfc626e9489788f5c40ebb1da4"
+    },
+    "p4g": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4g_weight_barrier_pool_run01/results.jsonl",
+      "sha256": "4fc76735aa2450621dbe5b461ae2da268847925ac7cbee2bb80ec475751b4f97"
+    },
+    "p4i": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4i_weight_barrier_cross_compile_run01/results.jsonl",
+      "sha256": "2de5d9094170539a097e88bd6e4189d0149de6155fbf9d6b5fe668a3a9184472"
+    }
+  },
+  "insn_capacity_bytes": 24576,
+  "insn_peak_bytes": 23008,
+  "invalidation_key": [
+    "hardware fingerprint",
+    "workload shape",
+    "residency mode",
+    "complete ConfigEntity",
+    "lowered TIR hash",
+    "runtime source hash"
+  ],
+  "legacy_total_capacity_bytes": 67108864,
+  "modes": [
+    "input_stationary",
+    "original",
+    "paper_inspired_hybrid",
+    "weight_stationary",
+    "weight_stationary_barrier"
+  ],
+  "requested_byte_reduction_fraction": 0.99945068359375,
+  "runtime_rule": "both instruction and UOP capacities are checked before device submission",
+  "schema": "c3_full_pool_command_resource_plan_v1",
+  "source_guards_sha256": {
+    "vta/runtime/queue_capacity.h": "81643e7584d5375c268dfaef6f6b88d6402a4d08ca4f2a1c50b68f04d0b224e4",
+    "vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711",
+    "vta/tutorials/frontend/collect_vta_full_pool_fsim_commands.py": "f5bdd98888f900dd2299786e00d12fdd1754e269ef2b46e4643ec2abe83cff7c"
+  },
+  "status": "frozen_before_reduced_capacity_validation",
+  "total_capacity_bytes": 36864,
+  "uop_capacity_bytes": 12288,
+  "uop_peak_bytes": 10820,
+  "workloads": [
+    "W00",
+    "W01",
+    "W02",
+    "W03",
+    "W04",
+    "W05",
+    "W06",
+    "W07",
+    "W08",
+    "W09"
+  ]
+}

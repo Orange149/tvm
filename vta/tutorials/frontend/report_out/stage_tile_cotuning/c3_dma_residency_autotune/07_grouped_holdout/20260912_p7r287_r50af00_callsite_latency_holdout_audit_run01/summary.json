@@ -1,0 +1,100 @@
+{
+  "auditor_source_sha256": "49aaf39dad10778c67441935be03474853004e6f2eae191361a1b7982f094c94",
+  "candidate_ids": [
+    "73aa97bd1989108f0d1fe089241ca12f3ffc07756c42f6d78cf2ca173afe969c",
+    "ea09328abc3e1e14129d29da989026db9a714762ae6c39c81c3f0def741440d2"
+  ],
+  "claim_boundary": "One additional tile on the same R50A workload, model and boot.  This confirms call-site/full-graph latency transfer under a prospective contract, not a new operator workload, cross-boot result, ImageNet accuracy, native AutoTVM call-site identity, or physical AXI traffic",
+  "graph_nodes": [
+    67,
+    80,
+    93
+  ],
+  "group_execution_reduction_percent": 66.66666666666667,
+  "group_median_latency_ms": {
+    "incumbent": 422.291663,
+    "proposal": 374.452164
+  },
+  "group_model_execution_calls": 20,
+  "group_paired_delta_ms": -47.839499000000046,
+  "group_paired_rounds": 7,
+  "group_paired_wins": 7,
+  "group_speedup_percent": 12.775863941862564,
+  "grouped_selected_mask": [
+    1,
+    1,
+    1
+  ],
+  "knobs": {
+    "h_nthread": 1,
+    "oc_nthread": 1,
+    "tile_b": 1,
+    "tile_ci": 8,
+    "tile_co": 2,
+    "tile_h": 1,
+    "tile_w": 7
+  },
+  "prospective_full_graph_dma_delta": {
+    "load_buffer_2d_acc_bytes": 0,
+    "load_buffer_2d_acc_calls": -1008,
+    "load_buffer_2d_bytes": -3612672,
+    "load_buffer_2d_calls": -9072,
+    "load_buffer_2d_inp_bytes": -3612672,
+    "load_buffer_2d_inp_calls": -4032,
+    "load_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_wgt_calls": -4032,
+    "store_buffer_2d_bytes": 0,
+    "store_buffer_2d_calls": 0
+  },
+  "raw_summary_boundary_correction": "The reused board executor emitted its older hard-coded 'second development domain/full-route exposed' claim_boundary.  Raw measurements are unchanged; the pre-board P7R281/P7R284/P7R285 hashes establish the narrower and accurate call-site/full-graph latency-holdout scope",
+  "schema": "c3_vta_r50af00_callsite_latency_holdout_audit_v1",
+  "scope": {
+    "full_graph_latency_unseen_before_contract": true,
+    "new_model_or_workload": false,
+    "new_tile": true,
+    "operator_correctness_previously_known": true,
+    "operator_latency_used_for_selection": false,
+    "partial_mask_latency_unseen_before_contract": true
+  },
+  "selected_family_id": "R50AF00",
+  "singleton_model_execution_calls": 60,
+  "singleton_results": [
+    {
+      "accepted": true,
+      "graph_node": 67,
+      "paired_delta_ms": -15.08832000000001,
+      "paired_wins": 7
+    },
+    {
+      "accepted": true,
+      "graph_node": 80,
+      "paired_delta_ms": -16.09854999999999,
+      "paired_wins": 7
+    },
+    {
+      "accepted": true,
+      "graph_node": 93,
+      "paired_delta_ms": -15.993310000000008,
+      "paired_wins": 7
+    }
+  ],
+  "singleton_selected_mask": [
+    1,
+    1,
+    1
+  ],
+  "source_hashes": {
+    "board_contract": "5fe0e8f04ed0f41084f24cbd7a8c1af349a9e04bb299a33468393f29e35e1267",
+    "board_summary": "2f1979a51d922467907cb8d83e5a9bcafbf6ccf5730228294eacf1bf8198c3bb",
+    "fused_contract": "b4afb198b12a78e91f170c4b369a9bc0be0ce91a1e4fdda8d57964695bc64346",
+    "holdout_contract": "84e02da387357b7f35dd60ab831f301c27a218ee574b7ae0eb47ca3c119f33c1",
+    "subset_manifest": "9832b7d447e790d0fe93948196c29ccddf1ff8c75fb7ca2ed5ccd0632b0463f4"
+  },
+  "status": "callsite_and_full_graph_latency_holdout_pass",
+  "verified_artifact_counts": {
+    "board": 11,
+    "build": 14,
+    "fused": 2,
+    "holdout": 2
+  }
+}

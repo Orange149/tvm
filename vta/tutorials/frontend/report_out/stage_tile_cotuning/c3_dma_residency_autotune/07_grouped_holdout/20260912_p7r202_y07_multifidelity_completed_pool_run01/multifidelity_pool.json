@@ -1,0 +1,1904 @@
+{
+  "claim_status": "strict_adaptive_prospective_first_wave_then_oracle_completion",
+  "frozen_before_target_labels": true,
+  "information_boundary": {
+    "after_fpga": "hardware correctness outcome and incurred resource cost",
+    "after_fsim": "command evidence and FSim outcome",
+    "after_lower": "exact lowered-TIR DMA/SRAM/request features and lower outcome",
+    "after_measure": "latency label",
+    "time_zero": "prelower.features only"
+  },
+  "manifest_binding": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r202_y07_multifidelity_completed_pool_run01/input_manifest.json",
+    "sha256": "8df935c21e7e598fdcb47764731e9c8c36b891a657e7d6371373913643d38450"
+  },
+  "pool_id": "P7R202-Y07-multifidelity-completed",
+  "schema": "c3_vta_multifidelity_pool_v1",
+  "workloads": {
+    "Y07": {
+      "candidate_count": 24,
+      "candidates": [
+        {
+          "candidate_id": "5bed20304c70a539509eddac94da625b5cd65f037c736e2489c9044951ee6964",
+          "family_id": "Y07F00",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 27.532358002645196
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 2.0,
+              "knob_tile_co": 16.0,
+              "knob_tile_h": 1.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 1.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 2.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 16.0,
+              "required_input_vectors": 18.0,
+              "required_weight_vectors": 288.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "original",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "d77dbbcca87488a45d849550908b030473ea180bca3379f1a1d02f9ea37099b4",
+          "family_id": "Y07F00",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 23.853977996623144
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 2.0,
+              "knob_tile_co": 16.0,
+              "knob_tile_h": 1.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 1.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 2.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 16.0,
+              "required_input_vectors": 18.0,
+              "required_weight_vectors": 288.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "input_stationary",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "7c92bceadac914ef7b848a12bf2e669e8a8fb95f02b4dc782d8507213faf8d5e",
+          "family_id": "Y07F00",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 18.381034999038093
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 2.0,
+              "knob_tile_co": 16.0,
+              "knob_tile_h": 1.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 1.0,
+              "opportunity_output_channel_outer_tiles": 2.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 16.0,
+              "required_input_vectors": 18.0,
+              "required_weight_vectors": 288.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "weight_resident_barrier",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "55b42a26479de5b7e883b1e736c1224ba0c5058823c6f7e5153791999b3f4344",
+          "family_id": "Y07F01",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 24.678710997250164
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 4.0,
+              "knob_tile_co": 16.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 1.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 2.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 208.0,
+              "required_input_vectors": 180.0,
+              "required_weight_vectors": 576.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "original",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "a21aa549ca8f782ebb514fe48adc127bf65287becbf980923fa12432a30b316a",
+          "family_id": "Y07F01",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 18.55328300007386
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 4.0,
+              "knob_tile_co": 16.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 1.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 2.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 208.0,
+              "required_input_vectors": 180.0,
+              "required_weight_vectors": 576.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "input_stationary",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "a4a57bea31830b996d60b25e29920b725b8b121aef4c57897931ddbf89d43c58",
+          "family_id": "Y07F01",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 18.543007001426304
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 4.0,
+              "knob_tile_co": 16.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 1.0,
+              "opportunity_output_channel_outer_tiles": 2.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 208.0,
+              "required_input_vectors": 180.0,
+              "required_weight_vectors": 576.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "weight_resident_barrier",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "77d0084203b6a29486cf071e69eebbdbd704a6c40449e3c912605a8fb00d217f",
+          "family_id": "Y07F02",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 23.568745000375202
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 8.0,
+              "knob_tile_co": 8.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 1.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 4.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 104.0,
+              "required_input_vectors": 360.0,
+              "required_weight_vectors": 576.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "original",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "245d34b2dfa9e44d7565b59bc84ecdb58fc61a4343ea4c8ccc1beaa089f12c98",
+          "family_id": "Y07F02",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 17.14828399781254
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 8.0,
+              "knob_tile_co": 8.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 1.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 4.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 104.0,
+              "required_input_vectors": 360.0,
+              "required_weight_vectors": 576.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "input_stationary",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "77405a7821fd8f0e7f62a33603aeb1d5e8cb809faeba216b4d8bb3575d4fc7cf",
+          "family_id": "Y07F02",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 18.10638299866696
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 8.0,
+              "knob_tile_co": 8.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 1.0,
+              "opportunity_output_channel_outer_tiles": 4.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 104.0,
+              "required_input_vectors": 360.0,
+              "required_weight_vectors": 576.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "weight_resident_barrier",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "f2700c985e0a43914d98e319f027a0071ee052e112d1adb331c4e51289adbed2",
+          "family_id": "Y07F03",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 22.018535000825068
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 16.0,
+              "knob_tile_co": 1.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 1.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 32.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 13.0,
+              "required_input_vectors": 720.0,
+              "required_weight_vectors": 144.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "original",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "21c54e0839578bb4ae63015111ecb6decc13d21d4d7328979ab9e110de7b55e5",
+          "family_id": "Y07F03",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 18.016466998233227
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 16.0,
+              "knob_tile_co": 1.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 1.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 32.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 13.0,
+              "required_input_vectors": 720.0,
+              "required_weight_vectors": 144.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "input_stationary",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "1767af77611d034ff1ece587737dc91d44caf9f13b1a11f761a72ba774cdfca8",
+          "family_id": "Y07F03",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 23.2596919995558
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 16.0,
+              "knob_tile_co": 1.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 1.0,
+              "opportunity_output_channel_outer_tiles": 32.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 13.0,
+              "required_input_vectors": 720.0,
+              "required_weight_vectors": 144.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "weight_resident_barrier",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "dbc519ce47a32e0104f0a23fa3523c9ee8d6d3091b9282e2c09bab45a51b20cc",
+          "family_id": "Y07F04",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 23.407586002576863
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 4.0,
+              "knob_tile_co": 4.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 1.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 8.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 52.0,
+              "required_input_vectors": 180.0,
+              "required_weight_vectors": 144.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "original",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "c1b207b4f54e226e69e244f9565ab209b4b19fe9e5de0ded4aa42e922085e3de",
+          "family_id": "Y07F04",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 17.298581999057205
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 4.0,
+              "knob_tile_co": 4.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 1.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 8.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 52.0,
+              "required_input_vectors": 180.0,
+              "required_weight_vectors": 144.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "input_stationary",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "17bc33fd6e37bae6150b96680194263d52e4834ba91c5386e2a87a04aede616a",
+          "family_id": "Y07F04",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 41.27924999920651
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 4.0,
+              "knob_tile_co": 4.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 1.0,
+              "opportunity_output_channel_outer_tiles": 8.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 52.0,
+              "required_input_vectors": 180.0,
+              "required_weight_vectors": 144.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "weight_resident_barrier",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "730e40e5091fd4c7d2ebc92a3a45f9e450c97081ca00e5e77ae8731dd37b60fd",
+          "family_id": "Y07F05",
+          "oracle": {
+            "latency_ms": 340.01527,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": null,
+                "status": "ok",
+                "wall_ms": 148.61046300211456
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 33462.0,
+                  "logical_vta_load_bytes": 600184320.0,
+                  "logical_vta_store_bytes": 259584.0
+                },
+                "reveal": null,
+                "status": "ok",
+                "wall_ms": 1797.709433005366
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "command_evidence_status": "available_three_seed_consistent",
+                  "failure_category": null,
+                  "features": {
+                    "drain_check_expected_residency_drain_count_from_p3e": 0.0,
+                    "drain_check_function_final_drain_count_assumed": 1.0,
+                    "drain_check_implementation_mode": 0.0,
+                    "drain_check_observed_residency_drain_count": 0.0,
+                    "finish_source_derived_count": 1.0,
+                    "peaks_insn_bytes": 292208.0,
+                    "peaks_uop_bytes": 80.0,
+                    "submissions": 1.0,
+                    "submit_reason_counts_explicit_sync": 1.0,
+                    "totals_insn_bytes": 292208.0,
+                    "totals_load_bytes": 200061440.0,
+                    "totals_store_bytes": 86528.0,
+                    "totals_uop_bytes": 80.0
+                  },
+                  "tir_sha256": "a7a49c3f0fdade89fd73515ec0f622aedd0e997d4679a1717051fbe414e2ed76"
+                },
+                "status": "ok",
+                "wall_ms": 690.561430001253
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": null,
+                  "features": {
+                    "accumulator_sram_headroom_vectors": 2032.0,
+                    "accumulator_sram_required_vectors": 16.0,
+                    "descriptor_rows": 11154.0,
+                    "expanded_dma_calls": 11154.0,
+                    "input_descriptor_calls": 5408.0,
+                    "input_dma_bytes": 700928.0,
+                    "input_dma_calls": 5408.0,
+                    "input_max_request_bytes": 144.0,
+                    "input_reload": 16.201183431952664,
+                    "input_sram_headroom_vectors": 2039.0,
+                    "input_sram_required_vectors": 9.0,
+                    "load_dma_bytes": 200061440.0,
+                    "load_dma_calls": 10816.0,
+                    "output_descriptor_calls": 338.0,
+                    "output_dma_bytes": 86528.0,
+                    "output_dma_calls": 338.0,
+                    "output_max_request_bytes": 256.0,
+                    "output_reload": 1.0,
+                    "padded_dma_calls": 1536.0,
+                    "small_dma_calls": 5746.0,
+                    "store_dma_bytes": 86528.0,
+                    "store_dma_calls": 338.0,
+                    "strided_dma_calls": 11154.0,
+                    "weight_descriptor_calls": 5408.0,
+                    "weight_dma_bytes": 199360512.0,
+                    "weight_dma_calls": 5408.0,
+                    "weight_max_request_bytes": 36864.0,
+                    "weight_reload": 169.0,
+                    "weight_sram_headroom_vectors": 880.0,
+                    "weight_sram_required_vectors": 144.0
+                  },
+                  "tir_sha256": "a7a49c3f0fdade89fd73515ec0f622aedd0e997d4679a1717051fbe414e2ed76"
+                },
+                "status": "ok",
+                "wall_ms": 2578.617932002089
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 22308.0,
+                  "logical_vta_load_bytes": 400122880.0,
+                  "logical_vta_store_bytes": 173056.0
+                },
+                "reveal": null,
+                "status": "ok",
+                "wall_ms": 948.3866839982511
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 1.0,
+              "knob_tile_co": 16.0,
+              "knob_tile_h": 1.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 1.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 2.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 16.0,
+              "required_input_vectors": 9.0,
+              "required_weight_vectors": 144.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "original",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "d355ba40abc579a78ed0ab2895ed8a95860e1b4256c46d24ec393037d8dc9917",
+          "family_id": "Y07F05",
+          "oracle": {
+            "latency_ms": 322.948999,
+            "phases": {
+              "compile": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": null,
+                "status": "ok",
+                "wall_ms": 142.1002419992874
+              },
+              "fpga": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 3.0,
+                  "logical_vta_dma_calls": 17238.0,
+                  "logical_vta_load_bytes": 599132928.0,
+                  "logical_vta_store_bytes": 259584.0
+                },
+                "reveal": null,
+                "status": "ok",
+                "wall_ms": 1747.9372910020174
+              },
+              "fsim": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "command_evidence_status": "available_three_seed_consistent",
+                  "failure_category": null,
+                  "features": {
+                    "drain_check_expected_residency_drain_count_from_p3e": 0.0,
+                    "drain_check_function_final_drain_count_assumed": 1.0,
+                    "drain_check_implementation_mode": 1.0,
+                    "drain_check_observed_residency_drain_count": 0.0,
+                    "finish_source_derived_count": 1.0,
+                    "peaks_insn_bytes": 148896.0,
+                    "peaks_uop_bytes": 144.0,
+                    "submissions": 1.0,
+                    "submit_reason_counts_explicit_sync": 1.0,
+                    "totals_insn_bytes": 148896.0,
+                    "totals_load_bytes": 199710976.0,
+                    "totals_store_bytes": 86528.0,
+                    "totals_uop_bytes": 144.0
+                  },
+                  "tir_sha256": "50cb7d2d569296ece5181da15d3098cddb9567c4cdfe25f044f2c1dd47beb5b5"
+                },
+                "status": "ok",
+                "wall_ms": 680.5946130007214
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": null,
+                  "features": {
+                    "accumulator_sram_headroom_vectors": 2032.0,
+                    "accumulator_sram_required_vectors": 16.0,
+                    "descriptor_rows": 5746.0,
+                    "expanded_dma_calls": 5746.0,
+                    "input_descriptor_calls": 2704.0,
+                    "input_dma_bytes": 350464.0,
+                    "input_dma_calls": 2704.0,
+                    "input_max_request_bytes": 144.0,
+                    "input_reload": 8.100591715976332,
+                    "input_sram_headroom_vectors": 2039.0,
+                    "input_sram_required_vectors": 9.0,
+                    "load_dma_bytes": 199710976.0,
+                    "load_dma_calls": 5408.0,
+                    "output_descriptor_calls": 338.0,
+                    "output_dma_bytes": 86528.0,
+                    "output_dma_calls": 338.0,
+                    "output_max_request_bytes": 256.0,
+                    "output_reload": 1.0,
+                    "padded_dma_calls": 768.0,
+                    "small_dma_calls": 3042.0,
+                    "store_dma_bytes": 86528.0,
+                    "store_dma_calls": 338.0,
+                    "strided_dma_calls": 5746.0,
+                    "weight_descriptor_calls": 2704.0,
+                    "weight_dma_bytes": 199360512.0,
+                    "weight_dma_calls": 2704.0,
+                    "weight_max_request_bytes": 73728.0,
+                    "weight_reload": 169.0,
+                    "weight_sram_headroom_vectors": 880.0,
+                    "weight_sram_required_vectors": 144.0
+                  },
+                  "tir_sha256": "50cb7d2d569296ece5181da15d3098cddb9567c4cdfe25f044f2c1dd47beb5b5"
+                },
+                "status": "ok",
+                "wall_ms": 1203.498094000679
+              },
+              "measure": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 2.0,
+                  "logical_vta_dma_calls": 11492.0,
+                  "logical_vta_load_bytes": 399421952.0,
+                  "logical_vta_store_bytes": 173056.0
+                },
+                "reveal": null,
+                "status": "ok",
+                "wall_ms": 927.7599009983533
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 1.0,
+              "knob_tile_co": 16.0,
+              "knob_tile_h": 1.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 1.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 2.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 16.0,
+              "required_input_vectors": 9.0,
+              "required_weight_vectors": 144.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "input_stationary",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "ba033addfd6cf1baaf29857b4627053bcde33d14e1938f0b3ab5d76ad846e604",
+          "family_id": "Y07F05",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 18.900769002357265
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 1.0,
+              "knob_tile_co": 16.0,
+              "knob_tile_h": 1.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 1.0,
+              "opportunity_output_channel_outer_tiles": 2.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 16.0,
+              "required_input_vectors": 9.0,
+              "required_weight_vectors": 144.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "weight_resident_barrier",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "4e5235bf40d7dcaa4fe6f91873c4b74cdc2b1923a85dac618b06ef95b8eb1a57",
+          "family_id": "Y07F06",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 23.07505900171236
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 16.0,
+              "knob_tile_co": 4.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 1.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 8.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 52.0,
+              "required_input_vectors": 720.0,
+              "required_weight_vectors": 576.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "original",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "35ed3d75b1ddc9ecae911eca991b6cba969b500f20ebf4d029fe733442ebacbe",
+          "family_id": "Y07F06",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 17.192511997563997
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 16.0,
+              "knob_tile_co": 4.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 1.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 8.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 52.0,
+              "required_input_vectors": 720.0,
+              "required_weight_vectors": 576.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "input_stationary",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "b8e03a2fedfc931327c1e8cec841181695b06424246faa9c518b25975dcefc78",
+          "family_id": "Y07F06",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 24.522518000594573
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 16.0,
+              "knob_tile_co": 4.0,
+              "knob_tile_h": 13.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 1.0,
+              "opportunity_output_channel_outer_tiles": 8.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 52.0,
+              "required_input_vectors": 720.0,
+              "required_weight_vectors": 576.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "weight_resident_barrier",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "0ed8aa04a5555239f0df7e5ed5a6c1ad6a9f571111ab0fdadce6d5709362a77d",
+          "family_id": "Y07F07",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 22.956550001254072
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 8.0,
+              "knob_tile_co": 1.0,
+              "knob_tile_h": 1.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 1.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 32.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 1.0,
+              "required_input_vectors": 72.0,
+              "required_weight_vectors": 72.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "original",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "e8efdb1d1c56be593618353e0b2b05b477c820e400a9e9e2e57e760ce064bb84",
+          "family_id": "Y07F07",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 17.612679999729153
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 8.0,
+              "knob_tile_co": 1.0,
+              "knob_tile_h": 1.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 1.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 0.0,
+              "opportunity_output_channel_outer_tiles": 32.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 1.0,
+              "required_input_vectors": 72.0,
+              "required_weight_vectors": 72.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "input_stationary",
+          "workload_id": "Y07"
+        },
+        {
+          "candidate_id": "0b6f0cce39aefc547f9e9bf07421eb484f65d5c93a6b835e4a5e2fa7c6594c79",
+          "family_id": "Y07F07",
+          "oracle": {
+            "latency_ms": null,
+            "phases": {
+              "compile": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fpga": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "fsim": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              },
+              "lower": {
+                "resource_cost": {
+                  "fpga_kernel_invocations": 0.0,
+                  "logical_vta_dma_calls": 0.0,
+                  "logical_vta_load_bytes": 0.0,
+                  "logical_vta_store_bytes": 0.0
+                },
+                "reveal": {
+                  "failure_category": "lower"
+                },
+                "status": "invalid",
+                "wall_ms": 23.584242997458205
+              },
+              "measure": {
+                "resource_cost": null,
+                "reveal": null,
+                "status": "not_run",
+                "wall_ms": null
+              }
+            }
+          },
+          "prelower": {
+            "feature_provenance": "frozen_before_target_labels",
+            "features": {
+              "knob_h_nthread": 1.0,
+              "knob_oc_nthread": 1.0,
+              "knob_tile_b": 1.0,
+              "knob_tile_ci": 8.0,
+              "knob_tile_co": 1.0,
+              "knob_tile_h": 1.0,
+              "knob_tile_w": 1.0,
+              "mode_input_stationary": 0.0,
+              "mode_original": 0.0,
+              "mode_weight_resident_barrier": 1.0,
+              "opportunity_output_channel_outer_tiles": 32.0,
+              "opportunity_output_width_outer_tiles": 13.0,
+              "required_accumulator_vectors": 1.0,
+              "required_input_vectors": 72.0,
+              "required_weight_vectors": 72.0
+            },
+            "geometry_signature_sha256": "09b6be5baf43212104064d304a2e51db97949df769d0cbbe181e5a8a0eeadb72",
+            "hardware_fingerprint_sha256": "9114f1aa203bc29f7c824fc4a4152e4be001fe5f1403ef4d011af5275ede183a",
+            "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+            "selection_basis": "frozen deterministic label-free ConfigEntity; no Y07 board latency, TopHub entity/cost, FSim outcome, or replacement"
+          },
+          "residence_mode": "weight_resident_barrier",
+          "workload_id": "Y07"
+        }
+      ],
+      "pool_oracle_latency_ms": 322.948999,
+      "source_bindings": {
+        "candidate_subset_pre_registered": false,
+        "completed_pool": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r201_y07_canonical_completed_pool_run01/completed_pool.json",
+        "completed_pool_sha256": "fdedd665c619fd64190745e695e11c294ce0ecd520b38c864d779157699740b4",
+        "local_artifact_hashes_sha256": "5e175f1520c7d1b14a3c7428c894fcf7a637b05b01fc9ebb34ae197216997bee",
+        "local_dir": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r199_y07_full_local_oracle_completion_run01"
+      }
+    }
+  }
+}

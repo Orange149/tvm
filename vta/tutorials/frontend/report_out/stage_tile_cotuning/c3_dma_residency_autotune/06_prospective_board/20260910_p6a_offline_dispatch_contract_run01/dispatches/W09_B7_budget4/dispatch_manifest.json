@@ -1,0 +1,451 @@
+{
+  "board_executed": false,
+  "board_fingerprint": {
+    "actual": {
+      "bitstream_sha256": null,
+      "boot_id": null,
+      "target": null,
+      "vta_config_sha256": null
+    },
+    "expected": {
+      "current_boot_verified": false,
+      "expected_bitstream_sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+      "target": "axu5evb",
+      "vta_config_sha256": "7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d"
+    },
+    "status": "must_be_filled_and_matched_before_board_execution"
+  },
+  "candidates": [
+    {
+      "candidate_id": "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+      "candidate_role": "protected_original_incumbent",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 203
+      },
+      "config_index": 203,
+      "dispatch_order": 0,
+      "feature_sha256": "05ba13905b50b3f77d17daef4f451a8d224d962fc9b0388dbc544d04909105af",
+      "feature_version": "c3_static_request_shape_v1",
+      "local_qualification": {
+        "correctness_seeds": [
+          0,
+          20250901,
+          20260910
+        ],
+        "evidence_source": "P2 local baseline run02",
+        "status": "fsim_passed"
+      },
+      "residence_mode": "original",
+      "schedule_version": "vta_conv2d.py@b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+      "static_tir_sha256": "50f1d2aee29892fc3b2e632f234c5718c505d3fb30d77533289f827aa3efb84f",
+      "template_name": "conv2d_packed.vta",
+      "workload_id": "W09"
+    },
+    {
+      "candidate_id": "5ff37b60e8c4e8ebe2892886f7c6a676dfd5bff99723451d4f90449c96c87425",
+      "candidate_role": "residency_experiment",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 103
+      },
+      "config_index": 103,
+      "dispatch_order": 1,
+      "feature_sha256": "472f88f1e3040a051522ce1b44528717c7cd285c8be2803d04e628947cec6664",
+      "feature_version": "c3_static_request_shape_v1",
+      "local_qualification": {
+        "correctness_seeds": [
+          0,
+          20250901,
+          20260910
+        ],
+        "evidence_source": "P4c run01",
+        "status": "fsim_passed"
+      },
+      "residence_mode": "input_stationary",
+      "schedule_version": "vta_residency@5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f+b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+      "static_tir_sha256": "38b731aa855d4fe01c83ec35f93ab40ab85c61c468f5e07feb500e12386ddb31",
+      "template_name": "conv2d_packed_residency.vta",
+      "workload_id": "W09"
+    },
+    {
+      "candidate_id": "30940bd8ef3dafb7e7a2aceb7897202d1be593a1caad87893a1cfdfa7ef206e1",
+      "candidate_role": "residency_experiment",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 103
+      },
+      "config_index": 103,
+      "dispatch_order": 2,
+      "feature_sha256": "2ec2a6e54279467a7bc168b426bebde38c2d86a2c54897c563743a943791daba",
+      "feature_version": "c3_static_request_shape_v1",
+      "local_qualification": {
+        "correctness_seeds": [
+          0,
+          20250901,
+          20260910
+        ],
+        "evidence_source": "P4c run01",
+        "status": "fsim_passed"
+      },
+      "residence_mode": "weight_stationary",
+      "schedule_version": "vta_residency@5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f+b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+      "static_tir_sha256": "38b731aa855d4fe01c83ec35f93ab40ab85c61c468f5e07feb500e12386ddb31",
+      "template_name": "conv2d_packed_residency.vta",
+      "workload_id": "W09"
+    },
+    {
+      "candidate_id": "3c450ac79b8561e8650d6241d9dff642f44d6daf82ea962c9d0a5bab78da00ef",
+      "candidate_role": "residency_experiment",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 103
+      },
+      "config_index": 103,
+      "dispatch_order": 3,
+      "feature_sha256": "0b47abcbaeefb03891d2c550add5d8a3024800324fc4bfa003d4ead24ba88032",
+      "feature_version": "c3_static_request_shape_v1",
+      "local_qualification": {
+        "correctness_seeds": [
+          0,
+          20250901,
+          20260910
+        ],
+        "evidence_source": "P4c run01",
+        "status": "fsim_passed"
+      },
+      "residence_mode": "paper_inspired_hybrid",
+      "schedule_version": "vta_residency@5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f+b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+      "static_tir_sha256": "38b731aa855d4fe01c83ec35f93ab40ab85c61c468f5e07feb500e12386ddb31",
+      "template_name": "conv2d_packed_residency.vta",
+      "workload_id": "W09"
+    }
+  ],
+  "claim_boundary": {
+    "G6_passed": false,
+    "correctness_executed": false,
+    "latency_measured": false,
+    "offline_contract_only": true
+  },
+  "contract_version": "c3_p6a_dispatch_contract_v1",
+  "correctness_protocol": {
+    "reference": "NumPy reference output",
+    "required_passes_per_candidate": 3,
+    "seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "status": "pending_board_execution"
+  },
+  "feature_contract": {
+    "feature_set_sha256": "ee48faf94f166074777dfae0e22f157062ef0c7d34efd1876972c394e3cbf0c7",
+    "feature_version": "c3_static_request_shape_v1"
+  },
+  "schema": "c3_offline_board_dispatch_contract_v1",
+  "selection": {
+    "effective_budget": 4,
+    "ordered_candidate_ids": [
+      "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+      "5ff37b60e8c4e8ebe2892886f7c6a676dfd5bff99723451d4f90449c96c87425",
+      "30940bd8ef3dafb7e7a2aceb7897202d1be593a1caad87893a1cfdfa7ef206e1",
+      "3c450ac79b8561e8650d6241d9dff642f44d6daf82ea962c9d0a5bab78da00ef"
+    ],
+    "protected_original_incumbent": "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+    "requested_budget": 4,
+    "strategy": "B7",
+    "workload": [
+      "conv2d_packed.vta",
+      [
+        "TENSOR",
+        [
+          1,
+          16,
+          14,
+          14,
+          1,
+          16
+        ],
+        "int8"
+      ],
+      [
+        "TENSOR",
+        [
+          32,
+          16,
+          1,
+          1,
+          16,
+          16
+        ],
+        "int8"
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      "NCHW1n16c",
+      "int32"
+    ],
+    "workload_id": "W09"
+  },
+  "source_artifacts": {
+    "candidate_pool": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/candidate_pool.json",
+      "sha256": "1593c1870d60d9401c8bd7e245f44d8586da1c474c0adce0852833a15ba8f708"
+    },
+    "p4e_artifact_hashes": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4e_unified_local_qualification_run01/artifact_hashes.json",
+      "sha256": "da6dbe9f16af4b2c7365bb0fc7e52f7319332f0888f0521dadeb6b9cbc9599e0"
+    },
+    "p4e_qualification_results": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4e_unified_local_qualification_run01/results.jsonl",
+      "sha256": "0ba3ab15b6bbdb45c36826891bcb601099376acfc626e9489788f5c40ebb1da4"
+    },
+    "p4e_qualification_summary": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4e_unified_local_qualification_run01/summary.json",
+      "sha256": "53778f63a9f75c74f6e778c88c82cc2b33a51a044c11990c01f1f5a92e4bfd61"
+    },
+    "p5b_artifact_hashes": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/05_grouped_replay/20260910_p5b_local_predispatch_shortlist_run01/artifact_hashes.json",
+      "sha256": "64bc2dd1d9a38722a7e923a148214d5a3c9fb5352bf90b2b3469affeb4340efa"
+    },
+    "p5b_input_manifest": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/05_grouped_replay/20260910_p5b_local_predispatch_shortlist_run01/input_manifest.json",
+      "sha256": "8fa84366dded5ab6457ed4ac78ea3213678c2bc95430f9ed3f803e24d62f723f"
+    },
+    "results": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/results.jsonl",
+      "sha256": "cddcdc503163e1f4cfda1a53933d4577c804b6842be818e0bbb616a431b9d2d9"
+    },
+    "shortlist": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/05_grouped_replay/20260910_p5b_local_predispatch_shortlist_run01/shortlist.json",
+      "sha256": "c18c46859329dd0c0bf0fecbc018aa94c0142b42d4b8dbb5ac412d51560e366d"
+    }
+  },
+  "timing_protocol": {
+    "status": "must_be_filled_and_frozen_before_board_execution",
+    "summary_statistic": null,
+    "timed_runs": null,
+    "timer_number": null,
+    "warmup_runs": null
+  }
+}

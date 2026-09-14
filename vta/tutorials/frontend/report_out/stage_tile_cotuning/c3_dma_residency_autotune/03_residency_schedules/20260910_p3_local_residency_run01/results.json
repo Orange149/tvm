@@ -1,0 +1,40 @@
+{
+  "run_id": "20260910_p3_local_residency_run01",
+  "status": "partial_completed_input_only",
+  "gate": "G3_LOCAL_MECHANISM",
+  "submechanisms": {
+    "input_stationary": "pass",
+    "weight_stationary": "fail_no_dma_reduction_in_safe_version",
+    "paper_inspired_hybrid": "fail_input_only_no_weight_reduction"
+  },
+  "dma_tuple_fields": ["load_calls", "input_bytes", "weight_bytes", "store_calls"],
+  "results": {
+    "W00": {
+      "original": [112, 487424, 258048, 14],
+      "input_stationary": [56, 243712, 258048, 14],
+      "weight_stationary_safe": [112, 487424, 258048, 14],
+      "paper_inspired_hybrid_safe": [56, 243712, 258048, 14]
+    },
+    "W02": {
+      "original": [256, 487424, 589824, 16],
+      "input_stationary": [64, 121856, 589824, 16],
+      "weight_stationary_safe": [256, 487424, 589824, 16],
+      "paper_inspired_hybrid_safe": [128, 243712, 589824, 16]
+    },
+    "W09": {
+      "original": [64, 86528, 131072, 2],
+      "input_stationary": [32, 43264, 131072, 2],
+      "weight_stationary_safe": [64, 86528, 131072, 2],
+      "paper_inspired_hybrid_safe": [32, 43264, 131072, 2]
+    }
+  },
+  "verification": {
+    "non_fsim": {"passed": 16, "deselected": 12, "exit_code": 0},
+    "fsim": {"passed": 12, "deselected": 16, "exit_code": 0}
+  },
+  "claim_limits": {
+    "board_measurement": false,
+    "axi_transaction_measurement": false,
+    "exact_2026_paper_reproduction": false
+  }
+}

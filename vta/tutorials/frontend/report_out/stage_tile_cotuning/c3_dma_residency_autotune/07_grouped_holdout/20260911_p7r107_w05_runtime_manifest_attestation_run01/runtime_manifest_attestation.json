@@ -1,0 +1,71 @@
+{
+  "candidate_ids": [
+    "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+    "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061"
+  ],
+  "claim_boundary": "same boot, one queue instance, two exact W05 identities; correctness, command capacity, manifest ID, and replay policy only; no timing, FPS, replay, SD, or cross-boot claim",
+  "command_memory": {
+    "backing_reduction_fraction": 0.9998779296875,
+    "formula": "C_q(S)=align_A(max_{c in S,b in submits(c)} B_q(c,b))",
+    "insn_capacity_bytes": 4096,
+    "insn_peak_bytes": 3808,
+    "legacy_total_bytes": 67108864,
+    "total_capacity_bytes": 8192,
+    "uop_capacity_bytes": 4096,
+    "uop_peak_bytes": 1480
+  },
+  "correctness_seed_checks": 6,
+  "inputs": {
+    "board": {
+      "correctness": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r104_w05_manifest_attestation_board_run01/correctness/correctness.jsonl",
+        "sha256": "37e3d29a6c793f796cf96054f5f80048bcb0472a1e477506162046a37b9862ec"
+      },
+      "preregistered": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r104_w05_manifest_attestation_board_run01/preregistered.json",
+        "sha256": "fade04db3830328abda549acd6f187f600851e0eff94290a4b8b360869a2c05f"
+      },
+      "queue_status": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r104_w05_manifest_attestation_board_run01/queue_capacity_status.json",
+        "sha256": "f3d229bfbc5b7f13988314a53db33a4a9430011c3660bbf2a3fe23071b1088ef"
+      },
+      "summary": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r104_w05_manifest_attestation_board_run01/summary.json",
+        "sha256": "c887f93bf7541194c9eea80cbaf3525c724e3af692dee117f92d0c484fc01290"
+      }
+    },
+    "contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r103_w05_manifest_attestation_contract_run01/contract.json",
+      "sha256": "575faf85a2d2eae1c34e4ddd2133fcf872a23daa8bae4ed44bc4d6c1e531e307"
+    },
+    "qualified_certificate": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r105_w05_current_qualified_resource_certificate_run02/qualified_command_resource_certificate.json",
+      "sha256": "623796231e3417502c188bdc39a43eedc9eb7301c6a0fbe560dac49c8a5e3957"
+    },
+    "ready_manifest": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r106_w05_ready_deployment_manifest_run02/deployment_manifest.json",
+      "sha256": "9b5bfb21e76a07cd55473f983e0371566d6ed3df2d273b3f9a8a51a321c7023c"
+    }
+  },
+  "manifest_id": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+  "qualification_key": "34fa40fdc68dcca6c4e077e58e0b70ba8a38b1cf7c3bbab4ec9ce3f7f3edfd81",
+  "resource_certificate_key": "0994e12dce454f4e3e86a70d894e862638632e05fc11882ec9fc7f5903ccff8c",
+  "runtime": {
+    "binary_sha256": {
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/libvta.so": "0c39d5f6fcfb1efec6bad715e3cea2279282e3bf887433cd2013b89fff1f4ba4",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/start_axu5evb_cpp_rpc.sh": "2f42f2d37d5199fa2b66336b61869d2015f8ec5f0264bc57307789b4c6a5b194",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa"
+    },
+    "command_manifest_id": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+    "replay_policy": "disabled",
+    "submissions": 6
+  },
+  "safety": {
+    "default_rpc_restored": true,
+    "reboot_or_poweroff": false,
+    "sd_writes_for_experiment": "none; RPC logs and uploads used /var/volatile tmpfs"
+  },
+  "schema": "c3_vta_runtime_manifest_attestation_v1",
+  "status": "attested"
+}

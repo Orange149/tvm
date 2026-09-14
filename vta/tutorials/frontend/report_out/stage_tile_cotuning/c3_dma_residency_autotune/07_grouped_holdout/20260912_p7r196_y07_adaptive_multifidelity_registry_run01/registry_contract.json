@@ -1,0 +1,69 @@
+{
+  "candidate_commitment_sha256": "e482add48ee1567376382ad26f8927c56e59f84d95b58ed5889ebedc6482ca52",
+  "candidate_count": 24,
+  "candidate_order": [
+    "5bed20304c70a539509eddac94da625b5cd65f037c736e2489c9044951ee6964",
+    "d77dbbcca87488a45d849550908b030473ea180bca3379f1a1d02f9ea37099b4",
+    "7c92bceadac914ef7b848a12bf2e669e8a8fb95f02b4dc782d8507213faf8d5e",
+    "55b42a26479de5b7e883b1e736c1224ba0c5058823c6f7e5153791999b3f4344",
+    "a21aa549ca8f782ebb514fe48adc127bf65287becbf980923fa12432a30b316a",
+    "a4a57bea31830b996d60b25e29920b725b8b121aef4c57897931ddbf89d43c58",
+    "77d0084203b6a29486cf071e69eebbdbd704a6c40449e3c912605a8fb00d217f",
+    "245d34b2dfa9e44d7565b59bc84ecdb58fc61a4343ea4c8ccc1beaa089f12c98",
+    "77405a7821fd8f0e7f62a33603aeb1d5e8cb809faeba216b4d8bb3575d4fc7cf",
+    "f2700c985e0a43914d98e319f027a0071ee052e112d1adb331c4e51289adbed2",
+    "21c54e0839578bb4ae63015111ecb6decc13d21d4d7328979ab9e110de7b55e5",
+    "1767af77611d034ff1ece587737dc91d44caf9f13b1a11f761a72ba774cdfca8",
+    "dbc519ce47a32e0104f0a23fa3523c9ee8d6d3091b9282e2c09bab45a51b20cc",
+    "c1b207b4f54e226e69e244f9565ab209b4b19fe9e5de0ded4aa42e922085e3de",
+    "17bc33fd6e37bae6150b96680194263d52e4834ba91c5386e2a87a04aede616a",
+    "730e40e5091fd4c7d2ebc92a3a45f9e450c97081ca00e5e77ae8731dd37b60fd",
+    "d355ba40abc579a78ed0ab2895ed8a95860e1b4256c46d24ec393037d8dc9917",
+    "ba033addfd6cf1baaf29857b4627053bcde33d14e1938f0b3ab5d76ad846e604",
+    "4e5235bf40d7dcaa4fe6f91873c4b74cdc2b1923a85dac618b06ef95b8eb1a57",
+    "35ed3d75b1ddc9ecae911eca991b6cba969b500f20ebf4d029fe733442ebacbe",
+    "b8e03a2fedfc931327c1e8cec841181695b06424246faa9c518b25975dcefc78",
+    "0ed8aa04a5555239f0df7e5ed5a6c1ad6a9f571111ab0fdadce6d5709362a77d",
+    "e8efdb1d1c56be593618353e0b2b05b477c820e400a9e9e2e57e760ce064bb84",
+    "0b6f0cce39aefc547f9e9bf07421eb484f65d5c93a6b835e4a5e2fa7c6594c79"
+  ],
+  "candidate_source": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r195_y07_conv14_adaptive_holdout_contract_run02/candidates.jsonl",
+    "sha256": "f666820d413e762a92b4cee71001ef0ce7bb14d9e644c141a6e8b7ce80cc0730"
+  },
+  "claim_boundary": "policy/candidates only; no target outcome has been observed",
+  "clean_start_contract": "stop exact RPC, reload frozen bitstream, start fresh RPC before target allocation; preserve output-data-weight physical allocation order",
+  "development_evidence": {
+    "ledger_sha256": "8ea2ceae865622a00a748823bc38a5735abef043950e3526f1279039ed64e517",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r185_adaptive_survival_development_replay_run01",
+    "status": "Y00/Y01/Y03/Y04/Y05 labels exposed; development only"
+  },
+  "failure_policy": "retain all failures; no target-driven replacement or threshold change",
+  "policy": {
+    "decision_visibility": "only the three paid lowering outcomes of the first family",
+    "dense_path": {
+      "frontier_width": 4,
+      "policy": "hardware_diverse_frontier_service",
+      "promotion_width": 2
+    },
+    "first_family_modes": 3,
+    "first_family_selection": "hardware max-min diversity in F0 knob/SRAM/opportunity space",
+    "name": "adaptive_survival_frontier_service",
+    "service_proxy": {
+      "extra_submission_equivalent_bytes": 131072,
+      "formula": "B_dma + 65536*N_dma + 131072*max(N_submit-1,0)",
+      "request_equivalent_bytes": 65536
+    },
+    "sparse_path": "immediate minimum-service family-wave promotion",
+    "sparse_threshold_lower_passes": 1,
+    "validity_model_in_primary_policy": false
+  },
+  "schema": "c3_vta_adaptive_multifidelity_registry_v1",
+  "source_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/prepare_vta_adaptive_multifidelity_registry.py": "43efeba87114cdeb8339619b8801a2e35c5807cc10bf2561977aabc3bc73abd5",
+    "/home/orange/code/tvm/vta/tutorials/frontend/replay_vta_adaptive_multifidelity_search.py": "57ca4e87f5d948647a02bff244c33277722e2bcdb8bef792ccef21f4255fefcc",
+    "/home/orange/code/tvm/vta/tutorials/frontend/replay_vta_multifidelity_search.py": "fe66a479351b79854131ceb4f9b6d8b117b658e420e3582567a80b1c6755d6a9"
+  },
+  "status": "frozen_before_target_lower_fsim_fpga_or_latency",
+  "workload_id": "Y07"
+}

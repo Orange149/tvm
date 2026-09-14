@@ -1,0 +1,4162 @@
+{
+  "candidate_count": 60,
+  "hardware_fingerprint": {
+    "current_boot_verified": false,
+    "expected_bitstream_sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+    "target": "axu5evb",
+    "vta_config_sha256": "7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d"
+  },
+  "implementation_mode": 4,
+  "residence_mode": "weight_stationary_barrier",
+  "schedule_source_sha256": {
+    "coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+    "transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+    "vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+    "vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+  },
+  "schedule_version": "weight_stationary_barrier@coproc_sync.cc=edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999+transform.py=3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c+vta_conv2d.py=8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc+vta_conv2d_residency.py=0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+  "schema": "c3_weight_barrier_candidate_pool_v1",
+  "template_name": "conv2d_packed_residency.vta",
+  "workloads": [
+    {
+      "records": [
+        {
+          "candidate_id": "3eef4eec574b81c812a92985d2a5f0368c2dfd047576b7b516604e26e836a61c",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 244
+          },
+          "mapped_config_index": 244,
+          "source_p4b_original_candidate_id": "a5fdb3a39ce3604d1c4bc9f5bbfa5c3a526d13659264668a5025f869a8f42fda"
+        },
+        {
+          "candidate_id": "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  56
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 251
+          },
+          "mapped_config_index": 251,
+          "source_p4b_original_candidate_id": "804e622fc926c4ee6b0440a37de14107f2c8dc32751c84f552594625d90dcbdd"
+        },
+        {
+          "candidate_id": "a7157fccec480fdb7db359c9643912303ae06e6e5d2a642071a496f35c1de7f5",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  56
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 252
+          },
+          "mapped_config_index": 252,
+          "source_p4b_original_candidate_id": "3c3f0c2f61935d8c6cf066a489be489304555321c7544a7ddfd7f27dc090f20f"
+        },
+        {
+          "candidate_id": "707d20f4efc2df03447f1c6647f8e8dec45fc13cabffafaa6e41b9d0b7daf0d1",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  56
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 253
+          },
+          "mapped_config_index": 253,
+          "source_p4b_original_candidate_id": "1f86ee57101457988ed45ce1457d9dc5bba90e98a043ec9b66a9784008b03660"
+        },
+        {
+          "candidate_id": "6f08ac863f2993730216c6535c62e82eb0b223bb984d3487be82beec2a69974d",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  56
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 316
+          },
+          "mapped_config_index": 316,
+          "source_p4b_original_candidate_id": "18a64de656694d499986123d05a65d77a2b74016a332209cb9f9eb2f5ae9fe27"
+        },
+        {
+          "candidate_id": "b22851fec3cd6fd024bbe984b69e90e811c1e1b127f3e8e9b811246972b02462",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  56
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 444
+          },
+          "mapped_config_index": 444,
+          "source_p4b_original_candidate_id": "0e45a111f516dcd52ea2ca284780a440a7c2785bce9f79f5acba3122f0c6575f"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            4,
+            56,
+            56,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            4,
+            4,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W00"
+    },
+    {
+      "records": [
+        {
+          "candidate_id": "672b056b31967fa9c0ecfd2fc27347830f4527f71f381764c17f32106d7ab79e",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 243
+          },
+          "mapped_config_index": 243,
+          "source_p4b_original_candidate_id": "07cc5ee9b6b23f83969ce5ec54fe997704a915cac219cb8163c5f953da8ac74c"
+        },
+        {
+          "candidate_id": "0ce077ce31a18afee6ee51aa01ce86f53c1a7d8c01d117fec50fc4664b7c51e5",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 248
+          },
+          "mapped_config_index": 248,
+          "source_p4b_original_candidate_id": "c93af1b80b3626570d5f1f07c270872cf573e71ec220e786d2baa2eaed54cb74"
+        },
+        {
+          "candidate_id": "9d5e7942d097e177310cbb05d33915ea7691399f2108835afe29f463eb946109",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 249
+          },
+          "mapped_config_index": 249,
+          "source_p4b_original_candidate_id": "370da00bf437f244b294468d86bcefbaa7328e0193c21c75fbc9eb757cb51c14"
+        },
+        {
+          "candidate_id": "819d5ba4a81f36d6eff12c6fca6a2bf1ed30c923bf2c864ad6172a874a4086cc",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 250
+          },
+          "mapped_config_index": 250,
+          "source_p4b_original_candidate_id": "524c211dfccdae55a723cd6788bc47ce342d54f3e33d8cac8aeac73e1281fe9f"
+        },
+        {
+          "candidate_id": "9fd8281b94f142f8197da6fa6d265991ab9c83e58504e7d51a6970119a8ee827",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 285
+          },
+          "mapped_config_index": 285,
+          "source_p4b_original_candidate_id": "c3102993e87cb8c0b398c51f41971794deeb3a7118373471892c9ce0f8de3d27"
+        },
+        {
+          "candidate_id": "9b9a1f95d708768e187044510abbdbb742ff871923b7e33ccef303e83aea3410",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 357
+          },
+          "mapped_config_index": 357,
+          "source_p4b_original_candidate_id": "d3f7c60b3cecaa19245359c29c2aff6bd33aa95512a82be94c2fe7d5eb0ec48e"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            4,
+            56,
+            56,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            8,
+            4,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W01"
+    },
+    {
+      "records": [
+        {
+          "candidate_id": "2559a937fb48344dd44f07ff0bdb51b142c765f060e78955afdeb65e427c83bc",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 172
+          },
+          "mapped_config_index": 172,
+          "source_p4b_original_candidate_id": "9469a64c8f2920b3ce5f6c8ccd2b7f2e32553a4d2b2298f8ea700376af0506d5"
+        },
+        {
+          "candidate_id": "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 177
+          },
+          "mapped_config_index": 177,
+          "source_p4b_original_candidate_id": "53bc1b1555d281e271367dda00465d1c519583e7d8de046a857ee33ba7b0445d"
+        },
+        {
+          "candidate_id": "9a678c58e172e0741dda80aadce44e70ae7e56c9de3fd75c1c138e17b78197f9",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 178
+          },
+          "mapped_config_index": 178,
+          "source_p4b_original_candidate_id": "b492d3d90d9a6816ec25199f610b50b96390d38e6646a3ae4ceafcf88c6f6d75"
+        },
+        {
+          "candidate_id": "f09f263b8c5f798b4950d2a54d3dd12c0e4b44d8bd0850646c94a47c18958a08",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 179
+          },
+          "mapped_config_index": 179,
+          "source_p4b_original_candidate_id": "df13db54326e1d1a276dc3baaefd864a53bc7a36f75ec346fda3957cc3f972b0"
+        },
+        {
+          "candidate_id": "c513109a67e3de9f7123c4ff88bebed0e380e19b6fec4d901a16030b9a0a36c2",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 214
+          },
+          "mapped_config_index": 214,
+          "source_p4b_original_candidate_id": "71fcd28a22c039b208d9290a7728e357ad5aa6593acceeb3c4489f4a6151e4fe"
+        },
+        {
+          "candidate_id": "25c27a04cb4d1e915c221d1b623f057909ed518ee4fc36bda84c077d89b6ab32",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 322
+          },
+          "mapped_config_index": 322,
+          "source_p4b_original_candidate_id": "03ccebecbf2c3e75ea90cfaf122638a668034af7c21c053c36925155c063e188"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            8,
+            28,
+            28,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            8,
+            8,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W02"
+    },
+    {
+      "records": [
+        {
+          "candidate_id": "9a97816d0718dad2bd61da5fd89bdc82e03916076b947d7aff5a75673648c334",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 243
+          },
+          "mapped_config_index": 243,
+          "source_p4b_original_candidate_id": "a6e86c642fdadaa5b724bedb1efa68c45c942aba44812b56254a7c8f3115a522"
+        },
+        {
+          "candidate_id": "f748d95031828a1dcce6396e3b2c0e44929b7dd599b9ab5d210fe3b9e5b48991",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 248
+          },
+          "mapped_config_index": 248,
+          "source_p4b_original_candidate_id": "02949137676012e7ac3367e291b17afaaa312240ff06b5e0bd35628c79c53a35"
+        },
+        {
+          "candidate_id": "a457ba657eb7b2c9df0cf0559e4d1dca64afa600bf6edb2a9d9bbf735022a51d",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 249
+          },
+          "mapped_config_index": 249,
+          "source_p4b_original_candidate_id": "a4b61663b63fe05a66b50d96c24df5c856867762e0f5d39696fb06018fadd9a3"
+        },
+        {
+          "candidate_id": "c57c8913a831859e38c888df889d2996bb179c9ad318ada0176b69399aa74671",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 250
+          },
+          "mapped_config_index": 250,
+          "source_p4b_original_candidate_id": "de60980e298c03c38a049c84c3d3305367c85c51af4ac99529b04cc315013ca3"
+        },
+        {
+          "candidate_id": "515f4e34b139e6e2533fff34c0999b315a9c442429d4224967fa417446d3a6e2",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 285
+          },
+          "mapped_config_index": 285,
+          "source_p4b_original_candidate_id": "839c8dac83729e15599f1d2b70d605d4602b1b3e8b9fcb9a824ed3437e4f5813"
+        },
+        {
+          "candidate_id": "a9f932ce145fecf8b1847650f8ac52ae1ddc69f879943953365d8feb7306d25d",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  28
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 357
+          },
+          "mapped_config_index": 357,
+          "source_p4b_original_candidate_id": "b888d615d5cee94c95c26de85ffd063120de6448b1c9fabe2e99f346a698a950"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            4,
+            56,
+            56,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            8,
+            4,
+            1,
+            1,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W03"
+    },
+    {
+      "records": [
+        {
+          "candidate_id": "eafb825da0afd4d49a585dc62c7341ee73e877339ab8480e6c1837042f7f4b09",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 79
+          },
+          "mapped_config_index": 79,
+          "source_p4b_original_candidate_id": "46d26bf4160e1be1b4d14737f2b63b361576e8025940330dabbbb42f6bde585b"
+        },
+        {
+          "candidate_id": "e2d0c99782e7101647a0ab5cb845f9184acefe6f6f9eed0766626800afe61c22",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 139
+          },
+          "mapped_config_index": 139,
+          "source_p4b_original_candidate_id": "056aba501b8dc2b43c91d52c4449f201db368fe8458fae6b42d4717fecefcbae"
+        },
+        {
+          "candidate_id": "2ad0ed6e87936bf9d4c2eba7e7ae3b16e0f3a066b89996d6074c04fe11882673",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 142
+          },
+          "mapped_config_index": 142,
+          "source_p4b_original_candidate_id": "5b985f077fea1f0aef609f0da5bf4d36e09b98ffe029198cb9f2176d489fc273"
+        },
+        {
+          "candidate_id": "fd40e99d0206e64df5ca35916e3768d19aa1afabaf30065edba1c2f0f0a5010b",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 143
+          },
+          "mapped_config_index": 143,
+          "source_p4b_original_candidate_id": "7d789aaad11af9efbba8b42f9419268a67f4fa001b817d444de73463a0140bda"
+        },
+        {
+          "candidate_id": "a9c65db398c586614ec006b77f92afc804b7fab6d377d1467a21c2cb5be5ad3c",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 159
+          },
+          "mapped_config_index": 159,
+          "source_p4b_original_candidate_id": "f03f335b8c17c92af94a26933323080a3fefb4f26c993545dc5ae0a6699be3eb"
+        },
+        {
+          "candidate_id": "9e080bbf7e26bc73f3577a5e0a31fe808847700188e9982ccd173880488166e0",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 207
+          },
+          "mapped_config_index": 207,
+          "source_p4b_original_candidate_id": "4be453718b76f28cc514749c797bca1f231bd5f2c11dab8d3d106734f9de981b"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            8,
+            28,
+            28,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            8,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W04"
+    },
+    {
+      "records": [
+        {
+          "candidate_id": "37a98ebff4432e58c3123460ec2d3209e9902b357111624cf9847433d1ab3528",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 95
+          },
+          "mapped_config_index": 95,
+          "source_p4b_original_candidate_id": "23865c51fa1a0f364e1f5ea2bd3c003f39160ae5c1460b7ad4989486a6f23fe3"
+        },
+        {
+          "candidate_id": "202509f7f5ac1b88044c82e98f98e0e3dd5ec1843e086cbc7fc076e9aabfe868",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 171
+          },
+          "mapped_config_index": 171,
+          "source_p4b_original_candidate_id": "6ffd97181f8696354b417bdc2574533d833d1475a2de1a176b19a3317b6eb184"
+        },
+        {
+          "candidate_id": "bb0a666eb5bfec6a986b98adb9b91322a834bbf0ececde7d0036a99402aa1def",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 174
+          },
+          "mapped_config_index": 174,
+          "source_p4b_original_candidate_id": "db288134e5b59d3a762e09de6cfe20c5813f0fcdd93ce2c023a509e89a95b9de"
+        },
+        {
+          "candidate_id": "e2e231251fa3710a6002c51195a63b76f2d9b0e3db4093af058454f9f94ca6e9",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 175
+          },
+          "mapped_config_index": 175,
+          "source_p4b_original_candidate_id": "476ecde0a0640c127aa72c4b213d1df4d118dd49d1c981f6cb0ba038721031d2"
+        },
+        {
+          "candidate_id": "de6ffbf70e30a57c9cf87f8bd5ce64fdbdb1aedddb3c7f2df6501405a64ff2fa",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 191
+          },
+          "mapped_config_index": 191,
+          "source_p4b_original_candidate_id": "7e38e36daa640352759197a3d895e46a65519f22b45d0de89c69b3609693c5aa"
+        },
+        {
+          "candidate_id": "1323ef58c458841b4d18ca02ea4a25ee17eca62cd4ee6d85aafafa2382813d1e",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 255
+          },
+          "mapped_config_index": 255,
+          "source_p4b_original_candidate_id": "b3382629d4b16bd9c03d448d5273e461f4bd53fdb3bcc35b99ac0955739937b3"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W05"
+    },
+    {
+      "records": [
+        {
+          "candidate_id": "46c4ff89d99e7faa168d1b6a6fbe76a9fc3a4f05d60b10aca9ef92f8f9fc0641",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  4
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 142
+          },
+          "mapped_config_index": 142,
+          "source_p4b_original_candidate_id": "c0c1f4cd16a3c5dec11ad092956fe34afb0a1435fae11485a88b4fdcfeaf73d2"
+        },
+        {
+          "candidate_id": "c9ba66dcc9d67ededcbe8a7bde883d482b86a04d0f124a5af1dc844203b8c31f",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 202
+          },
+          "mapped_config_index": 202,
+          "source_p4b_original_candidate_id": "b29aa47ed8b749e4fa806e6e9c73c3c46a77977f8071d4cf74988328fde52171"
+        },
+        {
+          "candidate_id": "72bcff21298c8aab45cf136d612ec7519f5bd57cfb1a028b6cc75495520b2621",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 206
+          },
+          "mapped_config_index": 206,
+          "source_p4b_original_candidate_id": "875d50d51798917cb50f17baeaaf9a234b09f84b3ac0e8a1fa0f3c9ae5f759de"
+        },
+        {
+          "candidate_id": "6387c94344b7590f1a0203542e83246f2bbebfda529bd6b8dd1dbf5ae305aab3",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 207
+          },
+          "mapped_config_index": 207,
+          "source_p4b_original_candidate_id": "32273b948e4c90cef101a582c406e0c563739f6305ecd8bf25de3c983799fe72"
+        },
+        {
+          "candidate_id": "d38444a21a0773b351272c7ebfccdd58f299fe6e8d2bb5570fcb589b3dc63ef5",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 222
+          },
+          "mapped_config_index": 222,
+          "source_p4b_original_candidate_id": "b9c0746aeb4b327c7e59f33ab7ae0a1c44728a3cd4038feadef9f4e6ed68fca6"
+        },
+        {
+          "candidate_id": "26fa4edb689d784d2b48b4d330dc6f7e7628e8c2a75d19a95daca32ff7dfbc4c",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  14
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 270
+          },
+          "mapped_config_index": 270,
+          "source_p4b_original_candidate_id": "6e40612494220a4dfd661da57f333cc5871d5d6ce3043dd517f635b51a08643c"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            8,
+            28,
+            28,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            8,
+            1,
+            1,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W06"
+    },
+    {
+      "records": [
+        {
+          "candidate_id": "9e5a6fdf7d470e0d9661ad7f2a2a9a428fb2fa30839111ccefbc7253f6f8facb",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 63
+          },
+          "mapped_config_index": 63,
+          "source_p4b_original_candidate_id": "88437bb1870cdb9211ba4dac8a03aaf0709433b4ad684a9e3c2cc49b8e096a3d"
+        },
+        {
+          "candidate_id": "fa8f8b11c05f4e1c1c85149a465f585f6ba68589251c9d259cb34c26c012a0ce",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 81
+          },
+          "mapped_config_index": 81,
+          "source_p4b_original_candidate_id": "3950ea3383898e264485553150adf0f99284c18b491b30c5d25d65907a1f309b"
+        },
+        {
+          "candidate_id": "365057775bc5ca780b0ca5d4c65b2218331a4dec74230e57db8048b1e432028a",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 82
+          },
+          "mapped_config_index": 82,
+          "source_p4b_original_candidate_id": "cb6876503f73247bedd0713f85418b2719bbd623f750f07af128fccfd285a842"
+        },
+        {
+          "candidate_id": "7f950783a769bb3aca6472d8e268bbe1cc59abad75fc2ccaed68fa16496a0a86",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 83
+          },
+          "mapped_config_index": 83,
+          "source_p4b_original_candidate_id": "1c900bc3c0ca65df5d6908cc8aedc62ad00a80b7bfaa5adcacc0f1374923f2e5"
+        },
+        {
+          "candidate_id": "defa331e5c70f0ef4330d13127c25ec9887f0cf4be9b5a3fc015a9fdb13f306d",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 87
+          },
+          "mapped_config_index": 87,
+          "source_p4b_original_candidate_id": "117f9a66eebedd7a6fba577a56dcbeee8ac645e1ff4896ead620b1464d69a06a"
+        },
+        {
+          "candidate_id": "f955cad5d0c777f7c61bd8ae629a6a48a7700da165119588d294da9589391498",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  32
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 103
+          },
+          "mapped_config_index": 103,
+          "source_p4b_original_candidate_id": "7ed57af662ccaa93d3044626d7739fb7b1d9e72639b4c66dc21e2f14382efb84"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            32,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W07"
+    },
+    {
+      "records": [
+        {
+          "candidate_id": "072cd9f74078037bd38ae81cd32f6c5e1927c381d1e87fc280220ee46f3d8511",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 75
+          },
+          "mapped_config_index": 75,
+          "source_p4b_original_candidate_id": "f7add61579ab45f0f373554308d40e0fd2e98853a7ee88399a5b155771f62172"
+        },
+        {
+          "candidate_id": "4b4542b643e379fd695fa4d32723ef9fa07d5bbc261d5b561ddad6c695533cb6",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 97
+          },
+          "mapped_config_index": 97,
+          "source_p4b_original_candidate_id": "62a9febae299c2b3620b385fdd0a5e670bd106ad81e533d23a646bd17cfe1507"
+        },
+        {
+          "candidate_id": "789a51a75294ab52879ce643922564d5f074515b4c43fb2d6f9db8d0244e8b69",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 98
+          },
+          "mapped_config_index": 98,
+          "source_p4b_original_candidate_id": "15a0bc0072179f6867310059d87ac82c0b20d184fa6bbec0b24435c6fe9e13b4"
+        },
+        {
+          "candidate_id": "14027f524b79f0ea1e9b8acf39ff01b4c399fad3f12397abe3c8c4fc19b51c37",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 99
+          },
+          "mapped_config_index": 99,
+          "source_p4b_original_candidate_id": "256dc4cd5963e1d5932ae0f65af3a7f589f56c46f0b5ef0dfea528c646c70d87"
+        },
+        {
+          "candidate_id": "1dd5081fffe71d2da999cd949e202873812e7470b1ef484dba39608198808e53",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 103
+          },
+          "mapped_config_index": 103,
+          "source_p4b_original_candidate_id": "5ca9bdce7165729e65eaa6a3f293230c9fcbaa9884d3226a3d8d5805a65d1496"
+        },
+        {
+          "candidate_id": "b519e4931c8ada0f13b942602819e5e9e73ed31fc69b99566d388f8dde744be2",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  32
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 123
+          },
+          "mapped_config_index": 123,
+          "source_p4b_original_candidate_id": "11918729f1abd718ea7f86f1ea84145c920fba9f34e8efaffd5bcd71436e4c0b"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            32,
+            7,
+            7,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            32,
+            32,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W08"
+    },
+    {
+      "records": [
+        {
+          "candidate_id": "172d49058f48b25231d8ab5bc430be3e450d71afe90d435c20be2beca204a8cf",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  8
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 63
+          },
+          "mapped_config_index": 63,
+          "source_p4b_original_candidate_id": "3a93525051c90cf812d5ee311c67bc28b377ffa5afe6e553121f32e4831d8975"
+        },
+        {
+          "candidate_id": "de01e9a80a4e99f1697e03af6539b5550c15929672e13429a8a1a38ca1048985",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 81
+          },
+          "mapped_config_index": 81,
+          "source_p4b_original_candidate_id": "66a82198311f207e1b96c85c2da570fc4bf65c794e21ebeb6dc6d645882a7502"
+        },
+        {
+          "candidate_id": "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 82
+          },
+          "mapped_config_index": 82,
+          "source_p4b_original_candidate_id": "630d20c56910c8d950147e32dc6d64dd7205d4540f070691850d561bdcc8495f"
+        },
+        {
+          "candidate_id": "4d6e8e9d86e58fd12689afc0f337afe6635ef114392feb3db76d4588fd9001d5",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 83
+          },
+          "mapped_config_index": 83,
+          "source_p4b_original_candidate_id": "612a1b250bdb4c6bd444a00fc1a4dcc161a3b237245fa9334bac2edd1a0af8c6"
+        },
+        {
+          "candidate_id": "fd068d1bac610be5b5e502805a8fc1405d248d8cc54d6d7505ba8b687b7b77d6",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  16
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 87
+          },
+          "mapped_config_index": 87,
+          "source_p4b_original_candidate_id": "305424cf15bf9be6f426b7b0d90f2929b3236a4910a4319458dbe73087d60d54"
+        },
+        {
+          "candidate_id": "77f42c731bc1419fdac95173c2bf04cdbc8652d19dd66bca0c86db6e6459f26a",
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  7
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  32
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ],
+            "index": 103
+          },
+          "mapped_config_index": 103,
+          "source_p4b_original_candidate_id": "bacc7542543af99aa5da2f9f39e45f3a658698631e381a14ba278891ba0bb338"
+        }
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            32,
+            16,
+            1,
+            1,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W09"
+    }
+  ]
+}

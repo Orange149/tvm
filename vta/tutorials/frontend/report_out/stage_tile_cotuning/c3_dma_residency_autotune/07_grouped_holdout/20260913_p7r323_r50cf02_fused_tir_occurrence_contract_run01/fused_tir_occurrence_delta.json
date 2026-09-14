@@ -1,0 +1,255 @@
+{
+  "board_contacted": false,
+  "bundle_rule": "negative total LOAD bytes and non-increasing total LOAD calls",
+  "bundle_rule_pass": true,
+  "candidate_ids": [
+    "e239149944ef0bbf5a3007534c17968b495981593f083a3476dcf0d6add5e3aa",
+    "b0d72f563d1d9aa186c8e7b244aeab2321491fad17af61e1c9d040bd1d52f470"
+  ],
+  "claim_boundary": "Compiler-only prospective logical-DMA contract for one previously chosen tile; not FPGA correctness, latency, physical AXI, or a new operator-level holdout",
+  "exact_fields": [
+    "load_buffer_2d_bytes",
+    "load_buffer_2d_calls",
+    "load_buffer_2d_acc_bytes",
+    "load_buffer_2d_acc_calls",
+    "load_buffer_2d_inp_bytes",
+    "load_buffer_2d_inp_calls",
+    "load_buffer_2d_wgt_bytes",
+    "load_buffer_2d_wgt_calls",
+    "store_buffer_2d_bytes",
+    "store_buffer_2d_calls"
+  ],
+  "freezer_source_sha256": "569c42f203abdb816e86228b933a321b466d19f18f7fe81527da1c6154ee5c14",
+  "full_graph_fused_tir_delta": {
+    "load_buffer_2d_acc_bytes": 0,
+    "load_buffer_2d_acc_calls": -300,
+    "load_buffer_2d_bytes": -15052800,
+    "load_buffer_2d_calls": -38700,
+    "load_buffer_2d_inp_bytes": -15052800,
+    "load_buffer_2d_inp_calls": -19200,
+    "load_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_wgt_calls": -19200,
+    "store_buffer_2d_bytes": 0,
+    "store_buffer_2d_calls": 0
+  },
+  "full_graph_latency_observed": false,
+  "graph_occurrence_count": 5,
+  "graph_occurrences": [
+    {
+      "delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -60,
+        "load_buffer_2d_bytes": -3010560,
+        "load_buffer_2d_calls": -7740,
+        "load_buffer_2d_inp_bytes": -3010560,
+        "load_buffer_2d_inp_calls": -3840,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -3840,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_13",
+      "graph_node": 118,
+      "original_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 64,
+        "load_buffer_2d_bytes": 4263936,
+        "load_buffer_2d_calls": 8256,
+        "load_buffer_2d_inp_bytes": 3211264,
+        "load_buffer_2d_inp_calls": 4096,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 4096,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      },
+      "residency_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 4,
+        "load_buffer_2d_bytes": 1253376,
+        "load_buffer_2d_calls": 516,
+        "load_buffer_2d_inp_bytes": 200704,
+        "load_buffer_2d_inp_calls": 256,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 256,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      }
+    },
+    {
+      "delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -60,
+        "load_buffer_2d_bytes": -3010560,
+        "load_buffer_2d_calls": -7740,
+        "load_buffer_2d_inp_bytes": -3010560,
+        "load_buffer_2d_inp_calls": -3840,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -3840,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_15",
+      "graph_node": 131,
+      "original_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 64,
+        "load_buffer_2d_bytes": 4263936,
+        "load_buffer_2d_calls": 8256,
+        "load_buffer_2d_inp_bytes": 3211264,
+        "load_buffer_2d_inp_calls": 4096,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 4096,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      },
+      "residency_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 4,
+        "load_buffer_2d_bytes": 1253376,
+        "load_buffer_2d_calls": 516,
+        "load_buffer_2d_inp_bytes": 200704,
+        "load_buffer_2d_inp_calls": 256,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 256,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      }
+    },
+    {
+      "delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -60,
+        "load_buffer_2d_bytes": -3010560,
+        "load_buffer_2d_calls": -7740,
+        "load_buffer_2d_inp_bytes": -3010560,
+        "load_buffer_2d_inp_calls": -3840,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -3840,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_13",
+      "graph_node": 144,
+      "original_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 64,
+        "load_buffer_2d_bytes": 4263936,
+        "load_buffer_2d_calls": 8256,
+        "load_buffer_2d_inp_bytes": 3211264,
+        "load_buffer_2d_inp_calls": 4096,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 4096,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      },
+      "residency_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 4,
+        "load_buffer_2d_bytes": 1253376,
+        "load_buffer_2d_calls": 516,
+        "load_buffer_2d_inp_bytes": 200704,
+        "load_buffer_2d_inp_calls": 256,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 256,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      }
+    },
+    {
+      "delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -60,
+        "load_buffer_2d_bytes": -3010560,
+        "load_buffer_2d_calls": -7740,
+        "load_buffer_2d_inp_bytes": -3010560,
+        "load_buffer_2d_inp_calls": -3840,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -3840,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_13",
+      "graph_node": 157,
+      "original_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 64,
+        "load_buffer_2d_bytes": 4263936,
+        "load_buffer_2d_calls": 8256,
+        "load_buffer_2d_inp_bytes": 3211264,
+        "load_buffer_2d_inp_calls": 4096,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 4096,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      },
+      "residency_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 4,
+        "load_buffer_2d_bytes": 1253376,
+        "load_buffer_2d_calls": 516,
+        "load_buffer_2d_inp_bytes": 200704,
+        "load_buffer_2d_inp_calls": 256,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 256,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      }
+    },
+    {
+      "delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -60,
+        "load_buffer_2d_bytes": -3010560,
+        "load_buffer_2d_calls": -7740,
+        "load_buffer_2d_inp_bytes": -3010560,
+        "load_buffer_2d_inp_calls": -3840,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -3840,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_13",
+      "graph_node": 170,
+      "original_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 64,
+        "load_buffer_2d_bytes": 4263936,
+        "load_buffer_2d_calls": 8256,
+        "load_buffer_2d_inp_bytes": 3211264,
+        "load_buffer_2d_inp_calls": 4096,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 4096,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      },
+      "residency_dma": {
+        "load_buffer_2d_acc_bytes": 4096,
+        "load_buffer_2d_acc_calls": 4,
+        "load_buffer_2d_bytes": 1253376,
+        "load_buffer_2d_calls": 516,
+        "load_buffer_2d_inp_bytes": 200704,
+        "load_buffer_2d_inp_calls": 256,
+        "load_buffer_2d_wgt_bytes": 1048576,
+        "load_buffer_2d_wgt_calls": 256,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64
+      }
+    }
+  ],
+  "holdout_artifact_hash_manifest_sha256": "0d3bd0e743fad978f96a5d7c181652146f009146817257b4d96014779a7ee1d1",
+  "holdout_contract_sha256": "78de21236b1dc490d496321b2542bd26e1d929122c72a677bdd7ac30f9caed2d",
+  "modes": [
+    "original",
+    "input_stationary"
+  ],
+  "pair_build_artifact_hash_manifest_sha256": "0d8972336630f1c4ef00c5f44b292d9338c003d5f01445fe75a4e14dd3b22717",
+  "pair_build_summary_sha256": "205ed15fdee066069d9769a6690a974039169bd66a184aa2577644a94c7bd19c",
+  "partial_mask_latency_observed": false,
+  "schema": "c3_vta_resnet50_fused_tir_occurrence_contract_v2",
+  "status": "compiler_fused_tir_prediction_frozen_before_fpga",
+  "tir_audit_artifact_hash_manifest_sha256": "d438d6909865b0c92df8fea1c24c2962847aeb96a35cc8cec8b539fc4a5c388e",
+  "tir_audit_summary_sha256": "fc222121013d6fd65751abb492ea4ab89759487a20a049db95c138a85f757dd5",
+  "verified_holdout_artifact_count": 2,
+  "verified_pair_build_artifact_count": 10,
+  "verified_tir_audit_artifact_count": 282
+}

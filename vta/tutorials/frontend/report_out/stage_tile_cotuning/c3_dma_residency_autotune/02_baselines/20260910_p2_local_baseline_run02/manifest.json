@@ -1,0 +1,38 @@
+{
+  "schema": "c3_p2_local_manifest_v2",
+  "run_id": "20260910_p2_local_baseline_run02",
+  "repository_root": "/home/orange/code/tvm",
+  "tvm_commit": "55ec5feac39db09e9fee3f0ae6300afa04d23bd7",
+  "vta_hw_commit": "2fc44f4b8d0c517a8d1881a8399f983fe64c4f6c",
+  "environment": {
+    "platform": "Linux WSL2 x86_64",
+    "python": "3.10.20",
+    "tvm": "0.13.0",
+    "numpy": "1.23.5"
+  },
+  "inputs": {
+    "selected_tasks_sha256": "3f4abe7ca36cbc4a729718f17066f5e757547a0b716d15e9086b273e653b5087",
+    "frozen_static_dma_sha256": "ff154ced1154c54fdd168597a1ab23433854c06652004538b821bd96fb48a3a5",
+    "tophub_sha256": "8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc",
+    "axu5evb_config_sha256": "7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d",
+    "fsim_config_sha256": "8a99d1c4b68dd44cf4551cbdd599801c7079acdb3489bc4459507da3d14dbeb4",
+    "fsim_library_sha256": "ed08467bea6e82ecdc6ad161886ea2ccab0975b3636520c60ca4609a1e84345e"
+  },
+  "source_guard": {
+    "vta_conv2d_sha256": "b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+    "vta_conv2d_residency_sha256": "5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f",
+    "tune_resnet18_vta_sha256": "c48d8d9f583878af640debc360bd9887ed278333123585e02f306382b77ba763",
+    "stable_from_start_to_end": true,
+    "disclosure": "Root reported three comment-only clarifications in vta_conv2d.py; the captured run-start state already included them, and no executable statement changed during run02."
+  },
+  "outputs": {
+    "static_dma": "static_dma.json",
+    "fsim_results": "fsim_results.json",
+    "cross_compile_results": "cross_compile_results.json",
+    "tir_results": "tir_results.json",
+    "lowered_tir": "lowered_tir/",
+    "stdout_stderr": "logs/"
+  },
+  "source_files_modified_by_this_run": [],
+  "board_access": false
+}

@@ -1,0 +1,182 @@
+{
+  "board_contacted": false,
+  "bound_inputs": {
+    "fused_contracts": [
+      {
+        "artifact_manifest_sha256": "f3ee34a77ca515812dfe9462e94a484b6436812c99e22a392b267627326d1972",
+        "payload_sha256": "c5f9d755bbf6e77848c097a50d40f904d80e523c8771f2316fc3115671abf9b8"
+      },
+      {
+        "artifact_manifest_sha256": "8d3885e389ccc3c368710f7123a8332bdf510236f4f6319e0fdf5c9c6653654f",
+        "payload_sha256": "cb4999b0f16ec4a3d78aa186372ec0050be57e2de18781b8acc6818d6930ea69"
+      }
+    ],
+    "pair_builds": [
+      {
+        "artifact_manifest_sha256": "db4af81964d75fc19b6adfd17c860958cfa2f1563b94f9c7e0efb3d803356388",
+        "summary_sha256": "c22af41c71227b9e4e652bded565dc462ccad35dddfe1eea5c1d6308583db43b"
+      },
+      {
+        "artifact_manifest_sha256": "0d8972336630f1c4ef00c5f44b292d9338c003d5f01445fe75a4e14dd3b22717",
+        "summary_sha256": "205ed15fdee066069d9769a6690a974039169bd66a184aa2577644a94c7bd19c"
+      }
+    ],
+    "service_development": {
+      "analysis_sha256": "902a9f86c99bf9f3589eaa1c738a3b3c5e63f8e3e3211dec5a1b61d7bcf10a69",
+      "artifact_manifest_sha256": "362e9edfbbbe6a0879c75132e175cb75a635971f39ee2c5ec2597a36b42b47d5"
+    },
+    "tile_holdouts": [
+      {
+        "artifact_manifest_sha256": "15430f4d26872d4829fa32ce12989f62e11c99a854522e7310e4b9dfadaf3c0f",
+        "contract_sha256": "d1c8704367dd9e233045f7920ac007304b074e8709ec0204f03c86834c6958ea"
+      },
+      {
+        "artifact_manifest_sha256": "0d3bd0e743fad978f96a5d7c181652146f009146817257b4d96014779a7ee1d1",
+        "contract_sha256": "78de21236b1dc490d496321b2542bd26e1d929122c72a677bdd7ac30f9caed2d"
+      }
+    ]
+  },
+  "claim_boundary": "Prospective two-program full-graph reranking contract. It reuses fixed P7R166 byte-equivalent weights without refitting and uses compiler-derived logical VTA DMA only; it is not a physical AXI model or a new-workload operator holdout.",
+  "exact_profile_fields": [
+    "load_buffer_2d_bytes",
+    "load_buffer_2d_calls",
+    "load_buffer_2d_acc_bytes",
+    "load_buffer_2d_acc_calls",
+    "load_buffer_2d_inp_bytes",
+    "load_buffer_2d_inp_calls",
+    "load_buffer_2d_wgt_bytes",
+    "load_buffer_2d_wgt_calls",
+    "store_buffer_2d_bytes",
+    "store_buffer_2d_calls"
+  ],
+  "expected_profile_delta_b_minus_a": {
+    "load_buffer_2d_acc_bytes": -122880,
+    "load_buffer_2d_acc_calls": -120,
+    "load_buffer_2d_bytes": -31580160,
+    "load_buffer_2d_calls": 2160,
+    "load_buffer_2d_inp_bytes": 0,
+    "load_buffer_2d_inp_calls": 1140,
+    "load_buffer_2d_wgt_bytes": -31457280,
+    "load_buffer_2d_wgt_calls": 1140,
+    "store_buffer_2d_bytes": 0,
+    "store_buffer_2d_calls": -240
+  },
+  "extra_submission_equivalent_bytes": 131072,
+  "frozen_formula": "dma_bytes + 65536*dma_calls + 131072*max(submissions-1,0)",
+  "graph_occurrence_signature": [
+    [
+      118,
+      "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_13"
+    ],
+    [
+      131,
+      "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_15"
+    ],
+    [
+      144,
+      "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_13"
+    ],
+    [
+      157,
+      "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_13"
+    ],
+    [
+      170,
+      "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_13"
+    ]
+  ],
+  "preparer_source_sha256": "f5a6667d2e0ffdce7f0c1fa46b7e49d16730511142cd81f4b20e2de1f168baca",
+  "programs": [
+    {
+      "candidate_id": "85a83262388fa22c68206ee0b7fc52d8dfa20b7276fc3c8f7daba4e58bf78b89",
+      "dma_bytes": 38097920,
+      "dma_calls": 980,
+      "extra_residency_submissions": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 64,
+        "tile_co": 4,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "original_candidate_id": "50802685fed1cb5d043f5a4a73864d4015627d05937aea9b6140b07d29fff97b",
+      "program_id": "tile_a:input_stationary",
+      "service_score_byte_equivalent": 102323200,
+      "traffic": {
+        "load_buffer_2d_acc_bytes": 143360,
+        "load_buffer_2d_acc_calls": 140,
+        "load_buffer_2d_bytes": 37847040,
+        "load_buffer_2d_calls": 420,
+        "load_buffer_2d_inp_bytes": 1003520,
+        "load_buffer_2d_inp_calls": 140,
+        "load_buffer_2d_wgt_bytes": 36700160,
+        "load_buffer_2d_wgt_calls": 140,
+        "store_buffer_2d_bytes": 250880,
+        "store_buffer_2d_calls": 560
+      }
+    },
+    {
+      "candidate_id": "b0d72f563d1d9aa186c8e7b244aeab2321491fad17af61e1c9d040bd1d52f470",
+      "dma_bytes": 6517760,
+      "dma_calls": 2900,
+      "extra_residency_submissions": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "original_candidate_id": "e239149944ef0bbf5a3007534c17968b495981593f083a3476dcf0d6add5e3aa",
+      "program_id": "tile_b:input_stationary",
+      "service_score_byte_equivalent": 196572160,
+      "traffic": {
+        "load_buffer_2d_acc_bytes": 20480,
+        "load_buffer_2d_acc_calls": 20,
+        "load_buffer_2d_bytes": 6266880,
+        "load_buffer_2d_calls": 2580,
+        "load_buffer_2d_inp_bytes": 1003520,
+        "load_buffer_2d_inp_calls": 1280,
+        "load_buffer_2d_wgt_bytes": 5242880,
+        "load_buffer_2d_wgt_calls": 1280,
+        "store_buffer_2d_bytes": 250880,
+        "store_buffer_2d_calls": 320
+      }
+    }
+  ],
+  "request_equivalent_bytes": 65536,
+  "schema": "c3_vta_fused_program_reranker_holdout_contract_v1",
+  "selected_candidate_id": "85a83262388fa22c68206ee0b7fc52d8dfa20b7276fc3c8f7daba4e58bf78b89",
+  "selected_program": "tile_a:input_stationary",
+  "selection_order": [
+    "tile_a:input_stationary",
+    "tile_b:input_stationary"
+  ],
+  "status": "fused_service_choice_frozen_before_fpga_latency",
+  "submission_term_scope": "zero for both input-stationary programs",
+  "target_label_exposure": {
+    "full_graph_latency_observed": false,
+    "operator_correctness_used_for_eligibility": true,
+    "operator_latency_used_for_selection": false,
+    "partial_mask_latency_observed": false
+  },
+  "verified_artifact_counts": {
+    "fused_contracts": [
+      2,
+      2
+    ],
+    "pair_builds": [
+      10,
+      10
+    ],
+    "service_development": 4,
+    "tile_holdouts": [
+      2,
+      2
+    ]
+  }
+}

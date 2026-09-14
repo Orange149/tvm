@@ -1,0 +1,47 @@
+{
+  "schema": "c3_p7r_e03_pareto_confirmation_v1",
+  "status": "frozen_before_e03_fsim_fpga_or_latency_labels",
+  "workload_id": "E03",
+  "selection_pool": {
+    "joint_space": 864,
+    "locally_eligible": 74,
+    "pareto_certified": 74
+  },
+  "selection_rule": "maximize total-byte reduction, then total-call reduction; compare with minimum-margin certified boundary",
+  "primary_hypothesis": "same-tile speedup(priority) > same-tile speedup(boundary)",
+  "safety_policy": "measure original and residency correctness first; final choice is min(measured original, measured residency)",
+  "candidates": [
+    {
+      "candidate_id": "57d1e9ab9c1162cc156168efd688441bac848576c0f77daaf2415213c46afb4e",
+      "config_index": 17,
+      "selection": {
+        "stratum": "pareto_priority",
+        "prediction_frozen_before_fsim_or_board": "larger_same_tile_speedup",
+        "features": {
+          "input_byte_reduction_fraction": 0.9166666666666666,
+          "total_byte_reduction_fraction": 0.4612159329140461,
+          "total_call_reduction_fraction": 0.8627450980392157,
+          "certified": true
+        }
+      }
+    },
+    {
+      "candidate_id": "4a853b894789102a390882be471030d796007644e845c81a684b1f7a89997782",
+      "config_index": 576,
+      "selection": {
+        "stratum": "pareto_boundary",
+        "prediction_frozen_before_fsim_or_board": "smaller_same_tile_speedup",
+        "features": {
+          "input_byte_reduction_fraction": 0.5,
+          "total_byte_reduction_fraction": 0.004910265697660832,
+          "total_call_reduction_fraction": 0.47058823529411764,
+          "certified": true
+        }
+      }
+    }
+  ],
+  "source_scan": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r41_e03_local_pareto_space_run01/results.jsonl",
+    "sha256": "a518447d0d5719795592c096da7d6dab74abdad8a16d8951c0e6846d626acc41"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "c3_p7r_w05_hybrid_confirmation_v1",
+  "status": "frozen_before_hybrid_fsim_fpga_or_latency_labels",
+  "workload_id": "W05",
+  "mode": "paper_inspired_hybrid",
+  "oc_nthread": 2,
+  "selection_pool": {
+    "joint_space": 400,
+    "both_paths_lower_and_input_reduces": 2,
+    "dma_pareto_certified": 2
+  },
+  "selection_rule": "all bounded-hybrid t2 candidates passing exact same-tile DMA Pareto",
+  "primary_hypothesis": "both candidates improve over exact same-tile original",
+  "secondary_hypothesis": "config400 speedup exceeds config408 due larger total-byte margin",
+  "protected_hypothesis": "only a candidate faster than TopHub config575 may replace it",
+  "candidates": [
+    {
+      "candidate_id": "43af42294e51f4d7933a689ba0e14ae8fbc31736eb3add30cb3d5471d89ae648",
+      "config_index": 400,
+      "selection": {
+        "stratum": "pareto_priority",
+        "prediction_frozen_before_fsim_fpga_or_latency": "larger_same_tile_speedup",
+        "features": {
+          "input_byte_reduction_fraction": 0.35,
+          "total_byte_reduction_fraction": 0.4917508064853995,
+          "total_call_reduction_fraction": 0.48484848484848486,
+          "certified": true
+        },
+        "hardware_rule": "bounded co/width reuse with oc_nthread=2"
+      }
+    },
+    {
+      "candidate_id": "41e5a7bdd5aa001e124571b3c819d207e56479edc9b0a47de7542fb9a1cf2aae",
+      "config_index": 408,
+      "selection": {
+        "stratum": "pareto_boundary",
+        "prediction_frozen_before_fsim_fpga_or_latency": "smaller_same_tile_speedup",
+        "features": {
+          "input_byte_reduction_fraction": 0.125,
+          "total_byte_reduction_fraction": 0.4474569034530608,
+          "total_call_reduction_fraction": 0.48484848484848486,
+          "certified": true
+        },
+        "hardware_rule": "bounded co/width reuse with oc_nthread=2"
+      }
+    }
+  ],
+  "source_scan": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r68_w05_t2_bounded_hybrid_local_run01/results.jsonl",
+    "sha256": "8f6a7c6763de820c759519b39711c6233e28d2ab2671211bbb3049f80da64ad5"
+  },
+  "script_sha256": "29e0034f16f12bd2085ae89d1b427208fbd252b485d675d01bc699b8b50040be",
+  "performance_labels_used": false,
+  "board_contacted": false
+}

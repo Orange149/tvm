@@ -25,6 +25,7 @@ from tvm import topi
 from tvm.autotvm.task.space import OtherOptionEntity, SplitEntity
 
 from .utils import is_packed_layout
+from .residency_dispatch import resolve_schedule_route
 from ..environment import get_env
 
 
@@ -132,9 +133,37 @@ def conv2d_packed(cfg, data, kernel, strides, padding, dilation, layout, out_dty
     return res
 
 
-@autotvm.register_topi_schedule("conv2d_packed.vta")
-def schedule_conv2d_packed(cfg, outs):
-    """Schedule packed conv2d"""
+RESIDENCY_MODES = {
+    0: "original",
+    1: "input_stationary",
+    2: "weight_stationary",
+    3: "paper_inspired_hybrid",
+    4: "weight_stationary_sync_probe",
+    5: "input_weight_resident_barrier",
+}
+
+
+def _normalize_residency_mode(mode):
+    """Return the canonical name for an experimental residency mode."""
+    if isinstance(mode, str):
+        if mode not in RESIDENCY_MODES.values():
+            raise ValueError("Unknown VTA residency mode: {}".format(mode))
+        return mode
+    try:
+        return RESIDENCY_MODES[int(mode)]
+    except (KeyError, TypeError, ValueError) as err:
+        raise ValueError("Unknown VTA residency mode: {}".format(mode)) from err
+
+
+def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original"):
+    """Build the packed-conv schedule, optionally using an experimental residency mode.
+
+    The registered ``conv2d_packed.vta`` entry always selects ``original``.  The other
+    modes are deliberately reached only through the separate experimental template in
+    ``vta_conv2d_residency.py`` so existing TopHub records and ConfigSpace indices keep
+    their original meaning.
+    """
+    residency_mode = _normalize_residency_mode(residency_mode)
     assert len(outs) == 1
     output = outs[0]
     const_ops = []
@@ -216,8 +245,90 @@ def schedule_conv2d_packed(cfg, outs):
     x_co0, x_co1 = cfg["tile_co"].apply(s, output, x_co)
     x_i0, x_i1 = cfg["tile_h"].apply(s, output, x_i)
     x_j0, x_j1 = cfg["tile_w"].apply(s, output, x_j)
-    s[output].reorder(x_bo, x_i0, x_co0, x_j0, x_co1, x_i1, x_j1, x_bi, x_ci)
-    store_pt = x_j0
+    weight_residency_pt = None
+    sync_axis = None
+    full_weight_residency = False
+    hybrid_oc_vthread_axis = None
+    if residency_mode == "original":
+        s[output].reorder(x_bo, x_i0, x_co0, x_j0, x_co1, x_i1, x_j1, x_bi, x_ci)
+        store_pt = x_j0
+    elif residency_mode == "input_stationary":
+        # Compute one wider conv tile below x_j0.  The existing cdata placement at the
+        # reduction tile then covers all output-channel tiles in that conv region; this
+        # also preserves the VTA padded-DMA shape required by the original template.
+        s[output].reorder(x_bo, x_i0, x_j0, x_co0, x_co1, x_i1, x_j1, x_bi, x_ci)
+        store_pt = x_j0
+    elif residency_mode in ("weight_stationary", "weight_stationary_sync_probe"):
+        # Group adjacent outer width tiles.  Mode 2 remains a feasibility-only shape;
+        # mode 4 promotes ckernel and adds an explicit drain, realizing bounded weight
+        # reuse for identities that pass lowering, FSim, and FPGA qualification.
+        w_extent = topi.utils.get_const_int(s[output].op.axis[3].dom.extent)
+        w_outer_extent = w_extent // cfg["tile_w"].size[-1]
+        w_reuse_factor = 2 if w_outer_extent % 2 == 0 else 1
+        x_jg, x_jr = s[output].split(x_j0, factor=w_reuse_factor)
+        s[output].reorder(
+            x_bo, x_co0, x_i0, x_jg, x_jr, x_co1, x_i1, x_j1, x_bi, x_ci
+        )
+        store_pt = x_jg
+        if residency_mode == "weight_stationary_sync_probe":
+            # Keep one weight tile across all spatial groups of x_co0 and
+            # request a full command-queue drain at the end of that residency scope.
+            # This mode is excluded from the production candidate identity vocabulary.
+            weight_residency_pt = x_co0
+            # A pragma on x_i0 wraps the complete spatial loop and appends the sync
+            # inside each x_co0 iteration, after its final STORE and before the next
+            # x_co0 iteration begins with a new weight LOAD.
+            sync_axis = x_i0
+    elif residency_mode == "paper_inspired_hybrid":
+        # A local, paper-inspired bounded composition.  This is not claimed to be an
+        # exact reproduction.  The safe version realizes bounded input reuse; weight
+        # reuse remains a hypothesis because promoting ckernel across this group forms
+        # an unsupported STORE->LOAD dependency in the current VTA task graph.
+        co_extent = topi.utils.get_const_int(s[output].op.axis[1].dom.extent)
+        w_extent = topi.utils.get_const_int(s[output].op.axis[3].dom.extent)
+        co_outer_extent = co_extent // cfg["tile_co"].size[-1]
+        w_outer_extent = w_extent // cfg["tile_w"].size[-1]
+        co_reuse_factor = 2 if co_outer_extent % 2 == 0 else 1
+        w_reuse_factor = 2 if w_outer_extent % 2 == 0 else 1
+        x_cog, x_cor = s[output].split(x_co0, factor=co_reuse_factor)
+        # Keep the bounded-reuse group inside one virtual context.  Contexts are
+        # distributed across groups, not across x_cor inside a group; splitting the
+        # latter interleaves writes to the same accumulator indices and violates the
+        # VTA two-cycle UOP destination dependency rule.
+        hybrid_oc_vthread_axis = x_cog
+        x_jg, x_jr = s[output].split(x_j0, factor=w_reuse_factor)
+        s[output].reorder(
+            x_bo,
+            x_i0,
+            x_cog,
+            x_jg,
+            x_jr,
+            x_cor,
+            x_co1,
+            x_i1,
+            x_j1,
+            x_bi,
+            x_ci,
+        )
+        store_pt = x_jg
+    elif residency_mode == "input_weight_resident_barrier":
+        # Functional reimplementation of Cheng Scheme 4 for the current VTA tree.
+        # Input-prioritized traversal keeps x_j0 outside x_co0.  To make weight
+        # reuse compatible with that traversal, retain the *whole* layer kernel
+        # below the batch axis instead of retaining only one x_co0 tile.  This is
+        # intentionally different from Cheng's unpublished non-overwriting-address
+        # runtime patch and is exposed only through the experimental template.
+        full_weight_bytes = int(np.prod(topi.utils.get_const_tuple(kernel.shape)))
+        if full_weight_bytes > env.WGT_BUFF_SIZE:
+            raise ValueError(
+                "input_weight_resident_barrier not_applicable: full kernel {} exceeds "
+                "weight SRAM {}".format(full_weight_bytes, env.WGT_BUFF_SIZE)
+            )
+        s[output].reorder(x_bo, x_i0, x_j0, x_co0, x_co1, x_i1, x_j1, x_bi, x_ci)
+        store_pt = x_j0
+        weight_residency_pt = x_bo
+        sync_axis = x_bo
+        full_weight_residency = True
 
     # set all compute scopes
     s[conv2d_stage].compute_at(s[output], store_pt)
@@ -228,9 +339,28 @@ def schedule_conv2d_packed(cfg, outs):
         s[tensor].compute_at(s[output], store_pt)
         s[tensor].pragma(s[tensor].op.axis[0], env.dma_copy)
 
-    # virtual threading along output channel axes
+    # Virtual-thread support is deliberately narrow for the P7R joint experiment.
+    # Input-stationary schedules may retain output-channel cthreads so the compiler
+    # can certify the real context-replicated SRAM footprint.  Other experimental
+    # modes still use the older mechanism-isolation boundary, and spatial cthreads
+    # remain excluded because they introduce a second replication dimension.
+    if residency_mode != "original" and cfg["h_nthread"].val > 1:
+        raise ValueError("Experimental residency schedules require h_nthread = 1")
+    if residency_mode not in (
+        "original", "input_stationary", "paper_inspired_hybrid"
+    ) and cfg["oc_nthread"].val > 1:
+        raise ValueError(
+            "Only input-stationary and bounded-hybrid residency currently support "
+            "oc_nthread > 1"
+        )
+
     if cfg["oc_nthread"].val > 1:
-        _, v_t = s[output].split(x_co0, factor=cfg["oc_nthread"].val)
+        oc_vthread_axis = (
+            hybrid_oc_vthread_axis
+            if residency_mode == "paper_inspired_hybrid"
+            else x_co0
+        )
+        _, v_t = s[output].split(oc_vthread_axis, factor=cfg["oc_nthread"].val)
         s[output].reorder(v_t, x_bo)
         s[output].bind(v_t, te.thread_axis("cthread"))
 
@@ -246,7 +376,17 @@ def schedule_conv2d_packed(cfg, outs):
 
     k_o, _ = cfg["tile_ci"].apply(s, conv2d_stage, k_o)
     s[cdata].compute_at(s[conv2d_stage], k_o)
-    s[ckernel].compute_at(s[conv2d_stage], k_o)
+    if residency_mode == "weight_stationary_sync_probe":
+        s[ckernel].compute_at(s[output], weight_residency_pt)
+        s[output].pragma(sync_axis, "coproc_sync")
+    elif full_weight_residency:
+        s[ckernel].compute_at(s[output], weight_residency_pt)
+        s[output].pragma(sync_axis, "coproc_sync")
+    else:
+        # Keep both DMA producers inside the conv region.  Promoting ckernel to an
+        # output loop without an explicit drain creates an unsupported STORE->LOAD
+        # dependency in the VTA runtime.  Modes 0--3 retain that verified boundary.
+        s[ckernel].compute_at(s[conv2d_stage], k_o)
 
     # Use VTA instructions
     s[cdata].pragma(s[cdata].op.axis[0], env.dma_copy)
@@ -255,3 +395,15 @@ def schedule_conv2d_packed(cfg, outs):
     s[output].pragma(x_co1, env.dma_copy)
 
     return s
+
+
+@autotvm.register_topi_schedule("conv2d_packed.vta")
+def schedule_conv2d_packed(cfg, outs):
+    """Schedule packed conv2d, honoring only an explicit fail-closed route."""
+    residency_mode = resolve_schedule_route(cfg, outs)
+    return _schedule_conv2d_packed_impl(cfg, outs, residency_mode=residency_mode)
+
+
+def schedule_conv2d_packed_residency(cfg, outs, residency_mode):
+    """Experimental packed-conv schedule with an explicit integer/string mode."""
+    return _schedule_conv2d_packed_impl(cfg, outs, residency_mode=residency_mode)

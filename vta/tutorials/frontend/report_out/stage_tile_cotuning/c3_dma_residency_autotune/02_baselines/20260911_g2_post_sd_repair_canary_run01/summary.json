@@ -1,0 +1,41 @@
+{
+  "schema": "c3_g2_post_sd_repair_summary_v1",
+  "date": "2026-09-11",
+  "status": "passed",
+  "board": {
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "fpga_state_after": "operating",
+    "udmabuf_bytes": 201326592,
+    "cpu_frequency_khz": 1066666,
+    "sd_p2_used_percent_after": 78,
+    "sd_p2_available_mib_after": 381.2,
+    "new_storage_errors_after_dmesg_second_4058": 0
+  },
+  "tophub_canary": {
+    "workloads": 10,
+    "exact_correctness_passed": 10,
+    "failed": 0,
+    "warmup": 0,
+    "number": 1,
+    "performance_claim_allowed": false
+  },
+  "topology_b": {
+    "artifact": "frozen legacy topology B: CPU 00..02 / VTA 03..15 / CPU 16..20, threads 4/1/2, queue depth 2",
+    "runs_per_repeat": 22,
+    "discarded_warmup_frames": 2,
+    "fps_repeats": [
+      10.107228453759745,
+      10.777248472252568,
+      10.451076670441143
+    ],
+    "median_fps": 10.451076670441143,
+    "historical_reference_fps": 10.724,
+    "minimum_accepted_fps": 10.1878,
+    "median_relative_drop": 0.025449769634358178,
+    "accepted": true,
+    "unique_output_hashes_each_repeat": 1,
+    "output_fnv1a64": "a8c613584e081e5f",
+    "top1": 285
+  },
+  "recovery_note": "The deleted regenerable cache entries needed by the frozen topology-B package were restored from the pre-repair raw ext4 image, verified by SHA-256, and deployed only to /var/volatile tmpfs. The repaired SD partition was not repopulated with the cache."
+}

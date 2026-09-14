@@ -1,0 +1,78 @@
+{
+  "callsites": [
+    {
+      "from": 3,
+      "function": "main",
+      "index": 0,
+      "kind": "push",
+      "to": 1
+    },
+    {
+      "from": 3,
+      "function": "main",
+      "index": 1,
+      "kind": "pop",
+      "to": 1
+    }
+  ],
+  "edges": [
+    {
+      "allowed": false,
+      "balanced": true,
+      "forbidden_direct_load_store": true,
+      "from": 3,
+      "from_name": "store",
+      "function": "main",
+      "pop_count": 1,
+      "push_count": 1,
+      "to": 1,
+      "to_name": "load"
+    }
+  ],
+  "errors": [
+    {
+      "code": "forbidden_direct_load_store",
+      "from": 3,
+      "function": "main",
+      "to": 1
+    }
+  ],
+  "functions": [
+    "main"
+  ],
+  "schema": "vta_coproc_dependency_audit_v1",
+  "semantics": {
+    "balance_unit": "static_callsites_per_function_and_directed_edge",
+    "loop_multiplicity": "not_expanded",
+    "path_sensitive": false
+  },
+  "summary": {
+    "call_count": 2,
+    "edge_count": 1,
+    "forbidden_1_3_present": true,
+    "function_count": 1,
+    "only_supported_edges": false,
+    "pop_count": 1,
+    "push_count": 1,
+    "push_pop_balanced": true
+  },
+  "supported_edges": [
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      2
+    ]
+  ],
+  "valid": false
+}

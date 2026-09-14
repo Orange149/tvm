@@ -1,0 +1,325 @@
+{
+  "deviation_disclosure": "run01 reported 52 candidate attempts but durably recorded 51 checks; this recovery repeats the interrupted identity's full three-seed set, so the combined complete dataset has 54 auditable checks while gross reported attempts are 55",
+  "health_canary": {
+    "candidate_or_training_role": false,
+    "entry": {
+      "candidate_id": "6374bca35bb59bb20cbb07532e5ba29ca3a56225023cf8d632b80063818d5d77",
+      "debug": {
+        "config_index": 575
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                14
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                14
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                4
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              2
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "historical_candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+        "historical_tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060",
+        "implementation": "conv2d_packed_residency.vta mode0 original branch",
+        "schema": "c3_p7r122_w05_health_canary_identity_v1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "workload_id": "W05"
+      },
+      "implementation_mode": 0,
+      "performance_measurement": "not_collected",
+      "public_mode": "original",
+      "role": "health_gate_only"
+    },
+    "performance_baseline_role": false,
+    "role": "independent current-session health gate only"
+  },
+  "interrupted_run": {
+    "artifact_ledger_sha256": "0dd2e0acfeaab30aa889ef821a63dff585abfea6b5e07b31a0d3d793f3eb36a2",
+    "complete_identities": 17,
+    "complete_seed_checks": 51,
+    "contract_sha256": "6d6b7734c5df5bc78d3f26ddedffca615bf7b1121bb1f9e640aa74d1f4dfc516",
+    "correctness_sha256": "6e8e3aa28d12f2cdbe1788d69a9ec5ecc084e9d2247b5f690a61c8b99e741b00",
+    "failure_sha256": "2b30039fb960ba5b3b17da5094ef571beceb2c80e2933f768412278d2ed7198b",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r126_y01_remaining_correctness_run01",
+    "reported_candidate_dispatch_attempts": 52
+  },
+  "protocol": {
+    "Y01_TopHub": "forbidden",
+    "completed_identity_repeated": false,
+    "health_gate": "W05 must pass all three seeds before recovery identity",
+    "per_seed_durable_record": true,
+    "recovery_checks": "Y01F06 weight_resident_barrier at all three frozen seeds",
+    "replacement": false,
+    "ssh_restart_reconfiguration_persistent_write": "forbidden",
+    "timing": "forbidden",
+    "transport": "direct RPC ephemeral upload/load/remove only"
+  },
+  "qualification_binding": {
+    "command_signature": {
+      "insn_peak_bytes": 27248,
+      "insn_total_bytes": 54560,
+      "load_total_bytes": 608256,
+      "residency_drains": 2,
+      "store_total_bytes": 43264,
+      "submissions": 3,
+      "uop_peak_bytes": 24,
+      "uop_total_bytes": 48
+    },
+    "command_signature_sha256": "c064b06c36585baa2d451c957bb7e4385b84c4088449e172ea059b9b9bab7e58",
+    "static_feature_vector_sha256": "d83136a463723fbcba30def4cacaadac22ba23d8214bce4a5dd827e9519146ce",
+    "tir_sha256": "6ebb375f5a9e9bc10da87f71a424774b1496620d13c0592b9c611049ea6606c2"
+  },
+  "recovery_identity": {
+    "board_status": "not_dispatched",
+    "candidate_id": "3083a6f17ff353d5d1984816c191c651584f3a2fba6cdc7c9fa36f46aa3c01dc",
+    "debug": {
+      "config_index": 104
+    },
+    "family_id": "Y01F06",
+    "family_ordinal": 6,
+    "hardware_predicate": {
+      "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+      "limits": {
+        "accumulator_vectors": 2048,
+        "input_vectors": 2048,
+        "weight_vectors": 1024
+      },
+      "opportunities": {
+        "output_channel_outer_tiles": 2,
+        "output_width_outer_tiles": 13
+      },
+      "passed": true,
+      "reasons": [],
+      "required": {
+        "accumulator_vectors": 8,
+        "input_vectors": 32,
+        "weight_vectors": 256
+      }
+    },
+    "identity": {
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "implementation_mode": 4,
+      "public_mode": "weight_resident_barrier",
+      "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+      "schema": "c3_candidate_id_v2",
+      "template_name": "conv2d_packed_residency.vta",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            64,
+            13,
+            13,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            64,
+            1,
+            1,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ]
+    },
+    "implementation_mode": 4,
+    "knobs": {
+      "h_nthread": 1,
+      "oc_nthread": 1,
+      "tile_b": 1,
+      "tile_ci": 32,
+      "tile_co": 8,
+      "tile_h": 1,
+      "tile_w": 1
+    },
+    "performance_label": null,
+    "public_mode": "weight_resident_barrier",
+    "schema": "c3_p7r124_y01_v2_local_pool_v1",
+    "selection_basis": "P7R115b frozen deterministic label-free ConfigEntity; no Y01 board latency, TopHub entity/cost, FSim outcome, or replacement",
+    "selection_rank_sha256": "16a05a4c2b3315a21173dda3522d3046ef256836fb2eb88a02d52a022eca0ded",
+    "workload_id": "Y01"
+  },
+  "rpc": {
+    "boot_id": "unknown_not_exposed_by_rpc",
+    "host": "192.168.1.247",
+    "port": 9090
+  },
+  "schema": "c3_p7r126_y01_remaining_correctness_recovery_v1",
+  "status": "frozen_before_recovery_cross_compile_or_rpc_observations"
+}

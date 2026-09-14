@@ -1,0 +1,81 @@
+{
+  "analyzer_source_sha256": "7a0099d092f8135877156b1c392d40eac994c7a0f45a9d53a687c9efad1bc5f8",
+  "claim_boundary": "Retrospective replay of one existing four-way FPGA run.  Y00 and Y02 use different workloads and residency modes and would not belong to the normal same-mode call-site bundle rule; this is an adversarial fallback control, not a prospective search result.  It also demonstrates that recursive splitting can cost more than singleton greedy",
+  "matches_existing_sequential_planner": true,
+  "pair_test_overhead_vs_singleton_percent": 50.0,
+  "pair_tests": 3,
+  "path": [
+    {
+      "accepted": false,
+      "action": "test_forced_group_y00_y02",
+      "left": "stock_all",
+      "median_paired_delta_ms": 75.01230100000001,
+      "paired_delta_ms": [
+        75.005131,
+        74.04650099999998,
+        75.82845800000001,
+        74.31440300000003,
+        75.01947100000001,
+        77.02535,
+        77.92896000000002,
+        73.19584200000003
+      ],
+      "paired_rounds": 8,
+      "right": "y00_input_y02_weight",
+      "right_wins": 0
+    },
+    {
+      "accepted": true,
+      "action": "split_and_test_y00",
+      "left": "stock_all",
+      "median_paired_delta_ms": -4.19563149999999,
+      "paired_delta_ms": [
+        -3.746227000000033,
+        -5.3914139999999975,
+        -5.453095000000019,
+        -4.27792199999999,
+        -4.113340999999991,
+        -3.2225720000000138,
+        -4.859537999999986,
+        -3.164430999999979
+      ],
+      "paired_rounds": 8,
+      "right": "y00_input_only",
+      "right_wins": 8
+    },
+    {
+      "accepted": false,
+      "action": "test_y02_against_updated_y00_incumbent",
+      "left": "y00_input_only",
+      "median_paired_delta_ms": 79.28536349999999,
+      "paired_delta_ms": [
+        78.75135800000004,
+        79.43791499999998,
+        81.28155300000003,
+        78.59232500000002,
+        79.132812,
+        80.24792200000002,
+        82.788498,
+        76.360273
+      ],
+      "paired_rounds": 8,
+      "right": "y00_input_y02_weight",
+      "right_wins": 0
+    }
+  ],
+  "schema": "c3_vta_hierarchical_bundle_negative_control_v1",
+  "selected_route_candidate_ids": [
+    "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c"
+  ],
+  "singleton_greedy_pair_tests": 2,
+  "source": {
+    "factorial_artifact_hash_manifest_sha256": "e54518168c21608af796d45ecb74b2dbc44bc83bc7bee9b64f33fe301194b3dd",
+    "factorial_summary_sha256": "f236f0402ddcca7e79373d9ef303ccded03d5ac5b7519a1300f45ace868962e2",
+    "factorial_timing_sha256": "861334bddb7d44a35e9350010fe2d80d870be95d6fe572983d6c41d7c3ede1f4",
+    "factorial_verified_artifact_count": 6,
+    "greedy_artifact_hash_manifest_sha256": "9243343abe3183d545a7fae1a9865764f7f3a11fbe8da5636a3698efca6099e7",
+    "greedy_plan_sha256": "fdab8877e25a5a2dc5b10f654e1497994bb7303070b852e70c517f3c548e1f3d",
+    "greedy_verified_artifact_count": 2
+  },
+  "status": "forced_bundle_failure_and_recursive_split_replayed"
+}

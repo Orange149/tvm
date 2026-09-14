@@ -1,0 +1,173 @@
+{
+  "board_contacted": false,
+  "claim_boundary": "Call-site/full-graph latency holdout only.  The source operator correctness pool and its historical performance results already exist, but performance labels are not inputs to this deterministic selection",
+  "correctness_artifact_hash_manifest_sha256": "4a5cd67667c43318b748e8386fc85581d02707982ea0a05e1d2b555a7099fc63",
+  "correctness_source_sha256": "43f6980cd3c1f6abb3344862d800ab92211c3a2e3a9792abdee1c595fff2a3df",
+  "excluded_candidate_ids": [
+    "02f17ab72e57ba8767cb30afc7072640199f73eaa409e5c0d448034e727212e0",
+    "7287117f119111d13738774f2c338dd863cc1475159849efd51038b7b52698ca"
+  ],
+  "full_graph_latency_labels_used": false,
+  "operator_latency_labels_used": false,
+  "partial_mask_latency_labels_used": false,
+  "planned_gate": {
+    "correctness_seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "fused_tir_profile": "all ten LOAD/STORE fields exact",
+    "paired_rounds": 7,
+    "required_candidate_wins": 7,
+    "required_median_delta": "strictly_negative"
+  },
+  "preexisting_correctness_labels_used": true,
+  "registry_artifact_hash_manifest_sha256": "6c1f6e2cb4489e3c5315437e6bad2d9c8b66e52c97a053de2b15e38e2771a6b2",
+  "registry_candidates_sha256": "cf5cee20ef82263a3bd59609b6189463ff1290e17372c5acbf9cc6dc43797de3",
+  "schema": "c3_vta_r50a_callsite_latency_holdout_contract_v1",
+  "selected_family_id": "R50AF00",
+  "selected_pair": [
+    {
+      "candidate_id": "73aa97bd1989108f0d1fe089241ca12f3ffc07756c42f6d78cf2ca173afe969c",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 2,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "public_mode": "original"
+    },
+    {
+      "candidate_id": "ea09328abc3e1e14129d29da989026db9a714762ae6c39c81c3f0def741440d2",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 2,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "public_mode": "input_stationary"
+    }
+  ],
+  "selection_rule": "first family in the pre-existing frozen registry order with three-seed FPGA-correct original/input modes, excluding the previously used F06 pair",
+  "status": "frozen_before_new_full_graph_build_or_callsite_latency",
+  "verified_correctness_artifact_count": 13,
+  "verified_registry_artifact_count": 3
+}

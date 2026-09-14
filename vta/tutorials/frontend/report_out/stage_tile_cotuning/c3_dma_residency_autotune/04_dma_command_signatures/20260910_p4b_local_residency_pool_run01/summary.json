@@ -1,0 +1,335 @@
+{
+  "schema": "c3_residency_static_summary_v1",
+  "status": "completed",
+  "scope": "local static TIR lowering and logical DMA requests; no FSim timing or board data",
+  "mapping": {
+    "workload_count": 10,
+    "historical_source_candidates": 80,
+    "mapped_unique_tile_entities": 60,
+    "deduplicated_historical_sources": 20,
+    "protected_original_incumbents": 10,
+    "experimental_modes_per_tile": 3,
+    "experimental_candidates": 180
+  },
+  "result_records": 250,
+  "modes": {
+    "input_stationary": {
+      "attempted": 60,
+      "lower_ok": 32,
+      "lower_failed": 28,
+      "legality_rate": 0.5333333333333333,
+      "failure_subcategories": {
+        "allocation_capacity": 16,
+        "dma_2d_pattern": 8,
+        "dma_pad_innermost": 4
+      },
+      "input_reduction_fraction": {
+        "count": 32,
+        "min": 0.0,
+        "p25": 0.5,
+        "median": 0.5,
+        "p75": 0.75,
+        "max": 0.75,
+        "positive": 25,
+        "zero": 7,
+        "negative": 0
+      },
+      "weight_reduction_fraction": {
+        "count": 32,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "max": 0.0,
+        "positive": 0,
+        "zero": 32,
+        "negative": 0
+      },
+      "target_dma_definition": "input_load_bytes",
+      "target_dma_reduction_fraction": {
+        "count": 32,
+        "min": 0.0,
+        "p25": 0.5,
+        "median": 0.5,
+        "p75": 0.75,
+        "max": 0.75,
+        "positive": 25,
+        "zero": 7,
+        "negative": 0
+      }
+    },
+    "weight_stationary": {
+      "attempted": 60,
+      "lower_ok": 43,
+      "lower_failed": 17,
+      "legality_rate": 0.7166666666666667,
+      "failure_subcategories": {
+        "dma_2d_pattern": 3,
+        "dma_compact_buffer": 7,
+        "dma_pad_innermost": 7
+      },
+      "input_reduction_fraction": {
+        "count": 43,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "max": 0.0,
+        "positive": 0,
+        "zero": 43,
+        "negative": 0
+      },
+      "weight_reduction_fraction": {
+        "count": 43,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "max": 0.0,
+        "positive": 0,
+        "zero": 43,
+        "negative": 0
+      },
+      "target_dma_definition": "weight_load_bytes",
+      "target_dma_reduction_fraction": {
+        "count": 43,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "max": 0.0,
+        "positive": 0,
+        "zero": 43,
+        "negative": 0
+      }
+    },
+    "paper_inspired_hybrid": {
+      "attempted": 60,
+      "lower_ok": 35,
+      "lower_failed": 25,
+      "legality_rate": 0.5833333333333334,
+      "failure_subcategories": {
+        "allocation_capacity": 8,
+        "dma_2d_pattern": 3,
+        "dma_compact_buffer": 7,
+        "dma_pad_innermost": 7
+      },
+      "input_reduction_fraction": {
+        "count": 35,
+        "min": 0.0,
+        "p25": 0.5,
+        "median": 0.5,
+        "p75": 0.5,
+        "max": 0.5,
+        "positive": 28,
+        "zero": 7,
+        "negative": 0
+      },
+      "weight_reduction_fraction": {
+        "count": 35,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "max": 0.0,
+        "positive": 0,
+        "zero": 35,
+        "negative": 0
+      },
+      "target_dma_definition": "input_plus_weight_load_bytes",
+      "target_dma_reduction_fraction": {
+        "count": 35,
+        "min": 0.0,
+        "p25": 0.006310981298456303,
+        "median": 0.08139534883720931,
+        "p75": 0.2914072333641017,
+        "max": 0.45892169448010267,
+        "positive": 28,
+        "zero": 7,
+        "negative": 0
+      }
+    }
+  },
+  "workloads": {
+    "W00": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 3
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 4
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 3
+        }
+      }
+    },
+    "W01": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 3
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 4
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 3
+        }
+      }
+    },
+    "W02": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 1
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 4
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 2
+        }
+      }
+    },
+    "W03": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 3
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 4
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 3
+        }
+      }
+    },
+    "W04": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 2
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 4
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 3
+        }
+      }
+    },
+    "W05": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 2
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 4
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 3
+        }
+      }
+    },
+    "W06": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 3
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 4
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 3
+        }
+      }
+    },
+    "W07": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 5
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 5
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 5
+        }
+      }
+    },
+    "W08": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 5
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 5
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 5
+        }
+      }
+    },
+    "W09": {
+      "protected_original_ok": true,
+      "mapped_tile_controls": 6,
+      "modes": {
+        "input_stationary": {
+          "attempted": 6,
+          "lower_ok": 5
+        },
+        "weight_stationary": {
+          "attempted": 6,
+          "lower_ok": 5
+        },
+        "paper_inspired_hybrid": {
+          "attempted": 6,
+          "lower_ok": 5
+        }
+      }
+    }
+  }
+}

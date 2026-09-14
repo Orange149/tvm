@@ -1,0 +1,180 @@
+{
+  "analyzer_source_sha256": "63ab73b6e32d58d6a9af03d9a29b291cdd529c19889849d9d4dc75b4c8cbb512",
+  "claim_boundary": "Two tiles of one R50A workload on one ResNet50 graph and boot. This is a controlled full-graph tile/DMA mechanism comparison, not an independent workload sample, fitted latency model, or physical AXI measurement",
+  "cross_tile_right_vs_left": {
+    "original": {
+      "right_vs_left_latency_percent": 112.8437633872966,
+      "right_vs_left_load_bytes_percent": -23.248407643312095,
+      "right_vs_left_load_calls_percent": 622.2222222222223
+    },
+    "residency": {
+      "right_vs_left_latency_percent": 16.308427850346206,
+      "right_vs_left_load_bytes_percent": -47.42647058823529,
+      "right_vs_left_load_calls_percent": 261.11111111111114
+    }
+  },
+  "key_observation": "The right tile moves fewer LOAD bytes than the left tile in both modes but remains slower because it emits far more LOAD requests. Input residency cuts both reload bytes and request fragmentation; bytes alone cannot rank these two exact full-graph programs",
+  "schema": "c3_vta_r50a_callsite_tile_holdout_comparison_v1",
+  "source_hashes": {
+    "audit_a_summary": "f4f6c25973cd7447332b904d05770da3d933b81ac6fd6049db19765fc9c35f00",
+    "audit_b_summary": "c261d255714486e91690962152c54f0e4222c725b1510a918d146fcb146a7b54",
+    "fused_a": "b4afb198b12a78e91f170c4b369a9bc0be0ce91a1e4fdda8d57964695bc64346",
+    "fused_b": "ea56bf815a35ae7ddb9ba15b36ca4340e75e4a17f7bc0af0bc490f94923d9743"
+  },
+  "status": "two_callsite_latency_holdouts_expose_tile_dependent_dma_fragmentation",
+  "supported_search_feature": "Use final-fused-program LOAD bytes and LOAD calls jointly in the shared-memory service proxy, while retaining real FPGA latency as the admission label",
+  "tiles": [
+    {
+      "delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -1008,
+        "load_buffer_2d_bytes": -3612672,
+        "load_buffer_2d_calls": -9072,
+        "load_buffer_2d_inp_bytes": -3612672,
+        "load_buffer_2d_inp_calls": -4032,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -4032,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "family": "R50AF00",
+      "group_model_execution_calls": 20,
+      "grouped_selected_mask": [
+        1,
+        1,
+        1
+      ],
+      "input_reload_ratio_original_over_residency": 4.0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 2,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "latency_ms": {
+        "incumbent": 422.291663,
+        "proposal": 374.452164
+      },
+      "latency_reduction_percent": 11.328544508822102,
+      "load_bytes_reduction_percent": 13.375796178343947,
+      "load_calls_reduction_percent": 75.0,
+      "original": {
+        "load_buffer_2d_acc_bytes": 172032,
+        "load_buffer_2d_acc_calls": 1344,
+        "load_buffer_2d_bytes": 27009024,
+        "load_buffer_2d_calls": 12096,
+        "load_buffer_2d_inp_bytes": 4816896,
+        "load_buffer_2d_inp_calls": 5376,
+        "load_buffer_2d_wgt_bytes": 22020096,
+        "load_buffer_2d_wgt_calls": 5376,
+        "store_buffer_2d_bytes": 301056,
+        "store_buffer_2d_calls": 1344
+      },
+      "original_average_load_request_bytes": 2232.8888888888887,
+      "paired_rounds": 7,
+      "paired_wins": 7,
+      "residency": {
+        "load_buffer_2d_acc_bytes": 172032,
+        "load_buffer_2d_acc_calls": 336,
+        "load_buffer_2d_bytes": 23396352,
+        "load_buffer_2d_calls": 3024,
+        "load_buffer_2d_inp_bytes": 1204224,
+        "load_buffer_2d_inp_calls": 1344,
+        "load_buffer_2d_wgt_bytes": 22020096,
+        "load_buffer_2d_wgt_calls": 1344,
+        "store_buffer_2d_bytes": 301056,
+        "store_buffer_2d_calls": 1344
+      },
+      "residency_average_load_request_bytes": 7736.888888888889,
+      "singleton_model_execution_calls": 60,
+      "singleton_selected_mask": [
+        1,
+        1,
+        1
+      ],
+      "throughput_speedup_percent": 12.775863941862564
+    },
+    {
+      "delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -1176,
+        "load_buffer_2d_bytes": -8429568,
+        "load_buffer_2d_calls": -76440,
+        "load_buffer_2d_inp_bytes": -8429568,
+        "load_buffer_2d_inp_calls": -37632,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -37632,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "family": "R50AF01",
+      "group_model_execution_calls": 20,
+      "grouped_selected_mask": [
+        1,
+        1,
+        1
+      ],
+      "input_reload_ratio_original_over_residency": 8.0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 14,
+        "tile_w": 1
+      },
+      "latency_ms": {
+        "incumbent": 898.821468,
+        "proposal": 435.519425
+      },
+      "latency_reduction_percent": 51.5455025824995,
+      "load_bytes_reduction_percent": 40.66390041493776,
+      "load_calls_reduction_percent": 87.5,
+      "original": {
+        "load_buffer_2d_acc_bytes": 86016,
+        "load_buffer_2d_acc_calls": 1344,
+        "load_buffer_2d_bytes": 20729856,
+        "load_buffer_2d_calls": 87360,
+        "load_buffer_2d_inp_bytes": 9633792,
+        "load_buffer_2d_inp_calls": 43008,
+        "load_buffer_2d_wgt_bytes": 11010048,
+        "load_buffer_2d_wgt_calls": 43008,
+        "store_buffer_2d_bytes": 301056,
+        "store_buffer_2d_calls": 1344
+      },
+      "original_average_load_request_bytes": 237.2923076923077,
+      "paired_rounds": 7,
+      "paired_wins": 7,
+      "residency": {
+        "load_buffer_2d_acc_bytes": 86016,
+        "load_buffer_2d_acc_calls": 168,
+        "load_buffer_2d_bytes": 12300288,
+        "load_buffer_2d_calls": 10920,
+        "load_buffer_2d_inp_bytes": 1204224,
+        "load_buffer_2d_inp_calls": 5376,
+        "load_buffer_2d_wgt_bytes": 11010048,
+        "load_buffer_2d_wgt_calls": 5376,
+        "store_buffer_2d_bytes": 301056,
+        "store_buffer_2d_calls": 1344
+      },
+      "residency_average_load_request_bytes": 1126.4,
+      "singleton_model_execution_calls": 60,
+      "singleton_selected_mask": [
+        1,
+        1,
+        1
+      ],
+      "throughput_speedup_percent": 106.37919146775138
+    }
+  ],
+  "verified_artifact_counts": {
+    "audit_a": 2,
+    "audit_b": 2,
+    "fused_a": 2,
+    "fused_b": 2
+  }
+}

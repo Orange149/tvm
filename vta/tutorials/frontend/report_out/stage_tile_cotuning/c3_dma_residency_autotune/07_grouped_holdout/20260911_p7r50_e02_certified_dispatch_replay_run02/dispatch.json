@@ -1,0 +1,71 @@
+{
+  "counts": {
+    "abstain_keep_original": 2,
+    "protected_incumbent": 1
+  },
+  "inputs": {
+    "candidates": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r14_unseen_shape_shortlist_run01/shortlist.jsonl",
+      "sha256": "88f7abad63a31e5e99ad7ba42ac3c908f665a87df0e834048b77cbc1421a50a2"
+    },
+    "contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r16_unseen_board_contracts_run01/e02_contract.json",
+      "sha256": "04573afd7317d5db7f3050654ae77ecfd0de1d0d33e0079a89a9b149157228b3"
+    },
+    "ledger": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r48_hardware_certificate_ledger_run01/ledger.json",
+      "sha256": "b5ef55355db5be4fceaeeff3c3f28811193f78be7b78235e70c61c5aac1e7a6a"
+    }
+  },
+  "performance_labels_used": false,
+  "policy_order": [
+    "protected incumbent",
+    "static and DMA-Pareto certificate",
+    "exact hardware-certificate lookup",
+    "unknown identities receive correctness only",
+    "timing only after exact pass"
+  ],
+  "records": [
+    {
+      "reason": "zero-regret fallback is dispatched before experimental candidates",
+      "route": "protected_incumbent",
+      "workload_id": "E02"
+    },
+    {
+      "candidate_id": "43000a0a794c56a3480ed3c049d899e872a94507dcd91578e98b768df3c88fb0",
+      "config_index": 1163,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": -0.42655548428479795,
+          "total_dma_calls": 0.4878048780487805
+        }
+      },
+      "mode": "input_stationary",
+      "reason": "not_dma_pareto",
+      "route": "abstain_keep_original",
+      "tir_sha256": "24447036d25deb8839305d92ef49e04d371ea3793e33f817c6b1cfa9195f70c7",
+      "workload_id": "E02"
+    },
+    {
+      "candidate_id": "7da978ba351436733da454093f98929e8185ebeacd2b5946d40bb4a64bdec2d0",
+      "config_index": 1167,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": -0.3730668808997791,
+          "total_dma_calls": 0.4878048780487805
+        }
+      },
+      "mode": "input_stationary",
+      "reason": "not_dma_pareto",
+      "route": "abstain_keep_original",
+      "tir_sha256": "e648954bf2f59f248b2e8aa33340294428cc0dc1994c0d2d234e5cf7d8ea317c",
+      "workload_id": "E02"
+    }
+  ],
+  "schema": "c3_vta_hardware_certified_dispatch_v1",
+  "status": "completed"
+}

@@ -1,0 +1,5 @@
+TopHub correctness command:
+unset LD_LIBRARY_PATH && source /home/orange/alinx_plsdk/install/environment-setup-aarch64-xilinx-linux && TEST_DATA_ROOT_PATH=/tmp/tvm_test_data MPLCONFIGDIR=/tmp/mpl PYTHONUNBUFFERED=1 /home/orange/miniconda3/envs/vta-resnet/bin/python vta/tutorials/frontend/benchmark_resnet18_single_ops.py --host 192.168.1.247 --port 9090 --devices vta --cases s1_conv3x3_64_64,s2_conv3x3_64_128_s2,s2_proj1x1_64_128_s2,s2_conv3x3_128_128,s3_conv3x3_128_256_s2,s3_proj1x1_128_256_s2,s3_conv3x3_256_256,s4_conv3x3_256_512_s2,s4_proj1x1_256_512_s2,s4_conv3x3_512_512 --number 1 --warmup 0 --check-correctness --output-dir <this-run-dir>
+
+Topology-B replay protocol:
+Run the SHA-256-frozen legacy package from `/var/volatile/vta_c3_legacy` with CPU/VTA/CPU stage threads 4/1/2, affinities 0..3/default/0..1, queue depth 2, 22 frames, raw output, and no runtime profiler. Repeat three times; discard the first two frames of every repeat and compute `(N-1)/(last_completion-first_completion)`.

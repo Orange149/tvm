@@ -1,0 +1,381 @@
+{
+  "board_protocol": "two modules x three exact seeds in frozen order",
+  "candidate_dispatch": "forbidden",
+  "decision": {
+    "both_fail": "retain fail-closed P7R120 block and mismatch/profile evidence",
+    "source_pass_adapter_fail": "generate fresh v3 with genuine source-task canary"
+  },
+  "latency_or_performance_measurement": "forbidden",
+  "local_protocol": "two modules x three exact FSim seeds",
+  "parent_contract": {
+    "artifact_ledger_sha256": "f27c02b95f70dedc01d3e8e8446af1cc4fe343716c04fabcd599f904e1c0ad7d",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r120_y02_rpc_contract_v2_run01/contract.json",
+    "sha256": "19e4a3100c2bb385be74b20208a02f7014646db107616cb329eba96a6010b866"
+  },
+  "rpc": {
+    "boot_id": "unknown_not_exposed_by_rpc",
+    "host": "192.168.1.247",
+    "module_transport": "ephemeral upload/load_module/immediate remote.remove",
+    "persistent_board_write_forbidden": true,
+    "port": 9090,
+    "restart_or_reconfiguration_forbidden": true,
+    "ssh_forbidden": true,
+    "transport": "direct TVM RPC only"
+  },
+  "schema": "c3_p7r121_tophub_adapter_diagnostic_v1",
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "status": "frozen_before_local_fsim_or_board_observations",
+  "variant_order": [
+    "source_tophub",
+    "residency_mode0_adapter"
+  ],
+  "variants": [
+    {
+      "config_index": 526,
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                1,
+                13
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                1,
+                1
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              2
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "schema": "c3_p7r121_diagnostic_variant_v1",
+        "semantic_knobs": {
+          "h_nthread": 1,
+          "oc_nthread": 2,
+          "tile_b": 1,
+          "tile_ci": 1,
+          "tile_co": 1,
+          "tile_h": 13,
+          "tile_w": 13
+        },
+        "template": "conv2d_packed.vta",
+        "variant": "source_tophub",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              24,
+              26,
+              26,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              24,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "performance_measurement": "not_collected",
+      "selection_or_training_label": false,
+      "semantic_knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 13,
+        "tile_w": 13
+      },
+      "variant": "source_tophub",
+      "variant_id": "b399ee3f8c1c76b0006f4bdf123330d7369d8dfa6bfa5bd0fe78eec0e6ba0bfd",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            24,
+            26,
+            26,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            24,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ]
+    },
+    {
+      "config_index": 650,
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                13
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              2
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "implementation_mode": 0,
+        "schema": "c3_p7r121_diagnostic_variant_v1",
+        "semantic_knobs": {
+          "h_nthread": 1,
+          "oc_nthread": 2,
+          "tile_b": 1,
+          "tile_ci": 1,
+          "tile_co": 1,
+          "tile_h": 13,
+          "tile_w": 13
+        },
+        "template": "conv2d_packed_residency.vta",
+        "variant": "residency_mode0_adapter",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              24,
+              26,
+              26,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              24,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "performance_measurement": "not_collected",
+      "selection_or_training_label": false,
+      "semantic_knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 13,
+        "tile_w": 13
+      },
+      "variant": "residency_mode0_adapter",
+      "variant_id": "b1a1bb0030406e51a34efec252d625f75761550c7ee0f934be47ce7450736e01",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            24,
+            26,
+            26,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            24,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ]
+    }
+  ]
+}

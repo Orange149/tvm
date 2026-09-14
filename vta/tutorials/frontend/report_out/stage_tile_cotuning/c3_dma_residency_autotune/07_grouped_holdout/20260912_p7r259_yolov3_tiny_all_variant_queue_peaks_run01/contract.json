@@ -1,0 +1,48 @@
+{
+  "boot_id": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+  "claim_boundary": "Read-only logical allocator high-water and runtime queue status; not physical AXI traffic and not a latency comparison",
+  "default_runtime_to_restore": "/var/volatile/vta_c3_ram/runtime",
+  "diagnostic_driver_sha256": "f2c08a84625ea89de2647d89fe1d5402ab6bb806a66e37b75e83664c65aa97c7",
+  "diagnostic_runtime": "/var/volatile/vta_c3_ram/runtime_allocdiag_v2",
+  "factorial_build_summary_sha256": "23cf6237e72b6b6353ac493743b933562a690c5840f8ac615145f415bd652b73",
+  "purpose": "localize the 3-Executor pass / 4-Executor first-run OOM",
+  "scenarios": [
+    {
+      "load_count": 1,
+      "run": "stock_all"
+    },
+    {
+      "load_count": 3,
+      "run": "stock_all"
+    },
+    {
+      "load_count": 4,
+      "reason": "do not repeat known fatal OOM",
+      "run": null
+    },
+    {
+      "load_count": 1,
+      "role": "selected deployment",
+      "run": "y00_input_only"
+    },
+    {
+      "load_count": 1,
+      "role": "factorial allowlist",
+      "run": "y02_weight_only"
+    },
+    {
+      "load_count": 1,
+      "role": "factorial allowlist",
+      "run": "y00_input_y02_weight"
+    }
+  ],
+  "schema": "c3_yolov3_tiny_udmabuf_allocation_diagnostic_contract_v1",
+  "script_sha256_before_run": "04b59818445101056641f15801bfcce27ea75c6faff81eb8dd66177a3f78a975",
+  "udmabuf_capacity_bytes": 201326592,
+  "variants": [
+    "stock_all",
+    "y00_input_only",
+    "y02_weight_only",
+    "y00_input_y02_weight"
+  ]
+}

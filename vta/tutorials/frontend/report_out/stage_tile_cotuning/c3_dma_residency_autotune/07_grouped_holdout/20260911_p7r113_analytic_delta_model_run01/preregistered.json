@@ -1,0 +1,53 @@
+{
+  "analysis_kind": "post_hoc_offline_development",
+  "mode_intercepts": "unconstrained",
+  "models": {
+    "bytes_calls_nnls": [
+      "load_bytes",
+      "store_bytes",
+      "load_calls",
+      "store_calls"
+    ],
+    "command_nnls": [
+      "load_bytes",
+      "store_bytes",
+      "load_calls",
+      "store_calls",
+      "small_dma_calls",
+      "strided_dma_calls",
+      "padded_dma_calls",
+      "input_reload",
+      "weight_reload",
+      "output_reload",
+      "total_insn_bytes",
+      "total_uop_bytes",
+      "submissions",
+      "finish_count"
+    ],
+    "constant_mean": [],
+    "mode_mean": [],
+    "request_shape_nnls": [
+      "load_bytes",
+      "store_bytes",
+      "load_calls",
+      "store_calls",
+      "small_dma_calls",
+      "strided_dma_calls",
+      "padded_dma_calls",
+      "input_reload",
+      "weight_reload",
+      "output_reload"
+    ]
+  },
+  "not_a_theoretical_bound": true,
+  "physical_coefficient_constraint": "nonnegative",
+  "ranking_budgets": [
+    1,
+    2,
+    4
+  ],
+  "ridge_alpha_scaled_features": 1e-06,
+  "schema": "c3_p7r113_delta_proxy_protocol_v1",
+  "split": "leave_one_workload_out",
+  "target": "delta_t_ms = mechanism_median_ms - same_tile_original_median_ms"
+}

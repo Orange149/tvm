@@ -637,6 +637,8 @@ def main() -> None:
         "d2h_ms",
         "pack_ms",
         "gops",
+        "memory_bytes_est",
+        "effective_memory_bandwidth_GBps",
         "ok",
         "cpu_num_threads_requested",
         "cpu_num_threads_actual",

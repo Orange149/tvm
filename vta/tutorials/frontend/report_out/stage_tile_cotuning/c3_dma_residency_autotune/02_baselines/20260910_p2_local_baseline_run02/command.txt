@@ -1,0 +1,49 @@
+# C3 P2-local run02 command ledger
+
+All commands ran from `/home/orange/code/tvm`. Production sources were not edited.
+
+1. Run-start `sha256sum` over `vta_conv2d.py`, `vta_conv2d_residency.py`, tuning template, selected tasks, frozen DMA JSON, TopHub log, AXU config, FSim config, FSim library, and audit script; `git rev-parse` for TVM/VTA-HW; `stat` for schedule sources — exit 0. Outputs: `source_hashes_start.txt`, `source_stat_start.txt`.
+
+2. Static DMA extraction — exit 0:
+
+```sh
+TEST_DATA_ROOT_PATH=/tmp/tvm_test_data MPLCONFIGDIR=/tmp/mpl PYTHONPATH=/home/orange/code/tvm/python:/home/orange/code/tvm/vta/python:/home/orange/code/tvm/vta/tutorials/frontend /home/orange/miniconda3/envs/vta-resnet/bin/python vta/tutorials/frontend/extract_static_vta_dma.py --selected-tasks vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration6_safe_overlay_final/selected_tasks.json --runtime-artifacts 'vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/tuning_artifacts/*/measurement.json' --isolated-profiles vta/tutorials/frontend/report_out/stage_tile_cotuning/stage_memory_experiments/isolated_projection_profiles.json --output vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/02_baselines/20260910_p2_local_baseline_run02/static_dma.json
+```
+
+3. `cmp -s <run02>/static_dma.json stage_memory_experiments/static_workload_dma.json` — exit 0. A JSON equality check also returned `semantic_equal=True`, `workload_count=10`, `row_count=10`.
+
+4. Original-path TIR capture with `audit_original.py tir` under frozen AXU5EVB config — exit 0; 10 TIR files and `tir_results.json`. Hash comparison against run01 post-change IR JSON — 10/10 equal.
+
+5. Stage/tile tests — exit 0:
+
+```sh
+TEST_DATA_ROOT_PATH=/tmp/tvm_test_data MPLCONFIGDIR=/tmp/mpl PYTHONPATH=/home/orange/code/tvm/python:/home/orange/code/tvm/vta/python:/home/orange/code/tvm/vta/tutorials/frontend /home/orange/miniconda3/envs/vta-resnet/bin/python -m pytest -q vta/tutorials/frontend/test_stage_tile_cotuning.py
+```
+
+Result: 19 passed, 25 warnings.
+
+6. Candidate-identity tests — exit 0, same environment as command 5:
+
+```sh
+/home/orange/miniconda3/envs/vta-resnet/bin/python -m pytest -q vta/tutorials/frontend/test_c3_candidate_identity.py
+```
+
+Result: 7 passed.
+
+7. FSim/NumPy audit — exit 0:
+
+```sh
+VTA_HW_PATH=/tmp/vta-hw-fsim TVM_LIBRARY_PATH=/home/orange/code/tvm/build TEST_DATA_ROOT_PATH=/tmp/tvm_test_data MPLCONFIGDIR=/tmp/mpl PYTHONPATH=/home/orange/code/tvm/python:/home/orange/code/tvm/vta/python:/home/orange/code/tvm/vta/tutorials/frontend timeout 180s /home/orange/miniconda3/envs/vta-resnet/bin/python <run02>/audit_original.py fsim --selected-tasks vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration6_safe_overlay_final/selected_tasks.json --output <run02>/fsim_results.json
+```
+
+Result: 10 workloads × 3 seeds, 30/30 elementwise-equal.
+
+8. AXU5EVB compile-only audit. First environment attempt exited 1 before Python because the SDK rejected an inherited `LD_LIBRARY_PATH`. After explicitly unsetting it, an audit-script target guard used the legacy `pynq` name and exited 1 before compilation. The run-local script guard was corrected to the actual frozen `axu5evb` environment. Final command — exit 0:
+
+```sh
+unset LD_LIBRARY_PATH && source /home/orange/alinx_plsdk/install/environment-setup-aarch64-xilinx-linux && TEST_DATA_ROOT_PATH=/tmp/tvm_test_data MPLCONFIGDIR=/tmp/mpl PYTHONPATH=/home/orange/code/tvm/python:/home/orange/code/tvm/vta/python:/home/orange/code/tvm/vta/tutorials/frontend /home/orange/miniconda3/envs/vta-resnet/bin/python <run02>/audit_original.py cross --selected-tasks vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration6_safe_overlay_final/selected_tasks.json --output <run02>/cross_compile_results.json
+```
+
+Result: 10/10 exported with `aarch64-xilinx-linux-g++ 9.2.0`. The two preliminary failures are classified as harness/environment diagnostics, not candidate failures.
+
+9. Run-end hashes/stat and production-input comparison — exit 0 for the comparison excluding the intentionally corrected run-local audit script. Production sources and frozen inputs were unchanged from run start.

@@ -1,0 +1,68 @@
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(placeholder: T.Buffer((1, 12, 21, 21, 1, 16), "int8"), placeholder_1: T.Buffer((20, 12, 1, 1, 16, 16), "int8"), compute: T.Buffer((1, 20, 21, 21, 1, 16), "int8")):
+        T.func_attr({"from_legacy_te_schedule": T.bool(True), "global_symbol": "main", "tir.noalias": T.bool(True)})
+        T.tir.vta.coproc_dep_push(3, 2)
+        T.tir.vta.coproc_dep_push(3, 2)
+        for i2_outer, i1_outer_outer in T.grid(7, 2):
+            for cthread_s in range(2):
+                vta = T.int32()
+                T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_scope", 2)
+                T.tir.vta.coproc_dep_pop(3, 2)
+                with T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_uop_scope", "VTAPushGEMMOp"):
+                    T.call_extern("int32", "VTAUopLoopBegin", 21, 1, 0, 0)
+                    T.call_extern("int32", "VTAUopLoopBegin", 5, 63, 0, 0)
+                    for i_init in range(3):
+                        T.tir.vta.uop_push(0, 1, cthread_s * 315 + i_init * 21, 0, 0, 0, 0, 0)
+                    T.call_extern("int32", "VTAUopLoopEnd")
+                    T.call_extern("int32", "VTAUopLoopEnd")
+                T.tir.vta.coproc_dep_push(2, 1)
+            vta = T.int32()
+            with T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_scope", 1):
+                T.tir.vta.coproc_dep_pop(2, 1)
+                T.call_extern("int32", "VTALoadBuffer2D", T.tvm_thread_context(T.tir.vta.command_handle()), placeholder.data, i2_outer * 63, 63, 12, 441, 0, 0, 0, 0, 0, 2)
+                T.call_extern("int32", "VTALoadBuffer2D", T.tvm_thread_context(T.tir.vta.command_handle()), placeholder_1.data, i1_outer_outer * 120, 60, 1, 60, 0, 0, 0, 0, 0, 1)
+                T.tir.vta.coproc_dep_push(1, 2)
+            with T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_scope", 1):
+                T.tir.vta.coproc_dep_pop(2, 1)
+                T.call_extern("int32", "VTALoadBuffer2D", T.tvm_thread_context(T.tir.vta.command_handle()), placeholder.data, i2_outer * 63, 63, 12, 441, 0, 0, 0, 0, 756, 2)
+                T.call_extern("int32", "VTALoadBuffer2D", T.tvm_thread_context(T.tir.vta.command_handle()), placeholder_1.data, i1_outer_outer * 120 + 60, 60, 1, 60, 0, 0, 0, 0, 60, 1)
+                T.tir.vta.coproc_dep_push(1, 2)
+            for cthread_s in range(2):
+                T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_scope", 2)
+                T.tir.vta.coproc_dep_pop(1, 2)
+                with T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_uop_scope", "VTAPushGEMMOp"):
+                    T.call_extern("int32", "VTAUopLoopBegin", 12, 0, 63, 1)
+                    T.call_extern("int32", "VTAUopLoopBegin", 21, 1, 1, 0)
+                    for c_o, i in T.grid(5, 3):
+                        T.tir.vta.uop_push(0, 0, cthread_s * 315 + c_o * 63 + i * 21, cthread_s * 756 + i * 21, cthread_s * 60 + c_o * 12, 0, 0, 0)
+                    T.call_extern("int32", "VTAUopLoopEnd")
+                    T.call_extern("int32", "VTAUopLoopEnd")
+                with T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_uop_scope", "VTAPushALUOp"):
+                    T.call_extern("int32", "VTAUopLoopBegin", 315, 1, 1, 0)
+                    T.tir.vta.uop_push(1, 0, cthread_s * 315, cthread_s * 315, 0, 3, 1, 8)
+                    T.call_extern("int32", "VTAUopLoopEnd")
+                with T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_uop_scope", "VTAPushALUOp"):
+                    T.call_extern("int32", "VTAUopLoopBegin", 315, 1, 1, 0)
+                    T.tir.vta.uop_push(1, 0, cthread_s * 315, cthread_s * 315, 0, 0, 1, 127)
+                    T.call_extern("int32", "VTAUopLoopEnd")
+                with T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_uop_scope", "VTAPushALUOp"):
+                    T.call_extern("int32", "VTAUopLoopBegin", 315, 1, 1, 0)
+                    T.tir.vta.uop_push(1, 0, cthread_s * 315, cthread_s * 315, 0, 1, 1, 0)
+                    T.call_extern("int32", "VTAUopLoopEnd")
+                T.tir.vta.coproc_dep_push(2, 3)
+            with T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_scope", 3):
+                T.tir.vta.coproc_dep_pop(2, 3)
+                T.call_extern("int32", "VTAStoreBuffer2D", T.tvm_thread_context(T.tir.vta.command_handle()), 0, 4, compute.data, i1_outer_outer * 4410 + i2_outer * 63, 63, 5, 441)
+                T.tir.vta.coproc_dep_push(3, 2)
+            T.attr(T.iter_var(vta, None, "ThreadIndex", "vta"), "coproc_scope", 3)
+            T.tir.vta.coproc_dep_pop(2, 3)
+            T.call_extern("int32", "VTAStoreBuffer2D", T.tvm_thread_context(T.tir.vta.command_handle()), 315, 4, compute.data, i1_outer_outer * 4410 + i2_outer * 63 + 2205, 63, 5, 441)
+            T.tir.vta.coproc_dep_push(3, 2)
+        T.tir.vta.coproc_dep_pop(3, 2)
+        T.tir.vta.coproc_dep_pop(3, 2)
+        T.tir.vta.coproc_sync()

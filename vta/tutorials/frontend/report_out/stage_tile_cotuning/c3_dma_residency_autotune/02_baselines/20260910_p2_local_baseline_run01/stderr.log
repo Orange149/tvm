@@ -1,0 +1,8 @@
+[diagnostic harness attempt] exit=1
+The first single-workload custom FSim invocation omitted `from vta.testing import simulator`; as a result libvta_fsim was not loaded and TVM reported `Device API ext_dev is not enabled`. The corrected invocation imported the simulator, reported simulator_enabled=True, and passed. Classified as harness_environment, not a workload correctness failure.
+
+[non-fatal warnings]
+TVM repeatedly warned that target_host is deprecated. Pytest reported 25 warnings, mostly NumPy/MXNet deprecations. TIR text printing warned that several tir.vta intrinsics have no TScriptPrinterName; lowering and IR JSON hashing still completed.
+
+[blocking source guard]
+The original schedule hash changed during the run from b7fc752b... to 6f9bb140.... The post-change TIR text files are retained but excluded from the frozen-original baseline claim.

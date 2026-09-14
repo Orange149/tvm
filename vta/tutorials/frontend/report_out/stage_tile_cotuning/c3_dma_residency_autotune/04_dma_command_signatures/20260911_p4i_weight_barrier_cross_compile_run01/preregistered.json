@@ -1,0 +1,24 @@
+{
+  "binary_retention": "size/hash only; no candidate shared object retained",
+  "candidate_timeout_seconds": 180,
+  "claim": "AXU5EVB build/export deployability only; no board correctness or performance",
+  "failure_categories": [
+    "lower",
+    "compile",
+    "wrong_answer",
+    "timeout",
+    "rpc",
+    "environment"
+  ],
+  "identity_checks": [
+    "P4g artifact hash",
+    "stable ID",
+    "complete ConfigEntity",
+    "schedule/compiler source hashes",
+    "re-lowered TIR hash"
+  ],
+  "overall_timeout_seconds": 3600,
+  "schema": "c3_p4i_weight_barrier_cross_compile_protocol_v1",
+  "selection": "all 32 P4g status/lower/dependency/FSim-passed weight_stationary_barrier candidates",
+  "worker_isolation": "one subprocess and temporary binary directory per candidate"
+}

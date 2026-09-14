@@ -1,0 +1,144 @@
+{
+  "by_mode": {
+    "input_stationary": {
+      "losses": 0,
+      "max_speedup_percent": 79.85335434103115,
+      "median_input_dma_bytes_change_percent": -75.0,
+      "median_speedup_bootstrap_95_percent": {
+        "interpretation": "descriptive family-cluster bootstrap; not a population CI",
+        "lower_2_5": 24.336396082009305,
+        "samples": 10000,
+        "seed": 20260912,
+        "upper_97_5": 79.85335434103115
+      },
+      "median_speedup_percent": 44.69369613880098,
+      "median_total_dma_bytes_change_percent": -26.379542395693136,
+      "median_total_dma_calls_change_percent": -66.66666666666667,
+      "min_speedup_percent": 24.336396082009305,
+      "pairs": 5,
+      "ties": 0,
+      "two_sided_exact_sign_test_p": 0.0625,
+      "wins": 5
+    }
+  },
+  "claim_boundary": "same-tile descriptive evidence; families share one geometry/boot and are not independent workload replications; logical DMA is not physical AXI traffic",
+  "completed_pool": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r303_r50c_canonical_completed_pool_run01/completed_pool.json",
+    "sha256": "c7cad45f894ad6a41b3b050955bd64a973abd2bf4b5323c58024d619ed52ecb0"
+  },
+  "pair_count": 5,
+  "pairs": [
+    {
+      "candidate_id": "4b89b764e703b332df2fc22b18aece258b13e06f012bc772b911d3c5dabf9c34",
+      "control_candidate_id": "81247839d392f055134855efd14ab99b0162fe05c949ce8e0c05d04b45ef0a51",
+      "control_latency_ms": 102.374613,
+      "input_dma_bytes_change_percent": -87.5,
+      "instruction_peak_change_percent": -87.014918646054,
+      "knobs": {
+        "h_nthread": 1.0,
+        "oc_nthread": 1.0,
+        "tile_b": 1.0,
+        "tile_ci": 1.0,
+        "tile_co": 2.0,
+        "tile_h": 14.0,
+        "tile_w": 1.0
+      },
+      "latency_ms": 27.249483,
+      "mode": "input_stationary",
+      "speedup_percent": 73.38257776857238,
+      "total_dma_bytes_change_percent": -26.379542395693136,
+      "total_dma_calls_change_percent": -86.82170542635659,
+      "uop_peak_change_percent": 0.0
+    },
+    {
+      "candidate_id": "85a83262388fa22c68206ee0b7fc52d8dfa20b7276fc3c8f7daba4e58bf78b89",
+      "control_candidate_id": "50802685fed1cb5d043f5a4a73864d4015627d05937aea9b6140b07d29fff97b",
+      "control_latency_ms": 17.586055,
+      "input_dma_bytes_change_percent": -75.0,
+      "instruction_peak_change_percent": -64.82910694597574,
+      "knobs": {
+        "h_nthread": 1.0,
+        "oc_nthread": 1.0,
+        "tile_b": 1.0,
+        "tile_ci": 64.0,
+        "tile_co": 4.0,
+        "tile_h": 1.0,
+        "tile_w": 7.0
+      },
+      "latency_ms": 13.306243,
+      "mode": "input_stationary",
+      "speedup_percent": 24.336396082009305,
+      "total_dma_bytes_change_percent": -7.349081364829396,
+      "total_dma_calls_change_percent": -50.0,
+      "uop_peak_change_percent": 150.0
+    },
+    {
+      "candidate_id": "b0d72f563d1d9aa186c8e7b244aeab2321491fad17af61e1c9d040bd1d52f470",
+      "control_candidate_id": "e239149944ef0bbf5a3007534c17968b495981593f083a3476dcf0d6add5e3aa",
+      "control_latency_ms": 41.447664,
+      "input_dma_bytes_change_percent": -93.75,
+      "instruction_peak_change_percent": -93.19561617913743,
+      "knobs": {
+        "h_nthread": 1.0,
+        "oc_nthread": 1.0,
+        "tile_b": 1.0,
+        "tile_ci": 1.0,
+        "tile_co": 1.0,
+        "tile_h": 7.0,
+        "tile_w": 7.0
+      },
+      "latency_ms": 8.350314,
+      "mode": "input_stationary",
+      "speedup_percent": 79.85335434103115,
+      "total_dma_bytes_change_percent": -69.8503207412687,
+      "total_dma_calls_change_percent": -93.02325581395348,
+      "uop_peak_change_percent": 240.0
+    },
+    {
+      "candidate_id": "cbeec5d3c92de320929553a96df2989dd6e2d577ec27d14a8e72d9580b72ae61",
+      "control_candidate_id": "6f9d27406212db90645521fcda350778092d346815ffd8fc3a5c5f6cd53a792c",
+      "control_latency_ms": 8.03222,
+      "input_dma_bytes_change_percent": -75.0,
+      "instruction_peak_change_percent": -65.80645161290323,
+      "knobs": {
+        "h_nthread": 1.0,
+        "oc_nthread": 1.0,
+        "tile_b": 1.0,
+        "tile_ci": 16.0,
+        "tile_co": 4.0,
+        "tile_h": 14.0,
+        "tile_w": 7.0
+      },
+      "latency_ms": 4.442324,
+      "mode": "input_stationary",
+      "speedup_percent": 44.69369613880098,
+      "total_dma_bytes_change_percent": -43.71747211895911,
+      "total_dma_calls_change_percent": -66.66666666666667,
+      "uop_peak_change_percent": 230.13698630136986
+    },
+    {
+      "candidate_id": "da2dbf3a4558b6b65ce2f1198a0688a778fa2f8521a0a3d03e2673df9ce759b7",
+      "control_candidate_id": "b213060f1c4e2c43bcba8b06c6266c4d741475e469d8850c28850cf5ed18c11d",
+      "control_latency_ms": 14.569975,
+      "input_dma_bytes_change_percent": -50.0,
+      "instruction_peak_change_percent": -48.37027379400261,
+      "knobs": {
+        "h_nthread": 1.0,
+        "oc_nthread": 1.0,
+        "tile_b": 1.0,
+        "tile_ci": 4.0,
+        "tile_co": 8.0,
+        "tile_h": 14.0,
+        "tile_w": 2.0
+      },
+      "latency_ms": 10.416614,
+      "mode": "input_stationary",
+      "speedup_percent": 28.506301486447303,
+      "total_dma_bytes_change_percent": -8.77742946708464,
+      "total_dma_calls_change_percent": -48.484848484848484,
+      "uop_peak_change_percent": 86.82170542635659
+    }
+  ],
+  "schema": "c3_same_tile_completed_pool_analysis_v1",
+  "workload_id": "R50C"
+}

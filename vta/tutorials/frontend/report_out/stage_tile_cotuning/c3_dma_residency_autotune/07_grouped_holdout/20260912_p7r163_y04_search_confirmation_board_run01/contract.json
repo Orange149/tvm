@@ -1,0 +1,188 @@
+{
+  "candidate_order": [
+    "a51f9db94822a488272afc4002198877dfe40e896f91ea767478a547f912e9f6",
+    "321034168a03116267e4e167ae48ce1481c437b3c5846ead9a00d594ae2f79d3",
+    "f16d5caabf937f91c0c86b904265e2d25f1a4160c1f88f0bb7475fe24ce13210",
+    "f1949c01c6de30ce7170da6933abe13bacbbab6b606a5d84cea4c2b96acfb44f",
+    "1a83f17ecb3240fa485355c1db0026a10c428d2751547be2084af880731cf8db",
+    "2de0a5246b0efa821aa676635a6dd9ea8d9ce4c41370e4d2e92d71c09dc3a032",
+    "b73094b0e6041e877d08e1099fa278da75f6f99f129d6687e50aea897fc0d420",
+    "7e50d8ba4e4344779f4f1b6b1f748c001b027af3e6a2a7c574147e10be14a7b8",
+    "9cc071ebf9925a28ba6e48cd393a7aaee7d4ca58797b294a3464094f49e174be",
+    "23750cc1cfa2e9651637d8a9e8f5fa2c4c51e9d978b8c6e3d6233bb6344d0864",
+    "2c3d63f0987642ab4e85ddb245123f90a2a568a1f9b5bc6afb6e16cee36600ff",
+    "aa4354feca27bbd50caa724994e3c62fba684f14dfb3db9514bccdca4af1fbc8",
+    "9509d82c6b5006504f548b67867b1ec97f313a2537d06f57659abb16838c5526",
+    "0f1b8875b13c58c2b58cf0edaf4caa142d878f360abe07f26f2612c92473abcb",
+    "dfbeaf789597e331a5b5d8da779a5e258fa7ada71fab41f0eefb70d2b51c5b42",
+    "ab3ce0ef2d16625f396adadb13fb50721cff78b74efe71bc7f3cddc0274ec1db",
+    "2142dec9afaa0976a293e0e609c69bd0a8765e8072e904097f9bc64e41fe17a6",
+    "20de0d91592c8906261362333f4b2a8d00571236ee58ed7e96ef91400b4d2292",
+    "871b79b06f9b2c8ba8cd8feec5391b6ed8db6171877c9185deb43e8f6b49b902",
+    "0faeb78fb832036357e0019223424bf5daa5a5ee793204d35a087d11612cb370",
+    "95be0d070aee1fff8fe011a43c9d426e6b7e2bbf0fd2f83d87ec00e4a458645f",
+    "e9fc20c6d3ce96e72da1fcd3c6a7ca31f61614a230c1a9b9d56066e422f18caa",
+    "1a5c1ea0e8215fd406a0f82b0dc4682a0fbcb02c8be41ee3982df077d3486824",
+    "c5bfd5383d71f16b0b5fa733d9c2d6e8aae153cf35eb7e0c0543d6f1fab137d3"
+  ],
+  "failure_policy": "health fail stops before Y04; candidate first error rejects identity; any timed mismatch stops",
+  "health_canary": {
+    "candidate_id": "6374bca35bb59bb20cbb07532e5ba29ca3a56225023cf8d632b80063818d5d77",
+    "debug": {
+      "config_index": 575
+    },
+    "identity": {
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "historical_candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "historical_tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060",
+      "implementation": "conv2d_packed_residency.vta mode0 original branch",
+      "schema": "c3_p7r122_w05_health_canary_identity_v1",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W05"
+    },
+    "implementation_mode": 0,
+    "performance_measurement": "not_collected",
+    "public_mode": "original",
+    "role": "health_gate_only"
+  },
+  "p7r132": {
+    "artifact_ledger_sha256": "59c1478d20ba893c2853aa5e92cba816167bbd8c2f76c5b358bff773ba20ec29",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r162_y04_search_confirmation_contract_run01"
+  },
+  "persistent_board_write": false,
+  "rpc": {
+    "host": "192.168.1.247",
+    "port": 9090,
+    "session_timeout": 120
+  },
+  "schema": "c3_y04_search_confirmation_board_v2",
+  "search_budgets": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "search_policies": [
+    "random",
+    "stock_knob_xgb",
+    "rules_only",
+    "paper_minimum_access",
+    "shared_memory_lexicographic",
+    "validity_v",
+    "v_plus_delta_t",
+    "v_plus_delta_t_request",
+    "v_plus_delta_t_command"
+  ],
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "shared_memory_buffer_policy": {
+    "allocation_order": [
+      "output",
+      "data",
+      "weight"
+    ],
+    "reason": "match frozen qualification layout while avoiding non-freeing u-dma-buf exhaustion",
+    "reuse": "one shape-compatible output/input/weight set per workload"
+  },
+  "status": "frozen_before_current_board_observation",
+  "timing_rounds": 7
+}

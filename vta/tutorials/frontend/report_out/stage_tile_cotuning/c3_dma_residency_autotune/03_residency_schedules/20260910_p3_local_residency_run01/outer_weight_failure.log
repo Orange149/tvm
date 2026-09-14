@@ -1,0 +1,17 @@
+run_id=20260910_p3_local_residency_run01
+variant=initial_outer_weight_cache
+outcome=fsim_failure
+
+Initial matrix before recovery:
+original: W00 PASS, W02 PASS, W09 PASS
+input_stationary: W00 PASS, W02 PASS, W09 PASS
+weight_stationary: W00 FAIL, W02 FAIL, W09 FAIL
+paper_inspired_hybrid: W00 FAIL, W02 FAIL, W09 interrupted after excessive runtime
+
+First error:
+TVMError: Check failed: (from != kStoreStage || to != kLoadStage) is false
+location: vta/runtime/runtime.cc:1023, VTADepPop
+interpretation: promoting ckernel across the VTA task boundary created an unsupported STORE -> LOAD dependency.
+
+Recovery:
+Keep cdata and ckernel at conv2d_stage/k_o. The final safe version passed all 12 FSim reference cases, but weight DMA no longer decreased. Therefore only the input-stationary sub-mechanism passes G3_LOCAL_MECHANISM.

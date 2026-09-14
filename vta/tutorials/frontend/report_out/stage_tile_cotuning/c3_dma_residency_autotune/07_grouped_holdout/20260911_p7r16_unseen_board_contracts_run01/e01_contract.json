@@ -1,0 +1,131 @@
+{
+  "schema": "c3_p7r_unseen_board_contract_v1",
+  "status": "frozen_before_p7r_board_labels",
+  "purpose": "prospective request-shape sign test; correctness only",
+  "workload_id": "E01",
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        12,
+        21,
+        21,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        20,
+        12,
+        1,
+        1,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "selection_rule": {
+    "uses_this_workload_latency_labels": false,
+    "request_shape_prediction": {
+      "features": {
+        "estimated_input_row_contiguity": 0.14285714285714285,
+        "request_shape_score": 1620.0000000000002,
+        "residency_total_load_bytes": 814464,
+        "residency_total_load_calls": 28,
+        "tile_work_proxy": 3780
+      },
+      "prediction_frozen_before_fsim_or_board": "larger_same_tile_speedup",
+      "stratum": "request_shape"
+    },
+    "contiguous_control_prediction": {
+      "features": {
+        "estimated_input_row_contiguity": 1.0,
+        "request_shape_score": 0.0,
+        "residency_total_load_bytes": 814464,
+        "residency_total_load_calls": 28,
+        "tile_work_proxy": 3780
+      },
+      "prediction_frozen_before_fsim_or_board": "smaller_or_negative_same_tile_speedup",
+      "stratum": "contiguous_control"
+    },
+    "timing_gate": "all fifteen seed checks pass"
+  },
+  "execution_order": [
+    {
+      "role": "request_shape_original_before",
+      "mode": "original",
+      "config_index": 951
+    },
+    {
+      "role": "request_shape_residency",
+      "mode": "input_stationary",
+      "config_index": 951,
+      "candidate_id": "24b54318c048b1b03dd132d6f2f3ed544c1f36eb2f0c93e0c6ebfbaa3ba3183c",
+      "tir_sha256": "52d692c959dff2ccf47d66c6b45ad604fd58bda63b3293e1485a8ee299dbc6a9"
+    },
+    {
+      "role": "contiguous_original",
+      "mode": "original",
+      "config_index": 957
+    },
+    {
+      "role": "contiguous_residency",
+      "mode": "input_stationary",
+      "config_index": 957,
+      "candidate_id": "5f443c122ac8d764a4c1a0f3e9210f1e21e6a2c6d0b4b06b491f580b24a7a0b0",
+      "tir_sha256": "a8a414b6cb818374190c0f077bf2dbaa805bfc7c87b12cb4541260741ff18e2b"
+    },
+    {
+      "role": "request_shape_original_after",
+      "mode": "original",
+      "config_index": 951
+    }
+  ],
+  "board": {
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "fpga_state": "operating",
+    "udmabuf_bytes": 201326592,
+    "rpc_cwd_requirement": "/var/volatile/vta_c3_ram/runtime",
+    "sd_mount": "/media/sd-mmcblk1p2",
+    "sd_used_percent_at_freeze": 78,
+    "dmesg_error_cutoff_seconds": 4057.401259,
+    "safety": "abort without reboot/poweroff on any mismatch, new storage error, fingerprint change, or timeout"
+  },
+  "source_guards_sha256": {
+    "vta/tutorials/frontend/run_vta_p7r_joint_correctness.py": "e70b8c3199a2d6cd589f7376641f5c4622655d041313172a2e9aff2ef2d2cab2",
+    "vta/python/vta/top/vta_conv2d.py": "676ff21166871fdc30f0e42dfaf0067fbf6b8f866fe77ebc308f872f50e64926",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "vta/tutorials/frontend/qualify_vta_residency_fsim.py": "1b869cc9fa6e109c9742dcb82d2f0ccca6193981f589af70b4fb8428ddabec57"
+  },
+  "input_guards_sha256": {
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r14_unseen_shape_shortlist_run01/shortlist.jsonl": "88f7abad63a31e5e99ad7ba42ac3c908f665a87df0e834048b77cbc1421a50a2",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r15_unseen_shape_fsim_run01/results.jsonl": "512c29492ff7f77c335f425adad87348a396a9c77852108a68d1f3fe0346775e"
+  }
+}

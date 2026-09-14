@@ -1,0 +1,174 @@
+{
+  "all_correctness_outputs_nonzero": true,
+  "all_variant_outputs_equal": true,
+  "balanced_orders": [
+    [
+      "y00_input_y02_stock",
+      "y00_input_y02_same_tile_original",
+      "y00_input_y02_same_tile_weight"
+    ],
+    [
+      "y00_input_y02_stock",
+      "y00_input_y02_same_tile_weight",
+      "y00_input_y02_same_tile_original"
+    ],
+    [
+      "y00_input_y02_same_tile_original",
+      "y00_input_y02_stock",
+      "y00_input_y02_same_tile_weight"
+    ],
+    [
+      "y00_input_y02_same_tile_original",
+      "y00_input_y02_same_tile_weight",
+      "y00_input_y02_stock"
+    ],
+    [
+      "y00_input_y02_same_tile_weight",
+      "y00_input_y02_stock",
+      "y00_input_y02_same_tile_original"
+    ],
+    [
+      "y00_input_y02_same_tile_weight",
+      "y00_input_y02_same_tile_original",
+      "y00_input_y02_stock"
+    ]
+  ],
+  "board_after": {
+    "BOOT": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+    "FPGA": "operating",
+    "RPC_CWD": "/var/volatile/vta_c3_ram/runtime",
+    "RPC_PID": "4209",
+    "STORAGE_ERRORS": [],
+    "UDMABUF": "201326592"
+  },
+  "boot_id": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+  "claim_boundary": "Full YOLO controlled Y02 context triad; same-tile mechanism effect is separate from deployability against TopHub; no mAP or physical AXI evaluation",
+  "comparisons": {
+    "same_tile_original_to_weight": {
+      "lhs": "y00_input_y02_same_tile_original",
+      "lhs_median_ms": 377.553865,
+      "paired_rounds": 6,
+      "rhs": "y00_input_y02_same_tile_weight",
+      "rhs_median_ms": 343.08949099999995,
+      "rhs_paired_wins": 6,
+      "rhs_speedup_percent": 10.045301562442788
+    },
+    "stock_to_same_tile_original": {
+      "lhs": "y00_input_y02_stock",
+      "lhs_median_ms": 265.089851,
+      "paired_rounds": 6,
+      "rhs": "y00_input_y02_same_tile_original",
+      "rhs_median_ms": 377.553865,
+      "rhs_paired_wins": 0,
+      "rhs_speedup_percent": -29.787541441272225
+    },
+    "stock_to_same_tile_weight": {
+      "lhs": "y00_input_y02_stock",
+      "lhs_median_ms": 265.089851,
+      "paired_rounds": 6,
+      "rhs": "y00_input_y02_same_tile_weight",
+      "rhs_median_ms": 343.08949099999995,
+      "rhs_paired_wins": 0,
+      "rhs_speedup_percent": -22.734488244642836
+    }
+  },
+  "controlled_factors": {
+    "all_variants_share_y00_input_candidate": "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c",
+    "same_tile_y02_original_candidate": "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+    "same_tile_y02_weight_candidate": "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+    "stock_variant_delegates_y02_to_tophub": true,
+    "y02_complete_config_entity_equal": true,
+    "y02_workload_equal": true
+  },
+  "correctness_calls": 9,
+  "image_sha256": "cdcbab947e46110fc2b77784ac54ddbbab2640f1e44cb5e91fc8984a9793a7d1",
+  "median_runtime_profiles": {
+    "y00_input_y02_same_tile_original": {
+      "driver_run_calls": 24.0,
+      "driver_run_insns": 95912.0,
+      "load_buffer_2d_bytes": 105553920.0,
+      "load_buffer_2d_calls": 52272.0,
+      "load_buffer_2d_inp_bytes": 55410176.0,
+      "load_buffer_2d_inp_calls": 24824.0,
+      "load_buffer_2d_wgt_bytes": 49963008.0,
+      "load_buffer_2d_wgt_calls": 24824.0,
+      "store_buffer_2d_bytes": 6792448.0,
+      "store_buffer_2d_calls": 2728.0,
+      "synchronize_calls": 24.0
+    },
+    "y00_input_y02_same_tile_weight": {
+      "driver_run_calls": 56.0,
+      "driver_run_insns": 87064.0,
+      "load_buffer_2d_bytes": 84320256.0,
+      "load_buffer_2d_calls": 42320.0,
+      "load_buffer_2d_inp_bytes": 55410176.0,
+      "load_buffer_2d_inp_calls": 24824.0,
+      "load_buffer_2d_wgt_bytes": 28729344.0,
+      "load_buffer_2d_wgt_calls": 14872.0,
+      "store_buffer_2d_bytes": 6792448.0,
+      "store_buffer_2d_calls": 2728.0,
+      "synchronize_calls": 56.0
+    },
+    "y00_input_y02_stock": {
+      "driver_run_calls": 24.0,
+      "driver_run_insns": 72888.0,
+      "load_buffer_2d_bytes": 83269632.0,
+      "load_buffer_2d_calls": 38160.0,
+      "load_buffer_2d_inp_bytes": 49069568.0,
+      "load_buffer_2d_inp_calls": 17912.0,
+      "load_buffer_2d_wgt_bytes": 34037760.0,
+      "load_buffer_2d_wgt_calls": 17912.0,
+      "store_buffer_2d_bytes": 6792448.0,
+      "store_buffer_2d_calls": 2440.0,
+      "synchronize_calls": 24.0
+    }
+  },
+  "model": "yolov3-tiny",
+  "output_count": 8,
+  "parameter_semantic_sha256": "e098f48c612ae953e5085dd6472b9b3c76ad1606ef5619ce67ec599782f62235",
+  "profile_counter_note": "The runtime time_evaluator path records two graph executions per timed call; divide counter values and deltas by two for per-inference quantities",
+  "profile_deltas": {
+    "same_tile_original_to_weight": {
+      "driver_run_calls": 32.0,
+      "driver_run_insns": -8848.0,
+      "load_buffer_2d_bytes": -21233664.0,
+      "load_buffer_2d_calls": -9952.0,
+      "load_buffer_2d_inp_bytes": 0.0,
+      "load_buffer_2d_inp_calls": 0.0,
+      "load_buffer_2d_wgt_bytes": -21233664.0,
+      "load_buffer_2d_wgt_calls": -9952.0,
+      "store_buffer_2d_bytes": 0.0,
+      "store_buffer_2d_calls": 0.0,
+      "synchronize_calls": 32.0
+    },
+    "stock_to_same_tile_original": {
+      "driver_run_calls": 0.0,
+      "driver_run_insns": 23024.0,
+      "load_buffer_2d_bytes": 22284288.0,
+      "load_buffer_2d_calls": 14112.0,
+      "load_buffer_2d_inp_bytes": 6340608.0,
+      "load_buffer_2d_inp_calls": 6912.0,
+      "load_buffer_2d_wgt_bytes": 15925248.0,
+      "load_buffer_2d_wgt_calls": 6912.0,
+      "store_buffer_2d_bytes": 0.0,
+      "store_buffer_2d_calls": 288.0,
+      "synchronize_calls": 0.0
+    },
+    "stock_to_same_tile_weight": {
+      "driver_run_calls": 32.0,
+      "driver_run_insns": 14176.0,
+      "load_buffer_2d_bytes": 1050624.0,
+      "load_buffer_2d_calls": 4160.0,
+      "load_buffer_2d_inp_bytes": 6340608.0,
+      "load_buffer_2d_inp_calls": 6912.0,
+      "load_buffer_2d_wgt_bytes": -5308416.0,
+      "load_buffer_2d_wgt_calls": -3040.0,
+      "store_buffer_2d_bytes": 0.0,
+      "store_buffer_2d_calls": 288.0,
+      "synchronize_calls": 32.0
+    }
+  },
+  "schema": "c3_vta_yolov3_tiny_y02_context_triad_board_v1",
+  "status": "yolov3_tiny_y02_context_triad_board_complete",
+  "timing_calls": 18
+}

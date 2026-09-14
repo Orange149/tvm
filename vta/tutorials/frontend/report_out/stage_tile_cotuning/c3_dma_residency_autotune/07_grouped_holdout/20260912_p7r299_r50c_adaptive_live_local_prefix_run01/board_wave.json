@@ -1,0 +1,176 @@
+{
+  "adaptive_path": "sparse_family_wave",
+  "board_contacted": false,
+  "candidate_order": [
+    "cbeec5d3c92de320929553a96df2989dd6e2d577ec27d14a8e72d9580b72ae61"
+  ],
+  "candidate_records": [
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "cbeec5d3c92de320929553a96df2989dd6e2d577ec27d14a8e72d9580b72ae61",
+      "debug": {
+        "config_index": 299
+      },
+      "family_id": "R50CF00",
+      "family_ordinal": 0,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 4,
+          "output_width_outer_tiles": 2
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 392,
+          "input_vectors": 1568,
+          "weight_vectors": 64
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                14
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                16
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                4
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "817d416545b3cfaeb57cb20e1686d69b5b7f647692e2ef96e636e86a77eea12c",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              64,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              64,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 4,
+        "tile_h": 14,
+        "tile_w": 7
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_r50c_adaptive_multifidelity_candidate_v1",
+      "selection_basis": "frozen deterministic label-free ConfigEntity; no R50C board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "02f881e253d246a616fbf41409c060b4812b01308564244170402ced962c3e23",
+      "workload_id": "R50C"
+    }
+  ],
+  "first_family": "R50CF03",
+  "first_family_lower_passes": 0,
+  "history_head_sha256": "a7c6a96ad472adca4784b12fd07f2bf91e09a80350fd774cb6dcb9fb3cc43e12",
+  "performance_labels_used": false,
+  "service_scores": {
+    "cbeec5d3c92de320929553a96df2989dd6e2d577ec27d14a8e72d9580b72ae61": 2348032.0
+  },
+  "status": "frozen_after_adaptive_live_local_prefix_before_cross_or_board"
+}

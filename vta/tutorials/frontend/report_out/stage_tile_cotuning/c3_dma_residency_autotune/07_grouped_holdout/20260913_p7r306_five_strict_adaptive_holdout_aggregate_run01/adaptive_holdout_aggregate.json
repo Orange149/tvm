@@ -1,0 +1,326 @@
+{
+  "bindings": [
+    {
+      "ledger_sha256": "bf282b0724dfdcd710c3a0a32b4a78e240b0a2a232c36cc21b866882801df3c9",
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r194_y06_adaptive_multifidelity_holdout_analysis_run01"
+    },
+    {
+      "ledger_sha256": "542af4b87ab382cde5b5754b4e165937b4664387f24941e58f1ed645b43f5dcc",
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r203_y07_adaptive_multifidelity_holdout_analysis_run01"
+    },
+    {
+      "ledger_sha256": "301df6becc18f6d2a60b0b73c1c5bf49996e8f36e04dd6a63fb5b6cbc68198f4",
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r213_r50a_adaptive_multifidelity_holdout_analysis_run01"
+    },
+    {
+      "ledger_sha256": "908c03d8aa811d91b9c748689cb3f95b6845f7088c338d8acc42e9b45436f825",
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r224_r50b_adaptive_multifidelity_holdout_analysis_run01"
+    },
+    {
+      "ledger_sha256": "42f1d80ad4cb0124461264a8e3c2b8a80d5d2db6df4e4c7b2d6d38dc94b7d13d",
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r305_r50c_adaptive_multifidelity_holdout_analysis_run01"
+    }
+  ],
+  "claim_boundary": "aggregate only; each target was completed after its own prospective first wave; logical VTA resources are not physical AXI counters",
+  "claim_status": "post_hoc_aggregate_of_individually_preregistered_holdouts_no_retuning",
+  "comparisons": {
+    "adaptive_gross_reduction_vs_exhaustive_percent": 71.66666666666667,
+    "adaptive_wall_reduction_vs_exhaustive_percent": 41.387027090061004,
+    "adaptive_wall_reduction_vs_fixed_4_to_2_percent": 17.572010277885926
+  },
+  "holdouts": [
+    {
+      "adaptive_path": "sparse_family_wave",
+      "first_candidate_is_pool_oracle": true,
+      "pool_oracle_latency_ms": 30.102661,
+      "registered_candidates": 24,
+      "workload_id": "Y06"
+    },
+    {
+      "adaptive_path": "sparse_family_wave",
+      "first_candidate_is_pool_oracle": true,
+      "pool_oracle_latency_ms": 322.948999,
+      "registered_candidates": 24,
+      "workload_id": "Y07"
+    },
+    {
+      "adaptive_path": "dense_fixed_4_to_2",
+      "first_candidate_is_pool_oracle": true,
+      "pool_oracle_latency_ms": 5.90718,
+      "registered_candidates": 24,
+      "workload_id": "R50A"
+    },
+    {
+      "adaptive_path": "sparse_family_wave",
+      "first_candidate_is_pool_oracle": true,
+      "pool_oracle_latency_ms": 25.151352,
+      "registered_candidates": 24,
+      "workload_id": "R50B"
+    },
+    {
+      "adaptive_path": "sparse_family_wave",
+      "first_candidate_is_pool_oracle": true,
+      "pool_oracle_latency_ms": 4.442324,
+      "registered_candidates": 24,
+      "workload_id": "R50C"
+    }
+  ],
+  "schema": "c3_vta_strict_adaptive_holdout_aggregate_v1",
+  "summary": {
+    "adaptive_survival_frontier_service": {
+      "all_holdouts_success_rate": 1.0,
+      "gross_candidates_to_all_targets": {
+        "max": 35.0,
+        "median": 34.0,
+        "min": 34.0,
+        "q1": 34.0,
+        "q3": 35.0
+      },
+      "phase_actions_to_all_targets": {
+        "compile": {
+          "max": 6.0,
+          "median": 6.0,
+          "min": 6.0,
+          "q1": 6.0,
+          "q3": 6.0
+        },
+        "fpga": {
+          "max": 5.0,
+          "median": 5.0,
+          "min": 5.0,
+          "q1": 5.0,
+          "q3": 5.0
+        },
+        "fsim": {
+          "max": 6.0,
+          "median": 6.0,
+          "min": 6.0,
+          "q1": 6.0,
+          "q3": 6.0
+        },
+        "lower": {
+          "max": 35.0,
+          "median": 34.0,
+          "min": 34.0,
+          "q1": 34.0,
+          "q3": 35.0
+        },
+        "measure": {
+          "max": 5.0,
+          "median": 5.0,
+          "min": 5.0,
+          "q1": 5.0,
+          "q3": 5.0
+        }
+      },
+      "resources_to_all_targets": {
+        "fpga_kernel_invocations": {
+          "max": 105.0,
+          "median": 105.0,
+          "min": 105.0,
+          "q1": 105.0,
+          "q3": 105.0
+        },
+        "logical_vta_dma_calls": {
+          "max": 40410.0,
+          "median": 40410.0,
+          "min": 40410.0,
+          "q1": 40410.0,
+          "q3": 40410.0
+        },
+        "logical_vta_load_bytes": {
+          "max": 1035930240.0,
+          "median": 1035930240.0,
+          "min": 1035930240.0,
+          "q1": 1035930240.0,
+          "q3": 1035930240.0
+        },
+        "logical_vta_store_bytes": {
+          "max": 6653440.0,
+          "median": 6653440.0,
+          "min": 6653440.0,
+          "q1": 6653440.0,
+          "q3": 6653440.0
+        }
+      },
+      "runs": 20,
+      "wall_ms_to_all_targets": {
+        "max": 22495.689678024064,
+        "median": 21910.02247902361,
+        "min": 21888.274989025376,
+        "q1": 21888.274989025376,
+        "q3": 22473.94218802583
+      }
+    },
+    "exhaustive_then_service": {
+      "all_holdouts_success_rate": 1.0,
+      "gross_candidates_to_all_targets": {
+        "max": 120.0,
+        "median": 120.0,
+        "min": 120.0,
+        "q1": 120.0,
+        "q3": 120.0
+      },
+      "phase_actions_to_all_targets": {
+        "compile": {
+          "max": 5.0,
+          "median": 5.0,
+          "min": 5.0,
+          "q1": 5.0,
+          "q3": 5.0
+        },
+        "fpga": {
+          "max": 5.0,
+          "median": 5.0,
+          "min": 5.0,
+          "q1": 5.0,
+          "q3": 5.0
+        },
+        "fsim": {
+          "max": 29.0,
+          "median": 29.0,
+          "min": 29.0,
+          "q1": 29.0,
+          "q3": 29.0
+        },
+        "lower": {
+          "max": 120.0,
+          "median": 120.0,
+          "min": 120.0,
+          "q1": 120.0,
+          "q3": 120.0
+        },
+        "measure": {
+          "max": 5.0,
+          "median": 5.0,
+          "min": 5.0,
+          "q1": 5.0,
+          "q3": 5.0
+        }
+      },
+      "resources_to_all_targets": {
+        "fpga_kernel_invocations": {
+          "max": 105.0,
+          "median": 105.0,
+          "min": 105.0,
+          "q1": 105.0,
+          "q3": 105.0
+        },
+        "logical_vta_dma_calls": {
+          "max": 40410.0,
+          "median": 40410.0,
+          "min": 40410.0,
+          "q1": 40410.0,
+          "q3": 40410.0
+        },
+        "logical_vta_load_bytes": {
+          "max": 1035930240.0,
+          "median": 1035930240.0,
+          "min": 1035930240.0,
+          "q1": 1035930240.0,
+          "q3": 1035930240.0
+        },
+        "logical_vta_store_bytes": {
+          "max": 6653440.0,
+          "median": 6653440.0,
+          "min": 6653440.0,
+          "q1": 6653440.0,
+          "q3": 6653440.0
+        }
+      },
+      "runs": 20,
+      "wall_ms_to_all_targets": {
+        "max": 37380.84146096662,
+        "median": 37380.84146096662,
+        "min": 37380.84146096662,
+        "q1": 37380.84146096662,
+        "q3": 37380.84146096662
+      }
+    },
+    "hardware_diverse_frontier_service": {
+      "all_holdouts_success_rate": 1.0,
+      "gross_candidates_to_all_targets": {
+        "max": 95.0,
+        "median": 94.0,
+        "min": 94.0,
+        "q1": 94.0,
+        "q3": 95.0
+      },
+      "phase_actions_to_all_targets": {
+        "compile": {
+          "max": 10.0,
+          "median": 10.0,
+          "min": 10.0,
+          "q1": 10.0,
+          "q3": 10.0
+        },
+        "fpga": {
+          "max": 5.0,
+          "median": 5.0,
+          "min": 5.0,
+          "q1": 5.0,
+          "q3": 5.0
+        },
+        "fsim": {
+          "max": 10.0,
+          "median": 10.0,
+          "min": 10.0,
+          "q1": 10.0,
+          "q3": 10.0
+        },
+        "lower": {
+          "max": 95.0,
+          "median": 94.0,
+          "min": 94.0,
+          "q1": 94.0,
+          "q3": 95.0
+        },
+        "measure": {
+          "max": 5.0,
+          "median": 5.0,
+          "min": 5.0,
+          "q1": 5.0,
+          "q3": 5.0
+        }
+      },
+      "resources_to_all_targets": {
+        "fpga_kernel_invocations": {
+          "max": 105.0,
+          "median": 105.0,
+          "min": 105.0,
+          "q1": 105.0,
+          "q3": 105.0
+        },
+        "logical_vta_dma_calls": {
+          "max": 40410.0,
+          "median": 40410.0,
+          "min": 40410.0,
+          "q1": 40410.0,
+          "q3": 40410.0
+        },
+        "logical_vta_load_bytes": {
+          "max": 1035930240.0,
+          "median": 1035930240.0,
+          "min": 1035930240.0,
+          "q1": 1035930240.0,
+          "q3": 1035930240.0
+        },
+        "logical_vta_store_bytes": {
+          "max": 6653440.0,
+          "median": 6653440.0,
+          "min": 6653440.0,
+          "q1": 6653440.0,
+          "q3": 6653440.0
+        }
+      },
+      "runs": 20,
+      "wall_ms_to_all_targets": {
+        "max": 27166.471308002656,
+        "median": 26580.8041090022,
+        "min": 26559.056619003968,
+        "q1": 26559.056619003968,
+        "q3": 27144.723818004422
+      }
+    }
+  }
+}

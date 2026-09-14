@@ -1,0 +1,22 @@
+{
+  "schema": "c3_p3d_weight_sync_probe_summary_v1",
+  "status": "completed_negative",
+  "decision": "no_go_schedule_only",
+  "representatives": 3,
+  "actual_lower_ok": 0,
+  "actual_lower_failed": 3,
+  "counterfactual_weight_dma_gate_met": 2,
+  "dependency_gate_met": 0,
+  "fsim_three_seed_gate_met": 0,
+  "regression": {
+    "dedicated_probe_tests": "10/10 passed",
+    "existing_modes_0_to_3_and_original": "28/28 passed"
+  },
+  "sync": {
+    "placement": "inside each x_co0 residency iteration, after the x_i0 spatial loop",
+    "requested_counts": {"W00": 2, "W02": 4, "W09": 2},
+    "actual_intrinsic_counts": null,
+    "actual_intrinsic_count_reason": "explicit sync Call construction failed before executable TIR"
+  },
+  "interpretation": "The counterfactual DMA reduction is diagnostic only. It cannot pass the dependency or correctness gates and is not a candidate/performance result."
+}

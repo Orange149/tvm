@@ -1,0 +1,4648 @@
+{
+  "counts": {
+    "correctness_canary_only": 90,
+    "protected_incumbent": 1,
+    "reject_static": 230
+  },
+  "inputs": {
+    "candidates": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r52_w03_w05_w06_local_space_run01/results.jsonl",
+      "sha256": "3a0ad064e6ca835954ae884e81fc743bc86f6bede6a3483d60777290d746a7a1"
+    },
+    "contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r57_support_transfer_board_contracts_run01/w06_contract.json",
+      "sha256": "82ed921ba75f9051938d2c934e60a0af0e9ec85e14934f1d5d02555d2212233c"
+    },
+    "ledger": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r62_hardware_certificate_ledger_run01/ledger.json",
+      "sha256": "db24a315e68335fbc42354f46f2c9d53e23f853c0f4b4269b2c83af943a02bb8"
+    }
+  },
+  "performance_labels_used": false,
+  "policy_order": [
+    "protected incumbent",
+    "static and DMA-Pareto certificate",
+    "exact hardware-certificate lookup",
+    "unknown identities receive correctness only",
+    "timing only after exact pass"
+  ],
+  "records": [
+    {
+      "reason": "zero-regret fallback is dispatched before experimental candidates",
+      "route": "protected_incumbent",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "2cbee78c10169d29eed00ff50a68553a7c404fb083199b199a0155a8c48047c3",
+      "config_index": 0,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.05474452554744526,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "c07b8238a0bf6d22cf851e44cdedfcc76552f149959e50f82e9d64f7781e537c",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "65ec6b2378ebfe31764e0f2cf59d9f5017dcbd3c91ad6d3401927f1ea219c6d0",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "f43cf99117f123d89f5a0c6bf46811ca7f0438ea3a874861a1f3725cc7420cc7",
+      "config_index": 1,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.1461038961038961,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "18cef32e54589eca74fed5c60bc15fddc2f688c80e6df7e42f868bbb606cf9e0",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "6d5ff3d61d4c0819ac92ff1b54560be29377b51a3074a131b3a4d6d6fc7e87b9",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c001d9c914827783cf69df6619d8fb592477654e3091d433272bf8bb596b7d0f",
+      "config_index": 2,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.40794979079497906,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "e2c89a56ffff9aa97183cb7894733ad711930207bfea761218ae74d6faf3126e",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "9c787eeb61b62e8c042c9495c0817b251f4801e3b19fce2b6ad256a5176b5219",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a085d8c2906bef30eaaae1b11364f4ee0fbc54362133f163598b8179f8c46976",
+      "config_index": 3,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.5656424581005587,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "f53079aca8f4ab5efdf27ff539bfc008d356c3f0b14a8da997f71d2881e60e88",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "a6d89b142090a3d77185da5ae6365a0ecbca209964a4a24fa7dad4797eec78c8",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "57b84573468abc18817a79e0705a4c007e4689b224d908e76ba0589e527d3702",
+      "config_index": 4,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.1461038961038961,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "cbda5ba87ec4427973c7c74d5588017cc6b16cd797bbd163806f4db47be25bbb",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "5453b0076f4057dd9ab060644f3cfdf2c16b54602ad99a25035ea3fb90b097e9",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "679f50b82fc9dd6662215e620c684d9a23bcb70e314a9772ff4ac18cc48c82c4",
+      "config_index": 5,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.33088235294117646,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "5a25558b494687e1497322e1cab5f8d4e7bba6eab432fde35e43008e8a2da98f",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "0281d0bab2c4e68b199289c01afe225ce42660b312667a06cb3bb65cd4010af2",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "82d03db955e692bb26c1844972f23a9831a28e63752b10e3fde6652cfebbe1d4",
+      "config_index": 6,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.6442731277533039,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "2b6f0d2630569a6c2d368a4468c62817cd0f5e7483319fe2071ac2cf76c54646",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "fb4278018c78aa199af1fc5d16ccb7a9b99422ecc1c67ab93ef6298b2f389be5",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "cadb8c0b493113c446e6ddf6afcb8e25a9e852c430a22ee01224ef49c1753887",
+      "config_index": 7,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.7555970149253731,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "9bb51115f8b49ff5fcfda869f8ce44542b7264963347aa07f220e5c4040226ec",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "90a694f74504fbf19d2417905b25b1570b30e4ddbd073182d85cac7f81a919c2",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ac3974982742688efdba6f4a036ba0a6374db7ae5224913b010470be5be8f553",
+      "config_index": 8,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.40794979079497906,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "f062c046ef962731a6b341aadeac1d4ec1344b17adeb65388a245d310e765e14",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "7796089d9755baa3009d15cf4db8bf4b91385321e36f81d5b2f398e981338073",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a8baac695848dbb33108988e63d5686ab3c4b446113f8897990be796caa334b8",
+      "config_index": 9,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.6442731277533039,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "97e33587fe385c7a2a3d46f3011532952113647a598a56f13ee9ab4692cef6c9",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "8914d146a2d2fcde5a42e0a587f4872f2f0128e92c9131e0875be2d84e211e78",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e3b85783425bc32fd621370044e1673a2ae7cde67bad5a5446bc0af0d88a2161",
+      "config_index": 10,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.828973185088293,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "cbf48adbde50a88d27072fd7a7f006e997b092a92e9aceff9bc937e990b8f490",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "4fa3648d9c7c4e592f80ce233838dc25978cb2354fcbe3d2d01e9005a4f00027",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ab5b3382779dbd3d20261c3970f239573ebc89e65afdf63548823a8358d1cdd1",
+      "config_index": 11,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.8676664469347396,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "f4463547d92325dd605ebc0b6bf760a8afe344fea84839bf7cd8cfa9bbaced30",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "cda730296b1cd7db063fc8d069e18c7b5b79af0c3f5f058e5e90041bb0cc9b9f",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "cb86ab311965bc798a17c908e11906a2cde42cb722fce3b33de17b0b740bfce9",
+      "config_index": 12,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.5656424581005587,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "ac320ec3abb8c5c8ab746b377e8e374e17338106c99cf71aab2104b365196434",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "8eacf228a08cd061ab21d88f220ea1ec3696b6f679f30b5f3dd4065bdf91e8fa",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "481c3936d4ad4d22d174018d61d5ff212c1294f86477ce6e84e63a4a102b5a4f",
+      "config_index": 13,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.7555970149253731,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "5ad1db53604550a705be16c17abba38f9d812ffa8c9276c6e7af32058fc43f67",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "93dd0d9be71a09031a9ae02079c6effc36129cb86a02c38c15d7fc155d023ce8",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "409ceafe796f9151b337f58c5db33e56bf24aabfd2462c71fcba6ce07f50af04",
+      "config_index": 14,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.8676664469347396,
+          "total_dma_calls": 0.8823529411764706
+        }
+      },
+      "hardware_certificate_key": "90bdaa818fbad4b12f2e7e65545deb5524611d17b4b8697b67caea7e826e9bdd",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "091d632ecdc66ec1eceb0d3d245220ed25e1249900b70420010813204cbbc64b",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "00497ac628c9315180dcca9278d10d949684d9adb923d7cb0eb27cfaac73900a",
+      "config_index": 16,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.05474452554744526,
+          "total_dma_calls": 0.8333333333333334
+        }
+      },
+      "hardware_certificate_key": "ef8562b1f0f6ba79c321f6fb312423e077840284cd8c47b69dc41445cba219ae",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "1832e7330f461864384ab878ef1d12d7e502df46a91a8359eae8779f0dec5458",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8f42102de2a94f34b782f1833d488bc73f7ce59b812fda2e27b4f745eacc4698",
+      "config_index": 20,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.1461038961038961,
+          "total_dma_calls": 0.8333333333333334
+        }
+      },
+      "hardware_certificate_key": "203f8eb8891b3ad5beb88da26a05c687b63009f9687090b208bc22941843ca7e",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "6a482ba2e32cebb283f84dc047c74a419a5cb3e0fd8ef29bba62e801f3c239ed",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "008b080ce49b7a2f400ff398848c9340f34e5bfbea9e952b469a76780bfee4f8",
+      "config_index": 24,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.40794979079497906,
+          "total_dma_calls": 0.8333333333333334
+        }
+      },
+      "hardware_certificate_key": "9c075c60586ae645043435254eb9324402b1ca8c323e7e8de29e8ec848ffbcd0",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "90bfe3101e1f053f6a70dcf10e3e343f96cfe856e5e6bb1f5de43bae735dd3b0",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0e1bd4aabb7b3237086d50632c0085bb0e07fef6c9df51f0046d404bed95da7f",
+      "config_index": 28,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.5656424581005587,
+          "total_dma_calls": 0.8333333333333334
+        }
+      },
+      "hardware_certificate_key": "07f5489a755db54f7bfb86186b2f9c4ea1a84b7cc81aa387392735ff5d6eb05c",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "eb6ddc8a7e14ab10e8b7b67850aab76fdf0d30340e71dd0300b5f4c6f9bb7192",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "f943acb6a8ca35d560f185162332e023b58347452e651e0a16f29b8b43e7c8f3",
+      "config_index": 32,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.05474452554744526,
+          "total_dma_calls": 0.75
+        }
+      },
+      "hardware_certificate_key": "8e87de76213da834d2e1d6ecffd3ec7a00ec1ec8b2bdceb786e6f8f7755dd31d",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "3b1aa283a42aea6b5c694cab504b300a38d0fd618302c4e7e54dd0789d8d3b9e",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "03ff84797a7a3bc781a3f1012620bd3f1f4f6745654342890f5c693cb00e4fa7",
+      "config_index": 36,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.1461038961038961,
+          "total_dma_calls": 0.75
+        }
+      },
+      "hardware_certificate_key": "0510229f592c62c50d56317162b676c831062f907d84eecb445560b65aea9ea7",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "bc418866f54ea226ed041aa7797dbdbc3f59df8705c9629d24a8939a6d04b63c",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "76190198bb29c08fe2396d144195e2d56756a036f73c4197e06b03b10b2428a8",
+      "config_index": 40,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.40794979079497906,
+          "total_dma_calls": 0.75
+        }
+      },
+      "hardware_certificate_key": "f2cd822312f27d748c2ef04dfe35a2653a605fa3bbb30f8111714dec9f1d5269",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "d4d5672c12b28381a44bf9360e34a03b5608b0345e6741837d403718b82cddf2",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "40b3cb3e88b413a781f46c506e43ef16def829651ebf6dee7fac408ee87affe3",
+      "config_index": 44,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.5656424581005587,
+          "total_dma_calls": 0.75
+        }
+      },
+      "hardware_certificate_key": "ea52a79c3a24951b5426323b0f6b94192fc70d1775898ee22c482a7ce24ea0fe",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "29ad28902c2d2499fc6fc8f9799698358ced655af78f7960e363d919b94119ee",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "88da0718013f7e3a2e5102dbe175aaabbcf8faf2a986cf30b969d07ba785be3a",
+      "config_index": 48,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.05474452554744526,
+          "total_dma_calls": 0.625
+        }
+      },
+      "hardware_certificate_key": "a3177dcbc994adb5a951ef64421b9aaa4daf29c370855f9073df0b6abfde44c3",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "047144951730c8dda55a3c4f30bcca0104e503a13752be7bca9e4971d8a7393b",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "38c046e8eeff27359aeeb81319b5378bde40fc0440be6e41f504f1079e7a91bc",
+      "config_index": 52,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.1461038961038961,
+          "total_dma_calls": 0.625
+        }
+      },
+      "hardware_certificate_key": "0000aa34f7cddaf8fc2fc2afdd08fcb96b5a5a7603e4d8feb80254e810773455",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "70dd661f7cd0d1a26e85dcf077efd6fd2694cc28d8801e28f00d4e32afde9920",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9f6566e249978f5a1a1842bd3788a12cfeb36c1b5847833fc2cd4b1548500b75",
+      "config_index": 56,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.40794979079497906,
+          "total_dma_calls": 0.625
+        }
+      },
+      "hardware_certificate_key": "7ad2ab556b2ce6ee3954d3fff809adfea5fc1bb33e6e0cc44eb0ef42b18d077e",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "8825903635a2b05e472300382a9529b14652f2ff51381cecccdd6aac60f52c3b",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b912af4ae68b2661d27c63bd59057505f6ee5bc94134615f4eb12c9dc8a97e92",
+      "config_index": 60,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.9375,
+          "total_dma_bytes": 0.5656424581005587,
+          "total_dma_calls": 0.625
+        }
+      },
+      "hardware_certificate_key": "1c06ae078bfd627c9aad52ef2cec00f647a8d2005ef20a782880aba7fcaf7219",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "ff7cacbf858c3c9223b9f2f70b97e2b97104531f70080b49fcc47c9ba4117764",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a72378e76d24075df4bdaf6e416d3e027c5a7a9225dbc55d87d6b149bd4ba6db",
+      "config_index": 64,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.02631578947368421,
+          "total_dma_calls": 0.8235294117647058
+        }
+      },
+      "hardware_certificate_key": "327c9f2659eb55ccd4784aaf938350e5906c513c7990019dd3aa522a151012d5",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "aec1aeb9df4352ff50f24100d71b0ddfb7893ee58476b91437339edf9da53a5a",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8383cf021c6bc385e8229d2843ae95444111943906620fdd86a142566af2d681",
+      "config_index": 67,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.378,
+          "total_dma_calls": 0.8235294117647058
+        }
+      },
+      "hardware_certificate_key": "d56ad88ca88a15b46956230ebb2180615ef6d5ca329a274e80c4711f0daf3f63",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "b780c61e97a6bbc46540359c25e20db6e548fbdf98361abab762158e54378edc",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "fa755d810a856fafcc47d4bd140afbd416c07e923044c88b6d7b8b8d1f621548",
+      "config_index": 68,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.07394366197183098,
+          "total_dma_calls": 0.8235294117647058
+        }
+      },
+      "hardware_certificate_key": "ff172595665449d1f20486aa38ebd4f9ad859e764fcaff2c06b9f63be6fe2960",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "5073793d9003cef7627c1500d0fb06b2cbd782e8f96aff4f2609704b0f348afb",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "1661ef502c118fb0b034e012fef87782634795f9e7caf824398b9121dfc22727",
+      "config_index": 71,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.590625,
+          "total_dma_calls": 0.8235294117647058
+        }
+      },
+      "hardware_certificate_key": "f25d0e47142878ad85bb758c8fd393e46653f469632f8f98fa7d95bf680ac149",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "65f524baa39cfe73eef6a2b321a27a07276e22f2f733affbc632cdab3d50fe4d",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e84e0072ce3d49a9ac99794ddff893f0b2f8a3f58ab4a8d1ee27ee64bfc5b483",
+      "config_index": 72,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.24331550802139038,
+          "total_dma_calls": 0.8235294117647058
+        }
+      },
+      "hardware_certificate_key": "34324f41ccdd55a854c1286bdc52ec0b886c03b573da1c71e20dd39260fda6dd",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "0f38ce4ac4bf98dd943f620faa5ca26e57cacc23e1f7b55441d9af89e13c2943",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "42832bfe4fd551e6ec880e2d0f8fe441d629beb980da3e61d8d115066164d1b1",
+      "config_index": 75,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.753680981595092,
+          "total_dma_calls": 0.8235294117647058
+        }
+      },
+      "hardware_certificate_key": "6f92803ce04e917ca5061db82cbde9cfeca591babc08d0a8c017dd4b008ef497",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "b393ffcd88c0363b823ff4ba2e2849618a1e54e419aa15c7e5815517bc5d7a87",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b4f184729c6c65fb830c8ddc067c83d2e06ef86a02ecaa84ae4820f1b0c8b5c3",
+      "config_index": 76,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.378,
+          "total_dma_calls": 0.8235294117647058
+        }
+      },
+      "hardware_certificate_key": "2fb6e4c9ed67bf75dc8f263063b705b6d55c70dd21ea6195f9dea4365bc581e9",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "bdf47fcfa2d62319e3ce17d7aaacce007e7582cf165f7e7b2102e62af1eb35e8",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c330414efc0f4881c6648414c06ebb9837e460c67fc9c61c8957c27dd43b7467",
+      "config_index": 77,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.590625,
+          "total_dma_calls": 0.8235294117647058
+        }
+      },
+      "hardware_certificate_key": "d9e3237e46add6d38d9696a26d102a99653e0a49ac951d58a5b9811756b7568c",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "8d21e601e751855dadfe7d31389d3965768fe136f5d42c822d15f35679428e4b",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "3ecf01700dcb15826fdaf8a5fe06edfadfd09253e71fa1e05183f6b44ec31c4b",
+      "config_index": 78,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.753680981595092,
+          "total_dma_calls": 0.8235294117647058
+        }
+      },
+      "hardware_certificate_key": "c3a0488a59f0b73b9c3eb8a350bf07de819efb2bb56787550c83afb28cfcae6c",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "bf6cbf4063a3eb61ca735ea6e33ce7c2a51935f1ebb60d426a955e10957b25ba",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b121c80db672c35953436c519a7aead9b90384ef61acd3279f65dc69302d1406",
+      "config_index": 80,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.02631578947368421,
+          "total_dma_calls": 0.7777777777777778
+        }
+      },
+      "hardware_certificate_key": "e572c37a41692214a64638ae3623186a468fe244047f9e9e4da5cc170e82a6a2",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "e3184c7ec4688c745d9d026e7b5fa6defaed5aa52242c3b0feb823e5e821ebfd",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "76f53cd2c6d9041e83ef32afafd041d0674c90de0402aa1f6afce98d2784b536",
+      "config_index": 84,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.07394366197183098,
+          "total_dma_calls": 0.7777777777777778
+        }
+      },
+      "hardware_certificate_key": "a8369a0c1f3d17e2fa885130709214e976a0f94e3265375258506f39a3a9dc85",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "3f6bfbd41075c63edad3fff0ea8f4a4c102c17b29f77193dc22ec7c98a130655",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "713a9113ec2d978f0926f2ca98a6d6a1a4d98e610ca54ae5fdb24efe1f6b3d70",
+      "config_index": 88,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.24331550802139038,
+          "total_dma_calls": 0.7777777777777778
+        }
+      },
+      "hardware_certificate_key": "a2b5794e97906994426f9e2517422d8644b802567a443bc02a425997e4c0de1d",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "c40c39106ea54f9ce4a858e8251c564eee036a30fa6a9a7407846313534ae5f6",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "eb2108b2c81a485b3cf2ebe35008beca6e425b4db2e12fdfb96702f294e83a9d",
+      "config_index": 92,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.378,
+          "total_dma_calls": 0.7777777777777778
+        }
+      },
+      "hardware_certificate_key": "9e2137a3d6eac2e77e76ae7c2530248f7f6175d4eebd8ea2c3afe704bef3be01",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "d5de9a3fff3a91fd1d6ad3f12279d9eb8618f33f751d1780025dfb761b475c64",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6677b239bac322783c97b8cb78846a22233c67559ff769c3d421bab587cab37c",
+      "config_index": 96,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.02631578947368421,
+          "total_dma_calls": 0.7
+        }
+      },
+      "hardware_certificate_key": "f0fd6e2cbd5e7e2f03c51407f7fe9fd85cfb6702c1cebffbe45e25afcf5e20fe",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "b8d85aa066d38deb06060d578adc79943fed0cc7d5d3ea8b61a22718995b7dd7",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e0cd2a2301314ac28d2f615ad5f18318be248b9c2e6bca67f14fedf0b33e63c2",
+      "config_index": 100,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.07394366197183098,
+          "total_dma_calls": 0.7
+        }
+      },
+      "hardware_certificate_key": "a575699a9de69411a037539d7611adf04ec74b78130deb7918808cb04ee78d3f",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "09b295508bc8eb994818a19d78359e66a3d3875342f4d635677ddd82b8c0fb2a",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "95e5d3568ae491414f4e94fbb577cee095204a2d3ee9aafdb2a26852f84f32df",
+      "config_index": 104,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.24331550802139038,
+          "total_dma_calls": 0.7
+        }
+      },
+      "hardware_certificate_key": "edfa0ba1f2d546a7a1c66947a2134351f5416cd41bc2aa1eaf16eaf1797c06ec",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "9612b57ca7e22b16d061630d9b396550975880308a1e24c9bcdd67a5a36b58ae",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c009feb1e4e3ff15c5e2d06e1da0edc8e9934d5798b1f7b975700552fcc77729",
+      "config_index": 108,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.378,
+          "total_dma_calls": 0.7
+        }
+      },
+      "hardware_certificate_key": "7a152d00a831677ce5419fdf89448cce73477d3dcdef4cc6abc7423509c41547",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "ac713c7e5259e5c4b9f5d10b1acb4640cbb82b5ae0c6cbbc0257691200c3af03",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "4c1eb47d11ed536c00fdfe66aac29c35111b1fea9248ae9cfb532924c7e05c66",
+      "config_index": 112,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.02631578947368421,
+          "total_dma_calls": 0.5833333333333334
+        }
+      },
+      "hardware_certificate_key": "871e3693872073cc4b93c0dfdd5d870f9eaad27bd4666f61245461f049b7c0e6",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "ce6c6469bbad0055849d72885b867a5ad5a47e058ab540d7c7c18e3644838425",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "be6e7675830527d777292c06915d6ff6473e809c4ca2611452856e243c522a0d",
+      "config_index": 116,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.07394366197183098,
+          "total_dma_calls": 0.5833333333333334
+        }
+      },
+      "hardware_certificate_key": "af9380bb586bcb6aa09878cba70815efb7ff5d4de64d787f2541319fbe24f75c",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "b5c900ed68cc360cc428e762374a05c9f218c81a65a0e095a3ffe02072e94549",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ced6e32c8182ef1775a5a3f25808f5efc209f5e83f88a7ccef5ccbbd553ccd7d",
+      "config_index": 120,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.24331550802139038,
+          "total_dma_calls": 0.5833333333333334
+        }
+      },
+      "hardware_certificate_key": "e1df6e8cdde8f2a26d33c3dc2a6e52a56626ee08f5ddc42f1535b1f52ee2927d",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "8a1a11908b41950a53f40948f72281f32fe8e598fe71a40593f87850219b4350",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7c5368cb9e9e3cacd3cfaa7995297dc21c84a2b7d638cbe67120144308977675",
+      "config_index": 124,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.875,
+          "total_dma_bytes": 0.378,
+          "total_dma_calls": 0.5833333333333334
+        }
+      },
+      "hardware_certificate_key": "aee00d7e619a45c2dc4c191e648bab663df67aaf96b982aeaccaafe4f7128234",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "7cc2d074e114367609ab3cbaeb18c16274e609723d87a42ea504caee33f3cd1f",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7c93250dbba35949503d54f5fcbd2c2a3de2d3ba3279a08b75a2e08ade0fa942",
+      "config_index": 128,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.011450381679389313,
+          "total_dma_calls": 0.7058823529411765
+        }
+      },
+      "hardware_certificate_key": "97e5d7fcf90a066b3a9bc3e88b6f9ad1c3852b29c75ad750adc030124f57ea60",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "b3b2c51ef019c80cfa98d243df640e565898f025142cae93273b8571bdf4d18c",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "3ba5d18bca4ea217563a0310d9928aa4ba8c599ea926251d9aeeffceb70468aa",
+      "config_index": 131,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.2066326530612245,
+          "total_dma_calls": 0.7058823529411765
+        }
+      },
+      "hardware_certificate_key": "4196caca08f387b6fe3717225c6091fbadb5105974e7d2fa2f27fce6d8b7f9a0",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "49de9bc473b9cd4a9d7442d63bb67a4d817ff37b1171146b0aa51676ed157b65",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6a587dac4c79f5a4ab80957fd308a33aeb1128cfc8dbf741a7a797381b466259",
+      "config_index": 132,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.03308823529411765,
+          "total_dma_calls": 0.7058823529411765
+        }
+      },
+      "hardware_certificate_key": "59f63bb2d83709748f65bec9051845ec74258d7840f9a07b635c09da6fc15d8b",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "8071807a4130a205e40dc4c8c836217a7110fc4daf09d5502e4faa5f5522aa66",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8a01dd0b27f6984fa6a88a9301b750ae0d8a277ce3e0d9b64a902b5eb30baefd",
+      "config_index": 135,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.38207547169811323,
+          "total_dma_calls": 0.7058823529411765
+        }
+      },
+      "hardware_certificate_key": "cd2187c9d96fdb17e38fef8b99693fa391dc92f1a23826279f2e8ac023d17883",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "bd3eda30211aada0b80665c4fc3e2af291f38d56de92519628ef4f074e428837",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "fafbfe1c804b9315279589623fd878246d10fa34df3697c80060603d1ed6bc41",
+      "config_index": 136,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.12111801242236025,
+          "total_dma_calls": 0.7058823529411765
+        }
+      },
+      "hardware_certificate_key": "5f04b6533a2c588926682046f2bd70c702593db293d9ae4c294afd834a86afd9",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "287547a7c1892af4b1224bf0b234a0edacb7a0c75dc7bd6c194fc19d0e330914",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "bc157517f846c22847f86714341e819bd631fa442aa232f667f32865b61937f6",
+      "config_index": 139,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.5673491379310345,
+          "total_dma_calls": 0.7058823529411765
+        }
+      },
+      "hardware_certificate_key": "025001fa3914814977635b73a160df7a618a62bfd8de886e19b4719a5e176e2c",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "d95586444549395d3f5924142ecb145f7e1c5005c56199c33369b103b284de60",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c07438375548f00b68aff0c2067f4d5cedb897dd82c96be0ec8f1a006973732b",
+      "config_index": 140,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.2066326530612245,
+          "total_dma_calls": 0.7058823529411765
+        }
+      },
+      "hardware_certificate_key": "77690da77d323abd4128a5e3331ee8428c60396c8865f9292b8fad306535e5f1",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "6094b5fc2f6fb64d5bd2e791bed782fc2da71077706ad58654082ad8d705844f",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c4fa2ae0894855d5dfc0da2cd9fdd506c4b398b1a0b8c1dd9ba20a0990146f9f",
+      "config_index": 141,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.38207547169811323,
+          "total_dma_calls": 0.7058823529411765
+        }
+      },
+      "hardware_certificate_key": "a8102d6c9fb15558bf37ec3ecde666c5217a8702d892815ff3d1f0005b60124e",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "a19fc1d780ed40d01f85c17a93f4c1c4cc8ea8a11bb3a9053ec66fba288aba9d",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "68c6cc6faa49c6dcb0e4314e17e34a97f45afe0e6e65d22d00eef4c01030fae0",
+      "config_index": 142,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.5673491379310345,
+          "total_dma_calls": 0.7058823529411765
+        }
+      },
+      "hardware_certificate_key": "3d1c342eabfa2e30a359fa144f568dafc72eeb1f445aa8f5c4441498dfb52339",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "9e0602cee6a75fb6446737bc6ee16ce95bf81524825b09f75d89ab1746a3eaed",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9a54d9b8b6bdcf9c01d579b4d6be4d9c186d33711c7458162a17596094ffbab8",
+      "config_index": 144,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.011450381679389313,
+          "total_dma_calls": 0.6666666666666666
+        }
+      },
+      "hardware_certificate_key": "ccc63f0c9052c537c434d411e5caf2ec7839674c5a139f1c3953179e96c56b6e",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "c4b22be136210892f612a6e512a4a2b1313fbe0ce027f6cd8c676d51ec207cb1",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c3c894f1a96bf5465198b251936d4932dffc18645b691c8aede206fb577dba32",
+      "config_index": 148,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.03308823529411765,
+          "total_dma_calls": 0.6666666666666666
+        }
+      },
+      "hardware_certificate_key": "f412d3bf0acacf037931d7885fc9152921f3e825a9b1d708ee30eeb0d014fcd7",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "aba7b94509f88b9209e1fc8cea77dfcd9edc82156dbc20a28cb299e1faabaf69",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "90dd7d4bda8678c0975c3f9f36f01414afc0f93627d176d6c79e1963adafdd1a",
+      "config_index": 152,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.12111801242236025,
+          "total_dma_calls": 0.6666666666666666
+        }
+      },
+      "hardware_certificate_key": "a396bd2eb343835c9f480e6c72a7ed4395aa663d70717d3caf6da262c4873f67",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "6874fbc7338cce0948c3d4629fd398fdad81e258a03678b88794ef64edf401f2",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b6a76df84821d008e480ce6f8b974ec45e88fe26653c6dfe8fd5de3a087ede40",
+      "config_index": 156,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.2066326530612245,
+          "total_dma_calls": 0.6666666666666666
+        }
+      },
+      "hardware_certificate_key": "097c78003dc6eaa5cf886b27aeaf128e32efeaeecb8e4d8c3d50229794356436",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "b7d7f0ca6c40a7264dbc1918e4cd76176159450b119d77713b4e662a02d509ee",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "45408c715b9cb8c3cf9cba416b63701192caf22193962e8f75dc7a9e7f804445",
+      "config_index": 160,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.011450381679389313,
+          "total_dma_calls": 0.6
+        }
+      },
+      "hardware_certificate_key": "30d77afb9f3d95940ec1b545250e882e85b5f04b109511e34e1bb952ab9a63ee",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "321ab9a978ecd665a1ff0a865dff295fb3943f6caff0ee9890e48edb578e5346",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "1820bb64b2da246d61a54018ae104ef99939c8b7a3f847cf3b8d6c989ed74370",
+      "config_index": 164,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.03308823529411765,
+          "total_dma_calls": 0.6
+        }
+      },
+      "hardware_certificate_key": "c9da08f07cb8c4706563fd577a68ba53a6dd23d5e5552403a83b4b7f15b2480f",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "51777b1c4a01e51780cd71da6e7ea67f13d8e5e632e8100abab5489c6f9bfa5c",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "19beb61c4fcf36535eaf8883b7247d32212ee78e93c8f739990535a59edf6243",
+      "config_index": 168,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.12111801242236025,
+          "total_dma_calls": 0.6
+        }
+      },
+      "hardware_certificate_key": "90eac2c3ffbfb9c549c31ee2b04e202ab44c97e02c1392e4146c37a611077323",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "7b3b494554558a704bf3e1946cb8ea689cf7d9c5624c83c613eba9a326608823",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "3f4fd514b864e9dd86d3d55709b4418e8d1d01a4095600ba758c215614ab432d",
+      "config_index": 172,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.2066326530612245,
+          "total_dma_calls": 0.6
+        }
+      },
+      "hardware_certificate_key": "17539df6693c5dbd5edca7f98bcb24700578bbca5961e27fd88a7f62c4b82d5a",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "86508eea28b9f152892433d09ea1347ad0dd7c58651c74c35e576cf42f08067b",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b7c22616c345f98010e79883b700e395f1697cc277cf4cb5c01072ea4644e874",
+      "config_index": 176,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.011450381679389313,
+          "total_dma_calls": 0.5
+        }
+      },
+      "hardware_certificate_key": "9337fdf928bf3bf1fd101966269cca3a6bd8504a6894cc1a1049621db8d253e3",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "e2bd903f761bd0157183d99dc8ad636416c0e38130bf416b710f5398a8351b59",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0094d5ebf5de30545c410bcd002312d673a73a0e0b764d787b97894df9768055",
+      "config_index": 180,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.03308823529411765,
+          "total_dma_calls": 0.5
+        }
+      },
+      "hardware_certificate_key": "4cab5de47ad1d59cac097aa78e4831fd224a0231836670298678f32d853986ec",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "0cc8f7f7601c854b0400e98feed590c533ce1dd935ff8b1608b7ddcc0504203c",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6bc14bf1d9d767d736d8bb22f528d9f1f60f2e866363f21981044d4fd72dc435",
+      "config_index": 184,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.12111801242236025,
+          "total_dma_calls": 0.5
+        }
+      },
+      "hardware_certificate_key": "4c0be82dcfe5b08c4f7c0de8b3e5b91d4836b686d417f86e5ba236eba7bae8b7",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "2e7f0f111c90308cb183f3ebd0f8aea88c6d86f58a64a5f5312423683102b99c",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8c089ee2d247b70b10c812d0ab5fa8442b8ea764b6c98a4bc0b19aa348eb8215",
+      "config_index": 188,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.75,
+          "total_dma_bytes": 0.2066326530612245,
+          "total_dma_calls": 0.5
+        }
+      },
+      "hardware_certificate_key": "e3e5b555d9f44ec0b79f05afb9eede0b1ed0f45ce890681f56072ca77adfc2f4",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "0ced0bf4187a15cded76e1f6966b62e85e89cf80159056e061a53035b8cdb81f",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "fc36d52619784dc21245492c52c44b1158082d577b6cae7e9d61fd247576d5df",
+      "config_index": 192,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.0038461538461538464,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "d0f05261c895db12e2c6990f5ce882d894d67b9d5efc4e3fbdc9f1c89d534ef4",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "0f8b4a25e8c0a836eed6e5781528befaa91864b539b6951a5ca53b04b12432e1",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e5788d68e6c37275f33877fdf22ea475be3c4ae5d02e137a04b1036381b3178c",
+      "config_index": 195,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.07988165680473373,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "01ff09c2c0d1090bb37cf71ce4b9be2936c84cb1b8843d2ed30db4ed3f70a79c",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "477c4870657f26a620a2da3458d2ad5fd81ef849b7741c9d8eaccabfeb40618c",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "02a949025632c679831047c1a08512af639915898ee410f9cac26e78cee63ff8",
+      "config_index": 196,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.011278195488721804,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "0e959806dde0f4a6f02bb7898ad3eb50990e4cde97cfbaf89e049b3c04ed2420",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "f9e685f13d4125c3f0c035a43d90ffa09313af904a1bb8f4a6e9145e1920b429",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9025cbdeefd592989ac2eb86a108c9cf2afefea7d6564c82bf8d8851de8ee1f2",
+      "config_index": 199,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.17088607594936708,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "8f5add30979c3c04116a9fd4aeef5ac788aab0f186f7dfae45c5f8942a590cb6",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "c8fb2d2555f9ba9fffc6b7c65c1cb563f6d7b8e3b1d66ef7cae9ecc86a711919",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "4ca0010720edb7cee6c50981b142e845f9551102a4b1a4e6aeb0c7e50d8fe27c",
+      "config_index": 200,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.04391891891891892,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "fa147a5157b91087c9ee25e27258702a2ae5b8cef972a43afe74eea6b563dd97",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "c90ff4e5bc5eaef497903f8c55e661421e9f1c73c5416f4212d2f1594ba8a5f4",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "5f2bd835dd94433fea640f38b2ec84868599520a83ed4ccd56e10417bc302876",
+      "config_index": 203,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.304159445407279,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "40f18c538dbf5887eba6441f5923ebd63e9f0dd34d706333276201b9de7b9a95",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "25bdbe1bd4531bb9a05739ca976f33611452dbd892ccbbb30887bbcafc7cb8c9",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7095663159014456163d9778e5a9050faf02989443c796100d02ea025f3f75c0",
+      "config_index": 204,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.07988165680473373,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "6846acc83273aaa08a0fea00fb3b8f0d5e5bd27a1285583651e7c70de4c4aa5f",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "306f0e07568c8760878a319c7e5b72b9f8944232bb65fdcaa51813dde77911df",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "bcac1979e5fdc9052376a0acd83429cb316d95b2e9e4d21da8c56b5a428ee922",
+      "config_index": 205,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.17088607594936708,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "f2b6bc2cc5a57bf6032c583abaaa7abc047b661d9b808d32ec10ad870eb6871b",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "e1c0f056b1f91217937abdc06d64a3a1b36d8f1af4bdd176eabefc727588e33f",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "37e804a68c884ffcdc585ae8e294f825a9fcf2f5e83fcacd9f3dcd43bbd72c64",
+      "config_index": 206,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.304159445407279,
+          "total_dma_calls": 0.47058823529411764
+        }
+      },
+      "hardware_certificate_key": "4d1950a06787ded06ed3651b7cd2101a05db7c055d2ef19ac6da0cdc6d5e36f9",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "4a487fb313728594ff510402e62a1e602d41ca7ae708d9bea6a2904e9384fe4f",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a7aa7bdd637b33d2419b613e8778af016e7ba4aa5031f4bcd280c0ecfe76700d",
+      "config_index": 208,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.0038461538461538464,
+          "total_dma_calls": 0.4444444444444444
+        }
+      },
+      "hardware_certificate_key": "50538e3a50b00d8a559596ffc002d2db96f2c404810f8c758082cb2530882efd",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "01fad8140fb3d3e301cef93d7e5c5cb91560c53179da8b4931f1ffa95a095461",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "39f0070835cb69daaca7ad7c3bd7a8e39ba63ab1292fcc728bda8bf312681a86",
+      "config_index": 212,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.011278195488721804,
+          "total_dma_calls": 0.4444444444444444
+        }
+      },
+      "hardware_certificate_key": "daa5dd089b0d947810d940891aed488e2f8ac3ea3ca12526cb96f2cbc7e6beda",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "6ec7fc1668380e17d4816655f6bd8b219186ec34f8ddcf59094030b0327b3fce",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9089e53c9e62839f2776dd072b77749fe7cd9955232d148410ee5f5b9abc852e",
+      "config_index": 216,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.04391891891891892,
+          "total_dma_calls": 0.4444444444444444
+        }
+      },
+      "hardware_certificate_key": "e1ec8e76962b58eeec198c6b491432552a657442073b081c7b77c329766924ac",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "e351d3f93b049da857c7b5849161566551a2afbf76d33b4c235d296c22454f92",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8e1dd489b05bf5d2d87de3f15b73249fc8348656e812794c2528ddd2d61f7607",
+      "config_index": 220,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.07988165680473373,
+          "total_dma_calls": 0.4444444444444444
+        }
+      },
+      "hardware_certificate_key": "4ea207d5d15ccdd85a70f7a758e91380285f2fd96ebd36480f5270847f7d171b",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "e5c26214e4bf1da6ccdf1cf9becb4cbcd502dee708d1778bffa684b64decf13e",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e1a836b19383ad69b407f52cf8202d3480fa640954ac3a6b55476ba58e1ab715",
+      "config_index": 224,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.0038461538461538464,
+          "total_dma_calls": 0.4
+        }
+      },
+      "hardware_certificate_key": "fe6db58e315d581f0fef12639b35474eb5e49fb0a8b5bc47b6f5f7c893c731f4",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "0eeb59bb8e6a34a7aee6d1589e8c81f98dd2eeb7657b17501046d8f21411dab8",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "410ca9374d53eeb8c7b1c052569c1c57dec1655fc41ad75bc4f29bad62903ed3",
+      "config_index": 228,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.011278195488721804,
+          "total_dma_calls": 0.4
+        }
+      },
+      "hardware_certificate_key": "6959a5818f27c4f554a2a3a1597477bc8c1fcd6fc1e46c868c3957ed4a9c59df",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "83de21d9613b13814c0d23b8ff0af3280bad8049fb3b274a8e9c24cf77c98b8a",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b124355efbd8b1af4b9f07abb7e1b08f5b51db7001ac37fb3d52a09123492529",
+      "config_index": 232,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.04391891891891892,
+          "total_dma_calls": 0.4
+        }
+      },
+      "hardware_certificate_key": "a06e944913415b97ee6cefa1720c3d9ecd394f2919a43c4818cf74cc00819374",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "645e7fdca1a7eab40d86b3e7a13efa752d2907a257ad786ff66af44ebcab4256",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "05709ce8555405afa9398cdaf500c9b64e4a4a21bb1a9fbae4d37d7a514682ba",
+      "config_index": 236,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.07988165680473373,
+          "total_dma_calls": 0.4
+        }
+      },
+      "hardware_certificate_key": "50344dd52db8f573b761767da07f4d18f08b9c10bbb738a4ace3e430af85becc",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "f534e2510ba3bf8e413f69fad436faf7e68a9e8ca60e734216127d17b15f78be",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "29d2e1a4f47d4ee2d9b023f3acbacdddd5bbc9e20b1fac4a902b23a71144251b",
+      "config_index": 240,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.0038461538461538464,
+          "total_dma_calls": 0.3333333333333333
+        }
+      },
+      "hardware_certificate_key": "8d946d0eb727f431335ee7e2c09ec3412058cbd5ec02ec48bd2ce30f5c22f6a2",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "900f98772fe8d545dd3119d6a17ab3a75e28e81618bab4f33c26878f66917a68",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a0b9d775e83bfddbe9b3cc73c1fe59c5022abb25da2287323bf1b5d37dc8a521",
+      "config_index": 244,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.011278195488721804,
+          "total_dma_calls": 0.3333333333333333
+        }
+      },
+      "hardware_certificate_key": "0ff98daefd28cd8969117a33824624631547d7a4de51115b12a6c2309ed6a97f",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "18fdd10e6723156cf8e2e5d19312c1aaa39ac4480a6a1d26eb6bce2485d590e0",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6f82d812a082a6e0c4e1181306751763bf208df7cd34e8d64cdfd51a24cbec65",
+      "config_index": 248,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.04391891891891892,
+          "total_dma_calls": 0.3333333333333333
+        }
+      },
+      "hardware_certificate_key": "66a79c0587831af7588719ca8e357e07d7bb8b92e79e59e3855eb12ed2a79147",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "06526da532cc2d9ed05ff753cd8066fba3e09b2a3209467e5da7471cc2279080",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "2975b46898c921342ccd990854c22dfbdfd9558f750f556714cbd689efcdeb52",
+      "config_index": 252,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.5,
+          "total_dma_bytes": 0.07988165680473373,
+          "total_dma_calls": 0.3333333333333333
+        }
+      },
+      "hardware_certificate_key": "e8b77d10cc15dbd690ab30d6fc6279bbdcbfd28dcb1ea3cd0cb53616bd70215a",
+      "mode": "input_stationary",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "7f17ea181a0d8686e7c314c64f9ed336c5eb380d9209231b27eb893de4714de8",
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7611ec307e05ad6c89029daca91ed117e51c4e70b2461033439fe54edaadee13",
+      "config_index": 15,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c7e86e190598310a03cd28c960b592bdec99c33b0bcc85bf4dc2667439a84788",
+      "config_index": 17,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9665538e70a51cdd32a98de3e0c6a7de7df47184806cbaea0b0c75f446c2105e",
+      "config_index": 18,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "12828cacc26cb00ead0fb909043a3c411008b28a47eac863c55159cc3ed75f0c",
+      "config_index": 19,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "004a56a6b166cdea5e9443f0271596f862df1db5e30f4e150191827a55d1e180",
+      "config_index": 21,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "137fb12328371e18e0217a58d593ec5c8ebc4becf25ca2eaa28121612d2de12c",
+      "config_index": 22,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0fecaf6b470685f48bc617779f996225f26d3a73fc3d8b7e82a38fda7059deee",
+      "config_index": 23,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "42af1c67d9cdb5f82f191f1719d20f995435b9de5fa94c05c3b5ec208ef7d2d0",
+      "config_index": 25,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "51a7ff3666bdb807c29e5574c023d361f59dec742f1b5e1e1870f0b420cb3695",
+      "config_index": 26,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "fc79d4bbb7bd26b9f0edaaa88141d6486bb976f5504f9aa601387dfe0fad9962",
+      "config_index": 27,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "f79ddf861ae566f84e6a99f34f8c220266d1dd12a00097c08d23a38ed7e3eecf",
+      "config_index": 29,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "d3571262f3b5d2b35ae0110a7c67ec29cb2d4f1969b2b30ddf3f9fb6ee3bb6a7",
+      "config_index": 30,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "31c63e1ea166346d00095941e7885f6dd308e6cd3836697b0e37d5e9d5de3e19",
+      "config_index": 31,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "19ce1ef51dc2483c53626705a87933de5b96c27fb6e8474fb57e454afdcc9dc2",
+      "config_index": 33,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "db2c1b26c7e7e239a03504c84aaa602e2c2bd5b6f73f6dd5f42067fa4a6b8699",
+      "config_index": 34,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8d44f0c4a6736fd9b397c07f4ce0f5dfd440b163477c1d508e2675f59a603f13",
+      "config_index": 35,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "abd3c93847d80127c8c532354b09ba3ac53aab0f9b02dc0b4bb7270da1908575",
+      "config_index": 37,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c3c8be3af451ab170337f6712caf03125fb7d557ddf1b0c2e77d0f96ec15b848",
+      "config_index": 38,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "4615be338ec902b5b5451e48c5ffe3dd8157003bdfd3c8bc09fb68388f6a5fa8",
+      "config_index": 39,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "2949bdce01a38627be69ebd8264d94ca4d0750ffefe380fae357db303a612733",
+      "config_index": 41,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "68143576069b6e18cd25af197791ae613117f1aa8137ac3b5df07abb7b2550b6",
+      "config_index": 42,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c1d1e79d2efa3db024d9d07806ac27076e16373b58308e3c31c51b2b0d92aa16",
+      "config_index": 43,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "1f32a26738b281c0fca11e11e9573fe35fff96aee0e8cd32fae75772c68f2471",
+      "config_index": 45,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "45240870abb2616ddd0e2d57973932814aef046f5f9fb5ab72a350921e500c4b",
+      "config_index": 46,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "22a37499440a21c0c4207c5c72fa2529574a480f31ea044a453b0624a9354c05",
+      "config_index": 47,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b918b99ec26b8c20c173989e318cb2f51daa1fa38244ee50775a59866ba11240",
+      "config_index": 49,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "d49380de10277e7aeae86c2ec93c325edfefe2d6a3ac9550d378f40218842451",
+      "config_index": 50,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "41d1dca07a71f2a021b16d16770aa6a37aaaa37023abaa69bde71f78a8e6f423",
+      "config_index": 51,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7e4be197fd9f6483199c8a8de18a57fdb36527aea95047dcdc4265b8fa174a1b",
+      "config_index": 53,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "965c0a492797bd1ff857a3d567ccb902644ae065ac209edf900810b377bfbc3f",
+      "config_index": 54,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "f898c6783d3d3711c2e30a7aaaba0989b05c731b7a844501f10bac5682288766",
+      "config_index": 55,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e031a818f10bd56f30afc40b8385528dd3898d7c8f9caf0411e9d3477846bf11",
+      "config_index": 57,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "33d74f20133becf5af18370a8d8ade2733fa631d623b450077470682f7f31bab",
+      "config_index": 58,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "d12a1bad46eb92e2d027434151127890370260403c2788532ca1b446166d6860",
+      "config_index": 59,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6eaf1e48fd5a7f3923844774b5c19b787e8e081424b5d7a90cec2f12e6f0b3af",
+      "config_index": 61,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "5f348e79068390a1ea40d2769f73c4e5b788367057ea2fe0d418a900763335e3",
+      "config_index": 62,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "2bec4f6f67270c95915917fc0d4819ea0e243556995a9941dcb3858054d42d04",
+      "config_index": 63,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "55ccee58451b451b69e02b42c4caaed58d67caddb8753ddf712d82caf982167b",
+      "config_index": 65,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9608e197001693b033e435021488e38d8c23ad5895e874d460992846a3bb3636",
+      "config_index": 66,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "284a01ffea41fba572d4ba7833e058995575775276bc1d11722bedfbdeb2945d",
+      "config_index": 69,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "4b04f6fa3a29f5be59449fcab51c01508d071c971aa913dc24d1d5ed0b193511",
+      "config_index": 70,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "862bab064a7c763fd619561fa6b183795cfe76043b285f3b2d03e91576ed51ec",
+      "config_index": 73,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "5f4af8071ea6ce0bd6ee291a80ba87a710fe7320b35abdff15356f9e87188629",
+      "config_index": 74,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "35bc666856b8f4d6635de78d69514f3eb92f7dc091cc771cd19479ebd644dfdd",
+      "config_index": 79,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "234598ab105e81052c5b15d6aa62602ad1e2fa1747cb0695ec563bbc7880e1cd",
+      "config_index": 81,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8fe07fb838ced8f5c839e80bb06debba398fc3e2c4884afd61616d4b52e36c2c",
+      "config_index": 82,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7070812af33b5d34eaf1ee0c513e2f702b67d98b99127ac5bea97b1fdfd7c9c7",
+      "config_index": 83,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "921d454dcce04fd74610706ab56c3456e042102699774cb808700cf1717515bf",
+      "config_index": 85,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "830cdb72a6d1dec5c487216b729fb2c9cb78dc94133602dcc9b5b98b7cb2e2fe",
+      "config_index": 86,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "fbaba793423f2c3cca2830010adde3c4b70b47a9890e21eecd1408db03ecd596",
+      "config_index": 87,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a4eae000ba4b1fdc80e4903e302609a8dcb96d313487cecd6a33a2e1efca4331",
+      "config_index": 89,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c6bda41bc3fcff5b74a8abfbfa97e3c5c3320454577a5e14ba7b0e5a4d50bf50",
+      "config_index": 90,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "60e304d5e38d8321306e93c65542626c13e34d6f7ce8e6f4f366524331abb927",
+      "config_index": 91,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "3e83bf78d978f175081d2630af039c123e4a06ef8f0d317527554eb739b08803",
+      "config_index": 93,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "830fc85d43408f97ed7e9a442ec1409e7003dc11c747d73a15a9c941b3dedb3f",
+      "config_index": 94,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8657c4f2f307659cec610ed63c5498c0491496867ab1dfe92fa223605de56ab8",
+      "config_index": 95,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "eb8be5bb9ad9de7cf14285110c042452427bfc8903b1af3f4be724a2607475fd",
+      "config_index": 97,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "d248e64ccb67a2f19cec61aedc8ea50e54684411731df3e473ca5fa9f6bcafa7",
+      "config_index": 98,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "56b70f462c5e265ecb5b5ff7a31651644dd7b3dbbcaf4cc30126223726e4a595",
+      "config_index": 99,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "d56916850b2468e60f9ee6e92fc162d05f89fb74b977545b34d7493fe8d69fd7",
+      "config_index": 101,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "15f467b61a982f857de0dfe6d3172d20d3018093fa3cde27e762c5ae13733737",
+      "config_index": 102,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "3aa5d536aebc69b72d68be9d9e148227026c4d8aa4cfc1c19d0bc793d9145192",
+      "config_index": 103,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "5a2109582c0a61eee39fe56108c397bbe7d1afb769129adf0018dba362192f8c",
+      "config_index": 105,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c0ef54cb08b1af5e2e1750d92fa8ebdeeb216e2aeb6990d906f17ae8f59fd3b1",
+      "config_index": 106,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7c7f7bdaa3f52143825df5f3f166e2b0e2d3b54200d1566c22dfb742bc3c31ab",
+      "config_index": 107,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6724e472e785893921f01f1c3c050a1870cb07ad150d7e680861ce36b92d4e0b",
+      "config_index": 109,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a0234e305293a3d66623dd9ebea5aca7469204850159a14c39962273fe0818fd",
+      "config_index": 110,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "bdd22bd98715a13f4d93b485ac33a183b99ca1f9a92aebba0fafb4591fdec057",
+      "config_index": 111,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7e57a6465cc8404402d47c87ee38a793f166227a8f11701cbf1a7e5b22e43d69",
+      "config_index": 113,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "33270c8ba2c1f0320145a7b8cd7239f92f79095911ef41532ba96a8c11fc1c20",
+      "config_index": 114,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "d13dc7b118fdef82995aec2d2a578735e0727198a10a727e7666b9d8ec47fbeb",
+      "config_index": 115,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c278ce46aa622a96554bdef4f5eb683669e570fcf9b93e42a5b53830b8de1a21",
+      "config_index": 117,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8ed2087a9b0246f4eae678c57dd2840171ad1ce97c1fc776d91aa7c2088f60de",
+      "config_index": 118,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "954a738f99df8759e54bab4fade910b39edfaf16d4704ee3019bd406449dbfa2",
+      "config_index": 119,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7aef3c5457f1391e313c8aa5553c9fc8dd41a37ecebab23001f65da479aaf26b",
+      "config_index": 121,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "80b4ef85510a3ac1e37a462b4844ea32e26bcda4c087c35317f17da533fdb093",
+      "config_index": 122,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7984a0ab5815d1a3905ec594a1090eb1f6ba7bb744050abd50ecb7209c74b80f",
+      "config_index": 123,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "2b73f687df0fb4b8d2594bff4fba1c7b49dad04f9a4e9bf9431009f88da54263",
+      "config_index": 125,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "00ff6ea6b7b7ca0c560f5435427c5788656fdcac70891fc00eea74a09a019642",
+      "config_index": 126,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "94954859d3614e3db7861ad1b699244332a561b1984b665704bb3fadb22647d1",
+      "config_index": 127,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "d5b02352de38f6e0e29eb21478ba6db3b0999a62a8335218f0b697ccd4e464e8",
+      "config_index": 129,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "fa8858e12e260b5efb9dd9ee203817a8cf55741163bbdd9a95dba535eae0efc2",
+      "config_index": 130,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "491cab39f17526a810b073fef3ef238a2a72180b2e653948cf27bdaaf3b5154c",
+      "config_index": 133,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6c88ff3cfd0aa67f56efcd37460be86f262f6c2d4888eed337e481ddc759aca8",
+      "config_index": 134,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "1cbf7198d760069d56eecdd9f4167920a4ceebac11812b6e11823d1cea805ed6",
+      "config_index": 137,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "4f414b2306792f1a52e3fd8d12c2d1adf949dbe3b8bcef5d4a8929bcbf1ba4ce",
+      "config_index": 138,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "170ca3f4a633ae66947321840671ba76d1564cdaaad0ddcf1b395f6f813c79b9",
+      "config_index": 143,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0dfea673ff028520625c29becb2addd635f96c9c88d50dd77db08a9cea0ed9c8",
+      "config_index": 145,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "f13fb0fc2807d621e778f413d802a67058823ba4a0aaf71d290e7d738c20a67e",
+      "config_index": 146,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7282338f3862c612cfe32e9076a425942371857af922f59aabb87be5aedede40",
+      "config_index": 147,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "1802165f4fdafc91051b477652775b5c7975397f405715cc3f6f9ea41f9187e1",
+      "config_index": 149,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "58ef9ee1b4ae5d588208bcc970cb16c9abb6eeae2185184f1d6e669294ff942d",
+      "config_index": 150,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ecfa5f134f3909f6afc2e35e2cf14421e486c8d99cd6a56040025d30722da390",
+      "config_index": 151,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "2d3ff7e78a0140b27173daf12cfd63dd21c5edb1b08d3727ead2dd9219249f19",
+      "config_index": 153,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "83976a48132fe1278ff278d9c3bd40be305ba31eaf189bb362c9d2119cd5a7ff",
+      "config_index": 154,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "de223d1fa856a1aa5a8b7e017092a4b3729dfbc52ba22676c3c7e3dbac2eb0a9",
+      "config_index": 155,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ea46139a7dd4a6e4843a657126004a8565c67d77db8f72a94836a21705dd99cf",
+      "config_index": 157,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e72531f458b7729ae927a84bd6ba5d7ca047ad6d14e84400132aee74ae2826c8",
+      "config_index": 158,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8eff2e05dbcbdf76aa63625baa9b6a9b78cd633ed4fb6c0e27c5edef36aa890b",
+      "config_index": 159,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "03ed08ba49eb91a3208d9bc84886b5c60f0da108c8ca012b2e94b641a64019f7",
+      "config_index": 161,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "deff3cc46fc71d9e622cfaefbb2a5ace7460bc1f7610dbcc9b16105d2ac24576",
+      "config_index": 162,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "24bdd69920d76ff6c8a05d5c5d1e1ed7d8876e47314d894c1616251a32c780ef",
+      "config_index": 163,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ad79d23b7d389aa1e79c009a7dea5237215965191747e7dbf766f61190e4e349",
+      "config_index": 165,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "d3c569e325fb59689ccd12bbed63413b61da5c6073d89da895b9322c848c0ea2",
+      "config_index": 166,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "90a3cee5824c83495e5964da7eb49badf22c609142092eee37e1fadb4bd61541",
+      "config_index": 167,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0f3bc4f8e6ae5da2442b1a650c3ab3c9d1d72e0d4056836a6661a87290768db6",
+      "config_index": 169,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0b830ad5d1168fc2c910caffaa417810294efae9564d8f8cdc4286ab519170c6",
+      "config_index": 170,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "944fd2a67d89cd2cef3c6ab7a2d20a4f56f8f56e80346dc3ef5c5924c7925732",
+      "config_index": 171,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "53af36d729bdcfaa60a2c3a386c411ecb36c586b5561155ece3a262c6d8b1e69",
+      "config_index": 173,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "13b42e55a60f4faf47bacd3fb2f6a8353c58631722b9fc36a853cb021c079c8c",
+      "config_index": 174,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "75b5874001f1cab6eed324ca25c3da7f85e5a201e5d8e31c079763495b66d5a2",
+      "config_index": 175,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ed0fe44b8b68caed55bc2f335c42714471650d636994e7eed08a76d99a27c7cd",
+      "config_index": 177,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "f75ca0f4ae5f84affb5719390de24f7f30dc55268fed0db75a489e07f1ee056a",
+      "config_index": 178,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "39dbe030315d39e95d28288d17824cf294918163f94c891812b98cd9acd585ec",
+      "config_index": 179,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "72d7535fa18b21e2a7c4181eb06ba909589d68942faf46a1699aee48a0a6eaa4",
+      "config_index": 181,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0339b94944d60877028dd1bc117797987fa217fdca867639e39b8f158e9c009a",
+      "config_index": 182,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e9915c2888b6c2687a021175f3794301ac2e36b970296c8504a069fc019ac722",
+      "config_index": 183,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "36a753365071ea9e188bd0867b51d1c7c8b5870320293deda058bebd6df4c86b",
+      "config_index": 185,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "3b8df95e974849d76308eee7c22331d3a25ce9e04244bbf5f10f9e32dcf4cab4",
+      "config_index": 186,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "5fa7b4eee5c3a03beba2e0911d3a84792ccbedf44912eb9772b89e2ffbdf610e",
+      "config_index": 187,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "638c36c59c2cfd0a90331f9e72fabc8466400e06e12b21d8a4eb9f8ed03fb7b1",
+      "config_index": 189,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "133e43633ca708e089785816c2159b3bf572abbd558fd654d15f24c2292fc746",
+      "config_index": 190,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9b45bea1930811f9f0afbf2bc453202811a0a38fb0ecab2567cd143f054bce9e",
+      "config_index": 191,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ed8dff073b1097527fce4a4788a38f1a027ffd0471293676ccf5c29d9a16440a",
+      "config_index": 193,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ac73f783af9b9e4e90d537ee0065c279be21cfddbe1afef03d4edec498d0e6c0",
+      "config_index": 194,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7103d2b4d2f75123c8e5dd018bb1ec04b930c5a9246542e949153a51e370d322",
+      "config_index": 197,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8a69b9300779b35369eacd155a1de64ecbda998b1ee72c9317a3c6cf1f8d8681",
+      "config_index": 198,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b59d29154a911706b74ba430f647b878106b0eef80f5baab7a48106ba4fc126d",
+      "config_index": 201,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0764765931b2769a6345b18d263d2f34c2eb3cd15f6f46e9a600172c86e9e808",
+      "config_index": 202,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "1ed276f9a92f2bc5062a5607b970135622366c19f030c83e1199b7775e0a11b5",
+      "config_index": 207,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "044ba60d0c283ed2c2210e7a6972b848b70e4ae947502902958f7fc0235e640a",
+      "config_index": 209,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0956cfd3e5e59ade506f14a9da7b4a463214e030c330a1ac0440ab2a72084d13",
+      "config_index": 210,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7d9224741cf6edc80f62b8ace5b2c94cf991ec4e6ad106394350e26496c0bae5",
+      "config_index": 211,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "bc0db0d297c2cf14f94017e2ff558035b7dbc77706e0b5dd025186cef9f5bd6b",
+      "config_index": 213,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "975eaea7ec1d7d0ad9ed93703064302207062ab22898cf33fcdfa39ce72c639f",
+      "config_index": 214,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "58d7df11f8e0f4039730782c10db9a0d687fcb78ef866f460d8b2eca70661e0d",
+      "config_index": 215,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "922db736848ab3249c00d690ca13649fd66a7a6f921ce6d9064eae53288989f6",
+      "config_index": 217,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "026b3c7c43faa20db1b9b88db2e2bf3e3e59ccf46b1bfc5e8d5512874e383224",
+      "config_index": 218,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "2e0f2689a0793fc2d38a821cb0629ae9bdbeb52ff3c4fa673f71532c16414dcc",
+      "config_index": 219,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "21c94b61e5cc6a67e052c271e62b5b9bd6c09374de81305ecd15ff5170eb1366",
+      "config_index": 221,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0ba48c5cd19ee5bbad8944c14c7547aea77a6c73b799a46ea31ea862e96f28de",
+      "config_index": 222,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c599695be59dfa71d98066e3def69e5c2713dca1cb853be2df28b2e9e8870870",
+      "config_index": 223,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a24d5aba43037bc328e845ff518c2ed8946ecae3e534497f84513a8dea9f8e2f",
+      "config_index": 225,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "5a1a541e2eb610d6c5c7a3fb0e568545c623d498e8f8d08676a28496118b97fe",
+      "config_index": 226,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "f8b684c1fd3fb6bd29e04645ec0db9785d47b91a40f5a1a5a07000a3211b0328",
+      "config_index": 227,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "efa97d1131c918131bddd6cdb766fd66e968dd891b8f3f47f2facba6865b48b0",
+      "config_index": 229,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "74d21e3c13a92f7f9ccf094bd6316216be64ca7c29015bf6f5c9d5a4d4370f24",
+      "config_index": 230,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "66d44e3f76079de112dedfff482390322b71d632b54734ca3c24742ff076329d",
+      "config_index": 231,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6974b5b6d5968d4bbc143393a3a73fe8bc0693cb145ad36e4f5e775818b53f63",
+      "config_index": 233,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "02aaa032f73b2864ffa7c78eddc3e3c5627871df20401c4a54792f0652ce2d70",
+      "config_index": 234,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ec7d4c7e4373f792d57e62a63d88c9362c763cc1ae653d62d4d7ce5a9e33aad0",
+      "config_index": 235,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "06b5a1a4b3551385b4bd6931eb64bfb1096d4aac9a4029ce042f173623a8d858",
+      "config_index": 237,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "509b6ca8e1206cc9dd103e179f267e935b3c74dcca71e7247af55494758c6ecf",
+      "config_index": 238,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "131021175bfd8b3552cac8dcbc3a28e0ee7c42d3edbacbd2f1fc22036bdc0d6f",
+      "config_index": 239,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7935d27f6acb85e596f151d39846002d6cba60de1665dbec85d4ee981e4d0e03",
+      "config_index": 241,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "411261673620555353698dc7196fadd4f92b084fccbe9b0962bd0b6ccc20ec70",
+      "config_index": 242,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "86898967408e567b8f9d1f038a3f41e81768a327991ecbfb3a000bde3b095f98",
+      "config_index": 243,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c11ade6afe32fc7ac7a17fbf2f51cba5f15e3c64e7ad4f3944be09fa921dffd4",
+      "config_index": 245,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "3a8a0b0b5e269344293a3442508a33f9100d73f98ef8d2fa47159b1ba562f7bc",
+      "config_index": 246,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "fedfb51d6a78139fc3d0b036569facc0e8e4857ec0ef744d4e51fdf20d2bb032",
+      "config_index": 247,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "eec7a3259a7fcc14161d810441fb76b39da7236815e75eacd142be80e5e7215b",
+      "config_index": 249,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "d8a78ef4c53e426678130f3621afb9b8a045d6017e366562b8c615fd6e191f16",
+      "config_index": 250,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8e881c31e0de1f0242baaad063b9118ff07e93b7a846aceb068b0214bf5042d3",
+      "config_index": 251,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b78f2db90e039f3bfa90754db0a9bcd48a59dac0b5332b20c2d027b8dd47ea99",
+      "config_index": 253,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e0faa0c10d55ee0e975e5de4ad02f72d966b0c1844bec716e12aad44ce656a90",
+      "config_index": 254,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "89eaa293c3bd020b4acb8b2395da3df352e240db5cb48e7cf9c05f29634d6887",
+      "config_index": 255,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "3781c0f7d303bb3db6297f6df409c077b79d57429f8190d4cfea54038739a9b3",
+      "config_index": 256,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "1cff9c3a2ec10d26b615f05b05d7782b6954cf679ce91cda065185c5cb891265",
+      "config_index": 257,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "f2480402745484338cd4bf5bdfd3d13016b2fdb04e816db6509e46297ca10ddc",
+      "config_index": 258,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "7ec2559079337121b62d41f72ea782688edfe2c96fdbe67f75e2e2d5051446d2",
+      "config_index": 259,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9fc1f4b9a8f7c4ac84a3046c6e0966f7db9c20f4def300ccf985952ae96ba54b",
+      "config_index": 260,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b9b32933f0d8d68e42d68a7a2fee7e621be9774eff2cb8b5733e4749e0e59451",
+      "config_index": 261,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "75d2cd5e06fea28628adb16ec915d61dee0ee1b9b473e94a21221daa66b536ce",
+      "config_index": 262,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ef6a44b312ca7dd4240127f6854d2945f63ca345c9a4edcdec24751c9087c1fb",
+      "config_index": 263,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "44f0c7e10a656332d9f2d286d1fd06765444de3d65f0456b9ff1ff00555c5870",
+      "config_index": 264,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9920a1ef0cdbdc9d6e5c58dcb6b65a5e4a5e20722105da4652e61428959ad899",
+      "config_index": 265,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "58e519360204ba4d0d2cfa87d059017a8e2e2465d251e6cb2ed6187d69b69054",
+      "config_index": 266,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "2e393efd0651d79888a4d9cfd2bf03a5d7b37851a7f747d0dc3960bdbb9404b4",
+      "config_index": 267,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "fb87d67725b4eb114a40a6cfefa50836e8541b18ce3d7bf8c3b454a8946bf34f",
+      "config_index": 268,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "5eeb696dff1b7bdb91dd21081c2a544e9b5a0dd85f3c153aa5a232d161f403e1",
+      "config_index": 269,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b23fde63f4808d2cd4de6f76dbc19a5531f54964986551ac0b9f507b1ece41f2",
+      "config_index": 270,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e911f8aadd51f59c9a27e4bf05c8458f4b9179b2a393e62e347e188a4d05973b",
+      "config_index": 271,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "2e32c1a8f4ec14f14dc31109f713ad9c40eaa7f5f652217aa1a114a1b79b74a8",
+      "config_index": 272,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "26949ba8d60ff0ebab44774c93570742cb266182fddeb3b7166c835092b40df4",
+      "config_index": 273,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a7305b1f169259f0c2551445594926b18e0c51b732cbe0fea94e007c620a1ac3",
+      "config_index": 274,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "61685b3635b3661308252fda2f41abbb5ee0b6ebc0557547cac86039ad548e4a",
+      "config_index": 275,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "de28dbf7d2e1118f2cfda05646f911846f8665a2b8d35a7d0b955bcd07b7e097",
+      "config_index": 276,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b45cb11a816d0a522b2387897bd7f23aed67b78ecf5ded3fa9cbc0092253f938",
+      "config_index": 277,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "be43ad242d286afc9db452ffe64f19ccecfef3d80f452a038737448fabdc3787",
+      "config_index": 278,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "de7c31f2bd52e7c34d9a00415fcb742c4395ba65009f88b6946ee4d5d4e8270d",
+      "config_index": 279,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "4238aa563c39cc587ef22427606b1fedfd81efd8fde193d17c2e111c7a7f7d54",
+      "config_index": 280,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "73012f01435e51c5c86c844655f8682e797bc740f5d4fb62287ec7baa6aca0b5",
+      "config_index": 281,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9b64193bc01ab6ca49d76712776081cbb30c3d2b2b4383a78cb45559fb7ad4dc",
+      "config_index": 282,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "bf909b17241cd523a391baf1cb4b1974c4eebe318233e006e4fa7e258d3a55a0",
+      "config_index": 283,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "24e322ddafa843a61cda5d5ce279defbdef6e4759f32b8664a3d27bc87fd592f",
+      "config_index": 284,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "44b100ed3666a0d23af50c6185bfc49bea64449f7997670635ecd115fefd13c6",
+      "config_index": 285,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6858c107f77d4c835e52b4f99d8b3c58fc40a18dd974cc49da99773717e8e889",
+      "config_index": 286,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9ebb9c9a58a2917bea00864627e89fcb1078e267e94ca4cdd5344ca824f34649",
+      "config_index": 287,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "11c87525c8d6dabfd5f538864373e973cdf415109abf969803aa619ad64c3874",
+      "config_index": 288,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6ca544acfd20b2c6fc78ad60100f05c4873920bbf2b3f5637cc3b7ba6e842f35",
+      "config_index": 289,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b0953ac71fcc210d23c91bd595d579d0c7ecc5d3cf92d3d180129f88d5d80d66",
+      "config_index": 290,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "aaeb3bba2fc457d18bef0d79efddcf6a34082f96944b413c19954ecd10a3c97b",
+      "config_index": 291,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a9be6e18ceed6315267fbe55792ed3a4ae64f729d90cf5a4c92b189146512095",
+      "config_index": 292,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "4ebc1c43349f82c2551daff641f8d9e5d6f3f52221931845074bb247760985c8",
+      "config_index": 293,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "283c47ddc8296a63c5d6d71d1f4ae73d6f1cc6ebab3a3cdac283be208a6df9ca",
+      "config_index": 294,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "96f5981bff64186969059c47035415d140e66279e50f9b2aca66bbca382830da",
+      "config_index": 295,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6100158a06f53c3b4a7b6d9479f2c2ed3d920e28562fd0df68e5ec2bd5ef901e",
+      "config_index": 296,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "ceb9579fbac3f3f5eb647b039bc2a59e2bd9dea53d271a9123f044dc4a7e0258",
+      "config_index": 297,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a3a89697da4c0f64a58ce6faf04b4f821e4ccb9c4685b493e4dfaa0af1f595d4",
+      "config_index": 298,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c6bc452639f0f8fefe55fbf02a58a115dc2412a31e916f724364485107d0c1d3",
+      "config_index": 299,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "e26bfa3d6c849b26675a0e6986778cd49cbfb7903e674f3dcce9976bfe33513a",
+      "config_index": 300,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "94655977cfe5176d6b4700c74ec22e925800003572d3fb242920c14dcd43ee8e",
+      "config_index": 301,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "564d2da864c7a76ba99999e4b61b88545fea6fc9daa837390b01ce59fbd9b120",
+      "config_index": 302,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "adfad6cf82f1d1b72df177a4285e245e614171af20e6d6ff2f42cbeebe43c3dc",
+      "config_index": 303,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "22b0a176d54a3998d0d02ad6eba2a5e7ff1a82000151fb5dba780f0daa3d8b7d",
+      "config_index": 304,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c6d009bb61913db287b7889b8f4d417bb2073c430bc45737f1d6b1f1aded84b8",
+      "config_index": 305,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "0745549564744649ce951992a6817f574ae330d217ad6f50fd66b3322040f241",
+      "config_index": 306,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "9b7bdea5d6214b8d06c70c5210150d83afe5b1c0ee932ca3a1e4ca677e1c1738",
+      "config_index": 307,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "566a5dc30cf5f35f6e4ce345f6b705a349de666e29304a250c5e8e403ebd0c62",
+      "config_index": 308,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "3ab6509944ac3d9013cab7c88f2e74e13585295871ce14bdd3a24d07aefdc059",
+      "config_index": 309,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a0de7e5400d043230e8d081417aa2df953788232d3526d7ab6c8998cace98fe6",
+      "config_index": 310,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b2806b8a6ede6dd67f6d7b631cbe3451067617651b31192e40ea660fc490ff8b",
+      "config_index": 311,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b71712ed528c6e81934e33575c1ce450877b39cc1d5b0bf030187cd05836c8ef",
+      "config_index": 312,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "c0851e891f1b5e04ee05130a2673715a67d9dafb8ecfef1b83f742470921d78e",
+      "config_index": 313,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "8916990b2a58e1efc13174eee84d4e5381f770afb14a6a989bf7108ef6b2f0a7",
+      "config_index": 314,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "6749114dd94b4dba9cf72623d72d7aa7da864dcbdc7b32707aea383cd7af5878",
+      "config_index": 315,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "a93d0282628e886867d7586eccbb04d463a81dad1ab236e054513bbf78f0b709",
+      "config_index": 316,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "b5a73fc26ff5c2563c471ea87367953396e5a7e10895d94064e3819e311a185d",
+      "config_index": 317,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "4944d5831b8a469459f4778de44a8faa3222d5c6a4a36442a523ee8ded2c7222",
+      "config_index": 318,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    },
+    {
+      "candidate_id": "443be094f515d3715eb343efd47552175076da7792bd68c14dfc129ce94c5560",
+      "config_index": 319,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "input_stationary",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W06"
+    }
+  ],
+  "schema": "c3_vta_hardware_certified_dispatch_v1",
+  "status": "completed"
+}

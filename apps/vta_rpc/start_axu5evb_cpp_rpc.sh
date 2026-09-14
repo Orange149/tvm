@@ -61,4 +61,7 @@ export LD_PRELOAD="$RUNTIME_DIR/libtvm_runtime.so:$RUNTIME_DIR/libvta.so"
 export AXU5EVB_DRIVER_POST_START_SLEEP_NS
 export AXU5EVB_DRIVER_POLL_SLEEP_NS
 
-exec ./tvm_rpc server --host 0.0.0.0 --port "$PORT"
+# This deployed C++ RPC binary uses dmlc-style ``--key=value`` parsing.  With
+# split arguments it silently kept the default port (9090), which made recovery
+# after a lingering TCP close look like a failed restart.
+exec ./tvm_rpc server --host=0.0.0.0 --port="$PORT"

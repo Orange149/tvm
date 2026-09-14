@@ -1,0 +1,36 @@
+{
+  "schema": "c3_vta_yolov3_tiny_relay_dispatch_evidence_v1",
+  "status": "pass_with_same_tile_and_stock_baselines",
+  "model": "yolov3-tiny",
+  "workload": "conv2_ci16_co32_h208_w208_k3",
+  "same_tile": {
+    "original_median_ms": 266.249693,
+    "input_stationary_median_ms": 264.246962,
+    "speedup_percent": 0.7579012393716722,
+    "paired_wins": 7,
+    "paired_rounds": 7,
+    "per_inference_total_dma_bytes_original": 45825408,
+    "per_inference_total_dma_bytes_selected": 45031040,
+    "per_inference_input_load_bytes_delta": -794368
+  },
+  "stock_tophub": {
+    "stock_median_ms": 267.503165,
+    "selected_median_ms": 264.219812,
+    "speedup_percent": 1.2426596533949619,
+    "paired_wins": 7,
+    "paired_rounds": 7,
+    "per_inference_total_dma_bytes_stock": 46513152,
+    "per_inference_total_dma_bytes_selected": 45031040,
+    "per_inference_total_dma_calls_stock": 21392,
+    "per_inference_total_dma_calls_selected": 20300
+  },
+  "correctness": {
+    "input_cases": 3,
+    "graph_calls_per_comparison": 6,
+    "output_tensors": 8,
+    "all_outputs_nonzero": true,
+    "all_paired_outputs_equal": true
+  },
+  "weights_sha256": "dccea06f59b781ec1234ddf8d1e94b9519a97f4245748a7d4db75d5b7080a42c",
+  "claim_boundary": "One YOLO workload and one boot; paired output equivalence, not COCO mAP or physical AXI"
+}

@@ -1,0 +1,221 @@
+{
+  "board_contacted": false,
+  "builder_source_sha256": "45a3aeeb7f30017fcd64552d708f8dc2b2d515a84c0f7da87a953678510facc5",
+  "candidate_ids": [
+    "73aa97bd1989108f0d1fe089241ca12f3ffc07756c42f6d78cf2ca173afe969c",
+    "ea09328abc3e1e14129d29da989026db9a714762ae6c39c81c3f0def741440d2"
+  ],
+  "expected_full_graph_delta": {
+    "load_buffer_2d_acc_bytes": 0,
+    "load_buffer_2d_acc_calls": -1008,
+    "load_buffer_2d_bytes": -3612672,
+    "load_buffer_2d_calls": -9072,
+    "load_buffer_2d_inp_bytes": -3612672,
+    "load_buffer_2d_inp_calls": -4032,
+    "load_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_wgt_calls": -4032,
+    "store_buffer_2d_bytes": 0,
+    "store_buffer_2d_calls": 0
+  },
+  "fused_contract_artifact_hash_manifest_sha256": "95ff62234fcf28a01d4fab9ad2dd614607ebe8fb833cca495bedd911b0942983",
+  "fused_contract_sha256": "b4afb198b12a78e91f170c4b369a9bc0be0ce91a1e4fdda8d57964695bc64346",
+  "gate": {
+    "correctness_seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "paired_rounds": 7,
+    "required_candidate_wins": 7,
+    "required_median_delta": "strictly_negative"
+  },
+  "label_exposure": "Operator correctness is historical; no F00 full-graph or partial-mask latency label was used before freezing these eight exact graph variants",
+  "parameter_count": 120,
+  "parameter_semantic_sha256": "778eb4136dbd80dbba51a67f065c9dfe5a18988fae17584ffcfe790d5ff7e76a",
+  "planned_comparison": "preregistered singleton greedy versus whole-group-first admission under the same three-seed, exact-DMA, seven-of-seven gate",
+  "proposal_order": [
+    67,
+    80,
+    93
+  ],
+  "resident_graphlib": "c3_r50a_input_graphlib.so",
+  "routes": [
+    {
+      "alias_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_7_c3_node67",
+      "expected_delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -336,
+        "load_buffer_2d_bytes": -1204224,
+        "load_buffer_2d_calls": -3024,
+        "load_buffer_2d_inp_bytes": -1204224,
+        "load_buffer_2d_inp_calls": -1344,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -1344,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_7",
+      "graph_node": 67
+    },
+    {
+      "alias_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9_c3_node80",
+      "expected_delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -336,
+        "load_buffer_2d_bytes": -1204224,
+        "load_buffer_2d_calls": -3024,
+        "load_buffer_2d_inp_bytes": -1204224,
+        "load_buffer_2d_inp_calls": -1344,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -1344,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9",
+      "graph_node": 80
+    },
+    {
+      "alias_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9_c3_node93",
+      "expected_delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -336,
+        "load_buffer_2d_bytes": -1204224,
+        "load_buffer_2d_calls": -3024,
+        "load_buffer_2d_inp_bytes": -1204224,
+        "load_buffer_2d_inp_calls": -1344,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -1344,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9",
+      "graph_node": 93
+    }
+  ],
+  "schema": "c3_vta_r50a_callsite_latency_holdout_subsets_v1",
+  "source_pair_artifact_hash_manifest_sha256": "fe246a48e766fa1cedac0985941a3e6752b7b5682581c3386362e5d5480bd13f",
+  "source_pair_summary_sha256": "7c6888d8158ade75d04c78b32a8f1863486d4e29f3683ea4d839497a1bc8688e",
+  "status": "eight_route_subsets_frozen_before_callsite_board_labels",
+  "variants": [
+    {
+      "graph_file": "mask000.json",
+      "graph_sha256": "c5a94d69d034c133903a8546cc6a2e074c04657d4693c40a509486b0856386ed",
+      "mask": [
+        0,
+        0,
+        0
+      ],
+      "resident_graph_nodes": []
+    },
+    {
+      "graph_file": "mask001.json",
+      "graph_sha256": "a9020088082f7d27e81df87716d235971169ec50443a4cd2eea75f5a578170aa",
+      "mask": [
+        0,
+        0,
+        1
+      ],
+      "resident_graph_nodes": [
+        93
+      ]
+    },
+    {
+      "graph_file": "mask010.json",
+      "graph_sha256": "c4879154f5c4939a85f677dcef65a157a34ecd7970c9c4a222a957ba0d325ade",
+      "mask": [
+        0,
+        1,
+        0
+      ],
+      "resident_graph_nodes": [
+        80
+      ]
+    },
+    {
+      "graph_file": "mask011.json",
+      "graph_sha256": "7ea4d97ca9afbdebc8f2870c4bd3f5da78c76ff190ef9efa628cc6a5b9c045f3",
+      "mask": [
+        0,
+        1,
+        1
+      ],
+      "resident_graph_nodes": [
+        80,
+        93
+      ]
+    },
+    {
+      "graph_file": "mask100.json",
+      "graph_sha256": "1ac2a79e3f88a33f5797a36758d6499a69d915c6c31077ecd432db1f8ed0e153",
+      "mask": [
+        1,
+        0,
+        0
+      ],
+      "resident_graph_nodes": [
+        67
+      ]
+    },
+    {
+      "graph_file": "mask101.json",
+      "graph_sha256": "e89a8bc05cd4c0954e3d6bddfe46ad1c98144301cf81f8fb7af82b0bada88999",
+      "mask": [
+        1,
+        0,
+        1
+      ],
+      "resident_graph_nodes": [
+        67,
+        93
+      ]
+    },
+    {
+      "graph_file": "mask110.json",
+      "graph_sha256": "685d84378ed76c66dfe43a2a88005e049523346a2050967d35a10879ecedcb26",
+      "mask": [
+        1,
+        1,
+        0
+      ],
+      "resident_graph_nodes": [
+        67,
+        80
+      ]
+    },
+    {
+      "graph_file": "mask111.json",
+      "graph_sha256": "57a3df3a7b3fac3f423a57bcc56c25f16bc31e395aa78ce7356d21eb6d43b84c",
+      "mask": [
+        1,
+        1,
+        1
+      ],
+      "resident_graph_nodes": [
+        67,
+        80,
+        93
+      ]
+    }
+  ],
+  "verified_fused_contract_artifact_count": 2,
+  "verified_source_pair_artifact_count": 10,
+  "wrapper_compile_command": [
+    "aarch64-xilinx-linux-g++",
+    "-march=armv8-a+crc",
+    "-mtune=cortex-a72.cortex-a53",
+    "--sysroot=/home/orange/alinx_plsdk/install/sysroots/aarch64-xilinx-linux",
+    "-shared",
+    "-fPIC",
+    "-std=c++17",
+    "-O2",
+    "-I/home/orange/code/tvm/include",
+    "-I/home/orange/code/tvm/3rdparty/dlpack/include",
+    "/home/orange/code/tvm/vta/tutorials/frontend/c3_resnet50_r50a_callsite_wrapper.cc",
+    "-o",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r285_r50af00_callsite_holdout_subsets_run01/c3_r50a_callsite_wrapper.so",
+    "-ldl",
+    "-pthread"
+  ],
+  "wrapper_file": "c3_r50a_callsite_wrapper.so",
+  "wrapper_source_sha256": "966a4651fe4dd6d685e2ac089c7fa7f0e27a819cc5ae1c1aa90c932881ed2b2f"
+}

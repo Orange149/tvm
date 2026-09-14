@@ -1,0 +1,14 @@
+{
+  "derivation": "runtime_profile / (1 + timer_number * repeat), with repeat=1",
+  "latency_values_changed": false,
+  "local_evidence": {
+    "python/tvm/runtime/module.py": "time_evaluator documentation states total invocations are 1 + number x repeat",
+    "src/runtime/profiling.cc": "WrapTimeEvaluator performs one warmup call before its repeat loop"
+  },
+  "output": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/06_prospective_board/20260911_p6d_ram_only_balanced_timing_run01/samples_counter_normalized.jsonl",
+  "output_sha256": "ca102d70c26545ee85b07acd516bf9683258a0fbd1851f79adffb35dda07af2f",
+  "records": 270,
+  "schema": "c3_p6d_counter_normalization_v1",
+  "source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/06_prospective_board/20260911_p6d_ram_only_balanced_timing_run01/samples.jsonl",
+  "source_sha256": "77cb499dcb77ac032827ec6fec7d973483db2b0fc57d5c50b29ff41e8d99c5d3"
+}

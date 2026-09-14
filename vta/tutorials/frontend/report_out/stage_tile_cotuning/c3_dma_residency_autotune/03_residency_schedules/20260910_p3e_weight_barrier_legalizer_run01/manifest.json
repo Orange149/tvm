@@ -1,0 +1,47 @@
+{
+  "schema": "c3_p3e_manifest_v1",
+  "run_id": "20260910_p3e_weight_barrier_legalizer_run01",
+  "executed_date": "2026-09-11",
+  "git_head": "55ec5feac39db09e9fee3f0ae6300afa04d23bd7",
+  "status": "completed_positive_local_proof",
+  "environment": {
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "python": "3.10.20",
+    "tvm": "0.13.0",
+    "vta_target": "sim",
+    "vta_hw_path": "/tmp/vta-hw-fsim",
+    "simulator_enabled": true,
+    "board_contacted": false,
+    "ssh_used": false,
+    "performance_timing_collected": false
+  },
+  "source_scope": {
+    "modified": [
+      "vta/python/vta/transform.py",
+      "src/tir/transforms/coproc_sync.cc",
+      "vta/python/vta/top/vta_conv2d.py",
+      "vta/tutorials/frontend/test_vta_weight_sync_probe.py"
+    ],
+    "added": [
+      "tests/python/unittest/test_tir_transform_coproc_sync_barrier.py",
+      "vta/tutorials/frontend/test_vta_weight_barrier_legalizer.py"
+    ],
+    "carried_probe_file": [
+      "vta/python/vta/top/vta_conv2d_residency.py"
+    ],
+    "explicitly_unchanged": [
+      "vta/python/vta/build_module.py",
+      "vta/runtime/runtime.cc",
+      "3rdparty/vta-hw/src/sim/sim_tlpp.cc",
+      "3rdparty/vta-hw/include/vta/hw_spec.h"
+    ]
+  },
+  "build": {
+    "command": "cmake --build build --target tvm -j8",
+    "exit_code": 0,
+    "libtvm_timestamp": "2026-09-11 00:13:29.181057171 +0800",
+    "libtvm_size_bytes": 59984512,
+    "libtvm_sha256": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9"
+  },
+  "decision": "go_local_compiler_explicit_drain_proof"
+}

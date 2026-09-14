@@ -1,0 +1,118 @@
+{
+  "schema": "c3_p7r_unseen_board_contract_v1",
+  "status": "frozen_before_p7r_board_labels",
+  "purpose": "prospective support-transfer correctness gate; no latency",
+  "workload_id": "W06",
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        8,
+        28,
+        28,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        16,
+        8,
+        1,
+        1,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "selection_rule": {
+    "development_anchor": {
+      "config_index": 142,
+      "measured_same_tile_speedup_percent": 18.605718105841753,
+      "workload_id": "W04"
+    },
+    "mapping_signature": [
+      1,
+      7,
+      14,
+      1,
+      4,
+      1,
+      1
+    ],
+    "prediction_frozen_before_target_fsim_or_board": "positive_same_tile_speedup",
+    "stratum": "support_transfer",
+    "target_label_free_features": {
+      "certified": true,
+      "input_byte_reduction_fraction": 0.75,
+      "total_byte_reduction_fraction": 0.5673491379310345,
+      "total_call_reduction_fraction": 0.7058823529411765
+    }
+  },
+  "execution_order": [
+    {
+      "role": "transferred_original_before",
+      "mode": "original",
+      "config_index": 142
+    },
+    {
+      "role": "transferred_residency",
+      "mode": "input_stationary",
+      "config_index": 142,
+      "candidate_id": "68c6cc6faa49c6dcb0e4314e17e34a97f45afe0e6e65d22d00eef4c01030fae0",
+      "tir_sha256": "9e0602cee6a75fb6446737bc6ee16ce95bf81524825b09f75d89ab1746a3eaed"
+    },
+    {
+      "role": "transferred_original_after",
+      "mode": "original",
+      "config_index": 142
+    }
+  ],
+  "board": {
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "fpga_state": "operating",
+    "udmabuf_bytes": 201326592,
+    "rpc_cwd_requirement": "/var/volatile/vta_c3_ram/runtime",
+    "sd_mount": "/media/sd-mmcblk1p2",
+    "sd_used_percent_at_freeze": 78,
+    "dmesg_error_cutoff_seconds": 4057.401259,
+    "safety": "abort without reboot/poweroff on mismatch, new storage error, fingerprint change, or timeout"
+  },
+  "source_guards_sha256": {
+    "vta/tutorials/frontend/run_vta_p7r_joint_correctness.py": "e70b8c3199a2d6cd589f7376641f5c4622655d041313172a2e9aff2ef2d2cab2",
+    "vta/python/vta/top/vta_conv2d.py": "676ff21166871fdc30f0e42dfaf0067fbf6b8f866fe77ebc308f872f50e64926",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+  },
+  "input_guards_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r53_support_transfer_contract_run01/shortlist.jsonl": "383b9b8e98879f76f67a1895385916409a66e0b3a95059eb2df09344c10907ce",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r54_support_transfer_residency_fsim_run01/results.jsonl": "3c1252bab9bcb4a119cdc2837d1333c9be7afd77df76dc6ee0922811d82f50c8",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r55_support_transfer_original_pool_run01/candidates.jsonl": "04495ddd1ca4e077a282af8792160787f7e52dd53113f040fa471e792ed453d1",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r56_support_transfer_original_fsim_run01/results.jsonl": "f853b3cc8bf2e65ca61b4454f3f49b6cbd4915b1e94a6d5a90e0533abd5f025b"
+  }
+}

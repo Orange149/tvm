@@ -1,0 +1,35 @@
+{
+  "schema": "c3_g2_ram_bypass_canary_summary_v1",
+  "date": "2026-09-11",
+  "status": "passed_ram_only_correctness_canary",
+  "board_host": "192.168.1.247",
+  "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+  "execution_path": {
+    "fpga_bitstream": "/var/volatile/vta_c3_ram/firmware/vta_hpc.bit",
+    "rpc_and_runtime": "/var/volatile/vta_c3_ram/runtime",
+    "rpc_uploads": "RPC server working directory on /var/volatile tmpfs",
+    "udmabuf_bytes": 201326592,
+    "sd_p2_mount_mode": "read_only"
+  },
+  "correctness": {
+    "expected_workloads": 10,
+    "observed_rows": 10,
+    "unique_workloads": 10,
+    "exact_passes": 10,
+    "failures": 0
+  },
+  "measurement": {
+    "number": 1,
+    "warmup": 0,
+    "kernel_ms_sum": 34.421807,
+    "performance_claim_allowed": false,
+    "reason": "Recovery canary uses one untimed sample per workload and is not a preregistered stable performance comparison."
+  },
+  "storage_safety": {
+    "sd_p2_known_corrupt": true,
+    "sd_p2_full": true,
+    "sd_repaired": false,
+    "new_storage_errors_after_read_only_remount": 0
+  },
+  "raw_benchmark_sha256": "f00a5f8834e2300bb60f74a2c13f9f5c0108a78eda5d10e51cfb8d59b6b4c420"
+}

@@ -1,0 +1,12 @@
+# Generate the frozen shortlist from P4b static artifacts (exit 0).
+TEST_DATA_ROOT_PATH=/tmp/tvm_test_data MPLCONFIGDIR=/tmp/mpl PYTHONPATH=/home/orange/code/tvm/python:/home/orange/code/tvm/vta/python:/home/orange/code/tvm/vta/tutorials/frontend /home/orange/miniconda3/envs/vta-resnet/bin/python vta/tutorials/frontend/plan_vta_predispatch_shortlist.py --candidate-pool vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/candidate_pool.json --results vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/results.jsonl --output-dir vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/05_grouped_replay/20260910_p5b_local_predispatch_shortlist_run01 --budgets 4,8,16
+
+# Unit tests (exit 0, 10 passed).
+TEST_DATA_ROOT_PATH=/tmp/tvm_test_data MPLCONFIGDIR=/tmp/mpl PYTHONPATH=/home/orange/code/tvm/python:/home/orange/code/tvm/vta/python:/home/orange/code/tvm/vta/tutorials/frontend /home/orange/miniconda3/envs/vta-resnet/bin/python -m pytest -q vta/tutorials/frontend/test_plan_vta_predispatch_shortlist.py
+
+# Syntax check (exit 0).
+/home/orange/miniconda3/envs/vta-resnet/bin/python -m py_compile vta/tutorials/frontend/plan_vta_predispatch_shortlist.py vta/tutorials/frontend/test_plan_vta_predispatch_shortlist.py
+
+# Determinism check (exit 0): rerun the planner into a fresh mktemp directory, then byte-compare shortlist.json, candidate_features.json, filtered_failures.json, screening_cost.json, and input_manifest.json with cmp.
+
+# No SSH, RPC, or board command was run.

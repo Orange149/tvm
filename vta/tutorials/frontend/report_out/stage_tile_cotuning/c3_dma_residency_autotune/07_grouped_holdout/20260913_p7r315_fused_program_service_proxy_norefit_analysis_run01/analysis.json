@@ -1,0 +1,164 @@
+{
+  "all_four_program_pairwise_ordering": {
+    "bytes_only": {
+      "accuracy": 0.3333333333333333,
+      "correct": 2,
+      "discordant_pairs": [
+        {
+          "concordant": false,
+          "latency_delta_ms": -476.52980499999995,
+          "left": "R50AF00:original",
+          "metric_delta": 6279168,
+          "right": "R50AF01:original",
+          "tied": false
+        },
+        {
+          "concordant": false,
+          "latency_delta_ms": -13.227761999999984,
+          "left": "R50AF00:original",
+          "metric_delta": 14708736,
+          "right": "R50AF01:residency",
+          "tied": false
+        },
+        {
+          "concordant": false,
+          "latency_delta_ms": -524.369304,
+          "left": "R50AF00:residency",
+          "metric_delta": 2666496,
+          "right": "R50AF01:original",
+          "tied": false
+        },
+        {
+          "concordant": false,
+          "latency_delta_ms": -61.06726100000003,
+          "left": "R50AF00:residency",
+          "metric_delta": 11096064,
+          "right": "R50AF01:residency",
+          "tied": false
+        }
+      ],
+      "total": 6
+    },
+    "fused_service_proxy": {
+      "accuracy": 0.8333333333333334,
+      "correct": 5,
+      "discordant_pairs": [
+        {
+          "concordant": false,
+          "latency_delta_ms": -13.227761999999984,
+          "left": "R50AF00:original",
+          "metric_delta": 91779072,
+          "right": "R50AF01:residency",
+          "tied": false
+        }
+      ],
+      "total": 6
+    }
+  },
+  "analyzer_source_sha256": "34100acceccb6bb584123069f23faa69dde6f5347517e3860dc378dd300879f6",
+  "board_contacted": false,
+  "bound_input_hashes": {
+    "p7r166_analysis_sha256": "902a9f86c99bf9f3589eaa1c738a3b3c5e63f8e3e3211dec5a1b61d7bcf10a69",
+    "p7r166_artifact_manifest_sha256": "362e9edfbbbe6a0879c75132e175cb75a635971f39ee2c5ec2597a36b42b47d5",
+    "p7r296_artifact_manifest_sha256": "b23bd5fb2eba33880ed404e19a287bf657ad8c68bb36a1cfa959f61f4b1c9041",
+    "p7r296_summary_sha256": "d54961abf863df71b332399293f2d31974f70a4403f8857ed423b50b1cacbde1"
+  },
+  "claim_boundary": "No-refit post-hoc check on two tiles of one workload/model/boot. The 64 KiB coefficient predates the target labels, but this comparison was specified after label exposure; it is not a prospective holdout or a physical request-latency fit.",
+  "extra_submission_equivalent_bytes": 131072,
+  "frozen_formula": "dma_bytes + 65536*dma_calls + 131072*max(submissions-1,0)",
+  "programs": [
+    {
+      "dma_bytes": 27310080,
+      "dma_calls": 13440,
+      "extra_residency_submissions": 0,
+      "family": "R50AF00",
+      "latency_ms": 422.291663,
+      "mode": "original",
+      "program_id": "R50AF00:original",
+      "service_score_byte_equivalent": 908113920
+    },
+    {
+      "dma_bytes": 23697408,
+      "dma_calls": 4368,
+      "extra_residency_submissions": 0,
+      "family": "R50AF00",
+      "latency_ms": 374.452164,
+      "mode": "residency",
+      "program_id": "R50AF00:residency",
+      "service_score_byte_equivalent": 309958656
+    },
+    {
+      "dma_bytes": 21030912,
+      "dma_calls": 88704,
+      "extra_residency_submissions": 0,
+      "family": "R50AF01",
+      "latency_ms": 898.821468,
+      "mode": "original",
+      "program_id": "R50AF01:original",
+      "service_score_byte_equivalent": 5834336256
+    },
+    {
+      "dma_bytes": 12601344,
+      "dma_calls": 12264,
+      "extra_residency_submissions": 0,
+      "family": "R50AF01",
+      "latency_ms": 435.519425,
+      "mode": "residency",
+      "program_id": "R50AF01:residency",
+      "service_score_byte_equivalent": 816334848
+    }
+  ],
+  "request_equivalent_bytes": 65536,
+  "schema": "c3_vta_fused_program_service_proxy_norefit_analysis_v1",
+  "selection_accuracy": {
+    "bytes_only": 0.0,
+    "fused_service_proxy": 1.0
+  },
+  "status": "frozen_request_penalty_repairs_two_byte_only_tile_inversions",
+  "submission_term_scope": "zero in this input-stationary comparison; no barrier-induced extra submission",
+  "verified_artifact_counts": {
+    "contract": 2,
+    "service_development": 4,
+    "tile_comparison": 2
+  },
+  "within_mode_selection": [
+    {
+      "mode": "original",
+      "oracle_latency_ms": 422.291663,
+      "oracle_program": "R50AF00:original",
+      "policies": {
+        "bytes_only": {
+          "latency_regret_percent": 112.8437633872966,
+          "oracle_hit": false,
+          "selected_latency_ms": 898.821468,
+          "selected_program": "R50AF01:original"
+        },
+        "fused_service_proxy": {
+          "latency_regret_percent": 0.0,
+          "oracle_hit": true,
+          "selected_latency_ms": 422.291663,
+          "selected_program": "R50AF00:original"
+        }
+      }
+    },
+    {
+      "mode": "residency",
+      "oracle_latency_ms": 374.452164,
+      "oracle_program": "R50AF00:residency",
+      "policies": {
+        "bytes_only": {
+          "latency_regret_percent": 16.308427850346206,
+          "oracle_hit": false,
+          "selected_latency_ms": 435.519425,
+          "selected_program": "R50AF01:residency"
+        },
+        "fused_service_proxy": {
+          "latency_regret_percent": 0.0,
+          "oracle_hit": true,
+          "selected_latency_ms": 374.452164,
+          "selected_program": "R50AF00:residency"
+        }
+      }
+    }
+  ]
+}

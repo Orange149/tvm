@@ -1,0 +1,56 @@
+{
+  "by_mode": {
+    "weight_resident_barrier": {
+      "losses": 0,
+      "max_speedup_percent": 2.3114471468474855,
+      "median_input_dma_bytes_change_percent": 0.0,
+      "median_speedup_bootstrap_95_percent": {
+        "interpretation": "descriptive family-cluster bootstrap; not a population CI",
+        "lower_2_5": 2.3114471468474855,
+        "samples": 10000,
+        "seed": 20260912,
+        "upper_97_5": 2.3114471468474855
+      },
+      "median_speedup_percent": 2.3114471468474855,
+      "median_total_dma_bytes_change_percent": -15.946843853820598,
+      "median_total_dma_calls_change_percent": -42.857142857142854,
+      "min_speedup_percent": 2.3114471468474855,
+      "pairs": 1,
+      "ties": 0,
+      "two_sided_exact_sign_test_p": 1.0,
+      "wins": 1
+    }
+  },
+  "claim_boundary": "same-tile descriptive evidence; families share one geometry/boot and are not independent workload replications; logical DMA is not physical AXI traffic",
+  "completed_pool": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r222_r50b_canonical_completed_pool_run01/completed_pool.json",
+    "sha256": "254753156b5dc49624264b6a744919d2aefc7e2bc667bc455e52ae3df48abe94"
+  },
+  "pair_count": 1,
+  "pairs": [
+    {
+      "candidate_id": "6b1b47da86ede03ee54a82cbcc01d9176816295962ba710c1bec8e85002f5ad3",
+      "control_candidate_id": "31b35a8f70ce53f0cb2bc1f614de49b8a71fc5bf395882861c54dda83421c411",
+      "control_latency_ms": 25.746468,
+      "input_dma_bytes_change_percent": 0.0,
+      "instruction_peak_change_percent": -94.42525900345338,
+      "knobs": {
+        "h_nthread": 1.0,
+        "oc_nthread": 1.0,
+        "tile_b": 1.0,
+        "tile_ci": 2.0,
+        "tile_co": 2.0,
+        "tile_h": 28.0,
+        "tile_w": 4.0
+      },
+      "latency_ms": 25.151352,
+      "mode": "weight_resident_barrier",
+      "speedup_percent": 2.3114471468474855,
+      "total_dma_bytes_change_percent": -15.946843853820598,
+      "total_dma_calls_change_percent": -42.857142857142854,
+      "uop_peak_change_percent": 193.10344827586206
+    }
+  ],
+  "schema": "c3_same_tile_completed_pool_analysis_v1",
+  "workload_id": "R50B"
+}

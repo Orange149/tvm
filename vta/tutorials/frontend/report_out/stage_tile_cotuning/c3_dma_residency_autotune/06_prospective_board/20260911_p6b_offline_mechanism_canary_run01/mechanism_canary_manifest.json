@@ -1,0 +1,974 @@
+{
+  "board_executed": false,
+  "claim_boundary": {
+    "G6_passed": false,
+    "board_correctness_executed": false,
+    "board_performance_measured": false,
+    "generic_B7_effectiveness": false
+  },
+  "contract_kind": "mechanism_canary_not_generic_B7_exploration",
+  "p4i_barrier_axu": {
+    "artifact_hashes_sha256": "9cb1f6f85b112e33f2d62f614dac79075e5b3aaada50a3c31a6e7d037f03025b",
+    "manifest_sha256": "d50aeac0c8850fa737799d50db77ff744e8f563b53a5f942463106713d203b7b",
+    "results_sha256": "2de5d9094170539a097e88bd6e4189d0149de6155fbf9d6b5fe668a3a9184472",
+    "run_dir": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4i_weight_barrier_cross_compile_run01",
+    "summary_sha256": "b97c8713bdd59a6dbe776073016257c54c4b764250263bfb0c498a17fa0a4450"
+  },
+  "schema": "c3_p6b_mechanism_canary_manifest_v1",
+  "selection_rule": {
+    "roles": [
+      "protected original incumbent",
+      "qualified input-stationary with maximum static input-byte reduction",
+      "qualified mode-4 barrier with maximum static weight-byte reduction"
+    ],
+    "tie_break": "fewer target LOAD calls, then stable candidate_id"
+  },
+  "source_runs": {
+    "P4b": {
+      "artifact_hashes_sha256": "c7f527e86ec03ed6a8e5c8853479402d60d82a6bd43601f8c5d83dd00e9fa410",
+      "manifest_sha256": "b5cd4def4e4e50833a7821022080d11e34105f41013071b30372c26fbac9a583",
+      "results_sha256": "cddcdc503163e1f4cfda1a53933d4577c804b6842be818e0bbb616a431b9d2d9",
+      "run_dir": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01",
+      "summary_sha256": "34d0174d2efdebedeccad3ce85adefffa991b09f9bd8b1931249104d1c11cf14"
+    },
+    "P4e": {
+      "artifact_hashes_sha256": "da6dbe9f16af4b2c7365bb0fc7e52f7319332f0888f0521dadeb6b9cbc9599e0",
+      "manifest_sha256": "22838ba8dc6df6b96d5277fc262f7f25fec28c061069ae802970ed1b73a0b51c",
+      "results_sha256": "0ba3ab15b6bbdb45c36826891bcb601099376acfc626e9489788f5c40ebb1da4",
+      "run_dir": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4e_unified_local_qualification_run01",
+      "summary_sha256": "53778f63a9f75c74f6e778c88c82cc2b33a51a044c11990c01f1f5a92e4bfd61"
+    },
+    "P4f": {
+      "artifact_hashes_sha256": "7df9e30049518604fbf1b3f05bdc40b86272f1a99219096b3fa4ba5473870ae9",
+      "manifest_sha256": "305a6e510cb063a23b5fbedb6bc1c0e00804935e4e329f91d794e50dd2ebac68",
+      "results_sha256": "44b7c51a9d5785e6f6541fe1a73ba7dbf575e51e4161084f191fa592650d618e",
+      "run_dir": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4f_axu_cross_compile_run01",
+      "summary_sha256": "cfad6ce6c7b280cc2b4fca38088142ddcce674ed686db06da0e462cec33e6a32"
+    },
+    "P4g": {
+      "artifact_hashes_sha256": "782c4b84df391326334735588651c50823423b36ab55a2d2c562d3297ae0d981",
+      "manifest_sha256": "16aae8cd454479b010a914ac59345f3205d7527f6ce98c11f1ad3bdc7c5d819c",
+      "results_sha256": "4fc76735aa2450621dbe5b461ae2da268847925ac7cbee2bb80ec475751b4f97",
+      "run_dir": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4g_weight_barrier_pool_run01",
+      "summary_sha256": "eb6bdee5b5e3b398858f4bbbe20e9e2ad018db739bb9e37261c6bf30397f0d1e"
+    }
+  },
+  "status": "frozen_offline_mechanism_canary",
+  "workloads": {
+    "W00": [
+      {
+        "axu_cross_compile_evidence": {
+          "binary_sha256": "e45a02ad35c0e3beacfb997eb0505d91f6cab72086794c37ffe321b186975f6b",
+          "build_status": "referenced_passed",
+          "export_status": "referenced_passed",
+          "qualification_source": "referenced_p2_run02_cross_compile",
+          "source": "P4f results.jsonl",
+          "status": "passed",
+          "tir_sha256": "fb7ed224486096e7e3e3727c170fecfe166f8be24acc3da6f30c069c3bce601d"
+        },
+        "candidate_id": "b046098ba4198415ec8f8be17ed62ac7f4c59198a3b0f262cb945e31bac46dc2",
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                56
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              2
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ],
+          "index": 828
+        },
+        "config_index": 828,
+        "local_fsim_evidence": {
+          "seeds": [
+            0,
+            20250901,
+            20260910
+          ],
+          "source": "P4e results.jsonl",
+          "status": "fsim_passed",
+          "tir_sha256": "fb7ed224486096e7e3e3727c170fecfe166f8be24acc3da6f30c069c3bce601d"
+        },
+        "mechanism_role": "original_incumbent",
+        "qualification_source_guards_sha256": {
+          "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+          "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+          "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+        },
+        "residence_mode": "original",
+        "schedule_source_sha256": null,
+        "schedule_version": "vta_conv2d.py@b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+        "selection_metric": null,
+        "template_name": "conv2d_packed.vta",
+        "tir_sha256": "fb7ed224486096e7e3e3727c170fecfe166f8be24acc3da6f30c069c3bce601d",
+        "workload_id": "W00"
+      },
+      {
+        "axu_cross_compile_evidence": {
+          "binary_sha256": "6419555db32e6d8115972a1040d2d9c5c5166f050802c1650132f26554e56983",
+          "build_status": "passed",
+          "export_status": "passed",
+          "qualification_source": "fresh_isolated_cross_compile",
+          "source": "P4f results.jsonl",
+          "status": "passed",
+          "tir_sha256": "03e130b3c8320f1d023d9e5cc40f8835f6917aa6575ab4e2d1e2fa55eebdc9d3"
+        },
+        "candidate_id": "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                56
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ],
+          "index": 252
+        },
+        "config_index": 252,
+        "local_fsim_evidence": {
+          "seeds": [
+            0,
+            20250901,
+            20260910
+          ],
+          "source": "P4e results.jsonl",
+          "status": "fsim_passed",
+          "tir_sha256": "03e130b3c8320f1d023d9e5cc40f8835f6917aa6575ab4e2d1e2fa55eebdc9d3"
+        },
+        "mechanism_role": "input_stationary_mechanism",
+        "qualification_source_guards_sha256": {
+          "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+          "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+          "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+        },
+        "residence_mode": "input_stationary",
+        "schedule_source_sha256": null,
+        "schedule_version": "vta_residency@5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f+b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+        "selection_metric": {
+          "candidate_bytes": 243712,
+          "dma_reduction_fraction": 0.5,
+          "original_bytes": 487424,
+          "target_load_calls": 28,
+          "target_memory": "input",
+          "tie_break": "max reduction, fewer target LOAD calls, stable candidate_id"
+        },
+        "template_name": "conv2d_packed_residency.vta",
+        "tir_sha256": "03e130b3c8320f1d023d9e5cc40f8835f6917aa6575ab4e2d1e2fa55eebdc9d3",
+        "workload_id": "W00"
+      },
+      {
+        "axu_cross_compile_evidence": {
+          "binary_sha256": "bdad9f7274493437db5f35b520776ca81715ff850e0f8bad2179938d3120a21d",
+          "build_status": "passed",
+          "export_status": "passed",
+          "source": "P4i results.jsonl",
+          "status": "passed",
+          "tir_sha256": "8d185c47f0fd86d3bf1ff5b2956015d4b494f1452042a9fb3612c4869e521ce4"
+        },
+        "candidate_id": "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                56
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ],
+          "index": 251
+        },
+        "config_index": 251,
+        "local_fsim_evidence": {
+          "seeds": [
+            0,
+            20250901,
+            20260910
+          ],
+          "source": "P4g results.jsonl",
+          "status": "passed",
+          "tir_hash_matches": true
+        },
+        "mechanism_role": "weight_barrier_mechanism",
+        "qualification_source_guards_sha256": {
+          "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+          "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+          "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+        },
+        "residence_mode": "weight_stationary_barrier",
+        "schedule_source_sha256": {
+          "coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+        },
+        "schedule_version": "weight_stationary_barrier@coproc_sync.cc=edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999+transform.py=3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c+vta_conv2d.py=8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc+vta_conv2d_residency.py=0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+        "selection_metric": {
+          "candidate_bytes": 36864,
+          "dma_reduction_fraction": 0.875,
+          "original_bytes": 294912,
+          "target_load_calls": 2,
+          "target_memory": "weight",
+          "tie_break": "max reduction, fewer target LOAD calls, stable candidate_id"
+        },
+        "template_name": "conv2d_packed_residency.vta",
+        "tir_sha256": "8d185c47f0fd86d3bf1ff5b2956015d4b494f1452042a9fb3612c4869e521ce4",
+        "workload_id": "W00"
+      }
+    ],
+    "W02": [
+      {
+        "axu_cross_compile_evidence": {
+          "binary_sha256": "95d0e9e89b3e81331d1ca3184edc174eafa07bd2f6df9c9100299a501564fd01",
+          "build_status": "referenced_passed",
+          "export_status": "referenced_passed",
+          "qualification_source": "referenced_p2_run02_cross_compile",
+          "source": "P4f results.jsonl",
+          "status": "passed",
+          "tir_sha256": "aa774d16d33dfd9ce31af7020910dd8dad7de1c718ce68ddc2cd6c0f00bfafe5"
+        },
+        "candidate_id": "37c662cfab07879956fbf12bb9f60f1461b1a197e4a4f1826f4033f0adc1fe96",
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                14
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                28
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              2
+            ]
+          ],
+          "index": 1330
+        },
+        "config_index": 1330,
+        "local_fsim_evidence": {
+          "seeds": [
+            0,
+            20250901,
+            20260910
+          ],
+          "source": "P4e results.jsonl",
+          "status": "fsim_passed",
+          "tir_sha256": "aa774d16d33dfd9ce31af7020910dd8dad7de1c718ce68ddc2cd6c0f00bfafe5"
+        },
+        "mechanism_role": "original_incumbent",
+        "qualification_source_guards_sha256": {
+          "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+          "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+          "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+        },
+        "residence_mode": "original",
+        "schedule_source_sha256": null,
+        "schedule_version": "vta_conv2d.py@b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+        "selection_metric": null,
+        "template_name": "conv2d_packed.vta",
+        "tir_sha256": "aa774d16d33dfd9ce31af7020910dd8dad7de1c718ce68ddc2cd6c0f00bfafe5",
+        "workload_id": "W02"
+      },
+      {
+        "axu_cross_compile_evidence": {
+          "binary_sha256": "7bbce91a49666d154cf93e80dcbd1b3e64da479444f5439fa6db3b559ff41da0",
+          "build_status": "passed",
+          "export_status": "passed",
+          "qualification_source": "fresh_isolated_cross_compile",
+          "source": "P4f results.jsonl",
+          "status": "passed",
+          "tir_sha256": "ef36a3bbb5106425a381fad3dd9ae1d2db4896d6a19c50c0da66207ab17e0f94"
+        },
+        "candidate_id": "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                28
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ],
+          "index": 177
+        },
+        "config_index": 177,
+        "local_fsim_evidence": {
+          "seeds": [
+            0,
+            20250901,
+            20260910
+          ],
+          "source": "P4e results.jsonl",
+          "status": "fsim_passed",
+          "tir_sha256": "ef36a3bbb5106425a381fad3dd9ae1d2db4896d6a19c50c0da66207ab17e0f94"
+        },
+        "mechanism_role": "input_stationary_mechanism",
+        "qualification_source_guards_sha256": {
+          "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+          "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+          "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+        },
+        "residence_mode": "input_stationary",
+        "schedule_source_sha256": null,
+        "schedule_version": "vta_residency@5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f+b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+        "selection_metric": {
+          "candidate_bytes": 121856,
+          "dma_reduction_fraction": 0.75,
+          "original_bytes": 487424,
+          "target_load_calls": 32,
+          "target_memory": "input",
+          "tie_break": "max reduction, fewer target LOAD calls, stable candidate_id"
+        },
+        "template_name": "conv2d_packed_residency.vta",
+        "tir_sha256": "ef36a3bbb5106425a381fad3dd9ae1d2db4896d6a19c50c0da66207ab17e0f94",
+        "workload_id": "W02"
+      },
+      {
+        "axu_cross_compile_evidence": {
+          "binary_sha256": "dfa57cd3aa1c94115a73eb269bccafc4085a462aff49a519f5be8ec823f45eca",
+          "build_status": "passed",
+          "export_status": "passed",
+          "source": "P4i results.jsonl",
+          "status": "passed",
+          "tir_sha256": "e77e320c82efe963aac16f4e14254bd1876ae6948c467407651d6f1103dc1fe5"
+        },
+        "candidate_id": "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                28
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                2
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ],
+          "index": 177
+        },
+        "config_index": 177,
+        "local_fsim_evidence": {
+          "seeds": [
+            0,
+            20250901,
+            20260910
+          ],
+          "source": "P4g results.jsonl",
+          "status": "passed",
+          "tir_hash_matches": true
+        },
+        "mechanism_role": "weight_barrier_mechanism",
+        "qualification_source_guards_sha256": {
+          "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+          "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+          "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+        },
+        "residence_mode": "weight_stationary_barrier",
+        "schedule_source_sha256": {
+          "coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+        },
+        "schedule_version": "weight_stationary_barrier@coproc_sync.cc=edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999+transform.py=3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c+vta_conv2d.py=8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc+vta_conv2d_residency.py=0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+        "selection_metric": {
+          "candidate_bytes": 147456,
+          "dma_reduction_fraction": 0.75,
+          "original_bytes": 589824,
+          "target_load_calls": 4,
+          "target_memory": "weight",
+          "tie_break": "max reduction, fewer target LOAD calls, stable candidate_id"
+        },
+        "template_name": "conv2d_packed_residency.vta",
+        "tir_sha256": "e77e320c82efe963aac16f4e14254bd1876ae6948c467407651d6f1103dc1fe5",
+        "workload_id": "W02"
+      }
+    ],
+    "W09": [
+      {
+        "axu_cross_compile_evidence": {
+          "binary_sha256": "566f8c940104fd6c910ed7a5973253fc4689fbd7ff0594eeac06b06c6166cfd0",
+          "build_status": "referenced_passed",
+          "export_status": "referenced_passed",
+          "qualification_source": "referenced_p2_run02_cross_compile",
+          "source": "P4f results.jsonl",
+          "status": "passed",
+          "tir_sha256": "50f1d2aee29892fc3b2e632f234c5718c505d3fb30d77533289f827aa3efb84f"
+        },
+        "candidate_id": "1ea905d902b7345d88692916e59a1239623e337a1b5b7e7c48d6b6ae749a3846",
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                16
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              2
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ],
+          "index": 203
+        },
+        "config_index": 203,
+        "local_fsim_evidence": {
+          "seeds": [
+            0,
+            20250901,
+            20260910
+          ],
+          "source": "P4e results.jsonl",
+          "status": "fsim_passed",
+          "tir_sha256": "50f1d2aee29892fc3b2e632f234c5718c505d3fb30d77533289f827aa3efb84f"
+        },
+        "mechanism_role": "original_incumbent",
+        "qualification_source_guards_sha256": {
+          "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+          "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+          "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+        },
+        "residence_mode": "original",
+        "schedule_source_sha256": null,
+        "schedule_version": "vta_conv2d.py@b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+        "selection_metric": null,
+        "template_name": "conv2d_packed.vta",
+        "tir_sha256": "50f1d2aee29892fc3b2e632f234c5718c505d3fb30d77533289f827aa3efb84f",
+        "workload_id": "W09"
+      },
+      {
+        "axu_cross_compile_evidence": {
+          "binary_sha256": "23460a07e5fd2c93bab6ba444775c2766ef3120ca06180b5b3929e3f77e97e40",
+          "build_status": "passed",
+          "export_status": "passed",
+          "qualification_source": "fresh_isolated_cross_compile",
+          "source": "P4f results.jsonl",
+          "status": "passed",
+          "tir_sha256": "66ad46d121e52feecdf3dfc7840c74be7c9a5cdaeeebb9e9962cdd0843e00903"
+        },
+        "candidate_id": "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                8
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ],
+          "index": 63
+        },
+        "config_index": 63,
+        "local_fsim_evidence": {
+          "seeds": [
+            0,
+            20250901,
+            20260910
+          ],
+          "source": "P4e results.jsonl",
+          "status": "fsim_passed",
+          "tir_sha256": "66ad46d121e52feecdf3dfc7840c74be7c9a5cdaeeebb9e9962cdd0843e00903"
+        },
+        "mechanism_role": "input_stationary_mechanism",
+        "qualification_source_guards_sha256": {
+          "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+          "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+          "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+        },
+        "residence_mode": "input_stationary",
+        "schedule_source_sha256": null,
+        "schedule_version": "vta_residency@5adec7be746ecf7912b36f078970521115a9bd730707dfd4216d044114bf629f+b6b79a3569a7de1ab3f8ea290d34390e30588e392b4c1eb3ff5c93fe925715b0",
+        "selection_metric": {
+          "candidate_bytes": 43264,
+          "dma_reduction_fraction": 0.75,
+          "original_bytes": 173056,
+          "target_load_calls": 16,
+          "target_memory": "input",
+          "tie_break": "max reduction, fewer target LOAD calls, stable candidate_id"
+        },
+        "template_name": "conv2d_packed_residency.vta",
+        "tir_sha256": "66ad46d121e52feecdf3dfc7840c74be7c9a5cdaeeebb9e9962cdd0843e00903",
+        "workload_id": "W09"
+      },
+      {
+        "axu_cross_compile_evidence": {
+          "binary_sha256": "8ffd34b44f4397271d0521cb143a1c5ba31e809efc9f256c7383cad62a6377e6",
+          "build_status": "passed",
+          "export_status": "passed",
+          "source": "P4i results.jsonl",
+          "status": "passed",
+          "tir_sha256": "00e793e96aa6abea72d78f4bf21c5fab68893d75e1b29a31a2b46609fe1ed2ec"
+        },
+        "candidate_id": "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                16
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ],
+          "index": 82
+        },
+        "config_index": 82,
+        "local_fsim_evidence": {
+          "seeds": [
+            0,
+            20250901,
+            20260910
+          ],
+          "source": "P4g results.jsonl",
+          "status": "passed",
+          "tir_hash_matches": true
+        },
+        "mechanism_role": "weight_barrier_mechanism",
+        "qualification_source_guards_sha256": {
+          "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+          "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+          "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+        },
+        "residence_mode": "weight_stationary_barrier",
+        "schedule_source_sha256": {
+          "coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+          "transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+          "vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+          "vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd"
+        },
+        "schedule_version": "weight_stationary_barrier@coproc_sync.cc=edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999+transform.py=3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c+vta_conv2d.py=8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc+vta_conv2d_residency.py=0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+        "selection_metric": {
+          "candidate_bytes": 131072,
+          "dma_reduction_fraction": 0.8571428571428571,
+          "original_bytes": 917504,
+          "target_load_calls": 2,
+          "target_memory": "weight",
+          "tie_break": "max reduction, fewer target LOAD calls, stable candidate_id"
+        },
+        "template_name": "conv2d_packed_residency.vta",
+        "tir_sha256": "00e793e96aa6abea72d78f4bf21c5fab68893d75e1b29a31a2b46609fe1ed2ec",
+        "workload_id": "W09"
+      }
+    ]
+  }
+}

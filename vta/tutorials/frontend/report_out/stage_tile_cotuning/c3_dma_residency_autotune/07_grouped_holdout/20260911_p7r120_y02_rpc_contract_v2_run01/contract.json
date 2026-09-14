@@ -1,0 +1,1388 @@
+{
+  "analysis": {
+    "incumbent_protection": true,
+    "minimum_access_role": "post-measure deployment policy only; never a seventh schedule",
+    "primary": "within-family mode versus same-tile original median",
+    "promotion_rule": "retain TopHub unless a correctness-passed candidate is at least 2% faster than pooled TopHub median and wins at least 5 of 7 round-midpoint comparisons",
+    "secondary": "all six candidates versus sealed TopHub bracket midpoint"
+  },
+  "candidate_pool": {
+    "candidates": [
+      {
+        "board_status": "not_dispatched",
+        "candidate_id": "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+        "debug": {
+          "config_index": 7
+        },
+        "family_id": "Y02B00",
+        "family_ordinal": 0,
+        "fresh_axu_cross_certificate": {
+          "binary_retained": false,
+          "binary_sha256": "c29b748a2684a066f8fde50795368c83b71e6d51cdae966bdee4860216d325de",
+          "binary_size_bytes": 24216,
+          "candidate_id": "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+          "family_id": "Y02B00",
+          "public_mode": "original",
+          "status": "passed",
+          "tir_sha256": "a2721cec2729385f0dfe511c5a8e57dd1a9fdccc7390e27e0806ebe33947d9df"
+        },
+        "identity": {
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  26
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ]
+          },
+          "hardware_fingerprint": {
+            "acc_buff_size": 131072,
+            "batch": 1,
+            "block_in": 16,
+            "block_out": 16,
+            "inp_buff_size": 32768,
+            "target": "axu5evb",
+            "uop_buff_size": 32768,
+            "wgt_buff_size": 262144
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+          "schema": "c3_candidate_id_v2",
+          "template_name": "conv2d_packed_residency.vta",
+          "workload": [
+            "conv2d_packed.vta",
+            [
+              "TENSOR",
+              [
+                1,
+                24,
+                26,
+                26,
+                1,
+                16
+              ],
+              "int8"
+            ],
+            [
+              "TENSOR",
+              [
+                16,
+                24,
+                3,
+                3,
+                16,
+                16
+              ],
+              "int8"
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            "NCHW1n16c",
+            "int32"
+          ]
+        },
+        "implementation_mode": 0,
+        "knobs": {
+          "h_nthread": 1,
+          "oc_nthread": 1,
+          "tile_b": 1,
+          "tile_ci": 1,
+          "tile_co": 1,
+          "tile_h": 26,
+          "tile_w": 2
+        },
+        "performance_label": null,
+        "public_mode": "original",
+        "schema": "c3_p7r119_yolo_barrier_pilot_v2",
+        "selection_basis": "P7R118 four-mode legal; full-height, tile_w=2, tile_ci=1; tile_co sweep 1/2/8; no DMA, FSim, board, or TopHub label",
+        "workload_id": "Y02"
+      },
+      {
+        "board_status": "not_dispatched",
+        "candidate_id": "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+        "debug": {
+          "config_index": 7
+        },
+        "family_id": "Y02B00",
+        "family_ordinal": 0,
+        "fresh_axu_cross_certificate": {
+          "binary_retained": false,
+          "binary_sha256": "4d3c829c0f50ab59d9b09ca3541750e200570a6ca2a8cc3e53d5772ef98249cd",
+          "binary_size_bytes": 24216,
+          "candidate_id": "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+          "family_id": "Y02B00",
+          "public_mode": "input_stationary",
+          "status": "passed",
+          "tir_sha256": "7ceb6f6a31b0fcb828fe72dcaa862af3baa956ec6ec2cfc0dee4a54c3a1f43b9"
+        },
+        "identity": {
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  26
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ]
+          },
+          "hardware_fingerprint": {
+            "acc_buff_size": 131072,
+            "batch": 1,
+            "block_in": 16,
+            "block_out": 16,
+            "inp_buff_size": 32768,
+            "target": "axu5evb",
+            "uop_buff_size": 32768,
+            "wgt_buff_size": 262144
+          },
+          "implementation_mode": 1,
+          "public_mode": "input_stationary",
+          "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+          "schema": "c3_candidate_id_v2",
+          "template_name": "conv2d_packed_residency.vta",
+          "workload": [
+            "conv2d_packed.vta",
+            [
+              "TENSOR",
+              [
+                1,
+                24,
+                26,
+                26,
+                1,
+                16
+              ],
+              "int8"
+            ],
+            [
+              "TENSOR",
+              [
+                16,
+                24,
+                3,
+                3,
+                16,
+                16
+              ],
+              "int8"
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            "NCHW1n16c",
+            "int32"
+          ]
+        },
+        "implementation_mode": 1,
+        "knobs": {
+          "h_nthread": 1,
+          "oc_nthread": 1,
+          "tile_b": 1,
+          "tile_ci": 1,
+          "tile_co": 1,
+          "tile_h": 26,
+          "tile_w": 2
+        },
+        "performance_label": null,
+        "public_mode": "input_stationary",
+        "schema": "c3_p7r119_yolo_barrier_pilot_v2",
+        "selection_basis": "P7R118 four-mode legal; full-height, tile_w=2, tile_ci=1; tile_co sweep 1/2/8; no DMA, FSim, board, or TopHub label",
+        "workload_id": "Y02"
+      },
+      {
+        "board_status": "not_dispatched",
+        "candidate_id": "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "debug": {
+          "config_index": 7
+        },
+        "family_id": "Y02B00",
+        "family_ordinal": 0,
+        "fresh_axu_cross_certificate": {
+          "binary_retained": false,
+          "binary_sha256": "9173937644520ac22313fdce72076a512a142a4163b2421b8698de8cbec26c08",
+          "binary_size_bytes": 24216,
+          "candidate_id": "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+          "family_id": "Y02B00",
+          "public_mode": "weight_resident_barrier",
+          "status": "passed",
+          "tir_sha256": "cf3871a68e5949b0629e8c12f7f34b3c3972bd5da70e4b99e1a1e897e92ffa1d"
+        },
+        "identity": {
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  26
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ]
+          },
+          "hardware_fingerprint": {
+            "acc_buff_size": 131072,
+            "batch": 1,
+            "block_in": 16,
+            "block_out": 16,
+            "inp_buff_size": 32768,
+            "target": "axu5evb",
+            "uop_buff_size": 32768,
+            "wgt_buff_size": 262144
+          },
+          "implementation_mode": 4,
+          "public_mode": "weight_resident_barrier",
+          "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+          "schema": "c3_candidate_id_v2",
+          "template_name": "conv2d_packed_residency.vta",
+          "workload": [
+            "conv2d_packed.vta",
+            [
+              "TENSOR",
+              [
+                1,
+                24,
+                26,
+                26,
+                1,
+                16
+              ],
+              "int8"
+            ],
+            [
+              "TENSOR",
+              [
+                16,
+                24,
+                3,
+                3,
+                16,
+                16
+              ],
+              "int8"
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            "NCHW1n16c",
+            "int32"
+          ]
+        },
+        "implementation_mode": 4,
+        "knobs": {
+          "h_nthread": 1,
+          "oc_nthread": 1,
+          "tile_b": 1,
+          "tile_ci": 1,
+          "tile_co": 1,
+          "tile_h": 26,
+          "tile_w": 2
+        },
+        "performance_label": null,
+        "public_mode": "weight_resident_barrier",
+        "schema": "c3_p7r119_yolo_barrier_pilot_v2",
+        "selection_basis": "P7R118 four-mode legal; full-height, tile_w=2, tile_ci=1; tile_co sweep 1/2/8; no DMA, FSim, board, or TopHub label",
+        "workload_id": "Y02"
+      },
+      {
+        "board_status": "not_dispatched",
+        "candidate_id": "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+        "debug": {
+          "config_index": 135
+        },
+        "family_id": "Y02B01",
+        "family_ordinal": 1,
+        "fresh_axu_cross_certificate": {
+          "binary_retained": false,
+          "binary_sha256": "2732f5e7c42efa599cbe01523a1232ea48ab940c3ca3eb46cbe652b2928226ae",
+          "binary_size_bytes": 24216,
+          "candidate_id": "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+          "family_id": "Y02B01",
+          "public_mode": "original",
+          "status": "passed",
+          "tir_sha256": "4ab96bfdd01c30c39f53312d6ae8d768ebdd8ff65d29101ffce0d9556bde0155"
+        },
+        "identity": {
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  26
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ]
+          },
+          "hardware_fingerprint": {
+            "acc_buff_size": 131072,
+            "batch": 1,
+            "block_in": 16,
+            "block_out": 16,
+            "inp_buff_size": 32768,
+            "target": "axu5evb",
+            "uop_buff_size": 32768,
+            "wgt_buff_size": 262144
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+          "schema": "c3_candidate_id_v2",
+          "template_name": "conv2d_packed_residency.vta",
+          "workload": [
+            "conv2d_packed.vta",
+            [
+              "TENSOR",
+              [
+                1,
+                24,
+                26,
+                26,
+                1,
+                16
+              ],
+              "int8"
+            ],
+            [
+              "TENSOR",
+              [
+                16,
+                24,
+                3,
+                3,
+                16,
+                16
+              ],
+              "int8"
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            "NCHW1n16c",
+            "int32"
+          ]
+        },
+        "implementation_mode": 0,
+        "knobs": {
+          "h_nthread": 1,
+          "oc_nthread": 1,
+          "tile_b": 1,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "tile_h": 26,
+          "tile_w": 2
+        },
+        "performance_label": null,
+        "public_mode": "original",
+        "schema": "c3_p7r119_yolo_barrier_pilot_v2",
+        "selection_basis": "P7R118 four-mode legal; full-height, tile_w=2, tile_ci=1; tile_co sweep 1/2/8; no DMA, FSim, board, or TopHub label",
+        "workload_id": "Y02"
+      },
+      {
+        "board_status": "not_dispatched",
+        "candidate_id": "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+        "debug": {
+          "config_index": 135
+        },
+        "family_id": "Y02B01",
+        "family_ordinal": 1,
+        "fresh_axu_cross_certificate": {
+          "binary_retained": false,
+          "binary_sha256": "ba2f2a8e086d76644dc8ec4f2bed1b57c1d950a19cb5ea7742897614f3271d9b",
+          "binary_size_bytes": 24216,
+          "candidate_id": "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+          "family_id": "Y02B01",
+          "public_mode": "input_stationary",
+          "status": "passed",
+          "tir_sha256": "d96c5b08716963a0a0ec15c86d3cc6ab3d4f5ff6dc4e7913e90d75bfb3183a04"
+        },
+        "identity": {
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  26
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ]
+          },
+          "hardware_fingerprint": {
+            "acc_buff_size": 131072,
+            "batch": 1,
+            "block_in": 16,
+            "block_out": 16,
+            "inp_buff_size": 32768,
+            "target": "axu5evb",
+            "uop_buff_size": 32768,
+            "wgt_buff_size": 262144
+          },
+          "implementation_mode": 1,
+          "public_mode": "input_stationary",
+          "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+          "schema": "c3_candidate_id_v2",
+          "template_name": "conv2d_packed_residency.vta",
+          "workload": [
+            "conv2d_packed.vta",
+            [
+              "TENSOR",
+              [
+                1,
+                24,
+                26,
+                26,
+                1,
+                16
+              ],
+              "int8"
+            ],
+            [
+              "TENSOR",
+              [
+                16,
+                24,
+                3,
+                3,
+                16,
+                16
+              ],
+              "int8"
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            "NCHW1n16c",
+            "int32"
+          ]
+        },
+        "implementation_mode": 1,
+        "knobs": {
+          "h_nthread": 1,
+          "oc_nthread": 1,
+          "tile_b": 1,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "tile_h": 26,
+          "tile_w": 2
+        },
+        "performance_label": null,
+        "public_mode": "input_stationary",
+        "schema": "c3_p7r119_yolo_barrier_pilot_v2",
+        "selection_basis": "P7R118 four-mode legal; full-height, tile_w=2, tile_ci=1; tile_co sweep 1/2/8; no DMA, FSim, board, or TopHub label",
+        "workload_id": "Y02"
+      },
+      {
+        "board_status": "not_dispatched",
+        "candidate_id": "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+        "debug": {
+          "config_index": 135
+        },
+        "family_id": "Y02B01",
+        "family_ordinal": 1,
+        "fresh_axu_cross_certificate": {
+          "binary_retained": false,
+          "binary_sha256": "1756d02162702a7fb5267234a5e10273a410daaa39dc63c8efbb395df0e5726e",
+          "binary_size_bytes": 24216,
+          "candidate_id": "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+          "family_id": "Y02B01",
+          "public_mode": "weight_resident_barrier",
+          "status": "passed",
+          "tir_sha256": "9375ebda6ef9873d59c0375ce104e77adff3e436a3508f932eb9c52b3cccb3f5"
+        },
+        "identity": {
+          "complete_config_entity": {
+            "code_hash": null,
+            "entity": [
+              [
+                "tile_b",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_h",
+                "sp",
+                [
+                  -1,
+                  26
+                ]
+              ],
+              [
+                "tile_w",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "tile_ci",
+                "sp",
+                [
+                  -1,
+                  1
+                ]
+              ],
+              [
+                "tile_co",
+                "sp",
+                [
+                  -1,
+                  2
+                ]
+              ],
+              [
+                "oc_nthread",
+                "ot",
+                1
+              ],
+              [
+                "h_nthread",
+                "ot",
+                1
+              ]
+            ]
+          },
+          "hardware_fingerprint": {
+            "acc_buff_size": 131072,
+            "batch": 1,
+            "block_in": 16,
+            "block_out": 16,
+            "inp_buff_size": 32768,
+            "target": "axu5evb",
+            "uop_buff_size": 32768,
+            "wgt_buff_size": 262144
+          },
+          "implementation_mode": 4,
+          "public_mode": "weight_resident_barrier",
+          "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+          "schema": "c3_candidate_id_v2",
+          "template_name": "conv2d_packed_residency.vta",
+          "workload": [
+            "conv2d_packed.vta",
+            [
+              "TENSOR",
+              [
+                1,
+                24,
+                26,
+                26,
+                1,
+                16
+              ],
+              "int8"
+            ],
+            [
+              "TENSOR",
+              [
+                16,
+                24,
+                3,
+                3,
+                16,
+                16
+              ],
+              "int8"
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            "NCHW1n16c",
+            "int32"
+          ]
+        },
+        "implementation_mode": 4,
+        "knobs": {
+          "h_nthread": 1,
+          "oc_nthread": 1,
+          "tile_b": 1,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "tile_h": 26,
+          "tile_w": 2
+        },
+        "performance_label": null,
+        "public_mode": "weight_resident_barrier",
+        "schema": "c3_p7r119_yolo_barrier_pilot_v2",
+        "selection_basis": "P7R118 four-mode legal; full-height, tile_w=2, tile_ci=1; tile_co sweep 1/2/8; no DMA, FSim, board, or TopHub label",
+        "workload_id": "Y02"
+      }
+    ],
+    "equal_dispatch_budget": "two same-tile identities per mode; no replacements",
+    "families": [
+      "Y02B00",
+      "Y02B01"
+    ],
+    "gross_candidates": 6,
+    "pool_commitment_sha256": "0e2cde2d767b1a98129e96127f8e6483db00113d9302b6136ed5dfd1e8b27988",
+    "public_modes": {
+      "input_stationary": 1,
+      "original": 0,
+      "weight_resident_barrier": 4
+    }
+  },
+  "claim_limits": [
+    "single geometry and current RPC session only",
+    "boot ID is unknown because SSH is unavailable and RPC exposes no boot identity",
+    "no stage/FPS, cross-boot, full-pool-oracle, or exact-paper-reproduction claim"
+  ],
+  "correctness": {
+    "candidate_order": [
+      "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+      "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+      "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+      "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+      "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+      "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772"
+    ],
+    "checks": "elementwise exact equality against independent NumPy reference",
+    "failure_policy": "record and stop failed identity; no candidate is timed unless global 6/6 gate passes",
+    "seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "timing_gate": "all six identities must pass all three seeds"
+  },
+  "fresh_hardware_certificate_v2": {
+    "claim": "local AXU build/export only; board correctness is not inherited",
+    "cross_compiler": "aarch64-xilinx-linux-g++ (GCC) 9.2.0",
+    "elapsed_seconds": 1.1199723640020238,
+    "hardware_fingerprint": {
+      "ACC_BUFF_SIZE": 131072,
+      "BATCH": 1,
+      "BLOCK_IN": 16,
+      "BLOCK_OUT": 16,
+      "INP_BUFF_SIZE": 32768,
+      "TARGET": "axu5evb",
+      "UOP_BUFF_SIZE": 32768,
+      "WGT_BUFF_SIZE": 262144,
+      "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+      "target_host": "llvm -keys=arm_cpu,cpu -mtriple=aarch64-linux-gnu"
+    },
+    "qualified_candidates": [
+      {
+        "binary_retained": false,
+        "binary_sha256": "c29b748a2684a066f8fde50795368c83b71e6d51cdae966bdee4860216d325de",
+        "binary_size_bytes": 24216,
+        "candidate_id": "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+        "family_id": "Y02B00",
+        "public_mode": "original",
+        "status": "passed",
+        "tir_sha256": "a2721cec2729385f0dfe511c5a8e57dd1a9fdccc7390e27e0806ebe33947d9df"
+      },
+      {
+        "binary_retained": false,
+        "binary_sha256": "4d3c829c0f50ab59d9b09ca3541750e200570a6ca2a8cc3e53d5772ef98249cd",
+        "binary_size_bytes": 24216,
+        "candidate_id": "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+        "family_id": "Y02B00",
+        "public_mode": "input_stationary",
+        "status": "passed",
+        "tir_sha256": "7ceb6f6a31b0fcb828fe72dcaa862af3baa956ec6ec2cfc0dee4a54c3a1f43b9"
+      },
+      {
+        "binary_retained": false,
+        "binary_sha256": "9173937644520ac22313fdce72076a512a142a4163b2421b8698de8cbec26c08",
+        "binary_size_bytes": 24216,
+        "candidate_id": "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "family_id": "Y02B00",
+        "public_mode": "weight_resident_barrier",
+        "status": "passed",
+        "tir_sha256": "cf3871a68e5949b0629e8c12f7f34b3c3972bd5da70e4b99e1a1e897e92ffa1d"
+      },
+      {
+        "binary_retained": false,
+        "binary_sha256": "2732f5e7c42efa599cbe01523a1232ea48ab940c3ca3eb46cbe652b2928226ae",
+        "binary_size_bytes": 24216,
+        "candidate_id": "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+        "family_id": "Y02B01",
+        "public_mode": "original",
+        "status": "passed",
+        "tir_sha256": "4ab96bfdd01c30c39f53312d6ae8d768ebdd8ff65d29101ffce0d9556bde0155"
+      },
+      {
+        "binary_retained": false,
+        "binary_sha256": "ba2f2a8e086d76644dc8ec4f2bed1b57c1d950a19cb5ea7742897614f3271d9b",
+        "binary_size_bytes": 24216,
+        "candidate_id": "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+        "family_id": "Y02B01",
+        "public_mode": "input_stationary",
+        "status": "passed",
+        "tir_sha256": "d96c5b08716963a0a0ec15c86d3cc6ab3d4f5ff6dc4e7913e90d75bfb3183a04"
+      },
+      {
+        "binary_retained": false,
+        "binary_sha256": "1756d02162702a7fb5267234a5e10273a410daaa39dc63c8efbb395df0e5726e",
+        "binary_size_bytes": 24216,
+        "candidate_id": "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+        "family_id": "Y02B01",
+        "public_mode": "weight_resident_barrier",
+        "status": "passed",
+        "tir_sha256": "9375ebda6ef9873d59c0375ce104e77adff3e436a3508f932eb9c52b3cccb3f5"
+      }
+    ],
+    "sealed_canary": {
+      "binary_retained": false,
+      "binary_sha256": "797499e77ec40811161340013b9cbfe209b875591777ea172d4ddec05fc22499",
+      "binary_size_bytes": 24216,
+      "status": "passed",
+      "tir_sha256": "8b7410dece033b49a58a313d02949d19abea6f8b9d3df6b532999db8baa21a69"
+    },
+    "source_guards_sha256": {
+      "3rdparty/vta-hw/config/vta_config.json": "7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d",
+      "build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+      "src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+      "vta/python/vta/top/vta_conv2d.py": "cdffe82fdc55df4bb8661421ba98f712b10b3b0ade95020129d0d6c246fb29ce",
+      "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+      "vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+      "vta/runtime/runtime.cc": "036ce52832c414d8dfd765e78ebe0fc1c991734657a82a4b947ec4ec95cc9f1d"
+    },
+    "sysroot": "/home/orange/alinx_plsdk/install/sysroots/aarch64-xilinx-linux"
+  },
+  "rpc_contract": {
+    "board_restart_forbidden": true,
+    "boot_id": "unknown_not_exposed_by_rpc",
+    "boot_id_semantics": "must remain unknown unless a read-only RPC runtime API exposes it",
+    "host": "192.168.1.247",
+    "module_transport": "ephemeral RPC upload, load_module, then immediate remote.remove",
+    "optional_runtime_functions": [
+      "vta.runtime.profiler_clear",
+      "vta.runtime.queue_capacity_status",
+      "vta.runtime.replay_status"
+    ],
+    "persistent_board_write_forbidden": true,
+    "port": 9090,
+    "required_runtime_functions": [
+      "vta.runtime.profiler_status"
+    ],
+    "ssh_forbidden": true,
+    "transport": "direct TVM RPC only"
+  },
+  "schema": "c3_p7r120_y02_rpc_board_contract_v2",
+  "sealed_reference": {
+    "candidate_id": "31ae639b7e40a34ca04b99bb7dba1952734cff8eca863bc138173a9c54d69063",
+    "debug": {
+      "config_index": 650,
+      "config_index_semantics": "residency-template adapter only; not TopHub identity",
+      "source_tophub_config_index": 526
+    },
+    "execution_role": "pre/post timing canary and protected fallback",
+    "fresh_axu_cross_certificate": {
+      "binary_retained": false,
+      "binary_sha256": "797499e77ec40811161340013b9cbfe209b875591777ea172d4ddec05fc22499",
+      "binary_size_bytes": 24216,
+      "status": "passed",
+      "tir_sha256": "8b7410dece033b49a58a313d02949d19abea6f8b9d3df6b532999db8baa21a69"
+    },
+    "identity": {
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              13
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              13
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "config_serialization_note": "TopHub stores resolved outer split factors while the isolated adapter stores -1 for inferred factors; semantic knob sizes are identical",
+      "execution_adapter": "conv2d_packed_residency.vta mode0 original schedule branch",
+      "package_sha256": "8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc",
+      "public_mode": "sealed_tophub_canary",
+      "schema": "c3_sealed_tophub_canary_identity_v1",
+      "selection_role": "independent pre/post canary and deployment fallback only",
+      "semantic_knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 13,
+        "tile_w": 13
+      },
+      "source_tophub_complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              1,
+              13
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              1,
+              13
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "source_workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            24,
+            26,
+            26,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            24,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            24,
+            26,
+            26,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            24,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ]
+    },
+    "implementation_mode": 0,
+    "included_in_search_candidates": false,
+    "included_in_training_labels": false,
+    "prohibited_roles": [
+      "candidate generation",
+      "search dispatch",
+      "training label"
+    ],
+    "public_mode": "sealed_tophub_canary",
+    "reveal_phase": "after P7R119 pool freeze and local FSim measurements"
+  },
+  "source": {
+    "p7r115_contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r115_yolo_confirmation_protocol_run01/contract.json",
+      "sha256": "e46bdc76eac67c254f311bc82c24e55d490238d76d339369674167d2cfeac06e"
+    },
+    "p7r119_artifact_ledger_sha256": "6b95e86ada2ef880fffa3d8dd8dbb20a757ef142658e73a20d29c5ff02adadd8",
+    "p7r119_artifacts": {
+      "STATUS.md": "a9d3cfbfeca44a4eaedf590ee4e25e65d857c54cbaf1e4d5b4009c69a662d400",
+      "candidates_v2.jsonl": "692b284ba630b619060be78c80a0fe0ee60c2873002d4c01d138243bdd9cc4f6",
+      "command.txt": "9164ca65f7acd04ad12e4db485265b3ea54ca776f835e124addecee238244950",
+      "fsim_results.jsonl": "031e4560ba81ff085f9993267d829567988da1e0909de084bddbacb99ade3ea8",
+      "minimum_access_policy_v2.jsonl": "56469abf3094b88e5ec7acb45d640f8c216f2c3564790d9e00fbc80bfa0671b5",
+      "pre_fsim_hashes.json": "d0a012460a804c8deb7bba16fe486014757a1c12afc51e8f3100c6003399a9cc",
+      "pre_run_hashes.json": "792c4d169e27bd8b1f6fdffc282fe0b65b1d6cb62ce4dcaf8e20d1215152043a",
+      "preregistered.json": "de2c840cdd1f19f8d383011ec173e586f4c2ef7a6c578c553a3ea7cd47dd03c2",
+      "report.json": "3e13f12eb8ca75d11acd03e104c0193534304adf0d22d6fcc6762d725b161e13",
+      "static_results.jsonl": "81ff719f7942fe5ba36a174392afef75014b36b580c469156d6b3ab9c5017294",
+      "stderr.log": "082f5f579612578fd1483368ba007408a68176722af075367ea218c28e52e681"
+    },
+    "p7r119_dir": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r119_y02_weight_resident_barrier_pilot_v2_run01"
+  },
+  "status": "frozen_after_local_cross_qualification_before_rpc_labels",
+  "study_tier": "six_candidate_y02_mode4_board_pilot",
+  "timing": {
+    "balance": "one sample per candidate per round; cyclic rotations balance positions over first six rounds",
+    "canary_bracketing": "sealed TopHub once before and once after candidate order in every round",
+    "canary_samples": 14,
+    "candidate_invocations_per_round": 1,
+    "candidate_orders": [
+      [
+        "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+        "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+        "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+        "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+        "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d"
+      ],
+      [
+        "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+        "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+        "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+        "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+        "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772"
+      ],
+      [
+        "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+        "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+        "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+        "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+        "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9"
+      ],
+      [
+        "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+        "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+        "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+        "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+        "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6"
+      ],
+      [
+        "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+        "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+        "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+        "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+        "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed"
+      ],
+      [
+        "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+        "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+        "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+        "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+        "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+        "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861"
+      ],
+      [
+        "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+        "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+        "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+        "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+        "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d"
+      ]
+    ],
+    "candidate_samples": 42,
+    "order_seed": 20260911,
+    "output_check": "verify the output produced by every timed invocation",
+    "rounds": 7
+  }
+}

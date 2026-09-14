@@ -1,0 +1,166 @@
+{
+  "candidate_order": [
+    "9d893f2ead727cafa959731d56eb5c40beacde543e7fb20ef08bf090a62149a4",
+    "4a6ad8246d54bafe728949e54e4ca0566cdd136659d39d361d5adff8f10822fc",
+    "c7c0c1ff8fe65c9969c0d196e933a697b58964f5dc8451681b20037715137080",
+    "54fc68278fa74c3fe280d9c6419958511258a4d3bae748c2cd8655ba8952978f",
+    "7fb2295c4c7279dc46193f829ba19518e4e19a3e195137b8fe47b87dad4d6c6c",
+    "9c4977af6f93f96d9b49bf540d4b5875cbe53b8810f62007d73469f36bd5da7b",
+    "45573b8b2b91f51d514bd4bf59c48aa8b6af8d53fd780342c48258c3e31e1361",
+    "a6e52f36df5b296dfd0f8b860ff9f5137fc3421e1fdb17099a75040c70fa1d85",
+    "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c",
+    "423345af4098fd1b9f901f8b46e6f5a141d3cd187b6fce2b6951439c586a12a5",
+    "868e26936b2140170a1cf5cf13f16ea22eef100e9f0eec5e3fdebdfce6c09a54"
+  ],
+  "failure_policy": "health fail stops before Y00; candidate first error rejects identity; any timed mismatch stops",
+  "health_canary": {
+    "candidate_id": "6374bca35bb59bb20cbb07532e5ba29ca3a56225023cf8d632b80063818d5d77",
+    "debug": {
+      "config_index": 575
+    },
+    "identity": {
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "historical_candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "historical_tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060",
+      "implementation": "conv2d_packed_residency.vta mode0 original branch",
+      "schema": "c3_p7r122_w05_health_canary_identity_v1",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W05"
+    },
+    "implementation_mode": 0,
+    "performance_measurement": "not_collected",
+    "public_mode": "original",
+    "role": "health_gate_only"
+  },
+  "p7r132": {
+    "artifact_ledger_sha256": "c26811f25fc24c5f049c9fbf3ad24212a53b9e5112c9f84a41f0b4f8586031e8",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r132_y00_search_confirmation_contract_run02"
+  },
+  "persistent_board_write": false,
+  "rpc": {
+    "host": "192.168.1.247",
+    "port": 9090,
+    "session_timeout": 120
+  },
+  "schema": "c3_p7r133_y00_search_confirmation_board_v1",
+  "search_budgets": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "search_policies": [
+    "random",
+    "stock_knob_xgb",
+    "rules_only",
+    "paper_minimum_access",
+    "shared_memory_lexicographic",
+    "validity_v",
+    "v_plus_delta_t",
+    "v_plus_delta_t_request",
+    "v_plus_delta_t_command"
+  ],
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "status": "frozen_before_current_board_observation",
+  "timing_rounds": 7
+}

@@ -1,0 +1,120 @@
+{
+  "analyzer_source_sha256": "075e84a67775e7ddd4280023385032bf45e7ce18c16ecf507f6fb06fb0da2629",
+  "claim_boundary": "The confirmation changes tile but not workload, network or boot, and historical operator correctness/performance data exist even though they were excluded from selection.  It is a call-site/full-graph latency holdout, not an independent model/workload holdout, a natural failed-bundle test, or global-optimum proof",
+  "development_domains": {
+    "R50A_F06_input_residency": {
+      "bundle_delta_ms": -6.977019999999982,
+      "bundle_model_execution_calls": 20,
+      "finding": "same_selected_bundle_with_fewer_board_executions",
+      "singleton_model_execution_calls": 60
+    },
+    "R50B_weight_residency": {
+      "bundle_delta_ms": -1.000060000000019,
+      "bundle_selected_mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "finding": "singleton_false_negative_avoided_by_bundle",
+      "singleton_selected_mask": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "latency_holdout": {
+    "bundle_delta_ms": -47.839499000000046,
+    "bundle_median_latency_ms": {
+      "incumbent": 422.291663,
+      "proposal": 374.452164
+    },
+    "bundle_model_execution_calls": 20,
+    "bundle_paired_rounds": 7,
+    "bundle_paired_wins": 7,
+    "bundle_selected_mask": [
+      1,
+      1,
+      1
+    ],
+    "bundle_speedup_percent": 12.775863941862564,
+    "execution_reduction_percent": 66.66666666666667,
+    "graph_nodes": [
+      67,
+      80,
+      93
+    ],
+    "knobs": {
+      "h_nthread": 1,
+      "oc_nthread": 1,
+      "tile_b": 1,
+      "tile_ci": 8,
+      "tile_co": 2,
+      "tile_h": 1,
+      "tile_w": 7
+    },
+    "name": "R50A_F00",
+    "prospective_dma_delta": {
+      "load_buffer_2d_acc_bytes": 0,
+      "load_buffer_2d_acc_calls": -1008,
+      "load_buffer_2d_bytes": -3612672,
+      "load_buffer_2d_calls": -9072,
+      "load_buffer_2d_inp_bytes": -3612672,
+      "load_buffer_2d_inp_calls": -4032,
+      "load_buffer_2d_wgt_bytes": 0,
+      "load_buffer_2d_wgt_calls": -4032,
+      "store_buffer_2d_bytes": 0,
+      "store_buffer_2d_calls": 0
+    },
+    "selection_scope": {
+      "full_graph_latency_unseen_before_contract": true,
+      "new_model_or_workload": false,
+      "new_tile": true,
+      "operator_correctness_previously_known": true,
+      "operator_latency_used_for_selection": false,
+      "partial_mask_latency_unseen_before_contract": true
+    },
+    "singleton_model_execution_calls": 60,
+    "singleton_results": [
+      {
+        "accepted": true,
+        "graph_node": 67,
+        "paired_delta_ms": -15.08832000000001,
+        "paired_wins": 7
+      },
+      {
+        "accepted": true,
+        "graph_node": 80,
+        "paired_delta_ms": -16.09854999999999,
+        "paired_wins": 7
+      },
+      {
+        "accepted": true,
+        "graph_node": 93,
+        "paired_delta_ms": -15.993310000000008,
+        "paired_wins": 7
+      }
+    ],
+    "singleton_selected_mask": [
+      1,
+      1,
+      1
+    ]
+  },
+  "method": "DMA-additivity-guided hierarchical bundle admission",
+  "schema": "c3_vta_grouped_admission_holdout_confirmation_v1",
+  "source_hashes": {
+    "development_artifact_hash_manifest": "669b3412c511256b9189f4c550953ac311e210cf71c75032d9e3a056f4b3e0cd",
+    "development_summary": "c204f5de0a671d2e6a86fa4218516f9830ea0140c9bda5d38c54a93b901fd01b",
+    "holdout_artifact_hash_manifest": "814779e99eda16ce91bed0232381b28be383050c01d9dc8effdb847f3d1c2bab",
+    "holdout_summary": "f4f6c25973cd7447332b904d05770da3d933b81ac6fd6049db19765fc9c35f00"
+  },
+  "status": "first_callsite_latency_holdout_confirms_group_first_cost_reduction",
+  "supported_claim": "After the group-first rule and 7-of-7 gate were fixed on two development domains, a deterministically chosen new tile with unseen full-graph and partial-mask latency reached the same 111 decision as singleton greedy with 20 instead of 60 full-model executions",
+  "verified_artifact_counts": {
+    "development": 2,
+    "holdout": 2
+  }
+}

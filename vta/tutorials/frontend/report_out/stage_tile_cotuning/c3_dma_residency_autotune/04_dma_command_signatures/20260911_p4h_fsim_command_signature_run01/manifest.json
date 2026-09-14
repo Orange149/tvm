@@ -1,0 +1,64 @@
+{
+  "date": "2026-09-11",
+  "environment": {
+    "VTA_QUEUE_DIAGNOSTICS": "set to 1 in each isolated worker",
+    "board_contacted": false,
+    "performance_measurement": "not_collected",
+    "python": "/home/orange/miniconda3/envs/vta-resnet/bin/python",
+    "python_version": "3.10.20",
+    "ssh_used": false,
+    "tvm_version": "0.13.0",
+    "vta_hw_path": "/tmp/vta-hw-fsim",
+    "vta_target": "sim"
+  },
+  "inputs": {
+    "p3e_results": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/03_residency_schedules/20260910_p3e_weight_barrier_legalizer_run01/results.jsonl",
+      "sha256": "e95a15a33bbc04289bbe19163ee5e4dabe59454bc132d23f0dc43787fc2ac54a"
+    },
+    "p4b_results": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/results.jsonl",
+      "sha256": "cddcdc503163e1f4cfda1a53933d4577c804b6842be818e0bbb616a431b9d2d9"
+    },
+    "p4g_results": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260911_p4g_weight_barrier_pool_run01/results.jsonl",
+      "sha256": "4fc76735aa2450621dbe5b461ae2da268847925ac7cbee2bb80ec475751b4f97"
+    }
+  },
+  "results": {
+    "claim_boundary": {
+      "board_qualified_capacity": false,
+      "board_runtime_semantic_equivalence": "not_established",
+      "end_to_end_fps": "not_measured",
+      "performance_measurement": "not_collected",
+      "single_operator_fps": "not_measured"
+    },
+    "diagnostic_records": 14,
+    "elementwise_correct": 6,
+    "mode4_drain_matches_p3e": 3,
+    "outcomes": {
+      "passed_local_signature": 6
+    },
+    "passed_local_signature": 6,
+    "schema": "c3_fsim_command_signature_summary_v1",
+    "scope": "six local FSim seed-0 correctness command dry-runs; no board and no performance",
+    "selected_candidates": 6,
+    "status": "fsim_dry_run"
+  },
+  "schema": "c3_p4h_manifest_v1",
+  "sources": {
+    "collector": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/collect_vta_fsim_command_signatures.py",
+      "sha256": "3151a86c986cd666e72ba3e01403af459cfbcaae8abbd2abafe448f4ab62f1c2"
+    },
+    "libvta_fsim": {
+      "path": "/home/orange/code/tvm/build/libvta_fsim.so",
+      "sha256": "8bf414f47b49b3c695deac5740a7a193e3f29d467959d4f8c1e0e50007be8f94"
+    },
+    "runtime": {
+      "path": "/home/orange/code/tvm/vta/runtime/runtime.cc",
+      "sha256": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+    }
+  },
+  "status": "fsim_dry_run"
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "c3_p3e_weight_barrier_legalizer_summary_v1",
+  "status": "completed_positive_local_proof",
+  "decision": "go_local_compiler_explicit_drain_proof",
+  "scope": "compiler dependency handling and local FSim correctness; not hardware prefetch; no performance measurement",
+  "representatives": 3,
+  "lower_build_ok": 3,
+  "dependency_gate_met": 3,
+  "fsim_seed_runs": 9,
+  "fsim_seed_runs_correct": 9,
+  "weight_dma_gate": {
+    "threshold_fraction": 0.2,
+    "met_by": ["W00", "W02"],
+    "W00_reduction_fraction": 0.8571428571428571,
+    "W02_reduction_fraction": 0.75,
+    "W09_reduction_fraction": 0.0
+  },
+  "sync": {
+    "placement": "after the full x_i0 spatial region inside each x_co0 weight-residency iteration",
+    "residency_drain_executions": {"W00": 2, "W02": 4, "W09": 2},
+    "existing_function_final_drain_executions": {"W00": 1, "W02": 1, "W09": 1}
+  },
+  "pure_tir_tests": "6/6 passed",
+  "final_combined_regression": "50/50 passed",
+  "original_frozen_tir": "passed",
+  "modes_0_to_3": "passed",
+  "runtime_check_removed": false,
+  "board_contacted": false,
+  "performance_timing_collected": false
+}

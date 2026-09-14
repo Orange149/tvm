@@ -1,0 +1,127 @@
+{
+  "schema": "c3_p7r_support_transfer_confirmation_v1",
+  "status": "frozen_before_target_fsim_fpga_or_latency_labels",
+  "performance_label_use": "development anchors only; no W03/W05/W06 residency labels",
+  "selection_rule": "exact mapping-structure support transfer plus target-local analytic/lowering and DMA-Pareto certificates",
+  "mapping_signature_fields": [
+    "tile_b",
+    "tile_h",
+    "tile_w",
+    "tile_ci",
+    "tile_co",
+    "oc_nthread",
+    "h_nthread"
+  ],
+  "primary_hypothesis": "each transferred candidate has positive same-tile speedup on its target workload",
+  "secondary_hypothesis": "larger target total-DMA Pareto margin tends to yield larger speedup",
+  "candidate_count": 3,
+  "candidates": [
+    {
+      "workload_id": "W03",
+      "config_index": 248,
+      "candidate_id": "d9860b6d8f8a7c3070b6143b55e14301a33d95f0bf710ae601687d328e80fed7",
+      "selection": {
+        "stratum": "support_transfer",
+        "prediction_frozen_before_target_fsim_or_board": "positive_same_tile_speedup",
+        "mapping_signature": [
+          1,
+          4,
+          28,
+          1,
+          4,
+          1,
+          1
+        ],
+        "development_anchor": {
+          "workload_id": "W01",
+          "config_index": 248,
+          "measured_same_tile_speedup_percent": 9.856285403161195
+        },
+        "target_label_free_features": {
+          "input_byte_reduction_fraction": 0.5,
+          "total_byte_reduction_fraction": 0.3431372549019608,
+          "total_call_reduction_fraction": 0.4444444444444444,
+          "certified": true
+        }
+      }
+    },
+    {
+      "workload_id": "W05",
+      "config_index": 174,
+      "candidate_id": "0a7f2c227f6449012ade9e0d38ca02fd49fe73ec15302892146587f0d4c836d7",
+      "selection": {
+        "stratum": "support_transfer",
+        "prediction_frozen_before_target_fsim_or_board": "positive_same_tile_speedup",
+        "mapping_signature": [
+          1,
+          7,
+          14,
+          1,
+          4,
+          1,
+          1
+        ],
+        "development_anchor": {
+          "workload_id": "W04",
+          "config_index": 142,
+          "measured_same_tile_speedup_percent": 18.605718105841753
+        },
+        "target_label_free_features": {
+          "input_byte_reduction_fraction": 0.75,
+          "total_byte_reduction_fraction": 0.11789473684210526,
+          "total_call_reduction_fraction": 0.7272727272727273,
+          "certified": true
+        }
+      }
+    },
+    {
+      "workload_id": "W06",
+      "config_index": 142,
+      "candidate_id": "68c6cc6faa49c6dcb0e4314e17e34a97f45afe0e6e65d22d00eef4c01030fae0",
+      "selection": {
+        "stratum": "support_transfer",
+        "prediction_frozen_before_target_fsim_or_board": "positive_same_tile_speedup",
+        "mapping_signature": [
+          1,
+          7,
+          14,
+          1,
+          4,
+          1,
+          1
+        ],
+        "development_anchor": {
+          "workload_id": "W04",
+          "config_index": 142,
+          "measured_same_tile_speedup_percent": 18.605718105841753
+        },
+        "target_label_free_features": {
+          "input_byte_reduction_fraction": 0.75,
+          "total_byte_reduction_fraction": 0.5673491379310345,
+          "total_call_reduction_fraction": 0.7058823529411765,
+          "certified": true
+        }
+      }
+    }
+  ],
+  "gates": [
+    "residency and same-tile original three-seed FSim",
+    "residency and same-tile original three-seed FPGA correctness",
+    "paired timing only for workloads whose complete correctness contract passes",
+    "final comparison against protected TopHub incumbent"
+  ],
+  "sources": {
+    "scan": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r52_w03_w05_w06_local_space_run01/results.jsonl",
+      "sha256": "3a0ad064e6ca835954ae884e81fc743bc86f6bede6a3483d60777290d746a7a1"
+    },
+    "development_contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7q_qualified_timing_contract_run01/contract.json",
+      "sha256": "dbed44f6260f6acade9dd723875f86f53b843402603447c4a927b7fb618f2246"
+    },
+    "development_effects": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7q5_search_analysis_run01/same_tile_effects.json",
+      "sha256": "0580212e5b3fb6c2adf4b78ddd54a2c69a2f83410a3126295f8186a0feab9707"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "board_contacted": false,
+  "candidate_count": 9,
+  "candidate_identity_schema": "c3_candidate_id_v2",
+  "candidate_order": [
+    "16d2f26c9df99af1be2a9396c8b4944f2532c062da7a6a496ecaa5322268c1ed",
+    "09def4b9c5cfb6c016a3aa94c5cdc02b25c1518d6d30feeff1f0987298a2eec6",
+    "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+    "626624a3d4f6b0cdb206d9300e7eb6006cf7b8bf70e5571bd0b62cd368d915e9",
+    "e5c8ec42d1f4d95ff219869ccd754c665b0e298aebb78121e2c1980e7a08e40d",
+    "ed175e534220b31b1f728d21ebc954e54b98e8295a0c22ec75c5680a383d3772",
+    "0d21531b36f430231a1fcc1045033ce95d0cb47eaa51d694971f218733d93ebc",
+    "b7785ebdc0ace8d6a31dac8f095f58c6d25c34e75ab144b264b15172bedce06e",
+    "5ae1d8e07488c3c1a923df37585dc2cae0e6dc330d374fa6175bb8a02b869bb0"
+  ],
+  "correctness_policy": "three FSim seeds before any future board timing",
+  "forbidden_sources": [
+    "TopHub entity/index/cost",
+    "board timing",
+    "FSim wall time"
+  ],
+  "fsim_timeout_seconds_per_candidate": 300,
+  "gross_budget_policy": "all nine candidates are charged; no replacement",
+  "inputs": {
+    "p3e_mode4_evidence": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/03_residency_schedules/20260910_p3e_weight_barrier_legalizer_run01/results.jsonl",
+      "sha256": "e95a15a33bbc04289bbe19163ee5e4dabe59454bc132d23f0dc43787fc2ac54a"
+    },
+    "p7r115_candidates": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r115_yolo_confirmation_protocol_run01/candidates.jsonl",
+      "sha256": "c21a224b1f0d0005e91788ce89f8d01c91db70628e2f96807ffd7935cd6a5fdf"
+    },
+    "p7r115_domain": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r115_yolo_confirmation_protocol_run01/complete_domain.jsonl",
+      "sha256": "2ee72abe5160fd95db55acead6a74b5b591fc51219ca3e0ba9d994ca803a1870"
+    },
+    "p7r118_legality": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r118_y02_legality_run01/four_mode_scan.jsonl",
+      "sha256": "e9ba3a35c86a6787a3f3dcb1c163bcbede1a78cd0d6d779d033e9ae400f1aab1"
+    }
+  },
+  "legacy_ablation_modes_excluded_from_formal_pool": {
+    "paper_inspired_hybrid": 3,
+    "weight_stationary": 2
+  },
+  "public_modes": {
+    "input_stationary": 1,
+    "original": 0,
+    "weight_resident_barrier": 4
+  },
+  "schema": "c3_p7r119_yolo_barrier_pilot_protocol_v2",
+  "selection_rule": "P7R118 four-mode legal; full-height, tile_w=2, tile_ci=1; tile_co sweep 1/2/8; no DMA, FSim, board, or TopHub label",
+  "status": "frozen_before_static_or_fsim"
+}

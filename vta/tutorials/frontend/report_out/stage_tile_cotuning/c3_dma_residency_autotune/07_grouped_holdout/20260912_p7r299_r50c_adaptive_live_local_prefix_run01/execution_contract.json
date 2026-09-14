@@ -1,0 +1,38 @@
+{
+  "board_contact": "forbidden",
+  "first_family": "R50CF03",
+  "performance_labels": "forbidden",
+  "policy": {
+    "decision_visibility": "only the three paid lowering outcomes of the first family",
+    "dense_path": {
+      "frontier_width": 4,
+      "policy": "hardware_diverse_frontier_service",
+      "promotion_width": 2
+    },
+    "first_family_modes": 3,
+    "first_family_selection": "hardware max-min diversity in F0 knob/SRAM/opportunity space",
+    "name": "adaptive_survival_frontier_service",
+    "service_proxy": {
+      "extra_submission_equivalent_bytes": 131072,
+      "formula": "B_dma + 65536*N_dma + 131072*max(N_submit-1,0)",
+      "request_equivalent_bytes": 65536
+    },
+    "sparse_path": "immediate minimum-service family-wave promotion",
+    "sparse_threshold_lower_passes": 1,
+    "validity_model_in_primary_policy": false
+  },
+  "registry": {
+    "ledger_sha256": "b75309cfa55da55a0c66243d7f4dd22cad2ed3dcfc1e172b846ad6cf791f32cd",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r298_r50c_adaptive_multifidelity_registry_run01"
+  },
+  "schema": "c3_vta_adaptive_multifidelity_live_local_prefix_v1",
+  "source_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/replay_vta_adaptive_multifidelity_search.py": "57ca4e87f5d948647a02bff244c33277722e2bcdb8bef792ccef21f4255fefcc",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_adaptive_multifidelity_local_prefix.py": "ec799366ab986187664b267dfce25adc5cbaf89bc28e6d763b0c7b486ef35e31"
+  },
+  "status": "frozen_before_target_local_actions",
+  "training_pool": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r173_multifidelity_development_pool_run03/multifidelity_pool.json",
+    "sha256": "de547ef65042f3cc898d17814193ba50f21d1235fdb5589bbfd2399720b101b2"
+  }
+}

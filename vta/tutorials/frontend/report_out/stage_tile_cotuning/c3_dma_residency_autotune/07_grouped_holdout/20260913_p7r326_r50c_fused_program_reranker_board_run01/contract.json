@@ -1,0 +1,39 @@
+{
+  "claim_boundary": "Prospective two-tile reranker validation on one ResNet50 model and board boot; logical VTA DMA, not physical AXI or ImageNet accuracy",
+  "executor_source_sha256": "e91c4dd1b78852a1b52a9fae5a9c981cf7a550947f817d182b5d2498e0b74577",
+  "expected_profile_delta_b_minus_a": {
+    "load_buffer_2d_acc_bytes": -122880,
+    "load_buffer_2d_acc_calls": -120,
+    "load_buffer_2d_bytes": -31580160,
+    "load_buffer_2d_calls": 2160,
+    "load_buffer_2d_inp_bytes": 0,
+    "load_buffer_2d_inp_calls": 1140,
+    "load_buffer_2d_wgt_bytes": -31457280,
+    "load_buffer_2d_wgt_calls": 1140,
+    "store_buffer_2d_bytes": 0,
+    "store_buffer_2d_calls": -240
+  },
+  "failure_policy": "fail closed before timing on any output or exact profile mismatch",
+  "program_ids": [
+    "tile_a:input_stationary",
+    "tile_b:input_stationary"
+  ],
+  "reranker_artifact_manifest_sha256": "39b828847f3b6084a34c7464b81b42d32b49627e3553f1d6f616db8053897ac2",
+  "reranker_contract_sha256": "c4f7e2cb9e59950c1be9ffd2a53a73ba26bca7abbb01cb298037e8772787e9b5",
+  "rounds": 7,
+  "schema": "c3_vta_resnet50_fused_program_reranker_board_contract_v1",
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "selected_program": "tile_a:input_stationary",
+  "status": "frozen_before_board_execution",
+  "verified_artifact_counts": {
+    "pair_builds": [
+      10,
+      10
+    ],
+    "reranker_contract": 2
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "candidate_order": [
+    "c599ed5554d10ffca0713daf6b47620617153361d862da52dfefea8d914806bf",
+    "3f843a4308e0b3f336e102fae620ae4ec467ea8a6426663ca470ce4852e63176",
+    "5c4a8b578e713ed546761e165afd16cae86ea6a8d1176dd9581d8da6cf10efc8",
+    "c177932c3afddd9e558bc8c74cc7566270b5c1321acb62582aa0d38004429002",
+    "49a2c50e63bd8325fa9f10f68dd421f1731dbfc13b3725fa3c4fd2d9982ea8f5",
+    "b142432fda56913995072678a5ab990fbe1584d1a3633222cc16ee59a76a8224"
+  ],
+  "clean_board_start": {
+    "enabled": true,
+    "operation": "stop exact default RPC, reload frozen bitstream, start fresh default RPC before the first health/tensor allocation"
+  },
+  "executor_source": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_p7r132_y00_search_confirmation.py",
+    "sha256": "f872a5c3d9a4714c4441e98da6fe859725ce4042e82bc4a556a14d1bce3cbaec"
+  },
+  "failure_policy": "health fail stops before Y01; candidate first error rejects identity; any timed mismatch stops",
+  "health_canary": {
+    "candidate_id": "6374bca35bb59bb20cbb07532e5ba29ca3a56225023cf8d632b80063818d5d77",
+    "debug": {
+      "config_index": 575
+    },
+    "identity": {
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "historical_candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "historical_tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060",
+      "implementation": "conv2d_packed_residency.vta mode0 original branch",
+      "schema": "c3_p7r122_w05_health_canary_identity_v1",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W05"
+    },
+    "implementation_mode": 0,
+    "performance_measurement": "not_collected",
+    "public_mode": "original",
+    "role": "health_gate_only"
+  },
+  "p7r132": {
+    "artifact_ledger_sha256": "8120c9921b91282dabe7c5bdbaf2c0fb8a24bce8443e8ec28090568af44329c1",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r169_y01_six_point_latency_unseen_contract_run01"
+  },
+  "persistent_board_write": false,
+  "rpc": {
+    "host": "192.168.1.247",
+    "port": 9090,
+    "session_timeout": 120
+  },
+  "schema": "c3_y01_search_confirmation_board_v2",
+  "search_budgets": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "search_policies": [
+    "random",
+    "stock_knob_xgb",
+    "rules_only",
+    "paper_minimum_access",
+    "shared_memory_lexicographic",
+    "shared_memory_service_proxy",
+    "validity_v",
+    "v_plus_delta_t",
+    "v_plus_delta_t_request",
+    "v_plus_delta_t_command"
+  ],
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "shared_memory_buffer_policy": {
+    "allocation_order": [
+      "output",
+      "data",
+      "weight"
+    ],
+    "reason": "match frozen qualification layout while avoiding non-freeing u-dma-buf exhaustion",
+    "reuse": "one shape-compatible output/input/weight set per workload"
+  },
+  "status": "frozen_before_current_board_observation",
+  "timing_rounds": 7
+}

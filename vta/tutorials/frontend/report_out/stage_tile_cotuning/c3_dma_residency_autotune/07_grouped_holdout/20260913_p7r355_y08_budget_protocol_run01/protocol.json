@@ -1,0 +1,29 @@
+{
+  "schema": "c3_y08_budget_search_policy_v1",
+  "status": "frozen_before_y08_local_qualification",
+  "target": "Y08 YOLOv3-tiny conv12 CI512 CO1024 H13 W13 K3",
+  "candidate_commitment": "29e2f0bed9b02b9426343b1b08a01a9b47993d6ce2788684feb074035d750ef6",
+  "scope": "new tile/residency candidate pool; historical full-network stock executions exposed",
+  "policies": [
+    "random_lazy_build",
+    "operator_bytes_lazy_build",
+    "operator_calls_lazy_build",
+    "operator_pareto_hash_lazy_build",
+    "operator_pareto_hash_prebuild_ablation"
+  ],
+  "random_seed": 20260913,
+  "sort_ties": "candidate_id",
+  "pareto_axes": [
+    "operator_LOAD_plus_STORE_bytes",
+    "operator_LOAD_plus_STORE_calls",
+    "weight_barrier_indicator"
+  ],
+  "search_budget_seconds": 600,
+  "eligibility": "real lowering plus three seed FSim; candidate FPGA result admitted only after three seed correctness and seven paired rounds",
+  "timing": "Each prospective policy must time a complete outer pipeline, including model preparation, qualification, selection, build, clean start, upload, allocation and measurement. Local qualification discovery run alone is not such a measurement.",
+  "deadline": "no new phase after deadline; running step drains; all overrun charged; late labels excluded",
+  "oracle": "post-collection evaluation only, never online stopping",
+  "failure": "preserve failures and no candidate replacement",
+  "status_if_no_candidates": "record real compiler/FSim failure reasons; no performance claims",
+  "baseline_scope": "Random/bytes/calls are explicit controls, not reproductions of Rieber, XGB or ML2Tuner"
+}

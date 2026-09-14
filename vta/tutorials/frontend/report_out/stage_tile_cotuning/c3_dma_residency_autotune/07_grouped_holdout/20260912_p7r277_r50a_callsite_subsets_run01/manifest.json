@@ -1,0 +1,217 @@
+{
+  "board_contacted": false,
+  "builder_source_sha256": "a39cffd39b5cae734dbe9ffc34512641cea229b17569f327da6665e41bc8b68f",
+  "expected_full_graph_delta": {
+    "load_buffer_2d_acc_bytes": 0,
+    "load_buffer_2d_acc_calls": -12,
+    "load_buffer_2d_bytes": -1204224,
+    "load_buffer_2d_calls": -204,
+    "load_buffer_2d_inp_bytes": -1204224,
+    "load_buffer_2d_inp_calls": -96,
+    "load_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_wgt_calls": -96,
+    "store_buffer_2d_bytes": 0,
+    "store_buffer_2d_calls": 0
+  },
+  "fused_analysis_artifact_hash_manifest_sha256": "04f2308d00d3a2c173799351550d1ecbeebfc669aa147e96f4db8de65050c9df",
+  "fused_analysis_sha256": "4fbc21e63db07b5b006dd55f52875a49ff3b637e3af82a7cb6db8d1bfb01c4d2",
+  "gate": {
+    "correctness_seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "paired_rounds": 7,
+    "required_candidate_wins": 7,
+    "required_median_delta": "strictly_negative"
+  },
+  "label_exposure": "P7R276 full-route latency is exposed, but no R50A call-site or partial-mask latency label was read before this contract",
+  "parameter_count": 120,
+  "parameter_semantic_sha256": "778eb4136dbd80dbba51a67f065c9dfe5a18988fae17584ffcfe790d5ff7e76a",
+  "planned_comparison": "strict singleton greedy uses three proposal pairs; grouped admission first tests 000->111 and recursively splits only if the full group fails",
+  "proposal_order": [
+    67,
+    80,
+    93
+  ],
+  "resident_graphlib": "c3_r50a_input_graphlib.so",
+  "routes": [
+    {
+      "alias_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_7_c3_node67",
+      "expected_delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -4,
+        "load_buffer_2d_bytes": -401408,
+        "load_buffer_2d_calls": -68,
+        "load_buffer_2d_inp_bytes": -401408,
+        "load_buffer_2d_inp_calls": -32,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -32,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_7",
+      "graph_node": 67
+    },
+    {
+      "alias_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9_c3_node80",
+      "expected_delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -4,
+        "load_buffer_2d_bytes": -401408,
+        "load_buffer_2d_calls": -68,
+        "load_buffer_2d_inp_bytes": -401408,
+        "load_buffer_2d_inp_calls": -32,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -32,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9",
+      "graph_node": 80
+    },
+    {
+      "alias_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9_c3_node93",
+      "expected_delta": {
+        "load_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_acc_calls": -4,
+        "load_buffer_2d_bytes": -401408,
+        "load_buffer_2d_calls": -68,
+        "load_buffer_2d_inp_bytes": -401408,
+        "load_buffer_2d_inp_calls": -32,
+        "load_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_wgt_calls": -32,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9",
+      "graph_node": 93
+    }
+  ],
+  "schema": "c3_vta_resnet50_r50a_callsite_subsets_v1",
+  "source_pair_artifact_hash_manifest_sha256": "c1056826f397bbc7cbc2c02931b342a9fb0915671b7eee375407ad80f57188d4",
+  "source_pair_summary_sha256": "5e3f372bf48f3202a99333f85af148a270063ad411084aa007bd51c8fd60b048",
+  "status": "eight_route_subsets_frozen_before_callsite_board_labels",
+  "variants": [
+    {
+      "graph_file": "mask000.json",
+      "graph_sha256": "c5a94d69d034c133903a8546cc6a2e074c04657d4693c40a509486b0856386ed",
+      "mask": [
+        0,
+        0,
+        0
+      ],
+      "resident_graph_nodes": []
+    },
+    {
+      "graph_file": "mask001.json",
+      "graph_sha256": "a9020088082f7d27e81df87716d235971169ec50443a4cd2eea75f5a578170aa",
+      "mask": [
+        0,
+        0,
+        1
+      ],
+      "resident_graph_nodes": [
+        93
+      ]
+    },
+    {
+      "graph_file": "mask010.json",
+      "graph_sha256": "c4879154f5c4939a85f677dcef65a157a34ecd7970c9c4a222a957ba0d325ade",
+      "mask": [
+        0,
+        1,
+        0
+      ],
+      "resident_graph_nodes": [
+        80
+      ]
+    },
+    {
+      "graph_file": "mask011.json",
+      "graph_sha256": "7ea4d97ca9afbdebc8f2870c4bd3f5da78c76ff190ef9efa628cc6a5b9c045f3",
+      "mask": [
+        0,
+        1,
+        1
+      ],
+      "resident_graph_nodes": [
+        80,
+        93
+      ]
+    },
+    {
+      "graph_file": "mask100.json",
+      "graph_sha256": "1ac2a79e3f88a33f5797a36758d6499a69d915c6c31077ecd432db1f8ed0e153",
+      "mask": [
+        1,
+        0,
+        0
+      ],
+      "resident_graph_nodes": [
+        67
+      ]
+    },
+    {
+      "graph_file": "mask101.json",
+      "graph_sha256": "e89a8bc05cd4c0954e3d6bddfe46ad1c98144301cf81f8fb7af82b0bada88999",
+      "mask": [
+        1,
+        0,
+        1
+      ],
+      "resident_graph_nodes": [
+        67,
+        93
+      ]
+    },
+    {
+      "graph_file": "mask110.json",
+      "graph_sha256": "685d84378ed76c66dfe43a2a88005e049523346a2050967d35a10879ecedcb26",
+      "mask": [
+        1,
+        1,
+        0
+      ],
+      "resident_graph_nodes": [
+        67,
+        80
+      ]
+    },
+    {
+      "graph_file": "mask111.json",
+      "graph_sha256": "57a3df3a7b3fac3f423a57bcc56c25f16bc31e395aa78ce7356d21eb6d43b84c",
+      "mask": [
+        1,
+        1,
+        1
+      ],
+      "resident_graph_nodes": [
+        67,
+        80,
+        93
+      ]
+    }
+  ],
+  "verified_fused_analysis_artifact_count": 2,
+  "verified_source_pair_artifact_count": 10,
+  "wrapper_compile_command": [
+    "aarch64-xilinx-linux-g++",
+    "-march=armv8-a+crc",
+    "-mtune=cortex-a72.cortex-a53",
+    "--sysroot=/home/orange/alinx_plsdk/install/sysroots/aarch64-xilinx-linux",
+    "-shared",
+    "-fPIC",
+    "-std=c++17",
+    "-O2",
+    "-I/home/orange/code/tvm/include",
+    "-I/home/orange/code/tvm/3rdparty/dlpack/include",
+    "/home/orange/code/tvm/vta/tutorials/frontend/c3_resnet50_r50a_callsite_wrapper.cc",
+    "-o",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r277_r50a_callsite_subsets_run01/c3_r50a_callsite_wrapper.so",
+    "-ldl",
+    "-pthread"
+  ],
+  "wrapper_file": "c3_r50a_callsite_wrapper.so",
+  "wrapper_source_sha256": "966a4651fe4dd6d685e2ac089c7fa7f0e27a819cc5ae1c1aa90c932881ed2b2f"
+}

@@ -1,0 +1,203 @@
+{
+  "claim_boundary": "Exact current-hardware graph route manifest; workload-level routes, one selected graph variant, no dynamic shapes, cross-boot guarantee, physical AXI or mAP claim",
+  "command_capacity_status": "not derived for this whole graph; the separate single-workload command certificate must not be reused as a whole-model bound",
+  "evidence": {
+    "board_summary": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r241_yolov3_tiny_multi_residency_board_run01/summary.json",
+      "sha256": "c4275eac46acfa4a7d0cb292f9dbc85704bf7d2918eeaca04661fb741c11c724"
+    },
+    "clean_start": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r241_yolov3_tiny_multi_residency_board_run01/clean_board_start.json",
+      "sha256": "6be9c5b3a9e08dbe38264ca0f664e49e0f8fee7b3d0adf4f8421f4b2a72842b1"
+    },
+    "graph_build_summary": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r245_yolov3_tiny_route_factorial_cross_build_run01/summary.json",
+      "sha256": "23cf6237e72b6b6353ac493743b933562a690c5840f8ac615145f415bd652b73"
+    },
+    "selected_route_plan": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r251_yolov3_tiny_incumbent_route_plan_run01/selected_routes.json",
+      "sha256": "fdab8877e25a5a2dc5b10f654e1497994bb7303070b852e70c517f3c548e1f3d"
+    }
+  },
+  "graph_artifacts": {
+    "graph.json": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r245_yolov3_tiny_route_factorial_cross_build_run01/y00_input_only/graph.json",
+      "sha256": "7b4b73c6dcd135412d3ac71d4c3e73d567f34a5d6bb5c48939027b8f713e35eb"
+    },
+    "graphlib.so": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r245_yolov3_tiny_route_factorial_cross_build_run01/y00_input_only/graphlib.so",
+      "sha256": "3fbecf152c9ead8c99407e803d69fee9ec1c451342bb9d020e8f8bd8d17b55cb"
+    },
+    "params.bin": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r245_yolov3_tiny_route_factorial_cross_build_run01/y00_input_only/params.bin",
+      "sha256": "64c2591eb410723ca1fa72b305a976b875d33894115ddc176e6b3f8e5ad4ddd3"
+    }
+  },
+  "hardware_contract": {
+    "bitstream": {
+      "firmware": "vta_hpc.bit",
+      "sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+      "state": "operating"
+    },
+    "boot_id_at_qualification": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+    "on_mismatch": "reject before graph execution and rebuild/requalify",
+    "rpc_runtime_directory": "/var/volatile/vta_c3_ram/runtime",
+    "target": "axu5evb",
+    "udmabuf_bytes": 201326592
+  },
+  "manifest_id": "0ad7d0b71792ccc76d18b4982df2af9562222beba5dc9bc8c22b6f67af11111b",
+  "model": "yolov3-tiny",
+  "rejected_routes": [
+    {
+      "checks": {
+        "graph_outputs_equal": true,
+        "live_memory_fit": true,
+        "minimum_improvement": false,
+        "minimum_rounds": true,
+        "minimum_win_fraction": false
+      },
+      "median_paired_delta_ms": 78.35502300000002,
+      "route": {
+        "candidate_id": "7c7d987e2b487320f6c7271cc77ec3720b4679f83aee5ab7e5881d7f18e2c861",
+        "candidate_source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r123_y02_b00_paired_timing_run01/contract.json",
+        "candidate_source_sha256": "7192f316ca4a4649e2d70f05d60eb9edf836ae3813bbb72a3f4b677c5e6667aa",
+        "implementation_mode": 4,
+        "public_mode": "weight_resident_barrier",
+        "workload_id": "Y02"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "candidate_id": "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c",
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                16
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                52
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              1,
+              208,
+              208,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              2,
+              1,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "public_mode": "input_stationary",
+      "source": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r132_y00_search_confirmation_contract_run02/board_collection_contract.json",
+        "sha256": "2d1701a24e44318566a62fd6c6d3c53f10546ddd3d5d042691a4f643bec23c82"
+      },
+      "workload_id": "Y00"
+    }
+  ],
+  "schema": "c3_vta_graph_route_deployment_manifest_v1",
+  "selected_deployment_variant": "y00_input_only",
+  "selected_route_candidate_ids": [
+    "7b958e8562ed5e04fd14a52e940aa7aa5518ba600d8284c41d5ecd0d9bf18e3c"
+  ],
+  "status": "ready_for_exact_graph_deployment_on_bound_hardware"
+}

@@ -1,0 +1,226 @@
+{
+  "architecture_fingerprint": {
+    "config": {
+      "HW_VER": "0.0.2",
+      "LOG_ACC_BUFF_SIZE": 17,
+      "LOG_ACC_WIDTH": 5,
+      "LOG_BATCH": 0,
+      "LOG_BLOCK": 4,
+      "LOG_INP_BUFF_SIZE": 15,
+      "LOG_INP_WIDTH": 3,
+      "LOG_UOP_BUFF_SIZE": 15,
+      "LOG_WGT_BUFF_SIZE": 18,
+      "LOG_WGT_WIDTH": 3,
+      "TARGET": "axu5evb"
+    },
+    "key": "c115f6b33672edd34e6f0abedf068d4ceb334a9d582eb111ffb54eb5e8cb0e55",
+    "schema": "vta_architecture_fingerprint_v1"
+  },
+  "board_qualification_key": "2dd8c1537a536236b41611911fad6512e3249d786d5b0b38707a702987bb95a8",
+  "claim_boundary": "single workload and declared queue concurrency; no whole-model, dynamic-shape, allocator-fragmentation, performance, replay, or cross-boot claim",
+  "command_memory": {
+    "alignment_bytes": 4096,
+    "deployment_total_capacity_bytes": 8192,
+    "formula": "C_q(S)=align_A(max_{c in S,b in submits(c)} B_q(c,b))",
+    "headroom_policy": "none_beyond_declared_alignment",
+    "lifetime_policy": "one_thread_local_queue_instance_per_declared_concurrent_executor",
+    "per_instance": {
+      "insn_capacity_bytes": 4096,
+      "total_capacity_bytes": 8192,
+      "uop_capacity_bytes": 4096
+    },
+    "queue_instances": 1,
+    "runtime_environment_per_instance": {
+      "VTA_INSN_BUFFER_BYTES": "4096",
+      "VTA_UOP_BUFFER_BYTES": "4096"
+    }
+  },
+  "deployment_identities": [
+    {
+      "candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "command_signature_sha256": "cb5ae369a4a82f2d7ee1c8afb1e41aa89963c5f839d456b6fe694bbeecce1181",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 575
+      },
+      "config_index": 575,
+      "finish_count": 1,
+      "fsim_execution_runtime_sha256": "9f310416ae1e955e8465aaaa5acf0deb091a089bbd439d6be4e804f1de853285",
+      "insn_peak_bytes": 3744,
+      "residence_mode": "original",
+      "role": "primary",
+      "submissions": 1,
+      "tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060",
+      "uop_peak_bytes": 1480,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061",
+      "command_signature_sha256": "8558b79c32c7a079e86bf879fbc9a46e343d4becee5d3646213740c1c3227820",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 574
+      },
+      "config_index": 574,
+      "finish_count": 1,
+      "fsim_execution_runtime_sha256": "9f310416ae1e955e8465aaaa5acf0deb091a089bbd439d6be4e804f1de853285",
+      "insn_peak_bytes": 3808,
+      "residence_mode": "paper_inspired_hybrid",
+      "role": "qualified_alternative",
+      "submissions": 1,
+      "tir_sha256": "349b968ae66b96c37262339867f1424016c54bf1b2c1e620d11f47062ae70a14",
+      "uop_peak_bytes": 1424,
+      "workload_id": "W05"
+    }
+  ],
+  "launcher_environment": {
+    "VTA_COMMAND_MANIFEST_ID": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+    "VTA_INSN_BUFFER_BYTES": "4096",
+    "VTA_REPLAY_POLICY": "disabled",
+    "VTA_UOP_BUFFER_BYTES": "4096"
+  },
+  "manifest_id": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+  "primary_candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+  "provenance": {
+    "builder_sha256": "3adc7b283bca128993a7e9ececbb595e9d8656fd9452c76702adaedc7c74ccf9",
+    "qualified_resource_certificate": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r105_w05_current_qualified_resource_certificate_run01/qualified_command_resource_certificate.json",
+      "sha256": "3765623df1be2e57cff20aeb65ba0c048eae809eab8a58b20d4368649a75c8cd"
+    }
+  },
+  "qualification_attestation": {
+    "binary_sha256_by_candidate_id": {
+      "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085": "c6eb7e376243053efd91f7363aa9f5f7dcc39c494b914f587f2ce36a4fb34ef3",
+      "94eae48ad3e47a2b1819f84ee3c3d863383c0132b96f4d2eb78202198decf061": "2838551066c71d1db8c70b48ed97e7433aed280bd903badb9a46a4dea8d2f21c"
+    },
+    "capacity_runtime_sha256": {
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/libvta.so": "0c39d5f6fcfb1efec6bad715e3cea2279282e3bf887433cd2013b89fff1f4ba4",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/start_axu5evb_cpp_rpc.sh": "2f42f2d37d5199fa2b66336b61869d2015f8ec5f0264bc57307789b4c6a5b194",
+      "/var/volatile/vta_c3_ram/p7r102_manifest_runtime/tvm_rpc": "20bbd3d896d124dd1127343f020c957fbb6034423af83433c2429955b6b316fa"
+    }
+  },
+  "replay_policy": {
+    "deployment_requirement": "VTA replay APIs must not be used under this certificate",
+    "mode": "disabled",
+    "reason": "capture/replay command-resource records are not yet observable in the frozen evidence"
+  },
+  "resource_certificate_key": "0994e12dce454f4e3e86a70d894e862638632e05fc11882ec9fc7f5903ccff8c",
+  "runtime_attestation": {
+    "on_mismatch": "abort_before_device_submission_and_regenerate_certificate",
+    "required_checks": [
+      "runtime-reported capacities equal the certificate",
+      "runtime-reported peaks do not exceed the certificate",
+      "all deployed candidate IDs are covered by the certificate"
+    ],
+    "status_function": "vta.runtime.queue_capacity_status",
+    "status_schema": "vta_queue_capacity_status_v1"
+  },
+  "schema": "c3_vta_deployment_manifest_v1",
+  "selection_policy": "use the protected incumbent unless an explicitly recorded policy selects a qualified alternative",
+  "status": "ready"
+}

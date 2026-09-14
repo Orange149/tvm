@@ -1,0 +1,25 @@
+{
+  "schema": "c3_p5_local_historical_replay_protocol_v1",
+  "data_scope": "historical_development_retrospective_not_holdout",
+  "pool": "iteration3 frozen 10 workloads x 8 selected candidates; repair log excluded",
+  "methods": {
+    "B2": "uniform random permutation of all eight historical positions",
+    "B4": "leaky diagnostic upper bound: retrospective correct-valid candidates first",
+    "B5": "not evaluable without pre-dispatch features; leaky diagnostic sorts passing candidates by observed total DMA bytes",
+    "B6": "not evaluable without pre-dispatch features; leaky diagnostic Pareto-sorts passing candidates by observed request counters"
+  },
+  "incumbent_policy": "never delete TopHub incumbent",
+  "budgets": [4, 8, 16],
+  "budget_unit": "total historical dispatch positions including failures",
+  "random_permutations": 1000,
+  "random_seed": 20260910,
+  "primary_claim_eligible_methods": ["B2"],
+  "failure_categories": ["lower", "compile", "wrong_answer", "timeout", "rpc", "environment"],
+  "near_oracle_threshold": 0.02,
+  "claims_forbidden": [
+    "grouped holdout validation",
+    "prospective pruning effectiveness",
+    "board performance measured by this run",
+    "complete P4 request-shape feature availability"
+  ]
+}

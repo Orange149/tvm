@@ -1,0 +1,39 @@
+{
+  "alias_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3_c3_callsite0",
+  "board_contacted": false,
+  "builder_source_sha256": "04e76088aa19a87c7ab727ea065cdf8592d0b3cd695c9429187d05dd4af7a4b6",
+  "claim_boundary": "Exact graph-node composition of two already qualified full-graph modules; board correctness and per-call DMA isolation remain unmeasured",
+  "graph_diff": "exactly one tvm_op func_name",
+  "matching_graph_nodes": [
+    57,
+    72,
+    85,
+    98
+  ],
+  "parameter_count": 120,
+  "schema": "c3_vta_resnet50_callsite_composed_graph_v1",
+  "selected_graph_node": 57,
+  "selected_instance": 0,
+  "semantic_parameter_sha256": "778eb4136dbd80dbba51a67f065c9dfe5a18988fae17584ffcfe790d5ff7e76a",
+  "source_pair_build": "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r231_resnet50_pretrained_relay_residency_dispatch_cross_build_run01",
+  "source_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+  "status": "cross_built_unmeasured",
+  "wrapper_compile_command": [
+    "aarch64-xilinx-linux-g++",
+    "-march=armv8-a+crc",
+    "-mtune=cortex-a72.cortex-a53",
+    "--sysroot=/home/orange/alinx_plsdk/install/sysroots/aarch64-xilinx-linux",
+    "-shared",
+    "-fPIC",
+    "-std=c++17",
+    "-O2",
+    "-I/home/orange/code/tvm/include",
+    "-I/home/orange/code/tvm/3rdparty/dlpack/include",
+    "/home/orange/code/tvm/vta/tutorials/frontend/c3_resnet50_callsite_barrier_wrapper.cc",
+    "-o",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r264_resnet50_callsite0_composed_graph_build_run02/c3_r50_callsite_wrapper.so",
+    "-ldl",
+    "-pthread"
+  ],
+  "wrapper_source_sha256": "de71ed696adcf719f9b24fb3cd2a777626645f66eda75965b4de143d03b28326"
+}

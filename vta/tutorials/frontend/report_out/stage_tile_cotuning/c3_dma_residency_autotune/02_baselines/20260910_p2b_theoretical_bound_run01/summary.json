@@ -1,0 +1,86 @@
+{
+  "assumptions": {
+    "axi_bandwidth": "AXI_DATA_BITS * FPGA_FREQ / 8; optimistic ideal unidirectional payload bandwidth",
+    "compute_peak": "BLOCK_IN * BLOCK_OUT * FPGA_FREQ; one MAC counted per lane per cycle",
+    "excluded_overheads": [
+      "AXI protocol/turnaround/contention",
+      "DMA setup and request granularity",
+      "instruction/uop fetch",
+      "pipeline fill/drain and dependencies",
+      "CPU/runtime/RPC/framework overhead",
+      "whole-network inter-operator effects"
+    ],
+    "optimistic_full_duplex_no_overlap_reference": "T_compute + T_read + T_write",
+    "optimistic_full_duplex_perfect_overlap": "max(T_compute, T_read, T_write)",
+    "shared_bandwidth_scenario": "T_dma_shared=(read_bytes+write_bytes)/B; reported separately because it assumes one shared serialized bottleneck"
+  },
+  "board_accessed": false,
+  "closest_current_static_full_duplex_balance": {
+    "compute_to_dma_time_ratio": 1.006418485237484,
+    "workload_id": "W03"
+  },
+  "current_static_dominance_counts": {
+    "balanced": 0,
+    "compute": 10,
+    "dma": 0
+  },
+  "current_static_traffic_amplification": {
+    "maximum": 2.3705882352941177,
+    "median": 1.612985127085723,
+    "minimum": 1.0104122396940076
+  },
+  "hardware": {
+    "axi_data_bits": 128,
+    "block_in": 16,
+    "block_out": 16,
+    "fpga_freq_mhz": 100.0,
+    "optimistic_unidirectional_axi_bytes_per_second": 1600000000.0,
+    "peak_macs_per_second": 25600000000.0
+  },
+  "historical_correct_association": {
+    "artifacts_scanned": 43,
+    "correct_records": 32,
+    "duplicate_selected_artifact_keys": 0,
+    "matched_frozen_static_config_median_compute_peak_utilization_fraction": 0.8306561549357261,
+    "matched_frozen_static_config_records": 8,
+    "maximum_compute_peak_utilization_fraction": 0.8935178287459776,
+    "maximum_observed_effective_gmac_per_second": 22.874056415897027,
+    "median_irreducible_bound_efficiency_fraction": 0.7545041435806813,
+    "median_observed_over_irreducible_bound_gap": 1.325461043792517,
+    "post_measurement_runtime_dominance_counts": {
+      "balanced": 0,
+      "compute": 28,
+      "dma": 4
+    },
+    "selected_artifact_keys_seen": 39,
+    "selected_candidate_keys": 80,
+    "status": "completed",
+    "warning": "latencies/runtime counters are historical board observations; they are not generated or remeasured by this run"
+  },
+  "irreducible_dominance_counts": {
+    "balanced": 0,
+    "compute": 10,
+    "dma": 0
+  },
+  "performance_measured_by_this_run": false,
+  "schema": "c3_vta_theoretical_bound_v1",
+  "scope": "idealized_single_operator_bounds_not_end_to_end_network_fps",
+  "sources": {
+    "artifacts_dir": "vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/tuning_artifacts",
+    "selected_tasks": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/selected_tasks.json",
+      "sha256": "3f4abe7ca36cbc4a729718f17066f5e757547a0b716d15e9086b273e653b5087"
+    },
+    "static_dma": {
+      "path": "vta/tutorials/frontend/report_out/stage_tile_cotuning/stage_memory_experiments/static_workload_dma.json",
+      "sha256": "ff154ced1154c54fdd168597a1ab23433854c06652004538b821bd96fb48a3a5"
+    },
+    "vta_config": {
+      "path": "3rdparty/vta-hw/config/vta_config.json",
+      "sha256": "7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d"
+    }
+  },
+  "status": "completed_offline_analytical_model",
+  "workloads": 10,
+  "workloads_with_perfect_overlap_bound_gain_from_static_to_unique": 0
+}

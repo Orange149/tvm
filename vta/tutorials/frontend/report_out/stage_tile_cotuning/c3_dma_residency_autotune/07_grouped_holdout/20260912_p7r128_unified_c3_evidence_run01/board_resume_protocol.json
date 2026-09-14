@@ -1,0 +1,44 @@
+{
+  "schema": "c3_p7r128_board_resume_protocol_v1",
+  "status": "frozen_while_board_execution_unqualified",
+  "board_restart_by_script": false,
+  "topHub_used_for_selection": false,
+  "steps": [
+    {
+      "order": 1,
+      "action": "W05 config575 health gate",
+      "seeds": [0, 20250901, 20260910],
+      "failure_policy": "stop all VTA dispatch"
+    },
+    {
+      "order": 2,
+      "action": "complete P7R126 Y01F06 weight_resident_barrier classification",
+      "seeds": [0, 20250901, 20260910],
+      "timing": false
+    },
+    {
+      "order": 3,
+      "action": "Y00F01 original/input_stationary correctness",
+      "seeds": [0, 20250901, 20260910],
+      "timing_gate": "both identities pass all seeds"
+    },
+    {
+      "order": 4,
+      "action": "Y00F01 seven-round balanced same-tile timing",
+      "condition": "step 3 passed",
+      "output_check": "exact after every timed call"
+    },
+    {
+      "order": 5,
+      "action": "equal gross-budget replay",
+      "condition": "a new complete FPGA-correct timing pool exists",
+      "seeds": 20,
+      "budgets": [4, 8, 12, 24]
+    },
+    {
+      "order": 6,
+      "action": "final exact-allowlist command capacity pass and undersized fail-closed test",
+      "condition": "selected and qualified fallback identities are frozen"
+    }
+  ]
+}

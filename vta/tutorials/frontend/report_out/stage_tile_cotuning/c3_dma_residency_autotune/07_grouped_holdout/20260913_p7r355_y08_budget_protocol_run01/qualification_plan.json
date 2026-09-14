@@ -1,0 +1,27 @@
+{
+  "schema": "c3_budgeted_process_plan_v1",
+  "schedule": "one_candidate_build_then_measure",
+  "budget_seconds": 600,
+  "experiment_role": "local_qualification_only_no_fpga_or_performance_labels",
+  "steps": [
+    {
+      "name": "real_lowering_and_three_seed_fsim",
+      "kind": "prepare",
+      "cwd": "/home/orange/code/tvm",
+      "argv": [
+        "/home/orange/miniconda3/envs/vta-resnet/bin/python",
+        "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_p7r127_y00_v2_local_pool.py",
+        "--candidates",
+        "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r354_y08_conv12_candidate_contract_run01/candidates.jsonl",
+        "--workload-id",
+        "Y08",
+        "--output-dir",
+        "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r356_y08_local_qualification_run01/qualification",
+        "--fsim-hw-path",
+        "/tmp/vta-hw-fsim",
+        "--fsim-timeout",
+        "300"
+      ]
+    }
+  ]
+}

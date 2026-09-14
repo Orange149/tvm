@@ -1,0 +1,24 @@
+{
+  "schema": "c3_budgeted_process_executor_local_validation_v1",
+  "status": "six_local_executor_tests_passed_not_board_integrated",
+  "board_contacted": false,
+  "performance_labels_collected": false,
+  "tests_passed": 6,
+  "executor_sha256": "1d3fa6a9c38768274035e22d4bde66fc4304c57c6f1cc5e9a4fd2107064aa625",
+  "test_source_sha256": "c2a4b4b9597fac2196b7f0f41dcbc907186e3f232e83da27379a09c2d7779eab",
+  "test_report_sha256": "c1853b886ea99d933db089bbe492eea0c9188e9a4298598951c95ba5e95d1fe4",
+  "test_command": "PYTHONPATH=python:vta/python:vta/tutorials/frontend /home/orange/miniconda3/envs/vta-resnet/bin/python -m pytest -q vta/tutorials/frontend/test_run_vta_budgeted_process_plan.py --junitxml=vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r350_budgeted_process_executor_local_run01/tests.xml",
+  "claims": [
+    "Shared monotonic clock starts before loading plan and child process imports.",
+    "Build and measurement must alternate for each candidate.",
+    "Active steps drain on deadline overrun; late completions are charged but excluded from budget-eligible candidates.",
+    "Nonzero exit, stale receipt, absent receipt or wrong identity cannot become accepted completion.",
+    "No oracle or latency threshold is read by the executor."
+  ],
+  "remaining": [
+    "Wire real per-candidate full-graph builder and FPGA correctness/measurement receipt into this runner.",
+    "Freeze an unseen workload, ordering controls and budget before target labels.",
+    "Measure actual search wall and overrun on board. Local fixture tests are not FPGA results.",
+    "Timing excludes Python interpreter startup and final summary serialization, which must remain disclosed."
+  ]
+}

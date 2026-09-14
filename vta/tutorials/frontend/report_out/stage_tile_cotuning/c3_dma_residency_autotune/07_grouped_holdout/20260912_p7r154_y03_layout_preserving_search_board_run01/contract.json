@@ -1,0 +1,177 @@
+{
+  "candidate_order": [
+    "b8577affef5e3727ed430950c129ccc20d4fa864cca59b8c57ebb826d83359d7",
+    "359837fd7248bb20fea65c86a7043edbcc2150bb019ca4c08539d44a08f35722",
+    "190f1be26e8e79aee7a3c331a364f5d22fef616e2b2ba329ee18492d094b83de",
+    "ceffcaea28bcf69717c0698daa90c4fba46d410ff2c024e494b7955f292b736b",
+    "e7f1704406375ab28e11bf0efb2e3df7090384a5e67d12cda34c7c9e6706a12a",
+    "64bab476c85ce9a2c4560d60c0518676fbf610c81a6f370a7bee742a90cd1adf",
+    "7b5e10e4fb2e5cfb9282c8701744096bad1acb96f408be7c84f8cbb8eb7b3e65",
+    "36de346138fae2a1e3a679afe84d717f1be53e9fc67a1190aef61463d26dcc2d",
+    "2138f25c1cb8e02e2b5328c1ed6dce42c3549152b321a42e54ecf7a232a4e070",
+    "e041d6f4ad7ec83fe0bccc93871243688dbc01b151d3990f7cb3cdc033dc3d38",
+    "072415e24550c6b70f19188e821d489891e987f587ccaf4bbad8bf0753385692",
+    "3740af35acf94d8da768e721832829f85e6f9a1349a5eedc8320f90730e48655",
+    "357918b0ece8238307799cd81c90731a542b3b3c7c153c288dd7a21bd46b0b54"
+  ],
+  "failure_policy": "health fail stops before Y03; candidate first error rejects identity; any timed mismatch stops",
+  "health_canary": {
+    "candidate_id": "6374bca35bb59bb20cbb07532e5ba29ca3a56225023cf8d632b80063818d5d77",
+    "debug": {
+      "config_index": 575
+    },
+    "identity": {
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "historical_candidate_id": "4a73a6912dc107398dccfa1b91dff19da7ccc21931bf603d805a73247e9fa085",
+      "historical_tir_sha256": "0550a74a5a1446e8a31c9ba407778562b419ab3e937db504da923bb68be31060",
+      "implementation": "conv2d_packed_residency.vta mode0 original branch",
+      "schema": "c3_p7r122_w05_health_canary_identity_v1",
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W05"
+    },
+    "implementation_mode": 0,
+    "performance_measurement": "not_collected",
+    "public_mode": "original",
+    "role": "health_gate_only"
+  },
+  "p7r132": {
+    "artifact_ledger_sha256": "172ebefb4bac0fd11cfc9db0cd5cf3f5fef1bfdee8c88e297b5275e74d5b01e8",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r152_y03_search_confirmation_contract_run01"
+  },
+  "persistent_board_write": false,
+  "rpc": {
+    "host": "192.168.1.247",
+    "port": 9090,
+    "session_timeout": 120
+  },
+  "schema": "c3_y03_search_confirmation_board_v2",
+  "search_budgets": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "search_policies": [
+    "random",
+    "stock_knob_xgb",
+    "rules_only",
+    "paper_minimum_access",
+    "shared_memory_lexicographic",
+    "validity_v",
+    "v_plus_delta_t",
+    "v_plus_delta_t_request",
+    "v_plus_delta_t_command"
+  ],
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "shared_memory_buffer_policy": {
+    "allocation_order": [
+      "output",
+      "data",
+      "weight"
+    ],
+    "reason": "match frozen qualification layout while avoiding non-freeing u-dma-buf exhaustion",
+    "reuse": "one shape-compatible output/input/weight set per workload"
+  },
+  "status": "frozen_before_current_board_observation",
+  "timing_rounds": 7
+}

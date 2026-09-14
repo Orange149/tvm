@@ -1,0 +1,715 @@
+{
+  "config_index": 252,
+  "modes": {
+    "input_stationary": {
+      "callsites": [
+        {
+          "from": 3,
+          "function": "main",
+          "index": 0,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 1,
+          "kind": "pop",
+          "to": 2
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 2,
+          "kind": "push",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 3,
+          "kind": "pop",
+          "to": 1
+        },
+        {
+          "from": 1,
+          "function": "main",
+          "index": 4,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 1,
+          "function": "main",
+          "index": 5,
+          "kind": "pop",
+          "to": 2
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 6,
+          "kind": "push",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 7,
+          "kind": "pop",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 8,
+          "kind": "push",
+          "to": 3
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 9,
+          "kind": "pop",
+          "to": 3
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 10,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 11,
+          "kind": "pop",
+          "to": 2
+        }
+      ],
+      "edges": [
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 1,
+          "from_name": "load",
+          "function": "main",
+          "pop_count": 1,
+          "push_count": 1,
+          "to": 2,
+          "to_name": "compute"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 2,
+          "from_name": "compute",
+          "function": "main",
+          "pop_count": 2,
+          "push_count": 2,
+          "to": 1,
+          "to_name": "load"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 2,
+          "from_name": "compute",
+          "function": "main",
+          "pop_count": 1,
+          "push_count": 1,
+          "to": 3,
+          "to_name": "store"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 3,
+          "from_name": "store",
+          "function": "main",
+          "pop_count": 2,
+          "push_count": 2,
+          "to": 2,
+          "to_name": "compute"
+        }
+      ],
+      "errors": [],
+      "functions": [
+        "main"
+      ],
+      "schema": "vta_coproc_dependency_audit_v1",
+      "semantics": {
+        "balance_unit": "static_callsites_per_function_and_directed_edge",
+        "loop_multiplicity": "not_expanded",
+        "path_sensitive": false
+      },
+      "summary": {
+        "call_count": 12,
+        "edge_count": 4,
+        "forbidden_1_3_present": false,
+        "function_count": 1,
+        "only_supported_edges": true,
+        "pop_count": 6,
+        "push_count": 6,
+        "push_pop_balanced": true
+      },
+      "supported_edges": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "valid": true
+    },
+    "original": {
+      "callsites": [
+        {
+          "from": 3,
+          "function": "main",
+          "index": 0,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 1,
+          "kind": "pop",
+          "to": 2
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 2,
+          "kind": "push",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 3,
+          "kind": "pop",
+          "to": 1
+        },
+        {
+          "from": 1,
+          "function": "main",
+          "index": 4,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 1,
+          "function": "main",
+          "index": 5,
+          "kind": "pop",
+          "to": 2
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 6,
+          "kind": "push",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 7,
+          "kind": "pop",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 8,
+          "kind": "push",
+          "to": 3
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 9,
+          "kind": "pop",
+          "to": 3
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 10,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 11,
+          "kind": "pop",
+          "to": 2
+        }
+      ],
+      "edges": [
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 1,
+          "from_name": "load",
+          "function": "main",
+          "pop_count": 1,
+          "push_count": 1,
+          "to": 2,
+          "to_name": "compute"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 2,
+          "from_name": "compute",
+          "function": "main",
+          "pop_count": 2,
+          "push_count": 2,
+          "to": 1,
+          "to_name": "load"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 2,
+          "from_name": "compute",
+          "function": "main",
+          "pop_count": 1,
+          "push_count": 1,
+          "to": 3,
+          "to_name": "store"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 3,
+          "from_name": "store",
+          "function": "main",
+          "pop_count": 2,
+          "push_count": 2,
+          "to": 2,
+          "to_name": "compute"
+        }
+      ],
+      "errors": [],
+      "functions": [
+        "main"
+      ],
+      "schema": "vta_coproc_dependency_audit_v1",
+      "semantics": {
+        "balance_unit": "static_callsites_per_function_and_directed_edge",
+        "loop_multiplicity": "not_expanded",
+        "path_sensitive": false
+      },
+      "summary": {
+        "call_count": 12,
+        "edge_count": 4,
+        "forbidden_1_3_present": false,
+        "function_count": 1,
+        "only_supported_edges": true,
+        "pop_count": 6,
+        "push_count": 6,
+        "push_pop_balanced": true
+      },
+      "supported_edges": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "valid": true
+    },
+    "paper_inspired_hybrid": {
+      "callsites": [
+        {
+          "from": 3,
+          "function": "main",
+          "index": 0,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 1,
+          "kind": "pop",
+          "to": 2
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 2,
+          "kind": "push",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 3,
+          "kind": "pop",
+          "to": 1
+        },
+        {
+          "from": 1,
+          "function": "main",
+          "index": 4,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 1,
+          "function": "main",
+          "index": 5,
+          "kind": "pop",
+          "to": 2
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 6,
+          "kind": "push",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 7,
+          "kind": "pop",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 8,
+          "kind": "push",
+          "to": 3
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 9,
+          "kind": "pop",
+          "to": 3
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 10,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 11,
+          "kind": "pop",
+          "to": 2
+        }
+      ],
+      "edges": [
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 1,
+          "from_name": "load",
+          "function": "main",
+          "pop_count": 1,
+          "push_count": 1,
+          "to": 2,
+          "to_name": "compute"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 2,
+          "from_name": "compute",
+          "function": "main",
+          "pop_count": 2,
+          "push_count": 2,
+          "to": 1,
+          "to_name": "load"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 2,
+          "from_name": "compute",
+          "function": "main",
+          "pop_count": 1,
+          "push_count": 1,
+          "to": 3,
+          "to_name": "store"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 3,
+          "from_name": "store",
+          "function": "main",
+          "pop_count": 2,
+          "push_count": 2,
+          "to": 2,
+          "to_name": "compute"
+        }
+      ],
+      "errors": [],
+      "functions": [
+        "main"
+      ],
+      "schema": "vta_coproc_dependency_audit_v1",
+      "semantics": {
+        "balance_unit": "static_callsites_per_function_and_directed_edge",
+        "loop_multiplicity": "not_expanded",
+        "path_sensitive": false
+      },
+      "summary": {
+        "call_count": 12,
+        "edge_count": 4,
+        "forbidden_1_3_present": false,
+        "function_count": 1,
+        "only_supported_edges": true,
+        "pop_count": 6,
+        "push_count": 6,
+        "push_pop_balanced": true
+      },
+      "supported_edges": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "valid": true
+    },
+    "weight_stationary": {
+      "callsites": [
+        {
+          "from": 3,
+          "function": "main",
+          "index": 0,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 1,
+          "kind": "pop",
+          "to": 2
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 2,
+          "kind": "push",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 3,
+          "kind": "pop",
+          "to": 1
+        },
+        {
+          "from": 1,
+          "function": "main",
+          "index": 4,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 1,
+          "function": "main",
+          "index": 5,
+          "kind": "pop",
+          "to": 2
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 6,
+          "kind": "push",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 7,
+          "kind": "pop",
+          "to": 1
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 8,
+          "kind": "push",
+          "to": 3
+        },
+        {
+          "from": 2,
+          "function": "main",
+          "index": 9,
+          "kind": "pop",
+          "to": 3
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 10,
+          "kind": "push",
+          "to": 2
+        },
+        {
+          "from": 3,
+          "function": "main",
+          "index": 11,
+          "kind": "pop",
+          "to": 2
+        }
+      ],
+      "edges": [
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 1,
+          "from_name": "load",
+          "function": "main",
+          "pop_count": 1,
+          "push_count": 1,
+          "to": 2,
+          "to_name": "compute"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 2,
+          "from_name": "compute",
+          "function": "main",
+          "pop_count": 2,
+          "push_count": 2,
+          "to": 1,
+          "to_name": "load"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 2,
+          "from_name": "compute",
+          "function": "main",
+          "pop_count": 1,
+          "push_count": 1,
+          "to": 3,
+          "to_name": "store"
+        },
+        {
+          "allowed": true,
+          "balanced": true,
+          "forbidden_direct_load_store": false,
+          "from": 3,
+          "from_name": "store",
+          "function": "main",
+          "pop_count": 2,
+          "push_count": 2,
+          "to": 2,
+          "to_name": "compute"
+        }
+      ],
+      "errors": [],
+      "functions": [
+        "main"
+      ],
+      "schema": "vta_coproc_dependency_audit_v1",
+      "semantics": {
+        "balance_unit": "static_callsites_per_function_and_directed_edge",
+        "loop_multiplicity": "not_expanded",
+        "path_sensitive": false
+      },
+      "summary": {
+        "call_count": 12,
+        "edge_count": 4,
+        "forbidden_1_3_present": false,
+        "function_count": 1,
+        "only_supported_edges": true,
+        "pop_count": 6,
+        "push_count": 6,
+        "push_pop_balanced": true
+      },
+      "supported_edges": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "valid": true
+    }
+  },
+  "schema": "vta_coproc_dependency_w00_modes_v1",
+  "workload": "W00"
+}

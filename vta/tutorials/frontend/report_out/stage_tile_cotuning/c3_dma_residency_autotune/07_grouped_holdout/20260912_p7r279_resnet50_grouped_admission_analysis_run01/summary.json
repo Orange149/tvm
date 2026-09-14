@@ -1,0 +1,65 @@
+{
+  "algorithm": {
+    "action": "Test incumbent union whole group first; accept only through correctness, exact-DMA and paired-latency gates; recursively split a failed non-singleton group and re-evaluate each child against the current incumbent",
+    "best_case_pair_tests": 1,
+    "group_rule": "Group sequential graph occurrences whose compiler-derived per-occurrence DMA deltas are additive and whose residency mode/resource contract matches",
+    "name": "DMA-additivity-guided hierarchical bundle admission",
+    "singleton_pair_tests": "number_of_occurrences",
+    "worst_case_boundary": "Recursive splitting can require more tests than singleton greedy; no failed bundle was exercised here, so the fallback is specified but unvalidated"
+  },
+  "analyzer_source_sha256": "0c573d0a1d819edc5f375f7b997e8d28891df0988593040481900799da7b5eaa",
+  "claim_boundary": "Both are label-exposed development domains on one boot.  They establish a mechanism and motivating counterexample, not an unseen generalization result, a globally optimal subset solver, or a physical AXI measurement",
+  "r50a_input_residency": {
+    "bundle_delta_ms": -6.977019999999982,
+    "bundle_execution_reduction_vs_singleton_percent": 66.66666666666667,
+    "bundle_model_execution_calls": 20,
+    "bundle_paired_rounds": 7,
+    "bundle_paired_wins": 7,
+    "bundle_selected_mask": [
+      1,
+      1,
+      1
+    ],
+    "outcome": "same_selected_bundle_with_fewer_board_executions",
+    "singleton_model_execution_calls": 60,
+    "singleton_node_count": 3,
+    "singleton_selected_mask": [
+      1,
+      1,
+      1
+    ]
+  },
+  "r50b_weight_residency": {
+    "actual_three_way_final_validation_calls": 36,
+    "bundle_delta_ms": -1.000060000000019,
+    "bundle_paired_rounds": 9,
+    "bundle_paired_wins": 9,
+    "bundle_relevant_model_execution_calls": 24,
+    "bundle_selected_mask": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "outcome": "singleton_false_negative_avoided_by_bundle",
+    "singleton_accepted_nodes": [],
+    "singleton_model_execution_calls": 80,
+    "singleton_node_count": 4,
+    "singleton_selected_mask": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "schema": "c3_vta_resnet50_grouped_admission_two_domain_analysis_v1",
+  "sources": {
+    "r50a_artifact_hash_manifest_sha256": "03dbc2900a5aba66ac4ddd7c5c04e50fd0a8809de9ae40ac863800447afe8477",
+    "r50a_summary_sha256": "a054e43d19cd313354a593379665383145ed005921e22a5467772de5fbdd59ad",
+    "r50a_verified_artifact_count": 11,
+    "r50b_artifact_hash_manifest_sha256": "9742b22e7debdae4f5cf1f3e129929280c8479b926f507ee0f20cf3be0539338",
+    "r50b_summary_sha256": "46db710977ed559f930e810785528552bda2480245fc2251b7fdab2912f334ea",
+    "r50b_verified_artifact_count": 13
+  },
+  "status": "two_development_domains_support_group_first_admission"
+}

@@ -1,0 +1,86 @@
+{
+  "axes": [
+    "operator_expanded_LOAD_plus_STORE_bytes",
+    "operator_expanded_LOAD_plus_STORE_calls",
+    "weight_resident_barrier_indicator"
+  ],
+  "bindings": {
+    "development_artifact_manifest_sha256": "50772242c4511fefbcdfe3e12336d776453feb3fe94aedf53902a8658e159b2a",
+    "development_summary_sha256": "3adecdb65139a3de5a9d0679051783173917dbe19d57854d71211dd376a4a98f",
+    "target_artifact_manifest_sha256": "ec1b18ea23af0462acd9eb12992b87f7ee4e715dde65cd6f74434ae3f549465b",
+    "target_candidates_sha256": "0df8792cce51412e4093789486355258ceb866eb30a917e6893aa1cde583b99d",
+    "target_contract_sha256": "4695acfe6aa83834b47d8980f73c24b96694551575d297c57a26fb78fa6e07c9"
+  },
+  "candidate_commitment_sha256": "452f27a89db3a12e8d763443ea92bc21257647acfe216044678d010567a06d6f",
+  "claim_boundary": "Prospective policy specification only. Peeling was developed after R50D labels and has no R50F correctness, latency, oracle-retention, or cost result yet.",
+  "controls": {
+    "budget": "same 600-second complete outer process wall; a running action drains and overrun is charged",
+    "bytes_lazy": "ascending bytes then candidate_id",
+    "calls_lazy": "ascending calls then candidate_id",
+    "fixed_front": "wave_0 only",
+    "random_lazy": "SHA256(c3-r50f-random-v1|candidate_id)"
+  },
+  "cost_accounting": {
+    "common_qualification_reported_separately": true,
+    "front_filter_and_internal_order_reported_separately": true,
+    "included": [
+      "candidate preparation",
+      "operator lowering",
+      "FSim",
+      "selection bookkeeping",
+      "one-at-a-time full-graph build",
+      "clean board start",
+      "upload/allocation",
+      "FPGA correctness",
+      "FPGA timing",
+      "hashing and artifact finalization"
+    ]
+  },
+  "dominance": "no worse on all three axes and strictly better on at least one",
+  "eligibility": "real operator lowering and three-seed FSim; retain every failure",
+  "feature_visibility": "final lowered operator TIR only; no target latency or FPGA label",
+  "geometry_signature": [
+    1,
+    128,
+    56,
+    56,
+    128,
+    3,
+    3,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1
+  ],
+  "label_visibility": {
+    "target_final_graph": false,
+    "target_fpga_correctness": false,
+    "target_fsim": false,
+    "target_full_graph_latency": false,
+    "target_lowering": false,
+    "target_operator_latency": false,
+    "tophub": false
+  },
+  "oracle_completion": "after the online result is immutable, build and measure all remaining eligible candidates to reveal the complete FPGA-correct pool oracle",
+  "peeling_algorithm": {
+    "already_correct_front_points_remain_as_dominators": true,
+    "candidate_replacement_outside_recomputed_front": false,
+    "execution": "build one final graph at a time; three-seed FPGA correctness fail-fast; measure latency only after correctness passes",
+    "latency_is_not_used_for_peeling": true,
+    "stop": "stop when a completed wave has no FPGA-invalid candidate, no new identity is exposed, or the 600-second complete-outer-process budget is exhausted",
+    "update": "remove FPGA-invalid candidates, recompute the front over all non-invalid eligible identities, and dispatch only newly exposed identities",
+    "wave_0": "compute the non-dominated eligible operator-TIR front"
+  },
+  "schema": "c3_invalid_dominator_peeling_holdout_v1",
+  "source_layer": "stage2_unit1_conv2",
+  "source_model": "resnet50_v2",
+  "source_sha256": "9884de4b163699361e72b73124edb283a2be778b4df790c011ca4453c37cb623",
+  "status": "frozen_before_target_lowering_fsim_fullgraph_fpga_or_latency",
+  "verified_artifact_counts": {
+    "development": 2,
+    "target": 4
+  },
+  "workload_id": "R50F"
+}

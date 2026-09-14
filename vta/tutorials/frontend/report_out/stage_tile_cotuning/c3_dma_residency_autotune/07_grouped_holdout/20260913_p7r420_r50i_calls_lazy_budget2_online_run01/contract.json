@@ -1,0 +1,65 @@
+{
+  "bindings": {
+    "front_manifest": "f3ba1ac2e878009189d8097b8581ab4e9d117c1b643e4580d881a612f8caaf94",
+    "local_manifest": "4cb288087d2028b3565f1a44f944257dd167f3e7cea4b105ff684dea51be1759",
+    "policy_manifest": "3290fef85c28abc4937c60d435cbd80cf33aa13aced522c3d77ad2e1d82f1887",
+    "target_manifest": "a7d48cf96341a9625a9889ba4707b4bdea3ada14909b22505a09519510ad8fe9"
+  },
+  "board_contacted": false,
+  "budget_seconds": 600.0,
+  "candidate_budget": 2,
+  "claim_boundary": "Prospective online execution only. Pool oracle and undispatched correctness/latency remain unavailable; randomized deterministic model parameters are not ImageNet accuracy.",
+  "control_orders": {
+    "bytes_lazy": [
+      "5de50abfa5f14d15976ebf3728d1cdf5973f3bd9e3dd00c90379ea5ca708f97d",
+      "7075261c201a7e610c3302ce9cb4b2c1743b94216aefbc34356eb0a8f63b5880",
+      "c3319f07c3b277b99e7f64755ab93ac675598a07166b6e017d2e48904cde91e3",
+      "150900d45d89528f090241d6591ab85432a07c25d9ea822fe1c7bfa2bfdb0c24",
+      "da0cbe158d269267f287639fedb4381872d4e97db1b586ee63f8d3e953d80fa0"
+    ],
+    "calls_lazy": [
+      "c3319f07c3b277b99e7f64755ab93ac675598a07166b6e017d2e48904cde91e3",
+      "7075261c201a7e610c3302ce9cb4b2c1743b94216aefbc34356eb0a8f63b5880",
+      "5de50abfa5f14d15976ebf3728d1cdf5973f3bd9e3dd00c90379ea5ca708f97d",
+      "150900d45d89528f090241d6591ab85432a07c25d9ea822fe1c7bfa2bfdb0c24",
+      "da0cbe158d269267f287639fedb4381872d4e97db1b586ee63f8d3e953d80fa0"
+    ],
+    "fixed_front": [
+      "5de50abfa5f14d15976ebf3728d1cdf5973f3bd9e3dd00c90379ea5ca708f97d",
+      "c3319f07c3b277b99e7f64755ab93ac675598a07166b6e017d2e48904cde91e3"
+    ],
+    "random_lazy": [
+      "5de50abfa5f14d15976ebf3728d1cdf5973f3bd9e3dd00c90379ea5ca708f97d",
+      "da0cbe158d269267f287639fedb4381872d4e97db1b586ee63f8d3e953d80fa0",
+      "7075261c201a7e610c3302ce9cb4b2c1743b94216aefbc34356eb0a8f63b5880",
+      "150900d45d89528f090241d6591ab85432a07c25d9ea822fe1c7bfa2bfdb0c24",
+      "c3319f07c3b277b99e7f64755ab93ac675598a07166b6e017d2e48904cde91e3"
+    ]
+  },
+  "execution_strategy": "calls_lazy",
+  "executor_source_sha256": "8dce7cc0c4de91bd07545511ecc690e4becf8ac7efaf7323475a91d898b3e87d",
+  "full_graph_source": "relay.testing.resnet.get_workload(num_layers=50)",
+  "peeling_algorithm": {
+    "already_correct_front_points_remain_as_dominators": true,
+    "candidate_replacement_outside_recomputed_front": false,
+    "execution": "build one final graph at a time; three-seed FPGA correctness fail-fast; measure latency only after correctness passes",
+    "latency_is_not_used_for_peeling": true,
+    "stop": "stop when a completed wave has no FPGA-invalid candidate, no new identity is exposed, or the 600-second complete-outer-process budget is exhausted",
+    "update": "remove FPGA-invalid candidates, recompute the front over all non-invalid eligible identities, and dispatch only newly exposed identities",
+    "wave_0": "compute the non-dominated eligible operator-TIR front"
+  },
+  "schema": "c3_invalid_dominator_peeling_online_contract_v1",
+  "source_layer": "stage3_unit1_conv1",
+  "status": "frozen_before_fullgraph_build_or_board_contact",
+  "verified_artifact_counts": {
+    "front": 2,
+    "local": 9,
+    "policy": 2,
+    "target": 4
+  },
+  "wave0_candidate_ids": [
+    "5de50abfa5f14d15976ebf3728d1cdf5973f3bd9e3dd00c90379ea5ca708f97d",
+    "c3319f07c3b277b99e7f64755ab93ac675598a07166b6e017d2e48904cde91e3"
+  ],
+  "workload_id": "R50I"
+}

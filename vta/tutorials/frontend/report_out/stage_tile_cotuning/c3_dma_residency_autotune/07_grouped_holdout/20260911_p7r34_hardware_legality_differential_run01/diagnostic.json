@@ -1,0 +1,1394 @@
+{
+  "cases": [
+    {
+      "allocations": [],
+      "board_status": "fpga_fail",
+      "config_index": 330,
+      "derived": {
+        "co_outer_groups_after_cthread": 8,
+        "cthread_output_tile_vectors": 98,
+        "output_tile_vectors": 49
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 2834.0,
+        "load_buffer_2d_bytes": 2902016,
+        "load_buffer_2d_calls": 1024,
+        "load_buffer_2d_inp_bytes": 1722368,
+        "load_buffer_2d_inp_calls": 512,
+        "load_buffer_2d_small_calls": 1024,
+        "load_buffer_2d_strided_calls": 512,
+        "load_buffer_2d_wgt_bytes": 1179648,
+        "load_buffer_2d_wgt_calls": 512,
+        "store_average_request_bytes": 784.0,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 64,
+        "store_buffer_2d_out_bytes": 50176,
+        "store_buffer_2d_out_calls": 64,
+        "store_buffer_2d_small_calls": 64,
+        "store_buffer_2d_strided_calls": 64
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": "15 - T.max(1 - i3_outer * 14, 0)",
+          "x_stride": 28,
+          "y_size": "15 - T.max(1 - i2_outer * 14, 0)"
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 9,
+          "y_size": 1
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": "15 - T.max(1 - i3_outer * 14, 0)",
+          "x_stride": 28,
+          "y_size": "15 - T.max(1 - i2_outer * 14, 0)"
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 9,
+          "y_size": 1
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 7,
+          "x_stride": 14,
+          "y_size": 7
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 7,
+          "x_stride": 14,
+          "y_size": 7
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 21,
+      "store_strides": [
+        "14"
+      ],
+      "store_x_sizes": [
+        "7"
+      ],
+      "store_y_sizes": [
+        "7"
+      ],
+      "tir_sha256": "436b944be614bbb711681aedbdef2b172f8ac8ef04f74e57805594a3c0a6d3e1",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 10,
+        "coproc_dep_push": 9,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "w04_config330_fpga_fail.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        1,
+        21,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "W04"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_pass",
+      "config_index": 455,
+      "derived": {
+        "co_outer_groups_after_cthread": 2,
+        "cthread_output_tile_vectors": 224,
+        "output_tile_vectors": 112
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 4,
+        "tile_h": 14,
+        "tile_w": 2
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 5696.0,
+        "load_buffer_2d_bytes": 2551808,
+        "load_buffer_2d_calls": 448,
+        "load_buffer_2d_inp_bytes": 487424,
+        "load_buffer_2d_inp_calls": 224,
+        "load_buffer_2d_small_calls": 224,
+        "load_buffer_2d_strided_calls": 448,
+        "load_buffer_2d_wgt_bytes": 2064384,
+        "load_buffer_2d_wgt_calls": 224,
+        "store_average_request_bytes": 1792.0,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 28,
+        "store_buffer_2d_out_bytes": 50176,
+        "store_buffer_2d_out_calls": 28,
+        "store_buffer_2d_small_calls": 28,
+        "store_buffer_2d_strided_calls": 28
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": "5 - T.max(1 - i3_outer * 4, 0)",
+          "x_stride": 28,
+          "y_size": 28
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 72,
+          "y_size": 4
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": "5 - T.max(1 - i3_outer * 4, 0)",
+          "x_stride": 28,
+          "y_size": 28
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 72,
+          "y_size": 4
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 2,
+          "x_stride": 14,
+          "y_size": 56
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 2,
+          "x_stride": 14,
+          "y_size": 56
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 168,
+      "store_strides": [
+        "14"
+      ],
+      "store_x_sizes": [
+        "2"
+      ],
+      "store_y_sizes": [
+        "56"
+      ],
+      "tir_sha256": "e95b5720980b50454e42a2ce800de96eae19feec8e2773c3122c8dda04a771a0",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 10,
+        "coproc_dep_push": 9,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "w04_config455_fpga_pass.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        14,
+        168,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "W04"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_pass",
+      "config_index": 461,
+      "derived": {
+        "co_outer_groups_after_cthread": 2,
+        "cthread_output_tile_vectors": 224,
+        "output_tile_vectors": 112
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 4,
+        "tile_h": 2,
+        "tile_w": 14
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 5696.0,
+        "load_buffer_2d_bytes": 2551808,
+        "load_buffer_2d_calls": 448,
+        "load_buffer_2d_inp_bytes": 487424,
+        "load_buffer_2d_inp_calls": 224,
+        "load_buffer_2d_small_calls": 224,
+        "load_buffer_2d_strided_calls": 224,
+        "load_buffer_2d_wgt_bytes": 2064384,
+        "load_buffer_2d_wgt_calls": 224,
+        "store_average_request_bytes": 1792.0,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_calls": 28,
+        "store_buffer_2d_out_bytes": 50176,
+        "store_buffer_2d_out_calls": 28,
+        "store_buffer_2d_small_calls": 28,
+        "store_buffer_2d_strided_calls": 28
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 28,
+          "x_stride": 28,
+          "y_size": "5 - T.max(1 - i2_outer * 4, 0)"
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 72,
+          "y_size": 4
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 28,
+          "x_stride": 28,
+          "y_size": "5 - T.max(1 - i2_outer * 4, 0)"
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 72,
+          "y_size": 4
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 28,
+          "x_stride": 196,
+          "y_size": 4
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 28,
+          "x_stride": 196,
+          "y_size": 4
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 24,
+      "store_strides": [
+        "196"
+      ],
+      "store_x_sizes": [
+        "28"
+      ],
+      "store_y_sizes": [
+        "4"
+      ],
+      "tir_sha256": "a39d03dc6edbb5ac1c636455e9b63a8d1d232024f651a0ffd7de7cd0f482a3b8",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 10,
+        "coproc_dep_push": 9,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "w04_config461_fpga_pass.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        2,
+        24,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "W04"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_fail",
+      "config_index": 1061,
+      "derived": {
+        "co_outer_groups_after_cthread": 5,
+        "cthread_output_tile_vectors": 196,
+        "output_tile_vectors": 98
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 14,
+        "tile_w": 7
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 2215.1111111111113,
+        "load_buffer_2d_bytes": 4784640,
+        "load_buffer_2d_calls": 2160,
+        "load_buffer_2d_inp_bytes": 2296320,
+        "load_buffer_2d_inp_calls": 1080,
+        "load_buffer_2d_small_calls": 2160,
+        "load_buffer_2d_strided_calls": 1080,
+        "load_buffer_2d_wgt_bytes": 2488320,
+        "load_buffer_2d_wgt_calls": 1080,
+        "store_average_request_bytes": 1568.0,
+        "store_buffer_2d_bytes": 282240,
+        "store_buffer_2d_calls": 180,
+        "store_buffer_2d_out_bytes": 282240,
+        "store_buffer_2d_out_calls": 180,
+        "store_buffer_2d_small_calls": 180,
+        "store_buffer_2d_strided_calls": 180
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": "9 - T.max(1 - i3_outer * 7, 0) - T.max(i3_outer * 7 - 34, 0)",
+          "x_stride": 42,
+          "y_size": "16 - T.max(1 - i2_outer * 14, 0) - T.max(i2_outer * 14 - 27, 0)"
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 9,
+          "y_size": 1
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": "9 - T.max(1 - i3_outer * 7, 0) - T.max(i3_outer * 7 - 34, 0)",
+          "x_stride": 42,
+          "y_size": "16 - T.max(1 - i2_outer * 14, 0) - T.max(i2_outer * 14 - 27, 0)"
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 9,
+          "y_size": 1
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 7,
+          "x_stride": 42,
+          "y_size": 14
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 7,
+          "x_stride": 42,
+          "y_size": 14
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 42,
+      "store_strides": [
+        "42"
+      ],
+      "store_x_sizes": [
+        "7"
+      ],
+      "store_y_sizes": [
+        "14"
+      ],
+      "tir_sha256": "46908eaeca9eaaff015a9fbce0f1e003c9a07efc65153a22b0b39a8ce32c0751",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 10,
+        "coproc_dep_push": 9,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "e00_config1061_fpga_fail.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        1,
+        42,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "E00"
+    },
+    {
+      "allocations": [],
+      "board_status": "runtime_uop_reject",
+      "config_index": 1081,
+      "derived": {
+        "co_outer_groups_after_cthread": 5,
+        "cthread_output_tile_vectors": 168,
+        "output_tile_vectors": 84
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 2,
+        "tile_w": 42
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 2464.0,
+        "load_buffer_2d_bytes": 6209280,
+        "load_buffer_2d_calls": 2520,
+        "load_buffer_2d_inp_bytes": 3306240,
+        "load_buffer_2d_inp_calls": 1260,
+        "load_buffer_2d_small_calls": 2520,
+        "load_buffer_2d_strided_calls": 0,
+        "load_buffer_2d_wgt_bytes": 2903040,
+        "load_buffer_2d_wgt_calls": 1260,
+        "store_average_request_bytes": 1344.0,
+        "store_buffer_2d_bytes": 282240,
+        "store_buffer_2d_calls": 210,
+        "store_buffer_2d_out_bytes": 282240,
+        "store_buffer_2d_out_calls": 210,
+        "store_buffer_2d_small_calls": 210,
+        "store_buffer_2d_strided_calls": 0
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 42,
+          "x_stride": 42,
+          "y_size": "4 - T.max(1 - i2_outer * 2, 0) - T.max(i2_outer * 2 - 39, 0)"
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 9,
+          "y_size": 1
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 42,
+          "x_stride": 42,
+          "y_size": "4 - T.max(1 - i2_outer * 2, 0) - T.max(i2_outer * 2 - 39, 0)"
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 9,
+          "y_size": 1
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 84,
+          "x_stride": 84,
+          "y_size": 1
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 84,
+          "x_stride": 84,
+          "y_size": 1
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 6,
+      "store_strides": [
+        "84"
+      ],
+      "store_x_sizes": [
+        "84"
+      ],
+      "store_y_sizes": [
+        "1"
+      ],
+      "tir_sha256": "d40ecde94f5f931dac4c92ee3bc956b74f2ccfd1aacc6ad84420f7ba282fb704",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 10,
+        "coproc_dep_push": 9,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "e00_config1081_runtime_uop_reject.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        1,
+        6,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "E00"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_fail",
+      "config_index": 951,
+      "derived": {
+        "co_outer_groups_after_cthread": 2,
+        "cthread_output_tile_vectors": 630,
+        "output_tile_vectors": 315
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 12,
+        "tile_co": 5,
+        "tile_h": 21,
+        "tile_w": 3
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 13728.0,
+        "load_buffer_2d_bytes": 768768,
+        "load_buffer_2d_calls": 56,
+        "load_buffer_2d_inp_bytes": 338688,
+        "load_buffer_2d_inp_calls": 28,
+        "load_buffer_2d_small_calls": 0,
+        "load_buffer_2d_strided_calls": 28,
+        "load_buffer_2d_wgt_bytes": 430080,
+        "load_buffer_2d_wgt_calls": 28,
+        "store_average_request_bytes": 5040.0,
+        "store_buffer_2d_bytes": 141120,
+        "store_buffer_2d_calls": 28,
+        "store_buffer_2d_out_bytes": 141120,
+        "store_buffer_2d_out_calls": 28,
+        "store_buffer_2d_small_calls": 0,
+        "store_buffer_2d_strided_calls": 28
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 3,
+          "x_stride": 21,
+          "y_size": 252
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 60,
+          "x_stride": 60,
+          "y_size": 1
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 3,
+          "x_stride": 21,
+          "y_size": 252
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 60,
+          "x_stride": 60,
+          "y_size": 1
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 3,
+          "x_stride": 21,
+          "y_size": 105
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 3,
+          "x_stride": 21,
+          "y_size": 105
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 105,
+      "store_strides": [
+        "21"
+      ],
+      "store_x_sizes": [
+        "3"
+      ],
+      "store_y_sizes": [
+        "105"
+      ],
+      "tir_sha256": "bd53cb3d5000c1c942201901270e923bbb5b534ae2edb65379bd91979dd2645d",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 8,
+        "coproc_dep_push": 8,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "e01_config951_fpga_fail.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        21,
+        105,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "E01"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_fail",
+      "config_index": 755,
+      "derived": {
+        "co_outer_groups_after_cthread": 5,
+        "cthread_output_tile_vectors": 84,
+        "output_tile_vectors": 42
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 12,
+        "tile_co": 2,
+        "tile_h": 21,
+        "tile_w": 1
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 5088.0,
+        "load_buffer_2d_bytes": 2136960,
+        "load_buffer_2d_calls": 420,
+        "load_buffer_2d_inp_bytes": 846720,
+        "load_buffer_2d_inp_calls": 210,
+        "load_buffer_2d_small_calls": 210,
+        "load_buffer_2d_strided_calls": 210,
+        "load_buffer_2d_wgt_bytes": 1290240,
+        "load_buffer_2d_wgt_calls": 210,
+        "store_average_request_bytes": 672.0,
+        "store_buffer_2d_bytes": 141120,
+        "store_buffer_2d_calls": 210,
+        "store_buffer_2d_out_bytes": 141120,
+        "store_buffer_2d_out_calls": 210,
+        "store_buffer_2d_small_calls": 210,
+        "store_buffer_2d_strided_calls": 210
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 1,
+          "x_stride": 21,
+          "y_size": 252
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 24,
+          "x_stride": 24,
+          "y_size": 1
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 1,
+          "x_stride": 21,
+          "y_size": 252
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 24,
+          "x_stride": 24,
+          "y_size": 1
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 1,
+          "x_stride": 21,
+          "y_size": 42
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 1,
+          "x_stride": 21,
+          "y_size": 42
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 21,
+      "store_strides": [
+        "21"
+      ],
+      "store_x_sizes": [
+        "1"
+      ],
+      "store_y_sizes": [
+        "42"
+      ],
+      "tir_sha256": "e95b61d3ba7d5683b18afdfbec62a845aa7d37bf6d5e2c9f2bdab2692ea26a84",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 8,
+        "coproc_dep_push": 8,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "e01_config755_fpga_fail.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        1,
+        21,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "E01"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_fail",
+      "config_index": 957,
+      "derived": {
+        "co_outer_groups_after_cthread": 2,
+        "cthread_output_tile_vectors": 630,
+        "output_tile_vectors": 315
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 12,
+        "tile_co": 5,
+        "tile_h": 3,
+        "tile_w": 21
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 13728.0,
+        "load_buffer_2d_bytes": 768768,
+        "load_buffer_2d_calls": 56,
+        "load_buffer_2d_inp_bytes": 338688,
+        "load_buffer_2d_inp_calls": 28,
+        "load_buffer_2d_small_calls": 0,
+        "load_buffer_2d_strided_calls": 28,
+        "load_buffer_2d_wgt_bytes": 430080,
+        "load_buffer_2d_wgt_calls": 28,
+        "store_average_request_bytes": 5040.0,
+        "store_buffer_2d_bytes": 141120,
+        "store_buffer_2d_calls": 28,
+        "store_buffer_2d_out_bytes": 141120,
+        "store_buffer_2d_out_calls": 28,
+        "store_buffer_2d_small_calls": 0,
+        "store_buffer_2d_strided_calls": 28
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 63,
+          "x_stride": 441,
+          "y_size": 12
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 60,
+          "x_stride": 60,
+          "y_size": 1
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 63,
+          "x_stride": 441,
+          "y_size": 12
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 60,
+          "x_stride": 60,
+          "y_size": 1
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 63,
+          "x_stride": 441,
+          "y_size": 5
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 63,
+          "x_stride": 441,
+          "y_size": 5
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 15,
+      "store_strides": [
+        "441"
+      ],
+      "store_x_sizes": [
+        "63"
+      ],
+      "store_y_sizes": [
+        "5"
+      ],
+      "tir_sha256": "79aad7cba6672845da1c5faa6405ed33a2d0d167592bddd7095ef488036e32c4",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 8,
+        "coproc_dep_push": 8,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "e01_config957_fpga_fail.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        3,
+        15,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "E01"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_fail",
+      "config_index": 877,
+      "derived": {
+        "co_outer_groups_after_cthread": 2,
+        "cthread_output_tile_vectors": 630,
+        "output_tile_vectors": 315
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 5,
+        "tile_h": 3,
+        "tile_w": 21
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 1144.0,
+        "load_buffer_2d_bytes": 768768,
+        "load_buffer_2d_calls": 672,
+        "load_buffer_2d_inp_bytes": 338688,
+        "load_buffer_2d_inp_calls": 336,
+        "load_buffer_2d_small_calls": 672,
+        "load_buffer_2d_strided_calls": 336,
+        "load_buffer_2d_wgt_bytes": 430080,
+        "load_buffer_2d_wgt_calls": 336,
+        "store_average_request_bytes": 5040.0,
+        "store_buffer_2d_bytes": 141120,
+        "store_buffer_2d_calls": 28,
+        "store_buffer_2d_out_bytes": 141120,
+        "store_buffer_2d_out_calls": 28,
+        "store_buffer_2d_small_calls": 0,
+        "store_buffer_2d_strided_calls": 28
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 63,
+          "x_stride": 63,
+          "y_size": 1
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 1,
+          "x_stride": 12,
+          "y_size": 5
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 63,
+          "x_stride": 63,
+          "y_size": 1
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 1,
+          "x_stride": 12,
+          "y_size": 5
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 63,
+          "x_stride": 441,
+          "y_size": 5
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 63,
+          "x_stride": 441,
+          "y_size": 5
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 3,
+      "store_strides": [
+        "441"
+      ],
+      "store_x_sizes": [
+        "63"
+      ],
+      "store_y_sizes": [
+        "5"
+      ],
+      "tir_sha256": "b93d3bb657d8daa814ef42160045e50f7b83d3c4ec4c14489c6761dc0f47e555",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 10,
+        "coproc_dep_push": 9,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "e01_config877_fpga_fail.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        3,
+        3,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "E01"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_fail",
+      "config_index": 301,
+      "derived": {
+        "co_outer_groups_after_cthread": 4,
+        "cthread_output_tile_vectors": 315,
+        "output_tile_vectors": 315
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 2,
+        "VTAStoreBuffer2D": 1,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 5,
+        "tile_h": 3,
+        "tile_w": 21
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 1144.0,
+        "load_buffer_2d_bytes": 768768,
+        "load_buffer_2d_calls": 672,
+        "load_buffer_2d_inp_bytes": 338688,
+        "load_buffer_2d_inp_calls": 336,
+        "load_buffer_2d_small_calls": 672,
+        "load_buffer_2d_strided_calls": 336,
+        "load_buffer_2d_wgt_bytes": 430080,
+        "load_buffer_2d_wgt_calls": 336,
+        "store_average_request_bytes": 5040.0,
+        "store_buffer_2d_bytes": 141120,
+        "store_buffer_2d_calls": 28,
+        "store_buffer_2d_out_bytes": 141120,
+        "store_buffer_2d_out_calls": 28,
+        "store_buffer_2d_small_calls": 0,
+        "store_buffer_2d_strided_calls": 28
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 63,
+          "x_stride": 63,
+          "y_size": 1
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 1,
+          "x_stride": 12,
+          "y_size": 5
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 63,
+          "x_stride": 441,
+          "y_size": 5
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 3,
+      "store_strides": [
+        "441"
+      ],
+      "store_x_sizes": [
+        "63"
+      ],
+      "store_y_sizes": [
+        "5"
+      ],
+      "tir_sha256": "37da8eceabd4457f388a3c5cc4446e53fcfafc9f9deb0b1103f2e50112ddd394",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 2,
+        "VTAStoreBuffer2D": 1,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 6,
+        "coproc_dep_push": 6,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "e01_config301_fpga_fail.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        3,
+        3,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "E01"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_pass",
+      "config_index": 1163,
+      "derived": {
+        "co_outer_groups_after_cthread": 2,
+        "cthread_output_tile_vectors": 216,
+        "output_tile_vectors": 108
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 6,
+        "tile_h": 6,
+        "tile_w": 3
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 7440.0,
+        "load_buffer_2d_bytes": 2380800,
+        "load_buffer_2d_calls": 320,
+        "load_buffer_2d_inp_bytes": 168960,
+        "load_buffer_2d_inp_calls": 160,
+        "load_buffer_2d_small_calls": 160,
+        "load_buffer_2d_strided_calls": 320,
+        "load_buffer_2d_wgt_bytes": 2211840,
+        "load_buffer_2d_wgt_calls": 160,
+        "store_average_request_bytes": 1728.0,
+        "store_buffer_2d_bytes": 13824,
+        "store_buffer_2d_calls": 8,
+        "store_buffer_2d_out_bytes": 13824,
+        "store_buffer_2d_out_calls": 8,
+        "store_buffer_2d_small_calls": 8,
+        "store_buffer_2d_strided_calls": 8
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": "7 - T.max(1 - i3_outer * 6, 0) - T.max(i3_outer * 6 - 5, 0)",
+          "x_stride": 11,
+          "y_size": 11
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 180,
+          "y_size": 6
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": "7 - T.max(1 - i3_outer * 6, 0) - T.max(i3_outer * 6 - 5, 0)",
+          "x_stride": 11,
+          "y_size": 11
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 180,
+          "y_size": 6
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 3,
+          "x_stride": 6,
+          "y_size": 36
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 3,
+          "x_stride": 6,
+          "y_size": 36
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 108,
+      "store_strides": [
+        "6"
+      ],
+      "store_x_sizes": [
+        "3"
+      ],
+      "store_y_sizes": [
+        "36"
+      ],
+      "tir_sha256": "b8782809d484613b8a4d0224dd6341a036c8344eede599fcc2d3aff956e95f05",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 10,
+        "coproc_dep_push": 9,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "e02_config1163_fpga_pass.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        6,
+        108,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "E02"
+    },
+    {
+      "allocations": [],
+      "board_status": "fpga_pass",
+      "config_index": 1167,
+      "derived": {
+        "co_outer_groups_after_cthread": 2,
+        "cthread_output_tile_vectors": 432,
+        "output_tile_vectors": 216
+      },
+      "extern_site_histogram": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopLoopBegin": 7,
+        "VTAUopLoopEnd": 7
+      },
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 6,
+        "tile_h": 6,
+        "tile_w": 6
+      },
+      "logical_dma": {
+        "load_average_request_bytes": 7880.0,
+        "load_buffer_2d_bytes": 1260800,
+        "load_buffer_2d_calls": 160,
+        "load_buffer_2d_inp_bytes": 154880,
+        "load_buffer_2d_inp_calls": 80,
+        "load_buffer_2d_small_calls": 80,
+        "load_buffer_2d_strided_calls": 80,
+        "load_buffer_2d_wgt_bytes": 1105920,
+        "load_buffer_2d_wgt_calls": 80,
+        "store_average_request_bytes": 3456.0,
+        "store_buffer_2d_bytes": 13824,
+        "store_buffer_2d_calls": 4,
+        "store_buffer_2d_out_bytes": 13824,
+        "store_buffer_2d_out_calls": 4,
+        "store_buffer_2d_small_calls": 4,
+        "store_buffer_2d_strided_calls": 0
+      },
+      "lowered_dma_sites": [
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 11,
+          "x_stride": 11,
+          "y_size": 11
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 180,
+          "y_size": 6
+        },
+        {
+          "kind": "load",
+          "memory_type": 2,
+          "x_size": 11,
+          "x_stride": 11,
+          "y_size": 11
+        },
+        {
+          "kind": "load",
+          "memory_type": 1,
+          "x_size": 9,
+          "x_stride": 180,
+          "y_size": 6
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 216,
+          "x_stride": 216,
+          "y_size": 1
+        },
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 216,
+          "x_stride": 216,
+          "y_size": 1
+        }
+      ],
+      "max_uop_kernel_explicit_pushes": 108,
+      "store_strides": [
+        "216"
+      ],
+      "store_x_sizes": [
+        "216"
+      ],
+      "store_y_sizes": [
+        "1"
+      ],
+      "tir_sha256": "d45c9a036441f3b2886fba34530199fd805bb59ab887ad2d0cf45400753288d1",
+      "tir_text_counts": {
+        "VTALoadBuffer2D": 4,
+        "VTAStoreBuffer2D": 2,
+        "VTAUopPush": 0,
+        "coproc_dep_pop": 10,
+        "coproc_dep_push": 9,
+        "coproc_sync": 1,
+        "coproc_uop_scope": 5,
+        "virtual_thread": 0
+      },
+      "tir_text_file": "e02_config1167_fpga_pass.tir.txt",
+      "uop_kernel_explicit_push_counts": [
+        6,
+        108,
+        1,
+        1,
+        1
+      ],
+      "workload_id": "E02"
+    }
+  ],
+  "inputs": {
+    "schedule_sha256": "676ff21166871fdc30f0e42dfaf0067fbf6b8f866fe77ebc308f872f50e64926",
+    "selected_tasks": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/selected_tasks.json",
+    "selected_tasks_sha256": "3f4abe7ca36cbc4a729718f17066f5e757547a0b716d15e9086b273e653b5087"
+  },
+  "schema": "c3_p7r_hardware_legality_differential_v1",
+  "scope": "local lowering diagnostics with frozen real-FPGA pass/fail labels; no latency"
+}

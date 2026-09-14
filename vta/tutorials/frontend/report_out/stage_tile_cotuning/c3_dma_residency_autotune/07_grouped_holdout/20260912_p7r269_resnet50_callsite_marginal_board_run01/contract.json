@@ -1,0 +1,160 @@
+{
+  "build_artifact_hash_manifest_sha256": "4fb5f05ebeabf35b2fc7ba1edc7fd49cc209b8badd552c56c61f71a046934f57",
+  "build_manifest_sha256": "6d33a2c5f16c0f3c13003246197ade6c10a46b53fb8573b0d9e89a19de7b7751",
+  "execution_isolation": "one clean bitstream/RPC and two executors per marginal edge",
+  "executor_source_sha256": "549108be06cd2e87278325f9090e469dd731848ecaccb54e3112067a5fd8be47",
+  "expected_per_edge_delta": {
+    "driver_run_calls": 16,
+    "load_buffer_2d_wgt_bytes": -393216,
+    "load_buffer_2d_wgt_calls": -432,
+    "synchronize_calls": 16
+  },
+  "failure_policy": "fail closed, preserve completed rows, restore default RPC",
+  "pairs": [
+    {
+      "baseline_mask": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_mask": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "context": "other_three_original",
+      "graph_node": 57,
+      "pair_id": "node57_isolated_add"
+    },
+    {
+      "baseline_mask": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "candidate_mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "context": "other_three_resident",
+      "graph_node": 57,
+      "pair_id": "node57_full_context_add"
+    },
+    {
+      "baseline_mask": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_mask": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "context": "other_three_original",
+      "graph_node": 72,
+      "pair_id": "node72_isolated_add"
+    },
+    {
+      "baseline_mask": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "candidate_mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "context": "other_three_resident",
+      "graph_node": 72,
+      "pair_id": "node72_full_context_add"
+    },
+    {
+      "baseline_mask": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_mask": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "context": "other_three_original",
+      "graph_node": 85,
+      "pair_id": "node85_isolated_add"
+    },
+    {
+      "baseline_mask": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "candidate_mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "context": "other_three_resident",
+      "graph_node": 85,
+      "pair_id": "node85_full_context_add"
+    },
+    {
+      "baseline_mask": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_mask": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "context": "other_three_original",
+      "graph_node": 98,
+      "pair_id": "node98_isolated_add"
+    },
+    {
+      "baseline_mask": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "candidate_mask": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "context": "other_three_resident",
+      "graph_node": 98,
+      "pair_id": "node98_full_context_add"
+    }
+  ],
+  "rounds_per_pair": 7,
+  "schema": "c3_vta_resnet50_callsite_marginal_board_contract_v1",
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "status": "frozen_before_board_execution",
+  "verified_build_artifact_count": 16
+}

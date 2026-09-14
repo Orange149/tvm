@@ -1,0 +1,29 @@
+BUILD
+full rebuild: 657 Ninja steps
+exit code: 0
+final link: [656/657] Linking CXX shared library libtvm.so
+
+PURE TIR TESTS
+......                                                                   [100%]
+6 passed in 0.06s
+
+MODE-4 STATIC + FSIM QUALIFICATION
+test_weight_probe_has_expected_dma_and_legal_dependencies[0] PASSED
+test_weight_probe_has_expected_dma_and_legal_dependencies[2] PASSED
+test_weight_probe_has_expected_dma_and_legal_dependencies[9] PASSED
+test_weight_probe_matches_independent_reference_for_three_seeds[0] PASSED
+test_weight_probe_matches_independent_reference_for_three_seeds[2] PASSED
+test_weight_probe_matches_independent_reference_for_three_seeds[9] PASSED
+6 passed, 17 warnings in 1.86s
+
+FINAL COMBINED REGRESSION
+enabled targets: llvm
+pytest marker:
+..................................................                       [100%]
+50 passed in 9.32s
+
+FINAL INCREMENTAL BUILD CHECK
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+2026-09-11 00:13:29.181057171 +0800 59984512 build/libtvm.so
+3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9  build/libtvm.so

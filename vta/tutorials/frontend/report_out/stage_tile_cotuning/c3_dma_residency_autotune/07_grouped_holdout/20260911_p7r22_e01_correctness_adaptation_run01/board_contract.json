@@ -1,0 +1,28 @@
+{
+  "schema": "c3_p7r_unseen_board_contract_v1",
+  "status": "frozen_before_p7r_board_labels",
+  "purpose": "E01 correctness-only power-of-two tile_co adaptation; no E01 latency seen",
+  "workload_id": "E01",
+  "workload": ["conv2d_packed.vta", ["TENSOR", [1, 12, 21, 21, 1, 16], "int8"], ["TENSOR", [20, 12, 1, 1, 16, 16], "int8"], [1, 1], [0, 0, 0, 0], [1, 1], "NCHW1n16c", "int32"],
+  "seeds": [0, 20250901, 20260910],
+  "selection_rule": {"uses_E01_latency": false, "adaptation": "tile_co 5 to power-of-two tile_co 2; preserve request-shape and contiguous strata", "timing_gate": "all fifteen checks pass"},
+  "execution_order": [
+    {"role": "request_shape_original_before", "mode": "original", "config_index": 755},
+    {"role": "request_shape_residency", "mode": "input_stationary", "config_index": 755, "candidate_id": "e86a77d2789b6771e38340ad1205bb9581745a88c12719e3176619ddc94d54ba", "tir_sha256": "0712dd010643e2380d46e21ffb5869a8f5429e847df7d420123322a39ca01661"},
+    {"role": "contiguous_original", "mode": "original", "config_index": 764},
+    {"role": "contiguous_residency", "mode": "input_stationary", "config_index": 764, "candidate_id": "df49003918e585a0408125c64ee8f7232a936652adf3a94d4ddd2f62d473e96b", "tir_sha256": "e3f35f100b44c9f6b3fcb8afa297ca10221344bc278f954c08dab497220418e9"},
+    {"role": "request_shape_original_after", "mode": "original", "config_index": 755}
+  ],
+  "board": {"boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c", "fpga_state": "operating", "udmabuf_bytes": 201326592, "rpc_cwd_requirement": "/var/volatile/vta_c3_ram/runtime", "sd_mount": "/media/sd-mmcblk1p2", "sd_used_percent_at_freeze": 78, "dmesg_error_cutoff_seconds": 4057.401259, "safety": "abort without reboot or poweroff"},
+  "source_guards_sha256": {
+    "vta/tutorials/frontend/run_vta_p7r_joint_correctness.py": "e70b8c3199a2d6cd589f7376641f5c4622655d041313172a2e9aff2ef2d2cab2",
+    "vta/python/vta/top/vta_conv2d.py": "676ff21166871fdc30f0e42dfaf0067fbf6b8f866fe77ebc308f872f50e64926",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "vta/tutorials/frontend/qualify_vta_residency_fsim.py": "1b869cc9fa6e109c9742dcb82d2f0ccca6193981f589af70b4fb8428ddabec57"
+  },
+  "input_guards_sha256": {
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r12_e01_unseen_local_run01/results.jsonl": "302ca22eb60ae19c5a5c84bae987fe791ba53de24d85d8c936e9cb4855b9a133",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r22_e01_correctness_adaptation_run01/fsim/config755.json": "2a3786586af79fd51a3b6b996d0a4e04c44c71cccf64f809806cc8a577477caa",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r22_e01_correctness_adaptation_run01/fsim/config764.json": "ee66a2870dd4456ce78976eddd27293275564ddb0c3ff4fc1c651420fd6d4edd"
+  }
+}

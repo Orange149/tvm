@@ -1,0 +1,11 @@
+# exit 0
+/home/orange/miniconda3/envs/vta-resnet/bin/python -m py_compile vta/tutorials/frontend/c3_candidate_identity.py vta/tutorials/frontend/extract_vta_candidate_features.py vta/tutorials/frontend/test_c3_candidate_identity.py
+
+# exit 1: invalid module-style path; retained as failed invocation
+/home/orange/miniconda3/envs/vta-resnet/bin/python -m unittest -v vta/tutorials/frontend/test_c3_candidate_identity.py
+
+# exit 0: authoritative test invocation
+/home/orange/miniconda3/envs/vta-resnet/bin/python -m unittest discover -s vta/tutorials/frontend -p test_c3_candidate_identity.py -v
+
+# exit 0
+/home/orange/miniconda3/envs/vta-resnet/bin/python vta/tutorials/frontend/extract_vta_candidate_features.py --static-workload-dma vta/tutorials/frontend/report_out/stage_tile_cotuning/stage_memory_experiments/static_workload_dma.json --selected-tasks vta/tutorials/frontend/report_out/stage_tile_cotuning/iteration3_tophub_incumbent/selected_tasks.json --hardware-fingerprint-json '{"target":"axu5evb","vta_config_sha256":"7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d","expected_bitstream_sha256":"7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6"}' --template-name conv2d_packed.vta --schedule-version vta_conv2d.py@b7fc752b5c41974c0e68fcf7d1bd6b6ca12229920c213c7cbae12f2a96ad4645 --residence-mode original --output vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4_local_identity_adapter_run01/results.jsonl --summary vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4_local_identity_adapter_run01/summary.json

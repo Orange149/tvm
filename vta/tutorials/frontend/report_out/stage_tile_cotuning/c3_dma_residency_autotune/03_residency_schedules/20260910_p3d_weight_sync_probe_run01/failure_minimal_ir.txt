@@ -1,0 +1,33 @@
+Mode-4 raw TE-lowered structure (representative form):
+
+for x_co0 in range(CO_outer):
+    VTALoadBuffer2D(weight tile)       # ckernel.compute_at(output, x_co0)
+    attr [x_i0] "pragma_coproc_sync" = 1
+    for x_i0 in range(H_outer):
+        ... COMPUTE ...
+        VTAStoreBuffer2D(output tile)
+
+Requested lowering semantics:
+
+for x_co0 in range(CO_outer):
+    LOAD(weight)
+    for x_i0 in range(H_outer):
+        COMPUTE; STORE(output)
+    tir.vta.coproc_sync()              # one drain per resident weight tile
+
+Actual first failure:
+
+InjectCoProcSync attempts:
+    tvm.tir.Call("int32", "vta.coproc_sync", [])
+ValueError:
+    Cannot handle str op argument vta.coproc_sync
+
+Counterfactual dependency diagnostic (explicit pragma stripped; not executable probe):
+
+    coproc_dep_push(3, 1)
+    coproc_dep_pop(3, 1)
+    ... inner legal 1<->2 and 2<->3 pairs ...
+    coproc_dep_push(3, 1)
+    coproc_dep_pop(3, 1)
+
+Push/pop counts balance, but direct STORE(3)->LOAD(1) remains forbidden.

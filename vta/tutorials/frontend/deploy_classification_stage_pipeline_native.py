@@ -33,6 +33,8 @@ import tarfile
 import tempfile
 from pathlib import Path
 
+from tvm.target import Target
+
 from split_resnet18_stages import (  # pylint: disable=wrong-import-position
     AUTO_RESOURCE_AWARE_SCHEME,
     SCHEMES,
@@ -52,6 +54,7 @@ from profile_split_resnet18_stages import (  # pylint: disable=wrong-import-posi
     get_func_output_info,
     schema_nbytes,
 )
+from vta_tuning_history import history_identity
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png"}
 CAT_EQUIVALENT_TOP1 = {281, 282, 283, 284, 285}
@@ -105,6 +108,12 @@ def parse_args():
         help="SSH ControlPath; default is /tmp/vta_stage_pipeline_mux_%%r_%%h_%%p",
     )
     parser.add_argument("--model", default="resnet18_v1", choices=["resnet18_v1"])
+    parser.add_argument("--tune-log", default="", help="AutoTVM history for VTA stages; included in build cache keys")
+    parser.add_argument(
+        "--require-tuned-vta",
+        action="store_true",
+        help="Require TopHub or explicit history coverage for all conv2d_packed.vta workloads",
+    )
     parser.add_argument(
         "--scheme",
         default="three_stage_e",
@@ -315,6 +324,7 @@ def stage_build_cache_key(args, env, stage, input_schema, output_schema, use_gra
     lowering_sources = [
         "vta/tutorials/frontend/split_resnet18_stages.py",
         "vta/tutorials/frontend/profile_split_resnet18_stages.py",
+        "vta/tutorials/frontend/vta_tuning_history.py",
         "vta/python/vta/build_module.py",
         "vta/python/vta/top/graphpack.py",
         "vta/python/vta/top/op.py",
@@ -322,8 +332,19 @@ def stage_build_cache_key(args, env, stage, input_schema, output_schema, use_gra
         "python/tvm/relay/quantize/quantize.py",
         "3rdparty/vta-hw/config/vta_config.json",
     ]
+    if use_graph_pack:
+        vta_build_targets = [
+            Target(env.target_vta_cpu, host=env.target_host),
+            Target(env.target, host=env.target_host),
+        ]
+    else:
+        vta_build_targets = [Target(env.target, host=env.target_host)]
     payload = {
-        "version": 3,
+        "version": 5,
+        "vta_tuning": history_identity(
+            getattr(args, "tune_log", ""), vta_build_targets
+        ) if stage["device"] == "vta" else None,
+        "require_tuned_vta": bool(getattr(args, "require_tuned_vta", False)),
         "target": env.TARGET,
         "target_host": str(env.target_host),
         "target_vta_cpu": str(env.target_vta_cpu),
@@ -595,6 +616,7 @@ def build_stage_modules(args, package_dir):
             print("[BUILD-CACHE] hit {} key={}".format(stage_name, cache_key[:16]))
         else:
             print("[BUILD-CACHE] miss {} key={}".format(stage_name, cache_key[:16]))
+            tuning_audit = {}
             if stage["device"] == "cpu":
                 graph, lib, lowered_params = build_cpu_stage(stage_name, mod, params, cpu_target)
             else:
@@ -604,6 +626,9 @@ def build_stage_modules(args, package_dir):
                     params,
                     env,
                     use_graph_pack=use_graph_pack,
+                    tune_log=getattr(args, "tune_log", ""),
+                    tuning_audit=tuning_audit,
+                    require_tuned=getattr(args, "require_tuned_vta", False),
                 )
             write_text(graph_path, graph)
             write_bytes(params_path, tvm.runtime.save_param_dict(lowered_params))
@@ -615,6 +640,7 @@ def build_stage_modules(args, package_dir):
                 "key_payload": cache_payload,
                 "relay_ir_sha256": relay_ir_sha256,
                 "compiled_module_sources": module_sources,
+                "vta_tuning": tuning_audit if stage["device"] == "vta" else None,
                 "artifacts": {
                     "graph_sha256": file_sha256(graph_path),
                     "lib_sha256": file_sha256(lib_path),
@@ -646,6 +672,7 @@ def build_stage_modules(args, package_dir):
                 "params": str(params_path.relative_to(package_dir)),
                 "stage_build_cache_key": cache_key,
                 "stage_build_cache_hit": bool(cache_hit),
+                "vta_tuning": cache_record.get("vta_tuning"),
                 "relay_ir_sha256": relay_ir_sha256,
                 "compiled_module_sources": cache_record.get("compiled_module_sources", []),
                 "artifact_sha256": artifact_hashes,
@@ -666,7 +693,11 @@ def compile_runner(package_dir):
 
     source = root / "vta" / "apps" / "native_deploy" / "vta_stage_pipeline_runner.cc"
     output = package_dir / "vta_stage_pipeline_runner"
-    source_sha = file_sha256(source)
+    # The slot planner is header-only; invalidate the runner cache on either edit.
+    source_sha = hashlib.sha256(
+        source.read_bytes() + source.with_name("vta_shared_buffer_plan.h").read_bytes()
+        + (root / "3rdparty/picojson/picojson.h").read_bytes()
+    ).hexdigest()
     if len(package_dir.parents) >= 3 and package_dir.parents[1].name == "buildability":
         runner_cache_dir = package_dir.parents[2] / "runner_cache" / source_sha
     else:
@@ -1822,11 +1853,20 @@ def main():
         raise RuntimeError("--rpc-baseline-result requires --fetch-results-dir")
     if args.reuse_package_dir and args.package_only:
         raise RuntimeError("--reuse-package-dir is only valid for board deployment runs")
-
     if args.reuse_package_dir:
         source_dir = Path(args.reuse_package_dir).resolve()
         if not source_dir.is_dir():
             raise RuntimeError("--reuse-package-dir does not exist: {}".format(source_dir))
+        if args.tune_log or args.require_tuned_vta:
+            manifest = json.loads((source_dir / "manifest.json").read_text())
+            expected = history_identity(args.tune_log)["sha256"] if args.tune_log else None
+            for stage in manifest["stages"]:
+                if stage["device"] == "vta":
+                    tuning = stage.get("vta_tuning") or {}
+                    if expected is not None and tuning.get("sha256") != expected:
+                        raise RuntimeError("Reused package was not built with the requested tuning history")
+                    if args.require_tuned_vta and (not tuning.get("queried_workloads") or tuning.get("fallback_workloads")):
+                        raise RuntimeError("Reused package has incomplete VTA tuning coverage")
         work_dir, package_dir = stage_reused_package(source_dir)
         try:
             refresh_reused_package(args, package_dir)

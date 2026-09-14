@@ -1,0 +1,8 @@
+W00/W02/W09 actual mode-4 lowering failure:
+ValueError: Cannot handle str op argument vta.coproc_sync. This function only handles str argument with the tir namespace. If you are certain about the intrinsic name, pass in Op.get(name) instead
+
+Failure phase:
+vta/python/vta/transform.py, InjectCoProcSync._do_fold
+sync = tvm.tir.Call("int32", "vta.coproc_sync", [])
+
+This is retained as probe evidence. transform.py was not changed.

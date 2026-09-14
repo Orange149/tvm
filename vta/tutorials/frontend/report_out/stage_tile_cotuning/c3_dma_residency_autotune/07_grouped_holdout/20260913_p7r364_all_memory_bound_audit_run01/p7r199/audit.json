@@ -1,0 +1,517 @@
+{
+  "scope": "retrospective development audit, not prospective search savings",
+  "rule": "all_memories",
+  "count": 24,
+  "rejected": 10,
+  "rejected_static_ok": 0,
+  "rejected_observed_capacity_failure": 10,
+  "unknown": 0,
+  "source_sha256": "4364c55826d64225f529f04ef1ac09c3787bf8185ac3f39f3591be3dd5893915",
+  "input_hashes": {
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r199_y07_full_local_oracle_completion_run01/candidates_v2.jsonl": "641fbee221b631bcbb0d8f40eb5542c9417f70db79b60ea7cfcc87af81225eba",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r199_y07_full_local_oracle_completion_run01/static_results.jsonl": "a1953ed16ae01ee328a974ff8c8ae29d969f070f20c49134c5e16516253b914a"
+  },
+  "rows": [
+    {
+      "candidate_id": "5bed20304c70a539509eddac94da625b5cd65f037c736e2489c9044951ee6964",
+      "family_id": "Y07F00",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 73728,
+        "accumulator": 1024,
+        "input": 288
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "d77dbbcca87488a45d849550908b030473ea180bca3379f1a1d02f9ea37099b4",
+      "family_id": "Y07F00",
+      "mode": "input_stationary",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 147456,
+        "accumulator": 2048,
+        "input": 288
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "7c92bceadac914ef7b848a12bf2e669e8a8fb95f02b4dc782d8507213faf8d5e",
+      "family_id": "Y07F00",
+      "mode": "weight_resident_barrier",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 589824,
+        "accumulator": 1024,
+        "input": 288
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "55b42a26479de5b7e883b1e736c1224ba0c5058823c6f7e5153791999b3f4344",
+      "family_id": "Y07F01",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 147456,
+        "accumulator": 13312,
+        "input": 2880
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "a21aa549ca8f782ebb514fe48adc127bf65287becbf980923fa12432a30b316a",
+      "family_id": "Y07F01",
+      "mode": "input_stationary",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 294912,
+        "accumulator": 26624,
+        "input": 2880
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "a4a57bea31830b996d60b25e29920b725b8b121aef4c57897931ddbf89d43c58",
+      "family_id": "Y07F01",
+      "mode": "weight_resident_barrier",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 589824,
+        "accumulator": 13312,
+        "input": 2880
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "77d0084203b6a29486cf071e69eebbdbd704a6c40449e3c912605a8fb00d217f",
+      "family_id": "Y07F02",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 147456,
+        "accumulator": 6656,
+        "input": 5760
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "245d34b2dfa9e44d7565b59bc84ecdb58fc61a4343ea4c8ccc1beaa089f12c98",
+      "family_id": "Y07F02",
+      "mode": "input_stationary",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 589824,
+        "accumulator": 26624,
+        "input": 5760
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "77405a7821fd8f0e7f62a33603aeb1d5e8cb809faeba216b4d8bb3575d4fc7cf",
+      "family_id": "Y07F02",
+      "mode": "weight_resident_barrier",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 294912,
+        "accumulator": 6656,
+        "input": 5760
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "f2700c985e0a43914d98e319f027a0071ee052e112d1adb331c4e51289adbed2",
+      "family_id": "Y07F03",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 36864,
+        "accumulator": 832,
+        "input": 11520
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "21c54e0839578bb4ae63015111ecb6decc13d21d4d7328979ab9e110de7b55e5",
+      "family_id": "Y07F03",
+      "mode": "input_stationary",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 1179648,
+        "accumulator": 26624,
+        "input": 11520
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "1767af77611d034ff1ece587737dc91d44caf9f13b1a11f761a72ba774cdfca8",
+      "family_id": "Y07F03",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 36864,
+        "accumulator": 832,
+        "input": 11520
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "dbc519ce47a32e0104f0a23fa3523c9ee8d6d3091b9282e2c09bab45a51b20cc",
+      "family_id": "Y07F04",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 36864,
+        "accumulator": 3328,
+        "input": 2880
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "c1b207b4f54e226e69e244f9565ab209b4b19fe9e5de0ded4aa42e922085e3de",
+      "family_id": "Y07F04",
+      "mode": "input_stationary",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 294912,
+        "accumulator": 26624,
+        "input": 2880
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "17bc33fd6e37bae6150b96680194263d52e4834ba91c5386e2a87a04aede616a",
+      "family_id": "Y07F04",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 147456,
+        "accumulator": 3328,
+        "input": 2880
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "730e40e5091fd4c7d2ebc92a3a45f9e450c97081ca00e5e77ae8731dd37b60fd",
+      "family_id": "Y07F05",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 36864,
+        "accumulator": 1024,
+        "input": 144
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "d355ba40abc579a78ed0ab2895ed8a95860e1b4256c46d24ec393037d8dc9917",
+      "family_id": "Y07F05",
+      "mode": "input_stationary",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 73728,
+        "accumulator": 2048,
+        "input": 144
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "ba033addfd6cf1baaf29857b4627053bcde33d14e1938f0b3ab5d76ad846e604",
+      "family_id": "Y07F05",
+      "mode": "weight_resident_barrier",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 589824,
+        "accumulator": 1024,
+        "input": 144
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "4e5235bf40d7dcaa4fe6f91873c4b74cdc2b1923a85dac618b06ef95b8eb1a57",
+      "family_id": "Y07F06",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 147456,
+        "accumulator": 3328,
+        "input": 11520
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "35ed3d75b1ddc9ecae911eca991b6cba969b500f20ebf4d029fe733442ebacbe",
+      "family_id": "Y07F06",
+      "mode": "input_stationary",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 1179648,
+        "accumulator": 26624,
+        "input": 11520
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "b8e03a2fedfc931327c1e8cec841181695b06424246faa9c518b25975dcefc78",
+      "family_id": "Y07F06",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 147456,
+        "accumulator": 3328,
+        "input": 11520
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "0ed8aa04a5555239f0df7e5ed5a6c1ad6a9f571111ab0fdadce6d5709362a77d",
+      "family_id": "Y07F07",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 18432,
+        "accumulator": 64,
+        "input": 1152
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    },
+    {
+      "candidate_id": "e8efdb1d1c56be593618353e0b2b05b477c820e400a9e9e2e57e760ce064bb84",
+      "family_id": "Y07F07",
+      "mode": "input_stationary",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 589824,
+        "accumulator": 2048,
+        "input": 1152
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "weight"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "0b6f0cce39aefc547f9e9bf07421eb484f65d5c93a6b835e4a5e2fa7c6594c79",
+      "family_id": "Y07F07",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 36864,
+        "accumulator": 64,
+        "input": 1152
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_pad_innermost"
+    }
+  ],
+  "board_contacted": false
+}

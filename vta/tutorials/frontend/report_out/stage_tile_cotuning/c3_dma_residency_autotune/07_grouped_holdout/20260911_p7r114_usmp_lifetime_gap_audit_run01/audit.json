@@ -1,0 +1,361 @@
+{
+  "blocking_gaps": [
+    "A:allocation_and_free_event_clock",
+    "A:device_completion_event_separate_from_blocking_duration",
+    "A:finish_decoded_and_observed_per_submit",
+    "A:internal_tensor_access_events",
+    "A:per_allocation_identity_address_size",
+    "A:queue_backing_resource_and_physical_range",
+    "A:queue_to_frame_stage_invocation_link",
+    "A:replay_retained_resource_lifetime",
+    "A:static_to_runtime_resource_mapping",
+    "B:allocation_and_free_event_clock",
+    "B:device_completion_event_separate_from_blocking_duration",
+    "B:finish_decoded_and_observed_per_submit",
+    "B:internal_tensor_access_events",
+    "B:per_allocation_identity_address_size",
+    "B:queue_backing_resource_and_physical_range",
+    "B:queue_to_frame_stage_invocation_link",
+    "B:replay_retained_resource_lifetime",
+    "B:static_to_runtime_resource_mapping",
+    "C:allocation_and_free_event_clock",
+    "C:device_completion_event_separate_from_blocking_duration",
+    "C:finish_decoded_and_observed_per_submit",
+    "C:internal_tensor_access_events",
+    "C:per_allocation_identity_address_size",
+    "C:queue_backing_resource_and_physical_range",
+    "C:queue_to_frame_stage_invocation_link",
+    "C:replay_retained_resource_lifetime",
+    "C:static_to_runtime_resource_mapping",
+    "D:allocation_and_free_event_clock",
+    "D:device_completion_event_separate_from_blocking_duration",
+    "D:finish_decoded_and_observed_per_submit",
+    "D:internal_tensor_access_events",
+    "D:per_allocation_identity_address_size",
+    "D:queue_backing_resource_and_physical_range",
+    "D:queue_to_frame_stage_invocation_link",
+    "D:replay_retained_resource_lifetime",
+    "D:static_to_runtime_resource_mapping",
+    "profile:bounded_tail_capture",
+    "profile:resource_physical_range",
+    "profile:unified_correlation_fields",
+    "replay:execution_and_retained_resource_lifetime"
+  ],
+  "board_contacted": false,
+  "can_build_complete_conflict_graph": false,
+  "claim_boundary": "offline feasibility audit of named frozen artifacts only; no board contact, no new memory measurement, no USMP implementation, no unified peak-memory reduction, and no performance claim",
+  "decision": "The frozen artifacts do not close logical resource identity, physical byte range, birth, last device use, FINISH, and replay lifetime in one correlated trace. No lifetime graph or packing estimate is produced.",
+  "fail_closed_checks": {
+    "finish_observed_per_submit": false,
+    "overall": "passed_fail_closed",
+    "packing_withheld": true,
+    "replay_disabled_exact_manifest": true
+  },
+  "replay_and_finish": {
+    "finish": {
+      "available_evidence": "runtime source appends/checks FINISH and prior command certificates derive one FINISH; the frozen queue JSON does not decode/count FINISH from each submitted byte stream",
+      "observed_in_queue_trace": false,
+      "status": "unresolved_for_lifetime_graph"
+    },
+    "replay": {
+      "claim_boundary": "passes fail-closed policy only for the exact attested W05 manifest; provides no replay execution, retained-resource, performance, cross-manifest, or cross-boot evidence",
+      "exact_manifest_capture_and_replay_rejected": true,
+      "input_files": {
+        "negative_control": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r108_w05_manifest_replay_policy_fsim_run01/replay_policy_negative_control.json",
+          "sha256": "3fe9b8aa8af129aaf209058e218953718c4a777ecb5212fa11ca5121239674bc"
+        },
+        "runtime_attestation": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r107_w05_runtime_manifest_attestation_run01/runtime_manifest_attestation.json",
+          "sha256": "1f8e98e273ccf35ab2bf62077638de1767e70bbf344acfa75c8df8fecb10c10e"
+        }
+      },
+      "manifest_id": "9792b9222410584f0ac259fe16488facf34020dfe4e2f7974755315f56a51e8e",
+      "observed_replay_execution_lifetime": false,
+      "policy": "disabled"
+    }
+  },
+  "request_profile": {
+    "event_count": 200,
+    "events_limit": 200,
+    "has_request_shape": true,
+    "has_resource_physical_range": false,
+    "has_unified_correlation_fields": false,
+    "input_files": {
+      "events": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/stage_memory_experiments/boot_9efb07ba/rank01/profile/pipeline/benchmark_totals_events.json",
+        "sha256": "d75da376561b341bc5e27cbcbca220599fd2c783b7238eb699965d421bfc74d5"
+      },
+      "meta": {
+        "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/stage_memory_experiments/boot_9efb07ba/rank01/profile/pipeline/benchmark_totals_meta.json",
+        "sha256": "22ff97079cba84bb2fb1088a7e9a62862cca6ff390415bbc0446cfc30de88321"
+      }
+    },
+    "interpretation": "request-shape profiler tail; it is neither a complete inference trace nor a resource lifetime ledger",
+    "is_bounded_tail_capture": true
+  },
+  "requested_comparison": {
+    "lifetime_packing": {
+      "reason": "no complete birth/death/access/device-done trace or static-to-runtime physical mapping",
+      "status": "not_computable"
+    },
+    "naive_sum": {
+      "reason": "allocation snapshots contain aggregate high-water/count only, not a complete logical resource ledger; observed high-water is not naive logical sum",
+      "status": "not_computable"
+    },
+    "per_queue_max": {
+      "observations": {
+        "A": {
+          "insn_bytes": 5312,
+          "interpretation": "observed per-process queue components only; not a unified lifetime-packing result, not an aligned capacity, and not evidence for multiple queue instances",
+          "sum_of_independent_component_maxima_bytes": 8104,
+          "uop_bytes": 2792
+        },
+        "B": {
+          "insn_bytes": 5312,
+          "interpretation": "observed per-process queue components only; not a unified lifetime-packing result, not an aligned capacity, and not evidence for multiple queue instances",
+          "sum_of_independent_component_maxima_bytes": 8104,
+          "uop_bytes": 2792
+        },
+        "C": {
+          "insn_bytes": 5312,
+          "interpretation": "observed per-process queue components only; not a unified lifetime-packing result, not an aligned capacity, and not evidence for multiple queue instances",
+          "sum_of_independent_component_maxima_bytes": 8104,
+          "uop_bytes": 2792
+        },
+        "D": {
+          "insn_bytes": 5312,
+          "interpretation": "observed per-process queue components only; not a unified lifetime-packing result, not an aligned capacity, and not evidence for multiple queue instances",
+          "sum_of_independent_component_maxima_bytes": 8104,
+          "uop_bytes": 2792
+        }
+      },
+      "reason": "queue diagnostics support maxima for one queue instance per process in A/B/C/D, but lack backing ranges and cross-resource lifetimes required for unified comparison",
+      "status": "partially_supported_existing_scope_only"
+    }
+  },
+  "schema": "c3_p7r114_usmp_lifetime_feasibility_v1",
+  "status": "insufficient_evidence_fail_closed",
+  "topologies": [
+    {
+      "counts": {
+        "allocation_snapshots": 5,
+        "boundary_observations": 64,
+        "pipeline_frames": 32,
+        "queue_records": 510,
+        "static_boundary_tensors": 2,
+        "unique_queue_ids": 1
+      },
+      "input_files": {
+        "allocation": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/A_default_diag_allocation.jsonl",
+          "sha256": "1bffdd73e8a217f2253c1a3ac384115f97c6e28bbd1e398d2a6f013974d3bf0e"
+        },
+        "pipeline": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/A_default_diag.jsonl",
+          "sha256": "b46886c499e161e35f96949331b6d39eadeb008555265461749536f409c7849c"
+        },
+        "queue": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/A_default_diag.stderr",
+          "sha256": "9001d2bcbdc59cad1160ce91901ad498814c6f5d8ccf2a316844fff25205c8ed"
+        },
+        "static": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3s_buffer_reuse/s0_static_run1/A.json",
+          "sha256": "0c6836861fb1dd8c9ba2895ced5a506d01efecd0cc4a9941767db11885af9fde"
+        }
+      },
+      "malformed_queue_records": [],
+      "missing_for_unified_graph": {
+        "allocation_and_free_event_clock": true,
+        "device_completion_event_separate_from_blocking_duration": true,
+        "finish_decoded_and_observed_per_submit": true,
+        "internal_tensor_access_events": true,
+        "per_allocation_identity_address_size": true,
+        "queue_backing_resource_and_physical_range": true,
+        "queue_to_frame_stage_invocation_link": true,
+        "queue_trace_parse_errors": false,
+        "replay_retained_resource_lifetime": true,
+        "static_to_runtime_resource_mapping": true
+      },
+      "observed_local_evidence": {
+        "aggregate_allocation_high_water": true,
+        "boundary_slot_identity_generation_address_size": true,
+        "frame_and_stage_intervals": true,
+        "queue_submit_sizes_and_id": true,
+        "static_storage_alias_and_users": true
+      },
+      "queue_peak_observations_only": {
+        "insn_bytes": 5312,
+        "interpretation": "observed per-process queue components only; not a unified lifetime-packing result, not an aligned capacity, and not evidence for multiple queue instances",
+        "sum_of_independent_component_maxima_bytes": 8104,
+        "uop_bytes": 2792
+      },
+      "topology": "A"
+    },
+    {
+      "counts": {
+        "allocation_snapshots": 5,
+        "boundary_observations": 64,
+        "pipeline_frames": 32,
+        "queue_records": 476,
+        "static_boundary_tensors": 3,
+        "unique_queue_ids": 1
+      },
+      "input_files": {
+        "allocation": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/B_default_diag_allocation.jsonl",
+          "sha256": "13a40ce4758c07a1de11dab7865e525138361f6188a5c3d015ba0bcdfbe9aaa1"
+        },
+        "pipeline": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/B_default_diag.jsonl",
+          "sha256": "8dd9acb85f84cda035eace52be9714e1a72fd8e1e3cd1400c0a012929e9ce91c"
+        },
+        "queue": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/B_default_diag.stderr",
+          "sha256": "225263c34e4fffd4acb929f02d7f72576a1583e23b838e379949e643fd0f888b"
+        },
+        "static": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3s_buffer_reuse/s0_static_run1/B.json",
+          "sha256": "55e7bbd3dc9176d850704f09ca7c1cf0224a567f12e46faaeed981a9d03e9a91"
+        }
+      },
+      "malformed_queue_records": [],
+      "missing_for_unified_graph": {
+        "allocation_and_free_event_clock": true,
+        "device_completion_event_separate_from_blocking_duration": true,
+        "finish_decoded_and_observed_per_submit": true,
+        "internal_tensor_access_events": true,
+        "per_allocation_identity_address_size": true,
+        "queue_backing_resource_and_physical_range": true,
+        "queue_to_frame_stage_invocation_link": true,
+        "queue_trace_parse_errors": false,
+        "replay_retained_resource_lifetime": true,
+        "static_to_runtime_resource_mapping": true
+      },
+      "observed_local_evidence": {
+        "aggregate_allocation_high_water": true,
+        "boundary_slot_identity_generation_address_size": true,
+        "frame_and_stage_intervals": true,
+        "queue_submit_sizes_and_id": true,
+        "static_storage_alias_and_users": true
+      },
+      "queue_peak_observations_only": {
+        "insn_bytes": 5312,
+        "interpretation": "observed per-process queue components only; not a unified lifetime-packing result, not an aligned capacity, and not evidence for multiple queue instances",
+        "sum_of_independent_component_maxima_bytes": 8104,
+        "uop_bytes": 2792
+      },
+      "topology": "B"
+    },
+    {
+      "counts": {
+        "allocation_snapshots": 5,
+        "boundary_observations": 64,
+        "pipeline_frames": 32,
+        "queue_records": 510,
+        "static_boundary_tensors": 3,
+        "unique_queue_ids": 1
+      },
+      "input_files": {
+        "allocation": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/C_default_diag_allocation.jsonl",
+          "sha256": "c69bf86cfa7aaf782927e894aca9eb756b3285ac33e6eb71d25bd9708e4046ff"
+        },
+        "pipeline": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/C_default_diag.jsonl",
+          "sha256": "546d95c8e74542f48d3e84ebea7190df4e8615ff7fc346bba686f5635afa13d8"
+        },
+        "queue": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/C_default_diag.stderr",
+          "sha256": "78d48f3f309cb5a9a60201c078398a84beacc0c896aef084ef0f4b2734fbafbb"
+        },
+        "static": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3s_buffer_reuse/s0_static_run1/C.json",
+          "sha256": "56d724c26b1dd81c4b1db546af76bf4e43acab446bdaef4f6235e83a8718b73e"
+        }
+      },
+      "malformed_queue_records": [],
+      "missing_for_unified_graph": {
+        "allocation_and_free_event_clock": true,
+        "device_completion_event_separate_from_blocking_duration": true,
+        "finish_decoded_and_observed_per_submit": true,
+        "internal_tensor_access_events": true,
+        "per_allocation_identity_address_size": true,
+        "queue_backing_resource_and_physical_range": true,
+        "queue_to_frame_stage_invocation_link": true,
+        "queue_trace_parse_errors": false,
+        "replay_retained_resource_lifetime": true,
+        "static_to_runtime_resource_mapping": true
+      },
+      "observed_local_evidence": {
+        "aggregate_allocation_high_water": true,
+        "boundary_slot_identity_generation_address_size": true,
+        "frame_and_stage_intervals": true,
+        "queue_submit_sizes_and_id": true,
+        "static_storage_alias_and_users": true
+      },
+      "queue_peak_observations_only": {
+        "insn_bytes": 5312,
+        "interpretation": "observed per-process queue components only; not a unified lifetime-packing result, not an aligned capacity, and not evidence for multiple queue instances",
+        "sum_of_independent_component_maxima_bytes": 8104,
+        "uop_bytes": 2792
+      },
+      "topology": "C"
+    },
+    {
+      "counts": {
+        "allocation_snapshots": 5,
+        "boundary_observations": 128,
+        "pipeline_frames": 32,
+        "queue_records": 510,
+        "static_boundary_tensors": 4,
+        "unique_queue_ids": 1
+      },
+      "input_files": {
+        "allocation": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/D_default_diag_allocation.jsonl",
+          "sha256": "fc5d693208c880e9cd7f3a1e7cc2acea1c9747281c65d4e6562f738f0d9f5cff"
+        },
+        "pipeline": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/D_default_diag.jsonl",
+          "sha256": "95fc3a7582f539327284a9bc0919dfe1ec7da7d620c0a90c966c43a35d21a01b"
+        },
+        "queue": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/queue_capacity/q0_board_run3/D_default_diag.stderr",
+          "sha256": "c1078dda3fc90a7e3fbf3f4a81e3a3733c62ca0fc1ec8930f5c4c7e16a2ef651"
+        },
+        "static": {
+          "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3s_buffer_reuse/s0_static_run1/D.json",
+          "sha256": "325f5d91d3785ffe9b74e335d11669e4b1e9204823c3345ac03cd0425880a9b8"
+        }
+      },
+      "malformed_queue_records": [],
+      "missing_for_unified_graph": {
+        "allocation_and_free_event_clock": true,
+        "device_completion_event_separate_from_blocking_duration": true,
+        "finish_decoded_and_observed_per_submit": true,
+        "internal_tensor_access_events": true,
+        "per_allocation_identity_address_size": true,
+        "queue_backing_resource_and_physical_range": true,
+        "queue_to_frame_stage_invocation_link": true,
+        "queue_trace_parse_errors": false,
+        "replay_retained_resource_lifetime": true,
+        "static_to_runtime_resource_mapping": true
+      },
+      "observed_local_evidence": {
+        "aggregate_allocation_high_water": true,
+        "boundary_slot_identity_generation_address_size": true,
+        "frame_and_stage_intervals": true,
+        "queue_submit_sizes_and_id": true,
+        "static_storage_alias_and_users": true
+      },
+      "queue_peak_observations_only": {
+        "insn_bytes": 5312,
+        "interpretation": "observed per-process queue components only; not a unified lifetime-packing result, not an aligned capacity, and not evidence for multiple queue instances",
+        "sum_of_independent_component_maxima_bytes": 8104,
+        "uop_bytes": 2792
+      },
+      "topology": "D"
+    }
+  ]
+}

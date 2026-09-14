@@ -1,0 +1,22 @@
+{
+  "schema": "c3_p7r_unseen_board_contract_v1",
+  "status": "frozen_before_p7r_board_labels",
+  "purpose": "E01 config301 no-vthread causal correctness control",
+  "workload_id": "E01",
+  "workload": ["conv2d_packed.vta", ["TENSOR", [1, 12, 21, 21, 1, 16], "int8"], ["TENSOR", [20, 12, 1, 1, 16, 16], "int8"], [1, 1], [0, 0, 0, 0], [1, 1], "NCHW1n16c", "int32"],
+  "seeds": [0, 20250901, 20260910],
+  "selection_rule": {"uses_E01_latency": false, "diagnostic_contrast": "config877 h3-w21-ci1-co5-t2 versus config301 h3-w21-ci1-co5-t1", "timing": "forbidden"},
+  "execution_order": [
+    {"role": "no_vthread_original", "mode": "original", "config_index": 301}
+  ],
+  "board": {"boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c", "fpga_state": "operating", "udmabuf_bytes": 201326592, "rpc_cwd_requirement": "/var/volatile/vta_c3_ram/runtime", "sd_mount": "/media/sd-mmcblk1p2", "sd_used_percent_at_freeze": 78, "dmesg_error_cutoff_seconds": 4057.401259, "safety": "abort without reboot or poweroff"},
+  "source_guards_sha256": {
+    "vta/tutorials/frontend/run_vta_p7r_joint_correctness.py": "e70b8c3199a2d6cd589f7376641f5c4622655d041313172a2e9aff2ef2d2cab2",
+    "vta/python/vta/top/vta_conv2d.py": "676ff21166871fdc30f0e42dfaf0067fbf6b8f866fe77ebc308f872f50e64926",
+    "vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+    "vta/tutorials/frontend/qualify_vta_residency_fsim.py": "1b869cc9fa6e109c9742dcb82d2f0ccca6193981f589af70b4fb8428ddabec57"
+  },
+  "input_guards_sha256": {
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r31_e01_tile_ci_correctness_run01/correctness.jsonl": "6e95591c2be287c4b1e3afffc8347459948cc1f7706be2bf2c12ffdc573c0c73"
+  }
+}

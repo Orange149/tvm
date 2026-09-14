@@ -1,0 +1,73 @@
+{
+  "schema": "c3_p6e_same_tile_paired_protocol_v1",
+  "date": "2026-09-11",
+  "status": "frozen_before_p6e_board_data",
+  "board_boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+  "order_seed": 20260911,
+  "warmup_runs_per_unique_candidate": 3,
+  "timed_rounds_per_pair": 30,
+  "timer_number": 1,
+  "correctness_seeds_for_all_unique_candidates": [0, 20250901, 20260910],
+  "pairs": [
+    {
+      "pair_id": "W00_input_cfg252",
+      "workload_id": "W00",
+      "mechanism": "input_stationary",
+      "mechanism_candidate_id": "674e3264beecb2eebc7f6d3380a18e7bb02b2bf80c1eeff49ca1978bfad74b38",
+      "control_candidate_id": "3c3f0c2f61935d8c6cf066a489be489304555321c7544a7ddfd7f27dc090f20f",
+      "config_index": 252
+    },
+    {
+      "pair_id": "W00_barrier_cfg251",
+      "workload_id": "W00",
+      "mechanism": "weight_stationary_barrier",
+      "mechanism_candidate_id": "df9ef8675c4e1bc453463bbb8c9954837070d50ab9e9847c51fe312f11ed9908",
+      "control_candidate_id": "804e622fc926c4ee6b0440a37de14107f2c8dc32751c84f552594625d90dcbdd",
+      "config_index": 251
+    },
+    {
+      "pair_id": "W02_input_cfg177",
+      "workload_id": "W02",
+      "mechanism": "input_stationary",
+      "mechanism_candidate_id": "b298636a650419939c72ff49cbbee99be2b60e09f60c2a248c64b5133b41c25f",
+      "control_candidate_id": "53bc1b1555d281e271367dda00465d1c519583e7d8de046a857ee33ba7b0445d",
+      "config_index": 177
+    },
+    {
+      "pair_id": "W02_barrier_cfg177",
+      "workload_id": "W02",
+      "mechanism": "weight_stationary_barrier",
+      "mechanism_candidate_id": "b975b5e12b53db2d6ef72f8ce10b839cca0c9a7495115f8d7172deaf0996f77a",
+      "control_candidate_id": "53bc1b1555d281e271367dda00465d1c519583e7d8de046a857ee33ba7b0445d",
+      "config_index": 177
+    },
+    {
+      "pair_id": "W09_input_cfg63",
+      "workload_id": "W09",
+      "mechanism": "input_stationary",
+      "mechanism_candidate_id": "77bf9c711ccd704418941cdfface6e8941f5e5f1e1c6cac3fc31fd7cb905297c",
+      "control_candidate_id": "3a93525051c90cf812d5ee311c67bc28b377ffa5afe6e553121f32e4831d8975",
+      "config_index": 63
+    },
+    {
+      "pair_id": "W09_barrier_cfg82",
+      "workload_id": "W09",
+      "mechanism": "weight_stationary_barrier",
+      "mechanism_candidate_id": "24953281a2465eacf558acf79ba57ad12c654060a60790cc46dde705c8369d22",
+      "control_candidate_id": "630d20c56910c8d950147e32dc6d64dd7205d4540f070691850d561bdcc8495f",
+      "config_index": 82
+    }
+  ],
+  "ordering": {
+    "pair_order": "seeded base permutation followed by six cyclic rotations, repeated five times",
+    "within_pair": "mechanism-control and control-mechanism each occur 15 times"
+  },
+  "decision_rule": {
+    "relative_improvement": "(same_tile_control_median - mechanism_median) / same_tile_control_median",
+    "equivalent": "absolute relative difference <= 0.02",
+    "improved": "relative improvement >= 0.05",
+    "regressed": "relative improvement <= -0.05",
+    "indeterminate": "all remaining values"
+  },
+  "claim_boundary": "paired operator-level causal ablation only; not generic B7 search efficiency, stage speedup, FPS, or multi-boot confirmation"
+}

@@ -1,0 +1,5248 @@
+{
+  "counts": {
+    "correctness_canary_only": 2,
+    "protected_incumbent": 1,
+    "reject_static": 398
+  },
+  "inputs": {
+    "candidates": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r68_w05_t2_bounded_hybrid_local_run01/results.jsonl",
+      "sha256": "8f6a7c6763de820c759519b39711c6233e28d2ab2671211bbb3049f80da64ad5"
+    },
+    "contract": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r57_support_transfer_board_contracts_run01/w05_contract.json",
+      "sha256": "f08f748760f0d67d03ec184020d244a8ab35200c32d8de03a57e93405eae1f9c"
+    },
+    "ledger": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r62_hardware_certificate_ledger_run01/ledger.json",
+      "sha256": "db24a315e68335fbc42354f46f2c9d53e23f853c0f4b4269b2c83af943a02bb8"
+    }
+  },
+  "performance_labels_used": false,
+  "policy_order": [
+    "protected incumbent",
+    "static and DMA-Pareto certificate",
+    "exact hardware-certificate lookup",
+    "unknown identities receive correctness only",
+    "timing only after exact pass"
+  ],
+  "records": [
+    {
+      "reason": "zero-regret fallback is dispatched before experimental candidates",
+      "route": "protected_incumbent",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "43af42294e51f4d7933a689ba0e14ae8fbc31736eb3add30cb3d5471d89ae648",
+      "config_index": 400,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.35,
+          "total_dma_bytes": 0.4917508064853995,
+          "total_dma_calls": 0.48484848484848486
+        }
+      },
+      "hardware_certificate_key": "4ee5b2ea689543bb0436faac942dedf82d9a6741f13c59cb23822c18941066c9",
+      "mode": "paper_inspired_hybrid",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "8c4a6d5b3b8a8c5001cbacca81520d15cd7623a3b5a999b4c243e2b98e06b4f1",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "41e5a7bdd5aa001e124571b3c819d207e56479edc9b0a47de7542fb9a1cf2aae",
+      "config_index": 408,
+      "dma_pareto": {
+        "certified": true,
+        "reductions": {
+          "input_bytes": 0.125,
+          "total_dma_bytes": 0.4474569034530608,
+          "total_dma_calls": 0.48484848484848486
+        }
+      },
+      "hardware_certificate_key": "aef50a76eba8b06005b14b8bb2cdefebcd77c35d99e18f81207eb406ccf984b4",
+      "mode": "paper_inspired_hybrid",
+      "reason": "unknown_exact_hardware_identity",
+      "route": "correctness_canary_only",
+      "tir_sha256": "ba458ac8a3990665e3b35738a16f414e69b6c7d6fc36cb32a100be71cce18c31",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "32bb86f48b88fb9570741804bc75bdcc366c4ce6dbd0f0d75074a7e14dd3d30e",
+      "config_index": 401,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "52cbf1f6ae85ea6f6151d68a0f809a4baa6bee637782b8ad95c5b94267908df2",
+      "config_index": 402,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "755c08952f2cc6a0f510d0fecbe3652a36b8dee2b2c2ad900de210137c66a30a",
+      "config_index": 403,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a9f1cb4726bc9e810be31752e777a38b1e3039d7c664b917b8dd53e283f22d47",
+      "config_index": 404,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "f960776a7f7bbdc3adabdc5628e3b7afb55ba5e6bb73559e5ec95fafca916e90",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "fe70dcfe8d4905eda30509ad07e680a2deea8de2ed63fcbb611f15272b6e1a37",
+      "config_index": 405,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "d5fbaef2b1ca865d46bd8e5389c89ef28537519fcd98ba81c25d523a6722130e",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "97b4308191c355ef9112a455565679731de064aaf93950977704d1b0c1bee15b",
+      "config_index": 406,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "38ca6d121be4a1018c6ff706c2b70221204ccd5f736c7567013fc61e9441e85f",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "afbba9be8486bd7aa33124901a02d479645914ec2e619d5fd6a9609d3fdfc435",
+      "config_index": 407,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "c6881c8df23ee854623a2949564d9a53bad76d78e69a077fed0305eef4544b26",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d92b368c7cee9104609403078f79d1e7a03b237e3ea5179d9fa3dc0a6bf12ed1",
+      "config_index": 409,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ef1d3a61d3be646e047419eabf4c28a76715ca0c607fcbdebfedae748a4a14bf",
+      "config_index": 410,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b69721149bbc24884521242f28642866981755e84aed1b38f8fc9d73e4bbe1de",
+      "config_index": 411,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f2720f774ac9bbb2661dc9165d425b0fb7b28483497ead45c64c31dc9a29ef03",
+      "config_index": 412,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "566717d2b81e0a69f5d15ca78457421d6fa0978d802433fd77e36f436aad0b17",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0f3b57ef3a2d2a6c74524f233960c6b922103784546f2970a3e5d637af8ea2cc",
+      "config_index": 413,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "82d9edfe5236cf4fb91b6397a01c026148d1382667c3824e7a66d889dbf59b66",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5bbd3288b64cfd984db84298f75f4bc22f10338abb436b57ece1044cbd89d3c5",
+      "config_index": 414,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "f8f0fcd55d6e79fb9c40e53631fadbd93ac72bed59e41d72a78e50f0c0061158",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "50f778d1efe96de1a464592ab2d89dc947a1c13d40a0a5d982fe9387619b439f",
+      "config_index": 415,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c43f7309389e67110fb658cbac28c1440a5aeb32002d0778aa1224d46ad8f939",
+      "config_index": 416,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "73c005740cd9c573fb5e1b1c20c47521f5f4406ccf74ea92e73e84026379073b",
+      "config_index": 417,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6334325d902700fae860d76c4e1f92a97982ee35be52e83e3d54dfa2055d86cb",
+      "config_index": 418,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "de15aeb2b4c39b9f1e778fbfac3a2741e6623065784a6bc4ee36a81e4e5cd0c8",
+      "config_index": 419,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b1e168a302725a5224be7ab7a17119c6f8f46e70135b0215848bad3a9bca5ea5",
+      "config_index": 420,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8fbd5972eb0c72a96e9e915107d9bb0bdd066da91c7a2f41f211341ef80a4c0f",
+      "config_index": 421,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9402d8471efdafeb28fa8cf91c0233c2754fc19b427b631d7299799195291302",
+      "config_index": 422,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "421246714d844a8f8b9cae1ac710fa6e40def4ea32306975b3e2c7644f341718",
+      "config_index": 423,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "10df6f94b299c76df907bf123763cbb4c6951ddf9c887dee37fc5b3d9606dda3",
+      "config_index": 424,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0b2456cc18178f7aee7c453413e3368cd1578ba27a2bb49cb0790f3111309cdf",
+      "config_index": 425,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5026dd89c5ca385c2131179bc3aa1589cec5c08e6138a7b5b3e9dce149e45ef0",
+      "config_index": 426,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7259a0eb1c8a8c6188ade4c124e5f9797f3c4d87b3c3faa1d846f128405a7302",
+      "config_index": 427,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7f370ff3df68cbc951ebfdd6b9db2eb9ae8c933eff9b3da88e2060360e408874",
+      "config_index": 428,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4fb7904ad7dc2da438ff85f531852c8c202933138bb5c2700376ac0d248fff6c",
+      "config_index": 429,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "89f566ebfc3621d1e0afb0d01789c9460b1014d2e59acc6e2b6b6cd1a8f334ea",
+      "config_index": 430,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e3fa13cf25a168b6f777dc733710674bac7581b9ac75fa64bf0eb491961a9db1",
+      "config_index": 431,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d96f5fb74fa9b7520c76f5874db32a0bafd22d2013d3908e87ca6049878bbce8",
+      "config_index": 432,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cffb8b037ee043322cad8cd938a7111e9f9ca4ab8b24781863aa5de085975091",
+      "config_index": 433,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cb6b6bbe0645378671d6017788de7d7698898175f36fa1649dcc97e4bed89cbd",
+      "config_index": 434,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "25fa8f0ce540fd3cc1bfdd8e00079c97e299a3354a0fd115f16c95d8cd814042",
+      "config_index": 435,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9a7123fa4af0c62e565981ace28afd016435777522c822975a8344784d06ee8f",
+      "config_index": 436,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a9cf5e974bb9a1b1a9b6e760db4334859d486c6fb98ab27f04d1a9b8389fce3e",
+      "config_index": 437,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d2cfe2f7b80534203288ffaa355e5bf26302d06d23a412a1cf0b108211917291",
+      "config_index": 438,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8b74d472ee58e78f4100273465aa19dea494c8d6d2bc6e8ebacde43ac3aba423",
+      "config_index": 439,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1199befcf6454df7003b6c0ac401f6f97b312ecb25832f185504638ca618b1b4",
+      "config_index": 440,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "95023fe968267fb681c0f526e4e391279e23ecdcd564d5888f12eadea0408b01",
+      "config_index": 441,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d2e4afdf3c31333ee602c127cbd28615d563585bb7d0724109dd45b383a7b40e",
+      "config_index": 442,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3e0ac4ee5ad9c9104443517a741b7d9bc29d21036c6963756d8684fd2de355b6",
+      "config_index": 443,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3319e1b056639e85559f1114925c0c28a9cdf5e50c1264dc4d7d98cd1af82a18",
+      "config_index": 444,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "47210240c9c3519e02caca69ebcfda4c34cfb1bc227691ed9a529d7c0c02c4ed",
+      "config_index": 445,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e11d991660c14e8d09b16452f457940323281895ca4755c33a1cdc0ba37bd346",
+      "config_index": 446,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7b95f6088086b17bf8ee589a01041e5fc8c77330da700fb06d43a59cf08c010c",
+      "config_index": 447,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a1e433e727fe91ac6f40c5afe548189286a408042c907df73bb832272550b626",
+      "config_index": 448,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "728cbef95afa169f03719dcb90180fc6d264689ebdd1318c6d219ecf2ba40d77",
+      "config_index": 449,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9120e8d29712f1899ad485ada91c3c7f06824fc303929e80ad80ac0f8e2badca",
+      "config_index": 450,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2bfe7349b2d28961d921721ecca2e5cef7d9477584ebe8b8ebb60b86df574aa9",
+      "config_index": 451,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "dd11ded65a33257cf96f8c884307ee890396d22d1daa560214ba7eaa1c9a9039",
+      "config_index": 452,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9088aeb31b6839ecdf485cdbf4e4fe628efdf35e62c0fb9de86ce4aacf05045a",
+      "config_index": 453,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "beef51a4b907f2385121db993daac09dc14d69c1d5277bc13ff526a0abf3935b",
+      "config_index": 454,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0e753dfd31155b9e43ab9d63d6341e9a2efa208c2256c68aff95514105a1a98a",
+      "config_index": 455,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "97431d7af1d5af1865fe6ae8d2acccadf1a688f0b2a676ba496e4a325764800a",
+      "config_index": 456,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9827541b8f933c7f6438c4814969f2b97bd9d90a389bba088462b7ee60a0ca4b",
+      "config_index": 457,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "813a75b476c952e4da9ebdfd1b2cb9394f6937d784ba0442f1c82cfed1403ab1",
+      "config_index": 458,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4648130a845bb5612b382edfcb1ec7bb89a21e6e1c9375aef8e78b9be62a43cc",
+      "config_index": 459,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b76e03ab6c3274e35d94bf9a151da6819aa83fcfdbda0f0fde28ec84262d2e78",
+      "config_index": 460,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "790a439eac733dce911d078ee4eb991e95c26eefb95bdc5c31d49e0871c8339b",
+      "config_index": 461,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "408ed43627fe1ea521ac84207d2a7059efda6c3c21863ce5a109c23ac7b00be2",
+      "config_index": 462,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5426d5fb8e35d3820a1267b1f4c54a6562deebc5ef9bd181b72678e12463bcfa",
+      "config_index": 463,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9c321e276c9c9a6dd207709f17d3943f8e7317d285d930b3dfae2ba2a26eb155",
+      "config_index": 464,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3225af11259b7e0e7e9a587248d95e7940e8465ded9b879e8172bc5f4189a4af",
+      "config_index": 465,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9b620ae56da4b6542dd857c05ef22d0b66f569e3b50bce0fb1be7c572f29d2a5",
+      "config_index": 466,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cfa14dd132cd625ef6bd2e20ec34d89b6a825991ca7c2b81329b547736fd7253",
+      "config_index": 467,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9f9a69288f9efd514dfbf018bee07ccfecce2c89bfd1f91d4dc1854ce49bbdb6",
+      "config_index": 468,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "df31a42e3fec8c1b793aeb59b422211e6efb1919d25283280c96ccc745473d6d",
+      "config_index": 469,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cfa208442e59d9f7a3ba8db1e65b28046f61e8fe0260760a91eda926dfff0652",
+      "config_index": 470,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8ff94e27f8c6372518626d4e6e64b190a19f4e1acc87cd0839f5fe0568a157ee",
+      "config_index": 471,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3e53ba4fbee2f6d0c08ce79ed2ea467777f7db1b3cc08b6db8daf8dc7fd5fb99",
+      "config_index": 472,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7d841782636604d499c147ab1bd6717ff76d0332f78e06ce27f05f5ba0bca19d",
+      "config_index": 473,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "11c4f3127c4bde93eaf242d1df419f9efed39ed4b29206493d97ed4c1864f0e4",
+      "config_index": 474,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8682b6b4bcbe66d17db13e105d8cbc5498210128957ca1519151416cc11b50d7",
+      "config_index": 475,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b80430a8bc87e01d3603381326b649a7238f2386df7ed2caf0c4e4b2efcf52b5",
+      "config_index": 476,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6dfa2cd8f9b89866cac515cafcf1224359e32e850cc4a10362ec312fca3b1215",
+      "config_index": 477,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "15083f773efd919d5d11f83d9974998be529d9eddbe3d8b2897e9871ec8e7e15",
+      "config_index": 478,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "68ef4a5ec8b10645eaa6e8cee3e2b051368b53d20f0db7c3db70d83a6aa3da93",
+      "config_index": 479,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "90a071486e0032e3b69a7837f8a11dd63f7d8199eab448c9bb939729907aa36c",
+      "config_index": 480,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "262f3676b53924feec7fefe99b6d2befba91b0ace36f0340ac4fc555e1bc112f",
+      "config_index": 481,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6711f14359905de093df420459f98fa21be0aa281ded812a4b509e54f3f91304",
+      "config_index": 482,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e60c9a815361ddcf226b3c29d8cfb3c6b2601cd5ea38d78ceb9de360e0fbff27",
+      "config_index": 483,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0df5c77919b06be6e97cfcc445b8a49902a1eb69b4455340cd1cb08aefa5083d",
+      "config_index": 484,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "9f9705f711511e66f263579842ddabefb951b5eb6c848c8b15a18ff336f54519",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "fecd514c9acce9e71382420c65e58844df5070592b07712025d4ad9fa33b9a37",
+      "config_index": 485,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7911582b3910ff536411c6c646c1597ab828a612bc0c6b4edd8a0a1fd13ca22f",
+      "config_index": 486,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c0e93f1459f80257e07fb421e6d0bd31ff2440743812b5ad95866eb2a3d0f633",
+      "config_index": 487,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "096a3adaaee4bfbbd9e127f31ac6120815091bc6bab3cb04549df8033ca40c81",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6e4f10f14484eb99b4b985d965c12f4a126dedaa9b1e6752be4339da9eaacee7",
+      "config_index": 488,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "46f4f0a7b6fe6270e00dd026950909e8d60abd017ef0fabf19d19918bf4b6433",
+      "config_index": 489,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5593d7cfc36f7e74283a4f31b25eac7b102d1c251b0eb868d079a46104e63ca2",
+      "config_index": 490,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1ecaed8ac87e1ad78b92352bfa1f82daacbbb432bd9111ba9812f9cc932579b0",
+      "config_index": 491,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3c5671a9b3e485af2d22bc3b9cf5f44a091c4004b27a9b1312074e0c333ce358",
+      "config_index": 492,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "1f601f517eea4f1172a2042b77eb57d63f762c1e1605cf62d704bc710c8aba3a",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "dcb79357f26a70970cc527e227ff150e1b4220b441c2f9ca5f0d9b17ab6fb4f3",
+      "config_index": 493,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "e5e3c2e958e15699667a48b37eb4882ce96b835f379c83f17a377e760507bdb1",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3a152006b116ef87cc9d58e3f731e59e95dd71a7a2c46bb356055a71eb72079e",
+      "config_index": 494,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "e4311be26f646e204f6c75751dc5053ac0fcd8956101c403621eb8e048e0881e",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b48d70306b4d25cc69052ead92942b889187a1093e5f60a3fbaf74069424d73c",
+      "config_index": 495,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7dcda98f60e281da7b66f18276be90ceb492dd54a22f03ecc0e336546741357d",
+      "config_index": 496,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3197fc223fd5d0800da85424315c23f3b73659028c7d4435ea05c97a9a27a02d",
+      "config_index": 497,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b70232bf6ff84c2b059351531b318d61e1816d3eadffb8d6a89f365b4652bee7",
+      "config_index": 498,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "123237b7752de069e4ed4b7a874e73a61d240a861f66e9d7d3d1b3acdfdb70a9",
+      "config_index": 499,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "eeb516ecf2b425aa458e96c05032139242bf133184c37ad05ff1b832be241045",
+      "config_index": 500,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8dba139894c89b926297f0c6b4e0a8292b4c2736f99a508f5eb17bb6c3f2e51b",
+      "config_index": 501,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "09e52cae63b97175a663d41bc81d47a4cc18800d64b1e9dae26b835f530685d8",
+      "config_index": 502,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9f910d1dfa09136ee733cc561b3ed66854b3dde1d4c24adc1f5b1c4b493060a6",
+      "config_index": 503,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9725e8d3a26c5ed7377a92a9e0493b05bd783a2232e3c3f0df49bbf417c039b7",
+      "config_index": 504,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b9abffd4676f025082c4d9a43a72454879dc8b957a1bb98aab8850d0adc19c6d",
+      "config_index": 505,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5476b680ba5a365d4bca627a7001e9ac1f3bfa6978f7da6faf8c629c81a83c77",
+      "config_index": 506,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8667fa6fafee7785ed18e7ba604e0339750d257095f980c48bb2a22dcc0822a0",
+      "config_index": 507,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2a1a83e7a338dc82872d00600092cbe1d4d0bb5ea6bf25613223a59fb51c13b4",
+      "config_index": 508,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c3d17f75590480146e2f490bf1673000ddb4547b81a4cbd397a6cff41641f386",
+      "config_index": 509,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "344cd9b891e86b35d8bda959001f486a2700e61668e5166233946397d2a078de",
+      "config_index": 510,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "eb4f0d3821721bf17c27fa2d1a0143650fb37f248da5ecbb1152b1696cb7d85a",
+      "config_index": 511,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f74dd3deaf60f5ae70e1b0f1e71edab5df15170411621be8393db9721f3a5009",
+      "config_index": 512,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "555205e94037e698afe08132afe32d43dbf52bae091c220847b330df7e140c7e",
+      "config_index": 513,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5983f3725ca65e5875b42fd8d6d12ef9fd2f33dedc16df0e72305ae7df490c0c",
+      "config_index": 514,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5bfb803c7827705130a271d21047b5561fbbe16a474929790abb0c68acd9a4a1",
+      "config_index": 515,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1c6c479c5a6df4ecebb722d5627446c12fef7da09e89516eed40c8d2b0a916a4",
+      "config_index": 516,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6ad02dfc0ee59ab718121730e6dc1d0281f8c84df934c327cbcf58c9d71f2322",
+      "config_index": 517,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "710a338aea52da1ede6972e90a09550446d503fa99e4a15690d36dafd7da0f45",
+      "config_index": 518,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9094302552cf5f13414aa708b77629f078f6ba7451ae52bcbf2c5d540db500d9",
+      "config_index": 519,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "18d903f6ab60b8fd332ca47d8f639722c261a863da178801fb15a7248e51a0f7",
+      "config_index": 520,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "08f7a2ca1e40fce6c5650f947e74c472de112445e230d31a4eceed63565ee158",
+      "config_index": 521,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cc4f8d70bec187163eafd9f6bafd5ac671e9ca5b265a5ea1f8f2e8e1d20fa550",
+      "config_index": 522,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "920dd2b60542cafbe4091e9f9b02bd4733d9c80d6d86ce9b0ab953ab0202566b",
+      "config_index": 523,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "eec01508838c39caf502b3e5c056c6a80e0b2dd69b3a14b5bccf3fed23521b4e",
+      "config_index": 524,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b7f9956c15259f474fc2437b36f14b079409eaf5230e14fec383539017942d5b",
+      "config_index": 525,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "697f268dc2b650d61ef8b1ceda7f8ab7185ad31b3a645def9acfbb322f167f71",
+      "config_index": 526,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c1e2b990663d2c7ad1e5343be8264a0f638f69c29b9b326e5b8117acbcd65252",
+      "config_index": 527,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1b0bd25626478111a005468fa5ebc5dfc1014458ec56260c2d5c0763a6b5965f",
+      "config_index": 528,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1eecdb4fd125a830f6626c8a23630ba6ffa027ab6000bac55719e1e0ab64d600",
+      "config_index": 529,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "52e96ae089c7f1ffae9e860fb97d82cb1fb0380c0133d516e11834d58f2e78a0",
+      "config_index": 530,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9b19f4d27b07c637626ab5e199a26e924a32d8e27c3bff56d4ec41c275060952",
+      "config_index": 531,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c6b15408d0061201ed7add08a7f3ee9097e18a8984110cfd0aea487ba91c50af",
+      "config_index": 532,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "21c3176ce606319b6d1a670c4adede1ea1188da36347aaf0ffefa451fab94d6b",
+      "config_index": 533,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2dd43343614a46a83cca76cd5e7a9862e9a20084fe6290efb9236996dff940aa",
+      "config_index": 534,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "38fbeb44279d8224d5b57ed4a419de15ffdd1131603128d3e92a24c387a17636",
+      "config_index": 535,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "98a861340e0af287fe51ce6592dbe89a54cf197d5adbf2e8a4b7d2cc0dc883b9",
+      "config_index": 536,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ea4683eb4f3dfb05db5c32bbb2577ea08884a0e07e6ea16e6fc74b3e0886e2c4",
+      "config_index": 537,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "06879fd5bf3d66845a7a762cae1d891a7b3dd247ae88ca31cc825f1932c92ccd",
+      "config_index": 538,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "afceaa0b976d8399430f027a51acf100b28ac57a030e4590e9eb137f26f4680c",
+      "config_index": 539,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5b638c656b3603a01400bd5749b8dba022d5aabb00c48787a25f0a8a209d38d1",
+      "config_index": 540,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b87e251eac3fc7f6f7039e20fbbb3ca9b334651398841ffa27b9abc8cba3dfa9",
+      "config_index": 541,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7896cfba960515af7bda2b42d3313ec465965400d531984e0984c865a956d7b1",
+      "config_index": 542,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7f25d25a3be57dcc577489be952cd35bc85f4282fbe2906193c3b761733951d4",
+      "config_index": 543,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a589f0fcef17752ab906b3c7c19f3a6f43698f1820953a3ff30054f079e8b53e",
+      "config_index": 544,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "16e562343a877617a38b822b0f8eeacda71ac21d70c5fa0b8d312fa8bf5b3766",
+      "config_index": 545,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "508d6f8f5f40a6aa8c2ae8ecc61b91237946a9c5ec48a16296101e54e87e500d",
+      "config_index": 546,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "347a76c71cbc8873d397f031cfc43feb43cd2f284a104785a2ee188a0f9dff28",
+      "config_index": 547,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8edfef86a4cfe6cfd960423961b0679413732da0283e3d148870f7d01897e894",
+      "config_index": 548,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d3f42c114d2ce1c0ce4c60b6d62eb3ad205e55d8a8e26fe598c5cdfb1f7a7055",
+      "config_index": 549,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e6c9cfbb3d7896f55b423518db123b590a746084efaac16db448e34fabb9430b",
+      "config_index": 550,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "23b2017432f52ccc5ba4cf4170eaa0ca05422ec5e9e360e7bb9a6c0c4762c0f1",
+      "config_index": 551,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4a4906bbc43139ce07c49998a8cd4455d610ab1f0f8b9bcfc48a0ffea9249766",
+      "config_index": 552,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8478c26ccc8dd95d24d3200e5c1b9422750f78cabf57e3da6497f024d5932e51",
+      "config_index": 553,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1b713c1d8d95de044fbb2cd157c618de1d69df69cd328b73a12786f177cd52c2",
+      "config_index": 554,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "309ad159b1656f37aaa319ae099701384608a91f55f07ece6dab61fccf5ef06e",
+      "config_index": 555,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cfe70927475d70f5b0f87f80146a1c76a16f97274afd7f5fa981b0c1efeaac67",
+      "config_index": 556,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "48a28e6dd384eb285ade4897a3f02c1fd927dc55c9ade1eb1c73be9bad5505ba",
+      "config_index": 557,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f604081c9b386e7f77dad0c8871e50465742cdc2d1431b256b6a4f26c0f56971",
+      "config_index": 558,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "176c91d9c21e4946423d624f4e21a40314eec2f3b9d80e7f32d43abdae1e2f0e",
+      "config_index": 559,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "43392ba9d5bb66dfbd6095d085eb1b021126d6b01b7396e8aba011d189f07c35",
+      "config_index": 560,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6a574eb34842a6a6c9ad45574671a890a5d78c8a7d877a9e62c7703a9e1610c0",
+      "config_index": 561,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f4cc2b97dbd1b98beb4cec708ec94e97e500ad431fbd1bca06b1cca58a1e6943",
+      "config_index": 562,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "755b5b59dcb0b45cb85fa2347f720435c53990aeb3b33ad04b64ea1cf6ae4d96",
+      "config_index": 563,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "286427a72f0b4add023c2c81c16102bb6de8941b79145d3d076fc2d7667c38e0",
+      "config_index": 564,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "337b88459709489b4027261a5e7818c1524e2827dd7ac201d14a09cd9c3d1193",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b2a58f9a1a49d98d01ff6474a6d562bfcfb5eec053083c0162335cea469afa63",
+      "config_index": 565,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9f5d291f1b68c66b9fac5c96d93c27f8ebf54a6a0d4ef1e80cc4d58566bcf956",
+      "config_index": 566,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "bfbdc00bcf7a603ec35583313f40ef219bfa3d3ede238ff4b708422945fe4e47",
+      "config_index": 567,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "18ccecf8363fa14da1bff7c61db965b4681cce2f02a595dffb117da16d76296f",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7542ac2e00c03f941c95facc3bc3bf370f2e88a82406f45e2ea8f48938b6a70a",
+      "config_index": 568,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "968e13ca906d98fdb2b946dac9cf48233bfefc63df3735c2321528d92077c494",
+      "config_index": 569,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c3218c23787b0ffc2bfc2fa1bacca41eb6704532af3f25573b6c59bca952f990",
+      "config_index": 570,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c3996b214ad9a01e9565849d6e1623675b11428184dee9eb737b5afa500cecc9",
+      "config_index": 571,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "other_lower",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2355b36a4ae2007ceef112d919c766690b56d657870ec78274a377251767ff01",
+      "config_index": 572,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "a13405462b4bc5b918e7cc43bffb4a1a867bb912bc55387125d440c37f957336",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ae1f9f84d026b552b183fbcbdf52284a047a456a866e15bbe7ce20097074073f",
+      "config_index": 573,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "902fa3f78b046875f657ed1e01a4efc85bd8d18d0f8f0e53d97de17d730d51d8",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "56d8ef2b113fe3aea10aa2c6b8d69ad5abfbad25196e82033e8aa08dd9f60935",
+      "config_index": 574,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "no_input_dma_reduction",
+      "route": "reject_static",
+      "tir_sha256": "16cc96ffa656f808ad5e619553bdc6442dcea637f0cb10f74140daf9b68edfdb",
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6a5215cabc1e95e99a0302d4e2689b9970e4e18dc87ecdfe995db2ac8887df98",
+      "config_index": 575,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cae164e8f34940f5e2259b5cdcd4b20dee1f57446f4fc743d3b90581276e7b4f",
+      "config_index": 576,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "45fc744dd4c78412c5a6d7b837d28b37a56ff9c00428609b7fbf8e8ad6aa90f1",
+      "config_index": 577,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "91a82923a1876ee5f0d3480ad8aec546cbd047694bbcf1b626bd7f505062c4e9",
+      "config_index": 578,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a3710f5664eb6a2d84ab60145ad6f6bf8dc3142dfc61def7c414423d1a2724f1",
+      "config_index": 579,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ca59d87752ac5b5ef1c3f5425e50bdc97c9a134262329ae179464068ca77f77c",
+      "config_index": 580,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f8537a024ab3a0b75953b44f6fb020f7dc1d745dee044c16a1a2d5f67b140a72",
+      "config_index": 581,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "05b7067306cf969b1de1e52f3f41dc1d224ef1d7c6b9290f76eee88b7c4e0f68",
+      "config_index": 582,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e20fc68a37777862580ec11d77734e70867f21caee21d3a2eecf5f11d6e035e8",
+      "config_index": 583,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "30cfee73a2d15ab0f8b22a0960120030d8a020f4573f1a8cfd0a507a32544189",
+      "config_index": 584,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2818f7acb59adae20e774f86b0260c158f1a57f8e3709badb187d41d5aa0ee7d",
+      "config_index": 585,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c7f905f9858dc460075d3629010ebce9201c1c8385e246ccabd31e1e10b26a92",
+      "config_index": 586,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8a8a7546a9dc731e608bf27315cf599bf7a589a970caba02d28ddb3047f10f44",
+      "config_index": 587,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "33e4526f6987da96af8fb8c449660c58b7f50fb0658158ee90b449353535be6b",
+      "config_index": 588,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e74548f3c21d8afddc581752036da82b0f607f850e897ce17ea7f3217743f902",
+      "config_index": 589,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "11575939d41c74f858b88c2be305b536f5f6e37a1df0a31c892fe2b6f4c07e79",
+      "config_index": 590,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6fc2726cd40073e08e550fe7d4b5fc7abc8fe049306d9f27dec5db99735fb6ab",
+      "config_index": 591,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c2208829fb3cdd49e42b2c512717d445a7cfa517a0e849c29e78437fe71445ec",
+      "config_index": 592,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "933ac0f64e323d29d857b340f5cab08b2353c204bcaa8d3aac86c3093728ba8e",
+      "config_index": 593,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "93477a2ad6f2119a200cf82c438512d687865d5a2e855a62bad3246f69d610ce",
+      "config_index": 594,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f2e3d383db3771c89e96c4ad65f39db5f3d40d133b0b18849d01609e6b87ad36",
+      "config_index": 595,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5b344615668ae6cb3d76550c8c25a0033a22dc8d0f01424b6196105450d034c5",
+      "config_index": 596,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "37fe744a076de24cb7d1b301498be0ad907a63226497708404c399580f150f52",
+      "config_index": 597,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8cec032b9b3842f67d2062dd4f2da3cbf004eb29414b9389d59d747dfb811892",
+      "config_index": 598,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a11ebb6ed5dddc7bc71ae078e4b96f27f5fd9d75862803be50d38c9cbf12b555",
+      "config_index": 599,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3b1126a7c9212a03f9d900c6aca3eb27d0a5e20453814c32997d25279f493039",
+      "config_index": 600,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a8236d01739ccead9fb90fb90fded469900f8d328343ef81fe32d234f420f3da",
+      "config_index": 601,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c193156a4d8de16468cd2c3031b36dcfb456966a3e976439947f5f2bf705b381",
+      "config_index": 602,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4e014675cc294ac824b4986dc842139347833c65f15a992a0d0300c00bbc204d",
+      "config_index": 603,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "448a1290323fa4f8a583b4eca0796c5446c08887af2635c4465b4da4c07d038b",
+      "config_index": 604,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "95e515b519c1d8384ef27ee9f104844a6a75c78e2fefac97bd6c5527e1648e0f",
+      "config_index": 605,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3495725f1db169eb875b5b93de79f4a8f011e3847a8c923e93c43507c70cfd6b",
+      "config_index": 606,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "38f98b51b19995a1bd961bd6d687fe6dee65ab87ff6f7959fe53ea1c9bf1b9e3",
+      "config_index": 607,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "31ae4125647751fe751cc780361802c2835baa524f278382b993c995192c06a5",
+      "config_index": 608,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4b11bbf9deab8a44194b7159bfdf3f73441490431b004ec4d68a1f40b0b08bab",
+      "config_index": 609,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c0ec8ee92ae6655b6c7832734df669f5896ef01f74654e7928645cc13edbd04c",
+      "config_index": 610,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "06be330f3862e0fb5c6e6a242fcf5f6fb6146e471e9cb53ab7af2ce39c9ed3c5",
+      "config_index": 611,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "47d74beeef8a793ba94f0c0ff292771b299a71b76cab928d80d3c0e36b3a0586",
+      "config_index": 612,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "056fbb540ac0396cf97e422bbb72530cac21b53ddd8810266fed7695ec6c1be1",
+      "config_index": 613,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d5097592dc6a8a1be52bca3631b663df6b2514cb39cd28387f5466a9bb1caac9",
+      "config_index": 614,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d75be0fe8a0f4b679898dfa75044e373c75ea1be7bcb07e16697320f32ac9ede",
+      "config_index": 615,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c2eaaf2fb64c420868612bab4adbb9cd86bd386f04ca00bebcf65e2a3154f84c",
+      "config_index": 616,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e69187e090e72b6f99270d06efbbd3e0ffab191179a4ed9094c6fccf15d23f73",
+      "config_index": 617,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "94b8ad4c44d01dc7d131b6d5a4566971f1e51af36da5c15401661e32372b8ac4",
+      "config_index": 618,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c1b82fb7837654dce7bc9001d794734b5088547585036c21798a8302e2a44e9c",
+      "config_index": 619,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "41170a826cd0ee1db1841eae6a38a4a823691f3a7cb46abc686b80a2d6a2f976",
+      "config_index": 620,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e047eeed5c691cb8ed17dd6c85a9c0880b8476d3eeb975d6249c537ae7be3276",
+      "config_index": 621,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "same_tile_original_rejected",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cdd96395d2d42c297a77c6c5a6101cb366bfd0811500ef1a78cdb3f5f9505da6",
+      "config_index": 622,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a84e7cde4039e87982e7d2c0733ded1033d4bf9b84d0ce782cf8c2397fe10b03",
+      "config_index": 623,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ce2f8e25969b82a09b1c6240f4d6d6996efa4806e299910c1e7a21c90cc8d6bc",
+      "config_index": 624,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "79cba35be38e666b7594ec26524cd7c0fd8128ae8e617600d3e2120f8c0fe5cb",
+      "config_index": 625,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ece1c6094c55fccf578b2d0a3b89b196450c4ad2bfeb5ff3e14a8378ff9670e0",
+      "config_index": 626,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "72866deb01496248bddf08af5528af46fdb15ca91ba8ff65ea08257240055c76",
+      "config_index": 627,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "246ec7a760753522b8b9294984024fcb0761996b1ae26634d0ac9d3c75620db5",
+      "config_index": 628,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b7855cec332e64f988d992edf5d8db66203925e10af48540b48e73c746b0eb36",
+      "config_index": 629,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5491a7af3971b0271af7a5ee8de235d32f141cf1befca7dbadbed4a815f7d47a",
+      "config_index": 630,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ee510cd0e98582bd8f0438400325dc73ca93f7a1deb529769b6644b1792f1b7a",
+      "config_index": 631,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f44ddfd8fd0fdd05bddb395ab570000c356eb48ac6a088cb68569b797544e307",
+      "config_index": 632,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7cfb27bd212fd3870eeedc59a14f2ff107f75c451d98c62d17dfad470f9ad0a5",
+      "config_index": 633,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "791b84ccc70507f49334176ef9938484cf1a333c26b7c0bf193214ce12fcf27c",
+      "config_index": 634,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "09bb94835b0246c79aec578cd0a5a21af3837ee5f2eafeab034e22f38d9b9b02",
+      "config_index": 635,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e97c5da84721559d95ca5a6fd47f58d2bd3ee8eb0156c527c1fe860f7401b97f",
+      "config_index": 636,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "11a5eb893bac7ddab9f5b02e7751c3e35b2e8482c11dd30aa9b857adb5fa856f",
+      "config_index": 637,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_weight_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2fd0eead6abac6b57a6b90efb36b5130794bb6689a57c74980715fec9bbe3f7a",
+      "config_index": 638,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_input_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0c413149833d43548ccc7e911017b8c1fb38c2b53ac09bc816ee6f2ffdad6ccb",
+      "config_index": 639,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_acc_capacity",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ba3fdbc03043f01d8a2d6c2c105e8987a137908fa314a0d61595c7c411934371",
+      "config_index": 640,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4e0ffb450f3c6e73406c9d97e61f1546ed2a18c24a6380c1a511d166bc8ca570",
+      "config_index": 641,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9c467ac0547c05dad111ba2c2ad630450e6d4f32d01bdb44c7a5443ef5c0316c",
+      "config_index": 642,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "fab69df7dd874eefbc22375e696fea6cd1c0b6d0a083a857809d8a68ff2268bf",
+      "config_index": 643,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6edb782dc46dda4a0b5940e5ef325070a5aeac7cffb27dc0311935d2b7cdeaa2",
+      "config_index": 644,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1de1ee4689c785636ad0cb37ea3029353f0d1870b78d7200ba1b033eeb038583",
+      "config_index": 645,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e8d68d257bbd0abf35698990f6fa00f6feeb71639e9fe0ba52c49d2ff19fa3ee",
+      "config_index": 646,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "fedd05847dbc4238d5066e748952ee5f6c40a237978073f01694ae2e59e81bd7",
+      "config_index": 647,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "57c466189a613c0fe3f64fdde4296926532846c6b5151765c6523865d47e78b0",
+      "config_index": 648,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "87e82f25d446b8d2726dfa5bda762787a8ff44f0eb91ada974da1cb58d0d92d4",
+      "config_index": 649,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cc1f3cfc27cd48fe6bf02bad73a4e9e0b1572cc43df40ca76d28c69e3846f459",
+      "config_index": 650,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "994a890ab3bc585aca254a574b3807b01abc491b159d2b69ea2bf802cd2b83b2",
+      "config_index": 651,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b2e85a549087088f80597feadf794350f0bb5a9ca121639e09fc354813685606",
+      "config_index": 652,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ee0d650562fc5720d091353d039877ae4877f92c1dc76b475b6a4ba68f1dff27",
+      "config_index": 653,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d0b833a844c0220292a00af4edd89722c078a1eb4c3031b875b33839ea48ca45",
+      "config_index": 654,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4b20688c9e442163d0ddf5b3a7bf2154aea4091383e49e46af87d422bff379ca",
+      "config_index": 655,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0aff4550b0e53452bd6152a06526b78dbad572a33d44983196ed7378b66fb2d6",
+      "config_index": 656,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f40c255997e9b22f3f733ca75205b9e0d4692f58e789f174d5144a9037f8835e",
+      "config_index": 657,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "fd8d6927969c54df2b12cb85b6566a0f35a1d50b8a51a213b0a93a6f197950a5",
+      "config_index": 658,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6e07d669995f05b9d19b789fecea9c2da2945abb2a23490cdb3e518a30f4f0ea",
+      "config_index": 659,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6064a62d55984387474eff61fb4f8cbb09509e3f59e2cbc19e4034c71c9fdb3a",
+      "config_index": 660,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f3c2bcbe01698e826c0fbd1e91ce0771b1064b6c4c9af0c6eb828e952a6a6e6b",
+      "config_index": 661,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8c98737857951a6dceb20e5857c5d35caf8947b4f37767b28fd50f4dae10435e",
+      "config_index": 662,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d1e472f4423e360127b11b546801fb9817d9755b95f23a123ebb0df0ec72b328",
+      "config_index": 663,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5bdc62690cb3907691beead4c141a069192b8c09ae8ef70dbbe246b8e13cffe8",
+      "config_index": 664,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7e998ed22615a15b7c8944bd96ca97a5e6994940980ca0f04dd877f0568743e0",
+      "config_index": 665,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e87204de55d43e478490efa9176f7448c525f1d2d09ba845b586f6d15369b179",
+      "config_index": 666,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "31b6d5931bd88370da68ab62e6320d2b8de6836e96cc03054cedd6ee29e08cd5",
+      "config_index": 667,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9746af970048c644d5a7a57304f543737bd1c2dd008d40eb230d30d44996ea08",
+      "config_index": 668,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "bd2c211b240300a54cc64ffc70d2fd146e32506cc6a541ff0afe4874e1bac232",
+      "config_index": 669,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3899816d9efea0666ecef709edecf7f6a95d71e974a99229795ea1b8b80e0d02",
+      "config_index": 670,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f55f1549185e5ce0c1c6295f10a08014a14ae12e3498d59175959c3fb72f1c08",
+      "config_index": 671,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ef862e6247797601a81c82c8722ac79c80d21e1d85591aba2e6e4825b6813eb4",
+      "config_index": 672,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "98ab8ed2d33ad463a30ee8a090861da47dd6b51f26efa7a200f8b53052005993",
+      "config_index": 673,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "62d0d9601321f998d586370228ca11bd735af34b5ef30ccd2818b1a69e325b33",
+      "config_index": 674,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5662464b236e2d1879f49cb44e01a052141cabd4b4bf4ac56a6c97d791b0ced5",
+      "config_index": 675,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0f3e3d13e2eb1bc0e25f20609098f6980cb9932f2767129d184011dcf28b5497",
+      "config_index": 676,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "92b54d89e3b85dd45c4e4196e6649c0f0c5b20233c7c4b6dcc3cb6fece06d8ae",
+      "config_index": 677,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0479d3b54e279a44a1da6e9a6a4902808e503ed8b22c0c57db3edc78c96f16a0",
+      "config_index": 678,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "50cb7c576701d449411b86f3a9283b2a03633327f7207a3ccb7cb8d754ced2fa",
+      "config_index": 679,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c7f68e93360f254acff0fdd2a8b5823b6014b1e9c1906c3104feea25159d89cc",
+      "config_index": 680,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2a26035f72ec45b1bac0e8603942200dbe2f75b0075be134fa5839e5ae204ade",
+      "config_index": 681,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e3f8a18af5b0f4e45ed83734f1187c591e5d76cfd0320472e45d0f594ac1587e",
+      "config_index": 682,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2405147c1ed909507c9903d2bfabba2565c42034d759f48c1a67a8154ccbce2c",
+      "config_index": 683,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "485c6caf479804b4665637664c385cde2e4d897d69695214dc7cbf9ab3b33ceb",
+      "config_index": 684,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d0938bed0a9379a91e14f829ca37c42eaf231c812cc134e277d0000afee07494",
+      "config_index": 685,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c019d56d3bc3c98a9111f2b9cc88c50105cfcafd138a9111cd0bfeed057a956f",
+      "config_index": 686,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a1081f730d714ae1060e4808b4fc74ce48d9cfac880b61a725e8349d11d9afee",
+      "config_index": 687,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "93e7cf9d06f4d00943f529082d579224645beefff54f7f6310c2fc2940393f03",
+      "config_index": 688,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "888edef98d4a97dfcf587b5099b4f1a53a8b19b5f12f579a8484d76d24dbb980",
+      "config_index": 689,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8b2ef78500f58743ef8b59aba7cbf456ad1ea369d5fee9603dfb82b45f88206d",
+      "config_index": 690,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "93e4ea4962ee981d7a0e7b228b17c95ab9916fd6150fe1e0a093759ab30a3a4f",
+      "config_index": 691,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "31b999a0bffa91c70104d5f67c0fa5ddc6ad2f8892f10ac1387ae03f7ab45b90",
+      "config_index": 692,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "eb98d6ecbc2a8313e0fad46506a0a5d9c42e92b316dac707741fdd4e184a67f6",
+      "config_index": 693,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0eccdddfdce70ef6e4fb79424cf730480e607c33e42451bdd40f3ab58af54858",
+      "config_index": 694,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ecb7f9cd9e032f135182277503bacd51c0ceee2a379fc6a923760afb367a1967",
+      "config_index": 695,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "925a29984549c18ef7c3aa9babc25f2403712027a733f8d24b48c7ed35ca06de",
+      "config_index": 696,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "916e820ff068acf6f1eb08b25cdd448d845594587453220cca64c3d3be84f318",
+      "config_index": 697,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8cf6285bc90418683e4bd56c6d3f5c0d7d86d87a8a8f723081a36bc1f33804ea",
+      "config_index": 698,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7ed962efa9703a9021d73daa18313be3294e688fef44e127e89d598513e9b8d3",
+      "config_index": 699,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6482c7ff3fca242ea98126ce220e3478c1fbda42507afd6f7808b9b6ffd8888b",
+      "config_index": 700,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "284143a2771e0140744e6d0e3320c320627762e32ce7ac754a967493561198c5",
+      "config_index": 701,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4f3039057437666784b7c262f8ba8456f3f987d414fd125b863df8f2e8d13b9b",
+      "config_index": 702,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1425e49f0c23e37ee97e4e919f3c12050df8a36363c4aeca79a4ea2f792e9f83",
+      "config_index": 703,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a94e2287556d15f4f1f11e1be66a5dea1a516dc551eb1451e042392b0f7fbaa2",
+      "config_index": 704,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f0e5d92b7724397e8c7ac706fecb826390545ab14abce691a5e6c719d0ebb6b3",
+      "config_index": 705,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "58b8800a87fb124ab4f60cf90a025c63ee0baeeb304ecacbf5decab81a294ad7",
+      "config_index": 706,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e68a46bfda3798229138a7db7794b801667f4354297af48dc49bdd517cf7c244",
+      "config_index": 707,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "891eccf987d06c77a4be2b3bbb10387ba01fb5d61f6b4a84ac3f976d7b731bde",
+      "config_index": 708,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "af3c498c328471ec8302fb46afd523d935f32e554a5c34e374382b7b874406d2",
+      "config_index": 709,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7712b44dac3eb3274c24b93734d8c56b10c57cf46120e568e37d8d685f34737f",
+      "config_index": 710,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2f4f720b3f5baa07897adceae6cd3a93bfb865514abc3fbbc2d0c47bcdb63080",
+      "config_index": 711,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5f105e821a8cdcb9674eb0ba9f025de4fc826f21af17e9ed5308b1f6688d0784",
+      "config_index": 712,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "868b500cc60b4f319e5b1086ab36b066c9e4ca5c32100547994b3d1d8577048a",
+      "config_index": 713,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ed8a29aeace7979c7a0c19cca1c9ff5bfee611a1e03d139ba811a3e24ea9e2c0",
+      "config_index": 714,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d7d294198713b7d6f34225b00c143f5e86179221d8fbeabcfe392aa27031ced5",
+      "config_index": 715,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1be656c97ff2d640a5fbaab61a632398eb8750cab3842e4dc2c0d0ed84915155",
+      "config_index": 716,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f41789f39389e5aeee100acef7bd20b1c65bce83a1a1707ac236b437f7ea6a43",
+      "config_index": 717,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "648a64417cb65c2e932a98869b4138e21dc3797f3366d8062f9548ac87ef3489",
+      "config_index": 718,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a60b6953299441b40fcc82b008e3972491e79c5c7bc2b642889da06c85677c06",
+      "config_index": 719,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "83934fa4337caf2d1ec0161ccc622cc5d52225b8ebcba7ae6aa3bde6ff6da67c",
+      "config_index": 720,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a471c225798a5179d02bb1bf49e817e81bb3520fbe034f9217b77fed2d26898c",
+      "config_index": 721,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6c930476c2ceaeeb38601edf5aafae1a1f22cf2ab9a6001f767955ac7e43a4b6",
+      "config_index": 722,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "07c7aa99d01eeafeb1c8550b1e8289a70acf54cb2d7ec7ee37fe9e0c48fb4de1",
+      "config_index": 723,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f3ce80eed49be8480f1c238d11b4747c10f33d4e5b31e59409518b8074c2054f",
+      "config_index": 724,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3b9ca8e9f2f6030b502bf5d650b4420249ff379c525cb34af0b35b309f5af3da",
+      "config_index": 725,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8ded97764615b1ebda599cde6ebd7cd0b504bdb456a2b078c357d1d109681858",
+      "config_index": 726,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e907957cf9d104e1587aa376b13e8541a0a8874034c23752ccca8b695adb095b",
+      "config_index": 727,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e00a4129e44653a6dc1498090241c1218f09fd548c3fd1a3e37bd9442d09d426",
+      "config_index": 728,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2e172b064fdc5961567f33959cd06c6eeba98622d29abae46ab3faf7f5df4070",
+      "config_index": 729,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "3ceda63310565c1316a8a8b61e222e86604cb0a2477e19fd6ccca0ccbfe62a4f",
+      "config_index": 730,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1ff76321b8c7407f26eea32a807f7da214731922012d49c39c4691bfbb401b99",
+      "config_index": 731,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c92e176630a36f4ee5444b24f9994584d169c3e580aefba25f13b4c180bbe947",
+      "config_index": 732,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "8fd06f37902215990afd81b6f1180a5fcd9b426407a354a067a7c58f3fbd70a2",
+      "config_index": 733,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6b9c1546f4c0718f49676b055c58daf9295a526e43e809b7ef779814ef5677ce",
+      "config_index": 734,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "35273a3eff40612b9609207eaa43c0a213bfc9de1d13ada0260f14f8ddfe94bd",
+      "config_index": 735,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "df19b6064f9be35d6d83f1b0b8617126a1923b2964cd43b3b332bc71dbe2de0e",
+      "config_index": 736,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d0b7aaecc256c3175ff16100cdf48838c2f9e2c2800e78d1b2b073fc363f997b",
+      "config_index": 737,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "0e7679fd7030a82d99c522d36c09865a43dd37e1262e96a46995c1906252931a",
+      "config_index": 738,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "995130bfc44a9c6fc22fe916b6f2f879e7dbd2696f7ee03c541b7562c226282d",
+      "config_index": 739,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "7e78e73ac182920773329f3c955ae676a15c97f119227257c142989e31393bed",
+      "config_index": 740,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f689103e088d978b013d82c944f6e8c61297a0241c9314d5eb39a65313376c36",
+      "config_index": 741,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "41846f6e18bfce852095acfddd3d2c158ab657c8d98c52da4d79686785a18361",
+      "config_index": 742,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1f8a97926e6793f032f4e9ae75e1b243c7f2b0c763eff10bb9ab7f856e34a61a",
+      "config_index": 743,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "09a5ecd2dce3d09d9ef2025375c734a261500d4f68b58b1716f47b769ab82997",
+      "config_index": 744,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "510d01f004446fbeaf1135985caa9c00141bf16f3b9a8b2cbea7bd9b1cea4586",
+      "config_index": 745,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "48a466f246d6bf582d4732a26200afcd6560066d62a84245be2b9dd4c6092ad5",
+      "config_index": 746,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "63482fe7de759ef90d3eb124172c834ea4a01bdf26486cd379f14236a0d33de2",
+      "config_index": 747,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "58715d4c838e4ef9085980a3d8935b01419c0846bfaacf4692080c95cac5f79a",
+      "config_index": 748,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c33e8809a5312afae4425a75c2af23561f0b21cf9c09eb425411e28a7783a96e",
+      "config_index": 749,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "10c80f312866af7dc3c42aa68a920557016b72ee237d64e862cca730a489e685",
+      "config_index": 750,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1964223b437801d9d153f37656e8c4bb3fdd2d639cecd0d800826f29bf873a05",
+      "config_index": 751,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e014c725f1e9850a43883ec7299f6f266e4a8619df892b229b26bd01b329f932",
+      "config_index": 752,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "41436d80ab95e8a2a8aa78773c437b69851091c4da705f2194d89698675f704a",
+      "config_index": 753,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ec2dde71caf72369289e79ca3abe7e18ed33e19cf6c399a12a59753c4cb20fdf",
+      "config_index": 754,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "992e6235a36635f2a6803ee12421560c829574615361e393df3b66d637ff0300",
+      "config_index": 755,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9dee294a8dadb127405c147aff46942f24f52eabbe0b016dd6473b8f99221a3c",
+      "config_index": 756,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "439a465507c46d9669e49ee67161fc961af34ffd65150f7e986eb0efdf92d9a6",
+      "config_index": 757,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "e9592ca562bb4e5c353ab49612cedd4a2788b5a3dc5da36d64d1b8352337dcb3",
+      "config_index": 758,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "362e7d5b80cc92e2833da8147b5c664eb18d5dcaca3292e034d86119a70f278a",
+      "config_index": 759,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "18e4a39eca95ec12c515fca9e5017a9c4d983c85fa75781fb5d91996399f4a33",
+      "config_index": 760,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a07a91c568d5ff022258db822e75eef9889a26724aa81f39cebb7363b70c82e8",
+      "config_index": 761,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d6acfbfdb2305a849cac890847b520877e79edccf6ad9e183c97a07846f0eea3",
+      "config_index": 762,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c50aa8a7a035ff66c2b7a3986c27b2f54c52d8c6a15da764770bc6223d079268",
+      "config_index": 763,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5c6c2a991aadaa4370b123996ad8f1fd838ed48f712b2324a60a106dc0e4c204",
+      "config_index": 764,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a850236ac5e1349284d7acde7f84d542360326f05d0bed47c84aaaa3075b5680",
+      "config_index": 765,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "44b69dd5040e312c5e99d624ef96f94b9386ffc29c062b54c39cc9670684c7b9",
+      "config_index": 766,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2239024a0ed30b991117241d5369232dc3fb504b063ba2d116e361b949b75f75",
+      "config_index": 767,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "ce338e9e940573406fa509b9f29bbfcf3ef6f0a3332e0bac6bd46965030355f3",
+      "config_index": 768,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "88b4cbd14079f1b3025262471f7038379fee07801cc71f5079f9d5f88a352f6c",
+      "config_index": 769,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "06a556b834f660ec921e10b75eed82af4b938b01daa38470e76bfc661d9f5425",
+      "config_index": 770,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5a465f1dc4dbf50b8b7c922d1789bf314a44a9f304ce8d7c0fe3c762447a5961",
+      "config_index": 771,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5c8463417bda0098eef10d8db75b1aaa1e6cdbe48c542284355795e185631993",
+      "config_index": 772,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "2f9968454ca8cadee842866cea7c21904699547c4fa572aaced1e468179531e7",
+      "config_index": 773,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "01a1cd7c435c880587080038fce07be21d616e392b51e3546b9a50b1de556c7b",
+      "config_index": 774,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "5001008cff67fd53e035dfd9aa42140f744d267e154fcf0cde2f995b8ff652d5",
+      "config_index": 775,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4b4ba6546b58df337df8bfd65e576c54202fb9afef952c563f48edcfb37c36ef",
+      "config_index": 776,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "bb6cd59e296cdfa5f90fe5766ccc6ed03af715bbea287d48e440891bcd9d7393",
+      "config_index": 777,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "763ea9d396a759988dce10fee83df4cf1815eeff03dc7fcb75ffa04f29c8e6a4",
+      "config_index": 778,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "35d96183462ede1c9df30e38279e5647722ed9a816ef84a8ac2333a8054bf438",
+      "config_index": 779,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "cb159d14914dbbbb947334fa674cc270b01c10652979ec86377833b686bcae64",
+      "config_index": 780,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "1ca10010653586845be4ccd7571ca2b23bd03d90bef369c81b4aae9ac13678c6",
+      "config_index": 781,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "567407d33ff17bce270060e919a43102be61f4904a9694a0c4c30ad0765264f6",
+      "config_index": 782,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "bacbaf167f37cc4e2374bd62fc0fdf1ef7ee755ed14aca15f439be8876c306a2",
+      "config_index": 783,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "02213eea66c4aa23ba3c3ef1a429183a1aca7b65adc1f891419750b610c3f47c",
+      "config_index": 784,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "c08eb1a6dd8e5c399b1711f593e476da4cb965ea69b2df29724e4ab3c9312b7e",
+      "config_index": 785,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "4ac787a056df68ef792c4f3b4424db047c9e481d4d562e6140512c3df4bf721b",
+      "config_index": 786,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d7cc92092463d08e3d3e96eed129b1354c130d3508e06e5984b3de502a8a8928",
+      "config_index": 787,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "a3aa57605ccff5b8fa007f48c7afd5dbe2e8faa749fa556ac81b2a4881e0b775",
+      "config_index": 788,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "34d2dafe6bc7a74c469cfbe1e20e960b65564ab2b3c40559eb90686f6db28dd1",
+      "config_index": 789,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "6694ebc0b12dc4747b135d1c8086258f897d490cbff1abc1abc2977183d2259d",
+      "config_index": 790,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "87dcbd9d03334ee8f681b1d9a1b97b46670b58fafd31be8ed52387c0a8d329f4",
+      "config_index": 791,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "281dadc971b30b15fe843b144eaf1df9c9b4dab7a43d89c9d280c87818216169",
+      "config_index": 792,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "fc03cadb222a6ac81553e3c3ef4f4a72ce3e9d99b95483d6f4dfadeeb3946f4b",
+      "config_index": 793,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "f24e93970350126ebf1d748d412ffcda5433423fb904cd5767b3f3876163d4fb",
+      "config_index": 794,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "d56ba70863abd7a201f5521e1ecc0c0ba3ed4d1a8bb98f64ca1472459394f4e2",
+      "config_index": 795,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "b0eeab16b8debece81f989c7f26f5ff3f8ab7598fcfd93a6f5744a2e2fe1b853",
+      "config_index": 796,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "824c466cd12654d05c2f1b901d649674295b2ba76c4d5e75b0fe4ecc23bc2ea0",
+      "config_index": 797,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "9eb6225753a1c0c3d23eae4c0c06b8feb5c5c1d9b465ad5850bb809623ddf30e",
+      "config_index": 798,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    },
+    {
+      "candidate_id": "51a898e4acb68847cccd36dc317a1ace35900750317b6bfe42b0515d3c93cffa",
+      "config_index": 799,
+      "dma_pareto": {
+        "certified": false,
+        "reductions": null
+      },
+      "mode": "paper_inspired_hybrid",
+      "reason": "analytic_no_cross_context_reuse",
+      "route": "reject_static",
+      "tir_sha256": null,
+      "workload_id": "W05"
+    }
+  ],
+  "schema": "c3_vta_hardware_certified_dispatch_v1",
+  "status": "completed"
+}

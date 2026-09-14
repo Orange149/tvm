@@ -1,0 +1,45 @@
+{
+  "schema": "c3_vta_fused_program_service_proxy_norefit_contract_v1",
+  "status": "posthoc_test_spec_frozen_before_analysis_execution",
+  "research_question": "Does the already-frozen request penalty repair the two final-fused-program byte-only inversions exposed by R50AF00/F01?",
+  "target_comparison": "For original and input_stationary separately, choose between R50AF00 and R50AF01 using target-occurrence final fused-TIR traffic.",
+  "policies": {
+    "bytes_only": "min(total logical LOAD+STORE bytes)",
+    "fused_service_proxy": "min(B_dma + 65536*N_dma); the extra-submission term is zero because these input-stationary schedules add no residency barrier submission"
+  },
+  "frozen_weights": {
+    "request_equivalent_bytes": 65536,
+    "extra_submission_equivalent_bytes": 131072,
+    "source": "P7R166 development pool; no R50AF00/F01 fused-program or latency refit"
+  },
+  "evaluation": {
+    "comparisons": 2,
+    "success": "policy selects the lower observed full-graph median latency in each mode",
+    "report": [
+      "selection_accuracy",
+      "selected_latency_regret_percent",
+      "score_components",
+      "all-four-program pairwise ordering accuracy"
+    ]
+  },
+  "label_exposure": {
+    "target_labels_already_exposed": true,
+    "coefficient_frozen_before_target_labels": true,
+    "analysis_is_prospective": false,
+    "allowed_claim": "no-refit post-hoc external check of one previously frozen coefficient",
+    "forbidden_claims": [
+      "new prospective holdout",
+      "fitted physical request latency",
+      "universal full-graph ranking",
+      "physical AXI burst prediction"
+    ]
+  },
+  "bound_inputs": {
+    "p7r166_analysis_sha256": "902a9f86c99bf9f3589eaa1c738a3b3c5e63f8e3e3211dec5a1b61d7bcf10a69",
+    "p7r166_artifact_manifest_sha256": "362e9edfbbbe6a0879c75132e175cb75a635971f39ee2c5ec2597a36b42b47d5",
+    "p7r296_summary_sha256": "d54961abf863df71b332399293f2d31974f70a4403f8857ed423b50b1cacbde1",
+    "p7r296_artifact_manifest_sha256": "b23bd5fb2eba33880ed404e19a287bf657ad8c68bb36a1cfa959f61f4b1c9041"
+  },
+  "board_contacted": false,
+  "claim_boundary": "The target latencies are already exposed. This contract prevents coefficient refitting and metric switching, but does not convert the analysis into a prospective holdout."
+}

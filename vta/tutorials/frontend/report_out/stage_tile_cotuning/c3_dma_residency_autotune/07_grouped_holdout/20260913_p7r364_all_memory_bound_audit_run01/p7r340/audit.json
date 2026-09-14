@@ -1,0 +1,499 @@
+{
+  "scope": "retrospective development audit, not prospective search savings",
+  "rule": "all_memories",
+  "count": 24,
+  "rejected": 1,
+  "rejected_static_ok": 0,
+  "rejected_observed_capacity_failure": 1,
+  "unknown": 0,
+  "source_sha256": "4364c55826d64225f529f04ef1ac09c3787bf8185ac3f39f3591be3dd5893915",
+  "input_hashes": {
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r340_r50e_full_local_qualification_run01/candidates_v2.jsonl": "6e42e1a0810bde3c61d2578b338f4269bafee0408687f93cb8b2e5f1206cb6ba",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r340_r50e_full_local_qualification_run01/static_results.jsonl": "d14c7ece226424c151262bcf17d97169edc0a93cf0b768882ac21b9b50d6fa9c"
+  },
+  "rows": [
+    {
+      "candidate_id": "90d10aa120369966fd3c30fcf8bae6a3c4790c4b93026a73ef5032ae70d46a92",
+      "family_id": "R50EF00",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 512,
+        "accumulator": 1792,
+        "input": 224
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "7bed522b2960dcdfce94650945ed9aae7a72d15eda3cd1b4b8d93c3769cc04f9",
+      "family_id": "R50EF00",
+      "mode": "input_stationary",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 16384,
+        "accumulator": 57344,
+        "input": 224
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "d4853fe14234425d4acbdc4ddf6d240781f88d32b9e5f768246cbedb7c032273",
+      "family_id": "R50EF00",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 8192,
+        "accumulator": 3584,
+        "input": 448
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_compact_buffer"
+    },
+    {
+      "candidate_id": "fa910eb37307516e2db28541df10b1b88766a61182e9fe6cb6d44c3064c89019",
+      "family_id": "R50EF01",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 65536,
+        "accumulator": 50176,
+        "input": 12544
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_2d_pattern"
+    },
+    {
+      "candidate_id": "e828d727206c9094a83557e425cba0692342a461405f8c7bdc13444fee82724e",
+      "family_id": "R50EF01",
+      "mode": "input_stationary",
+      "decision": "reject_capacity",
+      "required_bytes": {
+        "weight": 262144,
+        "accumulator": 200704,
+        "input": 12544
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [
+        "accumulator"
+      ],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "allocation_capacity"
+    },
+    {
+      "candidate_id": "69dfae61c987e065f9885fd72541df1795f84cd8ff6e1d726486273e5a7bc183",
+      "family_id": "R50EF01",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 65536,
+        "accumulator": 100352,
+        "input": 25088
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_compact_buffer"
+    },
+    {
+      "candidate_id": "fa950f15520ae43e9cb271006b777555804354175780b92cee716dcecd57e906",
+      "family_id": "R50EF02",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 2048,
+        "accumulator": 1024,
+        "input": 32
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "b15089dcb5d0a45c90d3cee7ca8450988afc9164cb903ffc276262a40a7c309e",
+      "family_id": "R50EF02",
+      "mode": "input_stationary",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 16384,
+        "accumulator": 8192,
+        "input": 32
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "f8f29556798ce40fdd440ec94f358db21479cd06cafd33137e7cb5398f8e7ccf",
+      "family_id": "R50EF02",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 32768,
+        "accumulator": 1024,
+        "input": 32
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "57f6b37989c628f7c58cc57e574e483cd51446f663fdda4fb708057851a7b9ca",
+      "family_id": "R50EF03",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 2048,
+        "accumulator": 1792,
+        "input": 3584
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+      "family_id": "R50EF03",
+      "mode": "input_stationary",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 131072,
+        "accumulator": 114688,
+        "input": 3584
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "1d74724244d7028d4a091ea0404ba9ec0ee7a9ba4d1b19bfbf8d1e3d1c9e274e",
+      "family_id": "R50EF03",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 4096,
+        "accumulator": 1792,
+        "input": 3584
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "4600b355e4607f00f5bbab58e7eb7cccfc5e626942c2bc9cb8b88e60f4125534",
+      "family_id": "R50EF04",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 512,
+        "accumulator": 1792,
+        "input": 224
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_2d_pattern"
+    },
+    {
+      "candidate_id": "1614a57c8006b3a098b3e4bf28970a25a0e6a73f46cb11185a99fe8a2b5a6401",
+      "family_id": "R50EF04",
+      "mode": "input_stationary",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 16384,
+        "accumulator": 57344,
+        "input": 224
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_2d_pattern"
+    },
+    {
+      "candidate_id": "243f36e3ac00ae84cb688f33b49099d5afbc8edb26d6716da248e6fe5f0a2e5b",
+      "family_id": "R50EF04",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 8192,
+        "accumulator": 1792,
+        "input": 224
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_2d_pattern"
+    },
+    {
+      "candidate_id": "16360fb46eca1e309b6eceb84ab8abe4c9ea51478f48d9bb2a11003ae08ee46a",
+      "family_id": "R50EF05",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 8192,
+        "accumulator": 256,
+        "input": 128
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "32b53361e1daea3f2b8b4e253217bea14522d6c366bc86fbfc567a0d45d3d06b",
+      "family_id": "R50EF05",
+      "mode": "input_stationary",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 131072,
+        "accumulator": 4096,
+        "input": 128
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "6f7d36c46465bf2d69e14658336974dcdb0fd9cd33a623afbebb1ee440736b4e",
+      "family_id": "R50EF05",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 16384,
+        "accumulator": 512,
+        "input": 256
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_compact_buffer"
+    },
+    {
+      "candidate_id": "c402e1d6ba0b0b1aeb69daa5ca2288d1a0314bd8964971a84a8f4057e9d24433",
+      "family_id": "R50EF06",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 8192,
+        "accumulator": 896,
+        "input": 1792
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_2d_pattern"
+    },
+    {
+      "candidate_id": "01031c86eed41bad80528b85a201c7414b9d7994b8a3317e3fcbac72ac7e305a",
+      "family_id": "R50EF06",
+      "mode": "input_stationary",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 262144,
+        "accumulator": 28672,
+        "input": 1792
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_2d_pattern"
+    },
+    {
+      "candidate_id": "7b97f786b2d0ca7d48c0230ec5f50e514c63ddd9c57088d29c7ff5751eecfa6e",
+      "family_id": "R50EF06",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 8192,
+        "accumulator": 1792,
+        "input": 3584
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_2d_pattern"
+    },
+    {
+      "candidate_id": "ca12a8e4aaefec8b7c6d9883dd1a57b371a7b7c3721d5fa24f9db087b8653cee",
+      "family_id": "R50EF07",
+      "mode": "original",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 16384,
+        "accumulator": 2048,
+        "input": 32
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "18c3a192f64feaeb7adda9effacb0ee07092a3b860204779509706e72b2d7064",
+      "family_id": "R50EF07",
+      "mode": "input_stationary",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 32768,
+        "accumulator": 4096,
+        "input": 32
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "ok",
+      "observed_failure": null
+    },
+    {
+      "candidate_id": "24dc808a9c745e6bafde9e9d2c11c246c8c00a7c47577c2dd5ad928761002e41",
+      "family_id": "R50EF07",
+      "mode": "weight_resident_barrier",
+      "decision": "not_rejected",
+      "required_bytes": {
+        "weight": 131072,
+        "accumulator": 4096,
+        "input": 64
+      },
+      "capacity_bytes": {
+        "weight": 262144,
+        "accumulator": 131072,
+        "input": 32768
+      },
+      "exceeded_memories": [],
+      "scope": "development schedule-specific bounds, not correctness certificate",
+      "observed_static_status": "failed",
+      "observed_failure": "dma_compact_buffer"
+    }
+  ],
+  "board_contacted": false
+}

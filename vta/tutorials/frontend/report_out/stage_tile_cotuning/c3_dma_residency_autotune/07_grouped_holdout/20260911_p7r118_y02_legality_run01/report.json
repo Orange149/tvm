@@ -1,0 +1,169 @@
+{
+  "board_contacted": false,
+  "claim_boundary": "no FSim correctness, board latency, FPS, or performance winner claim",
+  "inputs": {
+    "candidates": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r115_yolo_confirmation_protocol_run01/candidates.jsonl",
+      "sha256": "c21a224b1f0d0005e91788ce89f8d01c91db70628e2f96807ffd7935cd6a5fdf"
+    },
+    "complete_domain": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r115_yolo_confirmation_protocol_run01/complete_domain.jsonl",
+      "sha256": "2ee72abe5160fd95db55acead6a74b5b591fc51219ca3e0ba9d994ca803a1870"
+    },
+    "p7r117b_context": {
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7r117b_yolo96_static_run01/static_results.jsonl",
+      "sha256": "1dccb2f8da43169cb4245cb2314f642230ff4e1b2e1af03e85b29f28d4b136e8"
+    }
+  },
+  "mechanism_explanation": [
+    {
+      "failure": "dma_pad_innermost",
+      "reason": "the 3x3 padding reaches a reduction/channel-inner dimension after tiling; InjectDMAIntrin accepts padding only on the two spatial dimensions and rejects nonzero innermost-block padding",
+      "tile_condition": "tile_ci > 1"
+    },
+    {
+      "failure": "dma_2d_pattern",
+      "reason": "the remaining tiled strides cannot be folded into VTA's supported 2-D DMA descriptor; tile_h=1 or a full-height tile removes that intermediate stride",
+      "tile_condition": "tile_ci == 1, tile_co > 1, and 1 < tile_h < output_height"
+    },
+    {
+      "failure": "dma_compact_buffer in weight/hybrid modes",
+      "reason": "the current modes group two adjacent outer-width tiles; the promoted/grouped buffer then has gaps, so _check_compact rejects it. tile_w=2 makes 26/2=13 outer tiles and disables factor-2 grouping; the degenerate tile_co=tile_h=1 layouts also remain compact",
+      "tile_condition": "most original-legal points with even output-width outer extent"
+    },
+    {
+      "failure": "allocation_capacity",
+      "reason": "the earlier vector formula is necessary-only; schedule placement may keep a larger accumulator/input region live. Compiler allocation bounds are the final memory-legality certificate",
+      "tile_condition": "mode-dependent promoted/grouped lifetime"
+    }
+  ],
+  "p7r117b_context": {
+    "failure_subcategories": {
+      "allocation_capacity": 5,
+      "dma_pad_innermost": 27
+    },
+    "role": "context-only; not used to select or fit the complete-domain scan",
+    "rows": 32,
+    "status_counts": {
+      "failed": 32
+    }
+  },
+  "population": {
+    "four_mode_fraction_of_hardware_eligible": 0.03498542274052478,
+    "four_mode_fraction_of_original_legal": 0.41379310344827586,
+    "four_mode_legal": 12,
+    "original_failure_subcategories": {
+      "dma_2d_pattern": 18,
+      "dma_pad_innermost": 296
+    },
+    "original_lower_legal": 29,
+    "original_lower_legal_fraction": 0.08454810495626822,
+    "other_modes_scanned": "all original-legal entities",
+    "p7r115_hardware_eligible": 343,
+    "per_mode_failures_on_original_legal": {
+      "input_stationary": {
+        "allocation_capacity": 4
+      },
+      "original": {},
+      "paper_inspired_hybrid": {
+        "allocation_capacity": 2,
+        "dma_compact_buffer": 15
+      },
+      "weight_stationary": {
+        "allocation_capacity": 1,
+        "dma_compact_buffer": 16
+      }
+    },
+    "per_mode_status_on_original_legal": {
+      "input_stationary": {
+        "failed": 4,
+        "ok": 25
+      },
+      "original": {
+        "ok": 29
+      },
+      "paper_inspired_hybrid": {
+        "failed": 17,
+        "ok": 12
+      },
+      "weight_stationary": {
+        "failed": 17,
+        "ok": 12
+      }
+    }
+  },
+  "replacement_decision": {
+    "minimum_required_four_mode_entities": 8,
+    "observed_four_mode_entities": 12,
+    "other_yolo_geometry_scan": "not_triggered",
+    "reason": "Y02 retains enough entities for an N=8 per-geometry confirmation rule",
+    "sufficient": true
+  },
+  "rules": {
+    "four_mode_intersection_v1": {
+      "confusion": {
+        "accuracy": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "tn": 331,
+        "total": 343,
+        "tp": 12
+      },
+      "expression": "original_legality_v1 and (tile_w == 2 or (tile_co == 1 and tile_h == 1))",
+      "scope_limit": "empirically exact for Y02 and current mode-0..3 schedule sources"
+    },
+    "original_legality_v1": {
+      "confusion": {
+        "accuracy": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "tn": 314,
+        "total": 343,
+        "tp": 29
+      },
+      "expression": "tile_ci == 1 and (tile_co == 1 or tile_h in {1, output_height})",
+      "output_height": 26,
+      "scope_limit": "empirically exact for Y02 and current source hashes; compiler remains final authority"
+    },
+    "padding_rule_only": {
+      "confusion": {
+        "accuracy": 0.9475218658892128,
+        "fn": 0,
+        "fp": 18,
+        "precision": 0.6170212765957447,
+        "recall": 1.0,
+        "specificity": 0.9426751592356688,
+        "tn": 296,
+        "total": 343,
+        "tp": 29
+      },
+      "expression": "tile_ci == 1",
+      "interpretation": "eliminates all channel-inner padding failures but not unsupported 2-D DMA layouts"
+    },
+    "prior_hardware_predicate_only": {
+      "confusion": {
+        "accuracy": 0.08454810495626822,
+        "fn": 0,
+        "fp": 314,
+        "precision": 0.08454810495626822,
+        "recall": 1.0,
+        "specificity": 0.0,
+        "tn": 0,
+        "total": 343,
+        "tp": 29
+      },
+      "expression": "True within this already-filtered 343-point population",
+      "interpretation": "SRAM-vector/reuse necessary conditions alone do not predict DMA lowering legality"
+    }
+  },
+  "schema": "c3_p7r118_yolo_legality_v1",
+  "scope": "Y02 packed conv geometry on the frozen VTA schedule/hardware fingerprint",
+  "status": "completed_local_legality_only",
+  "tophub_entity_or_cost_read": false
+}

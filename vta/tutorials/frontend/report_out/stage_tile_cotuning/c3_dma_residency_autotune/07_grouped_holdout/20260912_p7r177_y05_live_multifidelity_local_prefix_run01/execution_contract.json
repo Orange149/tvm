@@ -1,0 +1,43 @@
+{
+  "board_contact": "forbidden in this executor",
+  "fsim": {
+    "hardware_path": "/tmp/vta-hw-fsim",
+    "seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "timeout_seconds": 300
+  },
+  "performance_labels": "forbidden",
+  "policy": {
+    "correctness": "FPGA first-error stop; a pass requires all three frozen seeds",
+    "frontier_width": 4,
+    "initialization": "complete an opened same-tile family, otherwise choose the family with maximum minimum normalized Euclidean distance in knob/SRAM/opportunity space",
+    "name": "hardware_diverse_frontier_service",
+    "promotion": "lower four visible candidates; FSim candidates by currently visible service cost; compile two FSim-pass candidates; choose FPGA candidate by full service cost",
+    "promotion_width": 2,
+    "service_proxy": {
+      "extra_submission_equivalent_bytes": 131072,
+      "formula": "B_dma + 65536*N_dma + 131072*max(N_submit-1,0)",
+      "request_equivalent_bytes": 65536,
+      "semantics": "acquisition penalties, not physical AXI bytes or fitted latency constants"
+    },
+    "stop_for_confirmation": "record first online candidate reaching the target only after the complete pool oracle is constructed; continue with unbiased completion for oracle labels",
+    "validity_model_in_primary_policy": false
+  },
+  "registry": {
+    "ledger_sha256": "569806eed2f72c38e1f666e2263873b1a95842b81649c4a6b24543106f84e9f3",
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r176_y05_multifidelity_registry_run01"
+  },
+  "schema": "c3_vta_multifidelity_live_local_prefix_v1",
+  "source_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/replay_vta_multifidelity_search.py": "fe66a479351b79854131ceb4f9b6d8b117b658e420e3582567a80b1c6755d6a9",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_multifidelity_local_prefix.py": "1a0f9652b745dcebf535649b17d743471873abefb5737ad7c5a4c7db7e1caa8b"
+  },
+  "status": "frozen_before_live_local_actions",
+  "training_pool": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260912_p7r173_multifidelity_development_pool_run03/multifidelity_pool.json",
+    "sha256": "de547ef65042f3cc898d17814193ba50f21d1235fdb5589bbfd2399720b101b2"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "board_contacted": false,
+  "bound_inputs": {
+    "proxy_development_analysis_sha256": "9a94e4f4fce5d35b2559a68893c4967e2d4b3bc02f7a3df189d0576412ccfc14",
+    "proxy_development_artifact_manifest_sha256": "5ae17d80c5cb1b55070bdd69b2e845f7111ad12908de8e6d6d459117bc010d17",
+    "target_artifact_manifest_sha256": "ea9c4aaa70b3d5af715f793a2c2aa1db568f782e251b0a53a02e8e9ac0050a16",
+    "target_candidates_sha256": "f9285f93d2db0614cf9ec7e92cb13a981473a6f268514ccf7ce07ae4e14451de",
+    "target_contract_sha256": "e789be7a63e82a35970e1622c669e772350447db3894026e4b0a45f688dddfab"
+  },
+  "candidate_commitment_sha256": "307872e4379ba86a8a0f16344cb6285eb5474c967537f54728a74cb11c509de5",
+  "candidate_count_legacy_four_modes": 32,
+  "claim_boundary": "Prospective identity and policy freeze only. R50D selected this rule post hoc; R50E is the first independent test of full-graph build-cost reduction and oracle retention.",
+  "cost_accounting": {
+    "board": "charge candidate dispatches, RPC/API calls, driver invocations and host wall",
+    "operator_qualification": "charge lowering and FSim wall time to every policy",
+    "oracle_completion_build": "report separately after front labels are exposed",
+    "prospective_build": "measure actual stock-plus-front full-graph build wall time"
+  },
+  "freezer_source_sha256": "fcb11e23ae7f1a590b166b1a2bb5ae7cdf2055f02d9144d0113300b235d29f59",
+  "geometry_signature": [
+    1,
+    256,
+    14,
+    14,
+    1024,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0
+  ],
+  "label_visibility": {
+    "target_fpga_correctness": false,
+    "target_fsim": false,
+    "target_full_graph_features": false,
+    "target_full_graph_latency": false,
+    "target_lowering": false,
+    "target_operator_latency": false,
+    "tophub_used": false
+  },
+  "policy": {
+    "axes": [
+      "operator_lowered_tir_expanded_load_plus_store_bytes",
+      "operator_lowered_tir_expanded_load_plus_store_calls",
+      "weight_barrier_indicator"
+    ],
+    "dominance": "A dominates B iff A is no worse on every axis and strictly better on at least one axis",
+    "eligibility": "real operator lowering then three-seed FSim; retain all failures",
+    "oracle_completion": "after the prospective front outcomes are immutable, build and measure every remaining eligible candidate to reveal the complete FPGA-correct oracle",
+    "prospective_action": "form the non-dominated proxy front without target performance labels; build a stock ResNet50 reference and final fused graphs only for that front; run three-seed FPGA correctness and balanced latency only for the front",
+    "proxy_source": "final lowered operator TIR before any full-graph build",
+    "scalarization": null,
+    "tie_break": "candidate_id only controls deterministic execution order"
+  },
+  "schema": "c3_vta_operator_proxy_pareto_holdout_contract_v1",
+  "source_layer": "stage3_unit2_conv3",
+  "source_model": "resnet50_v2",
+  "status": "frozen_before_target_lower_fsim_fullgraph_fpga_or_latency",
+  "verified_artifact_counts": {
+    "proxy_development": 2,
+    "target_contract": 4
+  },
+  "workload_id": "R50E"
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "c3_budgeted_process_execution_v1",
+  "status": "completed",
+  "budget_seconds": 300,
+  "elapsed_seconds": 144.16850119300216,
+  "overrun_seconds": 0.0,
+  "budget_eligible_completed_candidates": [
+    "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56"
+  ],
+  "steps": [
+    {
+      "index": 0,
+      "name": "build_stock_and_single_candidate",
+      "kind": "build",
+      "candidate_id": "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+      "started_seconds": 0.04667125800187932,
+      "returncode": 0,
+      "completion_verified": false,
+      "finished_seconds": 114.2804929720005,
+      "elapsed_seconds": 114.23382171399862,
+      "finished_within_budget": true,
+      "overrun_seconds": 0.0
+    },
+    {
+      "index": 1,
+      "name": "measure_single_candidate",
+      "kind": "measure",
+      "candidate_id": "3d57d3562324529ce9a615afe20aace280bcbcc79f5e707efc81807b7937fb56",
+      "started_seconds": 114.28079672899912,
+      "returncode": 0,
+      "completion_verified": true,
+      "receipt_sha256": "bec20f8d1de042871473bc77bf7c359c8a4f6438459fdd28a56cf2710c13310d",
+      "finished_seconds": 144.1683374350032,
+      "elapsed_seconds": 29.887540706004074,
+      "finished_within_budget": true,
+      "overrun_seconds": 0.0
+    }
+  ],
+  "unstarted_steps": 0,
+  "deadline_policy": "soft admission; drain active step; charge overrun; exclude late label",
+  "clock_scope": "wrapper entry through execution and receipt checks; excludes interpreter startup and final report serialization",
+  "oracle_used": false,
+  "plan_sha256": "b01ca7411f8c8c64d757fc34ebde9bb0ceaf06827ef2aa2314f01066c9e3e9c7",
+  "executor_sha256": "1d3fa6a9c38768274035e22d4bde66fc4304c57c6f1cc5e9a4fd2107064aa625"
+}

@@ -1,0 +1,337 @@
+{
+  "adaptive_path": "dense_fixed_4_to_2",
+  "board_contacted": false,
+  "candidate_order": [
+    "7287117f119111d13738774f2c338dd863cc1475159849efd51038b7b52698ca",
+    "02f17ab72e57ba8767cb30afc7072640199f73eaa409e5c0d448034e727212e0"
+  ],
+  "candidate_records": [
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "7287117f119111d13738774f2c338dd863cc1475159849efd51038b7b52698ca",
+      "debug": {
+        "config_index": 527
+      },
+      "family_id": "R50AF06",
+      "family_ordinal": 6,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 4
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 784,
+          "input_vectors": 784,
+          "weight_vectors": 16
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                28
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                4
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                4
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 1,
+        "public_mode": "input_stationary",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              32,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              32,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 1,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 4,
+        "tile_h": 28,
+        "tile_w": 7
+      },
+      "performance_label": null,
+      "public_mode": "input_stationary",
+      "schema": "c3_r50a_adaptive_multifidelity_candidate_v1",
+      "selection_basis": "frozen deterministic label-free ConfigEntity; no R50A board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "04724fcbb77b6025a1eb1699bfb9421c4d62cbba8b80dc6e7922c0fabc32bdc5",
+      "workload_id": "R50A"
+    },
+    {
+      "board_status": "not_dispatched",
+      "candidate_id": "02f17ab72e57ba8767cb30afc7072640199f73eaa409e5c0d448034e727212e0",
+      "debug": {
+        "config_index": 527
+      },
+      "family_id": "R50AF06",
+      "family_ordinal": 6,
+      "hardware_predicate": {
+        "formula_scope": "necessary static bound; not a lowering, correctness, or speed certificate",
+        "limits": {
+          "accumulator_vectors": 2048,
+          "input_vectors": 2048,
+          "weight_vectors": 1024
+        },
+        "opportunities": {
+          "output_channel_outer_tiles": 2,
+          "output_width_outer_tiles": 4
+        },
+        "passed": true,
+        "reasons": [],
+        "required": {
+          "accumulator_vectors": 784,
+          "input_vectors": 784,
+          "weight_vectors": 16
+        }
+      },
+      "identity": {
+        "complete_config_entity": {
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                -1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                -1,
+                28
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                -1,
+                7
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                -1,
+                4
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                -1,
+                4
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              1
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        },
+        "hardware_fingerprint": {
+          "acc_buff_size": 131072,
+          "batch": 1,
+          "block_in": 16,
+          "block_out": 16,
+          "inp_buff_size": 32768,
+          "target": "axu5evb",
+          "uop_buff_size": 32768,
+          "wgt_buff_size": 262144
+        },
+        "implementation_mode": 0,
+        "public_mode": "original",
+        "schedule_version": "4c8b058aebb57a3b2c60e2718e4bff105ff8c7bd362e68ebd543209d370818d7",
+        "schema": "c3_candidate_id_v2",
+        "template_name": "conv2d_packed_residency.vta",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              32,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              32,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ]
+      },
+      "implementation_mode": 0,
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 4,
+        "tile_h": 28,
+        "tile_w": 7
+      },
+      "performance_label": null,
+      "public_mode": "original",
+      "schema": "c3_r50a_adaptive_multifidelity_candidate_v1",
+      "selection_basis": "frozen deterministic label-free ConfigEntity; no R50A board latency, TopHub entity/cost, FSim outcome, or replacement",
+      "selection_rank_sha256": "04724fcbb77b6025a1eb1699bfb9421c4d62cbba8b80dc6e7922c0fabc32bdc5",
+      "workload_id": "R50A"
+    }
+  ],
+  "first_family": "R50AF01",
+  "first_family_lower_passes": 2,
+  "history_head_sha256": "f7cf3e05459bb10636148164f7da8db4f3e1621c38640e9e426df60c0d4e61d7",
+  "performance_labels_used": false,
+  "service_scores": {
+    "02f17ab72e57ba8767cb30afc7072640199f73eaa409e5c0d448034e727212e0": 10078208.0,
+    "7287117f119111d13738774f2c338dd863cc1475159849efd51038b7b52698ca": 5482496.0
+  },
+  "status": "frozen_after_adaptive_live_local_prefix_before_cross_or_board"
+}

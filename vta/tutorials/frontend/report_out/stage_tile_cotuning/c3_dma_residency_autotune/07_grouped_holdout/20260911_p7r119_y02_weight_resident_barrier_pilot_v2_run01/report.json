@@ -1,0 +1,503 @@
+{
+  "board_contacted": false,
+  "formal_public_modes_v2": {
+    "input_stationary": 1,
+    "original": 0,
+    "weight_resident_barrier": 4
+  },
+  "fsim": {
+    "attempted": 8,
+    "failed": 0,
+    "passed": 8,
+    "performance_measurement": "not_collected",
+    "seeds": [
+      0,
+      20250901,
+      20260910
+    ]
+  },
+  "historical_supplemental_ablations": {
+    "paper_inspired_hybrid": 3,
+    "weight_stationary": 2
+  },
+  "minimum_access_strategy": {
+    "description": "choose between input_stationary and weight_resident_barrier after a development-only synchronization penalty is preregistered",
+    "family_count": 3,
+    "schema": "c3_minimum_access_policy_v2",
+    "simultaneous_hybrid_claim": false
+  },
+  "mode4_claim_boundary": "explicit full-drain schedule probe; not barrier-free reuse, hardware prefetch, or an exact reproduction of another paper",
+  "mode4_claim_name": "weight_resident_barrier",
+  "prior_mode4_correctness_evidence": {
+    "W00": {
+      "config_index": 252,
+      "dependency_balanced": true,
+      "forbidden_1_3_count": 0,
+      "mode4_weight_bytes": 36864,
+      "mode4_weight_calls": 2,
+      "original_weight_bytes": 258048,
+      "sync_static_execution_multiplicity": [
+        2,
+        1
+      ],
+      "three_seed_correct": true
+    },
+    "W02": {
+      "config_index": 177,
+      "dependency_balanced": true,
+      "forbidden_1_3_count": 0,
+      "mode4_weight_bytes": 147456,
+      "mode4_weight_calls": 4,
+      "original_weight_bytes": 589824,
+      "sync_static_execution_multiplicity": [
+        4,
+        1
+      ],
+      "three_seed_correct": true
+    },
+    "W09": {
+      "config_index": 83,
+      "dependency_balanced": true,
+      "forbidden_1_3_count": 0,
+      "mode4_weight_bytes": 131072,
+      "mode4_weight_calls": 2,
+      "original_weight_bytes": 131072,
+      "sync_static_execution_multiplicity": [
+        2,
+        1
+      ],
+      "three_seed_correct": true
+    }
+  },
+  "same_tile_comparisons": [
+    {
+      "family_id": "Y02B00",
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 26,
+        "tile_w": 2
+      },
+      "modes": {
+        "input_stationary": {
+          "dependency_audit": {
+            "balanced": true,
+            "forbidden_direct_1_3_count": 0,
+            "pop": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            },
+            "push": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            }
+          },
+          "dma": {
+            "input_bytes": 499200,
+            "input_calls": 312,
+            "load_bytes": 12000768,
+            "load_calls": 624,
+            "output_bytes": 173056,
+            "output_calls": 208,
+            "weight_bytes": 11501568,
+            "weight_calls": 312
+          },
+          "same_tile_delta_from_original": {
+            "input_bytes": -7488000,
+            "input_calls": -4680,
+            "load_bytes": -7488000,
+            "load_calls": -9360,
+            "output_bytes": 0,
+            "output_calls": 0,
+            "weight_bytes": 0,
+            "weight_calls": -4680
+          },
+          "status": "ok",
+          "sync": {
+            "function_final_drain": 1,
+            "residency_drains": 0,
+            "static_execution_multiplicity": [
+              1
+            ]
+          }
+        },
+        "original": {
+          "dependency_audit": {
+            "balanced": true,
+            "forbidden_direct_1_3_count": 0,
+            "pop": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            },
+            "push": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            }
+          },
+          "dma": {
+            "input_bytes": 7987200,
+            "input_calls": 4992,
+            "load_bytes": 19488768,
+            "load_calls": 9984,
+            "output_bytes": 173056,
+            "output_calls": 208,
+            "weight_bytes": 11501568,
+            "weight_calls": 4992
+          },
+          "same_tile_delta_from_original": {
+            "input_bytes": 0,
+            "input_calls": 0,
+            "load_bytes": 0,
+            "load_calls": 0,
+            "output_bytes": 0,
+            "output_calls": 0,
+            "weight_bytes": 0,
+            "weight_calls": 0
+          },
+          "status": "ok",
+          "sync": {
+            "function_final_drain": 1,
+            "residency_drains": 0,
+            "static_execution_multiplicity": [
+              1
+            ]
+          }
+        },
+        "weight_resident_barrier": {
+          "dependency_audit": {
+            "balanced": true,
+            "forbidden_direct_1_3_count": 0,
+            "pop": {
+              "1->2": 2,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            },
+            "push": {
+              "1->2": 2,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            }
+          },
+          "dma": {
+            "input_bytes": 7987200,
+            "input_calls": 4992,
+            "load_bytes": 8871936,
+            "load_calls": 5008,
+            "output_bytes": 173056,
+            "output_calls": 208,
+            "weight_bytes": 884736,
+            "weight_calls": 16
+          },
+          "same_tile_delta_from_original": {
+            "input_bytes": 0,
+            "input_calls": 0,
+            "load_bytes": -10616832,
+            "load_calls": -4976,
+            "output_bytes": 0,
+            "output_calls": 0,
+            "weight_bytes": -10616832,
+            "weight_calls": -4976
+          },
+          "status": "ok",
+          "sync": {
+            "function_final_drain": 1,
+            "residency_drains": 16,
+            "static_execution_multiplicity": [
+              16,
+              1
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family_id": "Y02B01",
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 2,
+        "tile_h": 26,
+        "tile_w": 2
+      },
+      "modes": {
+        "input_stationary": {
+          "dependency_audit": {
+            "balanced": true,
+            "forbidden_direct_1_3_count": 0,
+            "pop": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            },
+            "push": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            }
+          },
+          "dma": {
+            "input_bytes": 499200,
+            "input_calls": 312,
+            "load_bytes": 12000768,
+            "load_calls": 624,
+            "output_bytes": 173056,
+            "output_calls": 104,
+            "weight_bytes": 11501568,
+            "weight_calls": 312
+          },
+          "same_tile_delta_from_original": {
+            "input_bytes": -3494400,
+            "input_calls": -2184,
+            "load_bytes": -3494400,
+            "load_calls": -4368,
+            "output_bytes": 0,
+            "output_calls": 0,
+            "weight_bytes": 0,
+            "weight_calls": -2184
+          },
+          "status": "ok",
+          "sync": {
+            "function_final_drain": 1,
+            "residency_drains": 0,
+            "static_execution_multiplicity": [
+              1
+            ]
+          }
+        },
+        "original": {
+          "dependency_audit": {
+            "balanced": true,
+            "forbidden_direct_1_3_count": 0,
+            "pop": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            },
+            "push": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            }
+          },
+          "dma": {
+            "input_bytes": 3993600,
+            "input_calls": 2496,
+            "load_bytes": 15495168,
+            "load_calls": 4992,
+            "output_bytes": 173056,
+            "output_calls": 104,
+            "weight_bytes": 11501568,
+            "weight_calls": 2496
+          },
+          "same_tile_delta_from_original": {
+            "input_bytes": 0,
+            "input_calls": 0,
+            "load_bytes": 0,
+            "load_calls": 0,
+            "output_bytes": 0,
+            "output_calls": 0,
+            "weight_bytes": 0,
+            "weight_calls": 0
+          },
+          "status": "ok",
+          "sync": {
+            "function_final_drain": 1,
+            "residency_drains": 0,
+            "static_execution_multiplicity": [
+              1
+            ]
+          }
+        },
+        "weight_resident_barrier": {
+          "dependency_audit": {
+            "balanced": true,
+            "forbidden_direct_1_3_count": 0,
+            "pop": {
+              "1->2": 2,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            },
+            "push": {
+              "1->2": 2,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            }
+          },
+          "dma": {
+            "input_bytes": 3993600,
+            "input_calls": 2496,
+            "load_bytes": 4878336,
+            "load_calls": 2504,
+            "output_bytes": 173056,
+            "output_calls": 104,
+            "weight_bytes": 884736,
+            "weight_calls": 8
+          },
+          "same_tile_delta_from_original": {
+            "input_bytes": 0,
+            "input_calls": 0,
+            "load_bytes": -10616832,
+            "load_calls": -2488,
+            "output_bytes": 0,
+            "output_calls": 0,
+            "weight_bytes": -10616832,
+            "weight_calls": -2488
+          },
+          "status": "ok",
+          "sync": {
+            "function_final_drain": 1,
+            "residency_drains": 8,
+            "static_execution_multiplicity": [
+              8,
+              1
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family_id": "Y02B02",
+      "knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 26,
+        "tile_w": 2
+      },
+      "modes": {
+        "input_stationary": {
+          "dependency_audit": {
+            "balanced": true,
+            "forbidden_direct_1_3_count": 0,
+            "pop": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            },
+            "push": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            }
+          },
+          "dma": {
+            "input_bytes": 499200,
+            "input_calls": 312,
+            "load_bytes": 12000768,
+            "load_calls": 624,
+            "output_bytes": 173056,
+            "output_calls": 26,
+            "weight_bytes": 11501568,
+            "weight_calls": 312
+          },
+          "same_tile_delta_from_original": {
+            "input_bytes": -499200,
+            "input_calls": -312,
+            "load_bytes": -499200,
+            "load_calls": -624,
+            "output_bytes": 0,
+            "output_calls": 0,
+            "weight_bytes": 0,
+            "weight_calls": -312
+          },
+          "status": "ok",
+          "sync": {
+            "function_final_drain": 1,
+            "residency_drains": 0,
+            "static_execution_multiplicity": [
+              1
+            ]
+          }
+        },
+        "original": {
+          "dependency_audit": {
+            "balanced": true,
+            "forbidden_direct_1_3_count": 0,
+            "pop": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            },
+            "push": {
+              "1->2": 1,
+              "2->1": 2,
+              "2->3": 1,
+              "3->2": 2
+            }
+          },
+          "dma": {
+            "input_bytes": 998400,
+            "input_calls": 624,
+            "load_bytes": 12499968,
+            "load_calls": 1248,
+            "output_bytes": 173056,
+            "output_calls": 26,
+            "weight_bytes": 11501568,
+            "weight_calls": 624
+          },
+          "same_tile_delta_from_original": {
+            "input_bytes": 0,
+            "input_calls": 0,
+            "load_bytes": 0,
+            "load_calls": 0,
+            "output_bytes": 0,
+            "output_calls": 0,
+            "weight_bytes": 0,
+            "weight_calls": 0
+          },
+          "status": "ok",
+          "sync": {
+            "function_final_drain": 1,
+            "residency_drains": 0,
+            "static_execution_multiplicity": [
+              1
+            ]
+          }
+        },
+        "weight_resident_barrier": {
+          "dependency_audit": null,
+          "dma": null,
+          "same_tile_delta_from_original": null,
+          "status": "failed",
+          "sync": null
+        }
+      }
+    }
+  ],
+  "schema": "c3_p7r119_yolo_barrier_pilot_v2",
+  "scope": "Y02 local lowering/FSim only; no board latency or FPS",
+  "static": {
+    "attempted": 9,
+    "failed": 1,
+    "ok": 8
+  },
+  "status": "completed_local_pilot_with_recorded_outcomes",
+  "sufficient_for_final_ccf_b_claim": false,
+  "tophub_used": false
+}

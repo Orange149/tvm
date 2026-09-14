@@ -1,0 +1,66 @@
+{
+  "board_contacted": false,
+  "bound_inputs": {
+    "pareto_development_analysis_sha256": "326a533dc2a275bc8bdf012cbb0cd161531024e4020c9acd5387010e56e2cec1",
+    "pareto_development_artifact_manifest_sha256": "7a2ee0a8932ca859df88f58e4ac5b5c92920dbc408d841b2127d7087f49b4a8c",
+    "target_artifact_manifest_sha256": "7c9cad476e77b6f0d7374382bd9c0f2d9318ab8c46fc84d150c9e8dd02ea686a",
+    "target_candidates_sha256": "85f33278db3992b87a45c071e9d59c283a3aad7d3dada730f2a77b144b3ea150",
+    "target_contract_sha256": "834587a7ff2608047b2d46695aaca489722f23f3a2f9e79f898d8f02ceca90a8"
+  },
+  "candidate_commitment_sha256": "ed2cb5fa7c304b0eeee0bc5f1c3212216c160bc7e0ce2b3ca57127c7a4214778",
+  "candidate_count_legacy_four_modes": 32,
+  "claim_boundary": "Prospective policy and identity freeze only. Full local qualification is common cost, and Pareto dominance is a search rule to test rather than an assumed latency theorem.",
+  "cost_accounting": {
+    "common_qualification": "report all lowering and FSim wall time separately",
+    "final_fused_feature_cost": "charge every full-graph build and fused-TIR audit",
+    "oracle_completion": "report separately after prospective labels are exposed",
+    "prospective_wave": "charge cross-compile, FPGA correctness, timing and invocations"
+  },
+  "freezer_source_sha256": "2d1bc0097b0d1aa583ab5f2b7e5c35069a2d7ce0e9be7b8d4b017a9c13069e28",
+  "geometry_signature": [
+    1,
+    2048,
+    7,
+    7,
+    512,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0
+  ],
+  "label_visibility": {
+    "target_fpga_correctness": false,
+    "target_fsim": false,
+    "target_full_graph_latency": false,
+    "target_lowering": false,
+    "target_operator_latency": false,
+    "tophub_used": false
+  },
+  "policy": {
+    "action": "FPGA correctness and latency are required for every non-dominated program; dominated programs are measured only in the later oracle-completion phase",
+    "axes": [
+      "load_plus_store_bytes",
+      "load_plus_store_calls",
+      "extra_submissions"
+    ],
+    "dominance": "A dominates B iff A is no worse on every axis and strictly better on at least one axis",
+    "eligibility": "real lowering then three-seed FSim; all failures retained",
+    "final_program_feature": "cross-build final pretrained ResNet50 graph and aggregate exact fused-TIR logical LOAD+STORE over every matching Graph JSON occurrence",
+    "scalar_request_penalty": null,
+    "stop": "after the prospective Pareto wave, complete every remaining eligible program to construct an unbiased FPGA-correct pool oracle",
+    "tie_break": "candidate_id only for execution order, never for elimination"
+  },
+  "schema": "c3_vta_final_fused_pareto_holdout_contract_v1",
+  "source_layer": "stage4_unit2_conv1",
+  "source_model": "resnet50_v2",
+  "status": "frozen_before_target_lower_fsim_fpga_or_latency",
+  "verified_artifact_counts": {
+    "pareto_development": 2,
+    "target_contract": 4
+  },
+  "workload_id": "R50D"
+}

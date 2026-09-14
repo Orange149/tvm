@@ -1,0 +1,33 @@
+{
+  "status": "failed_closed_w05_health_call_hung",
+  "observation_time": "2026-09-12T00:51:28+08:00",
+  "rpc_control_plane": "connected_and_inventory_saved",
+  "w05_health_gate": {
+    "call_initiated": true,
+    "completed_seed_checks": 0,
+    "result": "no_return",
+    "health_gate_passed": false
+  },
+  "recovery_candidate": {
+    "candidate_id": "3083a6f17ff353d5d1984816c191c651584f3a2fba6cdc7c9fa36f46aa3c01dc",
+    "family_id": "Y01F06",
+    "public_mode": "weight_resident_barrier",
+    "dispatches": 0
+  },
+  "timeout_and_termination": {
+    "configured_session_timeout_seconds": 600,
+    "observed_client_elapsed_seconds_lower_bound": 708,
+    "session_timeout_did_not_interrupt_active_rpc_call": true,
+    "sigint_effective": false,
+    "local_client_sigterm_exit_code": 143,
+    "board_restart_or_reconfiguration": false
+  },
+  "timing_samples": 0,
+  "y01_tophub_used": false,
+  "replacement_used": false,
+  "ssh_used": false,
+  "persistent_board_write": false,
+  "boot_id": "unknown_not_exposed_by_rpc",
+  "interpretation": "RPC control plane responded, but the independent W05 VTA health call did not return. No Y01F06 correctness label is assigned and the combined 18-identity result remains incomplete.",
+  "provenance_note": "The hung Python client could not execute its exception handler; this fail-closed record was added after terminating only that local PID."
+}

@@ -1,0 +1,907 @@
+{
+  "board_contract": {
+    "boot_id": "a68a7983-719f-47bf-94d7-41f974c5342c",
+    "fpga_state": "operating",
+    "host": "192.168.1.247",
+    "rpc_cwd_prefix": "/var/volatile/",
+    "sd_p2_min_free_percent": 20,
+    "storage_error_dmesg_after_seconds": 4058.0,
+    "udmabuf_bytes": 201326592
+  },
+  "board_order": [
+    "baad2d5547bdf82935668a2ff4573947a6cddb5cdf7c1b52dba20fdd100503a8",
+    "562940852e79b7c4d7c37aeecb2a59fb1f7fe93203bb5e0f7bb6fbbb01148737",
+    "ffdd5c5f3c92ce54197766332ebfb8b04ba615ed5e7fbf73e01c8c189db62055",
+    "1da6f2f1337519c2965b029156ad9f9c4487fad44547da2ae7820d476a5a7339"
+  ],
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "accumulator_vector_capacity": 2048,
+      "accumulator_vectors_per_residency_region": 1568,
+      "candidate_id": "562940852e79b7c4d7c37aeecb2a59fb1f7fe93203bb5e0f7bb6fbbb01148737",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 11
+      },
+      "config_index": 11,
+      "label_source": "new_board_probe",
+      "residence_mode": "input_stationary",
+      "source_guards_sha256": {
+        "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+        "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+        "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+        "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+      },
+      "split_knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 14,
+        "tile_w": 7
+      },
+      "store_sites": [
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 7,
+          "x_stride": 14,
+          "y_size": 14
+        }
+      ],
+      "tir_sha256": "3588fc59951a11e7a53e71542eb2720d4a9e47684cd0a261c22dc2ff4cad63f5",
+      "uop_kernel_explicit_push_counts": [
+        14,
+        672,
+        1,
+        1,
+        1
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            8,
+            28,
+            28,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            8,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W04"
+    },
+    {
+      "accumulator_vector_capacity": 2048,
+      "accumulator_vectors_per_residency_region": 1568,
+      "candidate_id": "1da6f2f1337519c2965b029156ad9f9c4487fad44547da2ae7820d476a5a7339",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 75
+      },
+      "config_index": 75,
+      "label_source": "new_board_probe",
+      "residence_mode": "input_stationary",
+      "source_guards_sha256": {
+        "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+        "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+        "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+        "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+      },
+      "split_knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 2,
+        "tile_h": 14,
+        "tile_w": 7
+      },
+      "store_sites": [
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 7,
+          "x_stride": 14,
+          "y_size": 28
+        }
+      ],
+      "tir_sha256": "fc6dd4d1783237c4ac8408c4a975f1401538bf8140c811a04efe952f1ca8cb0c",
+      "uop_kernel_explicit_push_counts": [
+        14,
+        672,
+        1,
+        1,
+        1
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            8,
+            28,
+            28,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            8,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W04"
+    },
+    {
+      "accumulator_vector_capacity": 2048,
+      "accumulator_vectors_per_residency_region": 1568,
+      "candidate_id": "906c1bdc905dc2ebbbd18569941dcfd4f11fe9e32ed55b9bfa03eb027b3b9c40",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 139
+      },
+      "config_index": 139,
+      "label_source": "inherited_p7c1",
+      "residence_mode": "input_stationary",
+      "source_guards_sha256": {
+        "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+        "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+        "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+        "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+      },
+      "split_knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 4,
+        "tile_h": 14,
+        "tile_w": 7
+      },
+      "store_sites": [
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 7,
+          "x_stride": 14,
+          "y_size": 56
+        }
+      ],
+      "tir_sha256": "befa2a3676df89e1379326980dae6a91859a4d40c5c65064a539e6041967e42d",
+      "uop_kernel_explicit_push_counts": [
+        14,
+        672,
+        1,
+        1,
+        1
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            8,
+            28,
+            28,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            8,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W04"
+    },
+    {
+      "accumulator_vector_capacity": 2048,
+      "accumulator_vectors_per_residency_region": 1568,
+      "candidate_id": "baad2d5547bdf82935668a2ff4573947a6cddb5cdf7c1b52dba20fdd100503a8",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 203
+      },
+      "config_index": 203,
+      "label_source": "new_board_probe",
+      "residence_mode": "input_stationary",
+      "source_guards_sha256": {
+        "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+        "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+        "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+        "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+      },
+      "split_knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 14,
+        "tile_w": 7
+      },
+      "store_sites": [
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 7,
+          "x_stride": 14,
+          "y_size": 112
+        }
+      ],
+      "tir_sha256": "38d9725fd0025a179878bda61632ac57635a2e8c476d34aaabfd533890b25dce",
+      "uop_kernel_explicit_push_counts": [
+        14,
+        672,
+        1,
+        1,
+        1
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            8,
+            28,
+            28,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            8,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W04"
+    },
+    {
+      "accumulator_vector_capacity": 2048,
+      "accumulator_vectors_per_residency_region": 1568,
+      "candidate_id": "ffdd5c5f3c92ce54197766332ebfb8b04ba615ed5e7fbf73e01c8c189db62055",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ],
+        "index": 267
+      },
+      "config_index": 267,
+      "label_source": "new_board_probe",
+      "residence_mode": "input_stationary",
+      "source_guards_sha256": {
+        "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+        "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+        "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+        "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+        "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+      },
+      "split_knobs": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 16,
+        "tile_h": 14,
+        "tile_w": 7
+      },
+      "store_sites": [
+        {
+          "kind": "store",
+          "memory_type": 4,
+          "x_size": 7,
+          "x_stride": 14,
+          "y_size": 224
+        }
+      ],
+      "tir_sha256": "0e36b7a686fe45cb14652b9a287321cfc63a5128ec05ff8ec4f5b6ea8ff56508",
+      "uop_kernel_explicit_push_counts": [
+        14,
+        672,
+        1,
+        1,
+        1
+      ],
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            8,
+            28,
+            28,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            8,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "workload_id": "W04"
+    }
+  ],
+  "correctness_seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "hardware_fingerprint": {
+    "current_boot_verified": false,
+    "expected_bitstream_sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+    "target": "axu5evb",
+    "vta_config_sha256": "7c3e7d62da243bcf01f6674d0f2227a8415ce21e26c5a5caed28c91ab372334d"
+  },
+  "hypothesis": "with fixed tile_h=14, tile_w=7, tile_ci=1 and equal 1568-vector accumulator footprint, changing tile_co changes the number/grouping of consecutive output-store commands; correctness may expose a hardware-specific grouping boundary that FSim misses",
+  "inherited_failure": {
+    "candidate_id": "906c1bdc905dc2ebbbd18569941dcfd4f11fe9e32ed55b9bfa03eb027b3b9c40",
+    "config_index": 139,
+    "diagnostic_path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7c1_w04_mismatch_diagnostic_run01",
+    "diagnostic_sha256": "a84f6312c2e1bc31bdf6c75c2741c301e34310368c3ce2e30b1724e6ec19fe8e",
+    "target_all_correct": false,
+    "target_repeat_count": 3
+  },
+  "measurement_policy": {
+    "new_candidates": "three exact seeds once each; retain all pass/fail outcomes",
+    "replacement": "forbidden",
+    "sentinel": "known-correct original config139 seed0 after every new candidate; stop if sentinel fails",
+    "timing": "forbidden"
+  },
+  "new_board_candidate_count": 4,
+  "p4_identity_source": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/04_dma_command_signatures/20260910_p4b_local_residency_pool_run01/candidate_pool.json",
+    "sha256": "1593c1870d60d9401c8bd7e245f44d8586da1c474c0adce0852833a15ba8f708"
+  },
+  "p7_contract": {
+    "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260911_p7a_frozen_contract_run01/contract.json",
+    "sha256": "696bf95b25b4db7e9f54252231e70073e35e203d982c2d9a8d2b1f25b85f1bc0"
+  },
+  "schema": "c3_w04_store_group_probe_contract_v1",
+  "sentinel": {
+    "candidate_id": "056aba501b8dc2b43c91d52c4449f201db368fe8458fae6b42d4717fecefcbae",
+    "candidate_role": "same_tile_original_control",
+    "complete_config_entity": {
+      "code_hash": null,
+      "entity": [
+        [
+          "tile_b",
+          "sp",
+          [
+            -1,
+            1
+          ]
+        ],
+        [
+          "tile_h",
+          "sp",
+          [
+            -1,
+            14
+          ]
+        ],
+        [
+          "tile_w",
+          "sp",
+          [
+            -1,
+            7
+          ]
+        ],
+        [
+          "tile_ci",
+          "sp",
+          [
+            -1,
+            1
+          ]
+        ],
+        [
+          "tile_co",
+          "sp",
+          [
+            -1,
+            4
+          ]
+        ],
+        [
+          "oc_nthread",
+          "ot",
+          1
+        ],
+        [
+          "h_nthread",
+          "ot",
+          1
+        ]
+      ],
+      "index": 139
+    },
+    "config_index": 139,
+    "p5c_position": 19,
+    "qualification": "P4e three-seed FSim + P4f AXU cross-compile",
+    "residence_mode": "original",
+    "source_guards_sha256": {
+      "/home/orange/code/tvm/build/libtvm.so": "3feea276219c2ace9e33f4d31c664d7c0bc971a3efb88becfc1b0fe2fd6e76a9",
+      "/home/orange/code/tvm/src/tir/transforms/coproc_sync.cc": "edd6b6ba51179055292433aa1f5e4633670d63e61da959c92bd89a6175b4a999",
+      "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "8f5e2bc84b6e4d3a6dd80d350a4c729f88953a13669adaecd4c9fec7d1bd23cc",
+      "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "0d2f69364734119f3a011aa643b10d456625ef3e2269d2450ce36b79810be1bd",
+      "/home/orange/code/tvm/vta/python/vta/transform.py": "3a85767fa773982ea3877931422b5b348deae45bcb0e01f39ce23c62e9b8f03c",
+      "/home/orange/code/tvm/vta/runtime/runtime.cc": "4ecb944cab171d20a14c3a425b5f61c338698e42cf12f990dd78b05ad0ba9711"
+    },
+    "static_metrics": {
+      "dma_total_bytes": 1055744,
+      "dma_total_calls": 136,
+      "input_dma_bytes": 415744,
+      "input_dma_calls": 64,
+      "input_reload": 4.142857142857143,
+      "output_dma_bytes": 50176,
+      "output_dma_calls": 8,
+      "output_reload": 1.0,
+      "padded_dma_calls": 64,
+      "peak_insn_bytes": 4000,
+      "peak_uop_bytes": 740,
+      "small_dma_calls": 0,
+      "source_derived_finish_count": 1,
+      "strided_dma_calls": 136,
+      "submissions": 1,
+      "total_insn_bytes": 4000,
+      "total_uop_bytes": 740,
+      "weight_dma_bytes": 589824,
+      "weight_dma_calls": 64,
+      "weight_reload": 2.0
+    },
+    "template_name": "conv2d_packed_residency.vta",
+    "tir_sha256": "ab4f2d13c67f53a0c81a95617c96fa0e1b76c568c53dcdcde45c721bec9dd902",
+    "workload": [
+      "conv2d_packed.vta",
+      [
+        "TENSOR",
+        [
+          1,
+          8,
+          28,
+          28,
+          1,
+          16
+        ],
+        "int8"
+      ],
+      [
+        "TENSOR",
+        [
+          16,
+          8,
+          3,
+          3,
+          16,
+          16
+        ],
+        "int8"
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      "NCHW1n16c",
+      "int32"
+    ],
+    "workload_id": "W04"
+  },
+  "status": "frozen_before_new_probe_labels"
+}

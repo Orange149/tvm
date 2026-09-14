@@ -1,0 +1,27 @@
+{
+  "build_artifact_hash_manifest_sha256": "3013dd28ebb0fef39810b638ec4705c83057530b2b3cdd5de96889a95aa1dae1",
+  "build_manifest_sha256": "2d25a1b715d6f2a110f3205777afcb9ea95003e410d7762dc302db7c8eeb1000",
+  "executor_source_sha256": "a139f6f94459b9e5fc5282d09a1dae3c03d286783e53271eec3b6704ba576b45",
+  "failure_policy": "fail closed and restore default RPC on execution error",
+  "gate": {
+    "correctness_seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "paired_rounds": 7,
+    "required_candidate_wins": 7,
+    "required_median_delta": "strictly_negative"
+  },
+  "grouped_policy": "test all tied positive-DMA-gain nodes as one group; recursively split only if the group fails; no split is needed if 000->111 passes",
+  "label_exposure": "Operator correctness is historical; no F00 full-graph or partial-mask latency label was used before freezing these eight exact graph variants",
+  "proposal_order": [
+    67,
+    80,
+    93
+  ],
+  "schema": "c3_vta_resnet50_r50a_grouped_admission_contract_v1",
+  "status": "frozen_before_callsite_board_execution",
+  "strict_singleton_policy": "test nodes in graph order against current incumbent; accept only if all gate conditions hold",
+  "verified_build_artifact_count": 14
+}

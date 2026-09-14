@@ -1,0 +1,27 @@
+{
+  "schema": "c3_p5b_local_predispatch_run_manifest_v1",
+  "run_id": "20260910_p5b_local_predispatch_shortlist_run01",
+  "execution_scope": "local_static_only",
+  "planner": "vta/tutorials/frontend/plan_vta_predispatch_shortlist.py",
+  "tests": "vta/tutorials/frontend/test_plan_vta_predispatch_shortlist.py",
+  "source_run": "04_dma_command_signatures/20260910_p4b_local_residency_pool_run01",
+  "inputs": ["candidate_pool.json", "results.jsonl"],
+  "core_outputs": [
+    "shortlist.json",
+    "candidate_features.json",
+    "filtered_failures.json",
+    "screening_cost.json",
+    "input_manifest.json"
+  ],
+  "test_result": "10 passed",
+  "syntax_check": "passed",
+  "deterministic_regeneration": "five core outputs byte-identical",
+  "feature_version": "c3_static_request_shape_v1",
+  "feature_set_sha256": "ee48faf94f166074777dfae0e22f157062ef0c7d34efd1876972c394e3cbf0c7",
+  "label_free": true,
+  "ssh_used": false,
+  "rpc_used": false,
+  "board_used": false,
+  "production_sources_modified": false,
+  "gate": "G5_not_evaluated"
+}

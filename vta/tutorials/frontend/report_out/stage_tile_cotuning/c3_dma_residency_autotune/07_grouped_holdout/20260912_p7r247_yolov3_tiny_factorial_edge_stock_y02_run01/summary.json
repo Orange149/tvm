@@ -1,0 +1,85 @@
+{
+  "all_correctness_outputs_nonzero": true,
+  "all_paired_outputs_equal": true,
+  "board_after": {
+    "BOOT": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+    "FPGA": "operating",
+    "RPC_CWD": "/var/volatile/vta_c3_ram/runtime",
+    "RPC_PID": "4375",
+    "STORAGE_ERRORS": [],
+    "UDMABUF": "201326592"
+  },
+  "boot_id": "aa7a3e5c-021d-4d6b-88ae-7f696faa567c",
+  "claim_boundary": "One clean-start factorial edge with two co-resident executors; logical VTA DMA, not physical AXI; no mAP or cross-boot graph claim",
+  "correctness_calls": 6,
+  "edge": {
+    "lhs": "stock_all",
+    "rhs": "y02_weight_only"
+  },
+  "image_sha256": "cdcbab947e46110fc2b77784ac54ddbbab2640f1e44cb5e91fc8984a9793a7d1",
+  "median_latency_ms": {
+    "stock_all": 267.345303,
+    "y02_weight_only": 347.01725
+  },
+  "median_paired_delta_ms": 79.47301399999998,
+  "median_runtime_profiles": {
+    "stock_all": {
+      "driver_run_calls": 24.0,
+      "driver_run_insns": 78520.0,
+      "load_buffer_2d_bytes": 86233856.0,
+      "load_buffer_2d_calls": 39876.0,
+      "load_buffer_2d_inp_bytes": 50925568.0,
+      "load_buffer_2d_inp_calls": 18484.0,
+      "load_buffer_2d_wgt_bytes": 35116032.0,
+      "load_buffer_2d_wgt_calls": 18484.0,
+      "store_buffer_2d_bytes": 6792448.0,
+      "store_buffer_2d_calls": 2908.0,
+      "synchronize_calls": 24.0
+    },
+    "y02_weight_only": {
+      "driver_run_calls": 56.0,
+      "driver_run_insns": 92696.0,
+      "load_buffer_2d_bytes": 87284480.0,
+      "load_buffer_2d_calls": 44036.0,
+      "load_buffer_2d_inp_bytes": 57266176.0,
+      "load_buffer_2d_inp_calls": 25396.0,
+      "load_buffer_2d_wgt_bytes": 29807616.0,
+      "load_buffer_2d_wgt_calls": 15444.0,
+      "store_buffer_2d_bytes": 6792448.0,
+      "store_buffer_2d_calls": 3196.0,
+      "synchronize_calls": 56.0
+    }
+  },
+  "model": "yolov3-tiny",
+  "output_count": 8,
+  "paired_delta_ms": [
+    79.47301399999998,
+    77.14037000000002,
+    81.12738100000001,
+    79.77133800000001,
+    78.594606,
+    79.28356199999996,
+    79.68607700000001
+  ],
+  "paired_rounds": 7,
+  "parameter_semantic_sha256": "e098f48c612ae953e5085dd6472b9b3c76ad1606ef5619ce67ec599782f62235",
+  "profile_counter_note": "The runtime time_evaluator path records two graph executions per timed call; divide counter values and deltas by two for per-inference quantities",
+  "profile_delta": {
+    "driver_run_calls": 32.0,
+    "driver_run_insns": 14176.0,
+    "load_buffer_2d_bytes": 1050624.0,
+    "load_buffer_2d_calls": 4160.0,
+    "load_buffer_2d_inp_bytes": 6340608.0,
+    "load_buffer_2d_inp_calls": 6912.0,
+    "load_buffer_2d_wgt_bytes": -5308416.0,
+    "load_buffer_2d_wgt_calls": -3040.0,
+    "store_buffer_2d_bytes": 0.0,
+    "store_buffer_2d_calls": 288.0,
+    "synchronize_calls": 32.0
+  },
+  "rhs_paired_wins": 0,
+  "rhs_speedup_percent": -22.95907393652621,
+  "schema": "c3_vta_yolov3_tiny_route_factorial_edge_board_v1",
+  "status": "yolov3_tiny_route_factorial_edge_board_complete",
+  "timing_calls": 14
+}

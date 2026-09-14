@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "vta_coproc_dependency_audit_v1",
+  "title": "VTA coprocessor dependency audit",
+  "type": "object",
+  "required": ["schema", "valid", "semantics", "functions", "supported_edges", "summary", "edges", "callsites", "errors"],
+  "properties": {
+    "schema": {"const": "vta_coproc_dependency_audit_v1"},
+    "valid": {"type": "boolean"},
+    "semantics": {
+      "type": "object",
+      "required": ["balance_unit", "loop_multiplicity", "path_sensitive"],
+      "properties": {
+        "balance_unit": {"const": "static_callsites_per_function_and_directed_edge"},
+        "loop_multiplicity": {"const": "not_expanded"},
+        "path_sensitive": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "functions": {"type": "array", "items": {"type": "string"}},
+    "supported_edges": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "prefixItems": [{"type": "integer"}, {"type": "integer"}],
+        "minItems": 2,
+        "maxItems": 2
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["function_count", "call_count", "push_count", "pop_count", "edge_count", "only_supported_edges", "push_pop_balanced", "forbidden_1_3_present"],
+      "properties": {
+        "function_count": {"type": "integer", "minimum": 0},
+        "call_count": {"type": "integer", "minimum": 0},
+        "push_count": {"type": "integer", "minimum": 0},
+        "pop_count": {"type": "integer", "minimum": 0},
+        "edge_count": {"type": "integer", "minimum": 0},
+        "only_supported_edges": {"type": "boolean"},
+        "push_pop_balanced": {"type": "boolean"},
+        "forbidden_1_3_present": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["function", "from", "from_name", "to", "to_name", "push_count", "pop_count", "balanced", "allowed", "forbidden_direct_load_store"],
+        "properties": {
+          "function": {"type": "string"},
+          "from": {"type": "integer"},
+          "from_name": {"type": "string"},
+          "to": {"type": "integer"},
+          "to_name": {"type": "string"},
+          "push_count": {"type": "integer", "minimum": 0},
+          "pop_count": {"type": "integer", "minimum": 0},
+          "balanced": {"type": "boolean"},
+          "allowed": {"type": "boolean"},
+          "forbidden_direct_load_store": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "callsites": {"type": "array", "items": {"type": "object"}},
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "function"],
+        "properties": {
+          "code": {
+            "enum": ["malformed_dependency_call", "nonconstant_stage_endpoint", "forbidden_direct_load_store", "unsupported_stage_edge", "push_pop_imbalance"]
+          },
+          "function": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

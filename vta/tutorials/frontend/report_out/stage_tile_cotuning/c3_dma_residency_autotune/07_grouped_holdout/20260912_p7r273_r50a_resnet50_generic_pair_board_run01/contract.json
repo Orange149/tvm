@@ -1,0 +1,130 @@
+{
+  "build_artifact_hash_manifest_sha256": "c1056826f397bbc7cbc2c02931b342a9fb0915671b7eee375407ad80f57188d4",
+  "build_manifest_sha256": "5e3f372bf48f3202a99333f85af148a270063ad411084aa007bd51c8fd60b048",
+  "candidate_source_sha256": "cf5cee20ef82263a3bd59609b6189463ff1290e17372c5acbf9cc6dc43797de3",
+  "executor_source_sha256": "e4fab16f86e97128b186f3d51cfd2f6c56bd2240091acaa53aee61528417e979",
+  "expected_full_graph_delta": {
+    "driver_run_calls": 0,
+    "load_buffer_2d_bytes": -1204224,
+    "load_buffer_2d_calls": -192,
+    "load_buffer_2d_inp_bytes": -1204224,
+    "load_buffer_2d_inp_calls": -96,
+    "load_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_wgt_calls": -96,
+    "synchronize_calls": 0
+  },
+  "failure_policy": "fail closed before timing on output or DMA identity mismatch",
+  "graph_occurrences": [
+    {
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_7",
+      "graph_node": 67,
+      "input_shapes": [
+        [
+          1,
+          32,
+          28,
+          28,
+          1,
+          16
+        ],
+        [
+          8,
+          32,
+          1,
+          1,
+          16,
+          16
+        ],
+        [
+          8,
+          1,
+          1,
+          1,
+          16
+        ]
+      ]
+    },
+    {
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9",
+      "graph_node": 80,
+      "input_shapes": [
+        [
+          1,
+          32,
+          28,
+          28,
+          1,
+          16
+        ],
+        [
+          8,
+          32,
+          1,
+          1,
+          16,
+          16
+        ],
+        [
+          8,
+          1,
+          1,
+          1,
+          16
+        ]
+      ]
+    },
+    {
+      "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_9",
+      "graph_node": 93,
+      "input_shapes": [
+        [
+          1,
+          32,
+          28,
+          28,
+          1,
+          16
+        ],
+        [
+          8,
+          32,
+          1,
+          1,
+          16,
+          16
+        ],
+        [
+          8,
+          1,
+          1,
+          1,
+          16
+        ]
+      ]
+    }
+  ],
+  "modes": [
+    "original",
+    "input_stationary"
+  ],
+  "per_occurrence_static_delta": {
+    "driver_run_calls": 0,
+    "load_buffer_2d_bytes": -401408,
+    "load_buffer_2d_calls": -64,
+    "load_buffer_2d_inp_bytes": -401408,
+    "load_buffer_2d_inp_calls": -32,
+    "load_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_wgt_calls": -32,
+    "synchronize_calls": 0
+  },
+  "rounds": 7,
+  "schema": "c3_vta_resnet50_generic_residency_pair_board_contract_v1",
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "static_source_sha256": "b213e836067d0616f482a640110374c766b864e227a94791b3f2ff1cb28d6dbf",
+  "status": "frozen_before_board_execution",
+  "verified_build_artifact_count": 10
+}

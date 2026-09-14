@@ -1,0 +1,64 @@
+{
+  "claim_boundary": "offline full-label replay is development evidence, not prospective confirmation; only an immutable sequential prospective history can support a future confirmation claim",
+  "gross_budgets": [
+    1,
+    2,
+    4,
+    6
+  ],
+  "metrics": [
+    "gross dispatches and lower/FSim/compile/FPGA/measure-invalid counts at every budget",
+    "known lower/FSim/compile/FPGA/measure wall-ms and logical VTA DMA resource sums",
+    "non-reference full-pool oracle simple regret at every budget",
+    "success and trials-to-2%/5% against the completed non-reference pool oracle",
+    "success@2%/5% and trials-to-2%/5% against the post-run sealed reference",
+    "median, Q1, Q3, and IQR over workload-seed runs"
+  ],
+  "no_leak": [
+    "selector receives public_candidate projection; oracle is revealed only after selection",
+    "target workload is excluded from prior training records",
+    "invalid gross dispatches consume budget and are not latency/XGB/delta labels",
+    "sealed reference identity is forbidden in candidate lists and all training records",
+    "sealed reference latency is read only by post-run 2%/5% threshold metrics"
+  ],
+  "paper_minimum_access": "minimum total DMA mode within each same-tile family; family order is seeded random",
+  "policies": [
+    "random",
+    "stock_knob_xgb",
+    "rules_only",
+    "paper_minimum_access",
+    "shared_memory_lexicographic",
+    "shared_memory_service_proxy",
+    "validity_v",
+    "v_plus_delta_t",
+    "v_plus_delta_t_request",
+    "v_plus_delta_t_command"
+  ],
+  "rules_only": "ascending frozen label-free rule_score",
+  "schema": "c3_equal_gross_budget_search_protocol_v2",
+  "seeds": 20,
+  "shared_memory_lexicographic": "absolute total DMA bytes, calls, padded calls and submissions across tile families",
+  "shared_memory_service_proxy": {
+    "extra_submission_equivalent_bytes": 131072,
+    "interpretation": "development-frozen byte-equivalent acquisition penalties; not physical AXI bytes or literal bandwidth/latency constants",
+    "request_equivalent_bytes": 65536,
+    "score": "DMA bytes + request weight * DMA calls + submission weight * max(submissions-1, 0)"
+  },
+  "v_plus_delta_t": {
+    "acquisition": "equal Borda-rank fusion of predicted invalidity risk and same-tile delta-T",
+    "compatibility_alias": "v_plus_delta_t means the bytes_calls feature boundary",
+    "constraint": "delta physical coefficients are non-negative",
+    "frozen_ablations": {
+      "v_plus_delta_t": "bytes_calls",
+      "v_plus_delta_t_command": "command",
+      "v_plus_delta_t_request": "request"
+    }
+  },
+  "validity_v": "logistic probability from other-workload exposed labels plus already revealed target outcomes",
+  "xgb": {
+    "features": "seven ConfigEntity knob leaves only",
+    "model": "64-tree depth-3 XGBRegressor, seed fixed; dispatch seed affects warmup/ties",
+    "training": "successful current-target observations revealed before the next dispatch only",
+    "warmup": "4 seeded gross dispatches"
+  }
+}

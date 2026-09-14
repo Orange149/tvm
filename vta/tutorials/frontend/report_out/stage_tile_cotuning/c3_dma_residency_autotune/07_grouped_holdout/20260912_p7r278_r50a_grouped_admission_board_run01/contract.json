@@ -1,0 +1,27 @@
+{
+  "build_artifact_hash_manifest_sha256": "dcf8ba749b070aaf7042f512e38f867563a9958f5e020bf358dcb55a3fd87140",
+  "build_manifest_sha256": "59b189ef74adad39eb46c12bfe4587330d78b73ac81399fe7e82f3b40aaa13e4",
+  "executor_source_sha256": "a139f6f94459b9e5fc5282d09a1dae3c03d286783e53271eec3b6704ba576b45",
+  "failure_policy": "fail closed and restore default RPC on execution error",
+  "gate": {
+    "correctness_seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "paired_rounds": 7,
+    "required_candidate_wins": 7,
+    "required_median_delta": "strictly_negative"
+  },
+  "grouped_policy": "test all tied positive-DMA-gain nodes as one group; recursively split only if the group fails; no split is needed if 000->111 passes",
+  "label_exposure": "P7R276 full-route latency is exposed, but no R50A call-site or partial-mask latency label was read before this contract",
+  "proposal_order": [
+    67,
+    80,
+    93
+  ],
+  "schema": "c3_vta_resnet50_r50a_grouped_admission_contract_v1",
+  "status": "frozen_before_callsite_board_execution",
+  "strict_singleton_policy": "test nodes in graph order against current incumbent; accept only if all gate conditions hold",
+  "verified_build_artifact_count": 14
+}
