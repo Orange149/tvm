@@ -1,0 +1,95 @@
+{
+  "analysis": {
+    "budgets": [
+      10,
+      20,
+      50,
+      75,
+      96
+    ],
+    "cost_views_kept_separate": [
+      "actual complete-pool common cost",
+      "counterfactual lazy per-policy phase cost"
+    ],
+    "holdout": "target workload labels revealed only through phase ledger; other two complete workloads are development data",
+    "main_policies": [
+      "random",
+      "stock_mode_aware_xgb",
+      "rieber_hw_init_xgb",
+      "ml2tuner_pva",
+      "cheng_minimum_access",
+      "ours_dma_multifidelity"
+    ],
+    "metrics": [
+      "success@oracle+2%/+5%",
+      "trials/time-to-target",
+      "best-so-far regret",
+      "compiler/FPGA/kernel counts",
+      "logical DMA bytes/calls",
+      "per-phase and total wall",
+      "Model P/A RMSE and nDCG"
+    ],
+    "ml2tuner_A_plus_DMA_ablation": true,
+    "search_seeds": [
+      57001,
+      57002,
+      57003,
+      57004,
+      57005,
+      57006,
+      57007,
+      57008,
+      57009,
+      57010,
+      57011,
+      57012,
+      57013,
+      57014,
+      57015,
+      57016,
+      57017,
+      57018,
+      57019,
+      57020
+    ]
+  },
+  "board_contacted": false,
+  "board_execution": {
+    "boundaries": [
+      "W0",
+      "T0",
+      "T1"
+    ],
+    "correctness_fail_fast": true,
+    "correctness_seeds": [
+      0,
+      20250901,
+      20260910
+    ],
+    "oracle_after_complete_pool_only": true,
+    "single_non_spliceable_clean_start_session": true,
+    "timing_rounds": 5
+  },
+  "candidate_count": 214,
+  "input_artifact_ledgers": {
+    "cross_compile": "d0a26b93465fe0746cde22f2218494a4a8f55bee03a2336cd080882e0ece0608",
+    "hw_qualification": "aea7a5630501764cd697e396a732d519e285c6334af917b42b45266e3d13ee28",
+    "hw_union": "e4da49755181591e24d235586f1b5335ac8b478703f7c3d1b4f1bc1c8ffba012",
+    "merged_pool": "ecdef1f45ed752990553a655346791e82d1905b5a4626a0b568efc909aed630a",
+    "policy_amendment": "2279c638bd19cb868a9f1014b05f0e7dd50eec83b821d5182f4a820ea2a5e504"
+  },
+  "schema": "c3_resnet18_postboard_analysis_contract_v1",
+  "source_hashes": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/analyze_vta_c3_resnet18_literature_pool.py": "99cf22c8b6ad8a1c6d22d960dab33ef4c1d385e18659f3db036ebe23ececc1f3",
+    "/home/orange/code/tvm/vta/tutorials/frontend/prepare_vta_c3_resnet18_literature_replay.py": "8ba1249627a362b99375052557f28f44d3edcfd7695eff9478a65d6ccc96af78",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_literature_baselines.py": "a177b5337dadea696586d38d86a5b20ed80089e6f53b016ab88c859aa4edd15d",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_board_pool.py": "7e8b3cf7ee3aaa5a00d87a0eda2271263fe12ce43e8945dfd50eee13c94819c4"
+  },
+  "status": "frozen_before_any_merged_pool_fpga_correctness_or_latency",
+  "target_performance_labels_read": false,
+  "workload_counts": {
+    "R18-H1": 104,
+    "R18-H2": 44,
+    "R18-H3": 66
+  }
+}

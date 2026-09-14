@@ -1,0 +1,68 @@
+{
+  "amendment": "Select the unique tvm_rpc process with PPid=1 as the persistent server and wait until the per-connection child exits before stopping the parent.",
+  "board_contact_scope": "RPC process table and server logs only; no VTA candidate execution",
+  "board_rpc_processes": [
+    {
+      "CWD": "/var/volatile/vta_c3_ram/runtime",
+      "PID": "7538",
+      "PPID": "1"
+    }
+  ],
+  "failed_sessions": [
+    {
+      "T0_to_failure_seconds": 181.48314328299966,
+      "W0_to_failure_seconds": 189.42870613299965,
+      "artifact_ledger_sha256": "5e44caf2fd6de12742fb058a505d6f940ff43bb5f589bc36fdedf7c0dbb437cc",
+      "failure": {
+        "exception_type": "RuntimeError",
+        "message": "fresh default RPC failed to start"
+      },
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r518_resnet18_h1_from_scratch_ours_run01"
+    },
+    {
+      "T0_to_failure_seconds": 185.823051698997,
+      "W0_to_failure_seconds": 193.79663526999866,
+      "artifact_ledger_sha256": "589aa333b22253c6c43d40106d69db9a241f5f43151bd328af28a57e0a7977a5",
+      "failure": {
+        "exception_type": "RuntimeError",
+        "message": "fresh default RPC failed to start"
+      },
+      "path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r518_resnet18_h1_from_scratch_ours_run02"
+    }
+  ],
+  "fullgraph_performance_labels_read_for_amendment": false,
+  "persistent_parent": {
+    "CWD": "/var/volatile/vta_c3_ram/runtime",
+    "PID": "7538"
+  },
+  "prior_protocol_manifest_sha256": "4ef66031d698b61ad5dc4df0132c805130f91541a1c3f7bf5fd40064001c4ba9",
+  "remote_logs": {
+    "r18_h1_ours_candidate_001.log": {
+      "content": "[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/main.cc:96: host        = 0.0.0.0\n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/main.cc:97: port        = 9090\n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/main.cc:98: port_end    = 9099\n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/main.cc:99: tracker     = \n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/main.cc:100: key         = \n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/main.cc:101: custom_addr = \n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/main.cc:102: work_dir    = \n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/main.cc:103: silent      = False\n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/main.cc:264: Starting CPP Server, Press Ctrl+C to stop.\n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/rpc_server.cc:139: bind to 0.0.0.0:9090\n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/rpc_server.cc:309: Connection success 192.168.1.100:24181\n[23:15:02] /home/orange/code/tvm/apps/cpp_rpc/rpc_env.cc:130: Load module from /var/volatile/vta_c3_ram/runtime/rpc/971574aea090e965dd63f0ca931f9a1f7b3e899ea0097209e006a2463ddbdd03.so ...\n[23:15:03] /home/orange/code/tvm/src/runtime/profiling.cc:101: Warning: No timer implementation for ext_dev, using default timer instead. It may be inaccurate or have extra overhead.\n[23:15:04] /home/orange/code/tvm/apps/cpp_rpc/rpc_server.cc:210: Child pid=7548 killed, Process status = 15\n[23:15:04] /home/orange/code/tvm/apps/cpp_rpc/rpc_server.cc:238: Socket Connection Closed\n",
+      "remote_path": "/var/volatile/vta_c3_ram/runtime/r18_h1_ours_candidate_001.log",
+      "sha256": "e896b0ea59e5e4b36bbbc2fecbaf18ebdc86930753294f3f755d35ea22022578"
+    },
+    "r18_h1_ours_candidate_002.log": {
+      "content": "[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/main.cc:96: host        = 0.0.0.0\n[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/main.cc:97: port        = 9090\n[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/main.cc:98: port_end    = 9099\n[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/main.cc:99: tracker     = \n[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/main.cc:100: key         = \n[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/main.cc:101: custom_addr = \n[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/main.cc:102: work_dir    = \n[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/main.cc:103: silent      = False\n[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/main.cc:264: Starting CPP Server, Press Ctrl+C to stop.\n[23:15:09] /home/orange/code/tvm/apps/cpp_rpc/../../src/support/socket.h:265: Warning: Bind failed to 0.0.0.0:9090\nterminate called after throwing an instance of 'tvm::runtime::InternalError'\n  what():  [23:15:09] /home/orange/code/tvm/apps/cpp_rpc/../../src/support/socket.h:362: Socket TryBindHost Error:No such file or directory\nStack trace:\n  [bt] (0) /var/volatile/vta_c3_ram/runtime/libtvm_runtime.so(tvm::runtime::Backtrace[abi:cxx11]()+0x14) [0x7fbc2b2c5c]\n  [bt] (1) ./tvm_rpc(tvm::runtime::detail::LogFatal::Entry::Finalize()+0x8c) [0x5593028bfc]\n  [bt] (2) ./tvm_rpc(tvm::support::Socket::Error(char const*)+0x80) [0x55930345e0]\n  [bt] (3) ./tvm_rpc(+0x195d8) [0x55930355d8]\n  [bt] (4) ./tvm_rpc(+0x152f8) [0x55930312f8]\n  [bt] (5) ./tvm_rpc(+0xb5d0) [0x55930275d0]\n  [bt] (6) ./tvm_rpc(+0x7b54) [0x5593023b54]\n  [bt] (7) /lib/libc.so.6(__libc_start_main+0xe4) [0x7fbbe5d3b4]\n  [bt] (8) ./tvm_rpc(+0x7e4c) [0x5593023e4c]\n\n\n",
+      "remote_path": "/var/volatile/vta_c3_ram/runtime/r18_h1_ours_candidate_002.log",
+      "sha256": "82fb89fd6e64f77350fa37090b3787c20b6c10ddf0bcef74dc1dede98c4fe1d4"
+    }
+  },
+  "root_cause": "The C++ RPC parent forks a per-connection child. pidof ordering exposed the child first, so the old control path killed that child and left the parent listening on 9090; the replacement server then failed to bind.",
+  "schema": "c3_resnet18_rpc_parent_identity_amendment_v1",
+  "source_hashes": {
+    "apps/vta_rpc/start_axu5evb_cpp_rpc.sh": "2f42f2d37d5199fa2b66336b61869d2015f8ec5f0264bc57307789b4c6a5b194",
+    "run_vta_c3_resnet18_from_scratch_ours_fullgraph.py": "4db6deb8d669219926e7867c828fb3d727b80f5ba514e0c787bcef8806c99226",
+    "run_vta_p7r132_y00_search_confirmation.py": "c6e1b9ab4a30901cdbb6e689410226ae3710d9b1bf935016da086122c35e116a",
+    "test_vta_c3_resnet18_fullgraph_protocol.py": "bd812f6fecc6344acf62ebed25126f15f4ccc69169b338e40a4671c94f601fa1"
+  },
+  "status": "frozen_after_two_identical_infrastructure_failures_before_retry",
+  "target_candidate_latency_read_for_amendment": false,
+  "unchanged": [
+    "H1 workload and complete ConfigSpace",
+    "deterministic max-min batches and local threshold",
+    "DMA ordering and candidate budget 13",
+    "correctness seeds, timing rounds and full-graph gate",
+    "P7R517--P7R522 serialized method order"
+  ]
+}

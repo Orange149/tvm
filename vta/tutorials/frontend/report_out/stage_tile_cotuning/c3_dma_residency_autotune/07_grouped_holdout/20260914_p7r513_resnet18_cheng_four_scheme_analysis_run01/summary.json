@@ -1,0 +1,45 @@
+{
+  "claim_boundary": "Functional four-scheme reproduction with explicit barrier residency; not the authors' unpublished non-overwriting-address source implementation. Logical DMA is not physical AXI traffic.",
+  "fallback_rule": "resource-not-applicable modes inherit exact same-tile original; compiler/FSim/FPGA failures do not silently fall back",
+  "family_count": 90,
+  "input_adapter_manifest_sha256": "713ab22da36195868ce4e83473956e1dafa8693f6f4bc3dbd62323c9f7e8d244",
+  "schema": "c3_resnet18_cheng_four_scheme_analysis_v1",
+  "status": "complete_method_consistent_cheng_four_scheme_analysis",
+  "workloads": {
+    "R18-H1": {
+      "families_with_original": 45,
+      "four_scheme_resolved": 0,
+      "minimum_access_differs_from_fastest": 0,
+      "minimum_access_equals_fastest": 0,
+      "scheme_status_counts": {
+        "measured": 60,
+        "not_applicable_fallback_original": 40,
+        "unavailable_after_lowering_fsim_pool_qualification": 80
+      }
+    },
+    "R18-H2": {
+      "families_with_original": 29,
+      "four_scheme_resolved": 18,
+      "minimum_access_differs_from_fastest": 4,
+      "minimum_access_equals_fastest": 14,
+      "scheme_status_counts": {
+        "fpga_invalid": 1,
+        "measured": 39,
+        "not_applicable_fallback_original": 65,
+        "unavailable_after_lowering_fsim_pool_qualification": 11
+      }
+    },
+    "R18-H3": {
+      "families_with_original": 16,
+      "four_scheme_resolved": 1,
+      "minimum_access_differs_from_fastest": 0,
+      "minimum_access_equals_fastest": 1,
+      "scheme_status_counts": {
+        "fpga_invalid": 1,
+        "measured": 32,
+        "not_applicable_fallback_original": 3,
+        "unavailable_after_lowering_fsim_pool_qualification": 28
+      }
+    }
+  }
+}

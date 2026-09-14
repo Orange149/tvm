@@ -1,0 +1,7533 @@
+{
+  "candidate_count": 66,
+  "candidates": [
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 1024,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "02ba975282a63849c517241e30923bd0550c2e7e355fd1110104af8d19bf68f8",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0008",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "c5ee9e2b7467aa20f057b263c9d3110549cb9591577f21ef3c6cd04c8f5e11b6",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 32,
+        "input_dma_bytes": 401408,
+        "instruction_peak_bytes": 11216,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 33,
+        "total_dma_bytes": 557568,
+        "total_dma_calls": 7872,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 32,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 114688,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "05a48341e4db17c245227e5bedbb1b2897b3f0317e8d5c4aad6f1fbf2fe25eb8",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0098",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "34566eb448583ba8c93c25a92a4b1f75702ec991f465951cd106725e59cfe7f2",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 1088,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 22,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 144,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 28672,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "0a71f0d60a99262f2133ff4766646cd6e89aa27677c8c9afe5d9354734227bfe",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0166",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "c3dd947acbd713a9ce770c3815d4c1d9ce26a7172399e9ab0647b7f447b2f01b",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 186368,
+        "instruction_peak_bytes": 27168,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1128960,
+        "total_dma_calls": 952,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 64,
+        "weight_dma_bytes": 917504
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 2,
+        "tile_co": 4,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 802816,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "0db2521ee4de2d4d190032bc53e07b96bdf8e75ae56663b49f40141749c40542",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0203",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "50f1d2aee29892fc3b2e632f234c5718c505d3fb30d77533289f827aa3efb84f",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 86528,
+        "instruction_peak_bytes": 1936,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 242688,
+        "total_dma_calls": 66,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 136,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 16,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 114688,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "104fcfbd2ff457180cca8fd378b901a802a1fdcac629a345c23d3e6c34d102fd",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0090",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "b5112c4e4670a21c45d3177b2fd2ce9272bea79f07434d6bde5ca2d34522df74",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 2,
+        "input_dma_bytes": 46592,
+        "instruction_peak_bytes": 1808,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 3,
+        "total_dma_bytes": 202752,
+        "total_dma_calls": 72,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 272,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 1024,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "12338be874b08e70881ed8f0fa4bcff6642d92cedb2bfbb03fda8927405858de",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0016",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "994c9fab643dcb5152762a6d60e79403c8bdb782d748659e99d80c2e8a033a6f",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 32,
+        "input_dma_bytes": 401408,
+        "instruction_peak_bytes": 5680,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 33,
+        "total_dma_bytes": 557568,
+        "total_dma_calls": 3168,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 20,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 8192,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "1273de5e494ea5d9d7e1f39127520d1234893aaedd70c05da49eb15e104947c8",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0196",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "11afa4c941d5de54491975cb51be71ba1d427d443c439975d1550f2e08b58aeb",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 14400,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 9683968,
+        "total_dma_calls": 392,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 9633792
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 1605632,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "154595074b95ff0c9ecf0657b41bd5efef84feb387fcf0257f27c6f6fb8c713c",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0103",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "38b731aa855d4fe01c83ec35f93ab40ab85c61c468f5e07feb500e12386ddb31",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 43264,
+        "instruction_peak_bytes": 992,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 199424,
+        "total_dma_calls": 33,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 68,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 32,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 7168,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "16bcb492dba26a7cc6204086202cf52d56ec04389823bc363b59649538833f49",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0014",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "6960f7ef245a15e8106f99ee28bb55ecb76abe54ea119877264d689ee1c6ccdd",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 32,
+        "input_dma_bytes": 745472,
+        "instruction_peak_bytes": 1328,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 33,
+        "total_dma_bytes": 901632,
+        "total_dma_calls": 704,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 24,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 114688,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "173f00900198353913458eab6feb8221e5a3dc6fbf7612ecd6e20f4936aef3d9",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0090",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "19988a0ba155ec20dc68c836c44331cdfbc75b4a6565f5c712312f5bcf4cb5dc",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 1920,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 43,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 528,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 114688,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "17a8cc744eb9389be7ee0eb70aa7a81a505814eadfae00bd8cf24a8870924305",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0098",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "345a89cd65817db8565ead4284d6b0b2624b382a0ca4aea5129c10423b55633d",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 2,
+        "input_dma_bytes": 46592,
+        "instruction_peak_bytes": 976,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 3,
+        "total_dma_bytes": 202752,
+        "total_dma_calls": 30,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 7168,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "1b97f85f42d93092e1cb4915e348503f1cffb779d2dd91a1a4f6ba4551994a55",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0121",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "7849a99d30cffd58aeb5002e39de105c5b7358ee0923911d0e10ea61687865bd",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 46592,
+        "instruction_peak_bytes": 15744,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1849344,
+        "total_dma_calls": 672,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 1777664
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 7,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 1024,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "1ff5edc1e69b42a50f9f7569cf4123860b42b804ab14551545f3b38f88bf0320",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0008",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "ac545a986c36b42901f0790f411003208a207c03e95a417bc8576b69c6bf4330",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 12544,
+        "instruction_peak_bytes": 35520,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 168704,
+        "total_dma_calls": 1765,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 32,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 32768,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "20215ea7852894376a3b1a1cfbea478512e3fdb6f7c6c7466327a19f229ec523",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0100",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "38e47a86182c4e22629237b057795ae235d67d015f52f2a39e287100f623b18b",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 12544,
+        "instruction_peak_bytes": 30224,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 168704,
+        "total_dma_calls": 834,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 32,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 8192,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "2363d94ad364ec29feaa12ac98552e21527e73414962ecaf8d6e7e6b373f132f",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0180",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "8e9e9c7d299cf6a067f876cebbf3a274fe3c9458d644d345ecc70d7d37696640",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 50176,
+        "instruction_peak_bytes": 169632,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 6497792,
+        "total_dma_calls": 6468,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 6422528
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 2048,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "2cd1798af486c254c8e389eb9f30e24413f3b3f2d5238695588fc37dd47ce8a6",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0020",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "4f4b3882deff50f481e9c9ce650c8326b6b2f406a0cf0a776d073aecee645d89",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 12544,
+        "instruction_peak_bytes": 41984,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 168704,
+        "total_dma_calls": 1569,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 2,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 32768,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "34aa29b01356f34420608dbfa20d4cd825954c17a05711200093b20681904200",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0100",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "f2bceb537a8fe9fa4873cdd1022bca6b7518cc235c08f4c69a920e6d8721694f",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 12544,
+        "instruction_peak_bytes": 30224,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 168704,
+        "total_dma_calls": 834,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 32,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 229376,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "3b642f94ec7926eefe268c033d769344b0c8a03b5e4b956cfac73dbce5249258",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0118",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "8631e67a40fd5946482e782a6c1a531f31ba26278fcbed0703991b30d52526ef",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 976,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 15,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 144,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 32,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 28672,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "3b8f36bef6ba579597e1500827e282630895689911f80142e4d37a010a709208",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0166",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "18dbabad7151923a3e49d40f9cc421841279ed4c4cfc793dca9d9c7e04cee3c1",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 46592,
+        "instruction_peak_bytes": 7680,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1677312,
+        "total_dma_calls": 280,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 256,
+        "weight_dma_bytes": 1605632
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 2,
+        "tile_co": 4,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 8192,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "3be8aeaae8eb8b4c9aa15df9fc95ea53974facdf7b5330b026ef196ca9e6da62",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0196",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "4ce4556260bc5dfbe1c21e017e3519566afa295cc45942e7894b0cfa1a895f96",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 50176,
+        "instruction_peak_bytes": 25376,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 6497792,
+        "total_dma_calls": 588,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 6422528
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 16384,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "3fbba578559c37bb10c21379f1791e42b7fcb105434f7d831d744216b8714c66",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0080",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "969e5f527538d27a6fdffa20dc1319fa444e10064472a886be974407b3fdb4b5",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 12544,
+        "instruction_peak_bytes": 31008,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 168704,
+        "total_dma_calls": 883,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 229376,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "41251cf67b89f3594d531d2c901f34d68f09a4ab691fd55abd987c7455fd7824",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0114",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "c87efb31f23b833341b966f4691c86ef46d063c4df31f1cfe63dd3be37a6f515",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 1328,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 22,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 272,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 32,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 16384,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "46f0c15705838084f9cffc3b43a8cd0467d17577321cea6cfae435d611656c97",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0212",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "806007495b2c75e0affa2369674548af208c877194c29a3cc92885e0f2b41e55",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 19104,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 6472704,
+        "total_dma_calls": 490,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 6422528
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 50176,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "471aa07dce2141c7d3c3b56a0c37123cba90db706e35901f5b2da9612ba0e01b",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0003",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "bead3b62ad20d2f08849568ad1efa9a498dd4a6e3c4ecb6046735a35be64f122",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 43264,
+        "instruction_peak_bytes": 1488,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 199424,
+        "total_dma_calls": 49,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 488,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 28672,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "4892dbbd5f74436721371191b1a282729d27ac3cc338449a5ae6eb956ecd4a81",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0178",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "ed16c6581bfe07b951a5a82b59bf238e2229dd374b9706c12512e28dc346ea14",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 186368,
+        "instruction_peak_bytes": 7456,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1128960,
+        "total_dma_calls": 168,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 64,
+        "weight_dma_bytes": 917504
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 4,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 229376,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "4bdbde0d697bc2ee761bf4a46d8f6f90f751079d7398a295baaba6025cf57adf",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0114",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "c87efb31f23b833341b966f4691c86ef46d063c4df31f1cfe63dd3be37a6f515",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 1328,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 22,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 272,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 32,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 8192,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "50abdadb7c1aea3d17c465f08e9cba5c9ed27b7b8dc8b958b997d0578a223be4",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0180",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "81f529cb0ca4a55a6f5efc3fb7a1d9af31fbbb77b349c4ca34f45d9bf6ec1cbf",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 86528,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 9683968,
+        "total_dma_calls": 3332,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 9633792
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 16384,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "59fa8a8ba3c3482474a2b335be1b60d3c0bcbd1a5e977ca8d5deb3f699d604dc",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0216",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "135eb8be1590f59ddcf5465563e87871d015b4f52241b5fc06490b74831f8416",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 12832,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 6472704,
+        "total_dma_calls": 294,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 6422528
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 1024,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "60ea2c37faa009d61c7d79e25efdfde459102ddc9f0f0f920647d20e109b3dd0",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0016",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "7d94140c6e40ad2c7273246ed2c06a8e017582160ac54678a903fdba5e0ac830",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 12544,
+        "instruction_peak_bytes": 29984,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 168704,
+        "total_dma_calls": 1618,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 20,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 401408,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "674891ec2ee3772eb33ccc89c9ad3b0431db7f93147966afd950173b9534e197",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0183",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "c9641471818915dcb2a8a1069f01e0306380f19002946e113bd41b2d1950fa5f",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 173056,
+        "instruction_peak_bytes": 3744,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 329216,
+        "total_dma_calls": 132,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 136,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 28672,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "72602e4ea5729d79c32e3d01c2b4df8d0a52433737f44b231a7bb246a99c7f49",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0178",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "3d29c9d7c1689ace1feab6564bb50ad314c9bbea8ac61aca3e6f974ccfac0535",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 46592,
+        "instruction_peak_bytes": 2752,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1677312,
+        "total_dma_calls": 84,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 256,
+        "weight_dma_bytes": 1605632
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 4,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 1605632,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "72bd081ef1c3098e7ee0d5f83d318ee1e1e3c3ce5a1979ee8679be34f47c7ba5",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0103",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "38b731aa855d4fe01c83ec35f93ab40ab85c61c468f5e07feb500e12386ddb31",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 43264,
+        "instruction_peak_bytes": 992,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 199424,
+        "total_dma_calls": 33,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 68,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 32,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 229376,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "73263587691ef3e57e4cacf9f44ee290f94df955d347ef9024a728a120ce1ab8",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0101",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "5d2e7aa1036eff1bbacd27c48156dabc10e24ea0078d2c9f28dc15915fd2d3cd",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 4688,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 120,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 32,
+        "tile_h": 7,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 1605632,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "759d0f29214106c3fbe0320575b18f6063008f08c9155d15e85dfd6867d4d439",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0103",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "feba20e4728ca1fe905fcaa161ff9d62449a2cbc626f85cec3fa06491ae66018",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 43264,
+        "instruction_peak_bytes": 992,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 199424,
+        "total_dma_calls": 18,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 488,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 32,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 2048,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "779a3882d7d5256c687cb98a23cecb0eafaa24de3ca076a29e70667d1cf06973",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0020",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "ed703f1f95ef70e41b6efac25c95681f819e5b1bb8ebb6b4cf3e1e35fb6f824f",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 16,
+        "input_dma_bytes": 200704,
+        "instruction_peak_bytes": 30224,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 17,
+        "total_dma_bytes": 356864,
+        "total_dma_calls": 13344,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 2,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 7168,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "7e3943fdee3e35eaef127854123830430d3cb8b102e9d1cd41fb9404c070dfe8",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0134",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "99518acedf586f951d9b981a7ad7a36cf8f03735b0ee98e6d67fa4ae21b3f6a5",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 745472,
+        "instruction_peak_bytes": 43296,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1688064,
+        "total_dma_calls": 1120,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 917504
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 57344,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "7f27dc49a969abff990d7bcb8292674c9241d7df764914de9829304c1b541627",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0062",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "c53855744ed972d6e02862cd70018b49ae5d0ad5cc4a5903570163d59b161a74",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 4,
+        "input_dma_bytes": 93184,
+        "instruction_peak_bytes": 4688,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 5,
+        "total_dma_bytes": 249344,
+        "total_dma_calls": 480,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 229376,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "83799e399aac9dca6d7e5bdd8dc7ce78c20898061d09a476609159a3e17e798b",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0101",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "12d91c36153da759a6232cd75eeda62f050711051a2535ce6dcaa47c26e666a6",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 4688,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 120,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 32,
+        "tile_h": 7,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 1024,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "8554b4d775f476d12d5b0e1a9ec17ac995872355a7377ac8acd4b7080a89999a",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0128",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "a28c0111dbf37d397525e3eae99d445d7361f1024c707bd636c4247f9856316b",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 52032,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 12493824,
+        "total_dma_calls": 2352,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 12443648
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 57344,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "8649b594d265e2a62d71b1b7a315cfa0504a360134002acc663aa480c203a5d7",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0061",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "55b02617f53866491c3627f64f5f8da067b49bcd23db73a3ff70892bda823776",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 4,
+        "input_dma_bytes": 93184,
+        "instruction_peak_bytes": 4688,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 5,
+        "total_dma_bytes": 249344,
+        "total_dma_calls": 480,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 7,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 7168,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "9a55cfe3359d1befec4fdc33efee894d15e83eae44153d0c0e21b161eff21c36",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0134",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "d8bfba20e18346bb4a01b2e6a375ba2348f60bd10097e5d5800e11b33450ed82",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 46592,
+        "instruction_peak_bytes": 6336,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1849344,
+        "total_dma_calls": 280,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 280,
+        "weight_dma_bytes": 1777664
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 16384,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "9dc5ec466d4c8075a00410086e9a3d8a08e4c032552c1049bdb58164c1b2ea36",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0080",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "d7b2203b12d05d37b42db19f57f77ab886a2bf7b06b81cbf68a51a9a39ef1552",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 2,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 30224,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 3,
+        "total_dma_bytes": 181248,
+        "total_dma_calls": 1668,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 32768,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "9f03ade5b999968456e2e7676abe1e50db23ce28c12b149c0800495640866b7e",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0116",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "a310a65edd97aaab25a5277be398eccd3ccb8a61b036a0b24ebd40c50d7cf2c2",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 12544,
+        "instruction_peak_bytes": 5680,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 168704,
+        "total_dma_calls": 99,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 20,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 32,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 1024,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "a58e9f79ee71cf03fbb91cde55b0033ec68bd7c754a57d0193b89dd417a52467",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0128",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "8a29faf7a379f8268b3ed63393c872c4c9e48187611dcbbd4ea016c758127f18",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 401408,
+        "instruction_peak_bytes": 451872,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 6849024,
+        "total_dma_calls": 14112,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 6422528
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 4,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 57344,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "a60af8a570cfd122e93d22c3dd1c6b566305b26ddcc3730329c28cc11e9b72b8",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0061",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "115feb416045a39dc0ee8251e7be6d5b6e736b4be06e585a3e7891653183b38a",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 5024,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 141,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 7,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 16384,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "a84185aa0275822b97ffcec87839014ac9d10aa0c09887a8fe5a57ec615adc55",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0212",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "806007495b2c75e0affa2369674548af208c877194c29a3cc92885e0f2b41e55",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 19104,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 6472704,
+        "total_dma_calls": 490,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 6422528
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 57344,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "a9acaf16fec99a36395f7849ec76409b11fb8178615c70b4921d4957c5b963e4",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0074",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "87b35ac74490305240ca3c88f0207a6c77e7a35ccf267c646cc53082acf8b219",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 1664,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 43,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 272,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 16384,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "a9cf1f8ca64480752ccfb130b2e6ef8b6668b1607e7f72a53125064ae19932b7",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0216",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "135eb8be1590f59ddcf5465563e87871d015b4f52241b5fc06490b74831f8416",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 12832,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 6472704,
+        "total_dma_calls": 294,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 6422528
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 16,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 32768,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "ac77f40ead24aeaa2fb72608156d3b3da7f5f94c2e0ed239d306f2d695d5e4e6",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0116",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "115467bf91e86663aad8a51e1e9bed7df61c425e6eb2f4ea646031ccfc8f22e5",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 12544,
+        "instruction_peak_bytes": 5680,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 168704,
+        "total_dma_calls": 99,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 20,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 32,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 50176,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "ad7a59559eaf565140bb82c92760fbc03aaead60e763751bb80e9fd25f624a59",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0003",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "5f3e9d55f7496e20ceca892a9b08c9b05cd12bc83330071e2670c6f6d85cbd81",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 43264,
+        "instruction_peak_bytes": 1488,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 199424,
+        "total_dma_calls": 64,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 68,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 802816,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "b26df2d47b578e1b48224fef680644c7cca98dce286f2b5d2dd6608c13dd7d87",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0203",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "50f1d2aee29892fc3b2e632f234c5718c505d3fb30d77533289f827aa3efb84f",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 86528,
+        "instruction_peak_bytes": 1936,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 242688,
+        "total_dma_calls": 66,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 136,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 16,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 7168,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "bc40eff52164c4eea4d4a23117083615d7042e86d10546753de52d5ab798c116",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0121",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "75ce53b4c91d15f95a6d11de3cb648b8c5175dab9801abbef4f66b67a1973987",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 745472,
+        "instruction_peak_bytes": 193824,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1688064,
+        "total_dma_calls": 7392,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 917504
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 7,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 8192,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "bf321e1f05ab54bacade6b7e63b8dc48c39cbea20653701cbedb1b96f0dedb06",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0184",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "9b821131213a17e30e026bf4a4a5ed531289b2f5cf1d50590288de1b6578a917",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 50176,
+        "instruction_peak_bytes": 94368,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 6497792,
+        "total_dma_calls": 3332,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 6422528
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 2,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 14336,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "bfdf9aca7ae375c53c10ae7740f14914cd9ce6bee144a9784e1a4f2d655d4584",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0158",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "7fbdcac8c1dce35d858f2e4236c9b0405f5b6daf090566c10863c0ae4abb0179",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 46592,
+        "instruction_peak_bytes": 3648,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1792000,
+        "total_dma_calls": 140,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 272,
+        "weight_dma_bytes": 1720320
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 2,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 7168,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "c5678435bf25dad3716a0c97dd1ebd396ea58795a98e356742cb5bf4a5ffd667",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0122",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "8076e17cc1550c314231807f5f4ce37851ba2572bc3bedb561b3d8403f537ed6",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 745472,
+        "instruction_peak_bytes": 193824,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1688064,
+        "total_dma_calls": 7392,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 917504
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 57344,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "ca03b2eb4bcaa5786b38812fab6580effdb92060c52e8e242ab9a8b353984151",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0062",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "f255ae35971ea8deba9c9587803dbfdb324b9f71628ca83ac13c59de51023d8d",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 5024,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 141,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 7168,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "cefb1707fd0d55d337e21f8ff25b0ae285f3161371ac62668f971c903ca1c4c5",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0014",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "f37787972ba8e4add40c1881a49e87d8666d38617f6f1efcfdb7b7fd526145ff",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 4800,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 239,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 272,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 57344,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "d1f2b014064829d9de1d2905d2f6d2d2e2e3875a71e9f38584bf3564b9e5a3af",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0074",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "a64b3073971b75a5d149213dbdb969e5ad28eb0217f9ae727737daf466a37f22",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 4,
+        "input_dma_bytes": 93184,
+        "instruction_peak_bytes": 1328,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 5,
+        "total_dma_bytes": 249344,
+        "total_dma_calls": 88,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 14336,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "d835884ff9485da7c30f71f0b7cd8d6606356eefdb7cb2101e4bbfe2c43cbe49",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0158",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "06a1a75d2ddffa75c0027eecbc685bee1f1fea9defd496befc742ed40cdc6134",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 372736,
+        "instruction_peak_bytes": 14624,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1315328,
+        "total_dma_calls": 336,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 48,
+        "weight_dma_bytes": 917504
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 2,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 50176,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "df551d44cb3fb0cbdf70f6a83470f4c24f3d65cf48dd65d1cd79f92faa49a417",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0003",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "01aaea1cc51c9b7a8d3892b0e479f2537536f92b1c741cd091b7ded84e810ca2",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 32,
+        "input_dma_bytes": 1384448,
+        "instruction_peak_bytes": 992,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 33,
+        "total_dma_bytes": 1540608,
+        "total_dma_calls": 576,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 80,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 8192,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "e034dac05b44909a393287127103b5f30ee3bc71e863969ba80effe3bcc73ff9",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              2
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0184",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "197ad5b2e9934b144a83652e4ec62fb7d48a50ef223816ffff2dd19712aeba37",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 48896,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 9683968,
+        "total_dma_calls": 1764,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 9633792
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 2,
+        "tile_co": 8,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 229376,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "e26647f513275f097d07791e5cb196c1f1edac8f166439aae2e620ebcc132efa",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              16
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0118",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "8631e67a40fd5946482e782a6c1a531f31ba26278fcbed0703991b30d52526ef",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 23296,
+        "instruction_peak_bytes": 976,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 179456,
+        "total_dma_calls": 15,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 144,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 16,
+        "tile_co": 32,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 4096,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "e99860c91b93817dc6daab816679b058075753f8b897e04e0a6ec65d99f7a4d8",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0172",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "10de94cadfceeaa9b24456f944c8e89ca9d4c27969306278d86c501f1cf03384",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 25088,
+        "instruction_peak_bytes": 23808,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 11289600,
+        "total_dma_calls": 784,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 11239424
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 4,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 4096,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "e9f5722fa11b5c6ca44c99d183c65628a75e5b101d47734bfcb10519877eb8f0",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              8
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0172",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "1f0fe3a365bdc8b05ef48746e29cfcc8b4c85572f17ef01395670922aac460f7",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "original",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 100352,
+        "instruction_peak_bytes": 75552,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 6547968,
+        "total_dma_calls": 1960,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 6422528
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 8,
+        "tile_co": 4,
+        "tile_h": 1,
+        "tile_w": 1
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": true,
+        "accumulator_tile_bytes_necessary_bound": 7168,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "eb001a44e8d39bf22d10d3a5f36cb4a6e63814f910426f8ca4dadb8ad0576371",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0122",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "23576dc12e387daedc125c5245357b586d5a0364d3af572d719130deac80a3ee",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "input_stationary",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 0,
+        "input_dma_bytes": 46592,
+        "instruction_peak_bytes": 15744,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 1,
+        "total_dma_bytes": 1849344,
+        "total_dma_calls": 672,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 40,
+        "weight_dma_bytes": 1777664
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 2,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 1,
+        "tile_h": 1,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    },
+    {
+      "applicability": {
+        "accumulator_fits_sram": false,
+        "accumulator_tile_bytes_necessary_bound": 1605632,
+        "full_weight_bytes": 131072,
+        "full_weight_fits_sram": true,
+        "output_height": 7,
+        "output_width": 7,
+        "scope": "label-free necessary analytic bounds; real lowering remains authoritative"
+      },
+      "candidate_id": "fff16d9deca1c762fc7c2275d6948300ddc7b289a713b3169f964e5818c2552c",
+      "complete_config_entity": {
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              -1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              -1,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              -1,
+              32
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            1
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "family_id": "R18-H3D0103",
+      "hardware_fingerprint": {
+        "acc_buff_size": 131072,
+        "batch": 1,
+        "block_in": 16,
+        "block_out": 16,
+        "inp_buff_size": 32768,
+        "target": "axu5evb",
+        "uop_buff_size": 32768,
+        "wgt_buff_size": 262144
+      },
+      "lowered_tir_sha256": "feba20e4728ca1fe905fcaa161ff9d62449a2cbc626f85cec3fa06491ae66018",
+      "model_hash": "60a3e99b2b0bbb23554b0e1dc9cac766401e22b25d0f3827fbf7e50e0198bdc2",
+      "residence_mode": "weight_resident_barrier",
+      "static_features": {
+        "acc_dma_bytes": 0,
+        "explicit_residency_drains": 1,
+        "input_dma_bytes": 43264,
+        "instruction_peak_bytes": 992,
+        "output_dma_bytes": 25088,
+        "padding_dma_calls": 0,
+        "scope": "logical lowered VTA LOAD/STORE; not physical AXI traffic",
+        "submissions": 2,
+        "total_dma_bytes": 199424,
+        "total_dma_calls": 18,
+        "uop_dma_bytes": 0,
+        "uop_peak_bytes": 488,
+        "weight_dma_bytes": 131072
+      },
+      "visible_features": {
+        "h_nthread": 1,
+        "oc_nthread": 1,
+        "tile_b": 1,
+        "tile_ci": 1,
+        "tile_co": 32,
+        "tile_h": 7,
+        "tile_w": 7
+      },
+      "workload_features": {
+        "ci": 256,
+        "co": 512,
+        "height": 14,
+        "kernel": 1,
+        "stride": 2,
+        "width": 14
+      },
+      "workload_id": "R18-H3"
+    }
+  ],
+  "role": "complete_fpga_observed_locally_qualified_pool",
+  "schema": "c3_literature_workload_contract_v1",
+  "target_labels_present": false,
+  "workload_id": "R18-H3"
+}

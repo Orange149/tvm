@@ -1,0 +1,61 @@
+{
+  "ablations": [
+    "ml2tuner_pva_A_plus_DMA"
+  ],
+  "budgets": [
+    10,
+    20,
+    50,
+    75,
+    96
+  ],
+  "cost_views": [
+    "counterfactual_lazy_per_candidate",
+    "actual_complete_pool_common_cost_reported_separately"
+  ],
+  "input_hashes": {
+    "adapter": "713ab22da36195868ce4e83473956e1dafa8693f6f4bc3dbd62323c9f7e8d244",
+    "full_original_contracts": "f47034d63d50116634092bbc5ac6f4de17cd491421eb009052297701681777c3",
+    "full_original_scans": {
+      "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r484_r18_h3_full_original_validity_run01": "a89f78eafea5ab441994e96f420d51befc86beb5cd3fd9f2f745b7d92e50aa76",
+      "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r485_r18_h2_full_original_validity_run01": "01a4b467b1d5738df010992bc20eebe28759a0cf1e45df2a53c9e78d1020ed8a",
+      "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r486_r18_h1_full_original_validity_run01": "e393c7bd30f9f56fe3f595aef7f11f0990736f0b650f19be6e3fb624d1145cb5"
+    },
+    "hw_qualification": "aea7a5630501764cd697e396a732d519e285c6334af917b42b45266e3d13ee28",
+    "hw_union": "e4da49755181591e24d235586f1b5335ac8b478703f7c3d1b4f1bc1c8ffba012",
+    "policy_amendment": "232ca84caafe9b293e5c8fc07748517e91ddea1bc83546c7e431d9049743316e"
+  },
+  "policies": [
+    "random",
+    "stock_mode_aware_xgb",
+    "rieber_hw_init_xgb",
+    "ml2tuner_pva",
+    "cheng_minimum_access",
+    "ours_dma_multifidelity"
+  ],
+  "schema": "c3_resnet18_literature_pool_analysis_v1",
+  "seeds": [
+    57001,
+    57002,
+    57003,
+    57004,
+    57005,
+    57006,
+    57007,
+    57008,
+    57009,
+    57010,
+    57011,
+    57012,
+    57013,
+    57014,
+    57015,
+    57016,
+    57017,
+    57018,
+    57019,
+    57020
+  ],
+  "status": "frozen_before_policy_replay_and_oracle_join",
+  "target_protocol": "leave one workload for target replay; other two complete workloads are development data"
+}

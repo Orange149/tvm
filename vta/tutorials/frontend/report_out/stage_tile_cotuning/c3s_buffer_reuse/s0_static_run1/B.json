@@ -1,0 +1,3385 @@
+{
+  "assumptions": [
+    "frozen GraphExecutor SetInputZeroCopy/SetupOpExecs semantics",
+    "no hidden out-of-contract kernel writes; compiled package unchanged",
+    "runtime pool membership/alignment/owner retention still required"
+  ],
+  "audit_source_sha256": "da2703c006c60235d04e0bb97f735d4e237f28ee983da44950b083eca4e2b2e8",
+  "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t2",
+  "edges": [
+    {
+      "consumer_stage": 1,
+      "direction": "cpu_to_vta",
+      "external_k2_bytes": 1605632,
+      "predicted_saved_bytes": 802816,
+      "producer_stage": 0,
+      "source": "pool-anchor",
+      "tensors": [
+        {
+          "alias_entries": [
+            0
+          ],
+          "bytes": 802816,
+          "contract_bytes": 802816,
+          "device": 12,
+          "dtype": "float32",
+          "entry": 0,
+          "input_name": "data0",
+          "is_arg": true,
+          "is_head": false,
+          "is_parameter": false,
+          "name": "data0",
+          "node": 0,
+          "op": "null",
+          "pool_capacity_bytes": 802816,
+          "readers": [
+            {
+              "func": "tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip",
+              "node": 1,
+              "op": "tvm_op",
+              "port": 0
+            }
+          ],
+          "reasons": [
+            "exclusive_nonparameter_input_all_tvm_op_uses_rebound"
+          ],
+          "scope": "",
+          "shape": [
+            1,
+            64,
+            56,
+            56
+          ],
+          "status": "eligible",
+          "storage_id": 0,
+          "tensor_index": 0,
+          "writers": []
+        }
+      ]
+    },
+    {
+      "consumer_stage": 2,
+      "direction": "vta_to_cpu",
+      "external_k2_bytes": 602112,
+      "predicted_saved_bytes": 0,
+      "producer_stage": 1,
+      "source": "external",
+      "tensors": [
+        {
+          "alias_entries": [
+            0
+          ],
+          "bytes": 100352,
+          "contract_bytes": 100352,
+          "device": 1,
+          "dtype": "float32",
+          "entry": 0,
+          "input_name": "data0",
+          "is_arg": true,
+          "is_head": false,
+          "is_parameter": false,
+          "name": "data0",
+          "node": 0,
+          "op": "null",
+          "pool_capacity_bytes": 100352,
+          "readers": [
+            {
+              "func": "tvmgen_default_fused_nn_conv2d_add_add_nn_relu",
+              "node": 4,
+              "op": "tvm_op",
+              "port": 3
+            }
+          ],
+          "reasons": [
+            "direction_outside_v1",
+            "not_plain_ext_dev_pool"
+          ],
+          "scope": "",
+          "shape": [
+            1,
+            512,
+            7,
+            7
+          ],
+          "status": "rejected",
+          "storage_id": 0,
+          "tensor_index": 0,
+          "writers": []
+        },
+        {
+          "alias_entries": [
+            1
+          ],
+          "bytes": 200704,
+          "contract_bytes": 200704,
+          "device": 1,
+          "dtype": "float32",
+          "entry": 1,
+          "input_name": "data1",
+          "is_arg": true,
+          "is_head": false,
+          "is_parameter": false,
+          "name": "data1",
+          "node": 1,
+          "op": "null",
+          "pool_capacity_bytes": 200704,
+          "readers": [
+            {
+              "func": "tvmgen_default_fused_nn_conv2d_add_add_nn_relu",
+              "node": 4,
+              "op": "tvm_op",
+              "port": 0
+            }
+          ],
+          "reasons": [
+            "direction_outside_v1",
+            "not_plain_ext_dev_pool"
+          ],
+          "scope": "",
+          "shape": [
+            1,
+            256,
+            14,
+            14
+          ],
+          "status": "rejected",
+          "storage_id": 1,
+          "tensor_index": 1,
+          "writers": []
+        }
+      ]
+    }
+  ],
+  "entries_by_stage": {
+    "0": [
+      {
+        "alias_entries": [
+          0
+        ],
+        "bytes": 602112,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 0,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "data0",
+        "node": 0,
+        "op": "null",
+        "pool_capacity_bytes": 602112,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu",
+            "node": 3,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          3,
+          224,
+          224
+        ],
+        "storage_id": 0,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          1
+        ],
+        "bytes": 37632,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 1,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p0",
+        "node": 1,
+        "op": "null",
+        "pool_capacity_bytes": 37632,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu",
+            "node": 3,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          3,
+          7,
+          7,
+          8
+        ],
+        "storage_id": 1,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          2
+        ],
+        "bytes": 256,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 2,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p1",
+        "node": 2,
+        "op": "null",
+        "pool_capacity_bytes": 256,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu",
+            "node": 3,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          1,
+          1
+        ],
+        "storage_id": 2,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          3,
+          7
+        ],
+        "bytes": 3211264,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 3,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_nn_relu",
+        "node": 3,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 3211264,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_max_pool2d",
+            "node": 4,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          112,
+          112
+        ],
+        "storage_id": 3,
+        "writers": [
+          3
+        ]
+      },
+      {
+        "alias_entries": [
+          4
+        ],
+        "bytes": 802816,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 4,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_max_pool2d",
+        "node": 4,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_nn_relu",
+            "node": 7,
+            "op": "tvm_op",
+            "port": 0
+          },
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 3
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          56,
+          56
+        ],
+        "storage_id": 4,
+        "writers": [
+          4
+        ]
+      },
+      {
+        "alias_entries": [
+          5
+        ],
+        "bytes": 589824,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 5,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p2",
+        "node": 5,
+        "op": "null",
+        "pool_capacity_bytes": 589824,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_nn_relu",
+            "node": 7,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          6,
+          6,
+          4,
+          64,
+          16
+        ],
+        "storage_id": 5,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          6
+        ],
+        "bytes": 256,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 6,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p3",
+        "node": 6,
+        "op": "null",
+        "pool_capacity_bytes": 256,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_nn_relu",
+            "node": 7,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          1,
+          1
+        ],
+        "storage_id": 6,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          3,
+          7
+        ],
+        "bytes": 802816,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 7,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_nn_relu",
+        "node": 7,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 3211264,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          56,
+          56
+        ],
+        "storage_id": 3,
+        "writers": [
+          7
+        ]
+      },
+      {
+        "alias_entries": [
+          8
+        ],
+        "bytes": 589824,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 8,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p4",
+        "node": 8,
+        "op": "null",
+        "pool_capacity_bytes": 589824,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          6,
+          6,
+          4,
+          64,
+          16
+        ],
+        "storage_id": 7,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          9
+        ],
+        "bytes": 256,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 9,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p5",
+        "node": 9,
+        "op": "null",
+        "pool_capacity_bytes": 256,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          1,
+          1
+        ],
+        "storage_id": 8,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          10
+        ],
+        "bytes": 802816,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 10,
+        "is_arg": false,
+        "is_head": true,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+        "node": 10,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          56,
+          56
+        ],
+        "storage_id": 9,
+        "writers": [
+          10
+        ]
+      }
+    ],
+    "1": [
+      {
+        "alias_entries": [
+          0
+        ],
+        "bytes": 802816,
+        "device": 12,
+        "dtype": "float32",
+        "entry": 0,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "data0",
+        "node": 0,
+        "op": "null",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip",
+            "node": 1,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          56,
+          56
+        ],
+        "storage_id": 0,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          1,
+          10,
+          20,
+          33,
+          40,
+          44
+        ],
+        "bytes": 802816,
+        "device": 12,
+        "dtype": "float32",
+        "entry": 1,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip",
+        "node": 1,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_reshape_transpose",
+            "node": 2,
+            "op": "tvm_op",
+            "port": 0
+          },
+          {
+            "func": "tvmgen_default_fused_cast",
+            "node": 9,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          56,
+          56
+        ],
+        "storage_id": 1,
+        "writers": [
+          1
+        ]
+      },
+      {
+        "alias_entries": [
+          2,
+          8,
+          13,
+          19,
+          23,
+          27,
+          37,
+          47,
+          51
+        ],
+        "bytes": 200704,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 2,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_cast_reshape_transpose",
+        "node": 2,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 200704,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+            "node": 5,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          4,
+          56,
+          56,
+          1,
+          16
+        ],
+        "storage_id": 2,
+        "writers": [
+          2
+        ]
+      },
+      {
+        "alias_entries": [
+          3
+        ],
+        "bytes": 36864,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 3,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p0",
+        "node": 3,
+        "op": "null",
+        "pool_capacity_bytes": 36864,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+            "node": 5,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          4,
+          4,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 3,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          4
+        ],
+        "bytes": 256,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 4,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p1",
+        "node": 4,
+        "op": "null",
+        "pool_capacity_bytes": 256,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+            "node": 5,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          4,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 4,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          5,
+          9,
+          16,
+          26,
+          30,
+          36,
+          43,
+          52
+        ],
+        "bytes": 200704,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 5,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+        "node": 5,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+            "node": 8,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          4,
+          56,
+          56,
+          1,
+          16
+        ],
+        "storage_id": 5,
+        "writers": [
+          5
+        ]
+      },
+      {
+        "alias_entries": [
+          6
+        ],
+        "bytes": 36864,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 6,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p2",
+        "node": 6,
+        "op": "null",
+        "pool_capacity_bytes": 36864,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+            "node": 8,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          4,
+          4,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 6,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          7
+        ],
+        "bytes": 256,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 7,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p3",
+        "node": 7,
+        "op": "null",
+        "pool_capacity_bytes": 256,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+            "node": 8,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          4,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 7,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          2,
+          8,
+          13,
+          19,
+          23,
+          27,
+          37,
+          47,
+          51
+        ],
+        "bytes": 200704,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 8,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+        "node": 8,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 200704,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_reshape_transpose_add_nn_relu_clip_cast",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          4,
+          56,
+          56,
+          1,
+          16
+        ],
+        "storage_id": 2,
+        "writers": [
+          8
+        ]
+      },
+      {
+        "alias_entries": [
+          5,
+          9,
+          16,
+          26,
+          30,
+          36,
+          43,
+          52
+        ],
+        "bytes": 802816,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 9,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_cast",
+        "node": 9,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_reshape_transpose_add_nn_relu_clip_cast",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          64,
+          56,
+          56
+        ],
+        "storage_id": 5,
+        "writers": [
+          9
+        ]
+      },
+      {
+        "alias_entries": [
+          1,
+          10,
+          20,
+          33,
+          40,
+          44
+        ],
+        "bytes": 200704,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 10,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_cast_reshape_transpose_add_nn_relu_clip_cast",
+        "node": 10,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_1",
+            "node": 13,
+            "op": "tvm_op",
+            "port": 0
+          },
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_2",
+            "node": 19,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          4,
+          56,
+          56,
+          1,
+          16
+        ],
+        "storage_id": 1,
+        "writers": [
+          10
+        ]
+      },
+      {
+        "alias_entries": [
+          11
+        ],
+        "bytes": 73728,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 11,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p4",
+        "node": 11,
+        "op": "null",
+        "pool_capacity_bytes": 73728,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_1",
+            "node": 13,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          4,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 8,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          12
+        ],
+        "bytes": 512,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 12,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p5",
+        "node": 12,
+        "op": "null",
+        "pool_capacity_bytes": 512,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_1",
+            "node": 13,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 9,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          2,
+          8,
+          13,
+          19,
+          23,
+          27,
+          37,
+          47,
+          51
+        ],
+        "bytes": 100352,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 13,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_1",
+        "node": 13,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 200704,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+            "node": 16,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          8,
+          28,
+          28,
+          1,
+          16
+        ],
+        "storage_id": 2,
+        "writers": [
+          13
+        ]
+      },
+      {
+        "alias_entries": [
+          14
+        ],
+        "bytes": 147456,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 14,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p6",
+        "node": 14,
+        "op": "null",
+        "pool_capacity_bytes": 147456,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+            "node": 16,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          8,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 10,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          15
+        ],
+        "bytes": 512,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 15,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p7",
+        "node": 15,
+        "op": "null",
+        "pool_capacity_bytes": 512,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+            "node": 16,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 11,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          5,
+          9,
+          16,
+          26,
+          30,
+          36,
+          43,
+          52
+        ],
+        "bytes": 100352,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 16,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+        "node": 16,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast",
+            "node": 20,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          8,
+          28,
+          28,
+          1,
+          16
+        ],
+        "storage_id": 5,
+        "writers": [
+          16
+        ]
+      },
+      {
+        "alias_entries": [
+          17
+        ],
+        "bytes": 8192,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 17,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p8",
+        "node": 17,
+        "op": "null",
+        "pool_capacity_bytes": 8192,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_2",
+            "node": 19,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          4,
+          1,
+          1,
+          16,
+          16
+        ],
+        "storage_id": 12,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          18
+        ],
+        "bytes": 512,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 18,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p9",
+        "node": 18,
+        "op": "null",
+        "pool_capacity_bytes": 512,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_2",
+            "node": 19,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 13,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          2,
+          8,
+          13,
+          19,
+          23,
+          27,
+          37,
+          47,
+          51
+        ],
+        "bytes": 100352,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 19,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_2",
+        "node": 19,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 200704,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast",
+            "node": 20,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          8,
+          28,
+          28,
+          1,
+          16
+        ],
+        "storage_id": 2,
+        "writers": [
+          19
+        ]
+      },
+      {
+        "alias_entries": [
+          1,
+          10,
+          20,
+          33,
+          40,
+          44
+        ],
+        "bytes": 100352,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 20,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast",
+        "node": 20,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_2",
+            "node": 23,
+            "op": "tvm_op",
+            "port": 0
+          },
+          {
+            "func": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast",
+            "node": 27,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          8,
+          28,
+          28,
+          1,
+          16
+        ],
+        "storage_id": 1,
+        "writers": [
+          20
+        ]
+      },
+      {
+        "alias_entries": [
+          21
+        ],
+        "bytes": 147456,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 21,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p10",
+        "node": 21,
+        "op": "null",
+        "pool_capacity_bytes": 147456,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_2",
+            "node": 23,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          8,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 14,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          22
+        ],
+        "bytes": 512,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 22,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p11",
+        "node": 22,
+        "op": "null",
+        "pool_capacity_bytes": 512,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_2",
+            "node": 23,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 15,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          2,
+          8,
+          13,
+          19,
+          23,
+          27,
+          37,
+          47,
+          51
+        ],
+        "bytes": 100352,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 23,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_2",
+        "node": 23,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 200704,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+            "node": 26,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          8,
+          28,
+          28,
+          1,
+          16
+        ],
+        "storage_id": 2,
+        "writers": [
+          23
+        ]
+      },
+      {
+        "alias_entries": [
+          24
+        ],
+        "bytes": 147456,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 24,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p12",
+        "node": 24,
+        "op": "null",
+        "pool_capacity_bytes": 147456,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+            "node": 26,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          8,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 16,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          25
+        ],
+        "bytes": 512,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 25,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p13",
+        "node": 25,
+        "op": "null",
+        "pool_capacity_bytes": 512,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+            "node": 26,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          8,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 17,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          5,
+          9,
+          16,
+          26,
+          30,
+          36,
+          43,
+          52
+        ],
+        "bytes": 100352,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 26,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1_1",
+        "node": 26,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast",
+            "node": 27,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          8,
+          28,
+          28,
+          1,
+          16
+        ],
+        "storage_id": 5,
+        "writers": [
+          26
+        ]
+      },
+      {
+        "alias_entries": [
+          2,
+          8,
+          13,
+          19,
+          23,
+          27,
+          37,
+          47,
+          51
+        ],
+        "bytes": 100352,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 27,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast_1",
+        "node": 27,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 200704,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_3",
+            "node": 30,
+            "op": "tvm_op",
+            "port": 0
+          },
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_4",
+            "node": 36,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          8,
+          28,
+          28,
+          1,
+          16
+        ],
+        "storage_id": 2,
+        "writers": [
+          27
+        ]
+      },
+      {
+        "alias_entries": [
+          28
+        ],
+        "bytes": 294912,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 28,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p14",
+        "node": 28,
+        "op": "null",
+        "pool_capacity_bytes": 294912,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_3",
+            "node": 30,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          8,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 18,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          29
+        ],
+        "bytes": 1024,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 29,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p15",
+        "node": 29,
+        "op": "null",
+        "pool_capacity_bytes": 1024,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_3",
+            "node": 30,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 19,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          5,
+          9,
+          16,
+          26,
+          30,
+          36,
+          43,
+          52
+        ],
+        "bytes": 50176,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 30,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_3",
+        "node": 30,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+            "node": 33,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          16,
+          14,
+          14,
+          1,
+          16
+        ],
+        "storage_id": 5,
+        "writers": [
+          30
+        ]
+      },
+      {
+        "alias_entries": [
+          31
+        ],
+        "bytes": 589824,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 31,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p16",
+        "node": 31,
+        "op": "null",
+        "pool_capacity_bytes": 589824,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+            "node": 33,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          16,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 20,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          32
+        ],
+        "bytes": 1024,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 32,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p17",
+        "node": 32,
+        "op": "null",
+        "pool_capacity_bytes": 1024,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+            "node": 33,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 21,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          1,
+          10,
+          20,
+          33,
+          40,
+          44
+        ],
+        "bytes": 50176,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 33,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+        "node": 33,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast_1",
+            "node": 37,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          16,
+          14,
+          14,
+          1,
+          16
+        ],
+        "storage_id": 1,
+        "writers": [
+          33
+        ]
+      },
+      {
+        "alias_entries": [
+          34
+        ],
+        "bytes": 32768,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 34,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p18",
+        "node": 34,
+        "op": "null",
+        "pool_capacity_bytes": 32768,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_4",
+            "node": 36,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          8,
+          1,
+          1,
+          16,
+          16
+        ],
+        "storage_id": 22,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          35
+        ],
+        "bytes": 1024,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 35,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p19",
+        "node": 35,
+        "op": "null",
+        "pool_capacity_bytes": 1024,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_4",
+            "node": 36,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 23,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          5,
+          9,
+          16,
+          26,
+          30,
+          36,
+          43,
+          52
+        ],
+        "bytes": 50176,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 36,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_4",
+        "node": 36,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast_1",
+            "node": 37,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          16,
+          14,
+          14,
+          1,
+          16
+        ],
+        "storage_id": 5,
+        "writers": [
+          36
+        ]
+      },
+      {
+        "alias_entries": [
+          2,
+          8,
+          13,
+          19,
+          23,
+          27,
+          37,
+          47,
+          51
+        ],
+        "bytes": 50176,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 37,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast_1_1",
+        "node": 37,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 200704,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_4",
+            "node": 40,
+            "op": "tvm_op",
+            "port": 0
+          },
+          {
+            "func": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast_1",
+            "node": 44,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          16,
+          14,
+          14,
+          1,
+          16
+        ],
+        "storage_id": 2,
+        "writers": [
+          37
+        ]
+      },
+      {
+        "alias_entries": [
+          38
+        ],
+        "bytes": 589824,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 38,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p20",
+        "node": 38,
+        "op": "null",
+        "pool_capacity_bytes": 589824,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_4",
+            "node": 40,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          16,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 24,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          39
+        ],
+        "bytes": 1024,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 39,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p21",
+        "node": 39,
+        "op": "null",
+        "pool_capacity_bytes": 1024,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_4",
+            "node": 40,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 25,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          1,
+          10,
+          20,
+          33,
+          40,
+          44
+        ],
+        "bytes": 50176,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 40,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_4",
+        "node": 40,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+            "node": 43,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          16,
+          14,
+          14,
+          1,
+          16
+        ],
+        "storage_id": 1,
+        "writers": [
+          40
+        ]
+      },
+      {
+        "alias_entries": [
+          41
+        ],
+        "bytes": 589824,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 41,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p22",
+        "node": 41,
+        "op": "null",
+        "pool_capacity_bytes": 589824,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+            "node": 43,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          16,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 26,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          42
+        ],
+        "bytes": 1024,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 42,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p23",
+        "node": 42,
+        "op": "null",
+        "pool_capacity_bytes": 1024,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+            "node": 43,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          16,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 27,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          5,
+          9,
+          16,
+          26,
+          30,
+          36,
+          43,
+          52
+        ],
+        "bytes": 50176,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 43,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3_1",
+        "node": 43,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast_1",
+            "node": 44,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          16,
+          14,
+          14,
+          1,
+          16
+        ],
+        "storage_id": 5,
+        "writers": [
+          43
+        ]
+      },
+      {
+        "alias_entries": [
+          1,
+          10,
+          20,
+          33,
+          40,
+          44
+        ],
+        "bytes": 50176,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 44,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_cast_cast_add_nn_relu_clip_cast_1_2",
+        "node": 44,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_5",
+            "node": 47,
+            "op": "tvm_op",
+            "port": 0
+          },
+          {
+            "func": "tvmgen_default_fused_cast_multiply_transpose_reshape_1",
+            "node": 52,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          16,
+          14,
+          14,
+          1,
+          16
+        ],
+        "storage_id": 1,
+        "writers": [
+          44
+        ]
+      },
+      {
+        "alias_entries": [
+          45
+        ],
+        "bytes": 1179648,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 45,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p24",
+        "node": 45,
+        "op": "null",
+        "pool_capacity_bytes": 1179648,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_5",
+            "node": 47,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          32,
+          16,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 28,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          46
+        ],
+        "bytes": 2048,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 46,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p25",
+        "node": 46,
+        "op": "null",
+        "pool_capacity_bytes": 2048,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_5",
+            "node": 47,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          32,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 29,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          2,
+          8,
+          13,
+          19,
+          23,
+          27,
+          37,
+          47,
+          51
+        ],
+        "bytes": 25088,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 47,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_5",
+        "node": 47,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 200704,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_5",
+            "node": 50,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          32,
+          7,
+          7,
+          1,
+          16
+        ],
+        "storage_id": 2,
+        "writers": [
+          47
+        ]
+      },
+      {
+        "alias_entries": [
+          48
+        ],
+        "bytes": 2359296,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 48,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p26",
+        "node": 48,
+        "op": "null",
+        "pool_capacity_bytes": 2359296,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_5",
+            "node": 50,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          32,
+          32,
+          3,
+          3,
+          16,
+          16
+        ],
+        "storage_id": 30,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          49
+        ],
+        "bytes": 2048,
+        "device": 12,
+        "dtype": "int32",
+        "entry": 49,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p27",
+        "node": 49,
+        "op": "null",
+        "pool_capacity_bytes": 2048,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_5",
+            "node": 50,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          32,
+          1,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 31,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          50
+        ],
+        "bytes": 25088,
+        "device": 12,
+        "dtype": "int8",
+        "entry": 50,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_5",
+        "node": 50,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 25088,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_cast_multiply_transpose_reshape",
+            "node": 51,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          32,
+          7,
+          7,
+          1,
+          16
+        ],
+        "storage_id": 32,
+        "writers": [
+          50
+        ]
+      },
+      {
+        "alias_entries": [
+          2,
+          8,
+          13,
+          19,
+          23,
+          27,
+          37,
+          47,
+          51
+        ],
+        "bytes": 100352,
+        "device": 12,
+        "dtype": "float32",
+        "entry": 51,
+        "is_arg": false,
+        "is_head": true,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_cast_multiply_transpose_reshape",
+        "node": 51,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 200704,
+        "readers": [],
+        "scope": "",
+        "shape": [
+          1,
+          512,
+          7,
+          7
+        ],
+        "storage_id": 2,
+        "writers": [
+          51
+        ]
+      },
+      {
+        "alias_entries": [
+          5,
+          9,
+          16,
+          26,
+          30,
+          36,
+          43,
+          52
+        ],
+        "bytes": 200704,
+        "device": 12,
+        "dtype": "float32",
+        "entry": 52,
+        "is_arg": false,
+        "is_head": true,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_cast_multiply_transpose_reshape_1",
+        "node": 52,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 802816,
+        "readers": [],
+        "scope": "",
+        "shape": [
+          1,
+          256,
+          14,
+          14
+        ],
+        "storage_id": 5,
+        "writers": [
+          52
+        ]
+      }
+    ],
+    "2": [
+      {
+        "alias_entries": [
+          0
+        ],
+        "bytes": 100352,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 0,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "data0",
+        "node": 0,
+        "op": "null",
+        "pool_capacity_bytes": 100352,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_add_nn_relu",
+            "node": 4,
+            "op": "tvm_op",
+            "port": 3
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          512,
+          7,
+          7
+        ],
+        "storage_id": 0,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          1
+        ],
+        "bytes": 200704,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 1,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "data1",
+        "node": 1,
+        "op": "null",
+        "pool_capacity_bytes": 200704,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_add_nn_relu",
+            "node": 4,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          256,
+          14,
+          14
+        ],
+        "storage_id": 1,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          2
+        ],
+        "bytes": 524288,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 2,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p0",
+        "node": 2,
+        "op": "null",
+        "pool_capacity_bytes": 524288,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_add_nn_relu",
+            "node": 4,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          32,
+          256,
+          1,
+          1,
+          16
+        ],
+        "storage_id": 2,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          3
+        ],
+        "bytes": 2048,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 3,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p1",
+        "node": 3,
+        "op": "null",
+        "pool_capacity_bytes": 2048,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_conv2d_add_add_nn_relu",
+            "node": 4,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          512,
+          1,
+          1
+        ],
+        "storage_id": 3,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          4
+        ],
+        "bytes": 100352,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 4,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_conv2d_add_add_nn_relu",
+        "node": 4,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 100352,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_nn_relu",
+            "node": 7,
+            "op": "tvm_op",
+            "port": 0
+          },
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 3
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          512,
+          7,
+          7
+        ],
+        "storage_id": 4,
+        "writers": [
+          4
+        ]
+      },
+      {
+        "alias_entries": [
+          5
+        ],
+        "bytes": 37748736,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 5,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p2",
+        "node": 5,
+        "op": "null",
+        "pool_capacity_bytes": 37748736,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_nn_relu",
+            "node": 7,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          6,
+          6,
+          32,
+          512,
+          16
+        ],
+        "storage_id": 5,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          6
+        ],
+        "bytes": 2048,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 6,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p3",
+        "node": 6,
+        "op": "null",
+        "pool_capacity_bytes": 2048,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_nn_relu",
+            "node": 7,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          512,
+          1,
+          1
+        ],
+        "storage_id": 6,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          7
+        ],
+        "bytes": 100352,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 7,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_nn_relu",
+        "node": 7,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 100352,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          512,
+          7,
+          7
+        ],
+        "storage_id": 7,
+        "writers": [
+          7
+        ]
+      },
+      {
+        "alias_entries": [
+          8
+        ],
+        "bytes": 37748736,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 8,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p4",
+        "node": 8,
+        "op": "null",
+        "pool_capacity_bytes": 37748736,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          6,
+          6,
+          32,
+          512,
+          16
+        ],
+        "storage_id": 8,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          9
+        ],
+        "bytes": 2048,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 9,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p5",
+        "node": 9,
+        "op": "null",
+        "pool_capacity_bytes": 2048,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+            "node": 10,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          512,
+          1,
+          1
+        ],
+        "storage_id": 9,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          10
+        ],
+        "bytes": 100352,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 10,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+        "node": 10,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 100352,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_global_avg_pool2d",
+            "node": 11,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          512,
+          7,
+          7
+        ],
+        "storage_id": 10,
+        "writers": [
+          10
+        ]
+      },
+      {
+        "alias_entries": [
+          11,
+          12
+        ],
+        "bytes": 2048,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 11,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_global_avg_pool2d",
+        "node": 11,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 2048,
+        "readers": [
+          {
+            "func": "__nop",
+            "node": 12,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          512,
+          1,
+          1
+        ],
+        "storage_id": 11,
+        "writers": [
+          11
+        ]
+      },
+      {
+        "alias_entries": [
+          11,
+          12
+        ],
+        "bytes": 2048,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 12,
+        "is_arg": false,
+        "is_head": false,
+        "is_parameter": false,
+        "name": "reshape_nop",
+        "node": 12,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 2048,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_dense_add",
+            "node": 15,
+            "op": "tvm_op",
+            "port": 0
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          512
+        ],
+        "storage_id": 11,
+        "writers": [
+          12
+        ]
+      },
+      {
+        "alias_entries": [
+          13
+        ],
+        "bytes": 2048000,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 13,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p6",
+        "node": 13,
+        "op": "null",
+        "pool_capacity_bytes": 2048000,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_dense_add",
+            "node": 15,
+            "op": "tvm_op",
+            "port": 1
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1000,
+          512
+        ],
+        "storage_id": 12,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          14
+        ],
+        "bytes": 4000,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 14,
+        "is_arg": true,
+        "is_head": false,
+        "is_parameter": true,
+        "name": "p7",
+        "node": 14,
+        "op": "null",
+        "pool_capacity_bytes": 4000,
+        "readers": [
+          {
+            "func": "tvmgen_default_fused_nn_dense_add",
+            "node": 15,
+            "op": "tvm_op",
+            "port": 2
+          }
+        ],
+        "scope": "",
+        "shape": [
+          1,
+          1000
+        ],
+        "storage_id": 13,
+        "writers": []
+      },
+      {
+        "alias_entries": [
+          15
+        ],
+        "bytes": 4000,
+        "device": 1,
+        "dtype": "float32",
+        "entry": 15,
+        "is_arg": false,
+        "is_head": true,
+        "is_parameter": false,
+        "name": "tvmgen_default_fused_nn_dense_add",
+        "node": 15,
+        "op": "tvm_op",
+        "pool_capacity_bytes": 4000,
+        "readers": [],
+        "scope": "",
+        "shape": [
+          1,
+          1000
+        ],
+        "storage_id": 14,
+        "writers": [
+          15
+        ]
+      }
+    ]
+  },
+  "ext_dev_pools": [
+    {
+      "aligned_bytes": 802816,
+      "linked_status": "absent",
+      "request_bytes": 802816,
+      "stage": 1,
+      "storage_id": 0
+    },
+    {
+      "aligned_bytes": 802816,
+      "linked_status": "absent",
+      "request_bytes": 802816,
+      "stage": 1,
+      "storage_id": 1
+    },
+    {
+      "aligned_bytes": 200704,
+      "linked_status": "absent",
+      "request_bytes": 200704,
+      "stage": 1,
+      "storage_id": 2
+    },
+    {
+      "aligned_bytes": 36864,
+      "linked_status": "absent",
+      "request_bytes": 36864,
+      "stage": 1,
+      "storage_id": 3
+    },
+    {
+      "aligned_bytes": 256,
+      "linked_status": "absent",
+      "request_bytes": 256,
+      "stage": 1,
+      "storage_id": 4
+    },
+    {
+      "aligned_bytes": 802816,
+      "linked_status": "absent",
+      "request_bytes": 802816,
+      "stage": 1,
+      "storage_id": 5
+    },
+    {
+      "aligned_bytes": 36864,
+      "linked_status": "absent",
+      "request_bytes": 36864,
+      "stage": 1,
+      "storage_id": 6
+    },
+    {
+      "aligned_bytes": 256,
+      "linked_status": "absent",
+      "request_bytes": 256,
+      "stage": 1,
+      "storage_id": 7
+    },
+    {
+      "aligned_bytes": 73728,
+      "linked_status": "absent",
+      "request_bytes": 73728,
+      "stage": 1,
+      "storage_id": 8
+    },
+    {
+      "aligned_bytes": 512,
+      "linked_status": "absent",
+      "request_bytes": 512,
+      "stage": 1,
+      "storage_id": 9
+    },
+    {
+      "aligned_bytes": 147456,
+      "linked_status": "absent",
+      "request_bytes": 147456,
+      "stage": 1,
+      "storage_id": 10
+    },
+    {
+      "aligned_bytes": 512,
+      "linked_status": "absent",
+      "request_bytes": 512,
+      "stage": 1,
+      "storage_id": 11
+    },
+    {
+      "aligned_bytes": 8192,
+      "linked_status": "absent",
+      "request_bytes": 8192,
+      "stage": 1,
+      "storage_id": 12
+    },
+    {
+      "aligned_bytes": 512,
+      "linked_status": "absent",
+      "request_bytes": 512,
+      "stage": 1,
+      "storage_id": 13
+    },
+    {
+      "aligned_bytes": 147456,
+      "linked_status": "absent",
+      "request_bytes": 147456,
+      "stage": 1,
+      "storage_id": 14
+    },
+    {
+      "aligned_bytes": 512,
+      "linked_status": "absent",
+      "request_bytes": 512,
+      "stage": 1,
+      "storage_id": 15
+    },
+    {
+      "aligned_bytes": 147456,
+      "linked_status": "absent",
+      "request_bytes": 147456,
+      "stage": 1,
+      "storage_id": 16
+    },
+    {
+      "aligned_bytes": 512,
+      "linked_status": "absent",
+      "request_bytes": 512,
+      "stage": 1,
+      "storage_id": 17
+    },
+    {
+      "aligned_bytes": 294912,
+      "linked_status": "absent",
+      "request_bytes": 294912,
+      "stage": 1,
+      "storage_id": 18
+    },
+    {
+      "aligned_bytes": 1024,
+      "linked_status": "absent",
+      "request_bytes": 1024,
+      "stage": 1,
+      "storage_id": 19
+    },
+    {
+      "aligned_bytes": 589824,
+      "linked_status": "absent",
+      "request_bytes": 589824,
+      "stage": 1,
+      "storage_id": 20
+    },
+    {
+      "aligned_bytes": 1024,
+      "linked_status": "absent",
+      "request_bytes": 1024,
+      "stage": 1,
+      "storage_id": 21
+    },
+    {
+      "aligned_bytes": 32768,
+      "linked_status": "absent",
+      "request_bytes": 32768,
+      "stage": 1,
+      "storage_id": 22
+    },
+    {
+      "aligned_bytes": 1024,
+      "linked_status": "absent",
+      "request_bytes": 1024,
+      "stage": 1,
+      "storage_id": 23
+    },
+    {
+      "aligned_bytes": 589824,
+      "linked_status": "absent",
+      "request_bytes": 589824,
+      "stage": 1,
+      "storage_id": 24
+    },
+    {
+      "aligned_bytes": 1024,
+      "linked_status": "absent",
+      "request_bytes": 1024,
+      "stage": 1,
+      "storage_id": 25
+    },
+    {
+      "aligned_bytes": 589824,
+      "linked_status": "absent",
+      "request_bytes": 589824,
+      "stage": 1,
+      "storage_id": 26
+    },
+    {
+      "aligned_bytes": 1024,
+      "linked_status": "absent",
+      "request_bytes": 1024,
+      "stage": 1,
+      "storage_id": 27
+    },
+    {
+      "aligned_bytes": 1179648,
+      "linked_status": "absent",
+      "request_bytes": 1179648,
+      "stage": 1,
+      "storage_id": 28
+    },
+    {
+      "aligned_bytes": 2048,
+      "linked_status": "absent",
+      "request_bytes": 2048,
+      "stage": 1,
+      "storage_id": 29
+    },
+    {
+      "aligned_bytes": 2359296,
+      "linked_status": "absent",
+      "request_bytes": 2359296,
+      "stage": 1,
+      "storage_id": 30
+    },
+    {
+      "aligned_bytes": 2048,
+      "linked_status": "absent",
+      "request_bytes": 2048,
+      "stage": 1,
+      "storage_id": 31
+    },
+    {
+      "aligned_bytes": 25088,
+      "linked_status": "absent",
+      "request_bytes": 25088,
+      "stage": 1,
+      "storage_id": 32
+    }
+  ],
+  "external_k2_bytes": 2207744,
+  "graph_pool_aligned_bytes": 8880640,
+  "package": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/resource_aware_maxplus/v1_p7_top20_board_20260904/packages/05_cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t2/package",
+  "package_sha256": {
+    "libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+    "libvta.so": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+    "manifest.json": "51e2da038dfeabce59d3cc634d9b070c1dd34126acf404c28e2a119e63d02516",
+    "stages/stage0/graph.json": "9ed987b41af738c0f5dc27603ffbc986ba078df9aea19820ff03ef7511b675a6",
+    "stages/stage0/graphlib.so": "792433337d6bfac9b06baa143a088d8cd5a3e350d7723b4d0b6ede9dbfd359e3",
+    "stages/stage0/params.params": "3940c871777ccf82d0b83d1e35c6f448a24c82eab0f4cda967ef98e4eed95b6e",
+    "stages/stage1/graph.json": "57f903e33fb222c688fe227e83c24584793b7685a3eb7dbe7abe25f2928d5394",
+    "stages/stage1/graphlib.so": "6db83800019edb50e7775e645ce9af88420889769fab3d36b7ea1982f513c7ea",
+    "stages/stage1/params.params": "2d21144bf47d8bd66e5b1884ad24be5f4a49c13d1744bade7152d87b5bf5e513",
+    "stages/stage2/graph.json": "ce1e4612973a182c75fd5f48cdaefa174036f8407e5010908316a8b93109a05a",
+    "stages/stage2/graphlib.so": "cead419b1a857a874af41d90497c55fb2e5e27b6d404b0f6a5a17b8f6f08b14f",
+    "stages/stage2/params.params": "669697465131980468e0d033f288c22d6d2c0efb860c985b10fe8da31d0e4f2f"
+  },
+  "predicted_saved_bytes": 802816,
+  "runtime_qualified": false,
+  "schema": "c3s-static-audit-v1",
+  "static_only": true
+}

@@ -1,0 +1,256 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "name": "data0", 
+      "inputs": []
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_reshape_transpose", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "1", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_reshape_transpose", 
+        "hash": "8478e60f236143df"
+      }, 
+      "inputs": [
+        [
+          0, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_multiply_transpose_reshape_round_clip_cast_reshape_transpose", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "1", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_multiply_transpose_reshape_round_clip_cast_reshape_transpose", 
+        "hash": "df90941d21881fde"
+      }, 
+      "inputs": [
+        [
+          1, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "null", 
+      "name": "p0", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "p1", 
+      "inputs": []
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "3", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast", 
+        "out_layout": "", 
+        "data_layout": "NCHW1n16c", 
+        "kernel_layout": "OIHW16o16i", 
+        "hash": "25255e476ce76319"
+      }, 
+      "inputs": [
+        [
+          2, 
+          0, 
+          0
+        ], 
+        [
+          3, 
+          0, 
+          0
+        ], 
+        [
+          4, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "null", 
+      "name": "p2", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "p3", 
+      "inputs": []
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "3", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast", 
+        "out_layout": "", 
+        "data_layout": "NCHW1n16c", 
+        "kernel_layout": "OIHW16o16i", 
+        "hash": "4cd59d7222f0a39a"
+      }, 
+      "inputs": [
+        [
+          5, 
+          0, 
+          0
+        ], 
+        [
+          6, 
+          0, 
+          0
+        ], 
+        [
+          7, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_cast_multiply_transpose_reshape", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "1", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_cast_multiply_transpose_reshape", 
+        "hash": "09792583f664ee48"
+      }, 
+      "inputs": [
+        [
+          8, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_transpose_reshape", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "1", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_transpose_reshape", 
+        "hash": "c7fb281c030f7f62"
+      }, 
+      "inputs": [
+        [
+          1, 
+          0, 
+          0
+        ]
+      ]
+    }
+  ], 
+  "arg_nodes": [0, 3, 4, 6, 7], 
+  "heads": [
+    [
+      9, 
+      0, 
+      0
+    ], 
+    [
+      10, 
+      0, 
+      0
+    ]
+  ], 
+  "attrs": {
+    "dltype": [
+      "list_str", 
+      [
+        "float32", 
+        "float32", 
+        "int8", 
+        "int8", 
+        "int32", 
+        "int8", 
+        "int8", 
+        "int32", 
+        "int8", 
+        "float32", 
+        "float32"
+      ]
+    ], 
+    "device_index": [
+      "list_int", 
+      [
+        12, 
+        12, 
+        12, 
+        12, 
+        12, 
+        12, 
+        12, 
+        12, 
+        12, 
+        12, 
+        12
+      ]
+    ], 
+    "storage_id": [
+      "list_int", 
+      [
+        0, 
+        1, 
+        2, 
+        3, 
+        4, 
+        5, 
+        6, 
+        7, 
+        2, 
+        5, 
+        2
+      ]
+    ], 
+    "shape": [
+      "list_shape", 
+      [
+        [1, 512, 7, 7], 
+        [1, 32, 7, 7, 1, 16], 
+        [1, 32, 7, 7, 1, 16], 
+        [32, 32, 3, 3, 16, 16], 
+        [32, 1, 1, 1, 16], 
+        [1, 32, 7, 7, 1, 16], 
+        [32, 32, 3, 3, 16, 16], 
+        [32, 1, 1, 1, 16], 
+        [1, 32, 7, 7, 1, 16], 
+        [1, 512, 7, 7], 
+        [1, 512, 7, 7]
+      ]
+    ]
+  }, 
+  "node_row_ptr": [
+    0, 
+    1, 
+    2, 
+    3, 
+    4, 
+    5, 
+    6, 
+    7, 
+    8, 
+    9, 
+    10, 
+    11
+  ]
+}

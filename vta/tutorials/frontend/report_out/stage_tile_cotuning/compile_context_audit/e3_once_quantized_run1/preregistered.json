@@ -1,0 +1,44 @@
+{
+  "scope": "Host LLVM numerical and compiler-context qualification; no timing or board claims",
+  "arms": [
+    "A original joined",
+    "B joined plus stop_fusion at both cut edges",
+    "C two host Executors sharing int8 output/input storage",
+    "D two host Executors with int8 copy",
+    "C_float exact float32 transport shared",
+    "D_float exact float32 transport copied"
+  ],
+  "reference": "frozen once-quantized local joined stage, including existing wrap behavior",
+  "cases": [
+    "frozen uniform",
+    "frozen normal including wrap counterexamples",
+    "frozen zeros"
+  ],
+  "threshold": "bit-exact output and exact transport at all edges; no accuracy-policy repair",
+  "sources_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/qualify_once_quantized_tail_split.py": "f644c7f5f0aa3be1c61227172585dddc62569423b9f0aed1c378c8d4d7d993c5",
+    "/home/orange/code/tvm/vta/tutorials/frontend/analyze_vta_tail_quantization.py": "946676e0202b67aa656d52617dbd5ae695000b73260363b9cf02587f11089eb5",
+    "/home/orange/code/tvm/vta/tutorials/frontend/audit_vta_compile_context.py": "d63f7f25bcb30f011993d0df88887a79e40a92a65c0af5e11862a9113a628ee6",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/vta_05_07/quantized.json": "fd98dca07379fd84b7f6b958ed7931ead1ca7497aa17b2fdab4b5dbb7202de90",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_05_06/inputs_0.npz": "8023c6ba1bd762501cf9392243435b35ddbec2f945219d872d92bf9bf8488f40",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_05_06/inputs_1.npz": "20d6138ea58220010098cca762dc40ad6112a17104c762d93130c2e9250371ea",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_05_06/inputs_2.npz": "ccc4fa19468f1d4258dbe1f30958affb0eb08a1d740417443bbcf20d6c5a2e93",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/layer2_case0.npz": "85a15f617fee15c16fac491e6bb1c97a40538aa94ee4fbf3867311f53b6a312e",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/layer2_case1.npz": "d3297b76aa31642356c1b9c0a023cf85824d2237dc38463f182918a744ada074",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/layer2_case2.npz": "51db308ed865702f0cbd317d85ee871725f7c4b86169fd1b2136c699a4c719fb",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/vta_10_12/quantized.json": "e5e076d0effecdeb98da10df2ac4b9f161b9e46f63a6ac600a05ffc9e272bd61",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_10_11/inputs_0.npz": "d56f9afadea1dbe636c3065e048cf314eec04913bb10364470e61ef50262b77f",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_10_11/inputs_1.npz": "6964b5f6811f44afa791cc63fdc2cb088092f57ab40c5e4b3980d8f1bdcbc216",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_10_11/inputs_2.npz": "56207fcf8d65aa8f5829813fca4c5c69f9a4d885b8eb8e6119925aa243ff4ec4",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/layer3_case0.npz": "e6e0a19620de81b68644abc88c2665e251ea9e24c7c9b22a757b9b680f0d841f",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/layer3_case1.npz": "a75e1fa0c4bb1d18d382074e653cd5c4d29709923d200b3f7c00a555ca944b36",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/layer3_case2.npz": "3436aac037cda25df6b0a00de6015f59f1cfa9acfed250ec8f2495ecc2e5ec15",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/vta_15_17/quantized.json": "ea0e9db0374b04e7de76eefc86aa56ee51d1f6ab140a033b73ecf1749d6f6621",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_15_16/inputs_0.npz": "e3cf8a3edd4e2e4306cb43e6cb7389d15b6a96bc496616e715dbfab7b6215ade",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_15_16/inputs_1.npz": "08e65e4cef7ae0bf07d80b368c87684fbe31a9c029ce1b742bdfe81febb06e25",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_15_16/inputs_2.npz": "ed4d4c55001f33fe1312d7a995321e6aa9faeb122ea4b25d2e7405c81ed2ee2b",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/layer4_case0.npz": "371c150fd6d5b65279d9d5ad46401c6add344cbfba58b064681e2879348aed7e",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/layer4_case1.npz": "8038c632f466bed76cdcc6ffc73cb611b0c6137c2f4d2c8b50bfb22f72aadb63",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/e3_tail_pilot_run1/layer4_case2.npz": "d2904b46506b25cc7e65ad35a4b974517b9a9801d37f0b3b0fe20963a0178ba1"
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        16,
+        10,
+        10,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        8,
+        16,
+        1,
+        1,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "config": {
+    "index": 541,
+    "code_hash": null,
+    "entity": [
+      [
+        "tile_b",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_h",
+        "sp",
+        [
+          -1,
+          2
+        ]
+      ],
+      [
+        "tile_w",
+        "sp",
+        [
+          -1,
+          10
+        ]
+      ],
+      [
+        "tile_ci",
+        "sp",
+        [
+          -1,
+          8
+        ]
+      ],
+      [
+        "tile_co",
+        "sp",
+        [
+          -1,
+          4
+        ]
+      ],
+      [
+        "oc_nthread",
+        "ot",
+        2
+      ],
+      [
+        "h_nthread",
+        "ot",
+        1
+      ]
+    ]
+  },
+  "host": "192.168.1.247",
+  "port": 9090,
+  "clean_start": {
+    "prior": {
+      "PID": "10611",
+      "CWD": "/var/volatile/vta_c3_ram/runtime"
+    },
+    "bitstream_reload": {
+      "firmware": "vta_hpc.bit",
+      "sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+      "state": "operating"
+    },
+    "fresh_rpc": {
+      "PID": "10647",
+      "CWD": "/var/volatile/vta_c3_ram/runtime"
+    }
+  },
+  "correctness": [
+    {
+      "seed": 0,
+      "correct": true,
+      "mismatch_count": 0,
+      "output_range": [
+        0,
+        23
+      ],
+      "expected_range": [
+        0,
+        23
+      ]
+    },
+    {
+      "seed": 20250901,
+      "correct": true,
+      "mismatch_count": 0,
+      "output_range": [
+        0,
+        23
+      ],
+      "expected_range": [
+        0,
+        23
+      ]
+    },
+    {
+      "seed": 20260910,
+      "correct": true,
+      "mismatch_count": 0,
+      "output_range": [
+        0,
+        23
+      ],
+      "expected_range": [
+        0,
+        23
+      ]
+    }
+  ],
+  "correctness_seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "output_range": [
+    0,
+    23
+  ],
+  "expected_range": [
+    0,
+    23
+  ],
+  "correct": true,
+  "costs_s": [
+    0.000693847,
+    0.000719377,
+    0.000730657
+  ],
+  "runtime_profile": {
+    "mem_copy_from_host_calls": 0,
+    "mem_copy_from_host_bytes": 0,
+    "mem_copy_from_host_us": 0,
+    "mem_copy_to_host_calls": 0,
+    "mem_copy_to_host_bytes": 0,
+    "mem_copy_to_host_us": 0,
+    "flush_cache_calls": 0,
+    "flush_cache_bytes": 0,
+    "flush_cache_us": 0,
+    "invalidate_cache_calls": 0,
+    "invalidate_cache_bytes": 0,
+    "invalidate_cache_us": 0,
+    "load_buffer_2d_calls": 40,
+    "load_buffer_2d_bytes": 215040,
+    "load_buffer_2d_small_calls": 20,
+    "load_buffer_2d_strided_calls": 40,
+    "load_buffer_2d_xsize1_calls": 0,
+    "load_buffer_2d_ysize1_calls": 0,
+    "load_buffer_2d_padded_calls": 0,
+    "load_buffer_2d_enqueue_us": 18.48,
+    "store_buffer_2d_calls": 10,
+    "store_buffer_2d_bytes": 12800,
+    "store_buffer_2d_small_calls": 10,
+    "store_buffer_2d_strided_calls": 10,
+    "store_buffer_2d_xsize1_calls": 0,
+    "store_buffer_2d_ysize1_calls": 0,
+    "store_buffer_2d_enqueue_us": 4.11,
+    "push_gemm_op_calls": 30,
+    "push_gemm_op_us": 8.46,
+    "push_alu_op_calls": 30,
+    "push_alu_op_us": 8.85001,
+    "template_capture_calls": 0,
+    "template_replay_hits": 0,
+    "template_replay_fallbacks": 0,
+    "template_capture_us": 0,
+    "template_replay_us": 0,
+    "input_copy_calls": 0,
+    "input_copy_bytes": 0,
+    "input_copy_us": 0,
+    "output_copy_calls": 0,
+    "output_copy_bytes": 0,
+    "output_copy_us": 0,
+    "device_copy_calls": 0,
+    "device_copy_bytes": 0,
+    "device_copy_us": 0,
+    "synchronize_calls": 1,
+    "synchronize_insns": 138,
+    "synchronize_load_bytes": 215040,
+    "synchronize_store_bytes": 12800,
+    "device_run_wait_us": 527.945,
+    "driver_run_calls": 1,
+    "driver_run_insns": 138,
+    "driver_timeout_calls": 0,
+    "driver_poll_iters": 8,
+    "driver_run_total_us": 510.305,
+    "driver_submit_mmio_us": 7.53,
+    "driver_post_start_sleep_us": 60.03,
+    "driver_poll_wait_us": 439.265,
+    "event_count": 111,
+    "load_buffer_2d_uop_calls": 0,
+    "load_buffer_2d_uop_bytes": 0,
+    "store_buffer_2d_uop_calls": 0,
+    "store_buffer_2d_uop_bytes": 0,
+    "load_buffer_2d_inp_calls": 20,
+    "load_buffer_2d_inp_bytes": 51200,
+    "store_buffer_2d_inp_calls": 0,
+    "store_buffer_2d_inp_bytes": 0,
+    "load_buffer_2d_wgt_calls": 20,
+    "load_buffer_2d_wgt_bytes": 163840,
+    "store_buffer_2d_wgt_calls": 0,
+    "store_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_acc_calls": 0,
+    "load_buffer_2d_acc_bytes": 0,
+    "store_buffer_2d_acc_calls": 0,
+    "store_buffer_2d_acc_bytes": 0,
+    "load_buffer_2d_out_calls": 0,
+    "load_buffer_2d_out_bytes": 0,
+    "store_buffer_2d_out_calls": 10,
+    "store_buffer_2d_out_bytes": 12800,
+    "load_buffer_2d_acc8_calls": 0,
+    "load_buffer_2d_acc8_bytes": 0,
+    "store_buffer_2d_acc8_calls": 0,
+    "store_buffer_2d_acc8_bytes": 0,
+    "load_buffer_2d_unknown_calls": 0,
+    "load_buffer_2d_unknown_bytes": 0,
+    "store_buffer_2d_unknown_calls": 0,
+    "store_buffer_2d_unknown_bytes": 0,
+    "load_buffer_2d_top_signatures": [
+      "wgt:x=8,y=4,stride=16,count=20",
+      "inp:x=20,y=8,stride=100,count=20"
+    ],
+    "store_buffer_2d_top_signatures": [
+      "out:x=20,y=4,stride=100,count=10"
+    ]
+  }
+}

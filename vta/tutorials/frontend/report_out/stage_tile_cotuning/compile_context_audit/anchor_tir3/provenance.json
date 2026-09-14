@@ -1,0 +1,32 @@
+{
+  "script_sha256": "48a1fe4bf4ced7e5a27eeaf3b0be6eed1eb79de7cdbef80c7b887df0434e5776",
+  "libtvm_sha256": "bde07171f8f3b96463a5662241a58529fd9fecaa1d6fc4b0a939fc8fb73afb0a",
+  "vta_config": {
+    "TARGET": "axu5evb",
+    "HW_VER": "0.0.2",
+    "LOG_INP_WIDTH": 3,
+    "LOG_WGT_WIDTH": 3,
+    "LOG_ACC_WIDTH": 5,
+    "LOG_BATCH": 0,
+    "LOG_BLOCK": 4,
+    "LOG_UOP_BUFF_SIZE": 15,
+    "LOG_INP_BUFF_SIZE": 15,
+    "LOG_WGT_BUFF_SIZE": 18,
+    "LOG_ACC_BUFF_SIZE": 17,
+    "LOG_BLOCK_IN": 4,
+    "LOG_BLOCK_OUT": 4,
+    "LOG_OUT_WIDTH": 3,
+    "LOG_OUT_BUFF_SIZE": 15,
+    "COHERENT": true
+  },
+  "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+  "host": "llvm -keys=arm_cpu,cpu -mtriple=aarch64-linux-gnu",
+  "compile_host_environment": {
+    "TVM_NUM_THREADS": null,
+    "TVM_THREAD_POOL_SPIN_COUNT": "0",
+    "OMP_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null
+  },
+  "profile_builder_sha256": "cda41c723828a164e38d37fa78166d687307e6dd7c0b2d3fb309176486a0904a",
+  "selection": "fixed layer4 endpoint qualification anchors; no board measurement"
+}

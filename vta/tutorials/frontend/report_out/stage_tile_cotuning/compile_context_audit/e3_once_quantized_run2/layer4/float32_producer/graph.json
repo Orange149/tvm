@@ -1,0 +1,289 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "name": "data0", 
+      "inputs": []
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_multiply_round_clip_cast", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "1", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_multiply_round_clip_cast", 
+        "hash": "c85a9427868bc394"
+      }, 
+      "inputs": [
+        [
+          0, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "null", 
+      "name": "p0", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "p1", 
+      "inputs": []
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "3", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast", 
+        "out_layout": "", 
+        "data_layout": "NCHW", 
+        "kernel_layout": "OIHW", 
+        "hash": "042b71b6f9036f62"
+      }, 
+      "inputs": [
+        [
+          1, 
+          0, 
+          0
+        ], 
+        [
+          2, 
+          0, 
+          0
+        ], 
+        [
+          3, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "null", 
+      "name": "p2", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "p3", 
+      "inputs": []
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "3", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast", 
+        "out_layout": "", 
+        "data_layout": "NCHW", 
+        "kernel_layout": "OIHW", 
+        "hash": "7cf551580bab212f"
+      }, 
+      "inputs": [
+        [
+          4, 
+          0, 
+          0
+        ], 
+        [
+          5, 
+          0, 
+          0
+        ], 
+        [
+          6, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_cast_multiply", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "1", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_cast_multiply", 
+        "hash": "152ffec02c089cfd"
+      }, 
+      "inputs": [
+        [
+          7, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "null", 
+      "name": "p4", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "p5", 
+      "inputs": []
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "3", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1", 
+        "out_layout": "", 
+        "data_layout": "NCHW", 
+        "kernel_layout": "OIHW", 
+        "hash": "b2a655603e2ce45a"
+      }, 
+      "inputs": [
+        [
+          1, 
+          0, 
+          0
+        ], 
+        [
+          9, 
+          0, 
+          0
+        ], 
+        [
+          10, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_cast_multiply_1", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "1", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_cast_multiply", 
+        "hash": "152ffec02c089cfd"
+      }, 
+      "inputs": [
+        [
+          11, 
+          0, 
+          0
+        ]
+      ]
+    }
+  ], 
+  "arg_nodes": [0, 2, 3, 5, 6, 9, 10], 
+  "heads": [
+    [
+      8, 
+      0, 
+      0
+    ], 
+    [
+      12, 
+      0, 
+      0
+    ]
+  ], 
+  "attrs": {
+    "dltype": [
+      "list_str", 
+      [
+        "float32", 
+        "int8", 
+        "int8", 
+        "int32", 
+        "int8", 
+        "int8", 
+        "int32", 
+        "int8", 
+        "float32", 
+        "int8", 
+        "int32", 
+        "int8", 
+        "float32"
+      ]
+    ], 
+    "device_index": [
+      "list_int", 
+      [
+        1, 
+        1, 
+        1, 
+        1, 
+        1, 
+        1, 
+        1, 
+        1, 
+        1, 
+        1, 
+        1, 
+        1, 
+        1
+      ]
+    ], 
+    "storage_id": [
+      "list_int", 
+      [
+        0, 
+        1, 
+        2, 
+        3, 
+        4, 
+        5, 
+        6, 
+        7, 
+        4, 
+        8, 
+        9, 
+        7, 
+        1
+      ]
+    ], 
+    "shape": [
+      "list_shape", 
+      [
+        [1, 256, 14, 14], 
+        [1, 256, 14, 14], 
+        [512, 256, 3, 3], 
+        [512, 1, 1], 
+        [1, 512, 7, 7], 
+        [512, 512, 3, 3], 
+        [512, 1, 1], 
+        [1, 512, 7, 7], 
+        [1, 512, 7, 7], 
+        [512, 256, 1, 1], 
+        [512, 1, 1], 
+        [1, 512, 7, 7], 
+        [1, 512, 7, 7]
+      ]
+    ]
+  }, 
+  "node_row_ptr": [
+    0, 
+    1, 
+    2, 
+    3, 
+    4, 
+    5, 
+    6, 
+    7, 
+    8, 
+    9, 
+    10, 
+    11, 
+    12, 
+    13
+  ]
+}

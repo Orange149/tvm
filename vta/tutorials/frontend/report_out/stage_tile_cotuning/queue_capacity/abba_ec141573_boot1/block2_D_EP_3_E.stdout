@@ -1,0 +1,12 @@
+[THREADPOOL] main runtime.NumThreads=4 requested_cpus=default effective_cpus=0,1,2,3
+[THREADPOOL] resolved stage threads: stage0=4 stage1=1 stage2=1 stage3=1 stage4=1
+[LOAD] stage0 device=cpu inputs=1 outputs=1
+[LOAD] stage1 device=vta inputs=1 outputs=1
+[LOAD] stage2 device=cpu inputs=1 outputs=1
+[LOAD] stage3 device=vta inputs=1 outputs=1
+[LOAD] stage4 device=cpu inputs=1 outputs=1
+[THREADPOOL] pipeline.stage0 runtime.NumThreads=4 requested_cpus=0,1,2,3 effective_cpus=0,1,2,3
+[THREADPOOL] pipeline.stage1 runtime.NumThreads=1 requested_cpus=default effective_cpus=0,1,2,3
+[THREADPOOL] pipeline.stage3 runtime.NumThreads=1 requested_cpus=default effective_cpus=0,1,2,3
+[THREADPOOL] pipeline.stage2 runtime.NumThreads=1 requested_cpus=0 effective_cpus=0
+[THREADPOOL] pipeline.stage4 runtime.NumThreads=1 requested_cpus=0 effective_cpus=0

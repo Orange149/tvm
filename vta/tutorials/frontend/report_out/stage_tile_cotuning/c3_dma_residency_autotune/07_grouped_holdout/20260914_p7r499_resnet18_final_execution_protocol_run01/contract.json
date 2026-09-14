@@ -1,0 +1,150 @@
+{
+  "board_contacted": false,
+  "claim_boundaries": {
+    "logical_VTA_DMA_is_physical_AXI": false,
+    "method_consistent_is_source_exact_reproduction": false,
+    "pool_XGB_is_official_empty_history_AutoTVM": false,
+    "random_input_equivalence_is_ImageNet_accuracy": false
+  },
+  "clean_start_H1": {
+    "both_W0_to_T1_and_T0_to_T1_reported": true,
+    "boundaries": {
+      "T0": "clean bitstream and fresh RPC ready before tuning work",
+      "T1": "selected full graph passes three inputs and seven paired rounds",
+      "W0": "host process starts before preflight/bitstream/RPC"
+    },
+    "execution_order": [
+      "XGB-seed-67001",
+      "OURS-run-1",
+      "OURS-run-2",
+      "XGB-seed-67002",
+      "XGB-seed-67003",
+      "OURS-run-3"
+    ],
+    "ours": {
+      "candidate_budget": 13,
+      "candidate_generation": "H1-only deterministic max-min batches until at least 12 three-seed FSim-pass identities",
+      "performance_labels_reused": false,
+      "runs": 3
+    },
+    "xgb": {
+      "history": "empty",
+      "seeds": [
+        67001,
+        67002,
+        67003
+      ],
+      "target_tophub_used_by_search": false,
+      "trial_cap": 300,
+      "wall_budget_seconds": 600
+    }
+  },
+  "failure_accounting": {
+    "RPC_or_power_interruption": "invalidate entire session; no clock splice",
+    "automatic_recovery": "included in W0/T0 wall and event ledger",
+    "compile_failure": "gross plus real wall",
+    "wrong_answer": "invalid; never enters performance regression"
+  },
+  "input_hashes": {
+    "cross_compile": "d0a26b93465fe0746cde22f2218494a4a8f55bee03a2336cd080882e0ece0608",
+    "fullgraph_source_contract": "57ad4a0ce67debfa5076d8ff0ba0e91ae5c41c2cf36c7f22f92dcb6527d6c562",
+    "merged_board_pool": "ecdef1f45ed752990553a655346791e82d1905b5a4626a0b568efc909aed630a",
+    "superseded_postboard_contract": "bddd186f214c4dc86a29569b80333da785f2e666ee250dfbee4998842ffd3938"
+  },
+  "operator_pool": {
+    "candidate_count": 214,
+    "correctness": "three seeds, first wrong answer stops; interruption invalidates the session",
+    "oracle": "connect only after the complete non-spliced pool",
+    "timing": "five balanced rounds for every FPGA-correct identity",
+    "workload_counts": {
+      "R18-H1": 104,
+      "R18-H2": 44,
+      "R18-H3": 66
+    }
+  },
+  "pool_replay": {
+    "actual_common_pool_cost_and_counterfactual_lazy_cost_are_separate": true,
+    "budgets": [
+      10,
+      20,
+      50,
+      75,
+      96
+    ],
+    "model_A_plus_DMA_is_ablation": true,
+    "policies": [
+      "random",
+      "stock_mode_aware_xgb",
+      "rieber_hw_init_xgb",
+      "ml2tuner_pva",
+      "cheng_minimum_access",
+      "ours_dma_multifidelity"
+    ],
+    "seeds": [
+      57001,
+      57002,
+      57003,
+      57004,
+      57005,
+      57006,
+      57007,
+      57008,
+      57009,
+      57010,
+      57011,
+      57012,
+      57013,
+      57014,
+      57015,
+      57016,
+      57017,
+      57018,
+      57019,
+      57020
+    ]
+  },
+  "schema": "c3_resnet18_final_execution_protocol_v1",
+  "selected_fullgraph": {
+    "correctness": "three deterministic inputs, every output, exact equality to stock",
+    "programs": [
+      "stock_tophub_reference",
+      "pool_stock_mode_aware_xgb",
+      "cheng_minimum_access",
+      "ml2tuner_pva",
+      "ours_dma_multifidelity"
+    ],
+    "same_route_signature_built_once": true,
+    "selection_budget": 50,
+    "selection_seed": 57001,
+    "timing": "seven balanced rounds in one non-spliced clean-start session"
+  },
+  "source_hashes": {
+    "/home/orange/code/tvm/python/tvm/relay/testing/resnet.py": "c2a33719c5e532df3577a72d6712bff82ffade203d4ff92e4b8c22d634d74191",
+    "/home/orange/code/tvm/vta/python/vta/top/residency_dispatch.py": "89c0d434e4822b77561805e693b3ed0a432e3c888942612c883589e89c17d84b",
+    "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d.py": "083b2fcf57142073cf218a809f42be293c87b5788d7e6ba2685e84750f1fb9dc",
+    "/home/orange/code/tvm/vta/python/vta/top/vta_conv2d_residency.py": "3b33bc686c5de2ddc306822cea4571f53b92d02e95ab3b8a913099ae5018eb6b",
+    "/home/orange/code/tvm/vta/tutorials/frontend/analyze_vta_c3_cheng_four_schemes.py": "eb153b7e48c7e518e27b75e63b7559fae02fd439e69954a75d9e2b1e160e9f3e",
+    "/home/orange/code/tvm/vta/tutorials/frontend/analyze_vta_c3_resnet18_clean_start_ab.py": "09dfdfeb08d482b7f4059e69282c7eead40a05cae7c8a33fc9eeabdcda71059d",
+    "/home/orange/code/tvm/vta/tutorials/frontend/analyze_vta_c3_resnet18_literature_pool.py": "5e8a9d9126eaf3825661e8b4cdaf5690fb12785f164481efdf4ebc363e13f728",
+    "/home/orange/code/tvm/vta/tutorials/frontend/build_vta_c3_resnet18_fullgraph_programs.py": "eb7f2bed566c55f103838c28e9e4e4ec6cb1e57a494306c295d76370e7bc653c",
+    "/home/orange/code/tvm/vta/tutorials/frontend/cross_compile_vta_c3_resnet18_board_pool.py": "2a974e3f1f9c511481d9135f641ee06658331e96d7bd8480ba1aeb8307187eed",
+    "/home/orange/code/tvm/vta/tutorials/frontend/extend_vta_c3_resnet18_literature_candidates.py": "74429a4a6f70db7bff0f92793ca584f7e75f86e2ad606bad6c37deb3593e0f2d",
+    "/home/orange/code/tvm/vta/tutorials/frontend/freeze_vta_c3_resnet18_board_pool.py": "e462bf9b4e66d938afafe7bb0271b23dc30e0507e832978245edf94d36121643",
+    "/home/orange/code/tvm/vta/tutorials/frontend/freeze_vta_c3_resnet18_fullgraph_selections.py": "42b077f19c4ecf3852523d3292338d114e21c186a8b57810caeac47ae47df52c",
+    "/home/orange/code/tvm/vta/tutorials/frontend/plot_vta_c3_literature_results.py": "591399473549bd5cb3c1e2149f028f424a59fc85ba2e55b8664688d6582bfc6e",
+    "/home/orange/code/tvm/vta/tutorials/frontend/prepare_vta_c3_resnet18_literature_candidates.py": "9b08b5bb5f4b85e7a331f15890ca13ed6e74968ff99d3e93b1d890de7a8818a5",
+    "/home/orange/code/tvm/vta/tutorials/frontend/prepare_vta_c3_resnet18_literature_replay.py": "8ba1249627a362b99375052557f28f44d3edcfd7695eff9478a65d6ccc96af78",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_literature_baselines.py": "a177b5337dadea696586d38d86a5b20ed80089e6f53b016ab88c859aa4edd15d",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_board_pool.py": "7e8b3cf7ee3aaa5a00d87a0eda2271263fe12ce43e8945dfd50eee13c94819c4",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_from_scratch_ours_fullgraph.py": "138bc3de1718c6bf8ccf5960f0b30ffff21ad878a5afc281b812fc8a009e4a17",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_fullgraph_programs.py": "82b7326ae3584286d9fbfc2dc287ee33d3aa8445f277e3d94fb5be9950773ddb",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_local_qualification.py": "21b3669a9446310ce3c6005fbce76e42bc0172c1ac5cdf054be12b4d2261e69f",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_from_scratch_autotvm_fullgraph.py": "e35b831f1b92458326afeebd4423f638e1e712c0d4463cd9de09321fc4046962"
+  },
+  "status": "frozen_before_any_merged_pool_fpga_or_resnet18_fullgraph_label",
+  "supersedes": {
+    "manifest_sha256": "bddd186f214c4dc86a29569b80333da785f2e666ee250dfbee4998842ffd3938",
+    "reason": "analysis rows now retain terminal candidate identity needed for immutable full-graph deployment"
+  },
+  "target_performance_labels_read": false
+}

@@ -1,0 +1,11 @@
+[THREADPOOL] pair.prepare runtime.NumThreads=4 requested_cpus=default effective_cpus=0,1,2,3
+[LOAD] stage0 device=cpu inputs=1 outputs=1
+[LOAD] stage1 device=vta inputs=1 outputs=1
+[LOAD] stage2 device=cpu inputs=1 outputs=1
+[THREADPOOL] pair.reference0 runtime.NumThreads=4 requested_cpus=0,1,2,3 effective_cpus=0,1,2,3
+[THREADPOOL] pair.reference1 runtime.NumThreads=1 requested_cpus=default effective_cpus=0,1,2,3
+[THREADPOOL] pair.reference2 runtime.NumThreads=1 requested_cpus=0 effective_cpus=0
+[REFERENCE] [{"index":0,"shape":[1,1000],"dtype":"float32","size":1000,"nbytes":4000,"fnv1a64":"00b1f37535ac3647","min":-3.879065037,"max":9.479934692,"mean":0.000342766,"sum":0.342765740}]
+[THREADPOOL] pair.worker1 runtime.NumThreads=1 requested_cpus=0 effective_cpus=0
+[THREADPOOL] pair.worker0 runtime.NumThreads=1 requested_cpus=default effective_cpus=0,1,2,3
+[PAIR_OK] 50 samples; all stage outputs match reference

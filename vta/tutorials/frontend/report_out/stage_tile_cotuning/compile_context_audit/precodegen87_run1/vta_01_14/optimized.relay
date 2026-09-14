@@ -1,0 +1,213 @@
+#[version = "0.0.5"]
+def @main(%data0 {virtual_device=VirtualDevice(device_type=12, virtual_device_id=0, target=Target(id=58db242d3af0, kind='ext_dev', keys={'vta', 'cpu'}, attrs={'model': "axu5evb_1x16_i8w8a32_15_15_18_17", 'device': "vta"}, host=Target(id=58db279a9b30, kind='llvm', keys={'arm_cpu', 'cpu'}, attrs={'mtriple': "aarch64-linux-gnu"})))}: Tensor[(1, 64, 56, 56), float32] /* ty=Tensor[(1, 64, 56, 56), float32] */, runtime=meta[Runtime][0], hash="60fa257a9e004811", kernel_layout="OIHW16o16i", executor=meta[Executor][0], data_layout="NCHW1n16c", out_layout="", virtual_device=VirtualDevice(device_type=12, virtual_device_id=0, target=Target(id=58db242d3af0, kind='ext_dev', keys={'vta', 'cpu'}, attrs={'model': "axu5evb_1x16_i8w8a32_15_15_18_17", 'device': "vta"}, host=Target(id=58db279a9b30, kind='llvm', keys={'arm_cpu', 'cpu'}, attrs={'mtriple': "aarch64-linux-gnu"})))) -> Tensor[(1, 256, 14, 14), float32] {
+  %101 = fn (%p020: Tensor[(1, 64, 56, 56), float32] /* ty=Tensor[(1, 64, 56, 56), float32] */, Primitive=1, hash="c88854e3f2c08334") -> Tensor[(1, 64, 56, 56), float32] {
+    %95 = reshape(%p020, newshape=[1, 1, 4, 16, 56, 56]) /* ty=Tensor[(1, 1, 4, 16, 56, 56), float32] */;
+    %96 = transpose(%95, axes=[0, 2, 4, 5, 1, 3]) /* ty=Tensor[(1, 4, 56, 56, 1, 16), float32] */;
+    %97 = multiply(%96, 16f /* ty=float32 */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), float32] */;
+    %98 = transpose(%97, axes=[0, 4, 1, 5, 2, 3]) /* ty=Tensor[(1, 1, 4, 16, 56, 56), float32] */;
+    %99 = reshape(%98, newshape=[1, 64, 56, 56]) /* ty=Tensor[(1, 64, 56, 56), float32] */;
+    %100 = round(%99) /* ty=Tensor[(1, 64, 56, 56), float32] */;
+    clip(%100, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 64, 56, 56), float32] */
+  } /* ty=fn (Tensor[(1, 64, 56, 56), float32]) -> Tensor[(1, 64, 56, 56), float32] */;
+  %102 = %101(%data0) /* ty=Tensor[(1, 64, 56, 56), float32] */;
+  %103 = fn (%p019: Tensor[(1, 64, 56, 56), float32] /* ty=Tensor[(1, 64, 56, 56), float32] */, Primitive=1, hash="c3c94563cfb02586") -> Tensor[(1, 4, 56, 56, 1, 16), int8] {
+    %93 = cast(%p019, dtype="int8") /* ty=Tensor[(1, 64, 56, 56), int8] */;
+    %94 = reshape(%93, newshape=[1, 1, 4, 16, 56, 56]) /* ty=Tensor[(1, 1, 4, 16, 56, 56), int8] */;
+    transpose(%94, axes=[0, 2, 4, 5, 1, 3]) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 64, 56, 56), float32]) -> Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %104 = %103(%102) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %105 = fn (%p018: Tensor[(1, 4, 56, 56, 1, 16), int8] /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */, %p117: Tensor[(4, 4, 3, 3, 16, 16), int8] /* ty=Tensor[(4, 4, 3, 3, 16, 16), int8] */, %p211: Tensor[(4, 1, 1, 1, 16), int32] /* ty=Tensor[(4, 1, 1, 1, 16), int32] */, Primitive=1, hash="a51f05c66d0cb666", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 4, 56, 56, 1, 16), int8] {
+    %87 = nn.conv2d(%p018, %p117, padding=[1, 1, 1, 1], channels=64, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %88 = add(%87, %p211) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %89 = nn.relu(%88) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %90 = add(%89, 64 /* ty=int32 */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %91 = right_shift(%90, 7 /* ty=int32 */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %92 = clip(%91, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    cast(%92, dtype="int8") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 4, 56, 56, 1, 16), int8], Tensor[(4, 4, 3, 3, 16, 16), int8], Tensor[(4, 1, 1, 1, 16), int32]) -> Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %106 = %105(%104, meta[relay.Constant][0] /* ty=Tensor[(4, 4, 3, 3, 16, 16), int8] */, meta[relay.Constant][1] /* ty=Tensor[(4, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %107 = fn (%p017: Tensor[(1, 4, 56, 56, 1, 16), int8] /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */, %p116: Tensor[(4, 4, 3, 3, 16, 16), int8] /* ty=Tensor[(4, 4, 3, 3, 16, 16), int8] */, %p210: Tensor[(4, 1, 1, 1, 16), int32] /* ty=Tensor[(4, 1, 1, 1, 16), int32] */, Primitive=1, hash="2e9bb630c30685e8", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 4, 56, 56, 1, 16), int8] {
+    %83 = nn.conv2d(%p017, %p116, padding=[1, 1, 1, 1], channels=64, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %84 = add(%83, %p210) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %85 = right_shift(%84, 6 /* ty=int32 */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %86 = clip(%85, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    cast(%86, dtype="int8") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 4, 56, 56, 1, 16), int8], Tensor[(4, 4, 3, 3, 16, 16), int8], Tensor[(4, 1, 1, 1, 16), int32]) -> Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %108 = fn (%p021: Tensor[(1, 64, 56, 56), float32] /* ty=Tensor[(1, 64, 56, 56), float32] */, Primitive=1, hash="85a2a68e8ca5adf3") -> Tensor[(1, 64, 56, 56), int32] {
+    cast(%p021, dtype="int32") /* ty=Tensor[(1, 64, 56, 56), int32] */
+  } /* ty=fn (Tensor[(1, 64, 56, 56), float32]) -> Tensor[(1, 64, 56, 56), int32] */;
+  %109 = %107(%106, meta[relay.Constant][2] /* ty=Tensor[(4, 4, 3, 3, 16, 16), int8] */, meta[relay.Constant][3] /* ty=Tensor[(4, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %110 = %108(%102) /* ty=Tensor[(1, 64, 56, 56), int32] */;
+  %111 = fn (%p016: Tensor[(1, 4, 56, 56, 1, 16), int8] /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */, %p115: Tensor[(1, 64, 56, 56), int32] /* ty=Tensor[(1, 64, 56, 56), int32] */, Primitive=1, hash="105072a640503e52") -> Tensor[(1, 4, 56, 56, 1, 16), int8] {
+    %77 = reshape(%p115, newshape=[1, 1, 4, 16, 56, 56]) /* ty=Tensor[(1, 1, 4, 16, 56, 56), int32] */;
+    %78 = cast(%p016, dtype="int32") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %79 = transpose(%77, axes=[0, 2, 4, 5, 1, 3]) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %80 = add(%78, %79) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %81 = nn.relu(%80) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %82 = clip(%81, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    cast(%82, dtype="int8") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 4, 56, 56, 1, 16), int8], Tensor[(1, 64, 56, 56), int32]) -> Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %112 = %111(%109, %110) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %113 = fn (%p015: Tensor[(1, 4, 56, 56, 1, 16), int8] /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */, %p114: Tensor[(4, 4, 3, 3, 16, 16), int8] /* ty=Tensor[(4, 4, 3, 3, 16, 16), int8] */, %p29: Tensor[(4, 1, 1, 1, 16), int32] /* ty=Tensor[(4, 1, 1, 1, 16), int32] */, Primitive=1, hash="548053bdcd850411", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 4, 56, 56, 1, 16), int8] {
+    %71 = nn.conv2d(%p015, %p114, padding=[1, 1, 1, 1], channels=64, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %72 = add(%71, %p29) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %73 = nn.relu(%72) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %74 = add(%73, 256 /* ty=int32 */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %75 = right_shift(%74, 9 /* ty=int32 */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %76 = clip(%75, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    cast(%76, dtype="int8") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 4, 56, 56, 1, 16), int8], Tensor[(4, 4, 3, 3, 16, 16), int8], Tensor[(4, 1, 1, 1, 16), int32]) -> Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %114 = %113(%112, meta[relay.Constant][4] /* ty=Tensor[(4, 4, 3, 3, 16, 16), int8] */, meta[relay.Constant][5] /* ty=Tensor[(4, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %115 = fn (%p014: Tensor[(1, 4, 56, 56, 1, 16), int8] /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */, %p113: Tensor[(4, 4, 3, 3, 16, 16), int8] /* ty=Tensor[(4, 4, 3, 3, 16, 16), int8] */, %p28: Tensor[(4, 1, 1, 1, 16), int32] /* ty=Tensor[(4, 1, 1, 1, 16), int32] */, Primitive=1, hash="2e9bb630c30685e8", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 4, 56, 56, 1, 16), int8] {
+    %67 = nn.conv2d(%p014, %p113, padding=[1, 1, 1, 1], channels=64, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %68 = add(%67, %p28) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %69 = right_shift(%68, 6 /* ty=int32 */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %70 = clip(%69, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    cast(%70, dtype="int8") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 4, 56, 56, 1, 16), int8], Tensor[(4, 4, 3, 3, 16, 16), int8], Tensor[(4, 1, 1, 1, 16), int32]) -> Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %116 = %115(%114, meta[relay.Constant][6] /* ty=Tensor[(4, 4, 3, 3, 16, 16), int8] */, meta[relay.Constant][7] /* ty=Tensor[(4, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %117 = fn (%p013: Tensor[(1, 4, 56, 56, 1, 16), int8] /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */, %p112: Tensor[(1, 4, 56, 56, 1, 16), int8] /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */, Primitive=1, hash="0525bb3562fe767b") -> Tensor[(1, 4, 56, 56, 1, 16), int8] {
+    %62 = cast(%p013, dtype="int32") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %63 = cast(%p112, dtype="int32") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %64 = add(%62, %63) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %65 = nn.relu(%64) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    %66 = clip(%65, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int32] */;
+    cast(%66, dtype="int8") /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 4, 56, 56, 1, 16), int8], Tensor[(1, 4, 56, 56, 1, 16), int8]) -> Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %118 = %117(%116, %112) /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */;
+  %119 = fn (%p012: Tensor[(1, 4, 56, 56, 1, 16), int8] /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */, %p111: Tensor[(8, 4, 3, 3, 16, 16), int8] /* ty=Tensor[(8, 4, 3, 3, 16, 16), int8] */, %p27: Tensor[(8, 1, 1, 1, 16), int32] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */, Primitive=1, hash="f516a809018329d8", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 8, 28, 28, 1, 16), int8] {
+    %56 = nn.conv2d(%p012, %p111, strides=[2, 2], padding=[1, 1, 1, 1], channels=128, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %57 = add(%56, %p27) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %58 = nn.relu(%57) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %59 = add(%58, 256 /* ty=int32 */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %60 = right_shift(%59, 9 /* ty=int32 */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %61 = clip(%60, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    cast(%61, dtype="int8") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 4, 56, 56, 1, 16), int8], Tensor[(8, 4, 3, 3, 16, 16), int8], Tensor[(8, 1, 1, 1, 16), int32]) -> Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %120 = %119(%118, meta[relay.Constant][8] /* ty=Tensor[(8, 4, 3, 3, 16, 16), int8] */, meta[relay.Constant][9] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %121 = fn (%p011: Tensor[(1, 8, 28, 28, 1, 16), int8] /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */, %p110: Tensor[(8, 8, 3, 3, 16, 16), int8] /* ty=Tensor[(8, 8, 3, 3, 16, 16), int8] */, %p26: Tensor[(8, 1, 1, 1, 16), int32] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */, Primitive=1, hash="9cec3da8469a40f6", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 8, 28, 28, 1, 16), int8] {
+    %52 = nn.conv2d(%p011, %p110, padding=[1, 1, 1, 1], channels=128, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %53 = add(%52, %p26) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %54 = right_shift(%53, 7 /* ty=int32 */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %55 = clip(%54, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    cast(%55, dtype="int8") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 8, 28, 28, 1, 16), int8], Tensor[(8, 8, 3, 3, 16, 16), int8], Tensor[(8, 1, 1, 1, 16), int32]) -> Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %126 = fn (%p022: Tensor[(1, 4, 56, 56, 1, 16), int8] /* ty=Tensor[(1, 4, 56, 56, 1, 16), int8] */, %p118: Tensor[(8, 4, 1, 1, 16, 16), int8] /* ty=Tensor[(8, 4, 1, 1, 16, 16), int8] */, %p212: Tensor[(8, 1, 1, 1, 16), int32] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */, Primitive=1, hash="07f6267806566a4f", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 8, 28, 28, 1, 16), int8] {
+    %122 = nn.conv2d(%p022, %p118, strides=[2, 2], padding=[0, 0, 0, 0], channels=128, kernel_size=[1, 1], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %123 = add(%122, %p212) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %124 = right_shift(%123, 7 /* ty=int32 */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %125 = clip(%124, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    cast(%125, dtype="int8") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 4, 56, 56, 1, 16), int8], Tensor[(8, 4, 1, 1, 16, 16), int8], Tensor[(8, 1, 1, 1, 16), int32]) -> Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %127 = %121(%120, meta[relay.Constant][10] /* ty=Tensor[(8, 8, 3, 3, 16, 16), int8] */, meta[relay.Constant][11] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %128 = %126(%118, meta[relay.Constant][12] /* ty=Tensor[(8, 4, 1, 1, 16, 16), int8] */, meta[relay.Constant][13] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %129 = fn (%p010: Tensor[(1, 8, 28, 28, 1, 16), int8] /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */, %p19: Tensor[(1, 8, 28, 28, 1, 16), int8] /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */, Primitive=1, hash="9556f4a7ab8b3a9f") -> Tensor[(1, 8, 28, 28, 1, 16), int8] {
+    %47 = cast(%p010, dtype="int32") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %48 = cast(%p19, dtype="int32") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %49 = add(%47, %48) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %50 = nn.relu(%49) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %51 = clip(%50, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    cast(%51, dtype="int8") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 8, 28, 28, 1, 16), int8], Tensor[(1, 8, 28, 28, 1, 16), int8]) -> Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %130 = %129(%127, %128) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %131 = fn (%p09: Tensor[(1, 8, 28, 28, 1, 16), int8] /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */, %p18: Tensor[(8, 8, 3, 3, 16, 16), int8] /* ty=Tensor[(8, 8, 3, 3, 16, 16), int8] */, %p25: Tensor[(8, 1, 1, 1, 16), int32] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */, Primitive=1, hash="bcb1fe3adbe5682a", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 8, 28, 28, 1, 16), int8] {
+    %41 = nn.conv2d(%p09, %p18, padding=[1, 1, 1, 1], channels=128, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %42 = add(%41, %p25) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %43 = nn.relu(%42) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %44 = add(%43, 128 /* ty=int32 */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %45 = right_shift(%44, 8 /* ty=int32 */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %46 = clip(%45, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    cast(%46, dtype="int8") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 8, 28, 28, 1, 16), int8], Tensor[(8, 8, 3, 3, 16, 16), int8], Tensor[(8, 1, 1, 1, 16), int32]) -> Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %132 = %131(%130, meta[relay.Constant][14] /* ty=Tensor[(8, 8, 3, 3, 16, 16), int8] */, meta[relay.Constant][15] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %133 = fn (%p08: Tensor[(1, 8, 28, 28, 1, 16), int8] /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */, %p17: Tensor[(8, 8, 3, 3, 16, 16), int8] /* ty=Tensor[(8, 8, 3, 3, 16, 16), int8] */, %p24: Tensor[(8, 1, 1, 1, 16), int32] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */, Primitive=1, hash="9cec3da8469a40f6", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 8, 28, 28, 1, 16), int8] {
+    %37 = nn.conv2d(%p08, %p17, padding=[1, 1, 1, 1], channels=128, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %38 = add(%37, %p24) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %39 = right_shift(%38, 7 /* ty=int32 */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %40 = clip(%39, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    cast(%40, dtype="int8") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 8, 28, 28, 1, 16), int8], Tensor[(8, 8, 3, 3, 16, 16), int8], Tensor[(8, 1, 1, 1, 16), int32]) -> Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %134 = %133(%132, meta[relay.Constant][16] /* ty=Tensor[(8, 8, 3, 3, 16, 16), int8] */, meta[relay.Constant][17] /* ty=Tensor[(8, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %135 = fn (%p07: Tensor[(1, 8, 28, 28, 1, 16), int8] /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */, %p16: Tensor[(1, 8, 28, 28, 1, 16), int8] /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */, Primitive=1, hash="9556f4a7ab8b3a9f") -> Tensor[(1, 8, 28, 28, 1, 16), int8] {
+    %32 = cast(%p07, dtype="int32") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %33 = cast(%p16, dtype="int32") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %34 = add(%32, %33) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %35 = nn.relu(%34) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    %36 = clip(%35, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int32] */;
+    cast(%36, dtype="int8") /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 8, 28, 28, 1, 16), int8], Tensor[(1, 8, 28, 28, 1, 16), int8]) -> Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %136 = %135(%134, %130) /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */;
+  %137 = fn (%p06: Tensor[(1, 8, 28, 28, 1, 16), int8] /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */, %p15: Tensor[(16, 8, 3, 3, 16, 16), int8] /* ty=Tensor[(16, 8, 3, 3, 16, 16), int8] */, %p23: Tensor[(16, 1, 1, 1, 16), int32] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */, Primitive=1, hash="b7811a362c1905fe", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 16, 14, 14, 1, 16), int8] {
+    %26 = nn.conv2d(%p06, %p15, strides=[2, 2], padding=[1, 1, 1, 1], channels=256, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %27 = add(%26, %p23) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %28 = nn.relu(%27) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %29 = add(%28, 256 /* ty=int32 */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %30 = right_shift(%29, 9 /* ty=int32 */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %31 = clip(%30, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    cast(%31, dtype="int8") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 8, 28, 28, 1, 16), int8], Tensor[(16, 8, 3, 3, 16, 16), int8], Tensor[(16, 1, 1, 1, 16), int32]) -> Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %138 = %137(%136, meta[relay.Constant][18] /* ty=Tensor[(16, 8, 3, 3, 16, 16), int8] */, meta[relay.Constant][19] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %139 = fn (%p05: Tensor[(1, 16, 14, 14, 1, 16), int8] /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */, %p14: Tensor[(16, 16, 3, 3, 16, 16), int8] /* ty=Tensor[(16, 16, 3, 3, 16, 16), int8] */, %p22: Tensor[(16, 1, 1, 1, 16), int32] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */, Primitive=1, hash="01f01fb45ee744b2", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 16, 14, 14, 1, 16), int8] {
+    %22 = nn.conv2d(%p05, %p14, padding=[1, 1, 1, 1], channels=256, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %23 = add(%22, %p22) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %24 = right_shift(%23, 7 /* ty=int32 */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %25 = clip(%24, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    cast(%25, dtype="int8") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 16, 14, 14, 1, 16), int8], Tensor[(16, 16, 3, 3, 16, 16), int8], Tensor[(16, 1, 1, 1, 16), int32]) -> Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %144 = fn (%p023: Tensor[(1, 8, 28, 28, 1, 16), int8] /* ty=Tensor[(1, 8, 28, 28, 1, 16), int8] */, %p119: Tensor[(16, 8, 1, 1, 16, 16), int8] /* ty=Tensor[(16, 8, 1, 1, 16, 16), int8] */, %p213: Tensor[(16, 1, 1, 1, 16), int32] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */, Primitive=1, hash="ca854945d4e9f99b", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 16, 14, 14, 1, 16), int8] {
+    %140 = nn.conv2d(%p023, %p119, strides=[2, 2], padding=[0, 0, 0, 0], channels=256, kernel_size=[1, 1], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %141 = add(%140, %p213) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %142 = right_shift(%141, 8 /* ty=int32 */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %143 = clip(%142, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    cast(%143, dtype="int8") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 8, 28, 28, 1, 16), int8], Tensor[(16, 8, 1, 1, 16, 16), int8], Tensor[(16, 1, 1, 1, 16), int32]) -> Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %145 = %139(%138, meta[relay.Constant][20] /* ty=Tensor[(16, 16, 3, 3, 16, 16), int8] */, meta[relay.Constant][21] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %146 = %144(%136, meta[relay.Constant][22] /* ty=Tensor[(16, 8, 1, 1, 16, 16), int8] */, meta[relay.Constant][23] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %147 = fn (%p04: Tensor[(1, 16, 14, 14, 1, 16), int8] /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */, %p13: Tensor[(1, 16, 14, 14, 1, 16), int8] /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */, Primitive=1, hash="b2ff632f527b8ee3") -> Tensor[(1, 16, 14, 14, 1, 16), int8] {
+    %17 = cast(%p04, dtype="int32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %18 = cast(%p13, dtype="int32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %19 = add(%17, %18) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %20 = nn.relu(%19) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %21 = clip(%20, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    cast(%21, dtype="int8") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 16, 14, 14, 1, 16), int8], Tensor[(1, 16, 14, 14, 1, 16), int8]) -> Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %148 = %147(%145, %146) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %149 = fn (%p03: Tensor[(1, 16, 14, 14, 1, 16), int8] /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */, %p12: Tensor[(16, 16, 3, 3, 16, 16), int8] /* ty=Tensor[(16, 16, 3, 3, 16, 16), int8] */, %p21: Tensor[(16, 1, 1, 1, 16), int32] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */, Primitive=1, hash="b418827c5a90f593", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 16, 14, 14, 1, 16), int8] {
+    %11 = nn.conv2d(%p03, %p12, padding=[1, 1, 1, 1], channels=256, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %12 = add(%11, %p21) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %13 = nn.relu(%12) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %14 = add(%13, 128 /* ty=int32 */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %15 = right_shift(%14, 8 /* ty=int32 */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %16 = clip(%15, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    cast(%16, dtype="int8") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 16, 14, 14, 1, 16), int8], Tensor[(16, 16, 3, 3, 16, 16), int8], Tensor[(16, 1, 1, 1, 16), int32]) -> Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %150 = %149(%148, meta[relay.Constant][24] /* ty=Tensor[(16, 16, 3, 3, 16, 16), int8] */, meta[relay.Constant][25] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %151 = fn (%p02: Tensor[(1, 16, 14, 14, 1, 16), int8] /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */, %p11: Tensor[(16, 16, 3, 3, 16, 16), int8] /* ty=Tensor[(16, 16, 3, 3, 16, 16), int8] */, %p2: Tensor[(16, 1, 1, 1, 16), int32] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */, Primitive=1, hash="01f01fb45ee744b2", kernel_layout="OIHW16o16i", data_layout="NCHW1n16c", out_layout="") -> Tensor[(1, 16, 14, 14, 1, 16), int8] {
+    %7 = nn.conv2d(%p02, %p11, padding=[1, 1, 1, 1], channels=256, kernel_size=[3, 3], data_layout="NCHW1n16c", kernel_layout="OIHW16o16i", out_dtype="int32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %8 = add(%7, %p2) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %9 = right_shift(%8, 7 /* ty=int32 */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %10 = clip(%9, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    cast(%10, dtype="int8") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 16, 14, 14, 1, 16), int8], Tensor[(16, 16, 3, 3, 16, 16), int8], Tensor[(16, 1, 1, 1, 16), int32]) -> Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %152 = %151(%150, meta[relay.Constant][26] /* ty=Tensor[(16, 16, 3, 3, 16, 16), int8] */, meta[relay.Constant][27] /* ty=Tensor[(16, 1, 1, 1, 16), int32] */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %153 = fn (%p01: Tensor[(1, 16, 14, 14, 1, 16), int8] /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */, %p1: Tensor[(1, 16, 14, 14, 1, 16), int8] /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */, Primitive=1, hash="0475f6915e74f994") -> Tensor[(1, 16, 14, 14, 1, 16), int8] {
+    %3 = cast(%p01, dtype="int32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %4 = cast(%p1, dtype="int32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %5 = add(%3, %4) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    %6 = nn.relu(%5) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int32] */;
+    cast(%6, dtype="int8") /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */
+  } /* ty=fn (Tensor[(1, 16, 14, 14, 1, 16), int8], Tensor[(1, 16, 14, 14, 1, 16), int8]) -> Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %154 = %153(%152, %148) /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */;
+  %155 = fn (%p0: Tensor[(1, 16, 14, 14, 1, 16), int8] /* ty=Tensor[(1, 16, 14, 14, 1, 16), int8] */, Primitive=1, hash="d09a860f1cd9bc8a") -> Tensor[(1, 256, 14, 14), float32] {
+    %0 = cast(%p0, dtype="float32") /* ty=Tensor[(1, 16, 14, 14, 1, 16), float32] */;
+    %1 = multiply(%0, 0.0625f /* ty=float32 */) /* ty=Tensor[(1, 16, 14, 14, 1, 16), float32] */;
+    %2 = transpose(%1, axes=[0, 4, 1, 5, 2, 3]) /* ty=Tensor[(1, 1, 16, 16, 14, 14), float32] */;
+    reshape(%2, newshape=[1, 256, 14, 14]) /* ty=Tensor[(1, 256, 14, 14), float32] */
+  } /* ty=fn (Tensor[(1, 16, 14, 14, 1, 16), int8]) -> Tensor[(1, 256, 14, 14), float32] */;
+  %155(%154) /* ty=Tensor[(1, 256, 14, 14), float32] */
+}
+
+/* For debugging purposes the metadata section has been omitted.
+ * If you would like to see the full metadata section you can set the 
+ * option to `True` when invoking `astext`. 
+ */

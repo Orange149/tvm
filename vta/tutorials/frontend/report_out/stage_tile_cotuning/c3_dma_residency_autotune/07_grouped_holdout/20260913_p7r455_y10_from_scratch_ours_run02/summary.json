@@ -1,0 +1,77 @@
+{
+  "candidate_generation_replay_proof": {
+    "candidate_rows_exactly_equal": true,
+    "mode": "retrospective_cost_reexecution_only",
+    "reference_candidates_sha256": "f06a9e8bcc28abf04388b31fb4c6cc45d78c250639843799a15b2aacee1629d8",
+    "reference_contract_path": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r428_y10_yolov3_tiny_320_conv18_candidate_contract_run01",
+    "reference_contract_sha256": "54b2314763b1e7cf784f0c437b8bd28035b83914feedb382f8da763660e4f24d",
+    "target_performance_labels_read": false
+  },
+  "claim_boundary": "One deterministic retrospective cost reexecution on exposed Y10. Identity-exact candidate generation, qualification and board execution were rerun; this is not a new prospective holdout or a multi-workload generalization result.",
+  "config_space_original_tiles": 1280,
+  "first_final_best_plus_2_percent_t0_seconds": 119.93088172300486,
+  "first_fpga_correct_fullgraph_t0_seconds": 119.93088172300486,
+  "fpga_correctness_invocations": 18,
+  "fpga_dispatch_count": 3,
+  "fpga_timing_invocations": 42,
+  "fsim_passed": 12,
+  "generated_mode_identities": 32,
+  "method": "capacity/hash family generation + exact lowering + three-seed FSim + invalid-dominator peeling + full-graph FPGA gate",
+  "old_target_labels_used_as_search_input": false,
+  "online_search_board_resources_including_paired_stock": {
+    "fpga_kernel_invocations": 1326,
+    "logical_dma_calls": 13875927,
+    "logical_load_bytes": 14280940032,
+    "logical_store_bytes": 204979200,
+    "profiled_invocation_rows": 60
+  },
+  "paired_stock_fullgraph_median_ms": 1067.975819,
+  "phase_timeline": [
+    {
+      "finished_t0_seconds": 2.5623836570011918,
+      "log": "candidate_generation.log",
+      "phase": "candidate_generation",
+      "returncode": 0,
+      "seconds": 2.5622797310061287
+    },
+    {
+      "finished_t0_seconds": 28.812335327995243,
+      "log": "static_and_fsim_qualification.log",
+      "phase": "static_and_fsim_qualification",
+      "returncode": 0,
+      "seconds": 26.249436163008795
+    },
+    {
+      "finished_t0_seconds": 30.37915875398903,
+      "log": "proxy_front.log",
+      "phase": "proxy_front",
+      "returncode": 0,
+      "seconds": 1.5663482039963128
+    },
+    {
+      "finished_t0_seconds": 244.83219364398974,
+      "log": "online_fullgraph_search.log",
+      "phase": "online_fullgraph_search",
+      "returncode": 0,
+      "seconds": 214.45254483199096
+    }
+  ],
+  "qualified_mode_identities": 24,
+  "schema": "c3_y10_from_scratch_ours_fullgraph_v1",
+  "selected_all_outputs_equal": true,
+  "selected_candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+  "selected_correctness_inputs": 3,
+  "selected_family_id": "Y10F02",
+  "selected_fullgraph_median_ms": 1059.288812,
+  "selected_over_stock_ratio": 0.9914818005818539,
+  "selected_paired_wins": 7,
+  "selected_public_mode": "input_stationary",
+  "selected_speedup_percent": 0.8518199418146133,
+  "static_ok": 12,
+  "status": "completed_t0_to_t1",
+  "t0_definition": "after clean bitstream reload and fresh healthy default RPC",
+  "t0_to_t1_seconds": 244.8347085439891,
+  "t1_definition": "after selected candidate passed three-input/all-output correctness and seven paired full-graph rounds",
+  "target_layer": "YOLOv3-tiny-320 conv18",
+  "workload_id": "Y10"
+}

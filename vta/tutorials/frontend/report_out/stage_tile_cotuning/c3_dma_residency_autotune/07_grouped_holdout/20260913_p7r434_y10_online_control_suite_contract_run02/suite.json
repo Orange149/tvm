@@ -1,0 +1,59 @@
+{
+  "bindings": {
+    "front_manifest": "ee976cfc861671b97f5a77fca7e554d374917cdbc4a0e08f80ed1971df3e26cf",
+    "local_manifest": "e6e6525f802f0f63ef19bcbd53058b3a2b308473b1ff4b9acd4146855b2e9004",
+    "policy_manifest": "68128cb5053f989cdf3c7436fc42010c59d7eff7b5627c38edc02490eb3f224d",
+    "target_manifest": "ff6816d7da4d6e90351a1614e5a840a426b2e8cdadd85d7662cfe883ac78e740"
+  },
+  "board_adapter_source_sha256": "5789c4fab6085572d3b3523bc9096faf014b22fb4739bd67b1f78156fee7e864",
+  "board_contacted": false,
+  "candidate_builder_source_sha256": "7e53622a713fdeb864f4d830f5f860c2a99853d19b5b625a7949d942e3976276",
+  "claim_boundary": "Orders and budgets are prospective; this contract contains no target full-graph correctness, latency, pool oracle, COCO mAP, or physical AXI observation.",
+  "comparison_scope": "Independent executions of method and three simple controls on the same frozen candidate identities. Control quality is evaluated only after all runs; method may replace an FPGA-invalid Pareto point under the same wall-clock admission rule.",
+  "execution_order": [
+    "peeling",
+    "calls_lazy",
+    "bytes_lazy",
+    "random_lazy"
+  ],
+  "executions": [
+    {
+      "admission_rule": "frozen Pareto wave; peel only after FPGA-invalid result",
+      "budget_seconds": 600.0,
+      "candidate_budget": null,
+      "strategy": "peeling"
+    },
+    {
+      "admission_rule": "immutable frozen-order prefix",
+      "budget_seconds": 600.0,
+      "candidate_budget": 3,
+      "strategy": "calls_lazy"
+    },
+    {
+      "admission_rule": "immutable frozen-order prefix",
+      "budget_seconds": 600.0,
+      "candidate_budget": 3,
+      "strategy": "bytes_lazy"
+    },
+    {
+      "admission_rule": "immutable frozen-order prefix",
+      "budget_seconds": 600.0,
+      "candidate_budget": 3,
+      "strategy": "random_lazy"
+    }
+  ],
+  "executor_source_sha256": "11ff44a37238f870d847c53db991e556dfb2a8d6f0375e29841a4be88dac404d",
+  "performance_labels_observed": false,
+  "schema": "c3_vta_online_control_suite_v1",
+  "source_layer": "conv18",
+  "source_model": "yolov3_tiny_320",
+  "status": "frozen_before_fullgraph_build_fpga_correctness_or_latency",
+  "stock_builder_source_sha256": "3ac40dfaa4a42f9fe275f38188fee30eeca1febe0a482ece74d05fe780e9bcf9",
+  "verified_artifact_counts": {
+    "front": 2,
+    "local": 9,
+    "policy": 2,
+    "target": 4
+  },
+  "workload_id": "Y10"
+}

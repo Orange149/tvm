@@ -1,0 +1,68 @@
+{
+  "board_contacted": false,
+  "boundaries": {
+    "T0": "clean frozen bitstream and fresh default RPC are ready",
+    "T1": "all programs pass three inputs and finish seven balanced rounds",
+    "W0": "host process starts before board preflight/bitstream/RPC preparation"
+  },
+  "build_manifest_sha256": "153d405888b3c81e7eaaaacd2cf9758b969512540c7d3a9818b8ac30718ee913",
+  "correctness_scope": "three deterministic random inputs, every graph output, exact equality to stock; not ImageNet accuracy",
+  "correctness_seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "performance_labels_collected": false,
+  "policy_to_program": {
+    "cheng_minimum_access": "selected_e53bbdbb71050431",
+    "ml2tuner_pva": "selected_e53bbdbb71050431",
+    "ours_dma_multifidelity": "selected_e53bbdbb71050431",
+    "stock_mode_aware_xgb": "fallback_8ff96c46487a92f8"
+  },
+  "program_ids": [
+    "stock_reference",
+    "fallback_8ff96c46487a92f8",
+    "selected_e53bbdbb71050431"
+  ],
+  "schema": "c3_resnet18_selected_fullgraph_board_contract_v1",
+  "session_policy": "any RPC, device or power interruption invalidates the entire session; clocks cannot be spliced",
+  "status": "frozen_before_current_board_observation",
+  "timing_orders": [
+    [
+      "stock_reference",
+      "fallback_8ff96c46487a92f8",
+      "selected_e53bbdbb71050431"
+    ],
+    [
+      "stock_reference",
+      "selected_e53bbdbb71050431",
+      "fallback_8ff96c46487a92f8"
+    ],
+    [
+      "selected_e53bbdbb71050431",
+      "stock_reference",
+      "fallback_8ff96c46487a92f8"
+    ],
+    [
+      "selected_e53bbdbb71050431",
+      "fallback_8ff96c46487a92f8",
+      "stock_reference"
+    ],
+    [
+      "fallback_8ff96c46487a92f8",
+      "selected_e53bbdbb71050431",
+      "stock_reference"
+    ],
+    [
+      "fallback_8ff96c46487a92f8",
+      "stock_reference",
+      "selected_e53bbdbb71050431"
+    ],
+    [
+      "stock_reference",
+      "fallback_8ff96c46487a92f8",
+      "selected_e53bbdbb71050431"
+    ]
+  ],
+  "timing_rounds": 7
+}

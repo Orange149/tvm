@@ -1,0 +1,36 @@
+#[version = "0.0.5"]
+def @main(%data0: Tensor[(1, 256, 14, 14), float32] /* ty=Tensor[(1, 256, 14, 14), float32] */) -> (Tensor[(1, 512, 7, 7), int8], Tensor[(1, 512, 7, 7), int8]) {
+  %0 = multiply(%data0, 16f /* ty=float32 */) /* ty=Tensor[(1, 256, 14, 14), float32] */;
+  %1 = round(%0) /* ty=Tensor[(1, 256, 14, 14), float32] */;
+  %2 = clip(%1, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 256, 14, 14), float32] */;
+  %3 = cast(%2, dtype="int8") /* ty=Tensor[(1, 256, 14, 14), int8] */;
+  %4 = nn.conv2d(%3, meta[relay.Constant][0] /* ty=Tensor[(512, 256, 3, 3), int8] */, strides=[2, 2], padding=[1, 1, 1, 1], channels=512, kernel_size=[3, 3], out_dtype="int32") /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %5 = add(%4, meta[relay.Constant][1] /* ty=Tensor[(512, 1, 1), int32] */) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %6 = nn.relu(%5) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %7 = add(%6, 128 /* ty=int32 */) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %8 = right_shift(%7, 8 /* ty=int32 */) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %9 = clip(%8, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %10 = cast(%9, dtype="int8") /* ty=Tensor[(1, 512, 7, 7), int8] */;
+  %11 = annotation.stop_fusion(%10) /* ty=Tensor[(1, 512, 7, 7), int8] */;
+  %12 = nn.conv2d(%11, meta[relay.Constant][2] /* ty=Tensor[(512, 512, 3, 3), int8] */, padding=[1, 1, 1, 1], channels=512, kernel_size=[3, 3], out_dtype="int32") /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %13 = add(%12, meta[relay.Constant][3] /* ty=Tensor[(512, 1, 1), int32] */) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %14 = add(%13, 32 /* ty=int32 */) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %15 = right_shift(%14, 6 /* ty=int32 */) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %16 = clip(%15, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %17 = cast(%16, dtype="int8") /* ty=Tensor[(1, 512, 7, 7), int8] */;
+  %18 = cast(%2, dtype="int8") /* ty=Tensor[(1, 256, 14, 14), int8] */;
+  %19 = nn.conv2d(%18, meta[relay.Constant][4] /* ty=Tensor[(512, 256, 1, 1), int8] */, strides=[2, 2], padding=[0, 0, 0, 0], channels=512, kernel_size=[1, 1], out_dtype="int32") /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %20 = add(%19, meta[relay.Constant][5] /* ty=Tensor[(512, 1, 1), int32] */) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %21 = add(%20, 32 /* ty=int32 */) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %22 = right_shift(%21, 6 /* ty=int32 */) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %23 = clip(%22, a_min=-127f, a_max=127f) /* ty=Tensor[(1, 512, 7, 7), int32] */;
+  %24 = cast(%23, dtype="int8") /* ty=Tensor[(1, 512, 7, 7), int8] */;
+  %25 = annotation.stop_fusion(%17) /* ty=Tensor[(1, 512, 7, 7), int8] */;
+  %26 = annotation.stop_fusion(%24) /* ty=Tensor[(1, 512, 7, 7), int8] */;
+  (%25, %26) /* ty=(Tensor[(1, 512, 7, 7), int8], Tensor[(1, 512, 7, 7), int8]) */
+}
+
+/* For debugging purposes the metadata section has been omitted.
+ * If you would like to see the full metadata section you can set the 
+ * option to `True` when invoking `astext`. 
+ */

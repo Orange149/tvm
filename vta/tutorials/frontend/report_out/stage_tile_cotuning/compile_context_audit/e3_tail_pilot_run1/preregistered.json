@@ -1,0 +1,40 @@
+{
+  "scope": "CPU-only local boundary pilot, no new board measurements or tile search",
+  "pairs": [
+    [
+      5,
+      6,
+      7
+    ],
+    [
+      10,
+      11,
+      12
+    ],
+    [
+      15,
+      16,
+      17
+    ]
+  ],
+  "inputs": "all three frozen E2 cases per pair; no selection based on outputs",
+  "comparison": "independently quantized main+projection then float32 add/relu versus quantized joined stage",
+  "threshold": "bit exact; report every mismatch, not ImageNet accuracy",
+  "qconfig": {
+    "global_scale": 8.0,
+    "skip_conv_layers": []
+  },
+  "sources_sha256": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/diagnose_vta_tail_quantization.py": "98be14cf4b548509c9fea89146834828da6e258c5fffd8fb147ac204a7356e04",
+    "vta/tutorials/frontend/report_out/resource_aware_maxplus/v1_profile_manifest.json": "507572e6459a26f49f1f06142fc7f18c6ab37a6cc0c2a4d00e1a2c6b243b79a6",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_05_06/inputs_0.npz": "8023c6ba1bd762501cf9392243435b35ddbec2f945219d872d92bf9bf8488f40",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_05_06/inputs_1.npz": "20d6138ea58220010098cca762dc40ad6112a17104c762d93130c2e9250371ea",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_05_06/inputs_2.npz": "ccc4fa19468f1d4258dbe1f30958affb0eb08a1d740417443bbcf20d6c5a2e93",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_10_11/inputs_0.npz": "d56f9afadea1dbe636c3065e048cf314eec04913bb10364470e61ef50262b77f",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_10_11/inputs_1.npz": "6964b5f6811f44afa791cc63fdc2cb088092f57ab40c5e4b3980d8f1bdcbc216",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_10_11/inputs_2.npz": "56207fcf8d65aa8f5829813fca4c5c69f9a4d885b8eb8e6119925aa243ff4ec4",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_15_16/inputs_0.npz": "e3cf8a3edd4e2e4306cb43e6cb7389d15b6a96bc496616e715dbfab7b6215ade",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_15_16/inputs_1.npz": "08e65e4cef7ae0bf07d80b368c87684fbe31a9c029ce1b742bdfe81febb06e25",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/compile_context_audit/board_e2_run1/vta_15_16/inputs_2.npz": "ed4d4c55001f33fe1312d7a995321e6aa9faeb122ea4b25d2e7405c81ed2ee2b"
+  }
+}

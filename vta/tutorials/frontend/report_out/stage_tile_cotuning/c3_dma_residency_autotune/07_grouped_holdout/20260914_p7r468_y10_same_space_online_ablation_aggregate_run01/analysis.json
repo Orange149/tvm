@@ -1,0 +1,1116 @@
+{
+  "analyzer_source_sha256": "2d4bb9412fcf2921937a72c85d54c88d1ed256e365e07c0470cff85cbb4f8cb4",
+  "bound_artifact_manifests": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r435_y10_online_peeling_run02": "c26f5fddcbffce4c9deb4328c1a59e1bbba275d3bdbf47fa16bd33c418461c92",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r440_y10_oracle_completion_board_run01": "e9aaa0676fc56ed4ad063a24b209c935d3ff1216f4e99e6b81c532621e696ae8",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r441_y10_complete_pool_analysis_run01": "42835495a67d5dbff7a1ac88b53f77194c63b885a229e7b76b0aedb26966f88c",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r462_y10_same_space_dma_seed44501_run01": "d22354c597e424d1ae6cf4976828dd1981622e92c02755dd30cd129be03e493b",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r463_y10_same_space_xgb_seed44501_run01": "fce79ac0accd7444b182cce6f0061d335cd1a964d8ee01c3a28c88970ed04619",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r464_y10_same_space_xgb_seed44502_run01": "3fdd866b18a62b4d246544d22214e54915647aa4c3d595501907a6829f4f252a",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r465_y10_same_space_dma_seed44502_run01": "efbcc691cb88178871008fabb5a3be49962e30034a7ff48c2ce60d3b662cb21f",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r466_y10_same_space_dma_seed44503_run01": "ade51bb6e82245758073000eaef819ee0339f028361a420d86e4cfd18f1107fa",
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r467_y10_same_space_xgb_seed44503_run01": "9b1d7f9cb1de048c50748ec46544010d1d8a8272aff40c0e3258026625d94080"
+  },
+  "candidate_budget_per_run": 6,
+  "candidate_universe_size": 12,
+  "claim_boundary": "Y10 labels existed before these six independent cost reexecutions. Selectors did not read them; the complete-pool labels are joined only after execution for fixed-quality attribution. This is not a prospective holdout. Runtime DMA counters are logical VTA operations, not physical AXI traffic.",
+  "oracle": {
+    "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+    "candidate_median_latency_ms": 1056.142621,
+    "median_paired_latency_ratio": 0.9878784824574122
+  },
+  "runs": [
+    {
+      "artifact_manifest_sha256": "d22354c597e424d1ae6cf4976828dd1981622e92c02755dd30cd129be03e493b",
+      "boot_id": "4d232b6f-6e2a-4395-aafe-853a021403e8",
+      "candidate_budget": 6,
+      "curve": [
+        {
+          "candidate_dispatches": 1,
+          "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+          "complete_candidate_build_action_seconds": 12.091646036002203,
+          "dispatch": 1,
+          "driver_kernel_invocations": 442,
+          "fixed_pool_best_paired_ratio": 0.9930121556442159,
+          "fixed_pool_regret_percent": 0.5196664648503546,
+          "graph_api_invocations": 20,
+          "invocation_host_wall_ms": 36278.38484602398,
+          "logical_dma_bytes": 4827882496,
+          "logical_dma_calls": 4632874,
+          "logical_load_bytes": 4759556096,
+          "logical_store_bytes": 68326400,
+          "observed_best_paired_ratio": 0.9914329247945769,
+          "outer_elapsed_seconds": 88.06395110800804
+        },
+        {
+          "candidate_dispatches": 2,
+          "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+          "complete_candidate_build_action_seconds": 23.631653486998403,
+          "dispatch": 2,
+          "driver_kernel_invocations": 918,
+          "fixed_pool_best_paired_ratio": 0.9930121556442159,
+          "fixed_pool_regret_percent": 0.5196664648503546,
+          "graph_api_invocations": 40,
+          "invocation_host_wall_ms": 72585.0450660364,
+          "logical_dma_bytes": 9656635392,
+          "logical_dma_calls": 9258982,
+          "logical_load_bytes": 9519982592,
+          "logical_store_bytes": 136652800,
+          "observed_best_paired_ratio": 0.9914329247945769,
+          "outer_elapsed_seconds": 150.18332601801376
+        },
+        {
+          "candidate_dispatches": 3,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "complete_candidate_build_action_seconds": 35.00631207699189,
+          "dispatch": 3,
+          "driver_kernel_invocations": 1326,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 60,
+          "invocation_host_wall_ms": 108812.62642599177,
+          "logical_dma_bytes": 14485919232,
+          "logical_dma_calls": 13875927,
+          "logical_load_bytes": 14280940032,
+          "logical_store_bytes": 204979200,
+          "observed_best_paired_ratio": 0.9902715709857556,
+          "outer_elapsed_seconds": 212.06630372301152
+        },
+        {
+          "candidate_dispatches": 4,
+          "candidate_id": "26db24b3a3209c71e8dabb41e2b60fddeabe1224f931c7b8ae741082202422f8",
+          "complete_candidate_build_action_seconds": 47.08931495399156,
+          "dispatch": 4,
+          "driver_kernel_invocations": 1870,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 80,
+          "invocation_host_wall_ms": 145114.66680695594,
+          "logical_dma_bytes": 19316021248,
+          "logical_dma_calls": 18494623,
+          "logical_load_bytes": 19042715648,
+          "logical_store_bytes": 273305600,
+          "observed_best_paired_ratio": 0.9902715709857556,
+          "outer_elapsed_seconds": 274.62207113900513
+        },
+        {
+          "candidate_dispatches": 5,
+          "candidate_id": "f031c5298f32be1790597b8b5b6a9a5056f4965f9a0428c6dcc40c53060d7f10",
+          "complete_candidate_build_action_seconds": 58.9006049449963,
+          "dispatch": 5,
+          "driver_kernel_invocations": 2414,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 100,
+          "invocation_host_wall_ms": 181581.44823490875,
+          "logical_dma_bytes": 24146297344,
+          "logical_dma_calls": 23171799,
+          "logical_load_bytes": 23804665344,
+          "logical_store_bytes": 341632000,
+          "observed_best_paired_ratio": 0.9902715709857556,
+          "outer_elapsed_seconds": 337.0884171170037
+        },
+        {
+          "candidate_dispatches": 6,
+          "candidate_id": "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+          "complete_candidate_build_action_seconds": 70.21068956500676,
+          "dispatch": 6,
+          "driver_kernel_invocations": 2822,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 120,
+          "invocation_host_wall_ms": 217876.78207285353,
+          "logical_dma_bytes": 28978627584,
+          "logical_dma_calls": 27791719,
+          "logical_load_bytes": 28568669184,
+          "logical_store_bytes": 409958400,
+          "observed_best_paired_ratio": 0.9902715709857556,
+          "outer_elapsed_seconds": 398.722579401001
+        }
+      ],
+      "first_exact_oracle": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "dispatch": 3,
+        "outer_elapsed_seconds": 212.06630372301152
+      },
+      "first_oracle_plus_2pct": {
+        "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+        "dispatch": 1,
+        "outer_elapsed_seconds": 88.06395110800804
+      },
+      "fixed_pool_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9878784824574122,
+        "regret_percent": 0.0
+      },
+      "observed_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9902715709857556
+      },
+      "outer_process_seconds_before_summary_write": 398.9627079930069,
+      "passed_candidates": 6,
+      "rejected_candidates": 0,
+      "run_dir": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r462_y10_same_space_dma_seed44501_run01",
+      "seed": 44501,
+      "strategy": "dma_prior",
+      "total_cost": {
+        "candidate_dispatches": 6,
+        "complete_candidate_build_action_seconds": 70.21068956500676,
+        "driver_kernel_invocations": 2822,
+        "graph_api_invocations": 120,
+        "invocation_host_wall_ms": 217876.78207285353,
+        "logical_dma_bytes": 28978627584,
+        "logical_dma_calls": 27791719,
+        "logical_load_bytes": 28568669184,
+        "logical_store_bytes": 409958400
+      }
+    },
+    {
+      "artifact_manifest_sha256": "efbcc691cb88178871008fabb5a3be49962e30034a7ff48c2ce60d3b662cb21f",
+      "boot_id": "4d232b6f-6e2a-4395-aafe-853a021403e8",
+      "candidate_budget": 6,
+      "curve": [
+        {
+          "candidate_dispatches": 1,
+          "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+          "complete_candidate_build_action_seconds": 12.052065388998017,
+          "dispatch": 1,
+          "driver_kernel_invocations": 442,
+          "fixed_pool_best_paired_ratio": 0.9930121556442159,
+          "fixed_pool_regret_percent": 0.5196664648503546,
+          "graph_api_invocations": 20,
+          "invocation_host_wall_ms": 36314.83350698545,
+          "logical_dma_bytes": 4827882496,
+          "logical_dma_calls": 4632874,
+          "logical_load_bytes": 4759556096,
+          "logical_store_bytes": 68326400,
+          "observed_best_paired_ratio": 0.9925665736019266,
+          "outer_elapsed_seconds": 87.69680776099267
+        },
+        {
+          "candidate_dispatches": 2,
+          "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+          "complete_candidate_build_action_seconds": 24.79102979900199,
+          "dispatch": 2,
+          "driver_kernel_invocations": 918,
+          "fixed_pool_best_paired_ratio": 0.9930121556442159,
+          "fixed_pool_regret_percent": 0.5196664648503546,
+          "graph_api_invocations": 40,
+          "invocation_host_wall_ms": 72614.87136001233,
+          "logical_dma_bytes": 9656635392,
+          "logical_dma_calls": 9258982,
+          "logical_load_bytes": 9519982592,
+          "logical_store_bytes": 136652800,
+          "observed_best_paired_ratio": 0.9925665736019266,
+          "outer_elapsed_seconds": 150.82498350099195
+        },
+        {
+          "candidate_dispatches": 3,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "complete_candidate_build_action_seconds": 37.11845905100927,
+          "dispatch": 3,
+          "driver_kernel_invocations": 1326,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 60,
+          "invocation_host_wall_ms": 108847.648089024,
+          "logical_dma_bytes": 14485919232,
+          "logical_dma_calls": 13875927,
+          "logical_load_bytes": 14280940032,
+          "logical_store_bytes": 204979200,
+          "observed_best_paired_ratio": 0.9887235752884814,
+          "outer_elapsed_seconds": 213.44323930899554
+        },
+        {
+          "candidate_dispatches": 4,
+          "candidate_id": "26db24b3a3209c71e8dabb41e2b60fddeabe1224f931c7b8ae741082202422f8",
+          "complete_candidate_build_action_seconds": 49.04894473400782,
+          "dispatch": 4,
+          "driver_kernel_invocations": 1870,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 80,
+          "invocation_host_wall_ms": 145144.34977903147,
+          "logical_dma_bytes": 19316021248,
+          "logical_dma_calls": 18494623,
+          "logical_load_bytes": 19042715648,
+          "logical_store_bytes": 273305600,
+          "observed_best_paired_ratio": 0.9887235752884814,
+          "outer_elapsed_seconds": 275.9062034989911
+        },
+        {
+          "candidate_dispatches": 5,
+          "candidate_id": "f031c5298f32be1790597b8b5b6a9a5056f4965f9a0428c6dcc40c53060d7f10",
+          "complete_candidate_build_action_seconds": 61.47213149901654,
+          "dispatch": 5,
+          "driver_kernel_invocations": 2414,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 100,
+          "invocation_host_wall_ms": 181640.20241002436,
+          "logical_dma_bytes": 24146297344,
+          "logical_dma_calls": 23171799,
+          "logical_load_bytes": 23804665344,
+          "logical_store_bytes": 341632000,
+          "observed_best_paired_ratio": 0.9887235752884814,
+          "outer_elapsed_seconds": 339.4955025380041
+        },
+        {
+          "candidate_dispatches": 6,
+          "candidate_id": "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+          "complete_candidate_build_action_seconds": 73.19087892101379,
+          "dispatch": 6,
+          "driver_kernel_invocations": 2822,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 120,
+          "invocation_host_wall_ms": 217929.76283803,
+          "logical_dma_bytes": 28978627584,
+          "logical_dma_calls": 27791719,
+          "logical_load_bytes": 28568669184,
+          "logical_store_bytes": 409958400,
+          "observed_best_paired_ratio": 0.9887235752884814,
+          "outer_elapsed_seconds": 401.53932396099844
+        }
+      ],
+      "first_exact_oracle": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "dispatch": 3,
+        "outer_elapsed_seconds": 213.44323930899554
+      },
+      "first_oracle_plus_2pct": {
+        "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+        "dispatch": 1,
+        "outer_elapsed_seconds": 87.69680776099267
+      },
+      "fixed_pool_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9878784824574122,
+        "regret_percent": 0.0
+      },
+      "observed_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9887235752884814
+      },
+      "outer_process_seconds_before_summary_write": 401.7869253999961,
+      "passed_candidates": 6,
+      "rejected_candidates": 0,
+      "run_dir": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r465_y10_same_space_dma_seed44502_run01",
+      "seed": 44502,
+      "strategy": "dma_prior",
+      "total_cost": {
+        "candidate_dispatches": 6,
+        "complete_candidate_build_action_seconds": 73.19087892101379,
+        "driver_kernel_invocations": 2822,
+        "graph_api_invocations": 120,
+        "invocation_host_wall_ms": 217929.76283803,
+        "logical_dma_bytes": 28978627584,
+        "logical_dma_calls": 27791719,
+        "logical_load_bytes": 28568669184,
+        "logical_store_bytes": 409958400
+      }
+    },
+    {
+      "artifact_manifest_sha256": "ade51bb6e82245758073000eaef819ee0339f028361a420d86e4cfd18f1107fa",
+      "boot_id": "4d232b6f-6e2a-4395-aafe-853a021403e8",
+      "candidate_budget": 6,
+      "curve": [
+        {
+          "candidate_dispatches": 1,
+          "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+          "complete_candidate_build_action_seconds": 12.084168511995813,
+          "dispatch": 1,
+          "driver_kernel_invocations": 442,
+          "fixed_pool_best_paired_ratio": 0.9930121556442159,
+          "fixed_pool_regret_percent": 0.5196664648503546,
+          "graph_api_invocations": 20,
+          "invocation_host_wall_ms": 36274.71273104311,
+          "logical_dma_bytes": 4827882496,
+          "logical_dma_calls": 4632874,
+          "logical_load_bytes": 4759556096,
+          "logical_store_bytes": 68326400,
+          "observed_best_paired_ratio": 0.9920077376654522,
+          "outer_elapsed_seconds": 87.62867628499225
+        },
+        {
+          "candidate_dispatches": 2,
+          "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+          "complete_candidate_build_action_seconds": 23.89832365399343,
+          "dispatch": 2,
+          "driver_kernel_invocations": 918,
+          "fixed_pool_best_paired_ratio": 0.9930121556442159,
+          "fixed_pool_regret_percent": 0.5196664648503546,
+          "graph_api_invocations": 40,
+          "invocation_host_wall_ms": 72581.01500004705,
+          "logical_dma_bytes": 9656635392,
+          "logical_dma_calls": 9258982,
+          "logical_load_bytes": 9519982592,
+          "logical_store_bytes": 136652800,
+          "observed_best_paired_ratio": 0.9920077376654522,
+          "outer_elapsed_seconds": 149.86620741599472
+        },
+        {
+          "candidate_dispatches": 3,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "complete_candidate_build_action_seconds": 35.93299884199223,
+          "dispatch": 3,
+          "driver_kernel_invocations": 1326,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 60,
+          "invocation_host_wall_ms": 108806.4799340791,
+          "logical_dma_bytes": 14485919232,
+          "logical_dma_calls": 13875927,
+          "logical_load_bytes": 14280940032,
+          "logical_store_bytes": 204979200,
+          "observed_best_paired_ratio": 0.9895252564702912,
+          "outer_elapsed_seconds": 212.56441770200036
+        },
+        {
+          "candidate_dispatches": 4,
+          "candidate_id": "26db24b3a3209c71e8dabb41e2b60fddeabe1224f931c7b8ae741082202422f8",
+          "complete_candidate_build_action_seconds": 48.38062006999098,
+          "dispatch": 4,
+          "driver_kernel_invocations": 1870,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 80,
+          "invocation_host_wall_ms": 145130.45480308938,
+          "logical_dma_bytes": 19316021248,
+          "logical_dma_calls": 18494623,
+          "logical_load_bytes": 19042715648,
+          "logical_store_bytes": 273305600,
+          "observed_best_paired_ratio": 0.9895252564702912,
+          "outer_elapsed_seconds": 275.4676605040004
+        },
+        {
+          "candidate_dispatches": 5,
+          "candidate_id": "f031c5298f32be1790597b8b5b6a9a5056f4965f9a0428c6dcc40c53060d7f10",
+          "complete_candidate_build_action_seconds": 60.46081284499087,
+          "dispatch": 5,
+          "driver_kernel_invocations": 2414,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 100,
+          "invocation_host_wall_ms": 181610.43151805643,
+          "logical_dma_bytes": 24146297344,
+          "logical_dma_calls": 23171799,
+          "logical_load_bytes": 23804665344,
+          "logical_store_bytes": 341632000,
+          "observed_best_paired_ratio": 0.9895252564702912,
+          "outer_elapsed_seconds": 337.9197353799973
+        },
+        {
+          "candidate_dispatches": 6,
+          "candidate_id": "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+          "complete_candidate_build_action_seconds": 72.32625683299557,
+          "dispatch": 6,
+          "driver_kernel_invocations": 2822,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 120,
+          "invocation_host_wall_ms": 217936.00260608946,
+          "logical_dma_bytes": 28978627584,
+          "logical_dma_calls": 27791719,
+          "logical_load_bytes": 28568669184,
+          "logical_store_bytes": 409958400,
+          "observed_best_paired_ratio": 0.9895252564702912,
+          "outer_elapsed_seconds": 400.6881487179926
+        }
+      ],
+      "first_exact_oracle": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "dispatch": 3,
+        "outer_elapsed_seconds": 212.56441770200036
+      },
+      "first_oracle_plus_2pct": {
+        "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+        "dispatch": 1,
+        "outer_elapsed_seconds": 87.62867628499225
+      },
+      "fixed_pool_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9878784824574122,
+        "regret_percent": 0.0
+      },
+      "observed_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9895252564702912
+      },
+      "outer_process_seconds_before_summary_write": 400.93325542299135,
+      "passed_candidates": 6,
+      "rejected_candidates": 0,
+      "run_dir": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r466_y10_same_space_dma_seed44503_run01",
+      "seed": 44503,
+      "strategy": "dma_prior",
+      "total_cost": {
+        "candidate_dispatches": 6,
+        "complete_candidate_build_action_seconds": 72.32625683299557,
+        "driver_kernel_invocations": 2822,
+        "graph_api_invocations": 120,
+        "invocation_host_wall_ms": 217936.00260608946,
+        "logical_dma_bytes": 28978627584,
+        "logical_dma_calls": 27791719,
+        "logical_load_bytes": 28568669184,
+        "logical_store_bytes": 409958400
+      }
+    },
+    {
+      "artifact_manifest_sha256": "fce79ac0accd7444b182cce6f0061d335cd1a964d8ee01c3a28c88970ed04619",
+      "boot_id": "4d232b6f-6e2a-4395-aafe-853a021403e8",
+      "candidate_budget": 6,
+      "curve": [
+        {
+          "candidate_dispatches": 1,
+          "candidate_id": "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+          "complete_candidate_build_action_seconds": 11.831000795995351,
+          "dispatch": 1,
+          "driver_kernel_invocations": 408,
+          "fixed_pool_best_paired_ratio": 0.9919185202002767,
+          "fixed_pool_regret_percent": 0.40896100224945275,
+          "graph_api_invocations": 20,
+          "invocation_host_wall_ms": 36363.89572601183,
+          "logical_dma_bytes": 4832330240,
+          "logical_dma_calls": 4619920,
+          "logical_load_bytes": 4764003840,
+          "logical_store_bytes": 68326400,
+          "observed_best_paired_ratio": 0.9919219493601334,
+          "outer_elapsed_seconds": 87.99707072999445
+        },
+        {
+          "candidate_dispatches": 2,
+          "candidate_id": "bfacba7ac8b6939d2e8e45689c60d177c0e14fb3790b6cf1a2fe5b49bd11851d",
+          "complete_candidate_build_action_seconds": 23.28675427500275,
+          "dispatch": 2,
+          "driver_kernel_invocations": 816,
+          "fixed_pool_best_paired_ratio": 0.9919185202002767,
+          "fixed_pool_regret_percent": 0.40896100224945275,
+          "graph_api_invocations": 40,
+          "invocation_host_wall_ms": 72705.75297802861,
+          "logical_dma_bytes": 9688378880,
+          "logical_dma_calls": 9249360,
+          "logical_load_bytes": 9551726080,
+          "logical_store_bytes": 136652800,
+          "observed_best_paired_ratio": 0.9919219493601334,
+          "outer_elapsed_seconds": 149.81995298000402
+        },
+        {
+          "candidate_dispatches": 3,
+          "candidate_id": "70be25bcf7fae14061b9681247fb3dfc6ed716600d7428a31ad28f85317aad2b",
+          "complete_candidate_build_action_seconds": 34.83263952600828,
+          "dispatch": 3,
+          "driver_kernel_invocations": 1224,
+          "fixed_pool_best_paired_ratio": 0.9901082113521499,
+          "fixed_pool_regret_percent": 0.22570882293044825,
+          "graph_api_invocations": 60,
+          "invocation_host_wall_ms": 109029.31964407617,
+          "logical_dma_bytes": 14543121920,
+          "logical_dma_calls": 13871150,
+          "logical_load_bytes": 14338142720,
+          "logical_store_bytes": 204979200,
+          "observed_best_paired_ratio": 0.9887756242888889,
+          "outer_elapsed_seconds": 211.65841426599945
+        },
+        {
+          "candidate_dispatches": 4,
+          "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+          "complete_candidate_build_action_seconds": 46.21240802900866,
+          "dispatch": 4,
+          "driver_kernel_invocations": 1700,
+          "fixed_pool_best_paired_ratio": 0.9901082113521499,
+          "fixed_pool_regret_percent": 0.22570882293044825,
+          "graph_api_invocations": 80,
+          "invocation_host_wall_ms": 145375.06363808643,
+          "logical_dma_bytes": 19371874816,
+          "logical_dma_calls": 18497258,
+          "logical_load_bytes": 19098569216,
+          "logical_store_bytes": 273305600,
+          "observed_best_paired_ratio": 0.9887756242888889,
+          "outer_elapsed_seconds": 273.4997281620017
+        },
+        {
+          "candidate_dispatches": 5,
+          "candidate_id": "b9c0bb87e78e2dbad28994d890da7050cb26a7d853b2f1d12176c4674c594f99",
+          "complete_candidate_build_action_seconds": 57.696139212013804,
+          "dispatch": 5,
+          "driver_kernel_invocations": 2108,
+          "fixed_pool_best_paired_ratio": 0.9901082113521499,
+          "fixed_pool_regret_percent": 0.22570882293044825,
+          "graph_api_invocations": 100,
+          "invocation_host_wall_ms": 181685.96990608785,
+          "logical_dma_bytes": 24226617856,
+          "logical_dma_calls": 23129248,
+          "logical_load_bytes": 23884985856,
+          "logical_store_bytes": 341632000,
+          "observed_best_paired_ratio": 0.9887756242888889,
+          "outer_elapsed_seconds": 335.272205442001
+        },
+        {
+          "candidate_dispatches": 6,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "complete_candidate_build_action_seconds": 68.93637144101376,
+          "dispatch": 6,
+          "driver_kernel_invocations": 2516,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 120,
+          "invocation_host_wall_ms": 217920.6009140762,
+          "logical_dma_bytes": 29055901696,
+          "logical_dma_calls": 27746193,
+          "logical_load_bytes": 28645943296,
+          "logical_store_bytes": 409958400,
+          "observed_best_paired_ratio": 0.9887756242888889,
+          "outer_elapsed_seconds": 396.7968422249978
+        }
+      ],
+      "first_exact_oracle": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "dispatch": 6,
+        "outer_elapsed_seconds": 396.7968422249978
+      },
+      "first_oracle_plus_2pct": {
+        "candidate_id": "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+        "dispatch": 1,
+        "outer_elapsed_seconds": 87.99707072999445
+      },
+      "fixed_pool_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9878784824574122,
+        "regret_percent": 0.0
+      },
+      "observed_terminal_best": {
+        "candidate_id": "70be25bcf7fae14061b9681247fb3dfc6ed716600d7428a31ad28f85317aad2b",
+        "median_paired_latency_ratio": 0.9887756242888889
+      },
+      "outer_process_seconds_before_summary_write": 397.04065640599583,
+      "passed_candidates": 6,
+      "rejected_candidates": 0,
+      "run_dir": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r463_y10_same_space_xgb_seed44501_run01",
+      "seed": 44501,
+      "strategy": "mode_aware_xgb",
+      "total_cost": {
+        "candidate_dispatches": 6,
+        "complete_candidate_build_action_seconds": 68.93637144101376,
+        "driver_kernel_invocations": 2516,
+        "graph_api_invocations": 120,
+        "invocation_host_wall_ms": 217920.6009140762,
+        "logical_dma_bytes": 29055901696,
+        "logical_dma_calls": 27746193,
+        "logical_load_bytes": 28645943296,
+        "logical_store_bytes": 409958400
+      }
+    },
+    {
+      "artifact_manifest_sha256": "3fdd866b18a62b4d246544d22214e54915647aa4c3d595501907a6829f4f252a",
+      "boot_id": "4d232b6f-6e2a-4395-aafe-853a021403e8",
+      "candidate_budget": 6,
+      "curve": [
+        {
+          "candidate_dispatches": 1,
+          "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+          "complete_candidate_build_action_seconds": 11.618942099012202,
+          "dispatch": 1,
+          "driver_kernel_invocations": 476,
+          "fixed_pool_best_paired_ratio": 0.9934652550492122,
+          "fixed_pool_regret_percent": 0.5655323697204784,
+          "graph_api_invocations": 20,
+          "invocation_host_wall_ms": 36314.80772400391,
+          "logical_dma_bytes": 4828752896,
+          "logical_dma_calls": 4626108,
+          "logical_load_bytes": 4760426496,
+          "logical_store_bytes": 68326400,
+          "observed_best_paired_ratio": 0.9931636024633259,
+          "outer_elapsed_seconds": 86.96412941200833
+        },
+        {
+          "candidate_dispatches": 2,
+          "candidate_id": "70be25bcf7fae14061b9681247fb3dfc6ed716600d7428a31ad28f85317aad2b",
+          "complete_candidate_build_action_seconds": 23.186177895011497,
+          "dispatch": 2,
+          "driver_kernel_invocations": 884,
+          "fixed_pool_best_paired_ratio": 0.9901082113521499,
+          "fixed_pool_regret_percent": 0.22570882293044825,
+          "graph_api_invocations": 40,
+          "invocation_host_wall_ms": 72584.58188097575,
+          "logical_dma_bytes": 9683495936,
+          "logical_dma_calls": 9247898,
+          "logical_load_bytes": 9546843136,
+          "logical_store_bytes": 136652800,
+          "observed_best_paired_ratio": 0.9903302205473733,
+          "outer_elapsed_seconds": 149.06212309400144
+        },
+        {
+          "candidate_dispatches": 3,
+          "candidate_id": "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+          "complete_candidate_build_action_seconds": 34.87967880400538,
+          "dispatch": 3,
+          "driver_kernel_invocations": 1292,
+          "fixed_pool_best_paired_ratio": 0.9901082113521499,
+          "fixed_pool_regret_percent": 0.22570882293044825,
+          "graph_api_invocations": 60,
+          "invocation_host_wall_ms": 108890.61053397018,
+          "logical_dma_bytes": 14515826176,
+          "logical_dma_calls": 13867818,
+          "logical_load_bytes": 14310846976,
+          "logical_store_bytes": 204979200,
+          "observed_best_paired_ratio": 0.9903302205473733,
+          "outer_elapsed_seconds": 211.09321715400438
+        },
+        {
+          "candidate_dispatches": 4,
+          "candidate_id": "bfacba7ac8b6939d2e8e45689c60d177c0e14fb3790b6cf1a2fe5b49bd11851d",
+          "complete_candidate_build_action_seconds": 46.613106414006324,
+          "dispatch": 4,
+          "driver_kernel_invocations": 1700,
+          "fixed_pool_best_paired_ratio": 0.9901082113521499,
+          "fixed_pool_regret_percent": 0.22570882293044825,
+          "graph_api_invocations": 80,
+          "invocation_host_wall_ms": 145210.7065019809,
+          "logical_dma_bytes": 19371874816,
+          "logical_dma_calls": 18497258,
+          "logical_load_bytes": 19098569216,
+          "logical_store_bytes": 273305600,
+          "observed_best_paired_ratio": 0.9903302205473733,
+          "outer_elapsed_seconds": 273.1366771500034
+        },
+        {
+          "candidate_dispatches": 5,
+          "candidate_id": "b9c0bb87e78e2dbad28994d890da7050cb26a7d853b2f1d12176c4674c594f99",
+          "complete_candidate_build_action_seconds": 58.499210447014775,
+          "dispatch": 5,
+          "driver_kernel_invocations": 2108,
+          "fixed_pool_best_paired_ratio": 0.9901082113521499,
+          "fixed_pool_regret_percent": 0.22570882293044825,
+          "graph_api_invocations": 100,
+          "invocation_host_wall_ms": 181546.56173197145,
+          "logical_dma_bytes": 24226617856,
+          "logical_dma_calls": 23129248,
+          "logical_load_bytes": 23884985856,
+          "logical_store_bytes": 341632000,
+          "observed_best_paired_ratio": 0.9903302205473733,
+          "outer_elapsed_seconds": 335.522090931001
+        },
+        {
+          "candidate_dispatches": 6,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "complete_candidate_build_action_seconds": 70.94589632701536,
+          "dispatch": 6,
+          "driver_kernel_invocations": 2516,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 120,
+          "invocation_host_wall_ms": 217786.1124779738,
+          "logical_dma_bytes": 29055901696,
+          "logical_dma_calls": 27746193,
+          "logical_load_bytes": 28645943296,
+          "logical_store_bytes": 409958400,
+          "observed_best_paired_ratio": 0.9882832392365596,
+          "outer_elapsed_seconds": 398.72597274799773
+        }
+      ],
+      "first_exact_oracle": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "dispatch": 6,
+        "outer_elapsed_seconds": 398.72597274799773
+      },
+      "first_oracle_plus_2pct": {
+        "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+        "dispatch": 1,
+        "outer_elapsed_seconds": 86.96412941200833
+      },
+      "fixed_pool_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9878784824574122,
+        "regret_percent": 0.0
+      },
+      "observed_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9882832392365596
+      },
+      "outer_process_seconds_before_summary_write": 398.9626949480007,
+      "passed_candidates": 6,
+      "rejected_candidates": 0,
+      "run_dir": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r464_y10_same_space_xgb_seed44502_run01",
+      "seed": 44502,
+      "strategy": "mode_aware_xgb",
+      "total_cost": {
+        "candidate_dispatches": 6,
+        "complete_candidate_build_action_seconds": 70.94589632701536,
+        "driver_kernel_invocations": 2516,
+        "graph_api_invocations": 120,
+        "invocation_host_wall_ms": 217786.1124779738,
+        "logical_dma_bytes": 29055901696,
+        "logical_dma_calls": 27746193,
+        "logical_load_bytes": 28645943296,
+        "logical_store_bytes": 409958400
+      }
+    },
+    {
+      "artifact_manifest_sha256": "9b1d7f9cb1de048c50748ec46544010d1d8a8272aff40c0e3258026625d94080",
+      "boot_id": "4d232b6f-6e2a-4395-aafe-853a021403e8",
+      "candidate_budget": 6,
+      "curve": [
+        {
+          "candidate_dispatches": 1,
+          "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+          "complete_candidate_build_action_seconds": 12.756371280993335,
+          "dispatch": 1,
+          "driver_kernel_invocations": 476,
+          "fixed_pool_best_paired_ratio": 0.9934652550492122,
+          "fixed_pool_regret_percent": 0.5655323697204784,
+          "graph_api_invocations": 20,
+          "invocation_host_wall_ms": 36311.35259101575,
+          "logical_dma_bytes": 4828752896,
+          "logical_dma_calls": 4626108,
+          "logical_load_bytes": 4760426496,
+          "logical_store_bytes": 68326400,
+          "observed_best_paired_ratio": 0.9926659869655098,
+          "outer_elapsed_seconds": 89.83847421700193
+        },
+        {
+          "candidate_dispatches": 2,
+          "candidate_id": "b9c0bb87e78e2dbad28994d890da7050cb26a7d853b2f1d12176c4674c594f99",
+          "complete_candidate_build_action_seconds": 24.371485772993765,
+          "dispatch": 2,
+          "driver_kernel_invocations": 884,
+          "fixed_pool_best_paired_ratio": 0.9934652550492122,
+          "fixed_pool_regret_percent": 0.5655323697204784,
+          "graph_api_invocations": 40,
+          "invocation_host_wall_ms": 72632.0837730018,
+          "logical_dma_bytes": 9683495936,
+          "logical_dma_calls": 9258098,
+          "logical_load_bytes": 9546843136,
+          "logical_store_bytes": 136652800,
+          "observed_best_paired_ratio": 0.9926659869655098,
+          "outer_elapsed_seconds": 151.69387676900078
+        },
+        {
+          "candidate_dispatches": 3,
+          "candidate_id": "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+          "complete_candidate_build_action_seconds": 36.11035189998802,
+          "dispatch": 3,
+          "driver_kernel_invocations": 1292,
+          "fixed_pool_best_paired_ratio": 0.9919185202002767,
+          "fixed_pool_regret_percent": 0.40896100224945275,
+          "graph_api_invocations": 60,
+          "invocation_host_wall_ms": 108984.37187896343,
+          "logical_dma_bytes": 14515826176,
+          "logical_dma_calls": 13878018,
+          "logical_load_bytes": 14310846976,
+          "logical_store_bytes": 204979200,
+          "observed_best_paired_ratio": 0.9926659869655098,
+          "outer_elapsed_seconds": 213.74835945499945
+        },
+        {
+          "candidate_dispatches": 4,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "complete_candidate_build_action_seconds": 47.78495123499306,
+          "dispatch": 4,
+          "driver_kernel_invocations": 1700,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 80,
+          "invocation_host_wall_ms": 145246.07055699744,
+          "logical_dma_bytes": 19345110016,
+          "logical_dma_calls": 18494963,
+          "logical_load_bytes": 19071804416,
+          "logical_store_bytes": 273305600,
+          "observed_best_paired_ratio": 0.988623807597622,
+          "outer_elapsed_seconds": 276.260658906991
+        },
+        {
+          "candidate_dispatches": 5,
+          "candidate_id": "70be25bcf7fae14061b9681247fb3dfc6ed716600d7428a31ad28f85317aad2b",
+          "complete_candidate_build_action_seconds": 59.789824323990615,
+          "dispatch": 5,
+          "driver_kernel_invocations": 2108,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 100,
+          "invocation_host_wall_ms": 181528.93613699416,
+          "logical_dma_bytes": 24199853056,
+          "logical_dma_calls": 23116753,
+          "logical_load_bytes": 23858221056,
+          "logical_store_bytes": 341632000,
+          "observed_best_paired_ratio": 0.988623807597622,
+          "outer_elapsed_seconds": 338.81888697198883
+        },
+        {
+          "candidate_dispatches": 6,
+          "candidate_id": "26db24b3a3209c71e8dabb41e2b60fddeabe1224f931c7b8ae741082202422f8",
+          "complete_candidate_build_action_seconds": 71.4281326559867,
+          "dispatch": 6,
+          "driver_kernel_invocations": 2652,
+          "fixed_pool_best_paired_ratio": 0.9878784824574122,
+          "fixed_pool_regret_percent": 0.0,
+          "graph_api_invocations": 120,
+          "invocation_host_wall_ms": 217836.39120898442,
+          "logical_dma_bytes": 29029955072,
+          "logical_dma_calls": 27735449,
+          "logical_load_bytes": 28619996672,
+          "logical_store_bytes": 409958400,
+          "observed_best_paired_ratio": 0.988623807597622,
+          "outer_elapsed_seconds": 401.3104189989972
+        }
+      ],
+      "first_exact_oracle": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "dispatch": 4,
+        "outer_elapsed_seconds": 276.260658906991
+      },
+      "first_oracle_plus_2pct": {
+        "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+        "dispatch": 1,
+        "outer_elapsed_seconds": 89.83847421700193
+      },
+      "fixed_pool_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.9878784824574122,
+        "regret_percent": 0.0
+      },
+      "observed_terminal_best": {
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "median_paired_latency_ratio": 0.988623807597622
+      },
+      "outer_process_seconds_before_summary_write": 401.5493360739929,
+      "passed_candidates": 6,
+      "rejected_candidates": 0,
+      "run_dir": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r467_y10_same_space_xgb_seed44503_run01",
+      "seed": 44503,
+      "strategy": "mode_aware_xgb",
+      "total_cost": {
+        "candidate_dispatches": 6,
+        "complete_candidate_build_action_seconds": 71.4281326559867,
+        "driver_kernel_invocations": 2652,
+        "graph_api_invocations": 120,
+        "invocation_host_wall_ms": 217836.39120898442,
+        "logical_dma_bytes": 29029955072,
+        "logical_dma_calls": 27735449,
+        "logical_load_bytes": 28619996672,
+        "logical_store_bytes": 409958400
+      }
+    }
+  ],
+  "schema": "c3_y10_same_space_online_ablation_aggregate_v1",
+  "status": "complete_labels_preexisted_attribution_only",
+  "strategies": {
+    "dma_prior": {
+      "all_runs_hit_exact_oracle": true,
+      "all_runs_hit_oracle_plus_2pct": true,
+      "metrics": {
+        "candidate_build_action_seconds": {
+          "max": 73.19087892101379,
+          "median": 72.32625683299557,
+          "min": 70.21068956500676,
+          "q1": 71.26847319900116,
+          "q3": 72.75856787700468
+        },
+        "driver_kernel_invocations": {
+          "max": 2822.0,
+          "median": 2822.0,
+          "min": 2822.0,
+          "q1": 2822.0,
+          "q3": 2822.0
+        },
+        "exact_oracle_dispatch": {
+          "max": 3.0,
+          "median": 3.0,
+          "min": 3.0,
+          "q1": 3.0,
+          "q3": 3.0
+        },
+        "exact_oracle_seconds": {
+          "max": 213.44323930899554,
+          "median": 212.56441770200036,
+          "min": 212.06630372301152,
+          "q1": 212.31536071250594,
+          "q3": 213.00382850549795
+        },
+        "fixed_pool_terminal_regret_percent": {
+          "max": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "q1": 0.0,
+          "q3": 0.0
+        },
+        "graph_api_invocations": {
+          "max": 120.0,
+          "median": 120.0,
+          "min": 120.0,
+          "q1": 120.0,
+          "q3": 120.0
+        },
+        "invocation_host_wall_ms": {
+          "max": 217936.00260608946,
+          "median": 217929.76283803,
+          "min": 217876.78207285353,
+          "q1": 217903.27245544177,
+          "q3": 217932.88272205973
+        },
+        "logical_dma_bytes": {
+          "max": 28978627584.0,
+          "median": 28978627584.0,
+          "min": 28978627584.0,
+          "q1": 28978627584.0,
+          "q3": 28978627584.0
+        },
+        "logical_dma_calls": {
+          "max": 27791719.0,
+          "median": 27791719.0,
+          "min": 27791719.0,
+          "q1": 27791719.0,
+          "q3": 27791719.0
+        },
+        "observed_terminal_best_ratio": {
+          "max": 0.9902715709857556,
+          "median": 0.9895252564702912,
+          "min": 0.9887235752884814,
+          "q1": 0.9891244158793864,
+          "q3": 0.9898984137280233
+        },
+        "oracle_plus_2pct_dispatch": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "q1": 1.0,
+          "q3": 1.0
+        },
+        "oracle_plus_2pct_seconds": {
+          "max": 88.06395110800804,
+          "median": 87.69680776099267,
+          "min": 87.62867628499225,
+          "q1": 87.66274202299246,
+          "q3": 87.88037943450036
+        },
+        "outer_process_seconds": {
+          "max": 401.7869253999961,
+          "median": 400.93325542299135,
+          "min": 398.9627079930069,
+          "q1": 399.94798170799913,
+          "q3": 401.36009041149373
+        }
+      },
+      "run_count": 3,
+      "seeds": [
+        44501,
+        44502,
+        44503
+      ]
+    },
+    "mode_aware_xgb": {
+      "all_runs_hit_exact_oracle": true,
+      "all_runs_hit_oracle_plus_2pct": true,
+      "metrics": {
+        "candidate_build_action_seconds": {
+          "max": 71.4281326559867,
+          "median": 70.94589632701536,
+          "min": 68.93637144101376,
+          "q1": 69.94113388401456,
+          "q3": 71.18701449150103
+        },
+        "driver_kernel_invocations": {
+          "max": 2652.0,
+          "median": 2516.0,
+          "min": 2516.0,
+          "q1": 2516.0,
+          "q3": 2584.0
+        },
+        "exact_oracle_dispatch": {
+          "max": 6.0,
+          "median": 6.0,
+          "min": 4.0,
+          "q1": 5.0,
+          "q3": 6.0
+        },
+        "exact_oracle_seconds": {
+          "max": 398.72597274799773,
+          "median": 396.7968422249978,
+          "min": 276.260658906991,
+          "q1": 336.5287505659944,
+          "q3": 397.7614074864978
+        },
+        "fixed_pool_terminal_regret_percent": {
+          "max": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "q1": 0.0,
+          "q3": 0.0
+        },
+        "graph_api_invocations": {
+          "max": 120.0,
+          "median": 120.0,
+          "min": 120.0,
+          "q1": 120.0,
+          "q3": 120.0
+        },
+        "invocation_host_wall_ms": {
+          "max": 217920.6009140762,
+          "median": 217836.39120898442,
+          "min": 217786.1124779738,
+          "q1": 217811.2518434791,
+          "q3": 217878.4960615303
+        },
+        "logical_dma_bytes": {
+          "max": 29055901696.0,
+          "median": 29055901696.0,
+          "min": 29029955072.0,
+          "q1": 29042928384.0,
+          "q3": 29055901696.0
+        },
+        "logical_dma_calls": {
+          "max": 27746193.0,
+          "median": 27746193.0,
+          "min": 27735449.0,
+          "q1": 27740821.0,
+          "q3": 27746193.0
+        },
+        "observed_terminal_best_ratio": {
+          "max": 0.9887756242888889,
+          "median": 0.988623807597622,
+          "min": 0.9882832392365596,
+          "q1": 0.9884535234170908,
+          "q3": 0.9886997159432555
+        },
+        "oracle_plus_2pct_dispatch": {
+          "max": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "q1": 1.0,
+          "q3": 1.0
+        },
+        "oracle_plus_2pct_seconds": {
+          "max": 89.83847421700193,
+          "median": 87.99707072999445,
+          "min": 86.96412941200833,
+          "q1": 87.48060007100139,
+          "q3": 88.91777247349819
+        },
+        "outer_process_seconds": {
+          "max": 401.5493360739929,
+          "median": 398.9626949480007,
+          "min": 397.04065640599583,
+          "q1": 398.0016756769983,
+          "q3": 400.2560155109968
+        }
+      },
+      "run_count": 3,
+      "seeds": [
+        44501,
+        44502,
+        44503
+      ]
+    }
+  },
+  "verified_artifact_counts": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r435_y10_online_peeling_run02": 281,
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r440_y10_oracle_completion_board_run01": 5,
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r441_y10_complete_pool_analysis_run01": 2,
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r462_y10_same_space_dma_seed44501_run01": 488,
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r463_y10_same_space_xgb_seed44501_run01": 488,
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r464_y10_same_space_xgb_seed44502_run01": 488,
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r465_y10_same_space_dma_seed44502_run01": 488,
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r466_y10_same_space_dma_seed44503_run01": 488,
+    "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r467_y10_same_space_xgb_seed44503_run01": 488
+  },
+  "workload_id": "Y10"
+}

@@ -1,0 +1,1605 @@
+{
+  "baseline": "none",
+  "candidate_id": "stage_tile_tuned_d",
+  "correctness_policy": "exact",
+  "deployment": {
+    "deploy_mode": "sync",
+    "remote_dir": "/mnt/sd/stage_tile_pipeline_tuned_d",
+    "ssh_target": "root@192.168.1.247"
+  },
+  "image_size": 224,
+  "input_count": 1,
+  "input_dtype": "float32",
+  "input_file": "input.bin",
+  "input_list": "",
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "inputs": [
+    {
+      "index": 0,
+      "input_file": "input.bin",
+      "source_image": "build_axu_aarch64/cat.png"
+    }
+  ],
+  "instrumentation": {
+    "barrier_token_configured": false,
+    "process_pmu_requested": false,
+    "ready_file": null,
+    "scope": "single_serial_stage_only",
+    "start_file": null,
+    "start_timeout_s": 120,
+    "warmup_runs": 0
+  },
+  "kind": "resnet18_native_stage_pipeline",
+  "model": "resnet18_v1",
+  "output_dump_dir": "raw",
+  "pipeline_configured": true,
+  "pipeline_output_jsonl": "native_result.jsonl",
+  "pipeline_stage_runtime_threads": {
+    "stage0": 4,
+    "stage1": 1,
+    "stage2": 1,
+    "stage3": 1,
+    "stage4": 1
+  },
+  "queue_depth": 2,
+  "requested_scheme": "three_stage_e",
+  "resource_aware_candidate_name": "",
+  "rpc_baseline_result": "",
+  "run_serial_before_pipeline": true,
+  "runner": "vta_stage_pipeline_runner",
+  "runner_output_mode": "raw",
+  "runs": 20,
+  "runtime_libs": [
+    "libtvm_runtime.so",
+    "libvta.so"
+  ],
+  "runtime_num_threads": 4,
+  "scheme": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t1",
+  "serial": false,
+  "serial_output_jsonl": "stage_serial_result.jsonl",
+  "serial_stage_runtime_threads": {
+    "stage0": 4,
+    "stage1": 1,
+    "stage2": 1,
+    "stage3": 1,
+    "stage4": 1
+  },
+  "stage_count": 5,
+  "stage_cpu_affinity": {
+    "pipeline": {
+      "stage0": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "stage1": [],
+      "stage2": [
+        0
+      ],
+      "stage3": [],
+      "stage4": [
+        0
+      ]
+    },
+    "policy": "independent_overlapping_prefix_masks_v1",
+    "serial": {
+      "stage0": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "stage1": [],
+      "stage2": [
+        0
+      ],
+      "stage3": [],
+      "stage4": [
+        0
+      ]
+    }
+  },
+  "stage_runtime_threads": {
+    "pipeline": {
+      "stage0": 4,
+      "stage1": 1,
+      "stage2": 1,
+      "stage3": 1,
+      "stage4": 1
+    },
+    "serial": {
+      "stage0": 4,
+      "stage1": 1,
+      "stage2": 1,
+      "stage3": 1,
+      "stage4": 1
+    }
+  },
+  "stages": [
+    {
+      "artifact_sha256": {
+        "graph_sha256": "9ed987b41af738c0f5dc27603ffbc986ba078df9aea19820ff03ef7511b675a6",
+        "lib_sha256": "792433337d6bfac9b06baa143a088d8cd5a3e350d7723b4d0b6ede9dbfd359e3",
+        "params_sha256": "3940c871777ccf82d0b83d1e35c6f448a24c82eab0f4cda967ef98e4eed95b6e"
+      },
+      "compiled_module_sources": [
+        {
+          "index": 0,
+          "source_bytes": 1202312,
+          "source_sha256": "1fe86084b770602091dd1d65aa954f2b4be4fab515ae516c858077f122b6353f",
+          "type_key": "llvm"
+        }
+      ],
+      "device": "cpu",
+      "graph": "stages/stage0/graph.json",
+      "index": 0,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage0/graphlib.so",
+      "name": "stage0",
+      "output_bytes": 802816,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage0/params.params",
+      "relay_ir_sha256": "0f44689ba8588f0c908e3e82c02fa1b19595c2f32e697ae6e4b4b3902bee43d5",
+      "stage_build_cache_hit": false,
+      "stage_build_cache_key": "0c3dc17df729efcff967645625c2f07ca0e9b0466015a7c47a97b53b6b7a1b5e",
+      "unit_names": [
+        "stem",
+        "layer1_block0_main_preadd",
+        "layer1_block0_add_relu_tail"
+      ],
+      "vta_tuning": null
+    },
+    {
+      "artifact_sha256": {
+        "graph_sha256": "de3b935c52d605936d365c20dd98d79b2fa456246759b701f0c0ccbbdbbb339f",
+        "lib_sha256": "050b69535ec4339b81880451f28b1af9e49532ac13488c30e814ad4621a60141",
+        "params_sha256": "01f4971e4ddd4a47c29adc2504247d03e0e0e68cc4e5dd2bc0fb0a1701ea7362"
+      },
+      "compiled_module_sources": [
+        {
+          "index": 0,
+          "source_bytes": 1142328,
+          "source_sha256": "823cbac9447db4eb8aff70126c1b85da1a9d98ed3941a1ff6cf888875eed78f6",
+          "type_key": "llvm"
+        }
+      ],
+      "device": "vta",
+      "graph": "stages/stage1/graph.json",
+      "index": 1,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage1/graphlib.so",
+      "name": "stage1",
+      "output_bytes": 200704,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage1/params.params",
+      "relay_ir_sha256": "5b6d23dd4b864bb2743cd343a2d6208cadce3cba31016084770a9ccf0930968f",
+      "stage_build_cache_hit": false,
+      "stage_build_cache_key": "90affbb428096641336c62ade7047bc9dd87109226d91a0c066a0dc823edcfb2",
+      "unit_names": [
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail"
+      ],
+      "vta_tuning": {
+        "coverage_scope": "conv2d_packed.vta",
+        "fallback_workloads": 0,
+        "mode": "history_best",
+        "queried_workloads": 7,
+        "rows": [
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    56
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    2
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 591
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  4,
+                  56,
+                  56,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  4,
+                  4,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    28
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    2
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 443
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  4,
+                  56,
+                  56,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  8,
+                  4,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    28
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    4
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  1
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 17
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  8,
+                  28,
+                  28,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  8,
+                  8,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    28
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 465
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  4,
+                  56,
+                  56,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  8,
+                  4,
+                  1,
+                  1,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    2
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 327
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  8,
+                  28,
+                  28,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  16,
+                  8,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    2
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 407
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  16,
+                  16,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 334
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  8,
+                  28,
+                  28,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  16,
+                  8,
+                  1,
+                  1,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          }
+        ],
+        "sha256": "53dc5497f4793f4b4d3b31917874eb41dffb6097eeae4521773a53ffd562a222",
+        "successful_records": 10,
+        "tuned_workloads": 7
+      }
+    },
+    {
+      "artifact_sha256": {
+        "graph_sha256": "7f477d37111243d28e2fb08d6a7d255e5e187f280c989562583f7caa6c1e90f3",
+        "lib_sha256": "db8ea27d76758a267f1592db853d768f050246de39c0554c45c1a81346a68ce8",
+        "params_sha256": "1814f903b9af65513439bb1f6af28beaccda7c497a23643525fd288603125063"
+      },
+      "compiled_module_sources": [
+        {
+          "index": 0,
+          "source_bytes": 1021348,
+          "source_sha256": "5e044abdbb046599ce20a3020a855222f7dd64a3dc4ebdd2278b373fb2b731c4",
+          "type_key": "llvm"
+        }
+      ],
+      "device": "cpu",
+      "graph": "stages/stage2/graph.json",
+      "index": 2,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage2/graphlib.so",
+      "name": "stage2",
+      "output_bytes": 200704,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage2/params.params",
+      "relay_ir_sha256": "666ce6c56f17ddf71f56162bcbec6947715f2fbb4b01c5846b45c3e91fca2460",
+      "stage_build_cache_hit": false,
+      "stage_build_cache_key": "3191a0cbc4aec91044a9b8a2462e9da72c6c619b147c9fc2ff6fb2dbebb03b88",
+      "unit_names": [
+        "layer3_block1_main_preadd",
+        "layer3_block1_add_relu_tail"
+      ],
+      "vta_tuning": null
+    },
+    {
+      "artifact_sha256": {
+        "graph_sha256": "955063a0db03fef035163c003eb96e650562d976611e85502a6be815013c0221",
+        "lib_sha256": "0ee4757b06d27177058c2e143f87109a80cc12e518e5b410787631e382486499",
+        "params_sha256": "1021c723abd302f7c706373e1f407f0a8bdaa2c93ae18bf5cb2685366bc704f4"
+      },
+      "compiled_module_sources": [
+        {
+          "index": 0,
+          "source_bytes": 662649,
+          "source_sha256": "de00b95f7360454d05cf32c894d2c94c342a129789aad5562c8ee7a5ff7beb27",
+          "type_key": "llvm"
+        }
+      ],
+      "device": "vta",
+      "graph": "stages/stage3/graph.json",
+      "index": 3,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              256,
+              14,
+              14
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage3/graphlib.so",
+      "name": "stage3",
+      "output_bytes": 100352,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage3/params.params",
+      "relay_ir_sha256": "2a02fe1547c0cf9fd66c87dc703d64748e9836d8f2cd3ab7016d9b05dbe9b3b2",
+      "stage_build_cache_hit": false,
+      "stage_build_cache_key": "922d60de1c744d722d40a0335880a0409fd39cba4b0baa7e56738acbdb90c08e",
+      "unit_names": [
+        "layer4_block0_main_preadd",
+        "layer4_block0_skip_proj",
+        "layer4_block0_add_relu_tail",
+        "layer4_block1_main_preadd",
+        "layer4_block1_add_relu_tail"
+      ],
+      "vta_tuning": {
+        "coverage_scope": "conv2d_packed.vta",
+        "fallback_workloads": 0,
+        "mode": "history_best",
+        "queried_workloads": 3,
+        "rows": [
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 123
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  32,
+                  16,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 147
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  32,
+                  7,
+                  7,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  32,
+                  32,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          {
+            "config": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ],
+              "index": 123
+            },
+            "is_fallback": false,
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  32,
+                  16,
+                  1,
+                  1,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          }
+        ],
+        "sha256": "53dc5497f4793f4b4d3b31917874eb41dffb6097eeae4521773a53ffd562a222",
+        "successful_records": 10,
+        "tuned_workloads": 3
+      }
+    },
+    {
+      "artifact_sha256": {
+        "graph_sha256": "3a3a4538f5cdd6166918a1719ee5844e55ef4f24dfe7294ca6b661d4c0be5da2",
+        "lib_sha256": "6cd8c260c4e4ac64407c2bfa5608600b0fe5da45794268cd5c485fc9fae5baf3",
+        "params_sha256": "b1498e0cb137545593947090ff1328dc7836d9946d8997519d4cbc1f0ec035f5"
+      },
+      "compiled_module_sources": [
+        {
+          "index": 0,
+          "source_bytes": 127163,
+          "source_sha256": "317d62ccddfa6c08fca94361b117276f3d47264110106a6bf4fafd553a0c5902",
+          "type_key": "llvm"
+        }
+      ],
+      "device": "cpu",
+      "graph": "stages/stage4/graph.json",
+      "index": 4,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage4/graphlib.so",
+      "name": "stage4",
+      "output_bytes": 4000,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              1000
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage4/params.params",
+      "relay_ir_sha256": "68b65d8a56e54c3beb5b31927c9188646d37aedf25671f3138badb22d328c3fb",
+      "stage_build_cache_hit": false,
+      "stage_build_cache_key": "f96f5f2f222abb16200683c6cb447756641aec2d976a6ef3d1acfa6b5ff0c335",
+      "unit_names": [
+        "head"
+      ],
+      "vta_tuning": null
+    }
+  ],
+  "target": "axu5evb",
+  "unit_assignment": [
+    {
+      "device": "cpu",
+      "stage": "stage0",
+      "unit_names": [
+        "stem",
+        "layer1_block0_main_preadd",
+        "layer1_block0_add_relu_tail"
+      ]
+    },
+    {
+      "device": "vta",
+      "stage": "stage1",
+      "unit_names": [
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail"
+      ]
+    },
+    {
+      "device": "cpu",
+      "stage": "stage2",
+      "unit_names": [
+        "layer3_block1_main_preadd",
+        "layer3_block1_add_relu_tail"
+      ]
+    },
+    {
+      "device": "vta",
+      "stage": "stage3",
+      "unit_names": [
+        "layer4_block0_main_preadd",
+        "layer4_block0_skip_proj",
+        "layer4_block0_add_relu_tail",
+        "layer4_block1_main_preadd",
+        "layer4_block1_add_relu_tail"
+      ]
+    },
+    {
+      "device": "cpu",
+      "stage": "stage4",
+      "unit_names": [
+        "head"
+      ]
+    }
+  ],
+  "vta_islands": [
+    {
+      "end_unit": "layer3_block0_add_relu_tail",
+      "stage": "stage1",
+      "start_unit": "layer1_block1_main_preadd",
+      "unit_names": [
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail"
+      ]
+    },
+    {
+      "end_unit": "layer4_block1_add_relu_tail",
+      "stage": "stage3",
+      "start_unit": "layer4_block0_main_preadd",
+      "unit_names": [
+        "layer4_block0_main_preadd",
+        "layer4_block0_skip_proj",
+        "layer4_block0_add_relu_tail",
+        "layer4_block1_main_preadd",
+        "layer4_block1_add_relu_tail"
+      ]
+    }
+  ]
+}

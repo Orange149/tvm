@@ -1,0 +1,92 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "name": "edge0", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "edge1", 
+      "inputs": []
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_cast_cast_add_nn_relu_cast", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "2", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_cast_cast_add_nn_relu_cast", 
+        "hash": "751bde1826c010fa"
+      }, 
+      "inputs": [
+        [
+          0, 
+          0, 
+          0
+        ], 
+        [
+          1, 
+          0, 
+          0
+        ]
+      ]
+    }, 
+    {
+      "op": "tvm_op", 
+      "name": "tvmgen_default_fused_cast_multiply", 
+      "attrs": {
+        "num_outputs": "1", 
+        "num_inputs": "1", 
+        "flatten_data": "0", 
+        "func_name": "tvmgen_default_fused_cast_multiply", 
+        "hash": "0430cb74ab9e85ed"
+      }, 
+      "inputs": [
+        [
+          2, 
+          0, 
+          0
+        ]
+      ]
+    }
+  ], 
+  "arg_nodes": [0, 1], 
+  "heads": [
+    [
+      3, 
+      0, 
+      0
+    ]
+  ], 
+  "attrs": {
+    "dltype": [
+      "list_str", 
+      [
+        "int8", 
+        "int8", 
+        "int8", 
+        "float32"
+      ]
+    ], 
+    "device_index": [
+      "list_int", 
+      [1, 1, 1, 1]
+    ], 
+    "storage_id": [
+      "list_int", 
+      [0, 1, 2, 3]
+    ], 
+    "shape": [
+      "list_shape", 
+      [
+        [1, 256, 14, 14], 
+        [1, 256, 14, 14], 
+        [1, 256, 14, 14], 
+        [1, 256, 14, 14]
+      ]
+    ]
+  }, 
+  "node_row_ptr": [0, 1, 2, 3, 4]
+}

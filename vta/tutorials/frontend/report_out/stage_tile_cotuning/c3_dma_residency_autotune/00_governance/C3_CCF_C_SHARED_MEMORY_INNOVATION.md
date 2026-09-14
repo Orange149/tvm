@@ -1,6 +1,122 @@
 # 第三创新点定稿方向：面向固定 FPGA 的共享内存访问规律驱动 AutoTVM 搜索优化
 
-状态：`MECHANISM_SEARCH_DEPLOYMENT_CHAIN_COMPLETE; LITERATURE_BASELINES_AND_R18_CANDIDATES_FROZEN; NODE_C_LOCAL_QUALIFICATION_PENDING`
+状态：`MECHANISM_SEARCH_DEPLOYMENT_CHAIN_COMPLETE; R18_P7R510_214_POINT_NON_SPLICED_FPGA_POOL_COMPLETE; R18_P7R512_SIX_POLICY_AND_P7R513_CHENG_ANALYSES_COMPLETE; P7R516G_LABEL_FREE_FALLBACK_FULLGRAPH_COMPLETE_WITHIN_2PCT_NO_SPEEDUP; P7R523_H1_THREE_BY_THREE_CLEAN_START_COMPLETE; P7R524C_FINAL_PUBLICATION_FIGURES_COMPLETE`
+
+> P7R517--P7R523 已完成 ResNet18 H1 的三对三完整 clean-start。空历史 AutoTVM-XGB 与本文方法
+> 的 T0→T1 中位数分别为668.459 s和309.699 s，本文减少53.67%；W0→T1减少53.03%，候选中位数
+> 由240降至13。最终 ResNet18 中位 latency 为116.912/117.902 ms，本文慢0.847%，但六次运行都
+> 通过三输入全输出正确性并进入各自 stock+2% 带。这支持“以更少完整系统时间达到可部署等价质量”，
+> 不支持“算子 oracle 更优”或“ResNet18 FPS 提升”：本文三次都未进入六会话 observed operator
+> minimum+2%，且两侧候选空间不同。三次 RPC 生命周期失败另付 T0 548.652 s，已作为不可拼接失败
+> 成本单列，不进入有效中位数。
+
+> P7R516E--P7R516G 已完成不读取整图性能标签的正确性回退。H3 combined D0098 被标为图上下文
+> invalid；因冻结池不存在 D0098 same-tile original，四个策略统一回退到已有 6/6 整图正确的 H3
+> D0203 original。回退后四策略去重为两份程序，只新增一次构建（11.722 s）。P7R516G 在同一
+> clean-start session 中完成 9/9 正确性和 21/21 七轮平衡计时：stock 为116.464 ms，stock-XGB
+> fallback 为117.093 ms（+0.540%），Cheng/ML²/本文共同 fallback 为117.722 ms（+1.080%）。
+> 四策略均通过预注册的2%非劣门槛，但均未加速；三者共享同一二进制，不能当作独立性能样本。
+
+> P7R514--P7R516D 已将固定 `seed=57001、budget=50` 的选择放回同一 ResNet18。四个策略去重为
+> 三个 selected 程序，P7R515 构建耗时 46.541 s；P7R516 在第一个输入的四次调用后发现整图输出
+> 不一致并在计时前 fail closed。保持二进制不变的 P7R516D 用三个 seed、正反两种顺序定位：H3
+> 使用 original 的 Cheng 程序 6/6 与 stock 完全相等；共享 H3 combined D0098 的 stock-XGB 程序
+> 和 ML²/本文程序均为 0/6，每次1000个分类输出全不相等且同 seed 哈希随顺序变化。故当前没有
+> ResNet18 selected 整图 latency/FPS 标签；这证明孤立算子 FPGA-correct 不能替代最终图上下文
+> 正确性。后续必须先冻结无 latency 的 invalid-route 回退协议，不能直接启动三对三 clean-start。
+
+> P7R511--P7R513 已在不再接触板端或修改规则的条件下完成 outcome 适配、六策略×三几何×20 seeds
+> 等预算回放和 Cheng 四方案分析。本文方法只在 H2 明确领先：首次测量、2.129 s 命中 oracle+2%；
+> H1 需 37 次/76.055 s，慢于 stock-XGB 的 26.5 次/52.251 s；H3 为 11 次/10.943 s，与 stock-XGB
+> 的 11.5 次/9.940 s 接近但墙钟略差。ML²Tuner P/V/A 在 H1/H3 更强；DMA 加入 Model A 只改善
+> H2，未稳定改善三几何。Cheng 可完整解析的 19 个 family 中 15 个最小访存即最快、4 个不是。
+> 因而当前不能写“本文搜索全面优于 XGB/ML²Tuner”；下一步只按冻结选择做 ResNet18 整图验证。
+
+> P7R508 在任何 R18 板端标签前补冻严格 host-key、公钥优先的 SSH 控制源码；P7R509 用串口与网络
+> 完整公钥一致性恢复冻结 bitstream、192 MiB u-dma-buf 和 tmpfs RPC。P7R510 随后在同一不可拼接
+> session 中完成 214 点三 seed FPGA correctness 与正确点五轮平衡计时：207/214 正确，7 个错误均
+> 在首 seed fail-fast；1035/1035 个计时样本完成。W0→T1 为 282.612 s，T0→T1 为 274.737 s；
+> H1/H2/H3 完整正确池 oracle 分别为 5.945580/5.156932/0.257132 ms。该 outcome 池本身不代表
+> 搜索器获胜；六策略与 Cheng 结论以随后的 P7R511--P7R513 独立分析为准。
+
+> P7R507 进一步规定 runtime profile 缺少 `driver_run_total_us` 时必须拒绝适配，不能默认为 0 ms
+> 并伪造最快方案。完整套件 56/56 通过；仍没有读取 R18 板端标签。
+
+> P7R506 修正 Cheng pure-instruction 指标：runtime 的 `driver_run_total_us` 包含 time evaluator 的
+> 两次完整主函数执行，必须除以完整算子调用次数；不能除以 `driver_run_calls`，因为 barrier 模式
+> 一次算子本来就包含多个 submission。该修订避免 pure-instruction 结果整体翻倍或把多 submission
+> 错当成多个算子，55/55 项本地测试通过。
+
+> P7R505 将相同审计合同扩展到策略所选完整图、官方空历史 XGB clean-start 和本文 clean-start
+> runner。失败路径保存五类统一产物及 `invalid_session.json`，已存在输出目录只拒绝而绝不写入；
+> 部分候选的已付 gross 与墙钟不会消失。文献对齐本地测试为 54/54 通过。
+
+> P7R504 补齐板池每次运行都必须保存的统一审计产物：`contract.json`、`timeline.jsonl`、
+> `results.jsonl`、`summary.json` 和 `artifact_hashes.json`。失败 session 仍抛错并额外保存
+> `invalid_session.json`，但不再缺少统一摘要；它仍明确不可拼接。50/50 项文献对齐本地测试通过，
+> 214 个候选、二进制、顺序和测量次数均未改变。
+
+> P7R503 将完整 214 点不可拼接板端 session 的 RPC 总生命周期从不可能完成该工作量的 120 秒
+> 修正为 7200 秒。TVM `session_timeout` 限制的是整个连接时长；本实验至少有 642 次正确性调用并
+> 最多有 1070 次计时调用，旧值会制造必然的基础设施中断。候选与测量次数保持不变。
+
+> P7R502 将 H1 三对三 clean-start 的 preflight 对齐：官方空历史 XGB 与本文路径都在 T0 前验证
+> 相同默认 runtime 哈希和 RPC 工作目录，本文路径同时验证 ResNet18 source contract artifact
+> ledger。它只消除不对称起点，不读取目标标签，也不改变搜索空间、预算或执行顺序。
+
+> P7R501 继续补齐计划要求的最终统计口径：所有策略的汇总同时包含 gross candidates、compiler
+> attempts、FPGA dispatch、kernel invocation、逻辑 DMA，以及 lowering/FSim/cross-compile/
+> correctness/timing 分阶段墙钟；oracle+2% 与 +5% 都保存首次命中的 trial 和累计 wall。它不改变
+> P7R500 的信息隔离修正，也不改变候选或板端执行顺序。P7R501 是当前最终分析语义合同。
+
+> P7R500 在新 R18 板端标签产生前修正两项会影响文献基线公平性的语义。ML²Tuner 不再把只通过
+> lowering/交叉编译、但未被 A 提升到 FSim/FPGA 的候选误标为最终 valid；这类样本保持删失未知，
+> 板后另报告最终可执行有效性的 F1/recall 等指标。HW-Aware 则把生成 E0 的全部 presampling
+> lowering 及实测墙钟放到首次性能 dispatch 之前，并让 validity 排名真正参与 E0 后的 XGB 选择。
+> H1/H2/H3 每个 seed 分别计入 1000/1000/480 次 compiler call，候选身份、板端顺序和二进制均
+> 不变。详见 `20260914_P7R500_FINAL_PROTOCOL_SEMANTICS_AMENDMENT.md`。
+
+> P7R497--P7R499 已把“完整候选池回放—Cheng 四方案—策略选中三路由—ResNet18 整图—三对三
+> clean-start”闭合成最终执行协议。P7R498 从量化、graph-pack 后的 Relay Testing ResNet18 中真实
+> 提取 13 类卷积任务，H1/H2/H3 各有且只有一个 exact workload 匹配，因此后续不再混用 MXNet
+> ResNet18。P7R499 在任何 214 点池 FPGA/latency 或 ResNet18 整图标签产生前绑定 21 个源码哈希：
+> 六策略 20-seed 回放保留终点 candidate identity；四策略各选 H1/H2/H3 三路由，重复路由组合只
+> 构建一次；三个确定性输入检查全部图输出，随后七轮平衡计时；H1 另做空历史官方 XGB 与本文方法
+> 各三次从 W0/T0 到 T1 的真实计时。中断 session 禁止拼接，失败编译、错误输出和 RPC 恢复均计入
+> gross 与墙钟。当前这些是实现和冻结证据，不是性能结果。
+
+> P7R491--P7R496 补上了 HW-Aware 只有 valid-yield、没有初始化性能候选的结构性缺口。
+> 20 个 balanced E0 的 valid original 并集为 H1/H2/H3=96/53/25，共174个；展开
+> Cheng 四模式得到696身份，335个lowering-pass、182三seed FSim-pass，整体本地资格墙钟
+> 848.410 s。与原50点池去重18个后，P7R494冻结H1/H2/H3=104/44/66、共214个统一板端身份；
+> P7R496 在正确 SDK 环境中 214/214 交叉编译成功，耗时294.496 s。P7R495 因未加载 SDK
+> 而在35点后停止，作为环境无效session保留、不计候选失败。新池仍无FPGA/latency标签，
+> 详见 `20260914_P7R491_P7R496_LITERATURE_PERFORMANCE_POOL.md`。
+
+> P7R484--P7R489 已先补齐不依赖开发板的文献合法性实验。H1/H2/H3 的完整 original
+> ConfigSpace 共做 4384 次真实 lowering，只有 569 个合法，总无效率 87.02%。
+> HW-Aware 20-seed 消融中，邻域前 50 点的合法率中位数由 Random 的
+> 12%/10%/26% 提到 42%/41%/55%，找到前 25 个合法点的 calls 中位数降至
+> 57.5/62/46.5；但完整 1000/1000/480 点 presampling 仍需 24.901/22.503/8.621 s，
+> 显著高于 Random 前 50 点，且 H1/H2 的 IQR 反而增大。ML²Tuner Model V 留一几何时，
+> H1/H2/H3 前 20 点合法率为 80%/100%/70%，但 H3 全域 F1 仅 0.267。因此当前证据
+> 支持“合法性粗筛减少前部无效编译”，不支持“固定大规模预采样一定减少总墙钟”或
+> “Model V 可以替代真实编译/板端正确性”。详见
+> `20260914_P7R484_P7R489_HW_AWARE_ML2_VALIDITY.md`。
+
+> P7R490 在任何 R18 FPGA correctness/latency 标签产生前冻结了板后分析实现修订。
+> 修订只包括非等距 knob 的离散邻接、并行 frontier 去重、ML²Tuner 的固定 20→10
+> 多轮语义、Cheng 资源 fallback 的模式作用域，以及将无标签 workload contract 与
+> 单向 outcome ledger 分离的板后适配器；不改变 P7R482 的 50 个候选身份或顺序。
+> P7R469 的原始协议仍保留，但后续板端回放必须引用 P7R490 的新源码哈希。
+
+> P7R471--P7R483 已完成节点 C 的板前部分。三个几何累计审计 1056 个四模式身份：288 个按 Cheng
+> SRAM 原则不适用，671 个 real lowering 失败，97 个 lowering 成功，最终 50 个通过三 seed FSim
+> 与一致命令签名（H1/H2/H3=13/12/25）。补池严格由 `<12` 本地合法身份触发，H1/H2/H3 最终扫描
+> 72/144/48 个 tile，期间未读取任何 FPGA latency。50 点上板池已冻结并 50/50 ARM 交叉编译成功，
+> 耗时 59.908 s。当前开发板 Dropbear host key 已改变，旧串口公钥无法通过严格校验；为避免接受
+> 未认证主机，尚未启动 FPGA correctness/timing。详见
+> `20260914_P7R471_P7R483_RESNET18_LOCAL_QUALIFICATION.md`。
 
 > P7R469--P7R470 已完成文献对齐节点 B：实现六策略统一 runner、HW-Aware 四级初始化消融、
 > ML²Tuner P/V/A 与 A+DMA 消融，以及 Cheng 四方案。新增 Scheme 4 功能级实现已在三个历史代表
@@ -997,6 +1113,66 @@ ML²Tuner 2025 [LCTES DOI](https://doi.org/10.1145/3735452.3735538)；Cheng 等
     ResNet18 几何的真实完整 original ConfigSpace 为 2304/1600/480，不是统一 1280；各自以无标签
     max-min 冻结 24 tile×4 mode=96 proposal，总计 288。相关回归 62/62 通过。该节点没有执行目标
     288 身份的 lowering/FSim 或任何上板计时，只证明方法、身份和协议已冻结，不产生性能主张。
+96. P7R471--P7R510 将上述协议推进为三个 ResNet18 几何的完整真实板池。P7R484--P7R486 对
+    H1/H2/H3 的 2304/1600/480 点 original 空间共执行 4384 次 real lowering；P7R491--P7R496
+    在性能标签不可见时合并冻结 214 个身份并 214/214 ARM 交叉编译。串口 Dropbear 公钥与网络
+    `SHA256:u7LM...LX0` 精确匹配后，P7R509 在 tmpfs 恢复冻结 runtime，P7R510 用单 boot、单 RPC
+    session 完成全部候选：H1 为 104/104、H2 为 43/44、H3 为 60/66 FPGA-correct；七个错误候选
+    均在 seed 0 拒绝，所以 correctness invocation 为 628 而非固定 642。全部 207 个正确点各有五轮
+    计时，共 1035 个样本；完整池 oracle 为 H1 original 5.945580 ms、H2 original 5.156932 ms、
+    H3 combined-residency 0.257132 ms。W0→T1/T0→T1 为 282.612/274.737 s，运行期累计逻辑
+    LOAD/STORE 为 21,617,020,928/319,169,536 B，逻辑 DMA calls 6,562,805，FPGA kernel
+    invocation 4,937。所有 artifact hash 通过，session 未拼接，实验后 boot、FPGA、u-dma-buf 与
+    RPC 均保持健康。该结果只闭合 outcome pool；六策略 time-to-target、Cheng 四方案以及 ResNet18
+    整图传递必须在后续只读分析与新执行中给出，逻辑 DMA 也不能称物理 AXI。
+97. P7R511--P7R513 完成板后文献对齐比较。P7R511 只在完整 P7R510 后建立单向 outcome ledger；
+    P7R512 对 Random、stock mode-aware XGB、HW-Aware、ML²Tuner P/V/A、Cheng minimum-access
+    和本文 DMA 多保真规则运行三几何×20 seeds、预算10/20/50/75/96。达到 oracle+2% 的中位
+    trial/按需实测墙钟为：H1 的 stock 26.5/52.251 s、ML² 12/32.754 s、本文37/76.055 s；H2
+    分别5/12.928 s、6/18.165 s、1/2.129 s；H3 分别11.5/9.940 s、7/9.368 s、11/10.943 s。
+    因而本文只有 H2 明确领先，H1 明显失败，H3 trial 略优但真实墙钟略差。budget=20 时本文在
+    2/3 几何命中，stock-XGB 的跨60轨迹成功率为70%、本文为66.67%；budget=50 两者均为100%。
+    HW-Aware 邻域初始化虽显著提高 valid yield，但计入固定 presampling 后仅 H1 的 time-to-target
+    略优于 stock，H2/H3 均更差。ML² Model V 在高合法率板池退化成全 valid 预测，没有减少无效
+    profiling；P/A 排序仍使 H1/H3 更早命中。A+DMA 在 H2 将 ML² 首命中6→3次，却使 H3 7→9次，
+    H1 不变，故不能声称稳定增强 ML²Tuner。P7R513 的 19 个语义完整 four-scheme family 中15个
+    minimum-access 与最快一致、4个不一致；H3 唯一完整 family 的 barrier/combined pure-
+    instruction 分别改善39.40%/38.01%，但算子 latency 反而恶化4.08%/6.33%，直接证明同步与
+    submission 会抵消 DMA 执行收益。该节点是重要的正负混合结果，尚无 ResNet18 整图结论。
+98. P7R514--P7R516D 将上述算子选择送入同一 ResNet18 完整图并在正确性门得到新的负边界。
+    P7R514 固定 `seed=57001、budget=50`；P7R515 把四策略去重为三个 route program，总构建
+    46.541 s，Graph JSON 相同、参数语义相同且全部 route 命中。P7R516 在同 boot clean-start 后
+    完成首个 seed 的四次图调用即因输出不一致 fail closed，W0→失败14.441 s、T0→失败约6.614 s，
+    没有进入 timing。P7R516D 保持二进制不变，以3 seeds×正反顺序完成24次只正确性调用：stock
+    与 H3 original 的 Cheng 程序均6/6相等；共享 H3 combined D0098 的 stock-XGB 程序和 ML²/本文
+    程序均0/6，每次1000个最终输出全错，且错误输出哈希有顺序依赖。ML²/本文与 Cheng 的 H1/H2
+    route 完全相同，故当前可强定位 H3 combined 不具整图部署资格；底层究竟是地址覆盖还是依赖
+    race 尚无证据，不能写死。P7R510 孤立算子标签仍有效，但不能外推为 fused/call-context 资格。
+    本节点没有有效 selected 整图 latency/FPS；后续必须先冻结无 latency 的 invalid-route 回退协议。
+99. P7R516E--P7R516G 已按该约束闭合安全回退和整图计时。P7R516E 只用正确性证据拒绝 H3
+    combined D0098，并统一选择已有孤立算子3/3、整图诊断6/6正确的 H3 D0203 original；冻结与
+    构建均记录 `fullgraph_performance_labels_read=false`。P7R516F 将四策略去重为两份 unique
+    program，精确复用 Cheng 程序，只为 stock-XGB 新构建一次，耗时11.722 s。P7R516G 在同一
+    boot 的不可拼接 clean-start session 完成9/9正确性调用和21/21计时调用，所有输出与stock逐
+    元素相等。stock、stock-XGB fallback、Cheng/ML²/本文共同 fallback 的七轮中位数分别为
+    116.464/117.093/117.722 ms，即后两者相对stock慢0.540%/1.080%；均进入2%等价带但没有整图
+    加速。W0→T1/T0→T1 为20.878/12.919 s，累计1020次FPGA kernel invocation、996,033,536 B
+    逻辑LOAD、95,961,600 B逻辑STORE和116,620次逻辑DMA调用。该结果证明整图正确性门及无标签
+    fallback可恢复部署，但不能抹去H1搜索负结果，也不能把“2%非劣”写成FPS提升。
+100. P7R517--P7R523 完成 H1 三对三从零调优到整图 T1 的直接 A/B。XGB 三种子的 gross 候选为
+    231/286/240、成功测量93/89/90，无效比例59.74%--68.88%；本文三个有效会话均为13/13板端
+    正确。T0→T1 中位数668.459→309.699 s（-53.67%），W0→T1为676.359→317.694 s（-53.03%）。
+    六次完整图均三输入全输出相等并通过相对同次stock的2%门；最终整图中位数116.912→117.902 ms，
+    本文慢0.847%。六会话观察到的孤立算子 minimum 为5.871189 ms；XGB三次在trial72/52/65进入
+    +2%带，本文三次均未进入，故核心结论是系统 time-to-deployable-quality，不是更优算子oracle。
+    P7R518前三个fail-closed会话另付T0 548.652 s且未拼接、未纳入有效中位数。
+101. P7R524/P7R524C 已将文献对齐实验收敛为四张论文主图。原始 P7R524 严格使用预注册绘图器，
+    后续 C 版只修正可读性并把第2图由反事实 lazy wall 换成 P7R523 六次独立 clean-start 的真实
+    T0 轨迹；候选、策略、预算和标签均未改变。四图覆盖 best-so-far vs dispatch、best-so-far vs
+    实测 T0、HW-Aware 合法率/六策略稳定性，以及 Cheng 逻辑 DMA—pure-instruction—算子—安全
+    回退整图传递。终稿13个产物哈希全部复核通过，账本 SHA-256 为
+    `5750728a7d4c62bc76579a9d89934394d287059cb9f5731efdb91971cd161e59`；最终相关回归
+    `65 passed`。
 
 ## 6. CCF-C 级必要实验
 
@@ -1007,7 +1183,7 @@ instruction/UOP 的关系；包含正确点和失败点。主消融采用 same-t
 和 `weight_resident_barrier`，回答什么几何适合 input reuse、什么几何适合 weight reuse，以及
 同步代价何时抵消访问下降。旧 safe-weight/hybrid 只作补充反例。
 
-### E2：等预算搜索（旧系统 A/B 已完成；文献基线与新 ResNet18 协议已冻结）
+### E2：等预算搜索（旧系统 A/B 与 R18 文献六策略回放已完成）
 
 现有 Y00/Y03/Y04 完整池与 Y01 latency-unseen recovery 已比较 Random、原始 XGB、minimum-access
 rules 和本文“合法性 + 共享内存服务代价”。P7R173--P7R194 又实现逐阶段部分可见的在线调度，先以
@@ -1029,7 +1205,7 @@ T0→T1 中位由 696.427 s 降至 244.844 s，最终图只慢 0.285%，因而�
 因此可以把“更早找到 exact oracle”归因于本池的搜索次序；P7R460 的 64.84% 仍是候选生成、资格、
 搜索空间与部署门共同作用的系统流程收益，不能整体改写为搜索算法加速。
 
-### E3：真实 FPGA 正确性与性能（算子级已完成）
+### E3：真实 FPGA 正确性与性能（算子级及 R18 三几何完整池已完成）
 
 所有进入性能池的候选先三 seed correctness，再做不少于五轮平衡交错计时。至少两个未见几何得到
 可用完整池 oracle；至少一类复用规律出现方向一致的 DMA 与 latency 改善。失败候选完整保留。
@@ -1104,7 +1280,49 @@ boot 与 tile 仍各只有一个，不能外推为 ResNet50 平均收益。
 基线、消融和真实硬件证据。其中 E2 是决定论文高度的主实验，E1/E3 证明搜索依据真实，E4 只负责
 部署闭环；不能用定容结果替代搜索效率结果。
 
-## 8. 当前水平（P7R468 后）
+## 8. 当前水平（P7R524C 后）
+
+文献对齐补充实验已经从板前实现推进到一个完整、不可拼接的三几何 ResNet18 算子 outcome pool。
+三个目标几何与同一份量化、graph-pack 后的 Relay Testing ResNet18 精确绑定；完整 original
+ConfigSpace 共完成 4384 次真实 lowering，214 个合并身份完成 ARM 交叉编译。P7R510 进一步在
+同一 boot 中取得 207/214 FPGA-correct、1035 个五轮计时样本和三个完整正确池 oracle；七个
+lowering/FSim-pass 但 FPGA-wrong 的候选也被完整保留。这批结果终于为 HW-Aware、ML²Tuner、Cheng
+和本文方法提供了同一 outcome universe，而不是只靠旧池或模拟数据。
+
+P7R510 本身只回答“完整池真实结局是什么”，不能单凭 207/214 正确率或三个 oracle 宣称任何搜索器
+已经获胜；P7R511--P7R513 随后关闭六策略、Model P/V/A 和 Cheng 汇总。P7R514--P7R516D 又证明
+算子级三 seed FPGA-correct 仍不足以保证整图：三个选择器共同选中的 H3 combined D0098 在孤立
+算子池正确，却使两个唯一整图程序在3 seeds×2顺序下0/6通过；H3 original 的 Cheng 程序则6/6
+与stock一致。P7R516E--P7R516G 随后在不读取整图性能标签的条件下冻结原始模式回退，重新构建并
+完成全部正确性与七轮计时。回退后的本文/ML²/Cheng 为同一程序，117.722 ms，相对116.464 ms的
+stock慢1.080%；stock-XGB回退为117.093 ms，慢0.540%。因此正确性闭环和2%非劣门槛已经完成，
+但新 R18 完整图没有性能提升。
+
+板后策略结果要求主动收缩算法主张。本文 DMA
+多保真规则没有在三个 R18 几何上稳定优于 stock-XGB 或 ML²Tuner：它在 H2 以第一次测量取得强胜，
+在 H1 明显更慢，在 H3 与 stock 接近。ML²Tuner 的 Model V 在这个已经通过严格本地资格的高合法率
+池中没有过滤价值，但 P/A 排序在 H1/H3 有效；DMA 特征加入 A 也只有 H2 获益。Cheng 结果则再次
+支持本文最初的理论判断：最小访存是有用先验而非性能定理，19 个完整 family 中有4个反例，并出现
+pure-instruction 明显下降而端到端算子反而变慢的同步开销案例。
+
+因此当前 R18 实验支撑的准确表述是：本文方法具有几何依赖的强局部收益、可审计的失败边界与可
+执行的安全回退，尚未达到预注册的“多数新几何按真实墙钟优于官方 XGB”核心门槛。系统型硕士论文
+创新仍由此前十五个
+标签隔离池、在线多保真/错误展开、Y10 三对三 T0→T1 和部署定容共同支撑；新 R18 文献对齐实验
+增强了基线可信度，但不能被包装成新的全面胜利。无标签回退、三输入正确性和七轮整图计时已经
+闭合；进入2%等价带只能主张部署安全，不能抹去 H1 搜索成本负结果、删除 combined 整图失败，
+或改写成提高FPS。H1三对三 clean-start 随后已按冻结顺序完成：本文将 T0→T1 中位墙钟降低
+53.67%，最终整图只比XGB慢0.847%并保持2%非劣；但本文没有进入六会话 observed operator
+minimum+2%，且候选空间不同。因此它补上了跨网络的完整系统成本正证据，没有推翻R18三几何
+回放中“只在H2明显领先、H1搜索质量较弱”的负结论。P7R524C 已完成四张终稿图，尤其以真实
+T0 clean-start 轨迹替换了早期反事实 wall 展示。至此本轮文献对齐补充计划的实现、三个新几何
+完整池、六策略回放、Cheng 四方案、整图安全回退、三对三从头调优和论文图表均已闭合。
+
+最终等级仍是“较强的硕士论文独立系统创新，具备 CCF-C 风格 case-study 的完整证据骨架”，而
+不是已证明普适优于 AutoTVM 的通用算法。原因是本文在 R18 三几何中只在 H2 明确胜出，H1/H3
+保留负结果；H1 的系统流程虽然把 T0→T1 中位墙钟降低53.67%，但最终图比 XGB 慢0.847%，且
+不同候选空间只允许作系统流程归因。后续若继续实验，应属于扩大外部有效性的增强项，不再是本轮
+计划的未完成必做项。
 
 现在有十五个在目标标签前冻结并完整上板测完的候选池：Y00、Y03、Y04 用来建立并反驳静态排序
 规律，Y05 用来开发多保真前沿，Y06/Y07/R50A/R50B/R50C 是生存率自适应规则冻结后的严格确认；
@@ -1295,6 +1513,7 @@ Relay/AutoTVM call-site 搜索、ImageNet/COCO accuracy 与物理 AXI 计数。�
 外部有效性的增强项。P7R462--P7R468 已完成相同候选空间的独立在线搜索器消融：DMA prior 的
 exact time-to-quality 中位数低 46.43%，但双方均在第 1 次进入 +2% 带且满六点总墙钟近似相同。
 P7R469--P7R470 已按冻结协议实现 HW-Aware、ML²Tuner P/V/A 与 Cheng 四方案基线，并预注册三个
-ResNet18 候选域。下一优先级是节点 C 的真实 lowering/FSim/交叉编译与完整 FPGA 池，随后才能在
-这个未暴露网络上重复 T0→T1。Y10 本轮是严格身份匹配且不读取旧性能标签的成本重演，不能重新包装
+ResNet18 候选域。P7R471--P7R483 已完成真实 lowering、三 seed FSim、按门槛扩展、50 点最终池冻结
+和 50/50 交叉编译；下一优先级是先由串口确认当前 Dropbear 公钥，再做完整 FPGA correctness/timing，
+随后才能在这个未暴露网络上连接 oracle 并重复 T0→T1。Y10 本轮是严格身份匹配且不读取旧性能标签的成本重演，不能重新包装
 成 prospective holdout；也不应继续利用其已暴露标签调整方法或追逐 TopHub。

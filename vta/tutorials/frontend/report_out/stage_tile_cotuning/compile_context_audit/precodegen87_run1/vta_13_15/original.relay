@@ -1,0 +1,20 @@
+#[version = "0.0.5"]
+def @main(%data0: Tensor[(1, 256, 14, 14), float32], %resnetv10_stage3_conv3_weight: Tensor[(256, 256, 3, 3), float32], %resnetv10_stage3_batchnorm3_gamma: Tensor[(256), float32], %resnetv10_stage3_batchnorm3_beta: Tensor[(256), float32], %resnetv10_stage3_batchnorm3_running_mean: Tensor[(256), float32], %resnetv10_stage3_batchnorm3_running_var: Tensor[(256), float32], %resnetv10_stage3_conv4_weight: Tensor[(256, 256, 3, 3), float32], %resnetv10_stage3_batchnorm4_gamma: Tensor[(256), float32], %resnetv10_stage3_batchnorm4_beta: Tensor[(256), float32], %resnetv10_stage3_batchnorm4_running_mean: Tensor[(256), float32], %resnetv10_stage3_batchnorm4_running_var: Tensor[(256), float32], %resnetv10_stage4_conv0_weight: Tensor[(512, 256, 3, 3), float32], %resnetv10_stage4_batchnorm0_gamma: Tensor[(512), float32], %resnetv10_stage4_batchnorm0_beta: Tensor[(512), float32], %resnetv10_stage4_batchnorm0_running_mean: Tensor[(512), float32], %resnetv10_stage4_batchnorm0_running_var: Tensor[(512), float32], %resnetv10_stage4_conv1_weight: Tensor[(512, 512, 3, 3), float32], %resnetv10_stage4_batchnorm1_gamma: Tensor[(512), float32], %resnetv10_stage4_batchnorm1_beta: Tensor[(512), float32], %resnetv10_stage4_batchnorm1_running_mean: Tensor[(512), float32], %resnetv10_stage4_batchnorm1_running_var: Tensor[(512), float32]) {
+  %0 = nn.conv2d(%data0, %resnetv10_stage3_conv3_weight, padding=[1, 1, 1, 1], channels=256, kernel_size=[3, 3]);
+  %1 = nn.batch_norm(%0, %resnetv10_stage3_batchnorm3_gamma, %resnetv10_stage3_batchnorm3_beta, %resnetv10_stage3_batchnorm3_running_mean, %resnetv10_stage3_batchnorm3_running_var);
+  %2 = %1.0;
+  %3 = nn.relu(%2);
+  %4 = nn.conv2d(%3, %resnetv10_stage3_conv4_weight, padding=[1, 1, 1, 1], channels=256, kernel_size=[3, 3]);
+  %5 = nn.batch_norm(%4, %resnetv10_stage3_batchnorm4_gamma, %resnetv10_stage3_batchnorm4_beta, %resnetv10_stage3_batchnorm4_running_mean, %resnetv10_stage3_batchnorm4_running_var);
+  %6 = %5.0;
+  %7 = add(%6, %data0);
+  %8 = nn.relu(%7);
+  %9 = nn.conv2d(%8, %resnetv10_stage4_conv0_weight, strides=[2, 2], padding=[1, 1, 1, 1], channels=512, kernel_size=[3, 3]);
+  %10 = nn.batch_norm(%9, %resnetv10_stage4_batchnorm0_gamma, %resnetv10_stage4_batchnorm0_beta, %resnetv10_stage4_batchnorm0_running_mean, %resnetv10_stage4_batchnorm0_running_var);
+  %11 = %10.0;
+  %12 = nn.relu(%11);
+  %13 = nn.conv2d(%12, %resnetv10_stage4_conv1_weight, padding=[1, 1, 1, 1], channels=512, kernel_size=[3, 3]);
+  %14 = nn.batch_norm(%13, %resnetv10_stage4_batchnorm1_gamma, %resnetv10_stage4_batchnorm1_beta, %resnetv10_stage4_batchnorm1_running_mean, %resnetv10_stage4_batchnorm1_running_var);
+  %15 = %14.0;
+  (%15, %8)
+}

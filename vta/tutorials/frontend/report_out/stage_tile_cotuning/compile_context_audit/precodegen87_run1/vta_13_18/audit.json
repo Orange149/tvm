@@ -1,0 +1,1427 @@
+{
+  "segment_id": "vta:13:18",
+  "unit_names": [
+    "layer3_block1_main_preadd",
+    "layer3_block1_add_relu_tail",
+    "layer4_block0_main_preadd",
+    "layer4_block0_skip_proj",
+    "layer4_block0_add_relu_tail",
+    "layer4_block1_main_preadd"
+  ],
+  "input_contract": {
+    "arity": 1,
+    "kind": "tensor",
+    "slots": [
+      {
+        "dtype": "float32",
+        "role": "data",
+        "shape": [
+          1,
+          256,
+          14,
+          14
+        ],
+        "slot_index": 0
+      }
+    ]
+  },
+  "output_contract": {
+    "arity": 2,
+    "kind": "tuple",
+    "slots": [
+      {
+        "dtype": "float32",
+        "role": "main",
+        "shape": [
+          1,
+          512,
+          7,
+          7
+        ],
+        "slot_index": 0
+      },
+      {
+        "dtype": "float32",
+        "role": "residual",
+        "shape": [
+          1,
+          512,
+          7,
+          7
+        ],
+        "slot_index": 1
+      }
+    ]
+  },
+  "status": "ok",
+  "convolutions": [
+    {
+      "primitive_signature": "039f5dcdb5269db0e65094eab26091f64c4b978acdee9fc2524aafefbba659cd",
+      "primitive_ops": [
+        "nn.conv2d",
+        "add",
+        "nn.relu",
+        "add",
+        "right_shift",
+        "clip",
+        "cast"
+      ],
+      "weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3,
+          16,
+          16
+        ],
+        "dtype": "int8",
+        "data_sha256": "d4fd6931e5e13f8941ef74fcfece27c39144cf697b47dd2c2d35c9d3f41a885b"
+      },
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "config": {
+        "index": 575,
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              16,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              4,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "is_fallback": false,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "input_types": [
+        "Tensor[(1, 16, 14, 14, 1, 16), int8]",
+        "Tensor[(16, 16, 3, 3, 16, 16), int8]",
+        "Tensor[(16, 1, 1, 1, 16), int32]"
+      ],
+      "return_type": "Tensor[(1, 16, 14, 14, 1, 16), int8]"
+    },
+    {
+      "primitive_signature": "d5be7fe00bd2a9ff15d7099f9adcbcd44d69721a92b9e77984fb6fc99c69a689",
+      "primitive_ops": [
+        "nn.conv2d",
+        "add",
+        "right_shift",
+        "clip",
+        "cast"
+      ],
+      "weight": {
+        "shape": [
+          16,
+          16,
+          3,
+          3,
+          16,
+          16
+        ],
+        "dtype": "int8",
+        "data_sha256": "2fd89c6ae1a5277a630b775dff292a1faf4e2f92285715d60711afc59619658a"
+      },
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            16,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "config": {
+        "index": 575,
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              1,
+              14
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              1,
+              14
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              16,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              4,
+              4
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "is_fallback": false,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "input_types": [
+        "Tensor[(1, 16, 14, 14, 1, 16), int8]",
+        "Tensor[(16, 16, 3, 3, 16, 16), int8]",
+        "Tensor[(16, 1, 1, 1, 16), int32]"
+      ],
+      "return_type": "Tensor[(1, 16, 14, 14, 1, 16), int8]"
+    },
+    {
+      "primitive_signature": "dbfc99f1540f8043af9a1df181db1c7aaeb1420c48b79fa4ac9eabfa3c9e9bcb",
+      "primitive_ops": [
+        "nn.conv2d",
+        "add",
+        "nn.relu",
+        "add",
+        "right_shift",
+        "clip",
+        "cast"
+      ],
+      "weight": {
+        "shape": [
+          32,
+          16,
+          3,
+          3,
+          16,
+          16
+        ],
+        "dtype": "int8",
+        "data_sha256": "ae4d3421a9b51f2cbb4e2fc2a2eca72e41585277511ed056021745337b753388"
+      },
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            32,
+            16,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "config": {
+        "index": 203,
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              16,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              2,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "is_fallback": false,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "input_types": [
+        "Tensor[(1, 16, 14, 14, 1, 16), int8]",
+        "Tensor[(32, 16, 3, 3, 16, 16), int8]",
+        "Tensor[(32, 1, 1, 1, 16), int32]"
+      ],
+      "return_type": "Tensor[(1, 32, 7, 7, 1, 16), int8]"
+    },
+    {
+      "primitive_signature": "f6f1412ef4f220748df2281af61464b7d63b4eebbbf02be99ccb9c4049a6fbe7",
+      "primitive_ops": [
+        "nn.conv2d",
+        "add",
+        "right_shift",
+        "clip",
+        "cast"
+      ],
+      "weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3,
+          16,
+          16
+        ],
+        "dtype": "int8",
+        "data_sha256": "b4f008e2f03794efc936db4279da5ca8146da898f52a0f2340db0e9b033389b2"
+      },
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            32,
+            7,
+            7,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            32,
+            32,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "config": {
+        "index": 243,
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              32,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              2,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "is_fallback": false,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "input_types": [
+        "Tensor[(1, 32, 7, 7, 1, 16), int8]",
+        "Tensor[(32, 32, 3, 3, 16, 16), int8]",
+        "Tensor[(32, 1, 1, 1, 16), int32]"
+      ],
+      "return_type": "Tensor[(1, 32, 7, 7, 1, 16), int8]"
+    },
+    {
+      "primitive_signature": "0e90554f07f36ecbe6b9a970612f35e6dccb1003ca5dae4cbba985d3df6981e9",
+      "primitive_ops": [
+        "nn.conv2d",
+        "add",
+        "right_shift",
+        "clip",
+        "cast"
+      ],
+      "weight": {
+        "shape": [
+          32,
+          16,
+          1,
+          1,
+          16,
+          16
+        ],
+        "dtype": "int8",
+        "data_sha256": "356372661bf1c90fe5916968331fb192dd3e62868fa88ef83e21754788ccf5e3"
+      },
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            16,
+            14,
+            14,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            32,
+            16,
+            1,
+            1,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "config": {
+        "index": 203,
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              16,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              2,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "is_fallback": false,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "input_types": [
+        "Tensor[(1, 16, 14, 14, 1, 16), int8]",
+        "Tensor[(32, 16, 1, 1, 16, 16), int8]",
+        "Tensor[(32, 1, 1, 1, 16), int32]"
+      ],
+      "return_type": "Tensor[(1, 32, 7, 7, 1, 16), int8]"
+    },
+    {
+      "primitive_signature": "14668d4886ed520581a3de9bfecad48ff0f75c850e7027381a1f74141462e7f4",
+      "primitive_ops": [
+        "nn.conv2d",
+        "add",
+        "nn.relu",
+        "add",
+        "right_shift",
+        "clip",
+        "cast"
+      ],
+      "weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3,
+          16,
+          16
+        ],
+        "dtype": "int8",
+        "data_sha256": "eca09c0623929b91ed4e76685f6594fa7d390dfec40eb093ff9db87cce1816bc"
+      },
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            32,
+            7,
+            7,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            32,
+            32,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "config": {
+        "index": 243,
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              32,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              2,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "is_fallback": false,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "input_types": [
+        "Tensor[(1, 32, 7, 7, 1, 16), int8]",
+        "Tensor[(32, 32, 3, 3, 16, 16), int8]",
+        "Tensor[(32, 1, 1, 1, 16), int32]"
+      ],
+      "return_type": "Tensor[(1, 32, 7, 7, 1, 16), int8]"
+    },
+    {
+      "primitive_signature": "5b9a35ed2e5696fdb9b105a7787e3569db9c8ba0172683b5f2ae519e1e6ced75",
+      "primitive_ops": [
+        "nn.conv2d",
+        "add",
+        "right_shift",
+        "clip",
+        "cast"
+      ],
+      "weight": {
+        "shape": [
+          32,
+          32,
+          3,
+          3,
+          16,
+          16
+        ],
+        "dtype": "int8",
+        "data_sha256": "f49a884680b6c18fd492dc7890c947c030865f36e81274220be3d46150d45a04"
+      },
+      "workload": [
+        "conv2d_packed.vta",
+        [
+          "TENSOR",
+          [
+            1,
+            32,
+            7,
+            7,
+            1,
+            16
+          ],
+          "int8"
+        ],
+        [
+          "TENSOR",
+          [
+            32,
+            32,
+            3,
+            3,
+            16,
+            16
+          ],
+          "int8"
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        "NCHW1n16c",
+        "int32"
+      ],
+      "config": {
+        "index": 243,
+        "code_hash": null,
+        "entity": [
+          [
+            "tile_b",
+            "sp",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "tile_h",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_w",
+            "sp",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "tile_ci",
+            "sp",
+            [
+              32,
+              1
+            ]
+          ],
+          [
+            "tile_co",
+            "sp",
+            [
+              2,
+              16
+            ]
+          ],
+          [
+            "oc_nthread",
+            "ot",
+            2
+          ],
+          [
+            "h_nthread",
+            "ot",
+            1
+          ]
+        ]
+      },
+      "is_fallback": false,
+      "kernel_size": [
+        3,
+        3
+      ],
+      "input_types": [
+        "Tensor[(1, 32, 7, 7, 1, 16), int8]",
+        "Tensor[(32, 32, 3, 3, 16, 16), int8]",
+        "Tensor[(32, 1, 1, 1, 16), int32]"
+      ],
+      "return_type": "Tensor[(1, 32, 7, 7, 1, 16), int8]"
+    }
+  ],
+  "primitive_count": 14,
+  "tuning": {
+    "mode": "tophub",
+    "configured_location": "https://raw.githubusercontent.com/tlc-pack/tophub/main/tophub",
+    "targets": [
+      "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17"
+    ],
+    "files": [
+      {
+        "backend": "vta",
+        "version": "v0.10",
+        "path": "/home/orange/.tvm/tophub/vta_v0.10.log",
+        "size_bytes": 63738,
+        "sha256": "8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc"
+      }
+    ],
+    "sha256": "39b3d5326878f91bed1529597e99ac8033de98179939c95c78b8e0f3b1514705",
+    "coverage_scope": "conv2d_packed.vta",
+    "queried_workloads": 4,
+    "tuned_workloads": 4,
+    "fallback_workloads": 0,
+    "rows": [
+      {
+        "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "is_fallback": false,
+        "config": {
+          "index": 575,
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                1,
+                14
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                1,
+                14
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                16,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                4,
+                4
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              2
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        }
+      },
+      {
+        "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "is_fallback": false,
+        "config": {
+          "index": 203,
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                1,
+                7
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                1,
+                7
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                16,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                2,
+                16
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              2
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        }
+      },
+      {
+        "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              32,
+              7,
+              7,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              32,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "is_fallback": false,
+        "config": {
+          "index": 243,
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                1,
+                7
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                1,
+                7
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                32,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                2,
+                16
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              2
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        }
+      },
+      {
+        "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "is_fallback": false,
+        "config": {
+          "index": 203,
+          "code_hash": null,
+          "entity": [
+            [
+              "tile_b",
+              "sp",
+              [
+                1,
+                1
+              ]
+            ],
+            [
+              "tile_h",
+              "sp",
+              [
+                1,
+                7
+              ]
+            ],
+            [
+              "tile_w",
+              "sp",
+              [
+                1,
+                7
+              ]
+            ],
+            [
+              "tile_ci",
+              "sp",
+              [
+                16,
+                1
+              ]
+            ],
+            [
+              "tile_co",
+              "sp",
+              [
+                2,
+                16
+              ]
+            ],
+            [
+              "oc_nthread",
+              "ot",
+              2
+            ],
+            [
+              "h_nthread",
+              "ot",
+              1
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "expected_conv_count": 7,
+  "dispatch_scope": "explicit query from optimized packed conv; actual lowering checked only on qualification builds"
+}

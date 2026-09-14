@@ -1,0 +1,91 @@
+COMMAND /home/orange/miniconda3/envs/vta-resnet/bin/python /home/orange/code/tvm/vta/tutorials/frontend/run_vta_p7r127_y00_v2_local_pool.py --candidates /home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r428_y10_yolov3_tiny_320_conv18_candidate_contract_run01/candidates.jsonl --workload-id Y10 --output-dir /home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260913_p7r455_y10_from_scratch_ours_run02/local_qualification --fsim-hw-path /tmp/vta-hw-fsim --fsim-timeout 300
+/home/orange/code/tvm/python/tvm/target/target.py:301: UserWarning: target_host parameter is going to be deprecated. Please pass in tvm.target.Target(target, host=target_host) instead.
+  warnings.warn(
+static Y10F00 original ok
+static Y10F00 input_stationary ok
+static Y10F00 weight_resident_barrier ok
+static Y10F01 original failed
+static Y10F01 input_stationary failed
+static Y10F01 weight_resident_barrier failed
+static Y10F02 original ok
+static Y10F02 input_stationary ok
+static Y10F02 weight_resident_barrier ok
+static Y10F03 original failed
+static Y10F03 input_stationary failed
+static Y10F03 weight_resident_barrier failed
+static Y10F04 original ok
+static Y10F04 input_stationary ok
+static Y10F04 weight_resident_barrier ok
+static Y10F05 original failed
+static Y10F05 input_stationary failed
+static Y10F05 weight_resident_barrier failed
+static Y10F06 original ok
+static Y10F06 input_stationary ok
+static Y10F06 weight_resident_barrier ok
+static Y10F07 original failed
+static Y10F07 input_stationary failed
+static Y10F07 weight_resident_barrier failed
+fsim Y10F00 original passed
+fsim Y10F00 input_stationary passed
+fsim Y10F00 weight_resident_barrier passed
+fsim Y10F01 original not_run_static_failed
+fsim Y10F01 input_stationary not_run_static_failed
+fsim Y10F01 weight_resident_barrier not_run_static_failed
+fsim Y10F02 original passed
+fsim Y10F02 input_stationary passed
+fsim Y10F02 weight_resident_barrier passed
+fsim Y10F03 original not_run_static_failed
+fsim Y10F03 input_stationary not_run_static_failed
+fsim Y10F03 weight_resident_barrier not_run_static_failed
+fsim Y10F04 original passed
+fsim Y10F04 input_stationary passed
+fsim Y10F04 weight_resident_barrier passed
+fsim Y10F05 original not_run_static_failed
+fsim Y10F05 input_stationary not_run_static_failed
+fsim Y10F05 weight_resident_barrier not_run_static_failed
+fsim Y10F06 original passed
+fsim Y10F06 input_stationary passed
+fsim Y10F06 weight_resident_barrier passed
+fsim Y10F07 original not_run_static_failed
+fsim Y10F07 input_stationary not_run_static_failed
+fsim Y10F07 weight_resident_barrier not_run_static_failed
+{
+  "board_contacted": false,
+  "by_mode": {
+    "input_stationary": {
+      "fsim_passed": 4,
+      "gross": 8,
+      "static_ok": 4
+    },
+    "original": {
+      "fsim_passed": 4,
+      "gross": 8,
+      "static_ok": 4
+    },
+    "weight_resident_barrier": {
+      "fsim_passed": 4,
+      "gross": 8,
+      "static_ok": 4
+    }
+  },
+  "claim_boundary": "local Y10 legality/correctness/resource evidence only; no latency or FPGA correctness",
+  "complete_three_mode_families": [
+    "Y10F00",
+    "Y10F02",
+    "Y10F04",
+    "Y10F06"
+  ],
+  "complete_three_mode_family_count": 4,
+  "fsim_passed": 12,
+  "future_board_family_order": [
+    "Y10F02",
+    "Y10F00",
+    "Y10F06",
+    "Y10F04"
+  ],
+  "gross_identities": 24,
+  "performance_labels_used": false,
+  "schema": "c3_y10_v2_local_pool_v1",
+  "static_ok": 12,
+  "status": "completed_local_no_board"
+}

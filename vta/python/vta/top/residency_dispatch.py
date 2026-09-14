@@ -21,6 +21,7 @@ _SUPPORTED_MODES = {
     "original": 0,
     "input_stationary": 1,
     "weight_resident_barrier": 4,
+    "input_weight_resident_barrier": 5,
 }
 
 

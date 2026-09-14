@@ -1,0 +1,120 @@
+{
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        4,
+        56,
+        56,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        4,
+        4,
+        3,
+        3,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "config": {
+    "index": 624,
+    "code_hash": null,
+    "entity": [
+      [
+        "tile_b",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_h",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_w",
+        "sp",
+        [
+          -1,
+          28
+        ]
+      ],
+      [
+        "tile_ci",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_co",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "oc_nthread",
+        "ot",
+        2
+      ],
+      [
+        "h_nthread",
+        "ot",
+        1
+      ]
+    ]
+  },
+  "host": "192.168.1.247",
+  "port": 9090,
+  "clean_start": {
+    "prior": {
+      "PID": "4220",
+      "CWD": "/var/volatile/vta_c3_ram/runtime"
+    },
+    "bitstream_reload": {
+      "firmware": "vta_hpc.bit",
+      "sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+      "state": "operating"
+    },
+    "fresh_rpc": {
+      "PID": "4256",
+      "CWD": "/var/volatile/vta_c3_ram/runtime"
+    }
+  },
+  "correct": false,
+  "error": "Traceback (most recent call last):\n  File \"/home/orange/code/tvm/vta/tutorials/frontend/vta_autotvm_measure.py\", line 154, in run\n    module[\"main\"](*buffers)\n  File \"/home/orange/code/tvm/python/tvm/_ffi/_ctypes/packed_func.py\", line 238, in __call__\n    raise get_last_ffi_error()\ntvm.error.RPCError: Traceback (most recent call last):\n  [bt] (7) /home/orange/code/tvm/build/libtvm.so(TVMFuncCall+0x60) [0x7405e6bcaaf0]\n  [bt] (6) /home/orange/code/tvm/build/libtvm.so(+0x2eb70cd) [0x7405e6cb70cd]\n  [bt] (5) /home/orange/code/tvm/build/libtvm.so(+0x2ea7c86) [0x7405e6ca7c86]\n  [bt] (4) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::RPCEndpoint::CallFunc(void*, TVMValue const*, int const*, int, std::function<void (tvm::runtime::TVMArgs)>)+0x1cf) [0x7405e6ca79ff]\n  [bt] (3) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::RPCEndpoint::HandleUntilReturnEvent(bool, std::function<void (tvm::runtime::TVMArgs)>)+0x11a) [0x7405e6ca630a]\n  [bt] (2) /home/orange/code/tvm/build/libtvm.so(+0x2ea5cab) [0x7405e6ca5cab]\n  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d42b) [0x7405e479d42b]\n  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7405e6bfc955]\n  [bt] (8) /var/volatile/vta_c3_ram/runtime/libtvm_runtime.so(+0x94ca4) [0x7f8ddf2ca4]\n  [bt] (7) /var/volatile/vta_c3_ram/runtime/rpc/kernel.so(main+0x390) [0x7f8d0a6e64]\n  [bt] (6) /var/volatile/vta_c3_ram/runtime/rpc/kernel.so(+0x1400) [0x7f8d0a7400]\n  [bt] (5) /var/volatile/vta_c3_ram/runtime/libvta.so(VTAPushGEMMOp+0x3c) [0x7f8dd3159c]\n  [bt] (4) /var/volatile/vta_c3_ram/runtime/libvta.so(vta::CommandQueue::PushGEMMOp(void**, int (*)(void*), void*, int)+0x688) [0x7f8dd3d948]\n  [bt] (3) /var/volatile/vta_c3_ram/runtime/rpc/kernel.so(+0x17a4) [0x7f8d0a77a4]\n  [bt] (2) /var/volatile/vta_c3_ram/runtime/libvta.so(VTAUopPush+0x180) [0x7f8dd2e970]\n  [bt] (1) ./tvm_rpc(tvm::runtime::detail::LogFatal::Entry::Finalize()+0x8c) [0x5584e9fbfc]\n  [bt] (0) /var/volatile/vta_c3_ram/runtime/libtvm_runtime.so(tvm::runtime::Backtrace[abi:cxx11]()+0x14) [0x7f8ddf6c5c]\n  File \"/home/orange/code/tvm/src/runtime/rpc/rpc_endpoint.cc\", line 380\nRPCError: Error caught from RPC call:\n[22:59:51] /home/orange/code/tvm/vta/runtime/runtime.cc:1262: Check failed: (seq_[i].dst_idx != dst_index) is false: \n\n"
+}

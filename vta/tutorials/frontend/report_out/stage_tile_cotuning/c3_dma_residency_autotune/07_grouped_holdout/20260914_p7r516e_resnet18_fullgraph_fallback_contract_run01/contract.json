@@ -1,0 +1,1408 @@
+{
+  "board_contacted": false,
+  "correctness_labels_read_for_safety": true,
+  "fallback_rule": "Reject the exact route that fails final graph-context correctness and use an already frozen original route from a six-observation graph-correct carrier. No fullgraph latency or FPS is available or used.",
+  "fullgraph_performance_labels_read": false,
+  "input_hashes": {
+    "diagnostic": "6b22ec4a9b1421b0d6873fb66d51b8fb0235eebe20a68e5b16241f3e2572c7fb",
+    "failed_board": "872e147b50f5adcc38ec198d4bbbd35f2d6b808baef728b54a1b9c5950aa3edb",
+    "selection": "899eadf5a0955568c2725bd00c22bbc0168d1f62fb1218468198acc3b86ae236"
+  },
+  "policy_routes": {
+    "cheng_minimum_access": {
+      "budget": 50,
+      "policy": "cheng_minimum_access",
+      "route_signature": "e53bbdbb710504313099691042ad8f05eb8439f64be463654da13f620b7eed97",
+      "routes": [
+        {
+          "candidate_id": "bca428ad077d8b697ae0467ca17c8bbcdbf9d1e907ecc57a07e0a48c3203f45d",
+          "family_id": "R18-H1D1213",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    56
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  1
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  2
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  4,
+                  56,
+                  56,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  4,
+                  4,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H1"
+        },
+        {
+          "candidate_id": "9ac34f10a632a3e02b6b43ae2884bf3d0f00e37350e2b0c075cfaf0a3dda0ff5",
+          "family_id": "R18-H2D0575",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    4
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  16,
+                  16,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H2"
+        },
+        {
+          "candidate_id": "b26df2d47b578e1b48224fef680644c7cca98dce286f2b5d2dd6608c13dd7d87",
+          "family_id": "R18-H3D0203",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    16
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  32,
+                  16,
+                  1,
+                  1,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H3"
+        }
+      ],
+      "seed": 57001
+    },
+    "ml2tuner_pva": {
+      "budget": 50,
+      "policy": "ml2tuner_pva",
+      "route_signature": "e53bbdbb710504313099691042ad8f05eb8439f64be463654da13f620b7eed97",
+      "routes": [
+        {
+          "candidate_id": "bca428ad077d8b697ae0467ca17c8bbcdbf9d1e907ecc57a07e0a48c3203f45d",
+          "family_id": "R18-H1D1213",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    56
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  1
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  2
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  4,
+                  56,
+                  56,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  4,
+                  4,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H1"
+        },
+        {
+          "candidate_id": "9ac34f10a632a3e02b6b43ae2884bf3d0f00e37350e2b0c075cfaf0a3dda0ff5",
+          "family_id": "R18-H2D0575",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    4
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  16,
+                  16,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H2"
+        },
+        {
+          "candidate_id": "b26df2d47b578e1b48224fef680644c7cca98dce286f2b5d2dd6608c13dd7d87",
+          "fallback": {
+            "reason": "selected route failed final graph-context correctness",
+            "rejected_candidate_id": "05a48341e4db17c245227e5bedbb1b2897b3f0317e8d5c4aad6f1fbf2fe25eb8",
+            "selection_uses_fullgraph_performance": false,
+            "source_policy": "cheng_minimum_access"
+          },
+          "family_id": "R18-H3D0203",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    16
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  32,
+                  16,
+                  1,
+                  1,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H3"
+        }
+      ],
+      "seed": 57001
+    },
+    "ours_dma_multifidelity": {
+      "budget": 50,
+      "policy": "ours_dma_multifidelity",
+      "route_signature": "e53bbdbb710504313099691042ad8f05eb8439f64be463654da13f620b7eed97",
+      "routes": [
+        {
+          "candidate_id": "bca428ad077d8b697ae0467ca17c8bbcdbf9d1e907ecc57a07e0a48c3203f45d",
+          "family_id": "R18-H1D1213",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    56
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  1
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  2
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  4,
+                  56,
+                  56,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  4,
+                  4,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H1"
+        },
+        {
+          "candidate_id": "9ac34f10a632a3e02b6b43ae2884bf3d0f00e37350e2b0c075cfaf0a3dda0ff5",
+          "family_id": "R18-H2D0575",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    4
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  16,
+                  16,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H2"
+        },
+        {
+          "candidate_id": "b26df2d47b578e1b48224fef680644c7cca98dce286f2b5d2dd6608c13dd7d87",
+          "fallback": {
+            "reason": "selected route failed final graph-context correctness",
+            "rejected_candidate_id": "05a48341e4db17c245227e5bedbb1b2897b3f0317e8d5c4aad6f1fbf2fe25eb8",
+            "selection_uses_fullgraph_performance": false,
+            "source_policy": "cheng_minimum_access"
+          },
+          "family_id": "R18-H3D0203",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    16
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  32,
+                  16,
+                  1,
+                  1,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H3"
+        }
+      ],
+      "seed": 57001
+    },
+    "stock_mode_aware_xgb": {
+      "budget": 50,
+      "policy": "stock_mode_aware_xgb",
+      "route_signature": "8ff96c46487a92f81b57edcf9c51f71b1071112fb38f0f5b3f7f4042000476c2",
+      "routes": [
+        {
+          "candidate_id": "8b5a2a77d6d92f0a8dc895a407e44a30bc83b57be58bdced3ac7f6e6b36447e6",
+          "family_id": "R18-H1D0637",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    56
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  4,
+                  56,
+                  56,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  4,
+                  4,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H1"
+        },
+        {
+          "candidate_id": "9ac34f10a632a3e02b6b43ae2884bf3d0f00e37350e2b0c075cfaf0a3dda0ff5",
+          "family_id": "R18-H2D0575",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    4
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  16,
+                  16,
+                  3,
+                  3,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H2"
+        },
+        {
+          "candidate_id": "b26df2d47b578e1b48224fef680644c7cca98dce286f2b5d2dd6608c13dd7d87",
+          "fallback": {
+            "reason": "selected route failed final graph-context correctness",
+            "rejected_candidate_id": "05a48341e4db17c245227e5bedbb1b2897b3f0317e8d5c4aad6f1fbf2fe25eb8",
+            "selection_uses_fullgraph_performance": false,
+            "source_policy": "cheng_minimum_access"
+          },
+          "family_id": "R18-H3D0203",
+          "identity": {
+            "complete_config_entity": {
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    -1,
+                    7
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    -1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    -1,
+                    16
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            },
+            "implementation_mode": 0,
+            "public_mode": "original",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  16,
+                  14,
+                  14,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  32,
+                  16,
+                  1,
+                  1,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ]
+          },
+          "implementation_mode": 0,
+          "public_mode": "original",
+          "workload_id": "R18-H3"
+        }
+      ],
+      "seed": 57001
+    }
+  },
+  "replacements": [
+    {
+      "fallback_candidate_id": "b26df2d47b578e1b48224fef680644c7cca98dce286f2b5d2dd6608c13dd7d87",
+      "policy": "ml2tuner_pva",
+      "rejected_candidate_id": "05a48341e4db17c245227e5bedbb1b2897b3f0317e8d5c4aad6f1fbf2fe25eb8",
+      "workload_id": "R18-H3"
+    },
+    {
+      "fallback_candidate_id": "b26df2d47b578e1b48224fef680644c7cca98dce286f2b5d2dd6608c13dd7d87",
+      "policy": "ours_dma_multifidelity",
+      "rejected_candidate_id": "05a48341e4db17c245227e5bedbb1b2897b3f0317e8d5c4aad6f1fbf2fe25eb8",
+      "workload_id": "R18-H3"
+    },
+    {
+      "fallback_candidate_id": "b26df2d47b578e1b48224fef680644c7cca98dce286f2b5d2dd6608c13dd7d87",
+      "policy": "stock_mode_aware_xgb",
+      "rejected_candidate_id": "05a48341e4db17c245227e5bedbb1b2897b3f0317e8d5c4aad6f1fbf2fe25eb8",
+      "workload_id": "R18-H3"
+    }
+  ],
+  "route_aliases": {
+    "8ff96c46487a92f81b57edcf9c51f71b1071112fb38f0f5b3f7f4042000476c2": [
+      "stock_mode_aware_xgb"
+    ],
+    "e53bbdbb710504313099691042ad8f05eb8439f64be463654da13f620b7eed97": [
+      "cheng_minimum_access",
+      "ml2tuner_pva",
+      "ours_dma_multifidelity"
+    ]
+  },
+  "same_tile_fallback_available": false,
+  "same_tile_fallback_explanation": "The frozen 214-point pool contains no original identity with the rejected D0098 ConfigEntity, so a same-tile original must not be invented.",
+  "schema": "c3_resnet18_fullgraph_correctness_fallback_contract_v1",
+  "selection_budget": 50,
+  "selection_seed": 57001,
+  "status": "frozen_after_graph_correctness_failure_before_any_selected_fullgraph_timing",
+  "unique_route_program_count": 2
+}

@@ -1,0 +1,91 @@
+{
+  "claim_boundary": "Matched one-seed Y10 case-study evidence. It supports a preliminary end-to-end time-to-quality claim, not multi-seed or cross-network generalization.",
+  "comparability_notes": [
+    "Both sessions start after a clean bitstream reload/fresh RPC and end after three-input all-output correctness plus seven paired full-graph timing rounds.",
+    "AutoTVM uses an empty tuning history and does not load TopHub during target-layer search; other graph layers use the normal deployment context in both sessions.",
+    "AutoTVM searches original mode with isolated-operator FPGA timing; ours searches tile plus residence mode and tests only three promoted candidates as complete graphs. This is a system-flow comparison, not a same-space pure search-algorithm ablation.",
+    "Y10 was already exposed before the cost rerun. Ours regenerated candidate identities exactly without reading target performance labels, so this is a retrospective cost reexecution, not a second prospective holdout.",
+    "Logical DMA totals are not directly favorable to ours because ours validates three complete graphs and paired stocks, whereas AutoTVM searches with isolated operators. Physical AXI traffic was not measured.",
+    "Only one XGB random seed and one deterministic ours clean-start session are complete; the frozen protocol requires three balanced seeds before a final statistical claim."
+  ],
+  "comparison": {
+    "candidate_program_dispatch_reduction_percent": 97.3913043478261,
+    "first_ours_xgb_plus_2_quality_time_reduction_percent": 82.72910112005239,
+    "ours_latency_minus_xgb_percent": 0.273320992346604,
+    "paired_ratio_difference_percentage_points": 0.26449684411884444,
+    "t0_to_t1_reduction_percent": 64.84277341708813,
+    "t0_to_t1_speedup": 2.8443654326420864
+  },
+  "ours": {
+    "board_logical_resources_including_three_paired_stock_runs": {
+      "fpga_kernel_invocations": 1326,
+      "logical_dma_calls": 13875927,
+      "logical_load_bytes": 14280940032,
+      "logical_store_bytes": 204979200,
+      "profiled_invocation_rows": 60
+    },
+    "config_space_original_tiles": 1280,
+    "first_deployable_fullgraph_within_final_xgb_2_percent_seconds": 120.27922513299563,
+    "fsim_invocations": 36,
+    "fsim_passed": 12,
+    "fullgraph_candidate_dispatches": 3,
+    "fullgraph_correctness_invocations_including_paired_stock": 18,
+    "fullgraph_timing_invocations_including_paired_stock": 42,
+    "generated_mode_identities": 32,
+    "online_fullgraph_seconds": 214.88993266598845,
+    "paired_ratio": 0.9906762042849201,
+    "paired_stock_fullgraph_median_ms": 1067.807608,
+    "paired_wins": 7,
+    "qualification_and_front_seconds": 29.95008902301197,
+    "qualified_mode_identities": 24,
+    "selected_fullgraph_median_ms": 1057.774037,
+    "selected_mode": "input_stationary",
+    "speedup_vs_paired_stock_percent": 0.9323795715079908,
+    "static_ok": 12,
+    "t0_to_t1_seconds": 244.84446354598913
+  },
+  "schema": "c3_from_scratch_autotune_ab_y10_v1",
+  "status": "one_seed_matched_y10_ab_complete",
+  "verified_artifact_counts": {
+    "ours": 304,
+    "xgb": 375
+  },
+  "workload": "YOLOv3-tiny-320 conv18, CI=256, CO=128, H=W=10, K=1",
+  "xgb": {
+    "board_logical_resource_lower_bound_excluding_failed_device_calls": {
+      "dma_calls": 4814886,
+      "driver_run_calls": 1178,
+      "load_buffer_2d_bytes": 4924043776,
+      "load_buffer_2d_calls": 4683242,
+      "store_buffer_2d_bytes": 78182400,
+      "store_buffer_2d_calls": 131644
+    },
+    "config_space": 1280,
+    "deployable_fullgraph_result_available_seconds": 696.427128484007,
+    "distinct_isolated_board_dispatches": 115,
+    "failed_device_attempts": 5,
+    "fsim_invocations": 0,
+    "gross_proposals": 173,
+    "isolated_build_artifacts": 115,
+    "isolated_compile_attempts": 173,
+    "isolated_fpga_correct": 110,
+    "isolated_runtime_failed": 5,
+    "known_correctness_invocations": 330,
+    "known_profile_invocations": 110,
+    "known_timing_invocations": 330,
+    "paired_ratio": 0.9880312358437316,
+    "paired_stock_fullgraph_median_ms": 1067.654636,
+    "paired_wins": 7,
+    "selected_config_index": 543,
+    "selected_fullgraph_median_ms": 1054.890799,
+    "selected_mode": "original",
+    "speedup_vs_paired_stock_percent": 1.1968764156268352,
+    "t0_to_t1_seconds": 696.427128484007,
+    "timeline_error_no_counts": {
+      "0": 110,
+      "2": 58,
+      "4": 5
+    },
+    "tuner_seconds": 603.8166196879902
+  }
+}

@@ -1,0 +1,1244 @@
+{
+  "build_seconds": 11.610542373000499,
+  "candidate_id": null,
+  "fused_features": {
+    "coproc_sync_occurrences": 4,
+    "dma_bytes": 3788288,
+    "dma_calls": 532,
+    "extra_submissions": 0,
+    "graph_occurrences": [
+      {
+        "coproc_sync_occurrences": 1,
+        "dma": {
+          "load_buffer_2d_acc_bytes": 1792,
+          "load_buffer_2d_acc_calls": 14,
+          "load_buffer_2d_bytes": 747264,
+          "load_buffer_2d_calls": 126,
+          "load_buffer_2d_inp_bytes": 487424,
+          "load_buffer_2d_inp_calls": 56,
+          "load_buffer_2d_wgt_bytes": 258048,
+          "load_buffer_2d_wgt_calls": 56,
+          "store_buffer_2d_bytes": 200704,
+          "store_buffer_2d_calls": 14
+        },
+        "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+        "graph_node": 12
+      },
+      {
+        "coproc_sync_occurrences": 1,
+        "dma": {
+          "load_buffer_2d_acc_bytes": 0,
+          "load_buffer_2d_acc_calls": 0,
+          "load_buffer_2d_bytes": 745472,
+          "load_buffer_2d_calls": 112,
+          "load_buffer_2d_inp_bytes": 487424,
+          "load_buffer_2d_inp_calls": 56,
+          "load_buffer_2d_wgt_bytes": 258048,
+          "load_buffer_2d_wgt_calls": 56,
+          "store_buffer_2d_bytes": 200704,
+          "store_buffer_2d_calls": 14
+        },
+        "func_name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+        "graph_node": 14
+      },
+      {
+        "coproc_sync_occurrences": 1,
+        "dma": {
+          "load_buffer_2d_acc_bytes": 1792,
+          "load_buffer_2d_acc_calls": 14,
+          "load_buffer_2d_bytes": 747264,
+          "load_buffer_2d_calls": 126,
+          "load_buffer_2d_inp_bytes": 487424,
+          "load_buffer_2d_inp_calls": 56,
+          "load_buffer_2d_wgt_bytes": 258048,
+          "load_buffer_2d_wgt_calls": 56,
+          "store_buffer_2d_bytes": 200704,
+          "store_buffer_2d_calls": 14
+        },
+        "func_name": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+        "graph_node": 23
+      },
+      {
+        "coproc_sync_occurrences": 1,
+        "dma": {
+          "load_buffer_2d_acc_bytes": 0,
+          "load_buffer_2d_acc_calls": 0,
+          "load_buffer_2d_bytes": 745472,
+          "load_buffer_2d_calls": 112,
+          "load_buffer_2d_inp_bytes": 487424,
+          "load_buffer_2d_inp_calls": 56,
+          "load_buffer_2d_wgt_bytes": 258048,
+          "load_buffer_2d_wgt_calls": 56,
+          "store_buffer_2d_bytes": 200704,
+          "store_buffer_2d_calls": 14
+        },
+        "func_name": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+        "graph_node": 25
+      }
+    ],
+    "traffic": {
+      "load_buffer_2d_acc_bytes": 3584,
+      "load_buffer_2d_acc_calls": 28,
+      "load_buffer_2d_bytes": 2985472,
+      "load_buffer_2d_calls": 476,
+      "load_buffer_2d_inp_bytes": 1949696,
+      "load_buffer_2d_inp_calls": 224,
+      "load_buffer_2d_wgt_bytes": 1032192,
+      "load_buffer_2d_wgt_calls": 224,
+      "store_buffer_2d_bytes": 802816,
+      "store_buffer_2d_calls": 56
+    }
+  },
+  "graph_sha256": "a6d1b42a160b32d94f72f50027790501e7a2a2b72a6c349c6a776470f578d564",
+  "graphlib_sha256": "3a8f7e0611e310753465ddaf7d94329b50b8d60a40bc1b1387e6e7fdff59e922",
+  "params_sha256": "cc991d56857f539e5f92979c6765ddc93e7e220213c4ba1b528fd5ecfe4a95e9",
+  "program_id": "stock_reference",
+  "public_mode": "stock_tophub_reference",
+  "role": "correctness_and_profile_reference_only",
+  "selection_eligible": false,
+  "snapshots": [
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_add",
+          "global_var": "tvmgen_default_fused_add",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_000.json",
+      "json_sha256": "7a6851ef819703097d3a21cbf38220829b5d863b4f2fc4254f6c5a6367a2353d",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_000.tir",
+      "tir_sha256": "bb768129901750102cf84d9d1c628369ce3824fae25d995893f73eaeb5af4bbe"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_nn_relu",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_001.json",
+      "json_sha256": "ce369fc3a5cd2a8c5acf89ddc803942221130d090f3b5bba629e2c867de35ddb",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_001.tir",
+      "tir_sha256": "5a4f43282f8e44dcba5ac05095b44bca1a5fa429de6189d6cd82df6307356f9e"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_max_pool2d",
+          "global_var": "tvmgen_default_fused_nn_max_pool2d",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_002.json",
+      "json_sha256": "d0f4c08d51666a54d4624303830f4e986aacefe722f0bf8fe82f9c4948919cd9",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_002.tir",
+      "tir_sha256": "39967579c358c2d7f59a097a9bdd34178f059de93a6f26e60d7d3436ed7239ae"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_reshape_transpose_add_nn_relu",
+          "global_var": "tvmgen_default_fused_reshape_transpose_add_nn_relu",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_003.json",
+      "json_sha256": "2dbcf39f90d809f3d2281eb97091374208af54fef3163235016929613b2f0c88",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_003.tir",
+      "tir_sha256": "abdd38010bca1deb1aaf536a506b1ee6dcd2c8756ea803e8cacc63f5bd65bfe7"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_multiply_round_clip_cast",
+          "global_var": "tvmgen_default_fused_multiply_round_clip_cast",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_004.json",
+      "json_sha256": "46ba01f6aa85cb672e8368b00bb2127e1930d5c62bf659436c99851250b2241c",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_004.tir",
+      "tir_sha256": "20bd9683427a41874dc78de2001005d94bbdae95beeeb665ceece2e6409c3d49"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 5930.666666666667,
+            "load_buffer_2d_acc_bytes": 1792,
+            "load_buffer_2d_acc_calls": 14,
+            "load_buffer_2d_bytes": 747264,
+            "load_buffer_2d_calls": 126,
+            "load_buffer_2d_inp_bytes": 487424,
+            "load_buffer_2d_inp_calls": 56,
+            "load_buffer_2d_small_calls": 14,
+            "load_buffer_2d_strided_calls": 56,
+            "load_buffer_2d_wgt_bytes": 258048,
+            "load_buffer_2d_wgt_calls": 56,
+            "store_average_request_bytes": 14336.0,
+            "store_buffer_2d_bytes": 200704,
+            "store_buffer_2d_calls": 14,
+            "store_buffer_2d_out_bytes": 200704,
+            "store_buffer_2d_out_calls": 14,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 14
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+          "max_request_bytes_by_memory": {
+            "acc": 128,
+            "inp": 8960,
+            "out": 14336,
+            "wgt": 4608
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_005.json",
+      "json_sha256": "6fde186eaffa89540d664828020630177b0de97b2bacad1782e090a4abdf9a0e",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_005.tir",
+      "tir_sha256": "673f0813a00fa3cc922d0de73fe89571be421c7ef5b42310be5d1ba5e7ae84ca"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 6656.0,
+            "load_buffer_2d_bytes": 745472,
+            "load_buffer_2d_calls": 112,
+            "load_buffer_2d_inp_bytes": 487424,
+            "load_buffer_2d_inp_calls": 56,
+            "load_buffer_2d_small_calls": 0,
+            "load_buffer_2d_strided_calls": 56,
+            "load_buffer_2d_wgt_bytes": 258048,
+            "load_buffer_2d_wgt_calls": 56,
+            "store_average_request_bytes": 14336.0,
+            "store_buffer_2d_bytes": 200704,
+            "store_buffer_2d_calls": 14,
+            "store_buffer_2d_out_bytes": 200704,
+            "store_buffer_2d_out_calls": 14,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 14
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+          "max_request_bytes_by_memory": {
+            "inp": 8960,
+            "out": 14336,
+            "wgt": 4608
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_006.json",
+      "json_sha256": "f5f40537bdad0740e7862b5f91dd7c4a53ab9ab0d94d59b716333064f83de996",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_006.tir",
+      "tir_sha256": "3b5a34b3f28411616c5e1a2da7300eab84b2a70798eae909cee3797a4e0022ff"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 7680.0,
+            "load_buffer_2d_bytes": 430080,
+            "load_buffer_2d_calls": 56,
+            "load_buffer_2d_inp_bytes": 401408,
+            "load_buffer_2d_inp_calls": 28,
+            "load_buffer_2d_small_calls": 28,
+            "load_buffer_2d_strided_calls": 56,
+            "load_buffer_2d_wgt_bytes": 28672,
+            "load_buffer_2d_wgt_calls": 28,
+            "store_average_request_bytes": 14336.0,
+            "store_buffer_2d_bytes": 200704,
+            "store_buffer_2d_calls": 14,
+            "store_buffer_2d_out_bytes": 200704,
+            "store_buffer_2d_out_calls": 14,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 14
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+          "max_request_bytes_by_memory": {
+            "inp": 14336,
+            "out": 14336,
+            "wgt": 1024
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_007.json",
+      "json_sha256": "afba6ca3ff236c1f5f1ac40f6ec2978dee0b670c676c74ac23b6f5e7342bf7cd",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_007.tir",
+      "tir_sha256": "b7b5d8714857f8382611aa27080db3bc7ab876b31a40b2c30681e5412c1e5926"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_cast_add_clip_cast",
+          "global_var": "tvmgen_default_fused_cast_cast_add_clip_cast",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_008.json",
+      "json_sha256": "acc94f77a8836207cef9fcc41ef21bdf647f07deefd06e34f4fa593d48f5342d",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_008.tir",
+      "tir_sha256": "c9c750b972c0a24a1c5597ebc74d659c993be4bd3d3905dc444e2f474474c286"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast",
+          "global_var": "tvmgen_default_fused_cast",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_009.json",
+      "json_sha256": "c560b778cd51757296711c492805f7db73f3b66c2b00e4d6cf45cef5aedcd3e6",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_009.tir",
+      "tir_sha256": "e1cb8b2b12f14387484e2f223e5b07ddbb223fb0f9a663a1d997877f3f7fbdaa"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_left_shift_add_nn_relu_add_right_shift_clip_cast",
+          "global_var": "tvmgen_default_fused_left_shift_add_nn_relu_add_right_shift_clip_cast",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_010.json",
+      "json_sha256": "12db59b766005407fe280104f3e2217ae86e0ee511660c8a7a6982866b4ba92f",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_010.tir",
+      "tir_sha256": "71b3134fd075d647467e809809a4573b7c71c524a8bc97dfd7e07c0d27149255"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_add_left_shift_add_nn_relu_add_right_shift_clip_cast",
+          "global_var": "tvmgen_default_fused_cast_add_left_shift_add_nn_relu_add_right_shift_clip_cast",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_011.json",
+      "json_sha256": "c855530271238f964c4ece5a34ca0f03dbb3e988149a1268cc7e4e2d6b68298b",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_011.tir",
+      "tir_sha256": "3bccaa15fced75ca0179070d03e524ceb048e7ee8b75c4a79a2fabb006732145"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 9998.222222222223,
+            "load_buffer_2d_acc_bytes": 2048,
+            "load_buffer_2d_acc_calls": 8,
+            "load_buffer_2d_bytes": 719872,
+            "load_buffer_2d_calls": 72,
+            "load_buffer_2d_inp_bytes": 422912,
+            "load_buffer_2d_inp_calls": 32,
+            "load_buffer_2d_small_calls": 8,
+            "load_buffer_2d_strided_calls": 32,
+            "load_buffer_2d_wgt_bytes": 294912,
+            "load_buffer_2d_wgt_calls": 32,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 100352,
+            "store_buffer_2d_calls": 8,
+            "store_buffer_2d_out_bytes": 100352,
+            "store_buffer_2d_out_calls": 8,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 8
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_1",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_1",
+          "max_request_bytes_by_memory": {
+            "acc": 256,
+            "inp": 13440,
+            "out": 12544,
+            "wgt": 9216
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_012.json",
+      "json_sha256": "488c8c8eb485a795b6f34f02a9c2a2bbcc0241e6b0e094160c5076686527f018",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_012.tir",
+      "tir_sha256": "1fa41bc827e75880f4a927758850452cd8531c35e92e07900837737785588018"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 5664.0,
+            "load_buffer_2d_bytes": 724992,
+            "load_buffer_2d_calls": 128,
+            "load_buffer_2d_inp_bytes": 430080,
+            "load_buffer_2d_inp_calls": 64,
+            "load_buffer_2d_small_calls": 0,
+            "load_buffer_2d_strided_calls": 64,
+            "load_buffer_2d_wgt_bytes": 294912,
+            "load_buffer_2d_wgt_calls": 64,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 100352,
+            "store_buffer_2d_calls": 8,
+            "store_buffer_2d_out_bytes": 100352,
+            "store_buffer_2d_out_calls": 8,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 8
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_2",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_2",
+          "max_request_bytes_by_memory": {
+            "inp": 6720,
+            "out": 12544,
+            "wgt": 4608
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_013.json",
+      "json_sha256": "97b2a6adb111ca04c57be376e2094eefb8c3d93236c82347fdd594aececcfdb2",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_013.tir",
+      "tir_sha256": "7bcfbae96c44b501c9757526ca895e4d504657f030862be0176e4bc13a22d8b0"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 6232.0,
+            "load_buffer_2d_bytes": 398848,
+            "load_buffer_2d_calls": 64,
+            "load_buffer_2d_inp_bytes": 366080,
+            "load_buffer_2d_inp_calls": 32,
+            "load_buffer_2d_small_calls": 32,
+            "load_buffer_2d_strided_calls": 64,
+            "load_buffer_2d_wgt_bytes": 32768,
+            "load_buffer_2d_wgt_calls": 32,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 100352,
+            "store_buffer_2d_calls": 8,
+            "store_buffer_2d_out_bytes": 100352,
+            "store_buffer_2d_out_calls": 8,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 8
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_3",
+          "max_request_bytes_by_memory": {
+            "inp": 11440,
+            "out": 12544,
+            "wgt": 1024
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_014.json",
+      "json_sha256": "8d0da3e120a44fb798625c30bdb09140298eef6d7a23b991efe319b8659d81b7",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_014.tir",
+      "tir_sha256": "0209edd36b2d23025fc947c51e63b1762b41be0b29dd169b82826bc24e51af85"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_cast_add_clip_cast_1",
+          "global_var": "tvmgen_default_fused_cast_cast_add_clip_cast_1",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_015.json",
+      "json_sha256": "957e6716a14419211b22549911cae06391b130f2b07844bad7ba99b31e38e969",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_015.tir",
+      "tir_sha256": "ce2f999e4e0737c495b748b11cc349c9dc784fdbd4c93e9263ceba23594552c8"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_1",
+          "global_var": "tvmgen_default_fused_cast_1",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_016.json",
+      "json_sha256": "a037743a6f7a203517be83e80e750916e941f84fc8102202fbff2a14565b69d1",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_016.tir",
+      "tir_sha256": "833bcf4cec620d00f4c015054da4acbb21c17b9e36af22bc727968a4897c419e"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_left_shift_add_nn_relu_add_right_shift_clip_cast_1",
+          "global_var": "tvmgen_default_fused_left_shift_add_nn_relu_add_right_shift_clip_cast_1",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_017.json",
+      "json_sha256": "e480d6ae79f70ce15acdb5f64873f2dbbdc223b189dff09e2d66202bb809bc2a",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_017.tir",
+      "tir_sha256": "df014c3c25df6db8d5f837435241defa685c4aed85d308d3c7c9957f1c985321"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 5338.35294117647,
+            "load_buffer_2d_acc_bytes": 1024,
+            "load_buffer_2d_acc_calls": 8,
+            "load_buffer_2d_bytes": 726016,
+            "load_buffer_2d_calls": 136,
+            "load_buffer_2d_inp_bytes": 430080,
+            "load_buffer_2d_inp_calls": 64,
+            "load_buffer_2d_small_calls": 8,
+            "load_buffer_2d_strided_calls": 64,
+            "load_buffer_2d_wgt_bytes": 294912,
+            "load_buffer_2d_wgt_calls": 64,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 100352,
+            "store_buffer_2d_calls": 8,
+            "store_buffer_2d_out_bytes": 100352,
+            "store_buffer_2d_out_calls": 8,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 8
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_2",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_2",
+          "max_request_bytes_by_memory": {
+            "acc": 128,
+            "inp": 6720,
+            "out": 12544,
+            "wgt": 4608
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_018.json",
+      "json_sha256": "c8188b5d351d4ccc767302aba3167311ad42a5e4a8d6d2991bc80e6cb15d3b45",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_018.tir",
+      "tir_sha256": "3e777d600e3e0c5f96d953094499910ce51535fd24532080ff8e7f152110634d"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_add_left_shift_add_nn_relu_add_right_shift_clip_cast_1",
+          "global_var": "tvmgen_default_fused_cast_add_left_shift_add_nn_relu_add_right_shift_clip_cast_1",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_019.json",
+      "json_sha256": "ddde7183d543853b35a3adf3322c9d690fec4851fb1dd3eeb8d816cf1a0f158d",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_019.tir",
+      "tir_sha256": "6794bcdd9f05a3c3493f27fd5690b84684caf158d704b09f6b4a407640bca9f9"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 10255.058823529413,
+            "load_buffer_2d_acc_bytes": 1024,
+            "load_buffer_2d_acc_calls": 4,
+            "load_buffer_2d_bytes": 697344,
+            "load_buffer_2d_calls": 68,
+            "load_buffer_2d_inp_bytes": 401408,
+            "load_buffer_2d_inp_calls": 32,
+            "load_buffer_2d_small_calls": 4,
+            "load_buffer_2d_strided_calls": 32,
+            "load_buffer_2d_wgt_bytes": 294912,
+            "load_buffer_2d_wgt_calls": 32,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 50176,
+            "store_buffer_2d_calls": 4,
+            "store_buffer_2d_out_bytes": 50176,
+            "store_buffer_2d_out_calls": 4,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_3",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_3",
+          "max_request_bytes_by_memory": {
+            "acc": 256,
+            "inp": 12544,
+            "out": 12544,
+            "wgt": 9216
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_020.json",
+      "json_sha256": "2311c0a52e79561ddd97f21ddd2cef74ac1888bfadd80fe5bc11c50689117b0c",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_020.tir",
+      "tir_sha256": "528ba0e2644968c563c920d4ac083b1810bb65e9c0c6f3484bd673b5de08080b"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 6176.0,
+            "load_buffer_2d_bytes": 790528,
+            "load_buffer_2d_calls": 128,
+            "load_buffer_2d_inp_bytes": 200704,
+            "load_buffer_2d_inp_calls": 64,
+            "load_buffer_2d_small_calls": 64,
+            "load_buffer_2d_strided_calls": 64,
+            "load_buffer_2d_wgt_bytes": 589824,
+            "load_buffer_2d_wgt_calls": 64,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 50176,
+            "store_buffer_2d_calls": 4,
+            "store_buffer_2d_out_bytes": 50176,
+            "store_buffer_2d_out_calls": 4,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_4",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_4",
+          "max_request_bytes_by_memory": {
+            "inp": 3136,
+            "out": 12544,
+            "wgt": 9216
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_021.json",
+      "json_sha256": "2f1200368873ee1a65430775440297a9d39e29171beef21644e99fcb21e36e47",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_021.tir",
+      "tir_sha256": "bca189796d970d1555aa49566e2693693eedb6880425e4d503f9c37adf99b131"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 3832.0,
+            "load_buffer_2d_bytes": 245248,
+            "load_buffer_2d_calls": 64,
+            "load_buffer_2d_inp_bytes": 179712,
+            "load_buffer_2d_inp_calls": 32,
+            "load_buffer_2d_small_calls": 32,
+            "load_buffer_2d_strided_calls": 64,
+            "load_buffer_2d_wgt_bytes": 65536,
+            "load_buffer_2d_wgt_calls": 32,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 50176,
+            "store_buffer_2d_calls": 4,
+            "store_buffer_2d_out_bytes": 50176,
+            "store_buffer_2d_out_calls": 4,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 4
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_5",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_5",
+          "max_request_bytes_by_memory": {
+            "inp": 5616,
+            "out": 12544,
+            "wgt": 2048
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_022.json",
+      "json_sha256": "c2fd32200ac117385e8ae6c4932f474f1a31a3544be38ddca740008ed2958017",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_022.tir",
+      "tir_sha256": "c24f35c45313bf6afc2a2af19adf2d71959aaa783914c252cdf9e1d36d0ec06a"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_cast_add_clip_cast_2",
+          "global_var": "tvmgen_default_fused_cast_cast_add_clip_cast_2",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_023.json",
+      "json_sha256": "9bb731c0066fc3bdf8c2fe95cb6001a5d932e3fe3b0dc4d23680192b28617228",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_023.tir",
+      "tir_sha256": "ab54b688fe7b79c4bba6236498808596b4fd3b5fd971df743d2b1f281f7bab91"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_2",
+          "global_var": "tvmgen_default_fused_cast_2",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_024.json",
+      "json_sha256": "2a56d135c40b7ebc825e0214678120d18dfd7aa602b3a1eaae7a7e84ec2436c9",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_024.tir",
+      "tir_sha256": "1ea11d0315fd9bc7dbc1fa5e13dfc5123cb6250c4278a38691dcda6575dea4c7"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_left_shift_add_nn_relu_add_right_shift_clip_cast_2",
+          "global_var": "tvmgen_default_fused_left_shift_add_nn_relu_add_right_shift_clip_cast_2",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_025.json",
+      "json_sha256": "50b84b888bc47ad54255960f4b271680bc319505161acf167a7531b42d07aa54",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_025.tir",
+      "tir_sha256": "ad7cc06321a652cf0787a8b51e1aba35ecd03905dd8287430589d68cd61b3f2a"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 5996.606060606061,
+            "load_buffer_2d_acc_bytes": 1024,
+            "load_buffer_2d_acc_calls": 4,
+            "load_buffer_2d_bytes": 791552,
+            "load_buffer_2d_calls": 132,
+            "load_buffer_2d_inp_bytes": 200704,
+            "load_buffer_2d_inp_calls": 64,
+            "load_buffer_2d_small_calls": 68,
+            "load_buffer_2d_strided_calls": 64,
+            "load_buffer_2d_wgt_bytes": 589824,
+            "load_buffer_2d_wgt_calls": 64,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 50176,
+            "store_buffer_2d_calls": 4,
+            "store_buffer_2d_out_bytes": 50176,
+            "store_buffer_2d_out_calls": 4,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_4",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_4",
+          "max_request_bytes_by_memory": {
+            "acc": 256,
+            "inp": 3136,
+            "out": 12544,
+            "wgt": 9216
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_026.json",
+      "json_sha256": "89e901bf826f66519f61a87a9aa6de1eb7a5a29feb1ae2a9472ec8c49ecc391f",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_026.tir",
+      "tir_sha256": "53e0a7a9d2ad1cc3c60d64c941cd02bf302c1613412731a307b97fd459e89adf"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_add_left_shift_add_nn_relu_add_right_shift_clip_cast_2",
+          "global_var": "tvmgen_default_fused_cast_add_left_shift_add_nn_relu_add_right_shift_clip_cast_2",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_027.json",
+      "json_sha256": "9c8224babc78ae21ab20f6dc0b6804f4657127aeafe80c8378c090127f96f82d",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_027.tir",
+      "tir_sha256": "060a9034f2fc324c5193c3e05742f4501d9bbf9a82d1e3dca2868244e8553855"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 19424.969696969696,
+            "load_buffer_2d_acc_bytes": 2048,
+            "load_buffer_2d_acc_calls": 2,
+            "load_buffer_2d_bytes": 1282048,
+            "load_buffer_2d_calls": 66,
+            "load_buffer_2d_inp_bytes": 100352,
+            "load_buffer_2d_inp_calls": 32,
+            "load_buffer_2d_small_calls": 34,
+            "load_buffer_2d_strided_calls": 32,
+            "load_buffer_2d_wgt_bytes": 1179648,
+            "load_buffer_2d_wgt_calls": 32,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 25088,
+            "store_buffer_2d_calls": 2,
+            "store_buffer_2d_out_bytes": 25088,
+            "store_buffer_2d_out_calls": 2,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_5",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_5",
+          "max_request_bytes_by_memory": {
+            "acc": 1024,
+            "inp": 3136,
+            "out": 12544,
+            "wgt": 36864
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_028.json",
+      "json_sha256": "106e51aff85cac55ce982243eafbde8742f723e319fd74f607c458663ff78356",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_028.tir",
+      "tir_sha256": "f5beac0def44e3c65d580444a977fca3936886c78aa346b2357dbd5ed3ab73a7"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 18824.0,
+            "load_buffer_2d_bytes": 2409472,
+            "load_buffer_2d_calls": 128,
+            "load_buffer_2d_inp_bytes": 50176,
+            "load_buffer_2d_inp_calls": 64,
+            "load_buffer_2d_small_calls": 64,
+            "load_buffer_2d_strided_calls": 64,
+            "load_buffer_2d_wgt_bytes": 2359296,
+            "load_buffer_2d_wgt_calls": 64,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 25088,
+            "store_buffer_2d_calls": 2,
+            "store_buffer_2d_out_bytes": 25088,
+            "store_buffer_2d_out_calls": 2,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_6",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_6",
+          "max_request_bytes_by_memory": {
+            "inp": 784,
+            "out": 12544,
+            "wgt": 36864
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_029.json",
+      "json_sha256": "4912b25aa903d8fc836e8b694633206211be5949df2f4482789a0fd2462e5f8d",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_029.tir",
+      "tir_sha256": "49c1cffcd36a2e0e14df2ab80e416064403eab7c446b762dc595b28ee7d649a4"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 3400.0,
+            "load_buffer_2d_bytes": 217600,
+            "load_buffer_2d_calls": 64,
+            "load_buffer_2d_inp_bytes": 86528,
+            "load_buffer_2d_inp_calls": 32,
+            "load_buffer_2d_small_calls": 32,
+            "load_buffer_2d_strided_calls": 64,
+            "load_buffer_2d_wgt_bytes": 131072,
+            "load_buffer_2d_wgt_calls": 32,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 25088,
+            "store_buffer_2d_calls": 2,
+            "store_buffer_2d_out_bytes": 25088,
+            "store_buffer_2d_out_calls": 2,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_7",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_7",
+          "max_request_bytes_by_memory": {
+            "inp": 2704,
+            "out": 12544,
+            "wgt": 4096
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_030.json",
+      "json_sha256": "867ecc5b99ecccced879993b43928526a7c3f0f81c3ce236a2554e0a5ea16946",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_030.tir",
+      "tir_sha256": "1f2a08d8a7188c99b5559499356256316ff7639f3d631d40a3f5d8c0fc2b6a52"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_cast_add_clip_cast_3",
+          "global_var": "tvmgen_default_fused_cast_cast_add_clip_cast_3",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_031.json",
+      "json_sha256": "c39c5ddcaca59fdb2ca4e1622c0ff629356ac52dc5dc73984419af2586c7f032",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_031.tir",
+      "tir_sha256": "67fa25bebd2bf7fc89de8adbfd5430049f432415c6cf49555339b4981b92781d"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_3",
+          "global_var": "tvmgen_default_fused_cast_3",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_032.json",
+      "json_sha256": "57177420ba68b460f2d85be08c1331f99aa38aab148036f121795a5b63c94bf1",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_032.tir",
+      "tir_sha256": "9cd57df1745117a9072a7cbfbaf46ef5e293a534524e1b01fbd1d125767837e8"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_left_shift_add_nn_relu_add_right_shift_clip_cast_3",
+          "global_var": "tvmgen_default_fused_left_shift_add_nn_relu_add_right_shift_clip_cast_3",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_033.json",
+      "json_sha256": "0faf8d76d3732ea9e9e7bb9e471cde57ca359dd493d1350efd13b80e620f3822",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_033.tir",
+      "tir_sha256": "b63df3d54eb77dea8c44bba31a51aa734379107d22d4c2400b37db0051489d04"
+    },
+    {
+      "coproc_sync_occurrences": 1,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 18550.153846153848,
+            "load_buffer_2d_acc_bytes": 2048,
+            "load_buffer_2d_acc_calls": 2,
+            "load_buffer_2d_bytes": 2411520,
+            "load_buffer_2d_calls": 130,
+            "load_buffer_2d_inp_bytes": 50176,
+            "load_buffer_2d_inp_calls": 64,
+            "load_buffer_2d_small_calls": 66,
+            "load_buffer_2d_strided_calls": 64,
+            "load_buffer_2d_wgt_bytes": 2359296,
+            "load_buffer_2d_wgt_calls": 64,
+            "store_average_request_bytes": 12544.0,
+            "store_buffer_2d_bytes": 25088,
+            "store_buffer_2d_calls": 2,
+            "store_buffer_2d_out_bytes": 25088,
+            "store_buffer_2d_out_calls": 2,
+            "store_buffer_2d_small_calls": 0,
+            "store_buffer_2d_strided_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_6",
+          "global_var": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast_6",
+          "max_request_bytes_by_memory": {
+            "acc": 1024,
+            "inp": 784,
+            "out": 12544,
+            "wgt": 36864
+          }
+        }
+      ],
+      "json_file": "cpu_access_rewrite_034.json",
+      "json_sha256": "bd24c062dc4dbdaada682323c566fff46a4e8643b98eee599c34499ef8212698",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_034.tir",
+      "tir_sha256": "834179121accd50efb21a70ceb276eb027a26761923077503710155adc9c089f"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_add_cast",
+          "global_var": "tvmgen_default_fused_cast_add_cast",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_035.json",
+      "json_sha256": "b2f429c1e95421ce22e2f00a30c4c2f00d120426ad299238cd8c10af965f5a45",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_035.tir",
+      "tir_sha256": "7b0d2b56e01cd698ff315f045c1c810edb26ad943fe8c89a7ec490a4875a47b1"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_multiply_add_nn_relu_add_right_shift_clip_cast",
+          "global_var": "tvmgen_default_fused_cast_multiply_add_nn_relu_add_right_shift_clip_cast",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_036.json",
+      "json_sha256": "e090cb5dff5a7d117d6c06828b773b41710f2d6cd8eb457562c01a09142eac90",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_036.tir",
+      "tir_sha256": "c6e094de8be848d5bea0b45409447d12318e39b6cfa98c9dbdfd45f54e8167f9"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_cast_transpose_reshape",
+          "global_var": "tvmgen_default_fused_cast_transpose_reshape",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_037.json",
+      "json_sha256": "fe3d67d95fb92b5edc5d1fe2a841d3891f9dfe574fb847940247b3794b386bf3",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_037.tir",
+      "tir_sha256": "36accebe718aab892bb14e290a46ebcf6bd6264bd4107fe997090ecd9e08640e"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_global_avg_pool2d",
+          "global_var": "tvmgen_default_fused_nn_global_avg_pool2d",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_038.json",
+      "json_sha256": "b7baf90fdbd3d77b31a2860d1a5c3e43fb69d0490f50977e9bc5bd1414084b00",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_038.tir",
+      "tir_sha256": "c15bdc70dbd8683eaffd753958d7547dd0cbafefdeab1a8d0403e5e079c64ed5"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_batch_flatten_cast",
+          "global_var": "tvmgen_default_fused_nn_batch_flatten_cast",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_039.json",
+      "json_sha256": "a0cf65e3cd28246d35832f8474a5ba5cd17278968fc671715dfaff2923dad908",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_039.tir",
+      "tir_sha256": "8e9f3533248ce47517bc01542f7d9b40f29e43d53a9f2117352dd3942e1b7189"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_dense_add",
+          "global_var": "tvmgen_default_fused_nn_dense_add",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_040.json",
+      "json_sha256": "0ee00a9a0361b1792616968e8fa0c8c0dab3e6943ee62202b00ed4c03d9e1ec6",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_040.tir",
+      "tir_sha256": "1ee0d3e4a48f7cbad2ff1bf3bb90a3d6d5e214a43b03ec312b8c30d02d0e6823"
+    },
+    {
+      "coproc_sync_occurrences": 0,
+      "functions": [
+        {
+          "dma_totals": {
+            "load_average_request_bytes": 0,
+            "load_buffer_2d_calls": 0,
+            "store_average_request_bytes": 0,
+            "store_buffer_2d_calls": 0
+          },
+          "global_symbol": "tvmgen_default_fused_nn_softmax",
+          "global_var": "tvmgen_default_fused_nn_softmax",
+          "max_request_bytes_by_memory": {}
+        }
+      ],
+      "json_file": "cpu_access_rewrite_041.json",
+      "json_sha256": "c7adc602d95f45e6961697f07ce22d5bce3b13591129ebc67e90e7681eabc5af",
+      "pass": "tir.vta.CPUAccessRewrite",
+      "tir_file": "cpu_access_rewrite_041.tir",
+      "tir_sha256": "5e09e60643eb9dcc500fcb29ce7d11a5cc1e95fa819a857a3586e9cb4c08bce1"
+    }
+  ]
+}

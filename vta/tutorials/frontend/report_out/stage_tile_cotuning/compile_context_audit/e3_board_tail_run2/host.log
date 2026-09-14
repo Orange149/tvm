@@ -1,0 +1,309 @@
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:580: warning: "LOG" redefined
+  580 | #define LOG(level) LOG_##level
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:263: note: this is the location of the previous definition
+  263 | #define LOG(severity) LOG_##severity.stream()
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:583: warning: "LOG_FATAL" redefined
+  583 | #define LOG_FATAL ::tvm::runtime::detail::LogFatal(__FILE__, __LINE__).stream()
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:257: note: this is the location of the previous definition
+  257 | #define LOG_FATAL dmlc::LogMessageFatal(__FILE__, __LINE__)
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:584: warning: "LOG_INFO" redefined
+  584 | #define LOG_INFO ::tvm::runtime::detail::LogMessage(__FILE__, __LINE__, TVM_LOG_LEVEL_INFO).stream()
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:253: note: this is the location of the previous definition
+  253 | #define LOG_INFO dmlc::LogMessage(__FILE__, __LINE__)
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:585: warning: "LOG_ERROR" redefined
+  585 | #define LOG_ERROR \
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:255: note: this is the location of the previous definition
+  255 | #define LOG_ERROR LOG_INFO
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:587: warning: "LOG_WARNING" redefined
+  587 | #define LOG_WARNING \
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:256: note: this is the location of the previous definition
+  256 | #define LOG_WARNING LOG_INFO
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:595: warning: "CHECK" redefined
+  595 | #define CHECK(x)                                                \
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:211: note: this is the location of the previous definition
+  211 | #define CHECK(x)                                           \
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:600: warning: "CHECK_LT" redefined
+  600 | #define CHECK_LT(x, y) TVM_CHECK_BINARY_OP(_LT, <, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:215: note: this is the location of the previous definition
+  215 | #define CHECK_LT(x, y) CHECK_BINARY_OP(_LT, <, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:601: warning: "CHECK_GT" redefined
+  601 | #define CHECK_GT(x, y) TVM_CHECK_BINARY_OP(_GT, >, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:216: note: this is the location of the previous definition
+  216 | #define CHECK_GT(x, y) CHECK_BINARY_OP(_GT, >, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:602: warning: "CHECK_LE" redefined
+  602 | #define CHECK_LE(x, y) TVM_CHECK_BINARY_OP(_LE, <=, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:217: note: this is the location of the previous definition
+  217 | #define CHECK_LE(x, y) CHECK_BINARY_OP(_LE, <=, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:603: warning: "CHECK_GE" redefined
+  603 | #define CHECK_GE(x, y) TVM_CHECK_BINARY_OP(_GE, >=, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:218: note: this is the location of the previous definition
+  218 | #define CHECK_GE(x, y) CHECK_BINARY_OP(_GE, >=, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:604: warning: "CHECK_EQ" redefined
+  604 | #define CHECK_EQ(x, y) TVM_CHECK_BINARY_OP(_EQ, ==, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:219: note: this is the location of the previous definition
+  219 | #define CHECK_EQ(x, y) CHECK_BINARY_OP(_EQ, ==, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:605: warning: "CHECK_NE" redefined
+  605 | #define CHECK_NE(x, y) TVM_CHECK_BINARY_OP(_NE, !=, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:220: note: this is the location of the previous definition
+  220 | #define CHECK_NE(x, y) CHECK_BINARY_OP(_NE, !=, x, y)
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:606: warning: "CHECK_NOTNULL" redefined
+  606 | #define CHECK_NOTNULL(x)                                                          \
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:221: note: this is the location of the previous definition
+  221 | #define CHECK_NOTNULL(x) \
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:611: warning: "LOG_IF" redefined
+  611 | #define LOG_IF(severity, condition) \
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:265: note: this is the location of the previous definition
+  265 | #define LOG_IF(severity, condition) \
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:637: warning: "LOG_DFATAL" redefined
+  637 | #define LOG_DFATAL LOG_ERROR
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:270: note: this is the location of the previous definition
+  270 | #define LOG_DFATAL LOG_FATAL
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:638: warning: "DFATAL" redefined
+  638 | #define DFATAL ERROR
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:271: note: this is the location of the previous definition
+  271 | #define DFATAL FATAL
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:639: warning: "DLOG" redefined
+  639 | #define DLOG(severity) true ? (void)0 : ::tvm::runtime::detail::LogMessageVoidify() & LOG(severity)
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:272: note: this is the location of the previous definition
+  272 | #define DLOG(severity) LOG_IF(severity, ::dmlc::DebugLoggingEnabled())
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:640: warning: "DLOG_IF" redefined
+  640 | #define DLOG_IF(severity, condition) \
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:273: note: this is the location of the previous definition
+  273 | #define DLOG_IF(severity, condition) LOG_IF(severity, ::dmlc::DebugLoggingEnabled() && (condition))
+      | 
+In file included from include/tvm/runtime/container/./base.h:28,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+include/tvm/runtime/logging.h:656: warning: "VLOG" redefined
+  656 | #define VLOG(level)                                                               \
+      | 
+In file included from include/tvm/runtime/container/./base.h:27,
+                 from include/tvm/runtime/container/optional.h:29,
+                 from include/tvm/runtime/ndarray.h:28,
+                 from vta/apps/native_deploy/vta_e3_buffer_probe.cc:2:
+3rdparty/dmlc-core/include/dmlc/logging.h:261: note: this is the location of the previous definition
+  261 | #define VLOG(x) LOG_INFO.stream()
+      | 
+[RUN] producer graph executor created on vta
+[RUN] mono graph executor created on vta
+Traceback (most recent call last):
+  File "/home/orange/code/tvm/vta/tutorials/frontend/qualify_vta_cpu_tail_handoff.py", line 196, in <module>
+    main()
+  File "/home/orange/code/tvm/vta/tutorials/frontend/qualify_vta_cpu_tail_handoff.py", line 117, in main
+    views=[cpu_view(owner) for owner in owners]
+  File "/home/orange/code/tvm/vta/tutorials/frontend/qualify_vta_cpu_tail_handoff.py", line 117, in <listcomp>
+    views=[cpu_view(owner) for owner in owners]
+  File "/home/orange/code/tvm/python/tvm/_ffi/_ctypes/packed_func.py", line 238, in __call__
+    raise get_last_ffi_error()
+tvm.error.RPCError: Traceback (most recent call last):
+  [bt] (7) /home/orange/code/tvm/build/libtvm.so(TVMFuncCall+0x60) [0x7f5ba19c9f30]
+  [bt] (6) /home/orange/code/tvm/build/libtvm.so(+0x2eb650d) [0x7f5ba1ab650d]
+  [bt] (5) /home/orange/code/tvm/build/libtvm.so(+0x2ea70c6) [0x7f5ba1aa70c6]
+  [bt] (4) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::RPCEndpoint::CallFunc(void*, TVMValue const*, int const*, int, std::function<void (tvm::runtime::TVMArgs)>)+0x1cf) [0x7f5ba1aa6e3f]
+  [bt] (3) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::RPCEndpoint::HandleUntilReturnEvent(bool, std::function<void (tvm::runtime::TVMArgs)>)+0x11a) [0x7f5ba1aa574a]
+  [bt] (2) /home/orange/code/tvm/build/libtvm.so(+0x2ea50eb) [0x7f5ba1aa50eb]
+  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x99d3ab) [0x7f5b9f59d3ab]
+  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x7f5ba19fbd95]
+  [bt] (8) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::RPCServerLoop(int)+0x94) [0x7fa99a5864]
+  [bt] (7) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::RPCEndpoint::ServerLoop()+0xf0) [0x7fa99884f0]
+  [bt] (6) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::RPCEndpoint::HandleUntilReturnEvent(bool, std::function<void (tvm::runtime::TVMArgs)>)+0x62c) [0x7fa99874e4]
+  [bt] (5) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::RPCSession::AsyncCallFunc(void*, TVMValue const*, int const*, int, std::function<void (tvm::runtime::RPCCode, tvm::runtime::TVMArgs)>)+0x44) [0x7fa99a412c]
+  [bt] (4) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::LocalSession::CallFunc(void*, TVMValue const*, int const*, int, std::function<void (tvm::runtime::TVMArgs)> const&)+0x50) [0x7fa9996070]
+  [bt] (3) /mnt/sd/tvm_deploy/hpc/libvta.so(+0x162b0) [0x7fa983e2b0]
+  [bt] (2) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::TVMMovableArgValueWithContext_::operator tvm::runtime::NDArray<tvm::runtime::NDArray>() const+0x2c8) [0x7fa9919f60]
+  [bt] (1) ./tvm_rpc(tvm::runtime::detail::LogFatal::Entry::Finalize()+0x8c) [0x5582ac7bfc]
+  [bt] (0) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::Backtrace[abi:cxx11]()+0x14) [0x7fa9902c5c]
+  [bt] (8) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::RPCServerLoop(int)+0x94) [0x7fa99a5864]
+  [bt] (7) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::RPCEndpoint::ServerLoop()+0xf0) [0x7fa99884f0]
+  [bt] (6) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::RPCEndpoint::HandleUntilReturnEvent(bool, std::function<void (tvm::runtime::TVMArgs)>)+0x62c) [0x7fa99874e4]
+  [bt] (5) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::RPCSession::AsyncCallFunc(void*, TVMValue const*, int const*, int, std::function<void (tvm::runtime::RPCCode, tvm::runtime::TVMArgs)>)+0x44) [0x7fa99a412c]
+  [bt] (4) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::LocalSession::CallFunc(void*, TVMValue const*, int const*, int, std::function<void (tvm::runtime::TVMArgs)> const&)+0x50) [0x7fa9996070]
+  [bt] (3) /mnt/sd/tvm_deploy/hpc/libvta.so(+0x162b0) [0x7fa983e2b0]
+  [bt] (2) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::TVMMovableArgValueWithContext_::operator tvm::runtime::NDArray<tvm::runtime::NDArray>() const+0x1c8) [0x7fa9919e60]
+  [bt] (1) ./tvm_rpc(tvm::runtime::detail::LogFatal::Entry::Finalize()+0x8c) [0x5582ac7bfc]
+  [bt] (0) /mnt/sd/tvm_deploy/hpc/libtvm_runtime.so(tvm::runtime::Backtrace[abi:cxx11]()+0x14) [0x7fa9902c5c]
+  File "/home/orange/code/tvm/src/runtime/rpc/rpc_endpoint.cc", line 380
+RPCError: Error caught from RPC call:
+[18:38:28] /home/orange/code/tvm/include/tvm/runtime/packed_func.h:777: In function vta.runtime.ndarray_shared_cpu_view(0: runtime.NDArray) -> runtime.NDArray: error while converting argument 0: [18:38:28] /home/orange/code/tvm/include/tvm/runtime/packed_func.h:589: InternalError: Check failed: type_code_ == kTVMNDArrayHandle (7 vs. 13) : expected NDArrayContainer but got ArrayHandle
+
+

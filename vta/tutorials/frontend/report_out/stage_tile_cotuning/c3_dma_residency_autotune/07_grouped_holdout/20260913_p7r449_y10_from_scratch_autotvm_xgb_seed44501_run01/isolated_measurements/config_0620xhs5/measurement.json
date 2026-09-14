@@ -1,0 +1,120 @@
+{
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        16,
+        10,
+        10,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        8,
+        16,
+        1,
+        1,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "config": {
+    "index": 48,
+    "code_hash": null,
+    "entity": [
+      [
+        "tile_b",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_h",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_w",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_ci",
+        "sp",
+        [
+          -1,
+          8
+        ]
+      ],
+      [
+        "tile_co",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "oc_nthread",
+        "ot",
+        1
+      ],
+      [
+        "h_nthread",
+        "ot",
+        1
+      ]
+    ]
+  },
+  "host": "192.168.1.247",
+  "port": 9090,
+  "clean_start": {
+    "prior": {
+      "PID": "7104",
+      "CWD": "/var/volatile/vta_c3_ram/runtime"
+    },
+    "bitstream_reload": {
+      "firmware": "vta_hpc.bit",
+      "sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+      "state": "operating"
+    },
+    "fresh_rpc": {
+      "PID": "7140",
+      "CWD": "/var/volatile/vta_c3_ram/runtime"
+    }
+  },
+  "correct": false,
+  "error": "Traceback (most recent call last):\n  File \"/home/orange/code/tvm/vta/tutorials/frontend/vta_autotvm_measure.py\", line 165, in run\n    raise AssertionError(\nAssertionError: seed 0: 6467 incorrect elements; max absolute error 15\n"
+}

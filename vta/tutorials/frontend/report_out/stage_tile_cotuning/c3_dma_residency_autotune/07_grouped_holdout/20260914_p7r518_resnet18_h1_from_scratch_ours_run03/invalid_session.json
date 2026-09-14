@@ -1,0 +1,10 @@
+{
+  "T0_elapsed_seconds": 181.34566828599782,
+  "W0_elapsed_seconds": 189.33381625900074,
+  "exception_type": "RuntimeError",
+  "may_splice_with_other_session": false,
+  "message": "RPC did not become an idle single-parent server: [{'PID': '7965', 'PPID': '7954', 'CWD': '/var/volatile/vta_c3_ram/runtime'}, {'PID': '7964', 'PPID': '7954', 'CWD': '/var/volatile/vta_c3_ram/runtime'}, {'PID': '7954', 'PPID': '1', 'CWD': '/var/volatile/vta_c3_ram/runtime'}]",
+  "schema": "c3_resnet18_h1_from_scratch_ours_failure_v1",
+  "status": "invalid_entire_session_fail_closed",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_from_scratch_ours_fullgraph.py\", line 494, in run\n    selected, online_results, online_calls = online_dma_search(\n  File \"/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_from_scratch_ours_fullgraph.py\", line 213, in online_dma_search\n    reset = candidate_reset(board, args, position)\n  File \"/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_from_scratch_ours_fullgraph.py\", line 193, in candidate_reset\n    prior = board.wait_idle_rpc(args.default_runtime)\n  File \"/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_from_scratch_ours_fullgraph.py\", line 117, in wait_idle_rpc\n    raise RuntimeError(\nRuntimeError: RPC did not become an idle single-parent server: [{'PID': '7965', 'PPID': '7954', 'CWD': '/var/volatile/vta_c3_ram/runtime'}, {'PID': '7964', 'PPID': '7954', 'CWD': '/var/volatile/vta_c3_ram/runtime'}, {'PID': '7954', 'PPID': '1', 'CWD': '/var/volatile/vta_c3_ram/runtime'}]\n"
+}

@@ -1,0 +1,214 @@
+{
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        8,
+        28,
+        28,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        16,
+        8,
+        3,
+        3,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "config": {
+    "index": 459,
+    "code_hash": null,
+    "entity": [
+      [
+        "tile_b",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_h",
+        "sp",
+        [
+          -1,
+          14
+        ]
+      ],
+      [
+        "tile_w",
+        "sp",
+        [
+          -1,
+          7
+        ]
+      ],
+      [
+        "tile_ci",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_co",
+        "sp",
+        [
+          -1,
+          4
+        ]
+      ],
+      [
+        "oc_nthread",
+        "ot",
+        2
+      ],
+      [
+        "h_nthread",
+        "ot",
+        1
+      ]
+    ]
+  },
+  "host": "192.168.1.247",
+  "port": 9090,
+  "output_range": [
+    0,
+    46
+  ],
+  "expected_range": [
+    0,
+    46
+  ],
+  "correct": true,
+  "costs_s": [
+    0.0029590800000000002,
+    0.0029451589999999997,
+    0.003012871
+  ],
+  "runtime_profile": {
+    "mem_copy_from_host_calls": 0,
+    "mem_copy_from_host_bytes": 0,
+    "mem_copy_from_host_us": 0,
+    "mem_copy_to_host_calls": 0,
+    "mem_copy_to_host_bytes": 0,
+    "mem_copy_to_host_us": 0,
+    "flush_cache_calls": 0,
+    "flush_cache_bytes": 0,
+    "flush_cache_us": 0,
+    "invalidate_cache_calls": 0,
+    "invalidate_cache_bytes": 0,
+    "invalidate_cache_us": 0,
+    "load_buffer_2d_calls": 128,
+    "load_buffer_2d_bytes": 1005568,
+    "load_buffer_2d_small_calls": 0,
+    "load_buffer_2d_strided_calls": 128,
+    "load_buffer_2d_xsize1_calls": 0,
+    "load_buffer_2d_ysize1_calls": 0,
+    "load_buffer_2d_padded_calls": 64,
+    "load_buffer_2d_enqueue_us": 56.071,
+    "store_buffer_2d_calls": 8,
+    "store_buffer_2d_bytes": 50176,
+    "store_buffer_2d_small_calls": 0,
+    "store_buffer_2d_strided_calls": 8,
+    "store_buffer_2d_xsize1_calls": 0,
+    "store_buffer_2d_ysize1_calls": 0,
+    "store_buffer_2d_enqueue_us": 3.39,
+    "push_gemm_op_calls": 72,
+    "push_gemm_op_us": 18.66,
+    "push_alu_op_calls": 24,
+    "push_alu_op_us": 7.89,
+    "template_capture_calls": 0,
+    "template_replay_hits": 0,
+    "template_replay_fallbacks": 0,
+    "template_capture_us": 0,
+    "template_replay_us": 0,
+    "input_copy_calls": 0,
+    "input_copy_bytes": 0,
+    "input_copy_us": 0,
+    "output_copy_calls": 0,
+    "output_copy_bytes": 0,
+    "output_copy_us": 0,
+    "device_copy_calls": 0,
+    "device_copy_bytes": 0,
+    "device_copy_us": 0,
+    "synchronize_calls": 1,
+    "synchronize_insns": 258,
+    "synchronize_load_bytes": 1005568,
+    "synchronize_store_bytes": 50176,
+    "device_run_wait_us": 2658.57,
+    "driver_run_calls": 1,
+    "driver_run_insns": 258,
+    "driver_timeout_calls": 0,
+    "driver_poll_iters": 45,
+    "driver_run_total_us": 2651.04,
+    "driver_submit_mmio_us": 7.2,
+    "driver_post_start_sleep_us": 61.68,
+    "driver_poll_wait_us": 2579.28,
+    "event_count": 233,
+    "load_buffer_2d_uop_calls": 0,
+    "load_buffer_2d_uop_bytes": 0,
+    "store_buffer_2d_uop_calls": 0,
+    "store_buffer_2d_uop_bytes": 0,
+    "load_buffer_2d_inp_calls": 64,
+    "load_buffer_2d_inp_bytes": 415744,
+    "store_buffer_2d_inp_calls": 0,
+    "store_buffer_2d_inp_bytes": 0,
+    "load_buffer_2d_wgt_calls": 64,
+    "load_buffer_2d_wgt_bytes": 589824,
+    "store_buffer_2d_wgt_calls": 0,
+    "store_buffer_2d_wgt_bytes": 0,
+    "load_buffer_2d_acc_calls": 0,
+    "load_buffer_2d_acc_bytes": 0,
+    "store_buffer_2d_acc_calls": 0,
+    "store_buffer_2d_acc_bytes": 0,
+    "load_buffer_2d_out_calls": 0,
+    "load_buffer_2d_out_bytes": 0,
+    "store_buffer_2d_out_calls": 8,
+    "store_buffer_2d_out_bytes": 50176,
+    "load_buffer_2d_acc8_calls": 0,
+    "load_buffer_2d_acc8_bytes": 0,
+    "store_buffer_2d_acc8_calls": 0,
+    "store_buffer_2d_acc8_bytes": 0,
+    "load_buffer_2d_unknown_calls": 0,
+    "load_buffer_2d_unknown_bytes": 0,
+    "store_buffer_2d_unknown_calls": 0,
+    "store_buffer_2d_unknown_bytes": 0,
+    "load_buffer_2d_top_signatures": [
+      "wgt:x=9,y=4,stride=72,count=64",
+      "inp:x=14,y=28,stride=28,count=32",
+      "inp:x=15,y=28,stride=28,count=32"
+    ],
+    "store_buffer_2d_top_signatures": [
+      "out:x=7,y=56,stride=14,count=8"
+    ]
+  }
+}

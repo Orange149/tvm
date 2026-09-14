@@ -1,0 +1,590 @@
+{
+  "analyzer_source_sha256": "d7d535857c03ab4b54884e3e3696e3ea68eece09f8cef101eb5b9150571fe0d2",
+  "board_boot_consistent": true,
+  "bound_artifact_manifests": {
+    "front_contract": "ee976cfc861671b97f5a77fca7e554d374917cdbc4a0e08f80ed1971df3e26cf",
+    "local_qualification": "e6e6525f802f0f63ef19bcbd53058b3a2b308473b1ff4b9acd4146855b2e9004",
+    "online_result": "c26f5fddcbffce4c9deb4328c1a59e1bbba275d3bdbf47fa16bd33c418461c92",
+    "oracle_completion_result": "e9aaa0676fc56ed4ad063a24b209c935d3ff1216f4e99e6b81c532621e696ae8",
+    "oracle_pool": "f7cca29d8c3402066df2593ca47e50bdcfe3a902bd262d97c00315dc616cc650",
+    "policy_contract": "68128cb5053f989cdf3c7436fc42010c59d7eff7b5627c38edc02490eb3f224d",
+    "target_contract": "ff6816d7da4d6e90351a1614e5a840a426b2e8cdadd85d7662cfe883ac78e740"
+  },
+  "claim_boundary": "One prospective yolov3_tiny_320 conv18 layer. Control orders are frozen-order replays over the subsequently completed pool, not independent online runs. Runtime counters are logical VTA operations, not physical AXI bursts. Invocation host wall excludes build/reset/upload; only the online outer-process wall is a directly measured end-to-end search wall.",
+  "exhaustive_measured_component_cost": {
+    "candidate_dispatches": 12,
+    "complete_candidate_build_action_seconds": 143.6649557639903,
+    "fpga_kernel_invocations": 240,
+    "invocation_host_wall_ms": 436283.4030610393,
+    "logical_dma_bytes": 58083585024,
+    "logical_dma_calls": 55686084,
+    "logical_load_bytes": 57263668224,
+    "logical_store_bytes": 819916800
+  },
+  "frozen_order_replay": {
+    "bytes_lazy": {
+      "cost_to_target": {
+        "exact_oracle": {
+          "candidate_dispatches": 3,
+          "complete_candidate_build_action_seconds": 34.104173202009406,
+          "fpga_kernel_invocations": 60,
+          "invocation_host_wall_ms": 108911.66780098865,
+          "logical_dma_bytes": 14485919232,
+          "logical_dma_calls": 13875927,
+          "logical_load_bytes": 14280940032,
+          "logical_store_bytes": 204979200
+        },
+        "oracle_plus_0_1pct": {
+          "candidate_dispatches": 3,
+          "complete_candidate_build_action_seconds": 34.104173202009406,
+          "fpga_kernel_invocations": 60,
+          "invocation_host_wall_ms": 108911.66780098865,
+          "logical_dma_bytes": 14485919232,
+          "logical_dma_calls": 13875927,
+          "logical_load_bytes": 14280940032,
+          "logical_store_bytes": 204979200
+        },
+        "oracle_plus_2pct": {
+          "candidate_dispatches": 1,
+          "complete_candidate_build_action_seconds": 11.795632339009899,
+          "fpga_kernel_invocations": 20,
+          "invocation_host_wall_ms": 36378.00681700173,
+          "logical_dma_bytes": 4827882496,
+          "logical_dma_calls": 4632874,
+          "logical_load_bytes": 4759556096,
+          "logical_store_bytes": 68326400
+        }
+      },
+      "order": [
+        "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+        "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+        "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "26db24b3a3209c71e8dabb41e2b60fddeabe1224f931c7b8ae741082202422f8",
+        "f031c5298f32be1790597b8b5b6a9a5056f4965f9a0428c6dcc40c53060d7f10",
+        "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+        "e53b8c16304ee075ac8f1527f4a578560fbda7cde9d8763182830643db257ef0",
+        "3133a28fb1b850c383c4f6f1aef5d79d2dcbf9f47564a2dae328c4e28698de7d",
+        "70be25bcf7fae14061b9681247fb3dfc6ed716600d7428a31ad28f85317aad2b",
+        "b9c0bb87e78e2dbad28994d890da7050cb26a7d853b2f1d12176c4674c594f99",
+        "f68a5137bf2127af2b6cd184cb1d5b93f8929c008dd761a8d35b55940be00eba",
+        "bfacba7ac8b6939d2e8e45689c60d177c0e14fb3790b6cf1a2fe5b49bd11851d"
+      ],
+      "targets": {
+        "exact_oracle": {
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 3
+        },
+        "oracle_plus_0_1pct": {
+          "best_ratio": 0.9878784824574122,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 3,
+          "regret_percent": 0.0
+        },
+        "oracle_plus_2pct": {
+          "best_ratio": 0.9930121556442159,
+          "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+          "dispatches": 1,
+          "regret_percent": 0.5196664648503546
+        }
+      },
+      "terminal_best": {
+        "best_ratio": 0.9878784824574122,
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "regret_percent": 0.0
+      },
+      "terminal_cost": {
+        "candidate_dispatches": 12,
+        "complete_candidate_build_action_seconds": 143.6649557639903,
+        "fpga_kernel_invocations": 240,
+        "invocation_host_wall_ms": 436283.4030610393,
+        "logical_dma_bytes": 58083585024,
+        "logical_dma_calls": 55686084,
+        "logical_load_bytes": 57263668224,
+        "logical_store_bytes": 819916800
+      }
+    },
+    "calls_lazy": {
+      "cost_to_target": {
+        "exact_oracle": {
+          "candidate_dispatches": 1,
+          "complete_candidate_build_action_seconds": 11.127343877000385,
+          "fpga_kernel_invocations": 20,
+          "invocation_host_wall_ms": 36229.929092980456,
+          "logical_dma_bytes": 4829283840,
+          "logical_dma_calls": 4616945,
+          "logical_load_bytes": 4760957440,
+          "logical_store_bytes": 68326400
+        },
+        "oracle_plus_0_1pct": {
+          "candidate_dispatches": 1,
+          "complete_candidate_build_action_seconds": 11.127343877000385,
+          "fpga_kernel_invocations": 20,
+          "invocation_host_wall_ms": 36229.929092980456,
+          "logical_dma_bytes": 4829283840,
+          "logical_dma_calls": 4616945,
+          "logical_load_bytes": 4760957440,
+          "logical_store_bytes": 68326400
+        },
+        "oracle_plus_2pct": {
+          "candidate_dispatches": 1,
+          "complete_candidate_build_action_seconds": 11.127343877000385,
+          "fpga_kernel_invocations": 20,
+          "invocation_host_wall_ms": 36229.929092980456,
+          "logical_dma_bytes": 4829283840,
+          "logical_dma_calls": 4616945,
+          "logical_load_bytes": 4760957440,
+          "logical_store_bytes": 68326400
+        }
+      },
+      "order": [
+        "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "26db24b3a3209c71e8dabb41e2b60fddeabe1224f931c7b8ae741082202422f8",
+        "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+        "70be25bcf7fae14061b9681247fb3dfc6ed716600d7428a31ad28f85317aad2b",
+        "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+        "bfacba7ac8b6939d2e8e45689c60d177c0e14fb3790b6cf1a2fe5b49bd11851d",
+        "b9c0bb87e78e2dbad28994d890da7050cb26a7d853b2f1d12176c4674c594f99",
+        "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+        "e53b8c16304ee075ac8f1527f4a578560fbda7cde9d8763182830643db257ef0",
+        "f68a5137bf2127af2b6cd184cb1d5b93f8929c008dd761a8d35b55940be00eba",
+        "f031c5298f32be1790597b8b5b6a9a5056f4965f9a0428c6dcc40c53060d7f10",
+        "3133a28fb1b850c383c4f6f1aef5d79d2dcbf9f47564a2dae328c4e28698de7d"
+      ],
+      "targets": {
+        "exact_oracle": {
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 1
+        },
+        "oracle_plus_0_1pct": {
+          "best_ratio": 0.9878784824574122,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 1,
+          "regret_percent": 0.0
+        },
+        "oracle_plus_2pct": {
+          "best_ratio": 0.9878784824574122,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 1,
+          "regret_percent": 0.0
+        }
+      },
+      "terminal_best": {
+        "best_ratio": 0.9878784824574122,
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "regret_percent": 0.0
+      },
+      "terminal_cost": {
+        "candidate_dispatches": 12,
+        "complete_candidate_build_action_seconds": 143.6649557639903,
+        "fpga_kernel_invocations": 240,
+        "invocation_host_wall_ms": 436283.4030610393,
+        "logical_dma_bytes": 58083585024,
+        "logical_dma_calls": 55686084,
+        "logical_load_bytes": 57263668224,
+        "logical_store_bytes": 819916800
+      }
+    },
+    "fixed_front": {
+      "cost_to_target": {
+        "exact_oracle": {
+          "candidate_dispatches": 3,
+          "complete_candidate_build_action_seconds": 34.104173202009406,
+          "fpga_kernel_invocations": 60,
+          "invocation_host_wall_ms": 108911.66780098865,
+          "logical_dma_bytes": 14485919232,
+          "logical_dma_calls": 13875927,
+          "logical_load_bytes": 14280940032,
+          "logical_store_bytes": 204979200
+        },
+        "oracle_plus_0_1pct": {
+          "candidate_dispatches": 3,
+          "complete_candidate_build_action_seconds": 34.104173202009406,
+          "fpga_kernel_invocations": 60,
+          "invocation_host_wall_ms": 108911.66780098865,
+          "logical_dma_bytes": 14485919232,
+          "logical_dma_calls": 13875927,
+          "logical_load_bytes": 14280940032,
+          "logical_store_bytes": 204979200
+        },
+        "oracle_plus_2pct": {
+          "candidate_dispatches": 1,
+          "complete_candidate_build_action_seconds": 11.795632339009899,
+          "fpga_kernel_invocations": 20,
+          "invocation_host_wall_ms": 36378.00681700173,
+          "logical_dma_bytes": 4827882496,
+          "logical_dma_calls": 4632874,
+          "logical_load_bytes": 4759556096,
+          "logical_store_bytes": 68326400
+        }
+      },
+      "order": [
+        "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+        "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+        "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2"
+      ],
+      "targets": {
+        "exact_oracle": {
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 3
+        },
+        "oracle_plus_0_1pct": {
+          "best_ratio": 0.9878784824574122,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 3,
+          "regret_percent": 0.0
+        },
+        "oracle_plus_2pct": {
+          "best_ratio": 0.9930121556442159,
+          "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+          "dispatches": 1,
+          "regret_percent": 0.5196664648503546
+        }
+      },
+      "terminal_best": {
+        "best_ratio": 0.9878784824574122,
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "regret_percent": 0.0
+      },
+      "terminal_cost": {
+        "candidate_dispatches": 3,
+        "complete_candidate_build_action_seconds": 34.104173202009406,
+        "fpga_kernel_invocations": 60,
+        "invocation_host_wall_ms": 108911.66780098865,
+        "logical_dma_bytes": 14485919232,
+        "logical_dma_calls": 13875927,
+        "logical_load_bytes": 14280940032,
+        "logical_store_bytes": 204979200
+      }
+    },
+    "online_peeling": {
+      "cost_to_target": {
+        "exact_oracle": {
+          "candidate_dispatches": 3,
+          "complete_candidate_build_action_seconds": 34.104173202009406,
+          "fpga_kernel_invocations": 60,
+          "invocation_host_wall_ms": 108911.66780098865,
+          "logical_dma_bytes": 14485919232,
+          "logical_dma_calls": 13875927,
+          "logical_load_bytes": 14280940032,
+          "logical_store_bytes": 204979200
+        },
+        "oracle_plus_0_1pct": {
+          "candidate_dispatches": 3,
+          "complete_candidate_build_action_seconds": 34.104173202009406,
+          "fpga_kernel_invocations": 60,
+          "invocation_host_wall_ms": 108911.66780098865,
+          "logical_dma_bytes": 14485919232,
+          "logical_dma_calls": 13875927,
+          "logical_load_bytes": 14280940032,
+          "logical_store_bytes": 204979200
+        },
+        "oracle_plus_2pct": {
+          "candidate_dispatches": 1,
+          "complete_candidate_build_action_seconds": 11.795632339009899,
+          "fpga_kernel_invocations": 20,
+          "invocation_host_wall_ms": 36378.00681700173,
+          "logical_dma_bytes": 4827882496,
+          "logical_dma_calls": 4632874,
+          "logical_load_bytes": 4759556096,
+          "logical_store_bytes": 68326400
+        }
+      },
+      "order": [
+        "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+        "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+        "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2"
+      ],
+      "targets": {
+        "exact_oracle": {
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 3
+        },
+        "oracle_plus_0_1pct": {
+          "best_ratio": 0.9878784824574122,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 3,
+          "regret_percent": 0.0
+        },
+        "oracle_plus_2pct": {
+          "best_ratio": 0.9930121556442159,
+          "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+          "dispatches": 1,
+          "regret_percent": 0.5196664648503546
+        }
+      },
+      "terminal_best": {
+        "best_ratio": 0.9878784824574122,
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "regret_percent": 0.0
+      },
+      "terminal_cost": {
+        "candidate_dispatches": 3,
+        "complete_candidate_build_action_seconds": 34.104173202009406,
+        "fpga_kernel_invocations": 60,
+        "invocation_host_wall_ms": 108911.66780098865,
+        "logical_dma_bytes": 14485919232,
+        "logical_dma_calls": 13875927,
+        "logical_load_bytes": 14280940032,
+        "logical_store_bytes": 204979200
+      }
+    },
+    "random_lazy": {
+      "cost_to_target": {
+        "exact_oracle": {
+          "candidate_dispatches": 1,
+          "complete_candidate_build_action_seconds": 11.127343877000385,
+          "fpga_kernel_invocations": 20,
+          "invocation_host_wall_ms": 36229.929092980456,
+          "logical_dma_bytes": 4829283840,
+          "logical_dma_calls": 4616945,
+          "logical_load_bytes": 4760957440,
+          "logical_store_bytes": 68326400
+        },
+        "oracle_plus_0_1pct": {
+          "candidate_dispatches": 1,
+          "complete_candidate_build_action_seconds": 11.127343877000385,
+          "fpga_kernel_invocations": 20,
+          "invocation_host_wall_ms": 36229.929092980456,
+          "logical_dma_bytes": 4829283840,
+          "logical_dma_calls": 4616945,
+          "logical_load_bytes": 4760957440,
+          "logical_store_bytes": 68326400
+        },
+        "oracle_plus_2pct": {
+          "candidate_dispatches": 1,
+          "complete_candidate_build_action_seconds": 11.127343877000385,
+          "fpga_kernel_invocations": 20,
+          "invocation_host_wall_ms": 36229.929092980456,
+          "logical_dma_bytes": 4829283840,
+          "logical_dma_calls": 4616945,
+          "logical_load_bytes": 4760957440,
+          "logical_store_bytes": 68326400
+        }
+      },
+      "order": [
+        "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "26db24b3a3209c71e8dabb41e2b60fddeabe1224f931c7b8ae741082202422f8",
+        "773d90e5a263409eeb11f34adf8b75fc01f578012f6fe0cc2ca23ddae29a533e",
+        "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+        "f68a5137bf2127af2b6cd184cb1d5b93f8929c008dd761a8d35b55940be00eba",
+        "e53b8c16304ee075ac8f1527f4a578560fbda7cde9d8763182830643db257ef0",
+        "70be25bcf7fae14061b9681247fb3dfc6ed716600d7428a31ad28f85317aad2b",
+        "bfacba7ac8b6939d2e8e45689c60d177c0e14fb3790b6cf1a2fe5b49bd11851d",
+        "b9c0bb87e78e2dbad28994d890da7050cb26a7d853b2f1d12176c4674c594f99",
+        "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+        "3133a28fb1b850c383c4f6f1aef5d79d2dcbf9f47564a2dae328c4e28698de7d",
+        "f031c5298f32be1790597b8b5b6a9a5056f4965f9a0428c6dcc40c53060d7f10"
+      ],
+      "targets": {
+        "exact_oracle": {
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 1
+        },
+        "oracle_plus_0_1pct": {
+          "best_ratio": 0.9878784824574122,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 1,
+          "regret_percent": 0.0
+        },
+        "oracle_plus_2pct": {
+          "best_ratio": 0.9878784824574122,
+          "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+          "dispatches": 1,
+          "regret_percent": 0.0
+        }
+      },
+      "terminal_best": {
+        "best_ratio": 0.9878784824574122,
+        "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+        "regret_percent": 0.0
+      },
+      "terminal_cost": {
+        "candidate_dispatches": 12,
+        "complete_candidate_build_action_seconds": 143.6649557639903,
+        "fpga_kernel_invocations": 240,
+        "invocation_host_wall_ms": 436283.4030610393,
+        "logical_dma_bytes": 58083585024,
+        "logical_dma_calls": 55686084,
+        "logical_load_bytes": 57263668224,
+        "logical_store_bytes": 819916800
+      }
+    }
+  },
+  "geometry_signature": [
+    1,
+    256,
+    10,
+    10,
+    128,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0
+  ],
+  "online": {
+    "best_candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+    "best_is_exact_oracle": true,
+    "best_regret_percent": 0.0,
+    "dispatch_count": 3,
+    "invalid_count": 0,
+    "measured_component_cost": {
+      "candidate_dispatches": 3,
+      "complete_candidate_build_action_seconds": 34.104173202009406,
+      "fpga_kernel_invocations": 60,
+      "invocation_host_wall_ms": 108911.66780098865,
+      "logical_dma_bytes": 14485919232,
+      "logical_dma_calls": 13875927,
+      "logical_load_bytes": 14280940032,
+      "logical_store_bytes": 204979200
+    },
+    "outer_process_seconds_before_summary_write": 212.72698375600157,
+    "stop_reason": "completed_wave_had_no_fpga_invalid_candidate",
+    "waves": [
+      {
+        "candidate_ids": [
+          "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+          "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+          "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2"
+        ],
+        "complete": true,
+        "finished_seconds": 212.57711047999328,
+        "results": [
+          {
+            "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+            "outer_elapsed_seconds": 89.59147236299759,
+            "status": "passed"
+          },
+          {
+            "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+            "outer_elapsed_seconds": 151.14198981299705,
+            "status": "passed"
+          },
+          {
+            "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+            "outer_elapsed_seconds": 212.50690648899763,
+            "status": "passed"
+          }
+        ],
+        "started_seconds": 27.428939498990076,
+        "wave": 0
+      }
+    ]
+  },
+  "online_vs_exhaustive_savings": {
+    "candidate_dispatches_reduction_percent": 75.0,
+    "complete_candidate_build_action_seconds_reduction_percent": 76.26131367900533,
+    "fpga_kernel_invocations_reduction_percent": 75.0,
+    "invocation_host_wall_ms_reduction_percent": 75.03648613794482,
+    "logical_dma_bytes_reduction_percent": 75.06021843174031,
+    "logical_dma_calls_reduction_percent": 75.0818768294068,
+    "logical_load_bytes_reduction_percent": 75.06108065564919,
+    "logical_store_bytes_reduction_percent": 75.0
+  },
+  "oracle": {
+    "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+    "candidate_median_latency_ms": 1056.142621,
+    "family_id": "Y10F02",
+    "median_paired_latency_ratio": 0.9878784824574122,
+    "public_mode": "input_stationary"
+  },
+  "pool": {
+    "eligible": 12,
+    "fpga_correct": 12,
+    "fpga_invalid": 0,
+    "invalid_candidate_ids": []
+  },
+  "recorded_post_selection_audit_cost": {
+    "oracle_completion_board_outer_process_seconds": 455.0312253269949,
+    "oracle_completion_build_process_wall_seconds": 110.24099656598992
+  },
+  "same_tile_mechanism_pairs": [
+    {
+      "candidate_id": "70be25bcf7fae14061b9681247fb3dfc6ed716600d7428a31ad28f85317aad2b",
+      "family_id": "Y10F00",
+      "fpga_status": "passed",
+      "mode": "input_stationary",
+      "operator_dma_bytes_change_percent": -4.316546762589923,
+      "operator_dma_calls_change_percent": -56.25,
+      "whole_model_latency_improvement_percent": 0.41342521131355614
+    },
+    {
+      "candidate_id": "bb0749920db5ca6e3851dcf13435306c94430199ba655039cca50c4918564c7c",
+      "family_id": "Y10F00",
+      "fpga_status": "passed",
+      "mode": "weight_resident_barrier",
+      "operator_dma_bytes_change_percent": -90.24460431654676,
+      "operator_dma_calls_change_percent": -24.5,
+      "whole_model_latency_improvement_percent": 0.07576870127429247
+    },
+    {
+      "candidate_id": "dc939aafdfbb9e7e84172f7ce12b651551b75e95753ca7e33c30967750f7abb2",
+      "family_id": "Y10F02",
+      "fpga_status": "passed",
+      "mode": "input_stationary",
+      "operator_dma_bytes_change_percent": -46.666666666666664,
+      "operator_dma_calls_change_percent": -72.91666666666667,
+      "whole_model_latency_improvement_percent": 0.4072953232135301
+    },
+    {
+      "candidate_id": "26db24b3a3209c71e8dabb41e2b60fddeabe1224f931c7b8ae741082202422f8",
+      "family_id": "Y10F02",
+      "fpga_status": "passed",
+      "mode": "weight_resident_barrier",
+      "operator_dma_bytes_change_percent": -34.13333333333334,
+      "operator_dma_calls_change_percent": -30.000000000000004,
+      "whole_model_latency_improvement_percent": -0.11452694629221494
+    },
+    {
+      "candidate_id": "e53b8c16304ee075ac8f1527f4a578560fbda7cde9d8763182830643db257ef0",
+      "family_id": "Y10F04",
+      "fpga_status": "passed",
+      "mode": "input_stationary",
+      "operator_dma_bytes_change_percent": -17.07317073170732,
+      "operator_dma_calls_change_percent": -84.92647058823529,
+      "whole_model_latency_improvement_percent": 1.424124402486282
+    },
+    {
+      "candidate_id": "f031c5298f32be1790597b8b5b6a9a5056f4965f9a0428c6dcc40c53060d7f10",
+      "family_id": "Y10F04",
+      "fpga_status": "passed",
+      "mode": "weight_resident_barrier",
+      "operator_dma_bytes_change_percent": -74.92682926829268,
+      "operator_dma_calls_change_percent": -46.94117647058823,
+      "whole_model_latency_improvement_percent": 0.5837915843310837
+    },
+    {
+      "candidate_id": "b9c0bb87e78e2dbad28994d890da7050cb26a7d853b2f1d12176c4674c594f99",
+      "family_id": "Y10F06",
+      "fpga_status": "passed",
+      "mode": "input_stationary",
+      "operator_dma_bytes_change_percent": -1.4814814814814836,
+      "operator_dma_calls_change_percent": -47.22222222222222,
+      "whole_model_latency_improvement_percent": 0.048883930766741024
+    },
+    {
+      "candidate_id": "68a7562c4a5059fbb2e75d37ff2268eee423c244631d02d3580e5ad497cb95e1",
+      "family_id": "Y10F06",
+      "fpga_status": "passed",
+      "mode": "weight_resident_barrier",
+      "operator_dma_bytes_change_percent": -92.91851851851852,
+      "operator_dma_calls_change_percent": -44.333333333333336,
+      "whole_model_latency_improvement_percent": 0.28816090945900097
+    }
+  ],
+  "schema": "c3_vta_invalid_dominator_peeling_holdout_analysis_v1",
+  "status": "prospective_online_peeling_exact_oracle_complete",
+  "verified_artifact_counts": {
+    "front_contract": 2,
+    "local_qualification": 9,
+    "online_result": 281,
+    "oracle_completion_result": 5,
+    "oracle_pool": 898,
+    "policy_contract": 2,
+    "target_contract": 4
+  },
+  "workload_id": "Y10"
+}

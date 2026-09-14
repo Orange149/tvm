@@ -1,0 +1,113 @@
+{
+  "workload": [
+    "conv2d_packed.vta",
+    [
+      "TENSOR",
+      [
+        1,
+        8,
+        28,
+        28,
+        1,
+        16
+      ],
+      "int8"
+    ],
+    [
+      "TENSOR",
+      [
+        16,
+        8,
+        1,
+        1,
+        16,
+        16
+      ],
+      "int8"
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    "NCHW1n16c",
+    "int32"
+  ],
+  "config": {
+    "index": 526,
+    "code_hash": null,
+    "entity": [
+      [
+        "tile_b",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_h",
+        "sp",
+        [
+          -1,
+          7
+        ]
+      ],
+      [
+        "tile_w",
+        "sp",
+        [
+          -1,
+          14
+        ]
+      ],
+      [
+        "tile_ci",
+        "sp",
+        [
+          -1,
+          1
+        ]
+      ],
+      [
+        "tile_co",
+        "sp",
+        [
+          -1,
+          8
+        ]
+      ],
+      [
+        "oc_nthread",
+        "ot",
+        2
+      ],
+      [
+        "h_nthread",
+        "ot",
+        1
+      ]
+    ]
+  },
+  "host": "192.168.1.247",
+  "port": 9090,
+  "output_range": [
+    -125,
+    125
+  ],
+  "expected_range": [
+    0,
+    16
+  ],
+  "correct": false,
+  "error": "Traceback (most recent call last):\n  File \"/home/orange/code/tvm/vta/tutorials/frontend/vta_autotvm_measure.py\", line 142, in run\n    raise AssertionError(\"{} incorrect elements; max absolute error {}\".format(\nAssertionError: 847 incorrect elements; max absolute error 131\n"
+}

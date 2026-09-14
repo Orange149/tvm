@@ -1,0 +1,673 @@
+[
+  {
+    "signature": "ad116acb33b63eb48fe52a337af6e738d6a1bb2d3ebef8cda03ae0aeeb080e53",
+    "ops": [
+      "reshape",
+      "transpose"
+    ],
+    "normalized": {
+      "nodes": [
+        [
+          "var",
+          0,
+          "Tensor[(1, 128, 28, 28), float32]"
+        ],
+        [
+          "call",
+          "reshape",
+          [
+            0
+          ],
+          {
+            "allowzero": 0,
+            "newshape": [
+              1,
+              1,
+              8,
+              16,
+              28,
+              28
+            ]
+          },
+          "Tensor[(1, 1, 8, 16, 28, 28), float32]"
+        ],
+        [
+          "call",
+          "transpose",
+          [
+            1
+          ],
+          {
+            "axes": [
+              0,
+              2,
+              4,
+              5,
+              1,
+              3
+            ]
+          },
+          "Tensor[(1, 8, 28, 28, 1, 16), float32]"
+        ],
+        [
+          "function",
+          [
+            0
+          ],
+          2,
+          "Tensor[(1, 8, 28, 28, 1, 16), float32]",
+          {
+            "Primitive": 1
+          }
+        ]
+      ],
+      "root": 3
+    }
+  },
+  {
+    "signature": "d70d99a5af8c6b42bb8c749ad1d4a780527309c26fba9899541992f647d90d94",
+    "ops": [
+      "multiply",
+      "transpose",
+      "reshape",
+      "round",
+      "clip",
+      "cast",
+      "reshape",
+      "transpose"
+    ],
+    "normalized": {
+      "nodes": [
+        [
+          "var",
+          0,
+          "Tensor[(1, 8, 28, 28, 1, 16), float32]"
+        ],
+        [
+          "constant",
+          {
+            "shape": [],
+            "dtype": "float32",
+            "data_sha256": "140efb356462f70dd1c7f1dfb10bcc07d0f14d439043fb9e9d50f4d7be71ea96"
+          }
+        ],
+        [
+          "call",
+          "multiply",
+          [
+            0,
+            1
+          ],
+          {},
+          "Tensor[(1, 8, 28, 28, 1, 16), float32]"
+        ],
+        [
+          "call",
+          "transpose",
+          [
+            2
+          ],
+          {
+            "axes": [
+              0,
+              4,
+              1,
+              5,
+              2,
+              3
+            ]
+          },
+          "Tensor[(1, 1, 8, 16, 28, 28), float32]"
+        ],
+        [
+          "call",
+          "reshape",
+          [
+            3
+          ],
+          {
+            "allowzero": 0,
+            "newshape": [
+              1,
+              128,
+              28,
+              28
+            ]
+          },
+          "Tensor[(1, 128, 28, 28), float32]"
+        ],
+        [
+          "call",
+          "round",
+          [
+            4
+          ],
+          {},
+          "Tensor[(1, 128, 28, 28), float32]"
+        ],
+        [
+          "call",
+          "clip",
+          [
+            5
+          ],
+          {
+            "a_max": 127.0,
+            "a_min": -127.0
+          },
+          "Tensor[(1, 128, 28, 28), float32]"
+        ],
+        [
+          "call",
+          "cast",
+          [
+            6
+          ],
+          {
+            "dtype": "int8"
+          },
+          "Tensor[(1, 128, 28, 28), int8]"
+        ],
+        [
+          "call",
+          "reshape",
+          [
+            7
+          ],
+          {
+            "allowzero": 0,
+            "newshape": [
+              1,
+              1,
+              8,
+              16,
+              28,
+              28
+            ]
+          },
+          "Tensor[(1, 1, 8, 16, 28, 28), int8]"
+        ],
+        [
+          "call",
+          "transpose",
+          [
+            8
+          ],
+          {
+            "axes": [
+              0,
+              2,
+              4,
+              5,
+              1,
+              3
+            ]
+          },
+          "Tensor[(1, 8, 28, 28, 1, 16), int8]"
+        ],
+        [
+          "function",
+          [
+            0
+          ],
+          9,
+          "Tensor[(1, 8, 28, 28, 1, 16), int8]",
+          {
+            "Primitive": 1
+          }
+        ]
+      ],
+      "root": 10
+    }
+  },
+  {
+    "signature": "83cbeb44fccfd5e8e2e48868b8e8db8c976c53a7c2fdd87984a33115b049c3f3",
+    "ops": [
+      "nn.conv2d",
+      "add",
+      "nn.relu",
+      "add",
+      "right_shift",
+      "clip",
+      "cast"
+    ],
+    "normalized": {
+      "nodes": [
+        [
+          "var",
+          0,
+          "Tensor[(1, 8, 28, 28, 1, 16), int8]"
+        ],
+        [
+          "var",
+          1,
+          "Tensor[(16, 8, 3, 3, 16, 16), int8]"
+        ],
+        [
+          "var",
+          2,
+          "Tensor[(16, 1, 1, 1, 16), int32]"
+        ],
+        [
+          "call",
+          "nn.conv2d",
+          [
+            0,
+            1
+          ],
+          {
+            "channels": 256,
+            "data_layout": "NCHW1n16c",
+            "dilation": [
+              1,
+              1
+            ],
+            "groups": 1,
+            "kernel_layout": "OIHW16o16i",
+            "kernel_size": [
+              3,
+              3
+            ],
+            "out_dtype": "int32",
+            "out_layout": "",
+            "padding": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "strides": [
+              2,
+              2
+            ]
+          },
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "call",
+          "add",
+          [
+            3,
+            2
+          ],
+          {},
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "call",
+          "nn.relu",
+          [
+            4
+          ],
+          {},
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "constant",
+          {
+            "shape": [],
+            "dtype": "int32",
+            "data_sha256": "bf5e8ffa51a9e748985800c1d3d7f1a2a6ae7435136593ca8d9637e3f87c699c"
+          }
+        ],
+        [
+          "call",
+          "add",
+          [
+            5,
+            6
+          ],
+          {},
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "constant",
+          {
+            "shape": [],
+            "dtype": "int32",
+            "data_sha256": "9f076b7eb7fdc0311cd3208cdbbebbf8014dd3a05e35191c96947b358a362b40"
+          }
+        ],
+        [
+          "call",
+          "right_shift",
+          [
+            7,
+            8
+          ],
+          {},
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "call",
+          "clip",
+          [
+            9
+          ],
+          {
+            "a_max": 127.0,
+            "a_min": -127.0
+          },
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "call",
+          "cast",
+          [
+            10
+          ],
+          {
+            "dtype": "int8"
+          },
+          "Tensor[(1, 16, 14, 14, 1, 16), int8]"
+        ],
+        [
+          "function",
+          [
+            0,
+            1,
+            2
+          ],
+          11,
+          "Tensor[(1, 16, 14, 14, 1, 16), int8]",
+          {
+            "Primitive": 1,
+            "data_layout": "NCHW1n16c",
+            "kernel_layout": "OIHW16o16i",
+            "out_layout": ""
+          }
+        ]
+      ],
+      "root": 12
+    }
+  },
+  {
+    "signature": "d5be7fe00bd2a9ff15d7099f9adcbcd44d69721a92b9e77984fb6fc99c69a689",
+    "ops": [
+      "nn.conv2d",
+      "add",
+      "right_shift",
+      "clip",
+      "cast"
+    ],
+    "normalized": {
+      "nodes": [
+        [
+          "var",
+          0,
+          "Tensor[(1, 16, 14, 14, 1, 16), int8]"
+        ],
+        [
+          "var",
+          1,
+          "Tensor[(16, 16, 3, 3, 16, 16), int8]"
+        ],
+        [
+          "var",
+          2,
+          "Tensor[(16, 1, 1, 1, 16), int32]"
+        ],
+        [
+          "call",
+          "nn.conv2d",
+          [
+            0,
+            1
+          ],
+          {
+            "channels": 256,
+            "data_layout": "NCHW1n16c",
+            "dilation": [
+              1,
+              1
+            ],
+            "groups": 1,
+            "kernel_layout": "OIHW16o16i",
+            "kernel_size": [
+              3,
+              3
+            ],
+            "out_dtype": "int32",
+            "out_layout": "",
+            "padding": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "strides": [
+              1,
+              1
+            ]
+          },
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "call",
+          "add",
+          [
+            3,
+            2
+          ],
+          {},
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "constant",
+          {
+            "shape": [],
+            "dtype": "int32",
+            "data_sha256": "e8613f5a5bc9f9feeda32a8e7c80b69dd4878e47b6a91723fb15eb84236b6a2b"
+          }
+        ],
+        [
+          "call",
+          "right_shift",
+          [
+            4,
+            5
+          ],
+          {},
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "call",
+          "clip",
+          [
+            6
+          ],
+          {
+            "a_max": 127.0,
+            "a_min": -127.0
+          },
+          "Tensor[(1, 16, 14, 14, 1, 16), int32]"
+        ],
+        [
+          "call",
+          "cast",
+          [
+            7
+          ],
+          {
+            "dtype": "int8"
+          },
+          "Tensor[(1, 16, 14, 14, 1, 16), int8]"
+        ],
+        [
+          "function",
+          [
+            0,
+            1,
+            2
+          ],
+          8,
+          "Tensor[(1, 16, 14, 14, 1, 16), int8]",
+          {
+            "Primitive": 1,
+            "data_layout": "NCHW1n16c",
+            "kernel_layout": "OIHW16o16i",
+            "out_layout": ""
+          }
+        ]
+      ],
+      "root": 9
+    }
+  },
+  {
+    "signature": "2265fc8dcda541ebdea00d851749f05994c05a42bd2a7e4acbfacda73cce1ad2",
+    "ops": [
+      "cast",
+      "multiply",
+      "transpose",
+      "reshape"
+    ],
+    "normalized": {
+      "nodes": [
+        [
+          "var",
+          0,
+          "Tensor[(1, 16, 14, 14, 1, 16), int8]"
+        ],
+        [
+          "call",
+          "cast",
+          [
+            0
+          ],
+          {
+            "dtype": "float32"
+          },
+          "Tensor[(1, 16, 14, 14, 1, 16), float32]"
+        ],
+        [
+          "constant",
+          {
+            "shape": [],
+            "dtype": "float32",
+            "data_sha256": "b1801134f2c71f5540537dc8ab78eb44398b15f76af4ab4fdf3a24468d8e50d6"
+          }
+        ],
+        [
+          "call",
+          "multiply",
+          [
+            1,
+            2
+          ],
+          {},
+          "Tensor[(1, 16, 14, 14, 1, 16), float32]"
+        ],
+        [
+          "call",
+          "transpose",
+          [
+            3
+          ],
+          {
+            "axes": [
+              0,
+              4,
+              1,
+              5,
+              2,
+              3
+            ]
+          },
+          "Tensor[(1, 1, 16, 16, 14, 14), float32]"
+        ],
+        [
+          "call",
+          "reshape",
+          [
+            4
+          ],
+          {
+            "allowzero": 0,
+            "newshape": [
+              1,
+              256,
+              14,
+              14
+            ]
+          },
+          "Tensor[(1, 256, 14, 14), float32]"
+        ],
+        [
+          "function",
+          [
+            0
+          ],
+          5,
+          "Tensor[(1, 256, 14, 14), float32]",
+          {
+            "Primitive": 1
+          }
+        ]
+      ],
+      "root": 6
+    }
+  },
+  {
+    "signature": "4b2fd9ec26ef570b386ccc36eb3361cf3729edd120244acee9fb8b980db1d495",
+    "ops": [
+      "transpose",
+      "reshape"
+    ],
+    "normalized": {
+      "nodes": [
+        [
+          "var",
+          0,
+          "Tensor[(1, 8, 28, 28, 1, 16), float32]"
+        ],
+        [
+          "call",
+          "transpose",
+          [
+            0
+          ],
+          {
+            "axes": [
+              0,
+              4,
+              1,
+              5,
+              2,
+              3
+            ]
+          },
+          "Tensor[(1, 1, 8, 16, 28, 28), float32]"
+        ],
+        [
+          "call",
+          "reshape",
+          [
+            1
+          ],
+          {
+            "allowzero": 0,
+            "newshape": [
+              1,
+              128,
+              28,
+              28
+            ]
+          },
+          "Tensor[(1, 128, 28, 28), float32]"
+        ],
+        [
+          "function",
+          [
+            0
+          ],
+          2,
+          "Tensor[(1, 128, 28, 28), float32]",
+          {
+            "Primitive": 1
+          }
+        ]
+      ],
+      "root": 3
+    }
+  }
+]

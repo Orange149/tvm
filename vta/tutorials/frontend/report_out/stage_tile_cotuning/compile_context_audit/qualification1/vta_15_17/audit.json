@@ -1,0 +1,44 @@
+{
+  "segment_id": "vta:15:17",
+  "unit_names": [
+    "layer4_block0_main_preadd",
+    "layer4_block0_skip_proj",
+    "layer4_block0_add_relu_tail"
+  ],
+  "input_contract": {
+    "arity": 1,
+    "kind": "tensor",
+    "slots": [
+      {
+        "dtype": "float32",
+        "role": "data",
+        "shape": [
+          1,
+          256,
+          14,
+          14
+        ],
+        "slot_index": 0
+      }
+    ]
+  },
+  "output_contract": {
+    "arity": 1,
+    "kind": "tensor",
+    "slots": [
+      {
+        "dtype": "float32",
+        "role": "out",
+        "shape": [
+          1,
+          512,
+          7,
+          7
+        ],
+        "slot_index": 0
+      }
+    ]
+  },
+  "status": "failed",
+  "error": "Traceback (most recent call last):\n  [bt] (8) /home/orange/code/tvm/build/libtvm.so(+0x2a7c516) [0x78235fc7c516]\n  [bt] (7) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ExprVisitor::VisitExpr(tvm::RelayExpr const&)+0x98) [0x78235fc7b7b8]\n  [bt] (6) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ExprVisitor::VisitExpr_(tvm::relay::CallNode const*)+0x1b0) [0x78235fc6c2b0]\n  [bt] (5) /home/orange/code/tvm/build/libtvm.so(+0x2a7c516) [0x78235fc7c516]\n  [bt] (4) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ExprVisitor::VisitExpr(tvm::RelayExpr const&)+0x98) [0x78235fc7b7b8]\n  [bt] (3) /home/orange/code/tvm/build/libtvm.so(tvm::relay::ExprVisitor::VisitExpr_(tvm::relay::CallNode const*)+0x1b0) [0x78235fc6c2b0]\n  [bt] (2) /home/orange/code/tvm/build/libtvm.so(+0x2a6c6e6) [0x78235fc6c6e6]\n  [bt] (1) /home/orange/code/tvm/build/libtvm.so(+0x2dc4772) [0x78235ffc4772]\n  [bt] (0) /home/orange/code/tvm/build/libtvm.so(tvm::runtime::Backtrace[abi:cxx11]()+0x25) [0x78235fffbd95]\n  File \"/home/orange/code/tvm/python/tvm/_ffi/_ctypes/packed_func.py\", line 82, in cfun\n    rv = local_pyfunc(*pyargs)\n  File \"/home/orange/code/tvm/vta/tutorials/frontend/audit_vta_compile_context.py\", line 117, in visit\n    and call.op.attrs is not None and call.op.attrs.get(\"Primitive\", 0)):\n  File \"/home/orange/code/tvm/python/tvm/runtime/object.py\", line 75, in __getattr__\n    raise AttributeError(f\"{type(self)} has no attribute {name}\") from None\nAttributeError: <class 'tvm.ir.attrs.DictAttrs'> has no attribute get"
+}

@@ -1,0 +1,1442 @@
+{
+  "scope": "Six complete manifest paths, contract-only; not 4623-topology E6-S completion",
+  "profile_sha256": "507572e6459a26f49f1f06142fc7f18c6ab37a6cc0c2a4d00e1a2c6b243b79a6",
+  "script_sha256": "002c89098bcbb0cffb03f4f9127ad7bcb7ef3347a88be8f06b9340f302edc079",
+  "cost_ownership": {
+    "vta_dma": "LOAD/STORE only within VTA stage",
+    "internal_cpu_helpers": "owned by VTA stage execution, not charged again as edge copy",
+    "external_cpu_tail": "owned by CPU suffix only in tail_outside version",
+    "boundary": "one contract payload per edge; copy API count separately qualified",
+    "slot_capacity": "theoretical two aligned buffers per live edge, not allocator high-water"
+  },
+  "pairs": [
+    {
+      "layer": 2,
+      "versions": {
+        "tail_outside": {
+          "path": [
+            "cpu:00:04",
+            "vta:05:06",
+            "cpu:07:20"
+          ],
+          "cpu_threads": [
+            1,
+            1
+          ],
+          "thread_choice_scope": "fixed structural control, not optimized ranking",
+          "stages": [
+            {
+              "segment_id": "cpu:00:04",
+              "unit_names": [
+                "stem",
+                "layer1_block0_main_preadd",
+                "layer1_block0_add_relu_tail",
+                "layer1_block1_main_preadd",
+                "layer1_block1_add_relu_tail"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      3,
+                      224,
+                      224
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      64,
+                      56,
+                      56
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "vta:05:06",
+              "unit_names": [
+                "layer2_block0_main_preadd",
+                "layer2_block0_skip_proj"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      64,
+                      56,
+                      56
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 2,
+                "kind": "tuple",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "main",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  },
+                  {
+                    "dtype": "float32",
+                    "role": "residual",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 1
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "cpu:07:20",
+              "unit_names": [
+                "layer2_block0_add_relu_tail",
+                "layer2_block1_main_preadd",
+                "layer2_block1_add_relu_tail",
+                "layer3_block0_main_preadd",
+                "layer3_block0_skip_proj",
+                "layer3_block0_add_relu_tail",
+                "layer3_block1_main_preadd",
+                "layer3_block1_add_relu_tail",
+                "layer4_block0_main_preadd",
+                "layer4_block0_skip_proj",
+                "layer4_block0_add_relu_tail",
+                "layer4_block1_main_preadd",
+                "layer4_block1_add_relu_tail",
+                "head"
+              ],
+              "input_contract": {
+                "arity": 2,
+                "kind": "tuple",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "main",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  },
+                  {
+                    "dtype": "float32",
+                    "role": "residual",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 1
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      1000
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            }
+          ],
+          "edges": [
+            {
+              "producer": "cpu:00:04",
+              "consumer": "vta:05:06",
+              "direction": "cpu_to_vta",
+              "contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      64,
+                      56,
+                      56
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                802816
+              ],
+              "total_payload_bytes": 802816,
+              "theoretical_k2_aligned_slot_bytes": 1605632,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            },
+            {
+              "producer": "vta:05:06",
+              "consumer": "cpu:07:20",
+              "direction": "vta_to_cpu",
+              "contract": {
+                "arity": 2,
+                "kind": "tuple",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "main",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  },
+                  {
+                    "dtype": "float32",
+                    "role": "residual",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 1
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                401408,
+                401408
+              ],
+              "total_payload_bytes": 802816,
+              "theoretical_k2_aligned_slot_bytes": 1605632,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            }
+          ],
+          "boundary_payload_bytes": 1605632,
+          "theoretical_k2_slot_bytes": 3211264,
+          "compiled_full_pipeline": false,
+          "numerical_equivalence_qualified": false
+        },
+        "tail_inside": {
+          "path": [
+            "cpu:00:04",
+            "vta:05:07",
+            "cpu:08:20"
+          ],
+          "cpu_threads": [
+            1,
+            1
+          ],
+          "thread_choice_scope": "fixed structural control, not optimized ranking",
+          "stages": [
+            {
+              "segment_id": "cpu:00:04",
+              "unit_names": [
+                "stem",
+                "layer1_block0_main_preadd",
+                "layer1_block0_add_relu_tail",
+                "layer1_block1_main_preadd",
+                "layer1_block1_add_relu_tail"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      3,
+                      224,
+                      224
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      64,
+                      56,
+                      56
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "vta:05:07",
+              "unit_names": [
+                "layer2_block0_main_preadd",
+                "layer2_block0_skip_proj",
+                "layer2_block0_add_relu_tail"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      64,
+                      56,
+                      56
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "cpu:08:20",
+              "unit_names": [
+                "layer2_block1_main_preadd",
+                "layer2_block1_add_relu_tail",
+                "layer3_block0_main_preadd",
+                "layer3_block0_skip_proj",
+                "layer3_block0_add_relu_tail",
+                "layer3_block1_main_preadd",
+                "layer3_block1_add_relu_tail",
+                "layer4_block0_main_preadd",
+                "layer4_block0_skip_proj",
+                "layer4_block0_add_relu_tail",
+                "layer4_block1_main_preadd",
+                "layer4_block1_add_relu_tail",
+                "head"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      1000
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            }
+          ],
+          "edges": [
+            {
+              "producer": "cpu:00:04",
+              "consumer": "vta:05:07",
+              "direction": "cpu_to_vta",
+              "contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      64,
+                      56,
+                      56
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                802816
+              ],
+              "total_payload_bytes": 802816,
+              "theoretical_k2_aligned_slot_bytes": 1605632,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            },
+            {
+              "producer": "vta:05:07",
+              "consumer": "cpu:08:20",
+              "direction": "vta_to_cpu",
+              "contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                401408
+              ],
+              "total_payload_bytes": 401408,
+              "theoretical_k2_aligned_slot_bytes": 802816,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            }
+          ],
+          "boundary_payload_bytes": 1204224,
+          "theoretical_k2_slot_bytes": 2408448,
+          "compiled_full_pipeline": false,
+          "numerical_equivalence_qualified": false
+        }
+      },
+      "boundary_payload_delta_bytes": -401408,
+      "theoretical_k2_slot_delta_bytes": -802816,
+      "tail_owner_outside": "cpu:07:20",
+      "tail_owner_inside": "CPU helper inside vta:05:07",
+      "mandatory_followup": "Compare full CPU suffix lowering and quantization; do not add or drop tail compute twice"
+    },
+    {
+      "layer": 3,
+      "versions": {
+        "tail_outside": {
+          "path": [
+            "cpu:00:09",
+            "vta:10:11",
+            "cpu:12:20"
+          ],
+          "cpu_threads": [
+            1,
+            1
+          ],
+          "thread_choice_scope": "fixed structural control, not optimized ranking",
+          "stages": [
+            {
+              "segment_id": "cpu:00:09",
+              "unit_names": [
+                "stem",
+                "layer1_block0_main_preadd",
+                "layer1_block0_add_relu_tail",
+                "layer1_block1_main_preadd",
+                "layer1_block1_add_relu_tail",
+                "layer2_block0_main_preadd",
+                "layer2_block0_skip_proj",
+                "layer2_block0_add_relu_tail",
+                "layer2_block1_main_preadd",
+                "layer2_block1_add_relu_tail"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      3,
+                      224,
+                      224
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "vta:10:11",
+              "unit_names": [
+                "layer3_block0_main_preadd",
+                "layer3_block0_skip_proj"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 2,
+                "kind": "tuple",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "main",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  },
+                  {
+                    "dtype": "float32",
+                    "role": "residual",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 1
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "cpu:12:20",
+              "unit_names": [
+                "layer3_block0_add_relu_tail",
+                "layer3_block1_main_preadd",
+                "layer3_block1_add_relu_tail",
+                "layer4_block0_main_preadd",
+                "layer4_block0_skip_proj",
+                "layer4_block0_add_relu_tail",
+                "layer4_block1_main_preadd",
+                "layer4_block1_add_relu_tail",
+                "head"
+              ],
+              "input_contract": {
+                "arity": 2,
+                "kind": "tuple",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "main",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  },
+                  {
+                    "dtype": "float32",
+                    "role": "residual",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 1
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      1000
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            }
+          ],
+          "edges": [
+            {
+              "producer": "cpu:00:09",
+              "consumer": "vta:10:11",
+              "direction": "cpu_to_vta",
+              "contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                401408
+              ],
+              "total_payload_bytes": 401408,
+              "theoretical_k2_aligned_slot_bytes": 802816,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            },
+            {
+              "producer": "vta:10:11",
+              "consumer": "cpu:12:20",
+              "direction": "vta_to_cpu",
+              "contract": {
+                "arity": 2,
+                "kind": "tuple",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "main",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  },
+                  {
+                    "dtype": "float32",
+                    "role": "residual",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 1
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                200704,
+                200704
+              ],
+              "total_payload_bytes": 401408,
+              "theoretical_k2_aligned_slot_bytes": 802816,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            }
+          ],
+          "boundary_payload_bytes": 802816,
+          "theoretical_k2_slot_bytes": 1605632,
+          "compiled_full_pipeline": false,
+          "numerical_equivalence_qualified": false
+        },
+        "tail_inside": {
+          "path": [
+            "cpu:00:09",
+            "vta:10:12",
+            "cpu:13:20"
+          ],
+          "cpu_threads": [
+            1,
+            1
+          ],
+          "thread_choice_scope": "fixed structural control, not optimized ranking",
+          "stages": [
+            {
+              "segment_id": "cpu:00:09",
+              "unit_names": [
+                "stem",
+                "layer1_block0_main_preadd",
+                "layer1_block0_add_relu_tail",
+                "layer1_block1_main_preadd",
+                "layer1_block1_add_relu_tail",
+                "layer2_block0_main_preadd",
+                "layer2_block0_skip_proj",
+                "layer2_block0_add_relu_tail",
+                "layer2_block1_main_preadd",
+                "layer2_block1_add_relu_tail"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      3,
+                      224,
+                      224
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "vta:10:12",
+              "unit_names": [
+                "layer3_block0_main_preadd",
+                "layer3_block0_skip_proj",
+                "layer3_block0_add_relu_tail"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "cpu:13:20",
+              "unit_names": [
+                "layer3_block1_main_preadd",
+                "layer3_block1_add_relu_tail",
+                "layer4_block0_main_preadd",
+                "layer4_block0_skip_proj",
+                "layer4_block0_add_relu_tail",
+                "layer4_block1_main_preadd",
+                "layer4_block1_add_relu_tail",
+                "head"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      1000
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            }
+          ],
+          "edges": [
+            {
+              "producer": "cpu:00:09",
+              "consumer": "vta:10:12",
+              "direction": "cpu_to_vta",
+              "contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      128,
+                      28,
+                      28
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                401408
+              ],
+              "total_payload_bytes": 401408,
+              "theoretical_k2_aligned_slot_bytes": 802816,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            },
+            {
+              "producer": "vta:10:12",
+              "consumer": "cpu:13:20",
+              "direction": "vta_to_cpu",
+              "contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                200704
+              ],
+              "total_payload_bytes": 200704,
+              "theoretical_k2_aligned_slot_bytes": 401408,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            }
+          ],
+          "boundary_payload_bytes": 602112,
+          "theoretical_k2_slot_bytes": 1204224,
+          "compiled_full_pipeline": false,
+          "numerical_equivalence_qualified": false
+        }
+      },
+      "boundary_payload_delta_bytes": -200704,
+      "theoretical_k2_slot_delta_bytes": -401408,
+      "tail_owner_outside": "cpu:12:20",
+      "tail_owner_inside": "CPU helper inside vta:10:12",
+      "mandatory_followup": "Compare full CPU suffix lowering and quantization; do not add or drop tail compute twice"
+    },
+    {
+      "layer": 4,
+      "versions": {
+        "tail_outside": {
+          "path": [
+            "cpu:00:14",
+            "vta:15:16",
+            "cpu:17:20"
+          ],
+          "cpu_threads": [
+            1,
+            1
+          ],
+          "thread_choice_scope": "fixed structural control, not optimized ranking",
+          "stages": [
+            {
+              "segment_id": "cpu:00:14",
+              "unit_names": [
+                "stem",
+                "layer1_block0_main_preadd",
+                "layer1_block0_add_relu_tail",
+                "layer1_block1_main_preadd",
+                "layer1_block1_add_relu_tail",
+                "layer2_block0_main_preadd",
+                "layer2_block0_skip_proj",
+                "layer2_block0_add_relu_tail",
+                "layer2_block1_main_preadd",
+                "layer2_block1_add_relu_tail",
+                "layer3_block0_main_preadd",
+                "layer3_block0_skip_proj",
+                "layer3_block0_add_relu_tail",
+                "layer3_block1_main_preadd",
+                "layer3_block1_add_relu_tail"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      3,
+                      224,
+                      224
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "vta:15:16",
+              "unit_names": [
+                "layer4_block0_main_preadd",
+                "layer4_block0_skip_proj"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 2,
+                "kind": "tuple",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "main",
+                    "shape": [
+                      1,
+                      512,
+                      7,
+                      7
+                    ],
+                    "slot_index": 0
+                  },
+                  {
+                    "dtype": "float32",
+                    "role": "residual",
+                    "shape": [
+                      1,
+                      512,
+                      7,
+                      7
+                    ],
+                    "slot_index": 1
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "cpu:17:20",
+              "unit_names": [
+                "layer4_block0_add_relu_tail",
+                "layer4_block1_main_preadd",
+                "layer4_block1_add_relu_tail",
+                "head"
+              ],
+              "input_contract": {
+                "arity": 2,
+                "kind": "tuple",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "main",
+                    "shape": [
+                      1,
+                      512,
+                      7,
+                      7
+                    ],
+                    "slot_index": 0
+                  },
+                  {
+                    "dtype": "float32",
+                    "role": "residual",
+                    "shape": [
+                      1,
+                      512,
+                      7,
+                      7
+                    ],
+                    "slot_index": 1
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      1000
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            }
+          ],
+          "edges": [
+            {
+              "producer": "cpu:00:14",
+              "consumer": "vta:15:16",
+              "direction": "cpu_to_vta",
+              "contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                200704
+              ],
+              "total_payload_bytes": 200704,
+              "theoretical_k2_aligned_slot_bytes": 401408,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            },
+            {
+              "producer": "vta:15:16",
+              "consumer": "cpu:17:20",
+              "direction": "vta_to_cpu",
+              "contract": {
+                "arity": 2,
+                "kind": "tuple",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "main",
+                    "shape": [
+                      1,
+                      512,
+                      7,
+                      7
+                    ],
+                    "slot_index": 0
+                  },
+                  {
+                    "dtype": "float32",
+                    "role": "residual",
+                    "shape": [
+                      1,
+                      512,
+                      7,
+                      7
+                    ],
+                    "slot_index": 1
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                100352,
+                100352
+              ],
+              "total_payload_bytes": 200704,
+              "theoretical_k2_aligned_slot_bytes": 401408,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            }
+          ],
+          "boundary_payload_bytes": 401408,
+          "theoretical_k2_slot_bytes": 802816,
+          "compiled_full_pipeline": false,
+          "numerical_equivalence_qualified": false
+        },
+        "tail_inside": {
+          "path": [
+            "cpu:00:14",
+            "vta:15:17",
+            "cpu:18:20"
+          ],
+          "cpu_threads": [
+            1,
+            1
+          ],
+          "thread_choice_scope": "fixed structural control, not optimized ranking",
+          "stages": [
+            {
+              "segment_id": "cpu:00:14",
+              "unit_names": [
+                "stem",
+                "layer1_block0_main_preadd",
+                "layer1_block0_add_relu_tail",
+                "layer1_block1_main_preadd",
+                "layer1_block1_add_relu_tail",
+                "layer2_block0_main_preadd",
+                "layer2_block0_skip_proj",
+                "layer2_block0_add_relu_tail",
+                "layer2_block1_main_preadd",
+                "layer2_block1_add_relu_tail",
+                "layer3_block0_main_preadd",
+                "layer3_block0_skip_proj",
+                "layer3_block0_add_relu_tail",
+                "layer3_block1_main_preadd",
+                "layer3_block1_add_relu_tail"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      3,
+                      224,
+                      224
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "vta:15:17",
+              "unit_names": [
+                "layer4_block0_main_preadd",
+                "layer4_block0_skip_proj",
+                "layer4_block0_add_relu_tail"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      512,
+                      7,
+                      7
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            },
+            {
+              "segment_id": "cpu:18:20",
+              "unit_names": [
+                "layer4_block1_main_preadd",
+                "layer4_block1_add_relu_tail",
+                "head"
+              ],
+              "input_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "data",
+                    "shape": [
+                      1,
+                      512,
+                      7,
+                      7
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "output_contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      1000
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              }
+            }
+          ],
+          "edges": [
+            {
+              "producer": "cpu:00:14",
+              "consumer": "vta:15:17",
+              "direction": "cpu_to_vta",
+              "contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      256,
+                      14,
+                      14
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                200704
+              ],
+              "total_payload_bytes": 200704,
+              "theoretical_k2_aligned_slot_bytes": 401408,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            },
+            {
+              "producer": "vta:15:17",
+              "consumer": "cpu:18:20",
+              "direction": "vta_to_cpu",
+              "contract": {
+                "arity": 1,
+                "kind": "tensor",
+                "slots": [
+                  {
+                    "dtype": "float32",
+                    "role": "out",
+                    "shape": [
+                      1,
+                      512,
+                      7,
+                      7
+                    ],
+                    "slot_index": 0
+                  }
+                ]
+              },
+              "tensor_payload_bytes": [
+                100352
+              ],
+              "total_payload_bytes": 100352,
+              "theoretical_k2_aligned_slot_bytes": 200704,
+              "materialization_accounting": "one-transfer logical payload only; actual API copy multiplicity depends on runner",
+              "zero_copy_status": "shape/dtype necessary conditions only; storage/alignment/physical binding unqualified",
+              "live_interval": "producer write/ready -> consumer completion/release, independently per frame generation"
+            }
+          ],
+          "boundary_payload_bytes": 301056,
+          "theoretical_k2_slot_bytes": 602112,
+          "compiled_full_pipeline": false,
+          "numerical_equivalence_qualified": false
+        }
+      },
+      "boundary_payload_delta_bytes": -100352,
+      "theoretical_k2_slot_delta_bytes": -200704,
+      "tail_owner_outside": "cpu:17:20",
+      "tail_owner_inside": "CPU helper inside vta:15:17",
+      "mandatory_followup": "Compare full CPU suffix lowering and quantization; do not add or drop tail compute twice"
+    }
+  ]
+}

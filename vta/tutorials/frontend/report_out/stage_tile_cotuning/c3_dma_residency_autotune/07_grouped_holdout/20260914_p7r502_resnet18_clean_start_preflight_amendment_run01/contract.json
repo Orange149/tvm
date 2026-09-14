@@ -1,0 +1,34 @@
+{
+  "board_contacted": false,
+  "corrections": {
+    "clean_start_preflight_symmetry": "both empty-history AutoTVM-XGB and the proposed H1 clean-start runner verify the same default runtime hashes and RPC working directory before T0; the proposed runner also verifies the source-contract artifact ledger",
+    "complete_cost_breakdown": "all policies aggregate gross candidates, compiler attempts, FPGA dispatches, kernel invocations, DMA and per-phase lowering/FSim/cross-compile/correctness/timing wall; oracle+2% and +5% both report first trial and first wall",
+    "hw_aware_cost": "every min(1000, |S|) original-space lowering call and measured wall time is prepaid before the first E0 performance dispatch and never double charged",
+    "hw_aware_post_e0": "post-E0 choice uses the rank sum of the common visible-feature performance XGB and the target-presampling lowering-validity XGB",
+    "ml2tuner_metrics": "post-pool leave-one-workload-out Model V reports precision, recall, F1, accuracy, nDCG, top-20 valid yield and base valid yield",
+    "ml2tuner_validity_censoring": "lower/cross-compile success without FSim and FPGA observation is unknown, not a positive Model V label; terminal compile failure remains negative"
+  },
+  "required_analysis_inputs": {
+    "full_original_dir": "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r470_resnet18_literature_candidates_run01",
+    "full_scan_dirs": [
+      "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r486_r18_h1_full_original_validity_run01",
+      "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r485_r18_h2_full_original_validity_run01",
+      "/home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r484_r18_h3_full_original_validity_run01"
+    ]
+  },
+  "schema": "c3_resnet18_final_execution_amendment_v1",
+  "source_hashes": {
+    "/home/orange/code/tvm/vta/tutorials/frontend/analyze_vta_c3_resnet18_literature_pool.py": "9b214e3993193b8f6b6748959d6e7cf16211f8e8a5e41cddf56fe87b8b700439",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_literature_baselines.py": "00bf78de1dc210bcd7f8c27b645abea860633b75d45d232211bf842a7890a73e",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_from_scratch_ours_fullgraph.py": "3c7e03a911b90ae8b3936fdd1649f706f2c4d8efe74bcd3d5aa7664333477741",
+    "/home/orange/code/tvm/vta/tutorials/frontend/run_vta_from_scratch_autotvm_fullgraph.py": "8a7b8f4636467dddb596c05439f50acf133b2c29912f918bc6547bc8e65036e2",
+    "/home/orange/code/tvm/vta/tutorials/frontend/test_analyze_vta_c3_resnet18_literature_pool.py": "41bdb9fadb162db331337fd6cd0d6b995a9788b12f1b832b16351097058b70dc",
+    "/home/orange/code/tvm/vta/tutorials/frontend/test_run_vta_c3_literature_baselines.py": "11ce2f78506718d42b53cf380a22abce3c1ce74bda286795d0153289367aad5b"
+  },
+  "status": "frozen_before_any_merged_pool_fpga_or_resnet18_fullgraph_label",
+  "supersedes": {
+    "manifest_sha256": "0a0bd5ef4df1534c77b7c8b9f02436301e7b8af4acba9f1847c603b20b4eee1f",
+    "scope": "analysis semantics only; all 214 candidate identities, order, board binaries, seeds, budgets and full-graph protocol remain unchanged"
+  },
+  "target_labels_read": false
+}

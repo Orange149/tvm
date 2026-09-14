@@ -56,12 +56,12 @@ def make_relay_program(env, pretrained):
     return packed, params
 
 
-def make_relay_testing_resnet50_program(env):
-    """Build the graph from the same Relay implementation used for layer derivation."""
+def make_relay_testing_resnet_program(env, num_layers, device_annot=True):
+    """Build a graph from the Relay Testing ResNet implementation."""
     from tvm.relay.testing import resnet
 
     mod, params = resnet.get_workload(
-        num_layers=50,
+        num_layers=int(num_layers),
         batch_size=env.BATCH,
         image_shape=(3, 224, 224),
         dtype="float32",
@@ -72,9 +72,14 @@ def make_relay_testing_resnet50_program(env):
     packed = graph_pack(
         mod["main"], env.BATCH, env.BLOCK_OUT, env.WGT_WIDTH,
         start_name="nn.max_pool2d", stop_name="nn.global_avg_pool2d",
-        device_annot=True,
+        device_annot=bool(device_annot),
     )
     return packed, params
+
+
+def make_relay_testing_resnet50_program(env):
+    """Compatibility wrapper for the previously frozen ResNet50 experiments."""
+    return make_relay_testing_resnet_program(env, 50)
 
 
 def cross_compiler():

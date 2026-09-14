@@ -1,0 +1,183 @@
+{
+  "board_contacted": false,
+  "candidate_generation": {
+    "complete_original_space": "use the actual per-workload AutoTVM ConfigSpace cardinality; do not truncate to the plan's assumed 1280 when the real domain differs",
+    "expanded_modes": [
+      "original",
+      "input_stationary",
+      "weight_resident_barrier",
+      "input_weight_resident_barrier"
+    ],
+    "expansion": "append the next 24 max-min tiles only when fewer than 12 identities survive local qualification; FPGA latency must remain unread",
+    "identities_per_workload": 96,
+    "local_legal_minimum": 12,
+    "observed_cardinalities_before_candidate_freeze": {
+      "R18-H1": 2304,
+      "R18-H2": 1600,
+      "R18-H3": 480
+    },
+    "selected_tiles_per_workload": 24,
+    "selection": "deterministic normalized-knob max-min without lowering or latency labels"
+  },
+  "execution": {
+    "budgets": [
+      10,
+      20,
+      50,
+      75,
+      96
+    ],
+    "failures_count_in_gross_and_wall": true,
+    "order": [
+      "analytic static checks",
+      "real lowering and hidden-feature extraction",
+      "three-seed FSim",
+      "ARM cross compile",
+      "three-seed fail-fast FPGA correctness",
+      "five-round balanced operator timing",
+      "connect pool oracle only after every correct candidate is timed"
+    ],
+    "rpc_or_power_interruption": "invalidate whole session; never splice clocks",
+    "search_seeds": [
+      57001,
+      57002,
+      57003,
+      57004,
+      57005,
+      57006,
+      57007,
+      57008,
+      57009,
+      57010,
+      57011,
+      57012,
+      57013,
+      57014,
+      57015,
+      57016,
+      57017,
+      57018,
+      57019,
+      57020
+    ],
+    "time_boundaries": {
+      "T0": "same clean bitstream and RPC are ready",
+      "T1": "selected configuration finishes whole-graph correctness and timing",
+      "W0": "host process begins before preflight/bitstream/RPC preparation"
+    }
+  },
+  "metric_scope": {
+    "logical_vta_dma_is_physical_axi": false,
+    "random_input_equivalence_is_accuracy": false,
+    "report_counts_and_real_wall_together": true
+  },
+  "node": "B",
+  "paper_alignment": {
+    "Cheng_2026": "four-scheme functional reimplementation on the current VTA tree",
+    "ML2Tuner_2024_2025": "method-consistent P/V/A reproduction plus A+DMA ablation",
+    "Rieber_2022": "method-consistent Algorithm-1/E0/validity-bias reproduction",
+    "code_exact_claim": false
+  },
+  "performance_labels_read": false,
+  "policies": [
+    "random",
+    "stock_mode_aware_xgb",
+    "rieber_hw_init_xgb",
+    "ml2tuner_pva",
+    "cheng_minimum_access",
+    "ours_dma_multifidelity"
+  ],
+  "policy_ablations": {
+    "cheng": {
+      "modes": [
+        "original",
+        "input_stationary",
+        "weight_resident_barrier",
+        "input_weight_resident_barrier"
+      ],
+      "resource_failure": "not_applicable with exact original fallback",
+      "scheme_4_implementation": "input-prioritized traversal plus full-layer weight SRAM residency and explicit end-of-residency synchronization; functional reimplementation, not the unpublished non-overwriting-address source patch"
+    },
+    "hw_aware_initialization": {
+      "e0_size": 50,
+      "levels": [
+        "random_initialization",
+        "neighbor_presampling",
+        "balanced_e0",
+        "balanced_e0_validity_bias"
+      ],
+      "maximum_invalid": 25,
+      "maximum_valid": 25,
+      "performance_tuner_after_initialization": "same mode-aware XGB",
+      "presampling": "min(1000, complete original ConfigSpace cardinality)",
+      "seeds": [
+        57001,
+        57002,
+        57003,
+        57004,
+        57005,
+        57006,
+        57007,
+        57008,
+        57009,
+        57010,
+        57011,
+        57012,
+        57013,
+        57014,
+        57015,
+        57016,
+        57017,
+        57018,
+        57019,
+        57020
+      ]
+    },
+    "ml2tuner": {
+      "N": 10,
+      "alpha": 1,
+      "compile_candidates_per_round": 20,
+      "fpga_candidates_per_round": 10,
+      "invalid_candidates_enter_performance_regression": false,
+      "model_a": "visible plus lowered compiler-hidden performance model",
+      "model_a_dma_ablation": true,
+      "model_p": "visible workload, tile and residence-mode performance model",
+      "model_v": "separate compile/execution validity classifier"
+    },
+    "ours": {
+      "correctness": "three seeds; first failure stops; all three required to pass",
+      "primary_label_free_priority": "lowered logical total DMA bytes",
+      "stages": [
+        "static",
+        "lower",
+        "fsim",
+        "compile",
+        "fpga_correctness",
+        "timing"
+      ]
+    }
+  },
+  "required_outputs": [
+    "contract.json",
+    "timeline.jsonl",
+    "results.jsonl",
+    "summary.json",
+    "artifact_hashes.json"
+  ],
+  "schema": "c3_literature_aligned_experiment_protocol_v1",
+  "source_hashes": {
+    "vta/python/vta/top/vta_conv2d.py": "083b2fcf57142073cf218a809f42be293c87b5788d7e6ba2685e84750f1fb9dc",
+    "vta/python/vta/top/vta_conv2d_residency.py": "3b33bc686c5de2ddc306822cea4571f53b92d02e95ab3b8a913099ae5018eb6b",
+    "vta/tutorials/frontend/c3_candidate_identity.py": "6378933e3ab8f3caa2a073d83f64c5faebc2f7336861b0cb5fc32a3a78044a9e",
+    "vta/tutorials/frontend/freeze_vta_c3_literature_baseline_protocol.py": "8f150fc49cca6a6cbdb0b5a4b3bf29cd0b2b849ee2be4d0697609edd98dfb763",
+    "vta/tutorials/frontend/prepare_vta_c3_resnet18_literature_candidates.py": "c287848885662d7a5fdbc9e17d1af278184499db73f619a8d2874c84376de49b",
+    "vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/01_paper_reproduction/PAPER_METHOD_SPEC.md": "18b404f3e943ee87031fb41e5b7613cb2ca02ab3504b999216643f34b896b210",
+    "vta/tutorials/frontend/run_vta_c3_literature_baselines.py": "72d4237179aaf9a77b9f7fe1ced8126a91d442d31028e1a5ed2d51acd90f86b1"
+  },
+  "status": "frozen_before_resnet18_lowering_fsim_fpga_or_latency",
+  "workloads": {
+    "R18-H1": "64->64, 56x56, 3x3, stride1",
+    "R18-H2": "256->256, 14x14, 3x3, stride1",
+    "R18-H3": "256->512, 14x14, 1x1, stride2"
+  }
+}

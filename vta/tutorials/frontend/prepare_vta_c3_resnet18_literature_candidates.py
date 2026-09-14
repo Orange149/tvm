@@ -325,7 +325,11 @@ def run(args):
     schedule_version = digest_value(sources)
     fingerprint = hardware_fingerprint(env)
     summary = {"status": "complete_local_preregistration", "geometries": {}, "board_contacted": False}
-    for workload_id, spec in GEOMETRIES.items():
+    selected_geometries = (
+        {args.workload_id: GEOMETRIES[args.workload_id]}
+        if args.workload_id else GEOMETRIES
+    )
+    for workload_id, spec in selected_geometries.items():
         complete, selected = build_geometry(
             workload_id, spec, args.selected_tiles, env, schedule_version, fingerprint
         )
@@ -364,6 +368,7 @@ def run(args):
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--selected-tiles", type=int, default=24)
+    parser.add_argument("--workload-id", choices=tuple(GEOMETRIES))
     parser.add_argument("--output-dir", required=True)
     return parser.parse_args()
 

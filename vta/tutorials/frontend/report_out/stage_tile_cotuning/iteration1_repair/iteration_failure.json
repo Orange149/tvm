@@ -1,0 +1,26 @@
+{
+  "status": "failed_stage_equivalence",
+  "record_origin": "Recorded from run traceback; automatic failure artifact support added after this run",
+  "phase": "first_tuned_stage",
+  "stage_units": "03..17",
+  "measurement_count": 32,
+  "successful_measurements": 25,
+  "successful_tuning_workloads": 10,
+  "requested_workloads": 10,
+  "strict_history_build_passed": true,
+  "comparison": {
+    "elements": 25088,
+    "mismatched": 8087,
+    "max_abs_error": 7.8125
+  },
+  "ranking_after_valid": false,
+  "pipeline_fps_measured": false,
+  "meaning_at_failure": "AutoTVM measurement and actual-stage history dispatch work, but optimization is rejected by stage output equivalence",
+  "followup_reference": {
+    "artifact": "../equivalence_diagnostic/comparison.json",
+    "scope": "first_stage_same_quantized_Relay_on_unpacked_host_LLVM; two repeated runs",
+    "baseline_mismatched_vs_reference": 8097,
+    "tuned_mismatched_vs_reference": 0,
+    "conclusion": "Current fallback is not a valid performance baseline; first tuned stage matches reference exactly. Full-loop ranking and all-stage reference validation remain incomplete."
+  }
+}

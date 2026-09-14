@@ -1,0 +1,144 @@
+{
+  "T0_wall_unix": 1789377520.628204,
+  "T1_wall_unix": 1789377533.547525,
+  "W0_wall_unix": 1789377512.6695871,
+  "accuracy_scope": "deterministic random-input schedule equivalence; not ImageNet accuracy",
+  "all_outputs_equal": true,
+  "boot_id": "bf5bc78c-115b-40e0-8853-6684f04ecf3d",
+  "correctness_inputs": 3,
+  "cost": {
+    "T0_to_T1_seconds": 12.919321312998363,
+    "W0_to_T1_seconds": 20.877937343997473,
+    "fpga_kernel_invocations": 1020,
+    "logical_dma_calls": 116620,
+    "logical_load_bytes": 996033536,
+    "logical_store_bytes": 95961600
+  },
+  "logical_dma_scope": "VTA runtime logical LOAD/STORE; not physical AXI traffic",
+  "policy_count": 4,
+  "policy_results": {
+    "cheng_minimum_access": {
+      "median_ms": 117.721987,
+      "program_id": "selected_e53bbdbb71050431",
+      "q1_ms": 117.097816,
+      "q3_ms": 117.8298235,
+      "values_ms": [
+        117.874599,
+        117.721987,
+        117.497915,
+        117.785048,
+        116.623736,
+        118.05556,
+        116.697717
+      ]
+    },
+    "ml2tuner_pva": {
+      "median_ms": 117.721987,
+      "program_id": "selected_e53bbdbb71050431",
+      "q1_ms": 117.097816,
+      "q3_ms": 117.8298235,
+      "values_ms": [
+        117.874599,
+        117.721987,
+        117.497915,
+        117.785048,
+        116.623736,
+        118.05556,
+        116.697717
+      ]
+    },
+    "ours_dma_multifidelity": {
+      "median_ms": 117.721987,
+      "program_id": "selected_e53bbdbb71050431",
+      "q1_ms": 117.097816,
+      "q3_ms": 117.8298235,
+      "values_ms": [
+        117.874599,
+        117.721987,
+        117.497915,
+        117.785048,
+        116.623736,
+        118.05556,
+        116.697717
+      ]
+    },
+    "stock_mode_aware_xgb": {
+      "median_ms": 117.09288,
+      "program_id": "fallback_8ff96c46487a92f8",
+      "q1_ms": 116.999775,
+      "q3_ms": 117.2229325,
+      "values_ms": [
+        117.352924,
+        117.089461,
+        117.09288,
+        116.700597,
+        117.092941,
+        117.361234,
+        116.910089
+      ]
+    }
+  },
+  "program_statistics": {
+    "fallback_8ff96c46487a92f8": {
+      "median_ms": 117.09288,
+      "q1_ms": 116.999775,
+      "q3_ms": 117.2229325,
+      "values_ms": [
+        117.352924,
+        117.089461,
+        117.09288,
+        116.700597,
+        117.092941,
+        117.361234,
+        116.910089
+      ]
+    },
+    "selected_e53bbdbb71050431": {
+      "median_ms": 117.721987,
+      "q1_ms": 117.097816,
+      "q3_ms": 117.8298235,
+      "values_ms": [
+        117.874599,
+        117.721987,
+        117.497915,
+        117.785048,
+        116.623736,
+        118.05556,
+        116.697717
+      ]
+    },
+    "stock_reference": {
+      "median_ms": 116.463925,
+      "q1_ms": 116.2203375,
+      "q3_ms": 116.7211165,
+      "values_ms": [
+        116.199382,
+        116.241293,
+        116.463925,
+        116.150121,
+        116.853419,
+        116.695076,
+        116.747157
+      ]
+    }
+  },
+  "schema": "c3_resnet18_selected_fullgraph_board_result_v1",
+  "session_spliced": false,
+  "status": "complete_non_spliced_selected_fullgraph_comparison",
+  "stock_reference": {
+    "median_ms": 116.463925,
+    "q1_ms": 116.2203375,
+    "q3_ms": 116.7211165,
+    "values_ms": [
+      116.199382,
+      116.241293,
+      116.463925,
+      116.150121,
+      116.853419,
+      116.695076,
+      116.747157
+    ]
+  },
+  "timing_rounds": 7,
+  "unique_program_count": 3
+}

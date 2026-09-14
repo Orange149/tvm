@@ -1,0 +1,110 @@
+{
+  "scope": "PrimFunc structural equality at CPUAccessRewrite; not board correctness, physical traffic, or all-domain TIR qualification",
+  "normalization": "Normalize only global_symbol; TVM structural_equal(map_free_vars=True)",
+  "archive_summary_sha256": "d09df5996837a578c7934e2b8e8b29fea743c9e8bad4317bd74490e34f45afbb",
+  "script_sha256": "55a947c3c99d5412b4fa1587a67f3dd1ed89c1a5716ab9bd68f0ee88da75fa2a",
+  "stages": [
+    {
+      "segment_id": "vta:15:15",
+      "graph_invocations": {
+        "tvmgen_default_fused_reshape_transpose": 1,
+        "tvmgen_default_fused_multiply_transpose_reshape_round_clip_cast_reshape_transpose": 1,
+        "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast": 1,
+        "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast": 1,
+        "tvmgen_default_fused_cast_multiply_transpose_reshape": 1,
+        "tvmgen_default_fused_transpose_reshape": 1
+      },
+      "unique_lowered_functions": 6,
+      "coverage_complete": true
+    },
+    {
+      "segment_id": "vta:15:16",
+      "graph_invocations": {
+        "tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip_cast_reshape_trans_3555e6773f8429f6_": 1,
+        "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast": 1,
+        "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast": 1,
+        "tvmgen_default_fused_cast_multiply_transpose_reshape": 2,
+        "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1": 1
+      },
+      "unique_lowered_functions": 5,
+      "coverage_complete": true
+    },
+    {
+      "segment_id": "vta:15:17",
+      "graph_invocations": {
+        "tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip_cast_reshape_trans_3555e6773f8429f6_": 1,
+        "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast": 1,
+        "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast": 1,
+        "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1": 1,
+        "tvmgen_default_fused_cast_cast_add_nn_relu_cast": 1,
+        "tvmgen_default_fused_cast_multiply_transpose_reshape": 1
+      },
+      "unique_lowered_functions": 6,
+      "coverage_complete": true
+    }
+  ],
+  "pairs": [
+    {
+      "left": "vta:15:15",
+      "right": "vta:15:16",
+      "structural_matches": [
+        {
+          "left_function": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+          "right_function": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast"
+        },
+        {
+          "left_function": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+          "right_function": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast"
+        },
+        {
+          "left_function": "tvmgen_default_fused_cast_multiply_transpose_reshape",
+          "right_function": "tvmgen_default_fused_cast_multiply_transpose_reshape"
+        }
+      ]
+    },
+    {
+      "left": "vta:15:15",
+      "right": "vta:15:17",
+      "structural_matches": [
+        {
+          "left_function": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+          "right_function": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast"
+        },
+        {
+          "left_function": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+          "right_function": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast"
+        },
+        {
+          "left_function": "tvmgen_default_fused_cast_multiply_transpose_reshape",
+          "right_function": "tvmgen_default_fused_cast_multiply_transpose_reshape"
+        }
+      ]
+    },
+    {
+      "left": "vta:15:16",
+      "right": "vta:15:17",
+      "structural_matches": [
+        {
+          "left_function": "tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip_cast_reshape_trans_3555e6773f8429f6_",
+          "right_function": "tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip_cast_reshape_trans_3555e6773f8429f6_"
+        },
+        {
+          "left_function": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast",
+          "right_function": "tvmgen_default_fused_nn_conv2d_add_nn_relu_add_right_shift_clip_cast"
+        },
+        {
+          "left_function": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast",
+          "right_function": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast"
+        },
+        {
+          "left_function": "tvmgen_default_fused_cast_multiply_transpose_reshape",
+          "right_function": "tvmgen_default_fused_cast_multiply_transpose_reshape"
+        },
+        {
+          "left_function": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1",
+          "right_function": "tvmgen_default_fused_nn_conv2d_add_right_shift_clip_cast_1"
+        }
+      ]
+    }
+  ]
+}

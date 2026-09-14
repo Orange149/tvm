@@ -1,0 +1,11 @@
+#[version = "0.0.5"]
+def @main(%edge0: Tensor[(1, 128, 28, 28), int8] /* ty=Tensor[(1, 128, 28, 28), int8] */, %edge1: Tensor[(1, 128, 28, 28), int8] /* ty=Tensor[(1, 128, 28, 28), int8] */) -> Tensor[(1, 128, 28, 28), float32] {
+  %0 = cast(%edge0, dtype="int32") /* ty=Tensor[(1, 128, 28, 28), int32] */;
+  %1 = cast(%edge1, dtype="int32") /* ty=Tensor[(1, 128, 28, 28), int32] */;
+  %2 = add(%0, %1) /* ty=Tensor[(1, 128, 28, 28), int32] */;
+  %3 = nn.relu(%2) /* ty=Tensor[(1, 128, 28, 28), int32] */;
+  %4 = cast(%3, dtype="int8") /* ty=Tensor[(1, 128, 28, 28), int8] */;
+  %5 = annotation.stop_fusion(%4) /* ty=Tensor[(1, 128, 28, 28), int8] */;
+  %6 = cast(%5, dtype="float32") /* ty=Tensor[(1, 128, 28, 28), float32] */;
+  multiply(%6, 0.0625f /* ty=float32 */) /* ty=Tensor[(1, 128, 28, 28), float32] */
+}

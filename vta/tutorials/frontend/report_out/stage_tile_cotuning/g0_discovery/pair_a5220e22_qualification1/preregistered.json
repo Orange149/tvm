@@ -1,0 +1,29 @@
+{
+  "purpose": "qualify pre-run hooks using one real pair in both natural directions",
+  "selection": "A stage0/stage1; first upstream CPU and first VTA, no concurrent outcome selection",
+  "offset_source": "rounded median active age from existing A natural readiness trace",
+  "trace_sha256": "633ea2adb8175d111fc9a4f0b6b00877e1359bb2b2d60a5ca050d5ae86308b38",
+  "cells": [
+    {
+      "active": 0,
+      "ready": 1,
+      "offset_ms": 24.78
+    },
+    {
+      "active": 1,
+      "ready": 0,
+      "offset_ms": 0.38
+    }
+  ],
+  "blocks": 10,
+  "warmups_per_action": 5,
+  "order": "ABBA = allow,wait,wait,allow",
+  "host_utc": "2026-09-08T01:46:08.308853+00:00",
+  "boot_id": "a5220e22-f562-40be-bbe9-058b6fbeed50",
+  "script_sha256": "66a141de22b775761b0c775091440ecb091d81f3160ca5da149d91aad4ad7ab2",
+  "runner_sha256": "e0e36ad3bbf7a9f0cc9680673aec9752e73331bfba060ab68e23d53663055f01",
+  "vta_host_affinity": "3",
+  "cpu_threads_affinity": "frozen stage0: t4, 0,1,2,3",
+  "protocol": "both inputs bound while idle; release active; mark pending eligible at frozen offset; allow now or wait for active graph completion; defer all get-output until both graph runs end",
+  "limits": "not slot-handoff experiment; no new tuning or production controller; not isolated-service/dose-response/9-pair or multi-boot confirmation"
+}

@@ -1,0 +1,81 @@
+COMMAND /home/orange/miniconda3/envs/vta-resnet/bin/python /home/orange/code/tvm/vta/tutorials/frontend/run_vta_c3_resnet18_local_qualification.py --input-dir /home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r518_resnet18_h1_from_scratch_ours_run03/candidate_batch2 --workload-id R18-H1 --phase all --fsim-timeout 300 --output-dir /home/orange/code/tvm/vta/tutorials/frontend/report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20260914_p7r518_resnet18_h1_from_scratch_ours_run03/local_qualification_batch2
+/home/orange/code/tvm/python/tvm/target/target.py:301: UserWarning: target_host parameter is going to be deprecated. Please pass in tvm.target.Target(target, host=target_host) instead.
+  warnings.warn(
+static 12/96 ok=0 failed=12 not_applicable=0
+static 24/96 ok=0 failed=24 not_applicable=0
+static 36/96 ok=0 failed=36 not_applicable=0
+static 48/96 ok=2 failed=46 not_applicable=0
+static 60/96 ok=5 failed=55 not_applicable=0
+static 72/96 ok=5 failed=67 not_applicable=0
+static 84/96 ok=5 failed=79 not_applicable=0
+static 96/96 ok=7 failed=89 not_applicable=0
+fsim 4/7 passed=0 failed=4
+fsim 7/7 passed=2 failed=5
+{
+  "board_contacted": false,
+  "fsim_attempted": 7,
+  "fsim_failed": 5,
+  "fsim_passed": 2,
+  "geometries": {
+    "R18-H1": {
+      "expansion_rule": "append next 24 deterministic max-min tiles iff local_fsim_legal_identities < 12",
+      "expansion_triggered": true,
+      "local_fsim_legal_identities": 2,
+      "modes": {
+        "input_stationary": {
+          "fsim_failed": 1,
+          "fsim_passed": 1,
+          "not_applicable": 0,
+          "proposed": 24,
+          "static_failed": 22,
+          "static_ok": 2
+        },
+        "input_weight_resident_barrier": {
+          "fsim_failed": 0,
+          "fsim_passed": 1,
+          "not_applicable": 0,
+          "proposed": 24,
+          "static_failed": 23,
+          "static_ok": 1
+        },
+        "original": {
+          "fsim_failed": 4,
+          "fsim_passed": 0,
+          "not_applicable": 0,
+          "proposed": 24,
+          "static_failed": 20,
+          "static_ok": 4
+        },
+        "weight_resident_barrier": {
+          "fsim_failed": 0,
+          "fsim_passed": 0,
+          "not_applicable": 0,
+          "proposed": 24,
+          "static_failed": 24,
+          "static_ok": 0
+        }
+      }
+    }
+  },
+  "input_artifact_hashes": {
+    "command.txt": "2f60c3007d401cf069d3f262edf1e2e5dc5123e6e98af86cee2e0eb26333f871",
+    "r18-h1_four_mode_96.json": "69a5bbb7ebfc1bbfe933be26571c7c7651751d362663eadaee51156ad645cfca",
+    "results.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "summary.json": "23f7c5a3a61fe38419a1f0920cb9bf3f741f0c6590d40c97d0ee127c3e6337da",
+    "timeline.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "not_applicable": 0,
+  "performance_labels_collected": false,
+  "proposed_identities": 96,
+  "schema": "c3_resnet18_local_qualification_v1",
+  "scope": "real lowering and three-seed local FSim; no board, latency, oracle, or TopHub label",
+  "seeds": [
+    0,
+    20250901,
+    20260910
+  ],
+  "static_failed": 89,
+  "static_ok": 7,
+  "status": "complete_local_qualification",
+  "wall_seconds": 18.371061436999298
+}

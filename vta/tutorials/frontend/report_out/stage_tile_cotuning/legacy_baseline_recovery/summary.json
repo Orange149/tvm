@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "kind": "stage_tile_legacy_incumbent_recovery",
+  "date": "2026-09-07",
+  "board": "root@192.168.1.247",
+  "topology": "B: CPU 00..02 / VTA 03..15 / CPU 16..20",
+  "stage_runtime_threads": [
+    4,
+    1,
+    2
+  ],
+  "protocol": {
+    "runs": 22,
+    "warmup_frames": 2,
+    "queue_depth": 2,
+    "throughput_definition": "(scored_frames-1)/(last_completion-first_completion)",
+    "bitstream": "vta_hpc.bit",
+    "bitstream_sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+    "fpga_reprogrammed_before_final_runs": true
+  },
+  "artifacts": {
+    "legacy_vta_graphlib_sha256": "6db83800019edb50e7775e645ce9af88420889769fab3d36b7ea1982f513c7ea",
+    "current_no_history_vta_graphlib_sha256": "bef5c914d2bce7aca68225a005a7c8f246aa2ff592c993b027bbef49bd44afe8",
+    "bounded_tuned_vta_graphlib_sha256": "57bf9eff9aac88181b5174d368c73bffda4b325dc59aa40ab7bffafb9a7e6cbc",
+    "graph_json_sha256": "57f903e33fb222c688fe227e83c24584793b7685a3eb7dbe7abe25f2928d5394",
+    "final_serial_jsonl_sha256": "65f3bea243cd554470046e224651400e3a644ac748301d54d89fce15160833d6",
+    "final_pipeline_jsonl_sha256": "d90b203e854956b6ece71b7c63c6494d0cf499a0ec5417b6d4f356d74e9acc80",
+    "final_profiled_pipeline_jsonl_sha256": "e5f5d5793c626e6bcf87d51f8f449aab8a80443197e9c0b45e7a66036c2c647b",
+    "final_profile_status_sha256": "c7f5576459fd4d380a5ccf9ffa37e1aa8c93992d61cf807b3d043fb64658e3cc"
+  },
+  "correctness": {
+    "serial_frames": 22,
+    "pipeline_frames": 22,
+    "serial_unique_output_hashes": 1,
+    "pipeline_unique_output_hashes": 1,
+    "serial_pipeline_output_hash_match": true,
+    "top1_values": [
+      285
+    ],
+    "fnv1a64": "a8c613584e081e5f"
+  },
+  "performance": {
+    "historical_rank05_fps": 10.6564104347304,
+    "legacy_replay_pipeline_fps": 10.724053940555429,
+    "legacy_replay_cycle_ms": 93.2483187368421,
+    "legacy_replay_profiled_fps": 10.859624095083602,
+    "legacy_replay_stage1_median_ms": 73.290538,
+    "bounded_tuned_b_pipeline_fps": 3.482135048716825,
+    "bounded_tuned_b_stage1_median_ms": 272.364683,
+    "bounded_tuned_over_legacy_fps_ratio": 0.32470323890747566
+  },
+  "dma_per_frame": {
+    "legacy_incumbent": {
+      "load_buffer_2d_calls": 1532.0,
+      "load_buffer_2d_bytes": 11806208.0,
+      "load_buffer_2d_small_calls": 444.0,
+      "load_buffer_2d_strided_calls": 784.0,
+      "load_buffer_2d_padded_calls": 656.0,
+      "load_buffer_2d_enqueue_us": 762.7,
+      "load_buffer_2d_inp_calls": 720.0,
+      "load_buffer_2d_inp_bytes": 4387840.0,
+      "load_buffer_2d_wgt_calls": 720.0,
+      "load_buffer_2d_wgt_bytes": 7397376.0,
+      "store_buffer_2d_calls": 92.0,
+      "store_buffer_2d_bytes": 1204224.0,
+      "store_buffer_2d_strided_calls": 72.0,
+      "synchronize_calls": 14.0,
+      "synchronize_insns": 3270.0,
+      "device_run_wait_us": 62798.63636363636,
+      "driver_poll_wait_us": 58174.545454545456
+    },
+    "bounded_tuned_b": {
+      "load_buffer_2d_calls": 22840.0,
+      "load_buffer_2d_bytes": 44656128.0,
+      "load_buffer_2d_small_calls": 22040.0,
+      "load_buffer_2d_strided_calls": 9344.0,
+      "load_buffer_2d_padded_calls": 10496.0,
+      "load_buffer_2d_enqueue_us": 10872.0,
+      "load_buffer_2d_inp_calls": 10880.0,
+      "load_buffer_2d_inp_bytes": 20305920.0,
+      "load_buffer_2d_wgt_calls": 10880.0,
+      "load_buffer_2d_wgt_bytes": 24281088.0,
+      "store_buffer_2d_calls": 1080.0,
+      "store_buffer_2d_bytes": 1204224.0,
+      "store_buffer_2d_strided_calls": 952.0,
+      "synchronize_calls": 14.0,
+      "synchronize_insns": 42630.0,
+      "device_run_wait_us": 212625.5,
+      "driver_poll_wait_us": 205610.5
+    },
+    "bounded_tuned_over_legacy_ratio": {
+      "load_buffer_2d_calls": 14.908616187989557,
+      "load_buffer_2d_bytes": 3.782427685502407,
+      "load_buffer_2d_small_calls": 49.63963963963964,
+      "load_buffer_2d_strided_calls": 11.918367346938776,
+      "load_buffer_2d_padded_calls": 16.0,
+      "load_buffer_2d_inp_bytes": 4.62777129521587,
+      "load_buffer_2d_wgt_bytes": 3.2823920265780733,
+      "store_buffer_2d_calls": 11.73913043478261,
+      "store_buffer_2d_bytes": 1.0,
+      "synchronize_calls": 1.0,
+      "synchronize_insns": 13.036697247706423,
+      "device_run_wait_us": 3.3858298891840444,
+      "driver_poll_wait_us": 3.53437226528316
+    }
+  },
+  "conclusion": {
+    "legacy_top20_parallel_fps_reproduced": true,
+    "runner_difference_explains_gap": false,
+    "profile_overhead_explains_gap": false,
+    "bounded_tuner_beats_legacy_incumbent": false,
+    "observed_failure_mode": "bounded search selected schedules with much finer and more repetitive DDR-to-on-chip DMA than the preserved legacy incumbent",
+    "required_method_change": "include the preserved legacy schedule as an incumbent and reject any candidate that fails correctness or regresses end-to-end FPS; use DMA fragmentation and repeated input/weight payload as pruning/tie-break evidence"
+  }
+}
