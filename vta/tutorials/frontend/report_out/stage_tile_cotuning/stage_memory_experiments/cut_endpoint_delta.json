@@ -1,0 +1,338 @@
+{
+  "deltas": [
+    {
+      "added_unit": "layer4_block0_skip_proj",
+      "added_workloads": {
+        "h14_ci256_co512_k1s2": 1
+      },
+      "boundary_delta": {
+        "all_cpu_vta_boundary_bytes": -100352,
+        "vta_to_cpu_bytes": -100352,
+        "vta_to_cpu_tensor_count": 0
+      },
+      "classification": "vta_dma_vs_boundary_tradeoff",
+      "observed_stage_dma_delta": {
+        "load_buffer_2d_bytes": 219648,
+        "load_buffer_2d_calls": 66,
+        "load_buffer_2d_inp_bytes": 86528,
+        "load_buffer_2d_small_calls": 34,
+        "load_buffer_2d_wgt_bytes": 131072,
+        "store_buffer_2d_bytes": 25088,
+        "store_buffer_2d_calls": 2
+      },
+      "static_conv_dma_delta": {
+        "load_buffer_2d_bytes": 217600,
+        "load_buffer_2d_calls": 64,
+        "load_buffer_2d_inp_bytes": 86528,
+        "load_buffer_2d_small_calls": 32,
+        "load_buffer_2d_wgt_bytes": 131072,
+        "store_buffer_2d_bytes": 25088,
+        "store_buffer_2d_calls": 2
+      },
+      "transition": "03..15 -> 03..16"
+    },
+    {
+      "added_unit": "layer4_block0_add_relu_tail",
+      "added_workloads": {},
+      "boundary_delta": {
+        "all_cpu_vta_boundary_bytes": -100352,
+        "vta_to_cpu_bytes": -100352,
+        "vta_to_cpu_tensor_count": -1
+      },
+      "classification": "boundary_only_reduction_no_new_conv_dma",
+      "observed_stage_dma_delta": {
+        "load_buffer_2d_bytes": 0,
+        "load_buffer_2d_calls": 0,
+        "load_buffer_2d_inp_bytes": 0,
+        "load_buffer_2d_small_calls": 0,
+        "load_buffer_2d_wgt_bytes": 0,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "static_conv_dma_delta": {
+        "load_buffer_2d_bytes": 0,
+        "load_buffer_2d_calls": 0,
+        "load_buffer_2d_inp_bytes": 0,
+        "load_buffer_2d_small_calls": 0,
+        "load_buffer_2d_wgt_bytes": 0,
+        "store_buffer_2d_bytes": 0,
+        "store_buffer_2d_calls": 0
+      },
+      "transition": "03..16 -> 03..17"
+    }
+  ],
+  "endpoints": [
+    {
+      "boundary": {
+        "all_cpu_vta_boundary_bytes": 1103872,
+        "vta_to_cpu_bytes": 301056,
+        "vta_to_cpu_tensor_count": 2
+      },
+      "end_unit_index": 15,
+      "observed_stage_dma": {
+        "load_average_request_bytes": 7706.402088772846,
+        "load_buffer_2d_bytes": 11806208,
+        "load_buffer_2d_calls": 1532,
+        "load_buffer_2d_inp_bytes": 4387840,
+        "load_buffer_2d_small_calls": 444,
+        "load_buffer_2d_wgt_bytes": 7397376,
+        "store_buffer_2d_bytes": 1204224,
+        "store_buffer_2d_calls": 92
+      },
+      "start_unit_index": 3,
+      "static_conv_dma": {
+        "load_average_request_bytes": 8184.177777777778,
+        "load_buffer_2d_bytes": 11785216,
+        "load_buffer_2d_calls": 1440,
+        "load_buffer_2d_inp_bytes": 4387840,
+        "load_buffer_2d_small_calls": 352,
+        "load_buffer_2d_wgt_bytes": 7397376,
+        "store_buffer_2d_bytes": 1204224,
+        "store_buffer_2d_calls": 92
+      },
+      "tail_unit": "layer4_block0_main_preadd",
+      "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+      "unit_names": [
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail",
+        "layer3_block1_main_preadd",
+        "layer3_block1_add_relu_tail",
+        "layer4_block0_main_preadd"
+      ],
+      "workload_occurrences": [
+        {
+          "occurrences": 2,
+          "workload_id": "h56_ci64_co64_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h56_ci64_co128_k3s2"
+        },
+        {
+          "occurrences": 3,
+          "workload_id": "h28_ci128_co128_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h56_ci64_co128_k1s2"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h28_ci128_co256_k3s2"
+        },
+        {
+          "occurrences": 3,
+          "workload_id": "h14_ci256_co256_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h28_ci128_co256_k1s2"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h14_ci256_co512_k3s2"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h7_ci512_co512_k3s1"
+        }
+      ]
+    },
+    {
+      "boundary": {
+        "all_cpu_vta_boundary_bytes": 1003520,
+        "vta_to_cpu_bytes": 200704,
+        "vta_to_cpu_tensor_count": 2
+      },
+      "end_unit_index": 16,
+      "observed_stage_dma": {
+        "load_average_request_bytes": 7525.566958698373,
+        "load_buffer_2d_bytes": 12025856,
+        "load_buffer_2d_calls": 1598,
+        "load_buffer_2d_inp_bytes": 4474368,
+        "load_buffer_2d_small_calls": 478,
+        "load_buffer_2d_wgt_bytes": 7528448,
+        "store_buffer_2d_bytes": 1229312,
+        "store_buffer_2d_calls": 94
+      },
+      "start_unit_index": 3,
+      "static_conv_dma": {
+        "load_average_request_bytes": 7980.595744680851,
+        "load_buffer_2d_bytes": 12002816,
+        "load_buffer_2d_calls": 1504,
+        "load_buffer_2d_inp_bytes": 4474368,
+        "load_buffer_2d_small_calls": 384,
+        "load_buffer_2d_wgt_bytes": 7528448,
+        "store_buffer_2d_bytes": 1229312,
+        "store_buffer_2d_calls": 94
+      },
+      "tail_unit": "layer4_block0_skip_proj",
+      "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+      "unit_names": [
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail",
+        "layer3_block1_main_preadd",
+        "layer3_block1_add_relu_tail",
+        "layer4_block0_main_preadd",
+        "layer4_block0_skip_proj"
+      ],
+      "workload_occurrences": [
+        {
+          "occurrences": 2,
+          "workload_id": "h56_ci64_co64_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h56_ci64_co128_k3s2"
+        },
+        {
+          "occurrences": 3,
+          "workload_id": "h28_ci128_co128_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h56_ci64_co128_k1s2"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h28_ci128_co256_k3s2"
+        },
+        {
+          "occurrences": 3,
+          "workload_id": "h14_ci256_co256_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h28_ci128_co256_k1s2"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h14_ci256_co512_k3s2"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h7_ci512_co512_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h14_ci256_co512_k1s2"
+        }
+      ]
+    },
+    {
+      "boundary": {
+        "all_cpu_vta_boundary_bytes": 903168,
+        "vta_to_cpu_bytes": 100352,
+        "vta_to_cpu_tensor_count": 1
+      },
+      "end_unit_index": 17,
+      "observed_stage_dma": {
+        "load_average_request_bytes": 7525.566958698373,
+        "load_buffer_2d_bytes": 12025856,
+        "load_buffer_2d_calls": 1598,
+        "load_buffer_2d_inp_bytes": 4474368,
+        "load_buffer_2d_small_calls": 478,
+        "load_buffer_2d_wgt_bytes": 7528448,
+        "store_buffer_2d_bytes": 1229312,
+        "store_buffer_2d_calls": 94
+      },
+      "start_unit_index": 3,
+      "static_conv_dma": {
+        "load_average_request_bytes": 7980.595744680851,
+        "load_buffer_2d_bytes": 12002816,
+        "load_buffer_2d_calls": 1504,
+        "load_buffer_2d_inp_bytes": 4474368,
+        "load_buffer_2d_small_calls": 384,
+        "load_buffer_2d_wgt_bytes": 7528448,
+        "store_buffer_2d_bytes": 1229312,
+        "store_buffer_2d_calls": 94
+      },
+      "tail_unit": "layer4_block0_add_relu_tail",
+      "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+      "unit_names": [
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail",
+        "layer3_block1_main_preadd",
+        "layer3_block1_add_relu_tail",
+        "layer4_block0_main_preadd",
+        "layer4_block0_skip_proj",
+        "layer4_block0_add_relu_tail"
+      ],
+      "workload_occurrences": [
+        {
+          "occurrences": 2,
+          "workload_id": "h56_ci64_co64_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h56_ci64_co128_k3s2"
+        },
+        {
+          "occurrences": 3,
+          "workload_id": "h28_ci128_co128_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h56_ci64_co128_k1s2"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h28_ci128_co256_k3s2"
+        },
+        {
+          "occurrences": 3,
+          "workload_id": "h14_ci256_co256_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h28_ci128_co256_k1s2"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h14_ci256_co512_k3s2"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h7_ci512_co512_k3s1"
+        },
+        {
+          "occurrences": 1,
+          "workload_id": "h14_ci256_co512_k1s2"
+        }
+      ]
+    }
+  ],
+  "kind": "vta_cut_endpoint_memory_delta",
+  "numbering": "zero-based UNIT_ORDER indices",
+  "schema_version": 1,
+  "scope": "fixed VTA start at unit 03; adjacent endpoints 15, 16, and 17",
+  "search_rule": {
+    "double_count_warning": "Do not add a DMA-derived time to measured VTA service time; its LOAD/STORE is already included.",
+    "safe_use": "Use deltas as a vector. If an endpoint extension reduces boundary bytes without increasing static/observed VTA DMA, retain it and prune the shorter endpoint only when compute, legality, and resource-balance terms are also no worse.",
+    "tradeoff_use": "When both VTA DMA and boundary bytes change, keep both candidates until the CPU, single-VTA, longest-stage, and shared-memory resource bounds are compared."
+  }
+}

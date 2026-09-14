@@ -1,0 +1,286 @@
+{
+  "schema": "shared-buffer-plan-v1",
+  "scope": "C2 fixed-K2 cross-executor input-pool reuse",
+  "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t1",
+  "package_sha256": {
+    "libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+    "libvta.so": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+    "manifest.json": "19f3c4e964abdb0e9c8f6f3adcb155ea145c6338aeff9be196564c1c8c7b86e3",
+    "stages/stage0/graph.json": "9ed987b41af738c0f5dc27603ffbc986ba078df9aea19820ff03ef7511b675a6",
+    "stages/stage0/graphlib.so": "792433337d6bfac9b06baa143a088d8cd5a3e350d7723b4d0b6ede9dbfd359e3",
+    "stages/stage0/params.params": "3940c871777ccf82d0b83d1e35c6f448a24c82eab0f4cda967ef98e4eed95b6e",
+    "stages/stage1/graph.json": "de3b935c52d605936d365c20dd98d79b2fa456246759b701f0c0ccbbdbbb339f",
+    "stages/stage1/graphlib.so": "31dad57a72d8b630354a27311bb768eb9579992c39c1586850f7e1736c342b78",
+    "stages/stage1/params.params": "fa836428afa54e78a09bddf27ae34d533a89e7ad4723eecb1dcb32fd3bb8163b",
+    "stages/stage2/graph.json": "7f477d37111243d28e2fb08d6a7d255e5e187f280c989562583f7caa6c1e90f3",
+    "stages/stage2/graphlib.so": "db8ea27d76758a267f1592db853d768f050246de39c0554c45c1a81346a68ce8",
+    "stages/stage2/params.params": "1814f903b9af65513439bb1f6af28beaccda7c497a23643525fd288603125063",
+    "stages/stage3/graph.json": "955063a0db03fef035163c003eb96e650562d976611e85502a6be815013c0221",
+    "stages/stage3/graphlib.so": "11abcad443708e076df2ff4043a95bc658d5d8210b994743f4451260f17ac317",
+    "stages/stage3/params.params": "1021c723abd302f7c706373e1f407f0a8bdaa2c93ae18bf5cb2685366bc704f4",
+    "stages/stage4/graph.json": "3a3a4538f5cdd6166918a1719ee5844e55ef4f24dfe7294ca6b661d4c0be5da2",
+    "stages/stage4/graphlib.so": "6cd8c260c4e4ac64407c2bfa5608600b0fe5da45794268cd5c485fc9fae5baf3",
+    "stages/stage4/params.params": "b1498e0cb137545593947090ff1328dc7836d9946d8997519d4cbc1f0ec035f5"
+  },
+  "runtime_sha256": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+  "driver_sha256": "e6b1a0b8520be0824268d0007a9578dc64083716242bee6af5156ae2581793dd",
+  "stages": [
+    {
+      "device": "cpu",
+      "input_names": [
+        "data0"
+      ],
+      "graph_sha256": "9ed987b41af738c0f5dc27603ffbc986ba078df9aea19820ff03ef7511b675a6",
+      "lib_sha256": "792433337d6bfac9b06baa143a088d8cd5a3e350d7723b4d0b6ede9dbfd359e3",
+      "params_sha256": "3940c871777ccf82d0b83d1e35c6f448a24c82eab0f4cda967ef98e4eed95b6e"
+    },
+    {
+      "device": "vta",
+      "input_names": [
+        "data0"
+      ],
+      "graph_sha256": "de3b935c52d605936d365c20dd98d79b2fa456246759b701f0c0ccbbdbbb339f",
+      "lib_sha256": "31dad57a72d8b630354a27311bb768eb9579992c39c1586850f7e1736c342b78",
+      "params_sha256": "fa836428afa54e78a09bddf27ae34d533a89e7ad4723eecb1dcb32fd3bb8163b"
+    },
+    {
+      "device": "cpu",
+      "input_names": [
+        "data0"
+      ],
+      "graph_sha256": "7f477d37111243d28e2fb08d6a7d255e5e187f280c989562583f7caa6c1e90f3",
+      "lib_sha256": "db8ea27d76758a267f1592db853d768f050246de39c0554c45c1a81346a68ce8",
+      "params_sha256": "1814f903b9af65513439bb1f6af28beaccda7c497a23643525fd288603125063"
+    },
+    {
+      "device": "vta",
+      "input_names": [
+        "data0"
+      ],
+      "graph_sha256": "955063a0db03fef035163c003eb96e650562d976611e85502a6be815013c0221",
+      "lib_sha256": "11abcad443708e076df2ff4043a95bc658d5d8210b994743f4451260f17ac317",
+      "params_sha256": "1021c723abd302f7c706373e1f407f0a8bdaa2c93ae18bf5cb2685366bc704f4"
+    },
+    {
+      "device": "cpu",
+      "input_names": [
+        "data0"
+      ],
+      "graph_sha256": "3a3a4538f5cdd6166918a1719ee5844e55ef4f24dfe7294ca6b661d4c0be5da2",
+      "lib_sha256": "6cd8c260c4e4ac64407c2bfa5608600b0fe5da45794268cd5c485fc9fae5baf3",
+      "params_sha256": "b1498e0cb137545593947090ff1328dc7836d9946d8997519d4cbc1f0ec035f5"
+    }
+  ],
+  "edges": [
+    {
+      "consumer_stage": 1,
+      "direction": "cpu_to_vta",
+      "external_k2_bytes": 1605632,
+      "predicted_saved_bytes": 802816,
+      "producer_stage": 0,
+      "source": "pool-anchor",
+      "tensors": [
+        {
+          "alias_entries": [
+            0
+          ],
+          "bytes": 802816,
+          "contract_bytes": 802816,
+          "device": 12,
+          "dtype": "float32",
+          "entry": 0,
+          "input_name": "data0",
+          "is_arg": true,
+          "is_head": false,
+          "is_parameter": false,
+          "name": "data0",
+          "node": 0,
+          "op": "null",
+          "pool_capacity_bytes": 802816,
+          "readers": [
+            {
+              "func": "tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip",
+              "node": 1,
+              "op": "tvm_op",
+              "port": 0
+            }
+          ],
+          "reasons": [
+            "exclusive_nonparameter_input_all_tvm_op_uses_rebound"
+          ],
+          "scope": "",
+          "shape": [
+            1,
+            64,
+            56,
+            56
+          ],
+          "status": "eligible",
+          "storage_id": 0,
+          "tensor_index": 0,
+          "writers": []
+        }
+      ]
+    },
+    {
+      "consumer_stage": 2,
+      "direction": "vta_to_cpu",
+      "external_k2_bytes": 401408,
+      "predicted_saved_bytes": 0,
+      "producer_stage": 1,
+      "source": "external",
+      "tensors": [
+        {
+          "alias_entries": [
+            0
+          ],
+          "bytes": 200704,
+          "contract_bytes": 200704,
+          "device": 1,
+          "dtype": "float32",
+          "entry": 0,
+          "input_name": "data0",
+          "is_arg": true,
+          "is_head": false,
+          "is_parameter": false,
+          "name": "data0",
+          "node": 0,
+          "op": "null",
+          "pool_capacity_bytes": 200704,
+          "readers": [
+            {
+              "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_nn_relu",
+              "node": 3,
+              "op": "tvm_op",
+              "port": 0
+            },
+            {
+              "func": "tvmgen_default_fused_nn_contrib_conv2d_winograd_without_weight_transform_add_add_nn_relu",
+              "node": 6,
+              "op": "tvm_op",
+              "port": 3
+            }
+          ],
+          "reasons": [
+            "direction_outside_v1",
+            "not_plain_ext_dev_pool"
+          ],
+          "scope": "",
+          "shape": [
+            1,
+            256,
+            14,
+            14
+          ],
+          "status": "rejected",
+          "storage_id": 0,
+          "tensor_index": 0,
+          "writers": []
+        }
+      ]
+    },
+    {
+      "consumer_stage": 3,
+      "direction": "cpu_to_vta",
+      "external_k2_bytes": 401408,
+      "predicted_saved_bytes": 200704,
+      "producer_stage": 2,
+      "source": "pool-anchor",
+      "tensors": [
+        {
+          "alias_entries": [
+            0
+          ],
+          "bytes": 200704,
+          "contract_bytes": 200704,
+          "device": 12,
+          "dtype": "float32",
+          "entry": 0,
+          "input_name": "data0",
+          "is_arg": true,
+          "is_head": false,
+          "is_parameter": false,
+          "name": "data0",
+          "node": 0,
+          "op": "null",
+          "pool_capacity_bytes": 200704,
+          "readers": [
+            {
+              "func": "tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip_cast_reshape_trans_3555e6773f8429f6_",
+              "node": 1,
+              "op": "tvm_op",
+              "port": 0
+            }
+          ],
+          "reasons": [
+            "exclusive_nonparameter_input_all_tvm_op_uses_rebound"
+          ],
+          "scope": "",
+          "shape": [
+            1,
+            256,
+            14,
+            14
+          ],
+          "status": "eligible",
+          "storage_id": 0,
+          "tensor_index": 0,
+          "writers": []
+        }
+      ]
+    },
+    {
+      "consumer_stage": 4,
+      "direction": "vta_to_cpu",
+      "external_k2_bytes": 200704,
+      "predicted_saved_bytes": 0,
+      "producer_stage": 3,
+      "source": "external",
+      "tensors": [
+        {
+          "alias_entries": [
+            0
+          ],
+          "bytes": 100352,
+          "contract_bytes": 100352,
+          "device": 1,
+          "dtype": "float32",
+          "entry": 0,
+          "input_name": "data0",
+          "is_arg": true,
+          "is_head": false,
+          "is_parameter": false,
+          "name": "data0",
+          "node": 0,
+          "op": "null",
+          "pool_capacity_bytes": 100352,
+          "readers": [
+            {
+              "func": "tvmgen_default_fused_nn_global_avg_pool2d",
+              "node": 1,
+              "op": "tvm_op",
+              "port": 0
+            }
+          ],
+          "reasons": [
+            "direction_outside_v1",
+            "not_plain_ext_dev_pool"
+          ],
+          "scope": "",
+          "shape": [
+            1,
+            512,
+            7,
+            7
+          ],
+          "status": "rejected",
+          "storage_id": 0,
+          "tensor_index": 0,
+          "writers": []
+        }
+      ]
+    }
+  ],
+  "predicted_saved_bytes": 1003520,
+  "startup_policy": "hash mismatch aborts; graph/physical eligibility failure falls back whole edge"
+}

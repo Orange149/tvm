@@ -1,0 +1,13 @@
+vta_stage_pipeline_runner error: [20:58:26] /home/orange/code/tvm/vta/runtime/runtime.cc:2035: Check failed: (std::getenv("VTA_INSN_SUBMIT_THRESHOLD_BYTES") == nullptr) is false: early submission is not qualified: dependency and SRAM lifetime audit required
+Stack trace:
+  [bt] (0) /media/sd-mmcblk1p2/v1_p7_top20/legacy_profile_rank01/libtvm_runtime.so(tvm::runtime::Backtrace[abi:cxx11]()+0x14) [0x7f96bbbc5c]
+  [bt] (1) /media/sd-mmcblk1p2/queue_q1_board_run1/vta_stage_pipeline_runner(tvm::runtime::detail::LogFatal::Entry::Finalize()+0x68) [0x5562ee4830]
+  [bt] (2) /media/sd-mmcblk1p2/queue_q1_board_run1/libvta.so(vta::CommandQueue::ThreadLocal()+0x6e0) [0x7f96afda00]
+  [bt] (3) /media/sd-mmcblk1p2/queue_q1_board_run1/libvta.so(VTATLSCommandHandle+0xc) [0x7f96af293c]
+  [bt] (4) stages/stage1/graphlib.so(tvmgen_default_fused_reshape_transpose_multiply_transpose_reshape_round_clip+0x1c) [0x7f94e1f014]
+  [bt] (5) /media/sd-mmcblk1p2/v1_p7_top20/legacy_profile_rank01/libtvm_runtime.so(+0x94ca4) [0x7f96bb7ca4]
+  [bt] (6) /media/sd-mmcblk1p2/v1_p7_top20/legacy_profile_rank01/libtvm_runtime.so(+0x14475c) [0x7f96c6775c]
+  [bt] (7) /media/sd-mmcblk1p2/v1_p7_top20/legacy_profile_rank01/libtvm_runtime.so(tvm::runtime::GraphExecutor::Run()+0x44) [0x7f96c67844]
+  [bt] (8) /media/sd-mmcblk1p2/queue_q1_board_run1/vta_stage_pipeline_runner(+0x28ca4) [0x5562edfca4]
+
+

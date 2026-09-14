@@ -1,0 +1,638 @@
+{
+  "aggregate_median_fps_ordering": [
+    "A",
+    "C",
+    "D",
+    "B"
+  ],
+  "archive_sha256": "65d80cc7cc6d989b82f38631a4eac495d285bdd49daae9ff1992b510636614aa",
+  "boot_id": "ba873689-d01b-47df-beaf-f536e8508824",
+  "conclusion": {
+    "fine_grained_ordering_stable_within_boot3": false,
+    "fit_ddr_time_coefficient": false,
+    "memory_mechanism_reproducible": true,
+    "use_for_model": "invariant DMA/boundary features and dominance pruning, not a scalar DDR-time fit"
+  },
+  "cross_boot_cycle_rank_spearman": {
+    "boot1_vs_boot2": 0.39999999999999997,
+    "boot1_vs_boot3": 0.7999999999999999,
+    "boot2_vs_boot3": 0.7999999999999999
+  },
+  "dma_invariant_across_three_boots": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "D": true
+  },
+  "kind": "experiment_d_third_boot_latin_square",
+  "output_hash_stable_across_three_boots": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "D": true
+  },
+  "paired_directions": {
+    "A_vs_C": {
+      "left_faster_rounds": 3,
+      "median_fps_delta_left_minus_right": 0.12487155628137181,
+      "rounds": [
+        {
+          "fps_delta_left_minus_right": 0.01944590209774333,
+          "left_faster": true,
+          "round": 1
+        },
+        {
+          "fps_delta_left_minus_right": 0.5449218348780285,
+          "left_faster": true,
+          "round": 2
+        },
+        {
+          "fps_delta_left_minus_right": -0.2541206942319647,
+          "left_faster": false,
+          "round": 3
+        },
+        {
+          "fps_delta_left_minus_right": 0.2302972104650003,
+          "left_faster": true,
+          "round": 4
+        }
+      ]
+    },
+    "D_vs_B": {
+      "left_faster_rounds": 4,
+      "median_fps_delta_left_minus_right": 0.44366757320681494,
+      "rounds": [
+        {
+          "fps_delta_left_minus_right": 0.09445493618333423,
+          "left_faster": true,
+          "round": 1
+        },
+        {
+          "fps_delta_left_minus_right": 0.402138879195002,
+          "left_faster": true,
+          "round": 2
+        },
+        {
+          "fps_delta_left_minus_right": 0.49000197076570196,
+          "left_faster": true,
+          "round": 3
+        },
+        {
+          "fps_delta_left_minus_right": 0.48519626721862785,
+          "left_faster": true,
+          "round": 4
+        }
+      ]
+    }
+  },
+  "position_normalized_effect": {
+    "1": {
+      "max_percent": 0.943582953534694,
+      "median_percent_from_topology_median": 0.24014066749840635,
+      "min_percent": -0.23578265869260706
+    },
+    "2": {
+      "max_percent": 3.103164899106736,
+      "median_percent_from_topology_median": -0.00908624645348799,
+      "min_percent": -3.466202205034219
+    },
+    "3": {
+      "max_percent": 0.879169088327103,
+      "median_percent_from_topology_median": 0.018978646751349748,
+      "min_percent": -3.01873454476852
+    },
+    "4": {
+      "max_percent": 0.29731169189837203,
+      "median_percent_from_topology_median": -0.25911931424975054,
+      "min_percent": -1.169313746385492
+    }
+  },
+  "protocol": {
+    "frames_per_trial": 62,
+    "latin_square": {
+      "1": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "2": [
+        "B",
+        "C",
+        "D",
+        "A"
+      ],
+      "3": [
+        "C",
+        "D",
+        "A",
+        "B"
+      ],
+      "4": [
+        "D",
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "rounds": 4,
+    "scored_intervals_per_trial": 59,
+    "skip_first_frames": 2,
+    "total_pipeline_frames": 992
+  },
+  "round_fps_ordering": {
+    "1": [
+      "A",
+      "C",
+      "D",
+      "B"
+    ],
+    "2": [
+      "A",
+      "D",
+      "C",
+      "B"
+    ],
+    "3": [
+      "C",
+      "A",
+      "D",
+      "B"
+    ],
+    "4": [
+      "A",
+      "C",
+      "D",
+      "B"
+    ]
+  },
+  "schema_version": 1,
+  "topology_summary": {
+    "A": {
+      "cycle_ms_max": 94.63552579661015,
+      "cycle_ms_median": 91.77924072033898,
+      "cycle_ms_min": 91.50667045762711,
+      "fps_max": 10.92816507254581,
+      "fps_median": 10.895770672414287,
+      "fps_min": 10.566856279207359,
+      "fps_range": 0.36130879333845023,
+      "interval_cv_median": 0.1277058675180459,
+      "interval_p95_ms_median": 107.36117519999982,
+      "trials": 4
+    },
+    "B": {
+      "cycle_ms_max": 100.2737943898305,
+      "cycle_ms_median": 99.10142944915253,
+      "cycle_ms_min": 96.11856166101694,
+      "fps_max": 10.403817771709049,
+      "fps_median": 10.090687111195734,
+      "fps_min": 9.972695319699774,
+      "fps_range": 0.4311224520092747,
+      "interval_cv_median": 0.19271652647779774,
+      "interval_p95_ms_median": 131.54991730000023,
+      "trials": 4
+    },
+    "C": {
+      "cycle_ms_max": 96.30902186440677,
+      "cycle_ms_median": 92.974142,
+      "cycle_ms_min": 92.1605097118644,
+      "fps_max": 10.850634432540076,
+      "fps_median": 10.756070386582538,
+      "fps_min": 10.38324323766778,
+      "fps_range": 0.4673911948722953,
+      "interval_cv_median": 0.14293159624972443,
+      "interval_p95_ms_median": 106.78936230000016,
+      "trials": 4
+    },
+    "D": {
+      "cycle_ms_max": 95.57764811864406,
+      "cycle_ms_median": 95.3349929661017,
+      "cycle_ms_min": 94.44376845762712,
+      "fps_max": 10.588311080033378,
+      "fps_median": 10.489335498332053,
+      "fps_min": 10.462697290465476,
+      "fps_range": 0.12561378956790215,
+      "interval_cv_median": 0.10371508250107067,
+      "interval_p95_ms_median": 108.04633710000022,
+      "trials": 4
+    }
+  },
+  "trials": [
+    {
+      "completion_interval_cv": 0.12455636452281471,
+      "completion_interval_median_ms": 92.62772599999971,
+      "completion_interval_p95_ms": 108.5791500999999,
+      "cycle_ms": 91.99564025423727,
+      "fps": 10.87008033463782,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "00b1f37535ac3647"
+      ],
+      "position": 1,
+      "profile_sha256": "066d38f47aed8918538e97198c8dc768f290667a5322f6e6177a02be61ba246a",
+      "rank": 1,
+      "result_sha256": "e292948fdf4bd4940c84f1a23e50b1f157ea89d988f3069b1b9f871d45794d27",
+      "round": 1,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1229312.0,
+      "store_calls_per_frame": 94.0,
+      "topology_id": "A",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.00051,
+      "weight_load_bytes_per_frame": 7528448.0
+    },
+    {
+      "completion_interval_cv": 0.1776834688387648,
+      "completion_interval_median_ms": 94.90474900000004,
+      "completion_interval_p95_ms": 121.36275189999981,
+      "cycle_ms": 96.11856166101694,
+      "fps": 10.403817771709049,
+      "load_bytes_per_frame": 11806208.0,
+      "load_calls_per_frame": 1532.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "a8c613584e081e5f"
+      ],
+      "position": 2,
+      "profile_sha256": "059cda2b8ca89ecb0ccc922038c7b3cf2fda64ba17062decf3496cb0ef5e064b",
+      "rank": 5,
+      "result_sha256": "47e38126d1e86a8c66fc7d281b8018a4e4d44c4d718d34335ec324bbb386f03f",
+      "round": 1,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1204224.0,
+      "store_calls_per_frame": 92.0,
+      "topology_id": "B",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.000465,
+      "weight_load_bytes_per_frame": 7397376.0
+    },
+    {
+      "completion_interval_cv": 0.15497775030116062,
+      "completion_interval_median_ms": 94.665706,
+      "completion_interval_p95_ms": 112.6583140999995,
+      "cycle_ms": 92.1605097118644,
+      "fps": 10.850634432540076,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "00b1f37535ac3647"
+      ],
+      "position": 3,
+      "profile_sha256": "b4cfba4826f76fb38a1be0a3909b8c2b080843906b91782a122fab787a08754d",
+      "rank": 7,
+      "result_sha256": "1f4e54ec65187168346c7a884fc4b4072cb9f1895b22ecb296df0cb9f2a34ce0",
+      "round": 1,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1229312.0,
+      "store_calls_per_frame": 94.0,
+      "topology_id": "C",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.00084,
+      "weight_load_bytes_per_frame": 7528448.0
+    },
+    {
+      "completion_interval_cv": 0.10733686450649704,
+      "completion_interval_median_ms": 97.44013399999994,
+      "completion_interval_p95_ms": 106.32270429999983,
+      "cycle_ms": 95.25376486440678,
+      "fps": 10.498272707892383,
+      "load_bytes_per_frame": 15265792.0,
+      "load_calls_per_frame": 1594.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "61479f4eb3a631dd"
+      ],
+      "position": 4,
+      "profile_sha256": "0e87338e281ee6be028cfedcc334fef084fc5ae63384b1d6de24b135da37f478",
+      "rank": 13,
+      "result_sha256": "ce690768d525cf350d73b70752e255e3878680fe0d9e99956b9d3fbe629f3c27",
+      "round": 1,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1179136.0,
+      "store_calls_per_frame": 90.0,
+      "topology_id": "D",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 14.677002,
+      "weight_load_bytes_per_frame": 11067392.0
+    },
+    {
+      "completion_interval_cv": 0.20062228644850819,
+      "completion_interval_median_ms": 95.759728,
+      "completion_interval_p95_ms": 131.98164830000007,
+      "cycle_ms": 99.22348288135593,
+      "fps": 10.07825940957672,
+      "load_bytes_per_frame": 11806208.0,
+      "load_calls_per_frame": 1532.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "a8c613584e081e5f"
+      ],
+      "position": 1,
+      "profile_sha256": "d3b90a5e6543d1bc9939f228d4a868fa297a9a799c41eb7a0ff0879a59f32bdf",
+      "rank": 5,
+      "result_sha256": "a2cf151a30cc4b6ec65c277ce4eeea69d40f283997b4f1131766f3ad3e06706d",
+      "round": 2,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1204224.0,
+      "store_calls_per_frame": 92.0,
+      "topology_id": "B",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.000495,
+      "weight_load_bytes_per_frame": 7397376.0
+    },
+    {
+      "completion_interval_cv": 0.11834945745521333,
+      "completion_interval_median_ms": 99.3076230000006,
+      "completion_interval_p95_ms": 106.89325940000008,
+      "cycle_ms": 96.30902186440677,
+      "fps": 10.38324323766778,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "00b1f37535ac3647"
+      ],
+      "position": 2,
+      "profile_sha256": "6e07a0b992969e8bd1672fd5bd0753578e3cb2a3af30c5a9858b14bc301dbbb4",
+      "rank": 7,
+      "result_sha256": "c72d0ad32c89f638bfd14e9003c011618bce5abe826ada93387dec11a82f0a34",
+      "round": 2,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1229312.0,
+      "store_calls_per_frame": 94.0,
+      "topology_id": "C",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.000615,
+      "weight_load_bytes_per_frame": 7528448.0
+    },
+    {
+      "completion_interval_cv": 0.10009330049564429,
+      "completion_interval_median_ms": 95.879009,
+      "completion_interval_p95_ms": 110.80228859999983,
+      "cycle_ms": 95.41622106779661,
+      "fps": 10.480398288771722,
+      "load_bytes_per_frame": 15265792.0,
+      "load_calls_per_frame": 1594.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "61479f4eb3a631dd"
+      ],
+      "position": 3,
+      "profile_sha256": "d9d4061fbcc256bf66ea242db5a869a097163510a803fc52bb6d8dc624f34647",
+      "rank": 13,
+      "result_sha256": "889781e640825b217d30f99b0e2fc657ba8b214259c29a9c9df3db6248812427",
+      "round": 2,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1179136.0,
+      "store_calls_per_frame": 90.0,
+      "topology_id": "D",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 15.438694500000002,
+      "weight_load_bytes_per_frame": 11067392.0
+    },
+    {
+      "completion_interval_cv": 0.12853608564086924,
+      "completion_interval_median_ms": 92.55674599999998,
+      "completion_interval_p95_ms": 108.87857369999988,
+      "cycle_ms": 91.50667045762711,
+      "fps": 10.92816507254581,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "00b1f37535ac3647"
+      ],
+      "position": 4,
+      "profile_sha256": "22897d0a9b48600a9aeea56906741ffa678ccc566bb41dbcaf62fa1ad0dd9043",
+      "rank": 1,
+      "result_sha256": "a5cb0e32f2b7eb86560a02dfc6cebf0cebc468235420c720a7d9bfee56955e5e",
+      "round": 2,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1229312.0,
+      "store_calls_per_frame": 94.0,
+      "topology_id": "A",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.00045,
+      "weight_load_bytes_per_frame": 7528448.0
+    },
+    {
+      "completion_interval_cv": 0.1469886141845654,
+      "completion_interval_median_ms": 98.84285799999998,
+      "completion_interval_p95_ms": 106.4234545,
+      "cycle_ms": 92.41309749152543,
+      "fps": 10.820976973439324,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "00b1f37535ac3647"
+      ],
+      "position": 1,
+      "profile_sha256": "164d5ffae109976a630b2b620553ee9b973615dc46f7a9ae20b0db1701d8e848",
+      "rank": 7,
+      "result_sha256": "c27b24145c829dc044fc1fb39c6c50e8e5df9c269d93b9227d01a421bf1f1a66",
+      "round": 3,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1229312.0,
+      "store_calls_per_frame": 94.0,
+      "topology_id": "C",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.00078,
+      "weight_load_bytes_per_frame": 7528448.0
+    },
+    {
+      "completion_interval_cv": 0.0955734077514508,
+      "completion_interval_median_ms": 97.18768200000005,
+      "completion_interval_p95_ms": 108.02340090000042,
+      "cycle_ms": 95.57764811864406,
+      "fps": 10.462697290465476,
+      "load_bytes_per_frame": 15265792.0,
+      "load_calls_per_frame": 1594.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "61479f4eb3a631dd"
+      ],
+      "position": 2,
+      "profile_sha256": "ad2a24a111dbb23af18dd8b34b640114fff8c795bcf3ff9ef293177bf341f87f",
+      "rank": 13,
+      "result_sha256": "0f7e87b9914cb5646ec1da8e9ce8ae291bedaaaa92cf5c1e9ad646c551121eeb",
+      "round": 3,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1179136.0,
+      "store_calls_per_frame": 90.0,
+      "topology_id": "D",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 17.679986999999997,
+      "weight_load_bytes_per_frame": 11067392.0
+    },
+    {
+      "completion_interval_cv": 0.12687564939522258,
+      "completion_interval_median_ms": 98.87108900000021,
+      "completion_interval_p95_ms": 106.14320029999976,
+      "cycle_ms": 94.63552579661015,
+      "fps": 10.566856279207359,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "00b1f37535ac3647"
+      ],
+      "position": 3,
+      "profile_sha256": "27633427c3e7cc3ef4bb3d24235e852150796a4311813e3b525a1c06ab270391",
+      "rank": 1,
+      "result_sha256": "d141a72f29403fc02a0ae5088d63916d1f0ce514c0dba6cfce3dd7ff121982aa",
+      "round": 3,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1229312.0,
+      "store_calls_per_frame": 94.0,
+      "topology_id": "A",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.00048,
+      "weight_load_bytes_per_frame": 7528448.0
+    },
+    {
+      "completion_interval_cv": 0.20322174666697565,
+      "completion_interval_median_ms": 97.353523,
+      "completion_interval_p95_ms": 134.7724413999999,
+      "cycle_ms": 100.2737943898305,
+      "fps": 9.972695319699774,
+      "load_bytes_per_frame": 11806208.0,
+      "load_calls_per_frame": 1532.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "a8c613584e081e5f"
+      ],
+      "position": 4,
+      "profile_sha256": "6f2169acef37950ccf4f334ed6f148be7b740e409594b4104cb4ae47c38f57aa",
+      "rank": 5,
+      "result_sha256": "d4f89145e763fbd4cba5556d8399d61fb2346d9bad2bbba5b8578a2408cc9dc1",
+      "round": 3,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1204224.0,
+      "store_calls_per_frame": 92.0,
+      "topology_id": "B",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.00048,
+      "weight_load_bytes_per_frame": 7397376.0
+    },
+    {
+      "completion_interval_cv": 0.18105937548026857,
+      "completion_interval_median_ms": 93.91629899999998,
+      "completion_interval_p95_ms": 108.06927330000002,
+      "cycle_ms": 94.44376845762712,
+      "fps": 10.588311080033378,
+      "load_bytes_per_frame": 15265792.0,
+      "load_calls_per_frame": 1594.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "61479f4eb3a631dd"
+      ],
+      "position": 1,
+      "profile_sha256": "90a1348fb092deb40e047308d7b4a6cacbfe4f388b444ad97945635f5abfbfd5",
+      "rank": 13,
+      "result_sha256": "a38ff4d30edd90d16d50c87a7e9911b767e543f5bed2089998dc7cd52717440d",
+      "round": 4,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1179136.0,
+      "store_calls_per_frame": 90.0,
+      "topology_id": "D",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 12.359568999999999,
+      "weight_load_bytes_per_frame": 11067392.0
+    },
+    {
+      "completion_interval_cv": 0.1298621871812404,
+      "completion_interval_median_ms": 98.08142100000032,
+      "completion_interval_p95_ms": 102.8157293,
+      "cycle_ms": 91.56284118644069,
+      "fps": 10.921461010190752,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "00b1f37535ac3647"
+      ],
+      "position": 2,
+      "profile_sha256": "70ba3d312b44774b27019b2de5278caabde7fe0aec0f72659a5d08088944756f",
+      "rank": 1,
+      "result_sha256": "bf920e143b2d942daaf1a4b025e7633022c663d8741d80e7f602d5e9e44bb81e",
+      "round": 4,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1229312.0,
+      "store_calls_per_frame": 94.0,
+      "topology_id": "A",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.000435,
+      "weight_load_bytes_per_frame": 7528448.0
+    },
+    {
+      "completion_interval_cv": 0.18481076650708733,
+      "completion_interval_median_ms": 96.61578599999984,
+      "completion_interval_p95_ms": 131.1181863000004,
+      "cycle_ms": 98.97937601694915,
+      "fps": 10.10311481281475,
+      "load_bytes_per_frame": 11806208.0,
+      "load_calls_per_frame": 1532.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "a8c613584e081e5f"
+      ],
+      "position": 3,
+      "profile_sha256": "d8233d636f377e40948649e9fc915af1ee98f385732e95e81216c230ec55db81",
+      "rank": 5,
+      "result_sha256": "452a81fb0911d152a544cafb6dad8cc10f40c1fef81cfcafa39f83157f6f8545",
+      "round": 4,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1204224.0,
+      "store_calls_per_frame": 92.0,
+      "topology_id": "B",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.00048,
+      "weight_load_bytes_per_frame": 7397376.0
+    },
+    {
+      "completion_interval_cv": 0.13887457831488345,
+      "completion_interval_median_ms": 99.11397100000067,
+      "completion_interval_p95_ms": 106.68546520000027,
+      "cycle_ms": 93.53518650847458,
+      "fps": 10.691163799725752,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "output_deterministic": true,
+      "output_hashes": [
+        "00b1f37535ac3647"
+      ],
+      "position": 4,
+      "profile_sha256": "997064a7b1edd09f76d7cd16f36d56cb16be91df2612605bd8f595080089d3ae",
+      "rank": 7,
+      "result_sha256": "892c98f88ad1409afa214080f6a076346ebe19f2343c33582be066cdc05a9433",
+      "round": 4,
+      "scored_frames": 60,
+      "scored_intervals": 59,
+      "store_bytes_per_frame": 1229312.0,
+      "store_calls_per_frame": 94.0,
+      "topology_id": "C",
+      "total_frames": 62,
+      "vta_mutex_wait_median_sum_ms": 0.0005549999999999999,
+      "weight_load_bytes_per_frame": 7528448.0
+    }
+  ]
+}

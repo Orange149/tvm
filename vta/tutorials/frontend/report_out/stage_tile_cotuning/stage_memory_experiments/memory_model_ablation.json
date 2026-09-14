@@ -1,0 +1,3852 @@
+{
+  "candidate_space": {
+    "cpu_segments_with_atomic_costs": 85,
+    "execution_configurations": 972528,
+    "topologies": 4623,
+    "unique_incumbent_workloads": 10,
+    "vta_segments_with_static_dma": 87
+  },
+  "conclusion": {
+    "interpretation": "Report a negative ranking result if M2 is off the critical resource in the natural Top-20; retain exact DMA for endpoint deltas, dominance checks, and rejecting fragmented tile candidates.",
+    "m2_changes_natural_top20": false,
+    "m2_improves_four_topology_spearman": false
+  },
+  "kind": "stage_memory_model_ablation",
+  "measured_four_topology_evaluation": {
+    "m0": {
+      "actual_cycle_ms": {
+        "A": 91.77924072033898,
+        "B": 99.10142944915253,
+        "C": 92.974142,
+        "D": 95.3349929661017
+      },
+      "actual_fps": {
+        "A": 10.895770672414287,
+        "B": 10.090687111195734,
+        "C": 10.756070386582538,
+        "D": 10.489335498332053
+      },
+      "actual_ordering": [
+        "A",
+        "C",
+        "D",
+        "B"
+      ],
+      "cycle_spearman": -0.39999999999999997,
+      "evaluations_to_95pct_oracle": 2,
+      "predicted_cycle_ms": {
+        "A": 67.97696840709094,
+        "B": 67.62169049277571,
+        "C": 67.97558600275508,
+        "D": 68.41211399999999
+      },
+      "predicted_ordering": [
+        "B",
+        "C",
+        "A",
+        "D"
+      ],
+      "throughput_regret_at_k": {
+        "1": 0.07388954718520724,
+        "2": 0.012821514882415785,
+        "3": 0.0,
+        "4": 0.0
+      },
+      "top1_hits_actual_best": false
+    },
+    "m1": {
+      "actual_cycle_ms": {
+        "A": 91.77924072033898,
+        "B": 99.10142944915253,
+        "C": 92.974142,
+        "D": 95.3349929661017
+      },
+      "actual_fps": {
+        "A": 10.895770672414287,
+        "B": 10.090687111195734,
+        "C": 10.756070386582538,
+        "D": 10.489335498332053
+      },
+      "actual_ordering": [
+        "A",
+        "C",
+        "D",
+        "B"
+      ],
+      "cycle_spearman": 0.39999999999999997,
+      "evaluations_to_95pct_oracle": 1,
+      "predicted_cycle_ms": {
+        "A": 70.80742178209094,
+        "B": 71.05931986777571,
+        "C": 71.10962737775507,
+        "D": 72.04493172150508
+      },
+      "predicted_ordering": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "throughput_regret_at_k": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0
+      },
+      "top1_hits_actual_best": true
+    },
+    "m2": {
+      "actual_cycle_ms": {
+        "A": 91.77924072033898,
+        "B": 99.10142944915253,
+        "C": 92.974142,
+        "D": 95.3349929661017
+      },
+      "actual_fps": {
+        "A": 10.895770672414287,
+        "B": 10.090687111195734,
+        "C": 10.756070386582538,
+        "D": 10.489335498332053
+      },
+      "actual_ordering": [
+        "A",
+        "C",
+        "D",
+        "B"
+      ],
+      "cycle_spearman": 0.39999999999999997,
+      "evaluations_to_95pct_oracle": 1,
+      "predicted_cycle_ms": {
+        "A": 70.80742178209094,
+        "B": 71.05931986777571,
+        "C": 71.10962737775507,
+        "D": 72.04493172150508
+      },
+      "predicted_ordering": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "throughput_regret_at_k": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0
+      },
+      "top1_hits_actual_best": true
+    }
+  },
+  "measurement_budget": {
+    "actual_unique_workload_trials": 80,
+    "avoided_trials": 232,
+    "hypothetical_stage_specific_trials": 312,
+    "outcomes": {
+      "compile_host": 41,
+      "pass": 32,
+      "wrong_answer": 7
+    },
+    "reduction_fraction": 0.7435897435897436,
+    "stage_workload_placements_in_frozen_topologies": 39,
+    "trials_per_workload": 8,
+    "unique_workloads": 10
+  },
+  "model_definitions": {
+    "m0": "compute resources only: CPU stage, serialized VTA, and four-core CPU lower bounds",
+    "m1": "M0 plus owned CPU-VTA boundary service, boundary host work, and VTA mutex boundary service",
+    "m2": "M1 plus shared-DDR lower bound using CPU component bandwidth and exact incumbent-tile TIR LOAD/STORE bytes; DMA calls/small calls are deterministic tie-break and pruning features"
+  },
+  "models": {
+    "m0": {
+      "distinct_topologies": 1,
+      "ordered_topologies": [
+        "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20"
+      ],
+      "top20": [
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t3__vta-10-10_t1__cpu-11-12_t1__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            2,
+            3,
+            1,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.654075750000004,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.61993084865536,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.8722688051471205,
+          "m2_exact_shared_ddr_service_ms": 10.094260784508762,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              3
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              1
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 1,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t3__vta-10-10_t1__cpu-11-12_t2__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            2,
+            3,
+            2,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.66750825,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.63336334865535,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.7154081178621287,
+          "m2_exact_shared_ddr_service_ms": 9.93740009722377,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              3
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              2
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 2,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t3__vta-10-10_t1__cpu-11-12_t3__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            2,
+            3,
+            3,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.714451499999996,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.68030659865535,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6726843607257289,
+          "m2_exact_shared_ddr_service_ms": 9.89467634008737,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              3
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              3
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 3,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t3__vta-10-10_t1__cpu-11-12_t4__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            2,
+            3,
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.7701845,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.73603959865535,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6529530450576417,
+          "m2_exact_shared_ddr_service_ms": 9.874945024419283,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              3
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              4
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 4,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t4__vta-10-10_t1__cpu-11-12_t1__vta-13-15_t1__cpu-16-20_t3",
+          "cpu_thread_parameters": [
+            2,
+            4,
+            1,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 59.7069875,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 66.67284259865535,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.842962862073101,
+          "m2_exact_shared_ddr_service_ms": 10.064954841434743,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              4
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              1
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              3
+            ]
+          ],
+          "rank": 5,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t4__vta-10-10_t1__cpu-11-12_t1__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            2,
+            4,
+            1,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 61.48602925,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.45188434865535,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.8328061738109461,
+          "m2_exact_shared_ddr_service_ms": 10.054798153172587,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              4
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              1
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 6,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t4__vta-10-10_t1__cpu-11-12_t2__vta-13-15_t1__cpu-16-20_t3",
+          "cpu_thread_parameters": [
+            2,
+            4,
+            2,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 59.720420000000004,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 66.68627509865534,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6861021747881092,
+          "m2_exact_shared_ddr_service_ms": 9.908094154149751,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              4
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              2
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              3
+            ]
+          ],
+          "rank": 7,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t4__vta-10-10_t1__cpu-11-12_t2__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            2,
+            4,
+            2,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 61.49946175,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.46531684865535,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6759454865259543,
+          "m2_exact_shared_ddr_service_ms": 9.897937465887596,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              4
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              2
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 8,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t4__vta-10-10_t1__cpu-11-12_t3__vta-13-15_t1__cpu-16-20_t3",
+          "cpu_thread_parameters": [
+            2,
+            4,
+            3,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 59.76736325,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 66.73321834865534,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6433784176517094,
+          "m2_exact_shared_ddr_service_ms": 9.86537039701335,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              4
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              3
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              3
+            ]
+          ],
+          "rank": 9,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t4__vta-10-10_t1__cpu-11-12_t3__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            2,
+            4,
+            3,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 61.54640500000001,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.51226009865535,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6332217293895546,
+          "m2_exact_shared_ddr_service_ms": 9.855213708751196,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              4
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              3
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 10,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t4__vta-10-10_t1__cpu-11-12_t4__vta-13-15_t1__cpu-16-20_t3",
+          "cpu_thread_parameters": [
+            2,
+            4,
+            4,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 59.823096250000006,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 66.78895134865535,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6236471019836223,
+          "m2_exact_shared_ddr_service_ms": 9.845639081345263,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              4
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              4
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              3
+            ]
+          ],
+          "rank": 11,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t2__vta-01-05_t1__cpu-06-09_t4__vta-10-10_t1__cpu-11-12_t4__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            2,
+            4,
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 61.602138000000004,
+            "max_cpu_stage_run_only_ms": 45.03618,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.56799309865535,
+            "max_cpu_stage_with_owned_boundary_ms": 45.408727375000005,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6134904137214674,
+          "m2_exact_shared_ddr_service_ms": 9.835482393083108,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              2
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              4
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              4
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 12,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t3__vta-01-05_t1__cpu-06-09_t2__vta-10-10_t1__cpu-11-12_t1__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            3,
+            2,
+            1,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.59377450000001,
+            "max_cpu_stage_run_only_ms": 38.111422,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.55962959865536,
+            "max_cpu_stage_with_owned_boundary_ms": 38.71517568749999,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.9130951140865596,
+          "m2_exact_shared_ddr_service_ms": 10.1350870934482,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              3
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              2
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              1
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 13,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t3__vta-01-05_t1__cpu-06-09_t2__vta-10-10_t1__cpu-11-12_t2__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            3,
+            2,
+            2,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.607207,
+            "max_cpu_stage_run_only_ms": 38.111422,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.57306209865536,
+            "max_cpu_stage_with_owned_boundary_ms": 38.71517568749999,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.7562344268015679,
+          "m2_exact_shared_ddr_service_ms": 9.978226406163209,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              3
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              2
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              2
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 14,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t3__vta-01-05_t1__cpu-06-09_t2__vta-10-10_t1__cpu-11-12_t3__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            3,
+            2,
+            3,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.65415025,
+            "max_cpu_stage_run_only_ms": 38.111422,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.62000534865535,
+            "max_cpu_stage_with_owned_boundary_ms": 38.71517568749999,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.7135106696651682,
+          "m2_exact_shared_ddr_service_ms": 9.93550264902681,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              3
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              2
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              3
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 15,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t3__vta-01-05_t1__cpu-06-09_t2__vta-10-10_t1__cpu-11-12_t4__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            3,
+            2,
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.709883250000004,
+            "max_cpu_stage_run_only_ms": 38.111422,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.67573834865536,
+            "max_cpu_stage_with_owned_boundary_ms": 38.71517568749999,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.693779353997081,
+          "m2_exact_shared_ddr_service_ms": 9.915771333358723,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              3
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              2
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              4
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 16,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t3__vta-01-05_t1__cpu-06-09_t3__vta-10-10_t1__cpu-11-12_t1__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            3,
+            3,
+            1,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.86637225,
+            "max_cpu_stage_run_only_ms": 34.915909,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.83222734865535,
+            "max_cpu_stage_with_owned_boundary_ms": 35.288456375,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.8276475998137601,
+          "m2_exact_shared_ddr_service_ms": 10.049639579175402,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              3
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              3
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              1
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 17,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t3__vta-01-05_t1__cpu-06-09_t3__vta-10-10_t1__cpu-11-12_t2__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            3,
+            3,
+            2,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.87980474999999,
+            "max_cpu_stage_run_only_ms": 34.915909,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.84565984865534,
+            "max_cpu_stage_with_owned_boundary_ms": 35.288456375,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6707869125287684,
+          "m2_exact_shared_ddr_service_ms": 9.89277889189041,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              3
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              3
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              2
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 18,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t3__vta-01-05_t1__cpu-06-09_t3__vta-10-10_t1__cpu-11-12_t3__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            3,
+            3,
+            3,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.92674799999999,
+            "max_cpu_stage_run_only_ms": 34.915909,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.89260309865534,
+            "max_cpu_stage_with_owned_boundary_ms": 35.288456375,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6280631553923687,
+          "m2_exact_shared_ddr_service_ms": 9.85005513475401,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              3
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              3
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              3
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 19,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        },
+        {
+          "boundary_bytes": 3512320,
+          "candidate_id": "cpu-00-00_t3__vta-01-05_t1__cpu-06-09_t3__vta-10-10_t1__cpu-11-12_t4__vta-13-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 60.98248099999999,
+            "max_cpu_stage_run_only_ms": 34.915909,
+            "single_vta_service_ms": 66.91113466414528
+          },
+          "m0_score_ms": 66.91113466414528,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.94833609865535,
+            "max_cpu_stage_with_owned_boundary_ms": 35.288456375,
+            "single_vta_plus_mutex_boundary_ms": 77.70849707039528
+          },
+          "m1_score_ms": 77.70849707039528,
+          "m2_cpu_ddr_service_ms": 0.6083318397242815,
+          "m2_exact_shared_ddr_service_ms": 9.830323819085923,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 77.70849707039528,
+          "m2_vta_ddr_service_ms": 9.221991979361642,
+          "path": [
+            [
+              "cpu:00:00",
+              3
+            ],
+            [
+              "vta:01:05",
+              1
+            ],
+            [
+              "cpu:06:09",
+              3
+            ],
+            [
+              "vta:10:10",
+              1
+            ],
+            [
+              "cpu:11:12",
+              4
+            ],
+            [
+              "vta:13:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 20,
+          "topology_id": "cpu-00-00__vta-01-05__cpu-06-09__vta-10-10__cpu-11-12__vta-13-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11182080,
+            "load_buffer_2d_calls": 1280,
+            "load_buffer_2d_inp_bytes": 3956736,
+            "load_buffer_2d_small_calls": 288,
+            "load_buffer_2d_strided_calls": 640,
+            "load_buffer_2d_wgt_bytes": 7225344,
+            "store_buffer_2d_bytes": 1254400,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 3
+        }
+      ]
+    },
+    "m1": {
+      "distinct_topologies": 4,
+      "ordered_topologies": [
+        "cpu-00-02__vta-03-17__cpu-18-20",
+        "cpu-00-02__vta-03-15__cpu-16-20",
+        "cpu-00-02__vta-03-16__cpu-17-20",
+        "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20"
+      ],
+      "top20": [
+        {
+          "boundary_bytes": 903168,
+          "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.450935,
+            "max_cpu_stage_run_only_ms": 66.673687,
+            "single_vta_service_ms": 67.97696840709094
+          },
+          "m0_score_ms": 67.97696840709094,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.32718525297588,
+            "max_cpu_stage_with_owned_boundary_ms": 66.708477,
+            "single_vta_plus_mutex_boundary_ms": 70.80742178209094
+          },
+          "m1_score_ms": 70.80742178209094,
+          "m2_cpu_ddr_service_ms": 0.23292593195291633,
+          "m2_exact_shared_ddr_service_ms": 10.008922879068503,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 70.80742178209094,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:17",
+              1
+            ],
+            [
+              "cpu:18:20",
+              1
+            ]
+          ],
+          "rank": 1,
+          "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 903168,
+          "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.42488624999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97696840709094
+          },
+          "m0_score_ms": 67.97696840709094,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.20406425297587,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 70.80742178209094
+          },
+          "m1_score_ms": 70.80742178209094,
+          "m2_cpu_ddr_service_ms": 0.2101650419285614,
+          "m2_exact_shared_ddr_service_ms": 9.986161989044149,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 70.80742178209094,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:17",
+              1
+            ],
+            [
+              "cpu:18:20",
+              2
+            ]
+          ],
+          "rank": 2,
+          "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 903168,
+          "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.397600999999995,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97696840709094
+          },
+          "m0_score_ms": 67.97696840709094,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.17677900297588,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 70.80742178209094
+          },
+          "m1_score_ms": 70.80742178209094,
+          "m2_cpu_ddr_service_ms": 0.2031372242438349,
+          "m2_exact_shared_ddr_service_ms": 9.979134171359421,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 70.80742178209094,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:17",
+              1
+            ],
+            [
+              "cpu:18:20",
+              3
+            ]
+          ],
+          "rank": 3,
+          "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 903168,
+          "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.15173424999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97696840709094
+          },
+          "m0_score_ms": 67.97696840709094,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 69.93091225297587,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 70.80742178209094
+          },
+          "m1_score_ms": 70.80742178209094,
+          "m2_cpu_ddr_service_ms": 0.1997597161346441,
+          "m2_exact_shared_ddr_service_ms": 9.97575666325023,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 70.80742178209094,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:17",
+              1
+            ],
+            [
+              "cpu:18:20",
+              4
+            ]
+          ],
+          "rank": 4,
+          "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1103872,
+          "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 64.7132865,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.62169049277571
+          },
+          "m0_score_ms": 67.62169049277571,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 69.64226773799405,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.05931986777571
+          },
+          "m1_score_ms": 71.05931986777571,
+          "m2_cpu_ddr_service_ms": 0.2583324498205434,
+          "m2_exact_shared_ddr_service_ms": 9.854161372588933,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.05931986777571,
+          "m2_vta_ddr_service_ms": 9.59582892276839,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              2
+            ]
+          ],
+          "rank": 5,
+          "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11785216,
+            "load_buffer_2d_calls": 1440,
+            "load_buffer_2d_inp_bytes": 4387840,
+            "load_buffer_2d_small_calls": 352,
+            "load_buffer_2d_strided_calls": 784,
+            "load_buffer_2d_wgt_bytes": 7397376,
+            "store_buffer_2d_bytes": 1204224,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1103872,
+          "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 64.70786399999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.62169049277571
+          },
+          "m0_score_ms": 67.62169049277571,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 69.63684523799404,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.05931986777571
+          },
+          "m1_score_ms": 71.05931986777571,
+          "m2_cpu_ddr_service_ms": 0.23727420733445703,
+          "m2_exact_shared_ddr_service_ms": 9.833103130102847,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.05931986777571,
+          "m2_vta_ddr_service_ms": 9.59582892276839,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              3
+            ]
+          ],
+          "rank": 6,
+          "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11785216,
+            "load_buffer_2d_calls": 1440,
+            "load_buffer_2d_inp_bytes": 4387840,
+            "load_buffer_2d_small_calls": 352,
+            "load_buffer_2d_strided_calls": 784,
+            "load_buffer_2d_wgt_bytes": 7397376,
+            "store_buffer_2d_bytes": 1204224,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1003520,
+          "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.580236,
+            "max_cpu_stage_run_only_ms": 66.802688,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.4447041561277,
+            "max_cpu_stage_with_owned_boundary_ms": 66.872268,
+            "single_vta_plus_mutex_boundary_ms": 71.10962737775507
+          },
+          "m1_score_ms": 71.10962737775507,
+          "m2_cpu_ddr_service_ms": 0.2793111057145774,
+          "m2_exact_shared_ddr_service_ms": 10.055308052830163,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.10962737775507,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:16",
+              1
+            ],
+            [
+              "cpu:17:20",
+              1
+            ]
+          ],
+          "rank": 7,
+          "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1003520,
+          "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.4494565,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.3138281561277,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.10962737775507
+          },
+          "m1_score_ms": 71.10962737775507,
+          "m2_cpu_ddr_service_ms": 0.2342487458745524,
+          "m2_exact_shared_ddr_service_ms": 10.01024569299014,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.10962737775507,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:16",
+              1
+            ],
+            [
+              "cpu:17:20",
+              2
+            ]
+          ],
+          "rank": 8,
+          "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1003520,
+          "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.44747674999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.3118484061277,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.10962737775507
+          },
+          "m1_score_ms": 71.10962737775507,
+          "m2_cpu_ddr_service_ms": 0.22020571578914597,
+          "m2_exact_shared_ddr_service_ms": 9.996202662904732,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.10962737775507,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:16",
+              1
+            ],
+            [
+              "cpu:17:20",
+              3
+            ]
+          ],
+          "rank": 9,
+          "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1003520,
+          "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.20853274999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 70.07290440612769,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.10962737775507
+          },
+          "m1_score_ms": 71.10962737775507,
+          "m2_cpu_ddr_service_ms": 0.21343861760347316,
+          "m2_exact_shared_ddr_service_ms": 9.98943556471906,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.10962737775507,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:16",
+              1
+            ],
+            [
+              "cpu:17:20",
+              4
+            ]
+          ],
+          "rank": 10,
+          "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1103872,
+          "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 66.48690574999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.62169049277571
+          },
+          "m0_score_ms": 67.62169049277571,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 71.41588698799404,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.05931986777571
+          },
+          "m1_score_ms": 71.41588698799404,
+          "m2_cpu_ddr_service_ms": 0.22711751907230218,
+          "m2_exact_shared_ddr_service_ms": 9.822946441840692,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.41588698799404,
+          "m2_vta_ddr_service_ms": 9.59582892276839,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 11,
+          "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11785216,
+            "load_buffer_2d_calls": 1440,
+            "load_buffer_2d_inp_bytes": 4387840,
+            "load_buffer_2d_small_calls": 352,
+            "load_buffer_2d_strided_calls": 784,
+            "load_buffer_2d_wgt_bytes": 7397376,
+            "store_buffer_2d_bytes": 1204224,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1103872,
+          "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 70.52755499999999,
+            "max_cpu_stage_run_only_ms": 71.757057,
+            "single_vta_service_ms": 67.62169049277571
+          },
+          "m0_score_ms": 71.757057,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 70.52755499999999,
+            "max_cpu_stage_with_owned_boundary_ms": 71.861427,
+            "single_vta_plus_mutex_boundary_ms": 71.05931986777571
+          },
+          "m1_score_ms": 71.861427,
+          "m2_cpu_ddr_service_ms": 0.32569627947623847,
+          "m2_exact_shared_ddr_service_ms": 9.921525202244629,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.861427,
+          "m2_vta_ddr_service_ms": 9.59582892276839,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              1
+            ]
+          ],
+          "rank": 12,
+          "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11785216,
+            "load_buffer_2d_calls": 1440,
+            "load_buffer_2d_inp_bytes": 4387840,
+            "load_buffer_2d_small_calls": 352,
+            "load_buffer_2d_strided_calls": 784,
+            "load_buffer_2d_wgt_bytes": 7397376,
+            "store_buffer_2d_bytes": 1204224,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            1,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 68.41211399999999,
+            "max_cpu_stage_run_only_ms": 66.86421899999999,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 68.41211399999999,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.41909007800268,
+            "max_cpu_stage_with_owned_boundary_ms": 67.02693584375,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.37464734633579505,
+          "m2_exact_shared_ddr_service_ms": 12.387427103402745,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              1
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              1
+            ]
+          ],
+          "rank": 13,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            1,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.58722599999999,
+            "max_cpu_stage_run_only_ms": 66.86421899999999,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.42752032800269,
+            "max_cpu_stage_with_owned_boundary_ms": 67.02693584375,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.3518864563114401,
+          "m2_exact_shared_ddr_service_ms": 12.36466621337839,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              1
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              2
+            ]
+          ],
+          "rank": 14,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            1,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.58722599999999,
+            "max_cpu_stage_run_only_ms": 66.86421899999999,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.43013807800268,
+            "max_cpu_stage_with_owned_boundary_ms": 67.02693584375,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.3448586386267136,
+          "m2_exact_shared_ddr_service_ms": 12.357638395693662,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              1
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              3
+            ]
+          ],
+          "rank": 15,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            1,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.58722599999999,
+            "max_cpu_stage_run_only_ms": 66.86421899999999,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.43098582800269,
+            "max_cpu_stage_with_owned_boundary_ms": 67.02693584375,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.3414811305175228,
+          "m2_exact_shared_ddr_service_ms": 12.354260887584472,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              1
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              4
+            ]
+          ],
+          "rank": 16,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t2__vta-15-19_t1__cpu-20-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            2,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.71117099999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.84195907800269,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.30699253831348355,
+          "m2_exact_shared_ddr_service_ms": 12.319772295380433,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              2
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              1
+            ]
+          ],
+          "rank": 17,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t2__vta-15-19_t1__cpu-20-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            2,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.71960125,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.85038932800269,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.2842316482891286,
+          "m2_exact_shared_ddr_service_ms": 12.297011405356079,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              2
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              2
+            ]
+          ],
+          "rank": 18,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t2__vta-15-19_t1__cpu-20-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            2,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.722218999999996,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.85300707800269,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.2772038306044021,
+          "m2_exact_shared_ddr_service_ms": 12.289983587671351,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              2
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              3
+            ]
+          ],
+          "rank": 19,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t2__vta-15-19_t1__cpu-20-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            2,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.723066749999994,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.8538548280027,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.2738263224952113,
+          "m2_exact_shared_ddr_service_ms": 12.28660607956216,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              2
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              4
+            ]
+          ],
+          "rank": 20,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        }
+      ]
+    },
+    "m2": {
+      "distinct_topologies": 4,
+      "ordered_topologies": [
+        "cpu-00-02__vta-03-17__cpu-18-20",
+        "cpu-00-02__vta-03-15__cpu-16-20",
+        "cpu-00-02__vta-03-16__cpu-17-20",
+        "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20"
+      ],
+      "top20": [
+        {
+          "boundary_bytes": 903168,
+          "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.450935,
+            "max_cpu_stage_run_only_ms": 66.673687,
+            "single_vta_service_ms": 67.97696840709094
+          },
+          "m0_score_ms": 67.97696840709094,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.32718525297588,
+            "max_cpu_stage_with_owned_boundary_ms": 66.708477,
+            "single_vta_plus_mutex_boundary_ms": 70.80742178209094
+          },
+          "m1_score_ms": 70.80742178209094,
+          "m2_cpu_ddr_service_ms": 0.23292593195291633,
+          "m2_exact_shared_ddr_service_ms": 10.008922879068503,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 70.80742178209094,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:17",
+              1
+            ],
+            [
+              "cpu:18:20",
+              1
+            ]
+          ],
+          "rank": 1,
+          "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 903168,
+          "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.42488624999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97696840709094
+          },
+          "m0_score_ms": 67.97696840709094,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.20406425297587,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 70.80742178209094
+          },
+          "m1_score_ms": 70.80742178209094,
+          "m2_cpu_ddr_service_ms": 0.2101650419285614,
+          "m2_exact_shared_ddr_service_ms": 9.986161989044149,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 70.80742178209094,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:17",
+              1
+            ],
+            [
+              "cpu:18:20",
+              2
+            ]
+          ],
+          "rank": 2,
+          "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 903168,
+          "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.397600999999995,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97696840709094
+          },
+          "m0_score_ms": 67.97696840709094,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.17677900297588,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 70.80742178209094
+          },
+          "m1_score_ms": 70.80742178209094,
+          "m2_cpu_ddr_service_ms": 0.2031372242438349,
+          "m2_exact_shared_ddr_service_ms": 9.979134171359421,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 70.80742178209094,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:17",
+              1
+            ],
+            [
+              "cpu:18:20",
+              3
+            ]
+          ],
+          "rank": 3,
+          "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 903168,
+          "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.15173424999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97696840709094
+          },
+          "m0_score_ms": 67.97696840709094,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 69.93091225297587,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 70.80742178209094
+          },
+          "m1_score_ms": 70.80742178209094,
+          "m2_cpu_ddr_service_ms": 0.1997597161346441,
+          "m2_exact_shared_ddr_service_ms": 9.97575666325023,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 70.80742178209094,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:17",
+              1
+            ],
+            [
+              "cpu:18:20",
+              4
+            ]
+          ],
+          "rank": 4,
+          "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1103872,
+          "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 64.7132865,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.62169049277571
+          },
+          "m0_score_ms": 67.62169049277571,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 69.64226773799405,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.05931986777571
+          },
+          "m1_score_ms": 71.05931986777571,
+          "m2_cpu_ddr_service_ms": 0.2583324498205434,
+          "m2_exact_shared_ddr_service_ms": 9.854161372588933,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.05931986777571,
+          "m2_vta_ddr_service_ms": 9.59582892276839,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              2
+            ]
+          ],
+          "rank": 5,
+          "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11785216,
+            "load_buffer_2d_calls": 1440,
+            "load_buffer_2d_inp_bytes": 4387840,
+            "load_buffer_2d_small_calls": 352,
+            "load_buffer_2d_strided_calls": 784,
+            "load_buffer_2d_wgt_bytes": 7397376,
+            "store_buffer_2d_bytes": 1204224,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1103872,
+          "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 64.70786399999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.62169049277571
+          },
+          "m0_score_ms": 67.62169049277571,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 69.63684523799404,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.05931986777571
+          },
+          "m1_score_ms": 71.05931986777571,
+          "m2_cpu_ddr_service_ms": 0.23727420733445703,
+          "m2_exact_shared_ddr_service_ms": 9.833103130102847,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.05931986777571,
+          "m2_vta_ddr_service_ms": 9.59582892276839,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              3
+            ]
+          ],
+          "rank": 6,
+          "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11785216,
+            "load_buffer_2d_calls": 1440,
+            "load_buffer_2d_inp_bytes": 4387840,
+            "load_buffer_2d_small_calls": 352,
+            "load_buffer_2d_strided_calls": 784,
+            "load_buffer_2d_wgt_bytes": 7397376,
+            "store_buffer_2d_bytes": 1204224,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1003520,
+          "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.580236,
+            "max_cpu_stage_run_only_ms": 66.802688,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 67.4447041561277,
+            "max_cpu_stage_with_owned_boundary_ms": 66.872268,
+            "single_vta_plus_mutex_boundary_ms": 71.10962737775507
+          },
+          "m1_score_ms": 71.10962737775507,
+          "m2_cpu_ddr_service_ms": 0.2793111057145774,
+          "m2_exact_shared_ddr_service_ms": 10.055308052830163,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.10962737775507,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:16",
+              1
+            ],
+            [
+              "cpu:17:20",
+              1
+            ]
+          ],
+          "rank": 7,
+          "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1003520,
+          "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.4494565,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.3138281561277,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.10962737775507
+          },
+          "m1_score_ms": 71.10962737775507,
+          "m2_cpu_ddr_service_ms": 0.2342487458745524,
+          "m2_exact_shared_ddr_service_ms": 10.01024569299014,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.10962737775507,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:16",
+              1
+            ],
+            [
+              "cpu:17:20",
+              2
+            ]
+          ],
+          "rank": 8,
+          "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1003520,
+          "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.44747674999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.3118484061277,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.10962737775507
+          },
+          "m1_score_ms": 71.10962737775507,
+          "m2_cpu_ddr_service_ms": 0.22020571578914597,
+          "m2_exact_shared_ddr_service_ms": 9.996202662904732,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.10962737775507,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:16",
+              1
+            ],
+            [
+              "cpu:17:20",
+              3
+            ]
+          ],
+          "rank": 9,
+          "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1003520,
+          "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.20853274999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 70.07290440612769,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.10962737775507
+          },
+          "m1_score_ms": 71.10962737775507,
+          "m2_cpu_ddr_service_ms": 0.21343861760347316,
+          "m2_exact_shared_ddr_service_ms": 9.98943556471906,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.10962737775507,
+          "m2_vta_ddr_service_ms": 9.775996947115587,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:16",
+              1
+            ],
+            [
+              "cpu:17:20",
+              4
+            ]
+          ],
+          "rank": 10,
+          "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 12002816,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4474368,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 7528448,
+            "store_buffer_2d_bytes": 1229312,
+            "store_buffer_2d_calls": 94
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1103872,
+          "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 66.48690574999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.62169049277571
+          },
+          "m0_score_ms": 67.62169049277571,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 71.41588698799404,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 71.05931986777571
+          },
+          "m1_score_ms": 71.41588698799404,
+          "m2_cpu_ddr_service_ms": 0.22711751907230218,
+          "m2_exact_shared_ddr_service_ms": 9.822946441840692,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.41588698799404,
+          "m2_vta_ddr_service_ms": 9.59582892276839,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              4
+            ]
+          ],
+          "rank": 11,
+          "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11785216,
+            "load_buffer_2d_calls": 1440,
+            "load_buffer_2d_inp_bytes": 4387840,
+            "load_buffer_2d_small_calls": 352,
+            "load_buffer_2d_strided_calls": 784,
+            "load_buffer_2d_wgt_bytes": 7397376,
+            "store_buffer_2d_bytes": 1204224,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1103872,
+          "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 70.52755499999999,
+            "max_cpu_stage_run_only_ms": 71.757057,
+            "single_vta_service_ms": 67.62169049277571
+          },
+          "m0_score_ms": 71.757057,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 70.52755499999999,
+            "max_cpu_stage_with_owned_boundary_ms": 71.861427,
+            "single_vta_plus_mutex_boundary_ms": 71.05931986777571
+          },
+          "m1_score_ms": 71.861427,
+          "m2_cpu_ddr_service_ms": 0.32569627947623847,
+          "m2_exact_shared_ddr_service_ms": 9.921525202244629,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 71.861427,
+          "m2_vta_ddr_service_ms": 9.59582892276839,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:15",
+              1
+            ],
+            [
+              "cpu:16:20",
+              1
+            ]
+          ],
+          "rank": 12,
+          "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 11785216,
+            "load_buffer_2d_calls": 1440,
+            "load_buffer_2d_inp_bytes": 4387840,
+            "load_buffer_2d_small_calls": 352,
+            "load_buffer_2d_strided_calls": 784,
+            "load_buffer_2d_wgt_bytes": 7397376,
+            "store_buffer_2d_bytes": 1204224,
+            "store_buffer_2d_calls": 92
+          },
+          "vta_islands": 1
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            1,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 68.41211399999999,
+            "max_cpu_stage_run_only_ms": 66.86421899999999,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 68.41211399999999,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.41909007800268,
+            "max_cpu_stage_with_owned_boundary_ms": 67.02693584375,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.37464734633579505,
+          "m2_exact_shared_ddr_service_ms": 12.387427103402745,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              1
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              1
+            ]
+          ],
+          "rank": 13,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            1,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.58722599999999,
+            "max_cpu_stage_run_only_ms": 66.86421899999999,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.42752032800269,
+            "max_cpu_stage_with_owned_boundary_ms": 67.02693584375,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.3518864563114401,
+          "m2_exact_shared_ddr_service_ms": 12.36466621337839,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              1
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              2
+            ]
+          ],
+          "rank": 14,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            1,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.58722599999999,
+            "max_cpu_stage_run_only_ms": 66.86421899999999,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.43013807800268,
+            "max_cpu_stage_with_owned_boundary_ms": 67.02693584375,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.3448586386267136,
+          "m2_exact_shared_ddr_service_ms": 12.357638395693662,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              1
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              3
+            ]
+          ],
+          "rank": 15,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            1,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 65.58722599999999,
+            "max_cpu_stage_run_only_ms": 66.86421899999999,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.43098582800269,
+            "max_cpu_stage_with_owned_boundary_ms": 67.02693584375,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.3414811305175228,
+          "m2_exact_shared_ddr_service_ms": 12.354260887584472,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              1
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              4
+            ]
+          ],
+          "rank": 16,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t2__vta-15-19_t1__cpu-20-20_t1",
+          "cpu_thread_parameters": [
+            4,
+            2,
+            1
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.71117099999999,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.84195907800269,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.30699253831348355,
+          "m2_exact_shared_ddr_service_ms": 12.319772295380433,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              2
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              1
+            ]
+          ],
+          "rank": 17,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t2__vta-15-19_t1__cpu-20-20_t2",
+          "cpu_thread_parameters": [
+            4,
+            2,
+            2
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.71960125,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.85038932800269,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.2842316482891286,
+          "m2_exact_shared_ddr_service_ms": 12.297011405356079,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              2
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              2
+            ]
+          ],
+          "rank": 18,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t2__vta-15-19_t1__cpu-20-20_t3",
+          "cpu_thread_parameters": [
+            4,
+            2,
+            3
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.722218999999996,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.85300707800269,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.2772038306044021,
+          "m2_exact_shared_ddr_service_ms": 12.289983587671351,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              2
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              3
+            ]
+          ],
+          "rank": 19,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        },
+        {
+          "boundary_bytes": 1304576,
+          "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t2__vta-15-19_t1__cpu-20-20_t4",
+          "cpu_thread_parameters": [
+            4,
+            2,
+            4
+          ],
+          "m0_components": {
+            "cpu_compute_pool_lower_bound_ms": 63.723066749999994,
+            "max_cpu_stage_run_only_ms": 51.786248,
+            "single_vta_service_ms": 67.97558600275508
+          },
+          "m0_score_ms": 67.97558600275508,
+          "m1_components": {
+            "cpu_pool_with_boundary_lower_bound_ms": 68.8538548280027,
+            "max_cpu_stage_with_owned_boundary_ms": 52.158795375000004,
+            "single_vta_plus_mutex_boundary_ms": 72.04493172150508
+          },
+          "m1_score_ms": 72.04493172150508,
+          "m2_cpu_ddr_service_ms": 0.2738263224952113,
+          "m2_exact_shared_ddr_service_ms": 12.28660607956216,
+          "m2_memory_is_bottleneck": false,
+          "m2_score_ms": 72.04493172150508,
+          "m2_vta_ddr_service_ms": 12.01277975706695,
+          "path": [
+            [
+              "cpu:00:02",
+              4
+            ],
+            [
+              "vta:03:12",
+              1
+            ],
+            [
+              "cpu:13:14",
+              2
+            ],
+            [
+              "vta:15:19",
+              1
+            ],
+            [
+              "cpu:20:20",
+              4
+            ]
+          ],
+          "rank": 20,
+          "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+          "vta_dma": {
+            "load_buffer_2d_bytes": 15240704,
+            "load_buffer_2d_calls": 1504,
+            "load_buffer_2d_inp_bytes": 4173312,
+            "load_buffer_2d_small_calls": 384,
+            "load_buffer_2d_strided_calls": 848,
+            "load_buffer_2d_wgt_bytes": 11067392,
+            "store_buffer_2d_bytes": 1179136,
+            "store_buffer_2d_calls": 90
+          },
+          "vta_islands": 2
+        }
+      ]
+    }
+  },
+  "parameter_policy": {
+    "boundary_bytes_in_ddr_sum": false,
+    "boundary_reason": "adjacent CPU/VTA stage traffic already owns the physical tensor demand",
+    "cpu_cost_source": "P5B 21-unit atomic profiles with grouped-holdout gate",
+    "double_count_prevention": "exact DMA service is a max-resource lower bound, never added to measured VTA service",
+    "topology_fps_fitted_coefficients": false,
+    "vta_dma_bandwidth_source": {
+      "fit_r_squared": 0.9973250059953189,
+      "load_bandwidth_GBps": 1.4142933765901262,
+      "measurement_path": "native_static_packed_function",
+      "path": "vta/tutorials/frontend/report_out/resource_aware_maxplus/stage4a_q_qualification/session1/dma_identification_summary.json",
+      "reuse_scope": "provisional V1 device-DMA component rate; P4 shortlist must validate",
+      "sha256": "c72f3583e622bb3b8b3adfa9ca37fb7a6c52dad35f619ae726e3d1b2523bba88",
+      "store_bandwidth_GBps": 0.9535439217400337
+    }
+  },
+  "schema_version": 1,
+  "search_statistics": {
+    "m1_m2_top20_identical": true,
+    "m1_m2_top20_overlap": 20,
+    "maximum_shared_ddr_fraction_of_m1": {
+      "candidate_id": "cpu-00-00_t2__vta-01-06_t1__cpu-07-09_t1__vta-10-12_t1__cpu-13-14_t3__vta-15-19_t1__cpu-20-20_t1",
+      "fraction": 0.17265086527233453,
+      "m1_score_ms": 75.73706840900508,
+      "shared_ddr_service_ms": 13.076070394004718
+    },
+    "memory_bottleneck_configurations": 0,
+    "memory_changes_m1_score_configurations": 0
+  },
+  "source_sha256": {
+    "boot3": "b4bdbdb22a53488bf05fdf670baa6b689b6d5344ef61634f843420aa748291f5",
+    "experiment_ab": "fe5609863e5b3dd56f3094a1fe494b1a47ed0f4e94bee96e3d52bada52a44084",
+    "frozen_top20": "a4b01d799e080528a94721248f04e4329fa8239094504c986bdf964a60e219d7",
+    "selected_tasks": "3f4abe7ca36cbc4a729718f17066f5e757547a0b716d15e9086b273e653b5087",
+    "static_dma": "ff154ced1154c54fdd168597a1ab23433854c06652004538b821bd96fb48a3a5",
+    "tile_dma_analysis": "6f9dd15017111a80a4ab9f7a153960e3a6639321012ead9f67ad06b6cb3409b6"
+  }
+}

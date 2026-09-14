@@ -1,0 +1,546 @@
+{
+  "status": "completed",
+  "host": "192.168.1.247",
+  "port": 9091,
+  "bitstream_expected_sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+  "results": [
+    {
+      "unit_name": "layer2_block0_skip_proj",
+      "relay_inputs": [
+        [
+          "data0",
+          [
+            1,
+            128,
+            28,
+            28
+          ]
+        ],
+        [
+          "data1",
+          [
+            1,
+            64,
+            56,
+            56
+          ]
+        ]
+      ],
+      "reference_correct": true,
+      "comparisons": [
+        {
+          "elements": 100352,
+          "mismatched": 0,
+          "max_abs_error": 0.0
+        },
+        {
+          "elements": 100352,
+          "mismatched": 0,
+          "max_abs_error": 0.0
+        }
+      ],
+      "median_ms": 3.349804,
+      "costs_s": [
+        0.003416404,
+        0.0033498039999999996,
+        0.003331983
+      ],
+      "runtime_profile": {
+        "mem_copy_from_host_calls": 0,
+        "mem_copy_from_host_bytes": 0,
+        "mem_copy_from_host_us": 0,
+        "mem_copy_to_host_calls": 0,
+        "mem_copy_to_host_bytes": 0,
+        "mem_copy_to_host_us": 0,
+        "flush_cache_calls": 0,
+        "flush_cache_bytes": 0,
+        "flush_cache_us": 0,
+        "invalidate_cache_calls": 0,
+        "invalidate_cache_bytes": 0,
+        "invalidate_cache_us": 0,
+        "load_buffer_2d_calls": 72,
+        "load_buffer_2d_bytes": 400896,
+        "load_buffer_2d_small_calls": 40,
+        "load_buffer_2d_strided_calls": 64,
+        "load_buffer_2d_xsize1_calls": 32,
+        "load_buffer_2d_ysize1_calls": 8,
+        "load_buffer_2d_padded_calls": 0,
+        "load_buffer_2d_enqueue_us": 33.93,
+        "store_buffer_2d_calls": 8,
+        "store_buffer_2d_bytes": 100352,
+        "store_buffer_2d_small_calls": 0,
+        "store_buffer_2d_strided_calls": 8,
+        "store_buffer_2d_xsize1_calls": 0,
+        "store_buffer_2d_ysize1_calls": 0,
+        "store_buffer_2d_enqueue_us": 3.81,
+        "push_gemm_op_calls": 40,
+        "push_gemm_op_us": 12.27,
+        "push_alu_op_calls": 32,
+        "push_alu_op_us": 12.42,
+        "template_capture_calls": 0,
+        "template_replay_hits": 0,
+        "template_replay_fallbacks": 0,
+        "template_capture_us": 0,
+        "template_replay_us": 0,
+        "input_copy_calls": 0,
+        "input_copy_bytes": 0,
+        "input_copy_us": 0,
+        "output_copy_calls": 0,
+        "output_copy_bytes": 0,
+        "output_copy_us": 0,
+        "device_copy_calls": 0,
+        "device_copy_bytes": 0,
+        "device_copy_us": 0,
+        "synchronize_calls": 1,
+        "synchronize_insns": 180,
+        "synchronize_load_bytes": 400896,
+        "synchronize_store_bytes": 100352,
+        "device_run_wait_us": 1224.07,
+        "driver_run_calls": 1,
+        "driver_run_insns": 180,
+        "driver_timeout_calls": 0,
+        "driver_poll_iters": 21,
+        "driver_run_total_us": 1217.35,
+        "driver_submit_mmio_us": 4.59,
+        "driver_post_start_sleep_us": 62.161,
+        "driver_poll_wait_us": 1148.86,
+        "event_count": 153,
+        "load_buffer_2d_uop_calls": 0,
+        "load_buffer_2d_uop_bytes": 0,
+        "store_buffer_2d_uop_calls": 0,
+        "store_buffer_2d_uop_bytes": 0,
+        "load_buffer_2d_inp_calls": 32,
+        "load_buffer_2d_inp_bytes": 366080,
+        "store_buffer_2d_inp_calls": 0,
+        "store_buffer_2d_inp_bytes": 0,
+        "load_buffer_2d_wgt_calls": 32,
+        "load_buffer_2d_wgt_bytes": 32768,
+        "store_buffer_2d_wgt_calls": 0,
+        "store_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_acc_calls": 8,
+        "load_buffer_2d_acc_bytes": 2048,
+        "store_buffer_2d_acc_calls": 0,
+        "store_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_out_calls": 0,
+        "load_buffer_2d_out_bytes": 0,
+        "store_buffer_2d_out_calls": 8,
+        "store_buffer_2d_out_bytes": 100352,
+        "load_buffer_2d_acc8_calls": 0,
+        "load_buffer_2d_acc8_bytes": 0,
+        "store_buffer_2d_acc8_calls": 0,
+        "store_buffer_2d_acc8_bytes": 0,
+        "load_buffer_2d_unknown_calls": 0,
+        "load_buffer_2d_unknown_bytes": 0,
+        "store_buffer_2d_unknown_calls": 0,
+        "store_buffer_2d_unknown_bytes": 0,
+        "load_buffer_2d_top_signatures": [
+          "wgt:x=1,y=4,stride=4,count=32",
+          "inp:x=55,y=13,stride=56,count=32",
+          "acc:x=4,y=1,stride=4,count=8"
+        ],
+        "store_buffer_2d_top_signatures": [
+          "out:x=196,y=4,stride=784,count=8"
+        ]
+      },
+      "tuning": {
+        "mode": "tophub",
+        "configured_location": "https://raw.githubusercontent.com/tlc-pack/tophub/main/tophub",
+        "targets": [
+          "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17"
+        ],
+        "files": [
+          {
+            "backend": "vta",
+            "version": "v0.10",
+            "path": "/home/orange/.tvm/tophub/vta_v0.10.log",
+            "size_bytes": 63738,
+            "sha256": "8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc"
+          }
+        ],
+        "sha256": "39b3d5326878f91bed1529597e99ac8033de98179939c95c78b8e0f3b1514705",
+        "coverage_scope": "conv2d_packed.vta",
+        "queried_workloads": 1,
+        "tuned_workloads": 1,
+        "fallback_workloads": 0,
+        "rows": [
+          {
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  4,
+                  56,
+                  56,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  8,
+                  4,
+                  1,
+                  1,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ],
+            "is_fallback": false,
+            "config": {
+              "index": 1113,
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    4,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    1,
+                    28
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    4,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    2,
+                    4
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  1
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  2
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "output_sha256": [
+        "1122dc09f95e22b6833c6b969566e3a34e843f2924b575963784fb4fbc0470df",
+        "dabca162310c55515d47fa6e9223b1a4d24aada77994c8f96a469699b1b988d2"
+      ]
+    },
+    {
+      "unit_name": "layer3_block0_skip_proj",
+      "relay_inputs": [
+        [
+          "data0",
+          [
+            1,
+            256,
+            14,
+            14
+          ]
+        ],
+        [
+          "data1",
+          [
+            1,
+            128,
+            28,
+            28
+          ]
+        ]
+      ],
+      "reference_correct": true,
+      "comparisons": [
+        {
+          "elements": 50176,
+          "mismatched": 0,
+          "max_abs_error": 0.0
+        },
+        {
+          "elements": 50176,
+          "mismatched": 0,
+          "max_abs_error": 0.0
+        }
+      ],
+      "median_ms": 1.846729,
+      "costs_s": [
+        0.00201266,
+        0.001846729,
+        0.001793508
+      ],
+      "runtime_profile": {
+        "mem_copy_from_host_calls": 0,
+        "mem_copy_from_host_bytes": 0,
+        "mem_copy_from_host_us": 0,
+        "mem_copy_to_host_calls": 0,
+        "mem_copy_to_host_bytes": 0,
+        "mem_copy_to_host_us": 0,
+        "flush_cache_calls": 0,
+        "flush_cache_bytes": 0,
+        "flush_cache_us": 0,
+        "invalidate_cache_calls": 0,
+        "invalidate_cache_bytes": 0,
+        "invalidate_cache_us": 0,
+        "load_buffer_2d_calls": 68,
+        "load_buffer_2d_bytes": 247296,
+        "load_buffer_2d_small_calls": 36,
+        "load_buffer_2d_strided_calls": 64,
+        "load_buffer_2d_xsize1_calls": 32,
+        "load_buffer_2d_ysize1_calls": 4,
+        "load_buffer_2d_padded_calls": 0,
+        "load_buffer_2d_enqueue_us": 30.93,
+        "store_buffer_2d_calls": 4,
+        "store_buffer_2d_bytes": 50176,
+        "store_buffer_2d_small_calls": 0,
+        "store_buffer_2d_strided_calls": 4,
+        "store_buffer_2d_xsize1_calls": 0,
+        "store_buffer_2d_ysize1_calls": 0,
+        "store_buffer_2d_enqueue_us": 1.77,
+        "push_gemm_op_calls": 36,
+        "push_gemm_op_us": 11.64,
+        "push_alu_op_calls": 16,
+        "push_alu_op_us": 7.26,
+        "template_capture_calls": 0,
+        "template_replay_hits": 0,
+        "template_replay_fallbacks": 0,
+        "template_capture_us": 0,
+        "template_replay_us": 0,
+        "input_copy_calls": 0,
+        "input_copy_bytes": 0,
+        "input_copy_us": 0,
+        "output_copy_calls": 0,
+        "output_copy_bytes": 0,
+        "output_copy_us": 0,
+        "device_copy_calls": 0,
+        "device_copy_bytes": 0,
+        "device_copy_us": 0,
+        "synchronize_calls": 1,
+        "synchronize_insns": 148,
+        "synchronize_load_bytes": 247296,
+        "synchronize_store_bytes": 50176,
+        "device_run_wait_us": 893.559,
+        "driver_run_calls": 1,
+        "driver_run_insns": 148,
+        "driver_timeout_calls": 0,
+        "driver_poll_iters": 15,
+        "driver_run_total_us": 888.939,
+        "driver_submit_mmio_us": 4.53,
+        "driver_post_start_sleep_us": 62.281,
+        "driver_poll_wait_us": 820.568,
+        "event_count": 125,
+        "load_buffer_2d_uop_calls": 0,
+        "load_buffer_2d_uop_bytes": 0,
+        "store_buffer_2d_uop_calls": 0,
+        "store_buffer_2d_uop_bytes": 0,
+        "load_buffer_2d_inp_calls": 32,
+        "load_buffer_2d_inp_bytes": 179712,
+        "store_buffer_2d_inp_calls": 0,
+        "store_buffer_2d_inp_bytes": 0,
+        "load_buffer_2d_wgt_calls": 32,
+        "load_buffer_2d_wgt_bytes": 65536,
+        "store_buffer_2d_wgt_calls": 0,
+        "store_buffer_2d_wgt_bytes": 0,
+        "load_buffer_2d_acc_calls": 4,
+        "load_buffer_2d_acc_bytes": 2048,
+        "store_buffer_2d_acc_calls": 0,
+        "store_buffer_2d_acc_bytes": 0,
+        "load_buffer_2d_out_calls": 0,
+        "load_buffer_2d_out_bytes": 0,
+        "store_buffer_2d_out_calls": 4,
+        "store_buffer_2d_out_bytes": 50176,
+        "load_buffer_2d_acc8_calls": 0,
+        "load_buffer_2d_acc8_bytes": 0,
+        "store_buffer_2d_acc8_calls": 0,
+        "store_buffer_2d_acc8_bytes": 0,
+        "load_buffer_2d_unknown_calls": 0,
+        "load_buffer_2d_unknown_bytes": 0,
+        "store_buffer_2d_unknown_calls": 0,
+        "store_buffer_2d_unknown_bytes": 0,
+        "load_buffer_2d_top_signatures": [
+          "wgt:x=1,y=8,stride=8,count=32",
+          "inp:x=27,y=13,stride=28,count=32",
+          "acc:x=8,y=1,stride=8,count=4"
+        ],
+        "store_buffer_2d_top_signatures": [
+          "out:x=98,y=8,stride=196,count=4"
+        ]
+      },
+      "tuning": {
+        "mode": "tophub",
+        "configured_location": "https://raw.githubusercontent.com/tlc-pack/tophub/main/tophub",
+        "targets": [
+          "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17"
+        ],
+        "files": [
+          {
+            "backend": "vta",
+            "version": "v0.10",
+            "path": "/home/orange/.tvm/tophub/vta_v0.10.log",
+            "size_bytes": 63738,
+            "sha256": "8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc"
+          }
+        ],
+        "sha256": "39b3d5326878f91bed1529597e99ac8033de98179939c95c78b8e0f3b1514705",
+        "coverage_scope": "conv2d_packed.vta",
+        "queried_workloads": 1,
+        "tuned_workloads": 1,
+        "fallback_workloads": 0,
+        "rows": [
+          {
+            "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+            "workload": [
+              "conv2d_packed.vta",
+              [
+                "TENSOR",
+                [
+                  1,
+                  8,
+                  28,
+                  28,
+                  1,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                "TENSOR",
+                [
+                  16,
+                  8,
+                  1,
+                  1,
+                  16,
+                  16
+                ],
+                "int8"
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              "NCHW1n16c",
+              "int32"
+            ],
+            "is_fallback": false,
+            "config": {
+              "index": 526,
+              "code_hash": null,
+              "entity": [
+                [
+                  "tile_b",
+                  "sp",
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                [
+                  "tile_h",
+                  "sp",
+                  [
+                    2,
+                    7
+                  ]
+                ],
+                [
+                  "tile_w",
+                  "sp",
+                  [
+                    1,
+                    14
+                  ]
+                ],
+                [
+                  "tile_ci",
+                  "sp",
+                  [
+                    8,
+                    1
+                  ]
+                ],
+                [
+                  "tile_co",
+                  "sp",
+                  [
+                    2,
+                    8
+                  ]
+                ],
+                [
+                  "oc_nthread",
+                  "ot",
+                  2
+                ],
+                [
+                  "h_nthread",
+                  "ot",
+                  1
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "output_sha256": [
+        "961a4a9022f0ab3ffb6efe78ce1b903a0134d03e7782803bdaf90273340a8bc4",
+        "ba192f0ca797f4e7b0d11ba8f87a612612ac695fd9343be62ad0cff7ea7f89be"
+      ]
+    }
+  ]
+}

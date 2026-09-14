@@ -1,0 +1,404 @@
+{
+  "controlled_contrasts": {
+    "a_vs_c_same_dma": {
+      "cycle_delta_ms": -1.0152922631578747,
+      "framework_copy_delta_bytes": 100352.0,
+      "load_bytes_equal": true,
+      "load_calls_equal": true,
+      "store_bytes_equal": true
+    },
+    "b_vs_d_extra_island": {
+      "cycle_delta_ms": -1.7571712105263089,
+      "framework_copy_bytes_percent": 18.181818181818187,
+      "island_delta": 1,
+      "load_bytes_percent": 29.303092068172944,
+      "load_calls_percent": 4.046997389033935,
+      "mutex_wait_delta_ms": 20.336138000000002,
+      "weight_load_bytes_percent": 49.6124031007752
+    }
+  },
+  "kind": "experiment_d_initial_shared_ddr_topology_table",
+  "model_decision": {
+    "block_aligned_stage_dma_correction": 0,
+    "fit_reason": "n=4 topology representatives is insufficient and confounded",
+    "fit_status": "not_fit",
+    "per_workload_dma": "aggregate statically after TopHub config selection",
+    "separate_outer_features": [
+      "framework boundary bytes and copy mode",
+      "VTA island count and re-entry bytes",
+      "single physical VTA service",
+      "mutex wait diagnostic",
+      "maximum CPU stage service",
+      "VTA LOAD calls, total bytes, and weight bytes"
+    ]
+  },
+  "rows": [
+    {
+      "candidate_id": "cpu-00-02_t4__vta-03-17_t1__cpu-18-20_t1",
+      "combined_logical_memory_bytes_per_frame": 14158336.0,
+      "cycle_minus_resource_proxy_ms": 0.6849546052631439,
+      "framework_copy_bytes_per_frame": 903168.0,
+      "heterogeneous_boundary_api_ms": 3.6425464999999995,
+      "id": "A",
+      "interstage_boundary_api_ms": 3.6425464999999995,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "longest_stage_scheduled_ms": 91.2922025,
+      "max_cpu_stage_scheduled_ms": 91.2922025,
+      "measured_cycle_ms": 91.97715710526315,
+      "mem_copy_from_host_bytes_per_frame": 802816.0,
+      "mem_copy_to_host_bytes_per_frame": 100352.0,
+      "pipeline_fps": 10.872264717374893,
+      "representative_rank": 1,
+      "resource_max_proxy_ms": 91.2922025,
+      "stage_medians": [
+        {
+          "device": "cpu",
+          "index": 0,
+          "median_get_ms": 0.8762785,
+          "median_run_ms": 89.9744845,
+          "median_scheduled_ms": 91.2922025,
+          "median_set_ms": 0.394324,
+          "median_total_ms": 91.2922025,
+          "median_vta_mutex_wait_ms": 0.0,
+          "units": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "index": 1,
+          "median_get_ms": 0.32895399999999997,
+          "median_run_ms": 70.042,
+          "median_scheduled_ms": 72.79065800000001,
+          "median_set_ms": 2.3843639999999997,
+          "median_total_ms": 72.788198,
+          "median_vta_mutex_wait_ms": 0.0006299999999999999,
+          "units": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "index": 2,
+          "median_get_ms": 0.058635,
+          "median_run_ms": 70.87993900000001,
+          "median_scheduled_ms": 70.98183449999999,
+          "median_set_ms": 0.05295,
+          "median_total_ms": 70.98183449999999,
+          "median_vta_mutex_wait_ms": 0.0,
+          "units": [
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "store_bytes_per_frame": 1229312.0,
+      "topology": "A: CPU 00..02 / VTA 03..17 / CPU 18..20",
+      "vta_dma_bytes_per_frame": 13255168.0,
+      "vta_islands": 1,
+      "vta_mutex_wait_sum_ms": 0.0006299999999999999,
+      "vta_run_sum_ms": 70.042,
+      "weight_load_bytes_per_frame": 7528448.0
+    },
+    {
+      "candidate_id": "cpu-00-02_t4__vta-03-15_t1__cpu-16-20_t2",
+      "combined_logical_memory_bytes_per_frame": 14114304.0,
+      "cycle_minus_resource_proxy_ms": -5.143217710526329,
+      "framework_copy_bytes_per_frame": 1103872.0,
+      "heterogeneous_boundary_api_ms": 4.43886,
+      "id": "B",
+      "interstage_boundary_api_ms": 4.43886,
+      "load_bytes_per_frame": 11806208.0,
+      "load_calls_per_frame": 1532.0,
+      "longest_stage_scheduled_ms": 102.1335165,
+      "max_cpu_stage_scheduled_ms": 102.1335165,
+      "measured_cycle_ms": 96.99029878947367,
+      "mem_copy_from_host_bytes_per_frame": 802816.0,
+      "mem_copy_to_host_bytes_per_frame": 301056.0,
+      "pipeline_fps": 10.31030951013556,
+      "representative_rank": 5,
+      "resource_max_proxy_ms": 102.1335165,
+      "stage_medians": [
+        {
+          "device": "cpu",
+          "index": 0,
+          "median_get_ms": 0.952975,
+          "median_run_ms": 100.7644075,
+          "median_scheduled_ms": 102.1335165,
+          "median_set_ms": 0.389944,
+          "median_total_ms": 102.1335165,
+          "median_vta_mutex_wait_ms": 0.0,
+          "units": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "index": 1,
+          "median_get_ms": 0.94069,
+          "median_run_ms": 68.7883475,
+          "median_scheduled_ms": 72.08194599999999,
+          "median_set_ms": 2.3723340000000004,
+          "median_total_ms": 72.07942600000001,
+          "median_vta_mutex_wait_ms": 0.000615,
+          "units": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd"
+          ]
+        },
+        {
+          "device": "cpu",
+          "index": 2,
+          "median_get_ms": 0.029835,
+          "median_run_ms": 63.348783499999996,
+          "median_scheduled_ms": 63.559340500000005,
+          "median_set_ms": 0.172861,
+          "median_total_ms": 63.559340500000005,
+          "median_vta_mutex_wait_ms": 0.0,
+          "units": [
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "store_bytes_per_frame": 1204224.0,
+      "topology": "B: CPU 00..02 / VTA 03..15 / CPU 16..20",
+      "vta_dma_bytes_per_frame": 13010432.0,
+      "vta_islands": 1,
+      "vta_mutex_wait_sum_ms": 0.000615,
+      "vta_run_sum_ms": 68.7883475,
+      "weight_load_bytes_per_frame": 7397376.0
+    },
+    {
+      "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t1",
+      "combined_logical_memory_bytes_per_frame": 14258688.0,
+      "cycle_minus_resource_proxy_ms": -0.8355731578947285,
+      "framework_copy_bytes_per_frame": 1003520.0,
+      "heterogeneous_boundary_api_ms": 4.0170095,
+      "id": "C",
+      "interstage_boundary_api_ms": 4.0170095,
+      "load_bytes_per_frame": 12025856.0,
+      "load_calls_per_frame": 1598.0,
+      "longest_stage_scheduled_ms": 91.797438,
+      "max_cpu_stage_scheduled_ms": 91.797438,
+      "measured_cycle_ms": 90.96186484210527,
+      "mem_copy_from_host_bytes_per_frame": 802816.0,
+      "mem_copy_to_host_bytes_per_frame": 200704.0,
+      "pipeline_fps": 10.993618058906712,
+      "representative_rank": 7,
+      "resource_max_proxy_ms": 91.797438,
+      "stage_medians": [
+        {
+          "device": "cpu",
+          "index": 0,
+          "median_get_ms": 0.8873035,
+          "median_run_ms": 90.500075,
+          "median_scheduled_ms": 91.797438,
+          "median_set_ms": 0.395704,
+          "median_total_ms": 91.797438,
+          "median_vta_mutex_wait_ms": 0.0,
+          "units": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "index": 1,
+          "median_get_ms": 0.6413465,
+          "median_run_ms": 70.3288635,
+          "median_scheduled_ms": 73.390694,
+          "median_set_ms": 2.3916385,
+          "median_total_ms": 73.38827900000001,
+          "median_vta_mutex_wait_ms": 0.000675,
+          "units": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail",
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail",
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj"
+          ]
+        },
+        {
+          "device": "cpu",
+          "index": 2,
+          "median_get_ms": 0.05881550000000001,
+          "median_run_ms": 71.073531,
+          "median_scheduled_ms": 71.21525199999999,
+          "median_set_ms": 0.096721,
+          "median_total_ms": 71.21525199999999,
+          "median_vta_mutex_wait_ms": 0.0,
+          "units": [
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail",
+            "head"
+          ]
+        }
+      ],
+      "store_bytes_per_frame": 1229312.0,
+      "topology": "C: CPU 00..02 / VTA 03..16 / CPU 17..20",
+      "vta_dma_bytes_per_frame": 13255168.0,
+      "vta_islands": 1,
+      "vta_mutex_wait_sum_ms": 0.000675,
+      "vta_run_sum_ms": 70.3288635,
+      "weight_load_bytes_per_frame": 7528448.0
+    },
+    {
+      "candidate_id": "cpu-00-02_t4__vta-03-12_t1__cpu-13-14_t1__vta-15-19_t1__cpu-20-20_t1",
+      "combined_logical_memory_bytes_per_frame": 17749504.0,
+      "cycle_minus_resource_proxy_ms": -0.20832692105263106,
+      "framework_copy_bytes_per_frame": 1304576.0,
+      "heterogeneous_boundary_api_ms": 5.3536145,
+      "id": "D",
+      "interstage_boundary_api_ms": 5.3536145,
+      "load_bytes_per_frame": 15265792.0,
+      "load_calls_per_frame": 1594.0,
+      "longest_stage_scheduled_ms": 95.44145449999999,
+      "max_cpu_stage_scheduled_ms": 95.44145449999999,
+      "measured_cycle_ms": 95.23312757894736,
+      "mem_copy_from_host_bytes_per_frame": 1003520.0,
+      "mem_copy_to_host_bytes_per_frame": 301056.0,
+      "pipeline_fps": 10.500547712989993,
+      "representative_rank": 13,
+      "resource_max_proxy_ms": 95.44145449999999,
+      "stage_medians": [
+        {
+          "device": "cpu",
+          "index": 0,
+          "median_get_ms": 0.8657185000000001,
+          "median_run_ms": 94.1737315,
+          "median_scheduled_ms": 95.44145449999999,
+          "median_set_ms": 0.359164,
+          "median_total_ms": 95.44145449999999,
+          "median_vta_mutex_wait_ms": 0.0,
+          "units": [
+            "stem",
+            "layer1_block0_main_preadd",
+            "layer1_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "index": 1,
+          "median_get_ms": 0.6306065000000001,
+          "median_run_ms": 49.6708815,
+          "median_scheduled_ms": 52.895029,
+          "median_set_ms": 2.3926885,
+          "median_total_ms": 52.796433,
+          "median_vta_mutex_wait_ms": 0.00045,
+          "units": [
+            "layer1_block1_main_preadd",
+            "layer1_block1_add_relu_tail",
+            "layer2_block0_main_preadd",
+            "layer2_block0_skip_proj",
+            "layer2_block0_add_relu_tail",
+            "layer2_block1_main_preadd",
+            "layer2_block1_add_relu_tail",
+            "layer3_block0_main_preadd",
+            "layer3_block0_skip_proj",
+            "layer3_block0_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "index": 2,
+          "median_get_ms": 0.260178,
+          "median_run_ms": 74.26181249999999,
+          "median_scheduled_ms": 74.6167165,
+          "median_set_ms": 0.11583099999999999,
+          "median_total_ms": 74.6167165,
+          "median_vta_mutex_wait_ms": 0.0,
+          "units": [
+            "layer3_block1_main_preadd",
+            "layer3_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "vta",
+          "index": 3,
+          "median_get_ms": 0.42184900000000003,
+          "median_run_ms": 20.1399365,
+          "median_scheduled_ms": 41.570741,
+          "median_set_ms": 0.6242019999999999,
+          "median_total_ms": 21.178487,
+          "median_vta_mutex_wait_ms": 20.336303,
+          "units": [
+            "layer4_block0_main_preadd",
+            "layer4_block0_skip_proj",
+            "layer4_block0_add_relu_tail",
+            "layer4_block1_main_preadd",
+            "layer4_block1_add_relu_tail"
+          ]
+        },
+        {
+          "device": "cpu",
+          "index": 4,
+          "median_get_ms": 0.04074,
+          "median_run_ms": 2.833483,
+          "median_scheduled_ms": 2.921984,
+          "median_set_ms": 0.042540999999999995,
+          "median_total_ms": 2.921984,
+          "median_vta_mutex_wait_ms": 0.0,
+          "units": [
+            "head"
+          ]
+        }
+      ],
+      "store_bytes_per_frame": 1179136.0,
+      "topology": "D: CPU 00..02 / VTA 03..12 / CPU 13..14 / VTA 15..19 / CPU 20",
+      "vta_dma_bytes_per_frame": 16444928.0,
+      "vta_islands": 2,
+      "vta_mutex_wait_sum_ms": 20.336753,
+      "vta_run_sum_ms": 69.810818,
+      "weight_load_bytes_per_frame": 11067392.0
+    }
+  ],
+  "sample_scope": "four topology representatives, one boot; mechanism evidence only",
+  "schema_version": 1,
+  "source": "vta/tutorials/frontend/report_out/stage_tile_cotuning/legacy_topology_profiles/summary.json"
+}

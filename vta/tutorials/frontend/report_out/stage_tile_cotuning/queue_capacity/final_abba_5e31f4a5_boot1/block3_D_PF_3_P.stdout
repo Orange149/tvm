@@ -1,0 +1,17 @@
+[SHARED-BUFFER] plan/artifact/runtime hashes verified
+[THREADPOOL] main runtime.NumThreads=4 requested_cpus=default effective_cpus=0,1,2,3
+[THREADPOOL] resolved stage threads: stage0=4 stage1=1 stage2=1 stage3=1 stage4=1
+[LOAD] stage0 device=cpu inputs=1 outputs=1
+[LOAD] stage1 device=vta inputs=1 outputs=1
+[LOAD] stage2 device=cpu inputs=1 outputs=1
+[LOAD] stage3 device=vta inputs=1 outputs=1
+[LOAD] stage4 device=cpu inputs=1 outputs=1
+[SHARED-BUFFER] edge=0 tensor=0 source=pool-anchor slot=0 bytes=802816 physical=1750073344
+[SHARED-BUFFER] edge=1 source=external reason=static_rule
+[SHARED-BUFFER] edge=2 tensor=0 source=pool-anchor slot=0 bytes=200704 physical=1754204160
+[SHARED-BUFFER] edge=3 source=external reason=static_rule
+[THREADPOOL] pipeline.stage0[THREADPOOL]  runtime.NumThreads=pipeline.stage2 runtime.NumThreads=41 requested_cpus= requested_cpus=0 effective_cpus=0,1,2,3 effective_cpus=0
+0,1,2,3
+[THREADPOOL] pipeline.stage1 runtime.NumThreads=1 requested_cpus=default effective_cpus=0,1,2,3
+[THREADPOOL] pipeline.stage4 runtime.NumThreads=1 requested_cpus=0 effective_cpus=0
+[THREADPOOL] pipeline.stage3 runtime.NumThreads=1 requested_cpus=default effective_cpus=0,1,2,3

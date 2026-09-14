@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "kind": "stage_tile_tophub_context_recovery",
+  "date": "2026-09-07",
+  "board": "root@192.168.1.247",
+  "boot_id": "35144ed4-eb22-4936-8ea7-69a1e6ad6a6f",
+  "deployment": {
+    "udmabuf_bytes": 201326592,
+    "bitstream": "/mnt/sd/tvm_deploy/firmware/vta_hpc.bit",
+    "bitstream_sha256": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+    "libvta_sha256": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+    "libtvm_runtime_sha256": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+    "rpc_port": 9090
+  },
+  "tophub": {
+    "path": "/home/orange/.tvm/tophub/vta_v0.10.log",
+    "size_bytes": 63738,
+    "sha256": "8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc",
+    "identity_sha256": "39b3d5326878f91bed1529597e99ac8033de98179939c95c78b8e0f3b1514705"
+  },
+  "topology_b_build": {
+    "packed_conv_queried": 9,
+    "packed_conv_tophub_hits": 9,
+    "packed_conv_fallbacks": 0,
+    "new_graphlib_sha256": "6db83800019edb50e7775e645ce9af88420889769fab3d36b7ea1982f513c7ea",
+    "legacy_incumbent_graphlib_sha256": "6db83800019edb50e7775e645ce9af88420889769fab3d36b7ea1982f513c7ea",
+    "binary_exact_match": true,
+    "graph_json_sha256": "57f903e33fb222c688fe227e83c24584793b7685a3eb7dbe7abe25f2928d5394"
+  },
+  "correctness": {
+    "serial_frames": 22,
+    "pipeline_frames_per_repeat": 22,
+    "serial_pipeline_top1_match": true,
+    "top1_values": [285],
+    "fnv1a64": "a8c613584e081e5f"
+  },
+  "performance": {
+    "warmup_frames_discarded": 2,
+    "throughput_definition": "(N-1)/(last_completion-first_completion) after discarding two frames",
+    "pipeline_repeat1_fps": 10.159832392410847,
+    "pipeline_repeat2_fps": 10.430251526037063,
+    "pipeline_repeat2_cycle_ms": 95.874965,
+    "pipeline_repeat2_vta_stage_run_median_ms": 69.32533799999999,
+    "legacy_replay_fps": 10.724053940555429,
+    "repeat2_vs_legacy_percent": -2.739693493185311
+  },
+  "all_top20_workloads": {
+    "unique_workloads": 10,
+    "tophub_incumbents": 10,
+    "fallbacks": 0,
+    "manifest": "tophub_incumbents.json"
+  },
+  "evidence_sha256": {
+    "preflight": "22bf0383b2b7db20450c4c51ec07321f47f4d98d36143fe272677496affdb7d1",
+    "manifest": "f46f0f8949949c1cc4b75245c6250b14ded527bf1016e8479c1a481f8c670a26",
+    "serial_jsonl": "d9a9c455bb54e165d3c48758a96150bf4721da1d40d56c16a8be253e73528a37",
+    "pipeline_repeat1_jsonl": "eebfacea6ad678d0d35a68ae598a4fb90cb675d40a2e6b131bb431a7c1dbd415",
+    "pipeline_repeat2_jsonl": "9c3ea2f4f1e22b65b6d4fe2ddac0260eb9c9c8526d6ff34b4cc763b20eed1c3c"
+  },
+  "preflight_note": "All component, RPC, FPGA, u-dma-buf, CPU and storage-health checks passed; the aggregate preflight gate was false only because 96.7 MiB free space was below the conservative 128 MiB reserve. Deployment used content-addressed incremental sync and completed successfully.",
+  "conclusion": "The audit-induced TopHub suppression is fixed. A source rebuild reproduces the legacy incumbent binary exactly and restores topology B from 3.482 FPS to the 10 FPS performance regime."
+}

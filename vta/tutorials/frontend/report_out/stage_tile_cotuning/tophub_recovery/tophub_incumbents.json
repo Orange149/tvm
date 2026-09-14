@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "kind": "stage_tile_tophub_incumbents",
+  "scope": "10 unique conv2d_packed.vta workloads in the frozen natural Top-20",
+  "target": "ext_dev -keys=vta,cpu -device=vta -model=axu5evb_1x16_i8w8a32_15_15_18_17",
+  "tophub": {
+    "path": "/home/orange/.tvm/tophub/vta_v0.10.log",
+    "size_bytes": 63738,
+    "sha256": "8eea6e4b4edf4e800b7782b93e17db4450d01d8817220fcbcf6ef8ef5f68a6dc",
+    "identity_sha256": "39b3d5326878f91bed1529597e99ac8033de98179939c95c78b8e0f3b1514705"
+  },
+  "workload_count": 10,
+  "incumbent_count": 10,
+  "fallback_count": 0,
+  "rows": [
+    {"input": [1, 4, 56, 56, 1, 16], "weight": [4, 4, 3, 3, 16, 16], "stride": [1, 1], "padding": [1, 1, 1, 1], "config_index": 828, "tile_h": 8, "tile_w": 56, "tile_ci": 1, "tile_co": 2, "oc_nthread": 2, "h_nthread": 1},
+    {"input": [1, 4, 56, 56, 1, 16], "weight": [8, 4, 3, 3, 16, 16], "stride": [2, 2], "padding": [1, 1, 1, 1], "config_index": 681, "tile_h": 7, "tile_w": 28, "tile_ci": 1, "tile_co": 4, "oc_nthread": 2, "h_nthread": 1},
+    {"input": [1, 4, 56, 56, 1, 16], "weight": [8, 4, 1, 1, 16, 16], "stride": [2, 2], "padding": [0, 0, 0, 0], "config_index": 1113, "tile_h": 7, "tile_w": 28, "tile_ci": 1, "tile_co": 4, "oc_nthread": 1, "h_nthread": 2},
+    {"input": [1, 8, 28, 28, 1, 16], "weight": [8, 8, 3, 3, 16, 16], "stride": [1, 1], "padding": [1, 1, 1, 1], "config_index": 1330, "tile_h": 14, "tile_w": 28, "tile_ci": 1, "tile_co": 2, "oc_nthread": 1, "h_nthread": 2},
+    {"input": [1, 8, 28, 28, 1, 16], "weight": [16, 8, 3, 3, 16, 16], "stride": [2, 2], "padding": [1, 1, 1, 1], "config_index": 463, "tile_h": 14, "tile_w": 14, "tile_ci": 1, "tile_co": 4, "oc_nthread": 2, "h_nthread": 1},
+    {"input": [1, 8, 28, 28, 1, 16], "weight": [16, 8, 1, 1, 16, 16], "stride": [2, 2], "padding": [0, 0, 0, 0], "config_index": 526, "tile_h": 7, "tile_w": 14, "tile_ci": 1, "tile_co": 8, "oc_nthread": 2, "h_nthread": 1},
+    {"input": [1, 16, 14, 14, 1, 16], "weight": [16, 16, 3, 3, 16, 16], "stride": [1, 1], "padding": [1, 1, 1, 1], "config_index": 575, "tile_h": 14, "tile_w": 14, "tile_ci": 1, "tile_co": 4, "oc_nthread": 2, "h_nthread": 1},
+    {"input": [1, 16, 14, 14, 1, 16], "weight": [32, 16, 3, 3, 16, 16], "stride": [2, 2], "padding": [1, 1, 1, 1], "config_index": 203, "tile_h": 7, "tile_w": 7, "tile_ci": 1, "tile_co": 16, "oc_nthread": 2, "h_nthread": 1},
+    {"input": [1, 16, 14, 14, 1, 16], "weight": [32, 16, 1, 1, 16, 16], "stride": [2, 2], "padding": [0, 0, 0, 0], "config_index": 203, "tile_h": 7, "tile_w": 7, "tile_ci": 1, "tile_co": 16, "oc_nthread": 2, "h_nthread": 1},
+    {"input": [1, 32, 7, 7, 1, 16], "weight": [32, 32, 3, 3, 16, 16], "stride": [1, 1], "padding": [1, 1, 1, 1], "config_index": 243, "tile_h": 7, "tile_w": 7, "tile_ci": 1, "tile_co": 16, "oc_nthread": 2, "h_nthread": 1}
+  ],
+  "selection_contract": "Every bounded search task starts with its dispatched TopHub/history configuration; the incumbent is measured and cannot be silently replaced by fallback."
+}

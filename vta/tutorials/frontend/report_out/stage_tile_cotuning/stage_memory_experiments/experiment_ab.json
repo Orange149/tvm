@@ -1,0 +1,3460 @@
+{
+  "experiment": "A_config_invariance_and_B_dma_additivity",
+  "topology_count": 4,
+  "unique_workloads": 10,
+  "experiment_a": {
+    "placements": [
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h56_ci64_co64_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              4,
+              4,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 2,
+        "config_index": 828,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 8,
+          "tile_w": 56,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h56_ci64_co128_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              4,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 681,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h28_ci128_co128_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              8,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 3,
+        "config_index": 1330,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "oc_nthread": 1,
+          "h_nthread": 2
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h56_ci64_co128_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              4,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 1113,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 1,
+          "h_nthread": 2
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h28_ci128_co256_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              8,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 463,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h14_ci256_co256_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 3,
+        "config_index": 575,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h28_ci128_co256_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              8,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 526,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 8,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h14_ci256_co512_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 203,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h7_ci512_co512_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              32,
+              7,
+              7,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              32,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 243,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-17__cpu-18-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "workload_id": "h14_ci256_co512_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 203,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "workload_id": "h56_ci64_co64_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              4,
+              4,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 2,
+        "config_index": 828,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 8,
+          "tile_w": 56,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "workload_id": "h56_ci64_co128_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              4,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 681,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "workload_id": "h28_ci128_co128_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              8,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 3,
+        "config_index": 1330,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "oc_nthread": 1,
+          "h_nthread": 2
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "workload_id": "h56_ci64_co128_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              4,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 1113,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 1,
+          "h_nthread": 2
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "workload_id": "h28_ci128_co256_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              8,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 463,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "workload_id": "h14_ci256_co256_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 3,
+        "config_index": 575,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "workload_id": "h28_ci128_co256_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              8,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 526,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 8,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "workload_id": "h14_ci256_co512_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 203,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-15__cpu-16-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "workload_id": "h7_ci512_co512_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              32,
+              7,
+              7,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              32,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 243,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h56_ci64_co64_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              4,
+              4,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 2,
+        "config_index": 828,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 8,
+          "tile_w": 56,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h56_ci64_co128_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              4,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 681,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h28_ci128_co128_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              8,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 3,
+        "config_index": 1330,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "oc_nthread": 1,
+          "h_nthread": 2
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h56_ci64_co128_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              4,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 1113,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 1,
+          "h_nthread": 2
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h28_ci128_co256_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              8,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 463,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h14_ci256_co256_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 3,
+        "config_index": 575,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h28_ci128_co256_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              8,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 526,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 8,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h14_ci256_co512_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 203,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h7_ci512_co512_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              32,
+              7,
+              7,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              32,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 243,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-16__cpu-17-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "workload_id": "h14_ci256_co512_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 203,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail"
+        ],
+        "workload_id": "h56_ci64_co64_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              4,
+              4,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 2,
+        "config_index": 828,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 8,
+          "tile_w": 56,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail"
+        ],
+        "workload_id": "h56_ci64_co128_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              4,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 681,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail"
+        ],
+        "workload_id": "h28_ci128_co128_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              8,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 3,
+        "config_index": 1330,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 2,
+          "oc_nthread": 1,
+          "h_nthread": 2
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail"
+        ],
+        "workload_id": "h56_ci64_co128_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              4,
+              56,
+              56,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              8,
+              4,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 1113,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 28,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 1,
+          "h_nthread": 2
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail"
+        ],
+        "workload_id": "h28_ci128_co256_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              8,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 463,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail"
+        ],
+        "workload_id": "h14_ci256_co256_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 575,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 14,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 4,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 1,
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail"
+        ],
+        "workload_id": "h28_ci128_co256_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              8,
+              28,
+              28,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              16,
+              8,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 526,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 14,
+          "tile_ci": 1,
+          "tile_co": 8,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 2,
+        "stage_units": [
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail",
+          "layer4_block1_main_preadd",
+          "layer4_block1_add_relu_tail"
+        ],
+        "workload_id": "h14_ci256_co512_k3s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 203,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 2,
+        "stage_units": [
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail",
+          "layer4_block1_main_preadd",
+          "layer4_block1_add_relu_tail"
+        ],
+        "workload_id": "h7_ci512_co512_k3s1",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              32,
+              7,
+              7,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              32,
+              3,
+              3,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 3,
+        "config_index": 243,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      },
+      {
+        "topology_id": "cpu-00-02__vta-03-12__cpu-13-14__vta-15-19__cpu-20-20",
+        "vta_island": 2,
+        "stage_units": [
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail",
+          "layer4_block1_main_preadd",
+          "layer4_block1_add_relu_tail"
+        ],
+        "workload_id": "h14_ci256_co512_k1s2",
+        "workload": [
+          "conv2d_packed.vta",
+          [
+            "TENSOR",
+            [
+              1,
+              16,
+              14,
+              14,
+              1,
+              16
+            ],
+            "int8"
+          ],
+          [
+            "TENSOR",
+            [
+              32,
+              16,
+              1,
+              1,
+              16,
+              16
+            ],
+            "int8"
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          "NCHW1n16c",
+          "int32"
+        ],
+        "occurrences": 1,
+        "config_index": 203,
+        "tile_factors": {
+          "tile_b": 1,
+          "tile_h": 7,
+          "tile_w": 7,
+          "tile_ci": 1,
+          "tile_co": 16,
+          "oc_nthread": 2,
+          "h_nthread": 1
+        },
+        "dispatch_observed": true,
+        "dispatch_config_matches": true
+      }
+    ],
+    "invariance": [
+      {
+        "workload_id": "h14_ci256_co256_k3s1",
+        "stage_placements": 4,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      },
+      {
+        "workload_id": "h14_ci256_co512_k1s2",
+        "stage_placements": 3,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      },
+      {
+        "workload_id": "h14_ci256_co512_k3s2",
+        "stage_placements": 4,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      },
+      {
+        "workload_id": "h28_ci128_co128_k3s1",
+        "stage_placements": 4,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      },
+      {
+        "workload_id": "h28_ci128_co256_k1s2",
+        "stage_placements": 4,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      },
+      {
+        "workload_id": "h28_ci128_co256_k3s2",
+        "stage_placements": 4,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      },
+      {
+        "workload_id": "h56_ci64_co128_k1s2",
+        "stage_placements": 4,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      },
+      {
+        "workload_id": "h56_ci64_co128_k3s2",
+        "stage_placements": 4,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      },
+      {
+        "workload_id": "h56_ci64_co64_k3s1",
+        "stage_placements": 4,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      },
+      {
+        "workload_id": "h7_ci512_co512_k3s1",
+        "stage_placements": 4,
+        "distinct_tile_configs": 1,
+        "all_dispatches_observed": true,
+        "all_dispatch_configs_match": true,
+        "invariant": true
+      }
+    ],
+    "all_workloads_invariant": true
+  },
+  "experiment_b": {
+    "stages": [
+      {
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail"
+        ],
+        "stage_tail": "layer4_block0_add_relu_tail",
+        "workload_occurrences": 15,
+        "covered_occurrences": 15,
+        "missing_direct_profiles": [],
+        "full_profile_coverage": true,
+        "comparison": {
+          "load_buffer_2d_calls": {
+            "actual": 1598,
+            "predicted_from_available_workloads": 1516,
+            "relative_error_if_full_coverage": -0.05131414267834793
+          },
+          "load_buffer_2d_bytes": {
+            "actual": 12025856,
+            "predicted_from_available_workloads": 12006912,
+            "relative_error_if_full_coverage": -0.0015752724795640328
+          },
+          "load_buffer_2d_inp_bytes": {
+            "actual": 4474368,
+            "predicted_from_available_workloads": 4474368,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_wgt_bytes": {
+            "actual": 7528448,
+            "predicted_from_available_workloads": 7528448,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_acc_calls": {
+            "actual": 94,
+            "predicted_from_available_workloads": 12,
+            "relative_error_if_full_coverage": -0.8723404255319149
+          },
+          "load_buffer_2d_acc_bytes": {
+            "actual": 23040,
+            "predicted_from_available_workloads": 4096,
+            "relative_error_if_full_coverage": -0.8222222222222222
+          },
+          "store_buffer_2d_calls": {
+            "actual": 94,
+            "predicted_from_available_workloads": 94,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "store_buffer_2d_bytes": {
+            "actual": 1229312,
+            "predicted_from_available_workloads": 1229312,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "driver_run_insns": {
+            "actual": 3397,
+            "predicted_from_available_workloads": 3103,
+            "relative_error_if_full_coverage": -0.0865469531939947
+          },
+          "push_alu_op_calls": {
+            "actual": 456,
+            "predicted_from_available_workloads": 294,
+            "relative_error_if_full_coverage": -0.35526315789473684
+          }
+        }
+      },
+      {
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd"
+        ],
+        "stage_tail": "layer4_block0_main_preadd",
+        "workload_occurrences": 14,
+        "covered_occurrences": 14,
+        "missing_direct_profiles": [],
+        "full_profile_coverage": true,
+        "comparison": {
+          "load_buffer_2d_calls": {
+            "actual": 1532,
+            "predicted_from_available_workloads": 1452,
+            "relative_error_if_full_coverage": -0.05221932114882506
+          },
+          "load_buffer_2d_bytes": {
+            "actual": 11806208,
+            "predicted_from_available_workloads": 11789312,
+            "relative_error_if_full_coverage": -0.0014311114965956894
+          },
+          "load_buffer_2d_inp_bytes": {
+            "actual": 4387840,
+            "predicted_from_available_workloads": 4387840,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_wgt_bytes": {
+            "actual": 7397376,
+            "predicted_from_available_workloads": 7397376,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_acc_calls": {
+            "actual": 92,
+            "predicted_from_available_workloads": 12,
+            "relative_error_if_full_coverage": -0.8695652173913043
+          },
+          "load_buffer_2d_acc_bytes": {
+            "actual": 20992,
+            "predicted_from_available_workloads": 4096,
+            "relative_error_if_full_coverage": -0.8048780487804879
+          },
+          "store_buffer_2d_calls": {
+            "actual": 92,
+            "predicted_from_available_workloads": 92,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "store_buffer_2d_bytes": {
+            "actual": 1204224,
+            "predicted_from_available_workloads": 1204224,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "driver_run_insns": {
+            "actual": 3270,
+            "predicted_from_available_workloads": 2982,
+            "relative_error_if_full_coverage": -0.08807339449541285
+          },
+          "push_alu_op_calls": {
+            "actual": 448,
+            "predicted_from_available_workloads": 288,
+            "relative_error_if_full_coverage": -0.35714285714285715
+          }
+        }
+      },
+      {
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail",
+          "layer3_block1_main_preadd",
+          "layer3_block1_add_relu_tail",
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj"
+        ],
+        "stage_tail": "layer4_block0_skip_proj",
+        "workload_occurrences": 15,
+        "covered_occurrences": 15,
+        "missing_direct_profiles": [],
+        "full_profile_coverage": true,
+        "comparison": {
+          "load_buffer_2d_calls": {
+            "actual": 1598,
+            "predicted_from_available_workloads": 1516,
+            "relative_error_if_full_coverage": -0.05131414267834793
+          },
+          "load_buffer_2d_bytes": {
+            "actual": 12025856,
+            "predicted_from_available_workloads": 12006912,
+            "relative_error_if_full_coverage": -0.0015752724795640328
+          },
+          "load_buffer_2d_inp_bytes": {
+            "actual": 4474368,
+            "predicted_from_available_workloads": 4474368,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_wgt_bytes": {
+            "actual": 7528448,
+            "predicted_from_available_workloads": 7528448,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_acc_calls": {
+            "actual": 94,
+            "predicted_from_available_workloads": 12,
+            "relative_error_if_full_coverage": -0.8723404255319149
+          },
+          "load_buffer_2d_acc_bytes": {
+            "actual": 23040,
+            "predicted_from_available_workloads": 4096,
+            "relative_error_if_full_coverage": -0.8222222222222222
+          },
+          "store_buffer_2d_calls": {
+            "actual": 94,
+            "predicted_from_available_workloads": 94,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "store_buffer_2d_bytes": {
+            "actual": 1229312,
+            "predicted_from_available_workloads": 1229312,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "driver_run_insns": {
+            "actual": 3397,
+            "predicted_from_available_workloads": 3103,
+            "relative_error_if_full_coverage": -0.0865469531939947
+          },
+          "push_alu_op_calls": {
+            "actual": 456,
+            "predicted_from_available_workloads": 294,
+            "relative_error_if_full_coverage": -0.35526315789473684
+          }
+        }
+      },
+      {
+        "stage_units": [
+          "layer1_block1_main_preadd",
+          "layer1_block1_add_relu_tail",
+          "layer2_block0_main_preadd",
+          "layer2_block0_skip_proj",
+          "layer2_block0_add_relu_tail",
+          "layer2_block1_main_preadd",
+          "layer2_block1_add_relu_tail",
+          "layer3_block0_main_preadd",
+          "layer3_block0_skip_proj",
+          "layer3_block0_add_relu_tail"
+        ],
+        "stage_tail": "layer3_block0_add_relu_tail",
+        "workload_occurrences": 10,
+        "covered_occurrences": 10,
+        "missing_direct_profiles": [],
+        "full_profile_coverage": true,
+        "comparison": {
+          "load_buffer_2d_calls": {
+            "actual": 1072,
+            "predicted_from_available_workloads": 1004,
+            "relative_error_if_full_coverage": -0.06343283582089553
+          },
+          "load_buffer_2d_bytes": {
+            "actual": 6529536,
+            "predicted_from_available_workloads": 6518784,
+            "relative_error_if_full_coverage": -0.0016466713714420136
+          },
+          "load_buffer_2d_inp_bytes": {
+            "actual": 3835904,
+            "predicted_from_available_workloads": 3835904,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_wgt_bytes": {
+            "actual": 2678784,
+            "predicted_from_available_workloads": 2678784,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_acc_calls": {
+            "actual": 80,
+            "predicted_from_available_workloads": 12,
+            "relative_error_if_full_coverage": -0.85
+          },
+          "load_buffer_2d_acc_bytes": {
+            "actual": 14848,
+            "predicted_from_available_workloads": 4096,
+            "relative_error_if_full_coverage": -0.7241379310344828
+          },
+          "store_buffer_2d_calls": {
+            "actual": 80,
+            "predicted_from_available_workloads": 80,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "store_buffer_2d_bytes": {
+            "actual": 1053696,
+            "predicted_from_available_workloads": 1053696,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "driver_run_insns": {
+            "actual": 2412,
+            "predicted_from_available_workloads": 2176,
+            "relative_error_if_full_coverage": -0.0978441127694859
+          },
+          "push_alu_op_calls": {
+            "actual": 388,
+            "predicted_from_available_workloads": 252,
+            "relative_error_if_full_coverage": -0.35051546391752575
+          }
+        }
+      },
+      {
+        "stage_units": [
+          "layer4_block0_main_preadd",
+          "layer4_block0_skip_proj",
+          "layer4_block0_add_relu_tail",
+          "layer4_block1_main_preadd",
+          "layer4_block1_add_relu_tail"
+        ],
+        "stage_tail": "layer4_block1_add_relu_tail",
+        "workload_occurrences": 5,
+        "covered_occurrences": 5,
+        "missing_direct_profiles": [],
+        "full_profile_coverage": true,
+        "comparison": {
+          "load_buffer_2d_calls": {
+            "actual": 522,
+            "predicted_from_available_workloads": 512,
+            "relative_error_if_full_coverage": -0.019157088122605363
+          },
+          "load_buffer_2d_bytes": {
+            "actual": 8736256,
+            "predicted_from_available_workloads": 8726016,
+            "relative_error_if_full_coverage": -0.00117212682412237
+          },
+          "load_buffer_2d_inp_bytes": {
+            "actual": 337408,
+            "predicted_from_available_workloads": 337408,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_wgt_bytes": {
+            "actual": 8388608,
+            "predicted_from_available_workloads": 8388608,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "load_buffer_2d_acc_calls": {
+            "actual": 10,
+            "predicted_from_available_workloads": 0,
+            "relative_error_if_full_coverage": -1.0
+          },
+          "load_buffer_2d_acc_bytes": {
+            "actual": 10240,
+            "predicted_from_available_workloads": 0,
+            "relative_error_if_full_coverage": -1.0
+          },
+          "store_buffer_2d_calls": {
+            "actual": 10,
+            "predicted_from_available_workloads": 10,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "store_buffer_2d_bytes": {
+            "actual": 125440,
+            "predicted_from_available_workloads": 125440,
+            "relative_error_if_full_coverage": 0.0
+          },
+          "driver_run_insns": {
+            "actual": 939,
+            "predicted_from_available_workloads": 893,
+            "relative_error_if_full_coverage": -0.04898828541001065
+          },
+          "push_alu_op_calls": {
+            "actual": 48,
+            "predicted_from_available_workloads": 30,
+            "relative_error_if_full_coverage": -0.375
+          }
+        }
+      }
+    ],
+    "nested_stage_projection_delta": {
+      "load_buffer_2d_calls": {
+        "observed_stage_delta": 66,
+        "isolated_projection": 64,
+        "residual": 2
+      },
+      "load_buffer_2d_bytes": {
+        "observed_stage_delta": 219648,
+        "isolated_projection": 217600,
+        "residual": 2048
+      },
+      "load_buffer_2d_inp_bytes": {
+        "observed_stage_delta": 86528,
+        "isolated_projection": 86528,
+        "residual": 0
+      },
+      "load_buffer_2d_wgt_bytes": {
+        "observed_stage_delta": 131072,
+        "isolated_projection": 131072,
+        "residual": 0
+      },
+      "load_buffer_2d_acc_calls": {
+        "observed_stage_delta": 2,
+        "isolated_projection": 0,
+        "residual": 2
+      },
+      "load_buffer_2d_acc_bytes": {
+        "observed_stage_delta": 2048,
+        "isolated_projection": 0,
+        "residual": 2048
+      },
+      "store_buffer_2d_calls": {
+        "observed_stage_delta": 2,
+        "isolated_projection": 2,
+        "residual": 0
+      },
+      "store_buffer_2d_bytes": {
+        "observed_stage_delta": 25088,
+        "isolated_projection": 25088,
+        "residual": 0
+      },
+      "driver_run_insns": {
+        "observed_stage_delta": 127,
+        "isolated_projection": 121,
+        "residual": 6
+      },
+      "push_alu_op_calls": {
+        "observed_stage_delta": 8,
+        "isolated_projection": 6,
+        "residual": 2
+      }
+    },
+    "interpretation": "Full-coverage stage tests additivity directly. Partial rows are not used to claim additivity. The nested 03..15->03..16 delta isolates one projection."
+  }
+}

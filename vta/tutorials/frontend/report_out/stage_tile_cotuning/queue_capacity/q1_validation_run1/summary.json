@@ -1,0 +1,76 @@
+{
+  "boot": "a5220e22-f562-40be-bbe9-058b6fbeed50",
+  "reference_sha256": "9be3f1b9c4783c1a6545ac633ba3dade56b786918eb0a093f5213fe8c6595238",
+  "script_sha256": "856c681f2f22809a0f4fb4cabd5baad643e21a6a791f303983a1f615aa506b38",
+  "runs": 1000,
+  "scope": "capacity rejection/recovery and natural varied-input stress; NOT FPS or forced fault qualification",
+  "results": [
+    {
+      "topology": "A",
+      "frames": 1000,
+      "byte_exact": true,
+      "compared_bytes": 4000000,
+      "high_water": 10058752,
+      "steady_growth": 0,
+      "overlaps": {
+        "0": 499
+      }
+    },
+    {
+      "topology": "B",
+      "frames": 1000,
+      "byte_exact": true,
+      "compared_bytes": 4000000,
+      "high_water": 10301952,
+      "steady_growth": 0,
+      "overlaps": {
+        "0": 499
+      }
+    },
+    {
+      "topology": "C",
+      "frames": 1000,
+      "byte_exact": true,
+      "compared_bytes": 4000000,
+      "high_water": 10234368,
+      "steady_growth": 0,
+      "overlaps": {
+        "0": 498
+      }
+    },
+    {
+      "topology": "D",
+      "frames": 1000,
+      "byte_exact": true,
+      "compared_bytes": 4000000,
+      "high_water": 14502912,
+      "steady_growth": 0,
+      "overlaps": {
+        "0": 499,
+        "2": 499
+      }
+    }
+  ],
+  "negative": [
+    {
+      "case": "bad_insn",
+      "rejected": true,
+      "exit_code": 1
+    },
+    {
+      "case": "bad_uop",
+      "rejected": true,
+      "exit_code": 1
+    },
+    {
+      "case": "bad_alignment",
+      "rejected": true,
+      "exit_code": 1
+    },
+    {
+      "case": "unqualified_threshold",
+      "rejected": true,
+      "exit_code": 1
+    }
+  ]
+}

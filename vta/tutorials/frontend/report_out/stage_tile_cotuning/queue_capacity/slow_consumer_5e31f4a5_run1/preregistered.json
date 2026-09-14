@@ -1,0 +1,17 @@
+{
+  "boot": "5e31f4a5-b9b7-416d-9448-f827e6e49669",
+  "scope": "forced VTA-consumer backpressure correctness; not performance",
+  "topologies": ["A", "B", "C", "D"],
+  "runs_per_topology": 1000,
+  "input_cycle": 8,
+  "baseline_driver_sleep_ns": 1000,
+  "forced_driver_sleep_ns": 1000000,
+  "frozen_candidate": {
+    "instruction_submit_threshold_bytes": 2656,
+    "instruction_buffer_bytes": 5376,
+    "uop_buffer_bytes": 5632,
+    "managed_slots": 2
+  },
+  "acceptance": "all output tensors byte-exact; no deadlock or early slot reuse",
+  "status": "preregistered"
+}

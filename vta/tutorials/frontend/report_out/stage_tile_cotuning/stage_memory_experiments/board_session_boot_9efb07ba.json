@@ -1,0 +1,39 @@
+{
+  "host_date": "2026-09-07",
+  "board": "192.168.1.247",
+  "boot_id": "9efb07ba-0fc9-4f22-8dbd-4f1de4bfc68d",
+  "kernel": "Linux vta_linux 5.4.0 #1 SMP Wed Mar 4 14:03:26 UTC 2026 aarch64 GNU/Linux",
+  "cpu0_governor": "userspace",
+  "cpu0_frequency_khz": 1066666,
+  "fpga_state": "operating",
+  "udmabuf_bytes": 201326592,
+  "rpc_port_after_measurement": 9091,
+  "file_sha256": {
+    "/mnt/sd/tvm_deploy/firmware/vta_hpc.bit": "7bf1ac95b1182c670cd25241111f33725b4ea37ed6d66f2df37b0b2e7df528d6",
+    "/mnt/sd/tvm_deploy/hpc/libvta.so": "eedfabb0630d58bf2eabaef9b4f2d2e4bfcdfa52a70503090f5608e79404ee5d",
+    "/mnt/sd/tvm_deploy/hpc/libtvm_runtime.so": "04e894baf305311315fd0c79d03ec2a6375b9591916e9c6f429cf3697c4457b2",
+    "/mnt/sd/tvm_deploy/start_axu5evb_cpp_rpc.sh": "2f42f2d37d5199fa2b66336b61869d2015f8ec5f0264bc57307789b4c6a5b194"
+  },
+  "result_archive_sha256": {
+    "boot_9efb07ba_results.tgz": "d76bca6c1b6f60dba64b59c482b707bb8637bacee7dc7682b2a7c2c0bad91d0f",
+    "boot_9efb07ba_repeat2_results.tgz": "a142f9787ec2c78780544aaedabb9da882b014c8aa54cce4b6c46a780bbca284",
+    "boot_9efb07ba_run62_results.tgz": "b7b53e2af26bb73c214bf893e2b3ca94c8101a531f99a925c909e3b11a0a0a62"
+  },
+  "protocol": {
+    "frozen_topologies": ["A", "B", "C", "D"],
+    "short_runs_per_topology": 2,
+    "short_run_frames": 22,
+    "long_runs_per_topology": 1,
+    "long_run_frames": 62,
+    "discard_first_completions": 2,
+    "long_run_order": ["D", "C", "B", "A"],
+    "serial_correctness_run": true,
+    "bitstream_reloaded_before_measurement": true
+  },
+  "notes": [
+    "The reboot removed /mnt/sd, u-dma-buf, and RPC; all three were restored.",
+    "Frozen stage graphlib hashes were checked before replay.",
+    "RPC was stopped during native measurements and restored afterward.",
+    "Runs within this boot are repeated runs, not independent boot samples."
+  ]
+}

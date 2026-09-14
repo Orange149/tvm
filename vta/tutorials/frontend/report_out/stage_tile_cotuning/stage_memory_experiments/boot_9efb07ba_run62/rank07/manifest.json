@@ -1,0 +1,400 @@
+{
+  "baseline": "none",
+  "candidate_id": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t1",
+  "correctness_policy": "exact",
+  "deployment": {
+    "deploy_mode": "sync",
+    "remote_dir": "/media/sd-mmcblk1p2/v1_p7_top20/legacy_profile_rank07",
+    "ssh_target": "root@192.168.1.247"
+  },
+  "image_size": 224,
+  "input_count": 1,
+  "input_dtype": "float32",
+  "input_file": "input.bin",
+  "input_list": "",
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "inputs": [
+    {
+      "index": 0,
+      "input_file": "input.bin",
+      "source_image": "/home/orange/code/tvm/build_axu_aarch64/cat.png"
+    }
+  ],
+  "kind": "resnet18_native_stage_pipeline",
+  "model": "resnet18_v1",
+  "output_dump_dir": "",
+  "pipeline_configured": true,
+  "pipeline_output_jsonl": "native_result.jsonl",
+  "pipeline_stage_runtime_threads": {
+    "stage0": 4,
+    "stage1": 1,
+    "stage2": 1
+  },
+  "queue_depth": 2,
+  "requested_scheme": "three_stage_e",
+  "resource_aware_candidate_name": "",
+  "rpc_baseline_result": "",
+  "run_serial_before_pipeline": true,
+  "runner": "vta_stage_pipeline_runner",
+  "runner_output_mode": "raw",
+  "runs": 22,
+  "runtime_libs": [
+    "libtvm_runtime.so",
+    "libvta.so"
+  ],
+  "runtime_num_threads": 4,
+  "scheme": "cpu-00-02_t4__vta-03-16_t1__cpu-17-20_t1",
+  "serial": false,
+  "serial_output_jsonl": "stage_serial_result.jsonl",
+  "serial_stage_runtime_threads": {
+    "stage0": 4,
+    "stage1": 1,
+    "stage2": 1
+  },
+  "stage_count": 3,
+  "stage_cpu_affinity": {
+    "pipeline": {
+      "stage0": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "stage1": [],
+      "stage2": [
+        0
+      ]
+    },
+    "policy": "independent_overlapping_prefix_masks_v1",
+    "serial": {
+      "stage0": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "stage1": [],
+      "stage2": [
+        0
+      ]
+    }
+  },
+  "stage_runtime_threads": {
+    "pipeline": {
+      "stage0": 4,
+      "stage1": 1,
+      "stage2": 1
+    },
+    "serial": {
+      "stage0": 4,
+      "stage1": 1,
+      "stage2": 1
+    }
+  },
+  "stages": [
+    {
+      "artifact_sha256": {
+        "graph_sha256": "9ed987b41af738c0f5dc27603ffbc986ba078df9aea19820ff03ef7511b675a6",
+        "lib_sha256": "792433337d6bfac9b06baa143a088d8cd5a3e350d7723b4d0b6ede9dbfd359e3",
+        "params_sha256": "3940c871777ccf82d0b83d1e35c6f448a24c82eab0f4cda967ef98e4eed95b6e"
+      },
+      "compiled_module_sources": [
+        {
+          "index": 0,
+          "source_bytes": 1202312,
+          "source_sha256": "0dcc4d1f59bea3a8f45d0a48d8467059461c0778ab07414461c60c944ed12f53",
+          "type_key": "llvm"
+        }
+      ],
+      "device": "cpu",
+      "graph": "stages/stage0/graph.json",
+      "index": 0,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage0/graphlib.so",
+      "name": "stage0",
+      "output_bytes": 802816,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage0/params.params",
+      "relay_ir_sha256": "0f44689ba8588f0c908e3e82c02fa1b19595c2f32e697ae6e4b4b3902bee43d5",
+      "stage_build_cache_hit": true,
+      "stage_build_cache_key": "09b4b4d31a6ba608296e83facb4db6ddfacd19bddd18b2aad7a97dc605af8ae6",
+      "unit_names": [
+        "stem",
+        "layer1_block0_main_preadd",
+        "layer1_block0_add_relu_tail"
+      ]
+    },
+    {
+      "artifact_sha256": {
+        "graph_sha256": "465bdf0f26d1e0b4baafe5ac0aecf2ce6d222704af4bf9a5b2fc9a3da8ad10a1",
+        "lib_sha256": "94567dc39d97119632de6b890e466e37241b2cec2b1d0d00001781961f28fd1f",
+        "params_sha256": "5d31dd41eee1bf8a43aa29be9d07dbe6357fe26ccbc8fca524c278e9d1f38c4c"
+      },
+      "compiled_module_sources": [
+        {
+          "index": 0,
+          "source_bytes": 1546580,
+          "source_sha256": "e272aa917b75e1aa644dee4c10d9d23a98c9a06858fc9ef075db25aaf94bab20",
+          "type_key": "llvm"
+        }
+      ],
+      "device": "vta",
+      "graph": "stages/stage1/graph.json",
+      "index": 1,
+      "input_names": [
+        "data0"
+      ],
+      "input_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "data",
+            "shape": [
+              1,
+              64,
+              56,
+              56
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "lib": "stages/stage1/graphlib.so",
+      "name": "stage1",
+      "output_bytes": 200704,
+      "output_schema": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out0",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "out1",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "params": "stages/stage1/params.params",
+      "relay_ir_sha256": "ae03a8e34a4e450158cb8de8dfdebeabeb76a86bad94716e2809327516829118",
+      "stage_build_cache_hit": true,
+      "stage_build_cache_key": "a973776ed7b546d37661baee7b4fe61df2b2a3b0515f48d8959db83abd6ab9dc",
+      "unit_names": [
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail",
+        "layer3_block1_main_preadd",
+        "layer3_block1_add_relu_tail",
+        "layer4_block0_main_preadd",
+        "layer4_block0_skip_proj"
+      ]
+    },
+    {
+      "artifact_sha256": {
+        "graph_sha256": "c5ddbe2084a431a4d270bfe0761fa4fa33057f9311c6b3955a967d045218f7a6",
+        "lib_sha256": "94323aa573efbd99bdb66a4320109f69a60dd2eeafa1360aa1d9c88e51bc89ec",
+        "params_sha256": "ed6fc93aef32af01ac983d41bf20f62fa60fa4df5672dee934ffa876abf53508"
+      },
+      "compiled_module_sources": [
+        {
+          "index": 0,
+          "source_bytes": 871991,
+          "source_sha256": "6291e7e91b8ee80b8c8e55cb0a236bb0dff58939cc8eb1348d1b1094b73f1844",
+          "type_key": "llvm"
+        }
+      ],
+      "device": "cpu",
+      "graph": "stages/stage2/graph.json",
+      "index": 2,
+      "input_names": [
+        "data0",
+        "data1"
+      ],
+      "input_schema": {
+        "arity": 2,
+        "kind": "tuple",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "main",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 0
+          },
+          {
+            "dtype": "float32",
+            "role": "residual",
+            "shape": [
+              1,
+              512,
+              7,
+              7
+            ],
+            "slot_index": 1
+          }
+        ]
+      },
+      "lib": "stages/stage2/graphlib.so",
+      "name": "stage2",
+      "output_bytes": 4000,
+      "output_schema": {
+        "arity": 1,
+        "kind": "tensor",
+        "slots": [
+          {
+            "dtype": "float32",
+            "role": "out",
+            "shape": [
+              1,
+              1000
+            ],
+            "slot_index": 0
+          }
+        ]
+      },
+      "params": "stages/stage2/params.params",
+      "relay_ir_sha256": "b3f6a26f4cb310cd039aa577da680caef89b4eb0acfb1818ae8d7e5837a885be",
+      "stage_build_cache_hit": true,
+      "stage_build_cache_key": "68356fb7a005a22c93367315f28ce0e18c3c458408e776dbf8308b8072877359",
+      "unit_names": [
+        "layer4_block0_add_relu_tail",
+        "layer4_block1_main_preadd",
+        "layer4_block1_add_relu_tail",
+        "head"
+      ]
+    }
+  ],
+  "target": "axu5evb",
+  "unit_assignment": [
+    {
+      "device": "cpu",
+      "stage": "stage0",
+      "unit_names": [
+        "stem",
+        "layer1_block0_main_preadd",
+        "layer1_block0_add_relu_tail"
+      ]
+    },
+    {
+      "device": "vta",
+      "stage": "stage1",
+      "unit_names": [
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail",
+        "layer3_block1_main_preadd",
+        "layer3_block1_add_relu_tail",
+        "layer4_block0_main_preadd",
+        "layer4_block0_skip_proj"
+      ]
+    },
+    {
+      "device": "cpu",
+      "stage": "stage2",
+      "unit_names": [
+        "layer4_block0_add_relu_tail",
+        "layer4_block1_main_preadd",
+        "layer4_block1_add_relu_tail",
+        "head"
+      ]
+    }
+  ],
+  "vta_islands": [
+    {
+      "end_unit": "layer4_block0_skip_proj",
+      "stage": "stage1",
+      "start_unit": "layer1_block1_main_preadd",
+      "unit_names": [
+        "layer1_block1_main_preadd",
+        "layer1_block1_add_relu_tail",
+        "layer2_block0_main_preadd",
+        "layer2_block0_skip_proj",
+        "layer2_block0_add_relu_tail",
+        "layer2_block1_main_preadd",
+        "layer2_block1_add_relu_tail",
+        "layer3_block0_main_preadd",
+        "layer3_block0_skip_proj",
+        "layer3_block0_add_relu_tail",
+        "layer3_block1_main_preadd",
+        "layer3_block1_add_relu_tail",
+        "layer4_block0_main_preadd",
+        "layer4_block0_skip_proj"
+      ]
+    }
+  ]
+}
