@@ -40,8 +40,11 @@ def conv2d_packed_residency_template(
     ConfigSpace: 0=original, 1=input-stationary, 2=weight-stationary, and
     3=paper-inspired-hybrid.  Mode 4 is the barrier-delimited weight-residency
     implementation. Mode 5 combines input-prioritized traversal with full-layer
-    weight residency when the kernel fits weight SRAM. Keeping the mode out of the original ConfigSpace preserves every
-    historical TopHub index; production use requires an explicit qualified route.
+    weight residency when the kernel fits weight SRAM. Modes 6 and 7 are the
+    isolated two-output-vthread reload/resident pair. Mode 8 emits the staged
+    first-use form consumed by the experiment-only lowering pass. Keeping the
+    modes out of the original ConfigSpace preserves every historical TopHub
+    index; production use requires an explicit qualified route.
     """
     cfg = autotvm.get_config()
     if isinstance(padding, (tuple, list)) and len(padding) == 4:

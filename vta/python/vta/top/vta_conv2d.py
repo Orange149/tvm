@@ -22,7 +22,7 @@ import tvm
 from tvm import te
 from tvm import autotvm
 from tvm import topi
-from tvm.autotvm.task.space import OtherOptionEntity, SplitEntity
+from tvm.autotvm.task.space import ConfigEntity, OtherOptionEntity, SplitEntity
 
 from .utils import is_packed_layout
 from .residency_dispatch import resolve_schedule_route
@@ -140,6 +140,10 @@ RESIDENCY_MODES = {
     3: "paper_inspired_hybrid",
     4: "weight_stationary_sync_probe",
     5: "input_weight_resident_barrier",
+    6: "weight_vthread_reload",
+    7: "weight_vthread_resident",
+    8: "weight_vthread_resident_staged",
+    9: "input_weight_resident_staged",
 }
 
 
@@ -155,7 +159,7 @@ def _normalize_residency_mode(mode):
         raise ValueError("Unknown VTA residency mode: {}".format(mode)) from err
 
 
-def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original"):
+def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original", _experimental_reload_weights=False):
     """Build the packed-conv schedule, optionally using an experimental residency mode.
 
     The registered ``conv2d_packed.vta`` entry always selects ``original``.  The other
@@ -205,6 +209,21 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original"):
     cfg.define_knob("h_nthread", [1, 2])
     ###### space definition end ######
 
+    # Modes 6/7 are deliberately a two-output-vthread experiment.  Task-space
+    # construction reaches this function with ConfigSpace, while an actual
+    # candidate reaches it with ConfigEntity; reject accidental one-thread
+    # instantiations without preventing AutoTVM from constructing the space.
+    if (
+        residency_mode in (
+            "weight_vthread_reload",
+            "weight_vthread_resident",
+            "weight_vthread_resident_staged",
+        )
+        and isinstance(cfg, ConfigEntity)
+        and cfg["oc_nthread"].val != 2
+    ):
+        raise ValueError("weight_vthread modes require oc_nthread = 2")
+
     if cfg.is_fallback:
         _set_safe_fallback(cfg, b, c_o, x_i, x_j, c_i)
 
@@ -249,13 +268,25 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original"):
     sync_axis = None
     full_weight_residency = False
     hybrid_oc_vthread_axis = None
+    vthread_weight_mode = None
+    bound_oc_vthread_axis = None
+    bound_oc_group_axis = None
     if residency_mode == "original":
         s[output].reorder(x_bo, x_i0, x_co0, x_j0, x_co1, x_i1, x_j1, x_bi, x_ci)
         store_pt = x_j0
-    elif residency_mode == "input_stationary":
+    elif residency_mode in ("input_stationary", "input_weight_resident_staged"):
         # Compute one wider conv tile below x_j0.  The existing cdata placement at the
         # reduction tile then covers all output-channel tiles in that conv region; this
         # also preserves the VTA padded-DMA shape required by the original template.
+        if residency_mode == "input_weight_resident_staged":
+            full_weight_bytes = int(np.prod(topi.utils.get_const_tuple(kernel.shape)))
+            if full_weight_bytes > env.WGT_BUFF_SIZE:
+                raise ValueError(
+                    "input_weight_resident_staged not_applicable: full kernel {} exceeds "
+                    "weight SRAM {}".format(full_weight_bytes, env.WGT_BUFF_SIZE)
+                )
+            if isinstance(cfg, ConfigEntity) and cfg["oc_nthread"].val != 1:
+                raise ValueError("input_weight_resident_staged requires oc_nthread = 1")
         s[output].reorder(x_bo, x_i0, x_j0, x_co0, x_co1, x_i1, x_j1, x_bi, x_ci)
         store_pt = x_j0
     elif residency_mode in ("weight_stationary", "weight_stationary_sync_probe"):
@@ -329,6 +360,25 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original"):
         weight_residency_pt = x_bo
         sync_axis = x_bo
         full_weight_residency = True
+    elif residency_mode in (
+        "weight_vthread_reload",
+        "weight_vthread_resident",
+        "weight_vthread_resident_staged",
+    ):
+        # Experimental O2-compatible weight layout.  Preserve the original
+        # output traversal and output-channel virtual threads.  The reload
+        # control materializes each virtual thread's complete weight region at
+        # every spatial tile; the resident form materializes the same region
+        # once at the virtual-thread scope and reuses its fixed SRAM addresses.
+        full_weight_bytes = int(np.prod(topi.utils.get_const_tuple(kernel.shape)))
+        if full_weight_bytes > env.WGT_BUFF_SIZE:
+            raise ValueError(
+                "weight_vthread residency not_applicable: full kernel {} exceeds "
+                "weight SRAM {}".format(full_weight_bytes, env.WGT_BUFF_SIZE)
+            )
+        s[output].reorder(x_bo, x_i0, x_co0, x_j0, x_co1, x_i1, x_j1, x_bi, x_ci)
+        store_pt = x_j0
+        vthread_weight_mode = residency_mode
 
     # set all compute scopes
     s[conv2d_stage].compute_at(s[output], store_pt)
@@ -347,22 +397,27 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original"):
     if residency_mode != "original" and cfg["h_nthread"].val > 1:
         raise ValueError("Experimental residency schedules require h_nthread = 1")
     if residency_mode not in (
-        "original", "input_stationary", "paper_inspired_hybrid"
+        "original", "input_stationary", "paper_inspired_hybrid",
+        "weight_vthread_reload", "weight_vthread_resident",
+        "weight_vthread_resident_staged",
     ) and cfg["oc_nthread"].val > 1:
         raise ValueError(
             "Only input-stationary and bounded-hybrid residency currently support "
             "oc_nthread > 1"
         )
-
     if cfg["oc_nthread"].val > 1:
         oc_vthread_axis = (
             hybrid_oc_vthread_axis
             if residency_mode == "paper_inspired_hybrid"
             else x_co0
         )
-        _, v_t = s[output].split(oc_vthread_axis, factor=cfg["oc_nthread"].val)
+        oc_group_axis, v_t = s[output].split(
+            oc_vthread_axis, factor=cfg["oc_nthread"].val
+        )
         s[output].reorder(v_t, x_bo)
         s[output].bind(v_t, te.thread_axis("cthread"))
+        bound_oc_vthread_axis = v_t
+        bound_oc_group_axis = oc_group_axis
 
     # virtual threading along spatial rows
     if cfg["h_nthread"].val > 1:
@@ -375,8 +430,50 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original"):
     s[conv2d_stage].reorder(x_bo, k_o, x_j, d_j, d_i, x_co, x_i, x_bi, x_ci, k_i)
 
     k_o, _ = cfg["tile_ci"].apply(s, conv2d_stage, k_o)
+    if vthread_weight_mode is not None:
+        # A resident-sized WGT layout makes the GEMM address depend on both the
+        # output-channel virtual thread and the outer reduction tile.  The VTA
+        # runtime deliberately accepts at most one int as a cached-uop
+        # signature, so leaving both as dynamic loops produces an unsupported
+        # two-int closure.  The R18-H1 O2 entity has only four outer reduction
+        # tiles: unrolling this loop specializes those four WGT bases while
+        # retaining cthread as the sole dynamic uop-cache key.  This is an
+        # experiment-only schedule mode; production mode 0 is unchanged.
+        s[conv2d_stage].unroll(k_o)
     s[cdata].compute_at(s[conv2d_stage], k_o)
-    if residency_mode == "weight_stationary_sync_probe":
+    if vthread_weight_mode == "weight_vthread_reload":
+        # Keep the resident-sized per-thread address layout but reload it at
+        # each spatial tile.  Reloading can otherwise form a direct STORE->LOAD
+        # edge when the next tile overwrites that region, so the control keeps
+        # the required tile-end drain.  The resident form has no overwrite and
+        # deliberately does not inherit this repeated drain.
+        s[ckernel].compute_at(s[output], x_i0)
+        if bound_oc_group_axis is not None:
+            s[output].pragma(bound_oc_group_axis, "coproc_sync")
+    elif vthread_weight_mode == "weight_vthread_resident":
+        if bound_oc_vthread_axis is None:
+            # Task-space construction uses the safe fallback entity before the
+            # explicit two-thread ConfigEntity is instantiated.  Experiment
+            # qualification rejects non-two-thread entities separately.
+            s[ckernel].compute_at(s[output], x_i0)
+        else:
+            s[ckernel].compute_at(s[output], bound_oc_vthread_axis)
+    elif vthread_weight_mode == "weight_vthread_resident_staged":
+        # Produce O2-sized per-reduction weight loads in first-use order.  An
+        # experiment-only post-StorageRewrite pass gives the four unrolled
+        # reduction blocks non-overwriting SRAM slots and predicates these
+        # loads on the first spatial tile.  Keeping that address/lifetime
+        # rewrite outside the production schedule prevents mode 0 and the
+        # frozen modes 6/7 from acquiring hidden lowering behavior.
+        s[ckernel].compute_at(s[conv2d_stage], k_o)
+    elif _experimental_reload_weights:
+        if residency_mode not in ("weight_stationary_sync_probe", "input_weight_resident_barrier"):
+            raise ValueError("Weight reload control requires a barrier-delimited residency mode")
+        # Experiment-only ablation: preserve traversal and the explicit drain,
+        # but restore reduction-scope loads. Default/production routes are unchanged.
+        s[ckernel].compute_at(s[conv2d_stage], k_o)
+        s[output].pragma(sync_axis, "coproc_sync")
+    elif residency_mode == "weight_stationary_sync_probe":
         s[ckernel].compute_at(s[output], weight_residency_pt)
         s[output].pragma(sync_axis, "coproc_sync")
     elif full_weight_residency:
