@@ -24,7 +24,14 @@ from c3_candidate_identity import canonical_json_bytes, make_failure, normalize_
 
 
 SCHEMA = "c3_resnet18_cross_compile_v1"
-MODES = {"original": 0, "input_stationary": 1, "weight_resident_barrier": 4, "input_weight_resident_barrier": 5}
+MODES = {
+    "original": 0,
+    "input_stationary": 1,
+    "weight_resident_barrier": 4,
+    "input_weight_resident_barrier": 5,
+    "input_weight_resident_composable": 10,
+    "input_weight_resident_transition_safe": 11,
+}
 
 
 def sha256_file(path):
@@ -102,9 +109,12 @@ def worker(candidate, binary):
         compile_options = options()
         phase = "identity"
         workload = candidate["identity"]["workload"]
+        mode_number = MODES[candidate["residence_mode"]]
+        if int(candidate.get("implementation_mode", mode_number)) != mode_number:
+            raise RuntimeError("frozen residence mode and implementation mode disagree")
         task = autotvm.task.create(
             "conv2d_packed_residency.vta",
-            args=tuple(workload[1:]) + (MODES[candidate["residence_mode"]],),
+            args=tuple(workload[1:]) + (mode_number,),
             target=env.target,
             target_host=env.target_host,
         )

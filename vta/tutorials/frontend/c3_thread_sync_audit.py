@@ -22,7 +22,7 @@ def final_tir_audit(module, semantics):
     import tvm
     from tvm import tir
     analyzer = tvm.arith.Analyzer()
-    kernels, syncs, events = [], [], []
+    kernels, syncs, events, debug_modes = [], [], [], []
     loops, kernel = [], None
     steps = 0
 
@@ -99,6 +99,15 @@ def final_tir_audit(module, semantics):
                 kernel.append(dict(args=values, loops=[list(x) for x in loops]))
             elif name in ("tir.vta.coproc_sync", "VTASynchronize"):
                 syncs.append(len(events))
+            elif name == "VTASetDebugMode":
+                # The command handle is opaque.  The mode is a static control
+                # value and must be the exact scoped force-serial transition
+                # emitted by composable residency lowering.
+                mode = integer(args[-1], bindings)
+                if mode not in (0, 32):
+                    raise ValueError("unsupported VTA debug mode {}".format(mode))
+                debug_modes.append(mode)
+                events.append(["VTASetDebugMode", mode])
             elif name in ("VTALoadBuffer2D", "VTAStoreBuffer2D"):
                 # Ordered numeric requests, normalized only for pointer identity.
                 ignore = {0, 1} if name == "VTALoadBuffer2D" else {0, 3}
@@ -122,7 +131,10 @@ def final_tir_audit(module, semantics):
     walk(module["main"].body, {})
     if not kernels:
         raise ValueError("no final computation audited")
+    if debug_modes and debug_modes != [32, 0]:
+        raise ValueError("invalid scoped VTA debug transition {}".format(debug_modes))
     return dict(status="passed", kernels=kernels, ordered_events=events, sync_event_positions=syncs,
+                debug_mode_transitions=debug_modes,
                 max_kernel_uops=max(map(len, kernels)), event_sha256=digest(events),
                 compute_sha256=digest(kernels), uop_effective_occupancy_peak=None)
 

@@ -22,6 +22,10 @@ _SUPPORTED_MODES = {
     "input_stationary": 1,
     "weight_resident_barrier": 4,
     "input_weight_resident_barrier": 5,
+    "input_weight_resident_composable": 10,
+    "input_weight_resident_transition_safe": 11,
+    # Exact-route-only experiment.  The production schedules never select it.
+    "node24_partial_input_experimental": 12,
 }
 
 

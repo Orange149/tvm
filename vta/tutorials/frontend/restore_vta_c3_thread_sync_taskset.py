@@ -47,6 +47,10 @@ def run(args):
             "taskset_sha256": binary_hash, "remote_directory": remote,
             "rootfs_write": "reboot-volatile symlink only", "SD_writes": False,
         })
+        ssh(
+            "if test -L /usr/bin/taskset && test ! -e /usr/bin/taskset; then "
+            "rm /usr/bin/taskset; fi"
+        )
         existing = ssh(
             "mount | grep -F 'none on / type rootfs (rw)' && "
             "mount | grep -F 'tmpfs on /var/volatile type tmpfs' && "

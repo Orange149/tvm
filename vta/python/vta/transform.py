@@ -341,6 +341,48 @@ def InjectCoProcSync():
         success = [False]
 
         def _do_fold(stmt):
+            if (_match_pragma(stmt, "coproc_force_serial")
+                    or _match_pragma(stmt, "coproc_force_serial_entry_drain")):
+                success[0] = True
+                needs_entry_drain = _match_pragma(stmt, "coproc_force_serial_entry_drain")
+                command_handle = tvm.tir.Call(
+                    "handle",
+                    tvm.ir.Op.get("tir.tvm_thread_context"),
+                    [
+                        tvm.tir.call_intrin(
+                            "handle", "tir.vta.command_handle"
+                        )
+                    ],
+                )
+                set_serial = tvm.tir.call_extern(
+                    "int32", "VTASetDebugMode", command_handle, 1 << 5
+                )
+                def make_sync():
+                    # Keep each occurrence as a distinct TIR node.  Reusing a
+                    # Call object makes DAG-based visitors count two dynamic
+                    # synchronization sites as one static event.
+                    return tvm.tir.Call(
+                        "int32", tvm.ir.Op.get("tir.vta.coproc_sync"), []
+                    )
+                clear_serial = tvm.tir.call_extern(
+                    "int32", "VTASetDebugMode", command_handle, 0
+                )
+                sequence = []
+                if needs_entry_drain:
+                    # A normal dependency-token program can leave FPGA-side
+                    # token state that is harmless to another normal program
+                    # but unsafe for RewriteForceSerial.  Drain it while the
+                    # debug flag is still zero, then enter the scoped serial
+                    # segment.  Mode 10 remains unchanged as historical
+                    # predecessor-sensitive evidence; mode 11 owns this cost.
+                    sequence.append(tvm.tir.Evaluate(make_sync()))
+                sequence.extend([
+                    tvm.tir.Evaluate(set_serial),
+                    stmt.body,
+                    tvm.tir.Evaluate(make_sync()),
+                    tvm.tir.Evaluate(clear_serial),
+                ])
+                return tvm.tir.SeqStmt(sequence)
             if _match_pragma(stmt, "coproc_sync"):
                 success[0] = True
                 sync = tvm.tir.Call(

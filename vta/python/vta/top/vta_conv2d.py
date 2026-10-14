@@ -144,6 +144,9 @@ RESIDENCY_MODES = {
     7: "weight_vthread_resident",
     8: "weight_vthread_resident_staged",
     9: "input_weight_resident_staged",
+    10: "input_weight_resident_composable",
+    11: "input_weight_resident_transition_safe",
+    12: "node24_partial_input_experimental",
 }
 
 
@@ -267,6 +270,7 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original", _experime
     weight_residency_pt = None
     sync_axis = None
     full_weight_residency = False
+    composable_force_serial = False
     hybrid_oc_vthread_axis = None
     vthread_weight_mode = None
     bound_oc_vthread_axis = None
@@ -274,7 +278,11 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original", _experime
     if residency_mode == "original":
         s[output].reorder(x_bo, x_i0, x_co0, x_j0, x_co1, x_i1, x_j1, x_bi, x_ci)
         store_pt = x_j0
-    elif residency_mode in ("input_stationary", "input_weight_resident_staged"):
+    elif residency_mode in (
+        "input_stationary",
+        "input_weight_resident_staged",
+        "node24_partial_input_experimental",
+    ):
         # Compute one wider conv tile below x_j0.  The existing cdata placement at the
         # reduction tile then covers all output-channel tiles in that conv region; this
         # also preserves the VTA padded-DMA shape required by the original template.
@@ -342,7 +350,11 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original", _experime
             x_ci,
         )
         store_pt = x_jg
-    elif residency_mode == "input_weight_resident_barrier":
+    elif residency_mode in (
+        "input_weight_resident_barrier",
+        "input_weight_resident_composable",
+        "input_weight_resident_transition_safe",
+    ):
         # Functional reimplementation of Cheng Scheme 4 for the current VTA tree.
         # Input-prioritized traversal keeps x_j0 outside x_co0.  To make weight
         # reuse compatible with that traversal, retain the *whole* layer kernel
@@ -352,14 +364,21 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original", _experime
         full_weight_bytes = int(np.prod(topi.utils.get_const_tuple(kernel.shape)))
         if full_weight_bytes > env.WGT_BUFF_SIZE:
             raise ValueError(
-                "input_weight_resident_barrier not_applicable: full kernel {} exceeds "
-                "weight SRAM {}".format(full_weight_bytes, env.WGT_BUFF_SIZE)
+                "{} not_applicable: full kernel {} exceeds "
+                "weight SRAM {}".format(
+                    residency_mode, full_weight_bytes, env.WGT_BUFF_SIZE
+                )
             )
         s[output].reorder(x_bo, x_i0, x_j0, x_co0, x_co1, x_i1, x_j1, x_bi, x_ci)
         store_pt = x_j0
         weight_residency_pt = x_bo
         sync_axis = x_bo
         full_weight_residency = True
+        composable_force_serial = residency_mode in (
+            "input_weight_resident_composable",
+            "input_weight_resident_transition_safe",
+        )
+        transition_entry_drain = residency_mode == "input_weight_resident_transition_safe"
     elif residency_mode in (
         "weight_vthread_reload",
         "weight_vthread_resident",
@@ -427,7 +446,13 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original", _experime
 
     x_bo, x_co, x_i, x_j, x_bi, x_ci = s[conv2d_stage].op.axis
     k_o, d_i, d_j, k_i = s[conv2d_stage].op.reduce_axis
-    s[conv2d_stage].reorder(x_bo, k_o, x_j, d_j, d_i, x_co, x_i, x_bi, x_ci, k_i)
+    if residency_mode == "node24_partial_input_experimental":
+        # Keep the Input-first *outer* spatial traversal.  Within a spatial
+        # tile, finish a channel group immediately after its WGT load, so a
+        # later streaming group may safely reuse that SRAM address.
+        s[conv2d_stage].reorder(x_bo, x_co, k_o, d_j, d_i, x_i, x_j, x_bi, x_ci, k_i)
+    else:
+        s[conv2d_stage].reorder(x_bo, k_o, x_j, d_j, d_i, x_co, x_i, x_bi, x_ci, k_i)
 
     k_o, _ = cfg["tile_ci"].apply(s, conv2d_stage, k_o)
     if vthread_weight_mode is not None:
@@ -440,7 +465,11 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original", _experime
         # retaining cthread as the sole dynamic uop-cache key.  This is an
         # experiment-only schedule mode; production mode 0 is unchanged.
         s[conv2d_stage].unroll(k_o)
-    s[cdata].compute_at(s[conv2d_stage], k_o)
+    if residency_mode == "node24_partial_input_experimental":
+        # The full input-channel tile must remain live across output groups.
+        s[cdata].compute_at(s[output], x_i0)
+    else:
+        s[cdata].compute_at(s[conv2d_stage], k_o)
     if vthread_weight_mode == "weight_vthread_reload":
         # Keep the resident-sized per-thread address layout but reload it at
         # each spatial tile.  Reloading can otherwise form a direct STORE->LOAD
@@ -478,7 +507,14 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original", _experime
         s[output].pragma(sync_axis, "coproc_sync")
     elif full_weight_residency:
         s[ckernel].compute_at(s[output], weight_residency_pt)
-        s[output].pragma(sync_axis, "coproc_sync")
+        s[output].pragma(
+            sync_axis,
+            "coproc_force_serial_entry_drain"
+            if transition_entry_drain
+            else "coproc_force_serial"
+            if composable_force_serial
+            else "coproc_sync",
+        )
     else:
         # Keep both DMA producers inside the conv region.  Promoting ckernel to an
         # output loop without an explicit drain creates an unsupported STORE->LOAD
@@ -486,7 +522,15 @@ def _schedule_conv2d_packed_impl(cfg, outs, residency_mode="original", _experime
         s[ckernel].compute_at(s[conv2d_stage], k_o)
 
     # Use VTA instructions
-    s[cdata].pragma(s[cdata].op.axis[0], env.dma_copy)
+    # The experimental grouped schedule keeps all CI tiles live across CO
+    # groups.  Lower each CI slice as a separate padded 2-D DMA: the VTA
+    # copy injector cannot encode a padded 4-D copy with CI outermost.
+    s[cdata].pragma(
+        s[cdata].op.axis[1]
+        if residency_mode == "node24_partial_input_experimental"
+        else s[cdata].op.axis[0],
+        env.dma_copy,
+    )
     s[ckernel].pragma(s[ckernel].op.axis[0], env.dma_copy)
     s[conv2d_stage].tensorize(x_bi, env.gemm)
     s[output].pragma(x_co1, env.dma_copy)

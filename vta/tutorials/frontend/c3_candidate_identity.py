@@ -17,6 +17,8 @@ RESIDENCE_MODES = (
     "paper_inspired_hybrid",
     "weight_resident_barrier",
     "input_weight_resident_barrier",
+    "input_weight_resident_composable",
+    "input_weight_resident_transition_safe",
 )
 FAILURE_CATEGORIES = (
     "lower",

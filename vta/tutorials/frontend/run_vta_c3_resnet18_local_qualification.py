@@ -43,7 +43,12 @@ MODES = {
     "weight_resident_barrier": 4,
     "input_weight_resident_barrier": 5,
 }
-WEIGHT_MODES = frozenset(("weight_resident_barrier", "input_weight_resident_barrier"))
+WEIGHT_MODES = frozenset((
+    "weight_resident_barrier",
+    "input_weight_resident_barrier",
+    "input_weight_resident_composable",
+    "input_weight_resident_transition_safe",
+))
 DEFAULT_INPUT = Path(__file__).resolve().parent / (
     "report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/"
     "20260914_p7r470_resnet18_literature_candidates_run01"
