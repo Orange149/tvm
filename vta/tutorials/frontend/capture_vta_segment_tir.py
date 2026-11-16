@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Capture complete Relay and lowered VTA TIR for frozen E1 representatives."""
 import argparse
+import inspect
 import json
 import os
 from pathlib import Path
@@ -9,6 +10,7 @@ import tvm
 from tvm import relay
 from mxnet.gluon.model_zoo import vision
 import vta
+import vta.top.vta_conv2d as vta_conv2d_module
 
 from audit_vta_compile_context import sha, save, REPORT, ROOT, signature, constant
 from collections import Counter
@@ -66,6 +68,12 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--selection", type=Path, help="Frozen coverage_and_representatives.json")
     parser.add_argument("--scan", type=Path, help="Matching completed level-1 directory")
+    parser.add_argument(
+        "--compile-only-provenance",
+        action="store_true",
+        help=("Permit drift only in the deployment runner, which is not imported by this "
+              "compile-only tool; all compiler inputs remain hash-exact"),
+    )
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     env = vta.get_env()
@@ -81,8 +89,19 @@ def main():
         assert sha((args.scan/"summary.json").read_bytes()) == selection["source_summary_sha256"]
         ids = set(selection["level2_proposal"]["selected_segments"])
         prior = json.loads((args.scan/"provenance.json").read_text())
+        runtime_only_drift = []
         for path,digest in prior["sources"].items():
-            assert sha((ROOT/path).read_bytes()) == digest, ("Frozen source changed",path)
+            source = ROOT/path
+            if path == "vta/python/vta/top/vta_conv2d.py":
+                source = Path(inspect.getsourcefile(vta_conv2d_module)).resolve()
+            if sha(source.read_bytes()) == digest:
+                continue
+            if (args.compile_only_provenance
+                    and path == "vta/tutorials/frontend/deploy_classification_stage_pipeline_native.py"):
+                runtime_only_drift.append({"path":path,"actual_sha256":sha(source.read_bytes()),
+                                           "reason":"not imported by compile-only capture"})
+                continue
+            raise AssertionError(("Frozen compiler source changed",path,str(source)))
     selected = [s for s in profile["segments"] if s["segment_id"] in ids]
     assert len(selected)==len(ids)
     save(args.output/"provenance.json",{"script_sha256":sha(Path(__file__).read_bytes()),
@@ -93,6 +112,10 @@ def main():
          "profile_builder_sha256":sha(Path(__file__).with_name("profile_split_resnet18_stages.py").read_bytes()),
          "selection":sorted(ids), "selection_sha256":sha(args.selection.read_bytes()) if args.selection else None,
          "scan_provenance_sha256":sha((args.scan/"provenance.json").read_bytes()) if args.scan else None,
+         "compile_only_provenance":args.compile_only_provenance,
+         "runtime_only_source_drift":runtime_only_drift if args.selection else [],
+         "imported_vta_conv2d":str(Path(inspect.getsourcefile(vta_conv2d_module)).resolve()),
+         "imported_vta_conv2d_sha256":sha(Path(inspect.getsourcefile(vta_conv2d_module)).read_bytes()),
          "scope":"compile-only; no board measurement"})
     rows=[]
     for segment in selected:

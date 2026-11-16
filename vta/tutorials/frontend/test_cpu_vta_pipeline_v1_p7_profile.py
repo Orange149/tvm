@@ -252,6 +252,103 @@ def test_p7c_review_derives_signal_counts_from_summary(tmp_path):
     assert "不是实测 DDR bandwidth" in review
 
 
+def test_p7c_multiboot_legacy_session_cannot_claim_exact_binary_lineage(tmp_path):
+    plan = p7.load_artifact(
+        p7.DEFAULT_P7C_PLAN,
+        "cpu_vta_pipeline_v1_p7c_shared_ddr_measurement_plan",
+    )
+    source = p7.load_artifact(
+        p7.DEFAULT_P7C_SESSION,
+        "cpu_vta_pipeline_v1_p7c_shared_ddr_qualification_session",
+    )
+    paths = []
+    for index in range(3):
+        session = json.loads(json.dumps(source))
+        session["board_boot_id"] = "synthetic-independent-boot-{}".format(index)
+        session = p7.seal_artifact(session)
+        path = tmp_path / "boot{}.json".format(index)
+        p7.write_json(path, session)
+        paths.append(path)
+
+    summary = p7.build_p7c_multiboot_summary(plan, paths)
+
+    assert summary["passed"]
+    assert not summary["exact_protocol_contention_profile_ready"]
+    assert not summary["generalized_candidate_contention_surface_ready"]
+    assert summary["binary_lineage"]["stage_runner_identity_complete"]
+    assert not summary["binary_lineage"]["memory_runner_identity_complete"]
+    assert summary["binary_lineage"]["legacy_session_without_memory_hash"]
+    assert summary["model"]["fixed_traffic_bytes_per_sample"] == 128 * 1024 * 1024
+    for item in summary["ddr_specific_contrast"].values():
+        assert item["ddr_contention_multiplier"] > 1.0
+        assert item["paired_bootstrap_95_ci"]["lower_95"] > 1.0
+        assert item["statistical_gate_passed"]
+        assert not item["admitted_exact_protocol_parameter"]
+    review = tmp_path / "legacy_review.md"
+    p7.write_p7c_multiboot_review(review, summary)
+    assert "未通过 exact-protocol 全部门槛" in review.read_text(encoding="utf-8")
+
+
+def test_p7c_multiboot_admits_only_with_identical_attested_binaries(tmp_path):
+    plan = p7.load_artifact(
+        p7.DEFAULT_P7C_PLAN,
+        "cpu_vta_pipeline_v1_p7c_shared_ddr_measurement_plan",
+    )
+    source = p7.load_artifact(
+        p7.DEFAULT_P7C_SESSION,
+        "cpu_vta_pipeline_v1_p7c_shared_ddr_qualification_session",
+    )
+    paths = []
+    for index in range(3):
+        session = json.loads(json.dumps(source))
+        session["board_boot_id"] = "synthetic-attested-boot-{}".format(index)
+        session["execution_binary_identity"] = {
+            "stage_runner_sha256": "stage-runner",
+            "deployed_stage_runner_sha256": ["stage-runner"],
+            "memory_runner_sha256": "memory-runner",
+            "remote_memory_runner_sha256": "memory-runner",
+            "remote_attestation_passed": True,
+        }
+        for result in session["case_results"]:
+            result["representative_package"]["runner_sha256"] = "stage-runner"
+        session = p7.seal_artifact(session)
+        path = tmp_path / "attested{}.json".format(index)
+        p7.write_json(path, session)
+        paths.append(path)
+
+    summary = p7.build_p7c_multiboot_summary(plan, paths)
+
+    assert summary["passed"]
+    assert summary["binary_lineage"]["exact_binary_lineage_complete"]
+    assert summary["exact_protocol_contention_profile_ready"]
+    assert all(
+        item["admitted_exact_protocol_parameter"]
+        for item in summary["ddr_specific_contrast"].values()
+    )
+    review = tmp_path / "attested_review.md"
+    p7.write_p7c_multiboot_review(review, summary)
+    assert "通过统计与执行二进制谱系门" in review.read_text(encoding="utf-8")
+
+
+def test_p7c_multiboot_rejects_duplicate_boots(tmp_path):
+    plan = p7.load_artifact(
+        p7.DEFAULT_P7C_PLAN,
+        "cpu_vta_pipeline_v1_p7c_shared_ddr_measurement_plan",
+    )
+    source = p7.load_artifact(
+        p7.DEFAULT_P7C_SESSION,
+        "cpu_vta_pipeline_v1_p7c_shared_ddr_qualification_session",
+    )
+    paths = []
+    for index in range(3):
+        path = tmp_path / "duplicate{}.json".format(index)
+        p7.write_json(path, source)
+        paths.append(path)
+
+    with pytest.raises(ValueError, match="three unique board boots"):
+        p7.build_p7c_multiboot_summary(plan, paths)
+
+
 def test_source_instrumentation_audit_passes():
     ranking, manifest = _inputs()
     plan = p7.build_plan(ranking, manifest)

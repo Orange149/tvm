@@ -1,0 +1,44 @@
+2026-11-16：Git工作区清理与复现保留
+
+实际删除
+
+共移除476个文件，文件内容合计9,491,555字节：
+- 239份论文分析目录中的运行记录、搜索源码快照及事件副本。删除前逐文件SHA256确认与正式artifacts/runs中的保留原件一致。
+- 3份带时间戳的PPTX重复导出。对应中文文件名版本字节完全相同，继续保留。
+- 195份导师汇报工作区的旧编辑备份，先压缩归档再移除；当前PPT、可编辑来源及有名称的历史交付继续保留。
+- 1份零字节下载失败的MATCH_TCAD_final.pdf，以及8份WPS锁文件／下载元数据。
+- 7份可再生的论文模板规范化副本和逐页渲染图，以及23份工作源码缓存。
+
+清理没有将失败实验当作无用数据删除，也没有根据v1/v2或日期批量删除脚本。当前差异中仍有多个研究点的有效源码、测试和文档；没有用git reset、git clean或大范围ignore将这些改动隐藏。
+
+保留的复现链
+
+- ResNet18历史约13 FPS成果、YOLO结果、八组消融、主机需求消融、分阶段消融及负向诊断。
+- 最新共同实测的88个配置、176个会话、4,312次推理及全部冻结名单、成本、程序身份和原始凭据。
+- 中期报告三个研究点所需源码与原始证据，包括零拷贝／所有权交接和TPS内容身份复用。
+- 当前5页英文论文的DOCX、PDF、正文源、参考文献、图表数据、脚本及证据索引。
+
+正式实验目录保持原路径。论文分析目录中的部分逐字节副本已经删除；这些轻量报告目录不能冒称为完整的独立部署归档。若需要某个旧导出布局，按下述清单恢复对应前缀。当前正式实验目录不需要恢复即可校验。
+
+版本管理修正
+
+根目录仅新增WPS同步元数据的忽略规则。新论文目录增加精确规则，使正文、参考文献、实验来源索引、表格定义及JSON检查报告不再被仓库通用的*.json规则屏蔽；可再生渲染物与模板副本不进入Git。
+
+恢复
+
+本地清单和恢复档案：
+  vta/experiments/cpu_vta_partitioning/artifacts/cleanup_20261116/manifest.json
+  vta/experiments/cpu_vta_partitioning/artifacts/cleanup_20261116/disposable_and_editing_files.tar.gz
+
+清单逐文件记录原路径、大小、SHA256、权限、时间和恢复来源。242份精确副本从保留原件恢复；其余234份从压缩档案恢复。恢复档案和实验原件在本机，未纳入Git；跨机器搬迁应另外复制所需档案。
+
+复用已有恢复器，默认仅预览；添加--restore才写入：
+  python vta/experiments/cpu_vta_partitioning/maintenance/restore_cleanup_20261104.py --manifest vta/experiments/cpu_vta_partitioning/artifacts/cleanup_20261116/manifest.json --path-prefix paper/my_paper/analysis/20261108_dp_frame_stream_top20/
+
+恢复器核验内容，不覆盖现存不同文件。重建新论文的规范化模板和逐页预览，也可以直接执行该论文目录README中的构建／校验命令。
+
+验证
+
+保留文件的清理前后SHA256、子模块补丁检查、最新共同实测原始凭据重放、相关本地测试及恢复抽查结果，保存在同一清理目录的protected_after.json、verification.json和SUMMARY.json。
+
+本轮没有连接开发板、增加推理、重新编译研究程序或修改评分／DP／执行机制。离线核验不等同于重新上板复现所有历史实验。

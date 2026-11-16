@@ -12,6 +12,8 @@ import json
 from pathlib import Path
 import subprocess
 
+from c3_valid_window_uop_values import certify_uop_values
+
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
@@ -109,6 +111,85 @@ int main() {
 '''
 
 
+def greedy_fixture(queue_test):
+    """Use the actual queue header to expose a prior-use overwrite after wrap.
+
+    Small SRAM is only a host fixture, not a modified experiment capacity.
+    The dummy opcode=2 instruction records a pending GEMM read of B's range.
+    """
+    prefix = queue_test.read_text().split("int main() {", 1)[0]
+    return "#include <cstdio>\n" + prefix + r'''int main() {
+  UopQueue<4096,false,false> q;
+  InsnQueue<4096,false,false> insn;
+  auto a=make(4,0), b=make(4,10), c=make(4,20), d=make(4,30);
+  for (auto k : {&a,&b,&c,&d}) { q.Push(k,[]{assert(false);}); q.FlushUopLoad(insn); }
+  auto e=make(4,40), f=make(4,50);
+  q.Push(&e,[]{assert(false);}); q.FlushUopLoad(insn);
+  assert(b.cached());
+  q.Push(&b,[]{assert(false);});
+  auto* gemm=insn.CreateMemInsn(0);
+  gemm->opcode=2; gemm->sram_base=b.sram_begin_; gemm->x_size=b.size();
+  unsigned prior_load=insn.count()-2;
+  assert(insn.data()[prior_load].sram_base==0 && insn.data()[prior_load].x_size==4);
+  assert(insn.data()[prior_load+1].sram_base==4);
+  q.Push(&f,[]{assert(false);}); q.FlushUopLoad(insn);
+  assert(insn.data()[prior_load].sram_base==0 && insn.data()[prior_load].x_size==8);
+  assert(insn.count()==prior_load+2);
+  assert(f.sram_begin_==4 && !b.cached());
+  printf("{\"sram_wrap\":true,\"prior_gemm_reads_old_cached_range\":true,"
+         "\"greedy_extension_covers_range_before_prior_gemm\":true,"
+         "\"general_inflight_safety_is_not_proven\":true}\n");
+}
+'''
+
+
+def historical_tps_fifo_audit():
+    """Bind actual cold/warm FIFO values to the sealed final TIR trace."""
+    calls = [json.loads(line) for line in (HISTORY / "qualification/calls.jsonl").read_text().splitlines()]
+    rows = [row for row in calls if row.get("program") == "TPS-oc-reuse-ci4" and row.get("dump_file")]
+    assert len(rows) == 4
+    cold_session = rows[0]["session_id"]
+    trace_path = HISTORY / "binaries/TPS-oc-reuse-ci4/address_audit.json"
+    kernels = json.loads(trace_path.read_text())["kernels"]
+    paths = [HISTORY / "qualification" / row["dump_file"] for row in rows]
+    for row, path in zip(rows, paths):
+        assert digest(path) == row["dump_sha256"]
+    results = []
+    frozen = None
+    for row, path in zip(rows, paths):
+        certificate = certify_uop_values(path.read_text(), kernels, frozen)
+        if frozen is None:
+            frozen = certificate["cache_definitions"]
+        assert certificate["compute_references"] == 28
+        assert certificate["serialized_uop_elements"] == 9440
+        assert certificate["uop_sram_wraps"] == 2
+        same_session = row["session_id"] == cold_session
+        certificate["session_binding"] = "SAME_SESSION" if same_session else "CROSS_SESSION_STRUCTURE_ONLY_NOT_WARM_CACHE_QUALIFICATION"
+        certificate["cold_definition_session"] = cold_session
+        results.append({"call_kind":row["call_kind"],"call_position":row.get("call_position"),
+                        "session_id":row["session_id"],
+                        "dump_file":str(path.relative_to(REPO)),"dump_sha256":digest(path),
+                        "certificate":certificate})
+    def rejected(text, expected, definitions):
+        try:
+            certify_uop_values(text, expected, definitions)
+        except ValueError as error:
+            return str(error)
+        raise AssertionError("negative fixture unexpectedly accepted")
+    cold = paths[0].read_text()
+    warm = paths[1].read_text()
+    negatives = {"warm_without_cold_definition":rejected(warm,kernels,None),
+                 "changed_actual_initializer":rejected(cold.replace("acc=0, inp=0, wgt=0", "acc=0, inp=1, wgt=0",1),kernels,None),
+                 "changed_actual_reference":rejected(warm.replace("range (0, 14)","range (1, 15)",1),kernels,frozen)}
+    return {"status":"SEALED_TPS_COLD_FIFO_PASSED_WARM_STRUCTURE_MATCHED_SESSION_BINDING_UNRESOLVED",
+            "program":"TPS-oc-reuse-ci4","final_trace_path":str(trace_path.relative_to(REPO)),
+            "final_trace_sha256":digest(trace_path),"sram_wrap_present":True,"negative_rejections":negatives,
+            "warm_cache_qualification":False,
+            "warm_binding_gap":"three warmed dumps are session qualification:014; initializer dump is qualification:013; session 014 warmup did not dump initializer values",
+            "scope":"actual UOP values, reset/mode/loop/opcode against sealed final TIR; tensor versions/tokens and unprinted ALU immediate remain separate",
+            "calls":results}
+
+
 def main(output):
     output.mkdir(parents=True, exist_ok=False)
     production = REPO / "vta/runtime/runtime.cc"
@@ -142,6 +223,11 @@ def main(output):
     queue_test = HERE / "c3_banerjee_uop_queue_test.cc"
     run(["g++", "-std=c++17", "-O2", str(queue_test), "-o", str(output / "actual_uop_queue_test")], output, "uop_queue_compile")
     run([str(output / "actual_uop_queue_test")], output, "uop_queue_run")
+    greedy = output / "greedy_inflight_counterexample.cc"
+    greedy.write_text(greedy_fixture(queue_test))
+    run(["g++", "-std=c++17", "-O2", "-I" + str(HERE), str(greedy),
+         "-o", str(output / "greedy_inflight_counterexample")], output, "greedy_inflight_compile")
+    greedy_result = json.loads(run([str(output / "greedy_inflight_counterexample")], output, "greedy_inflight_run"))
     config = json.loads((REPO / "3rdparty/vta-hw/config/vta_config.json").read_text())
     assert config == {"TARGET":"axu5evb", "HW_VER":"0.0.2", "LOG_INP_WIDTH":3,
                      "LOG_WGT_WIDTH":3, "LOG_ACC_WIDTH":5, "LOG_BATCH":0, "LOG_BLOCK":4,
@@ -160,6 +246,9 @@ def main(output):
               "cache_source_fixture":cache, "cache_fixture_sha256":digest(fixture),
               "actual_queue_regression":{"passed":True,"source_sha256":digest(queue_test),
                     "scope":"actual queue header with fake DMA and reduced test SRAM; does not qualify a new program"},
+              "greedy_inflight_counterexample":greedy_result,
+              "greedy_inflight_fixture_sha256":digest(greedy),
+              "historical_tps_uop_fifo":historical_tps_fifo_audit(),
               "memory_units":units,"historical_bitstream_record":dict(next(iter(bitstream_records))),
               "historical_bitstream_scope":"sealed prior sessions only; current board not observed",
               "source_hashes":{str(p.relative_to(REPO)):digest(p) for p in [production,header,

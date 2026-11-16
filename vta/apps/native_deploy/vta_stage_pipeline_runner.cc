@@ -24,13 +24,20 @@
 #include <tvm/runtime/registry.h>
 #include <vta/driver.h>
 #include "vta_shared_buffer_plan.h"
+#include "vta_managed_lifecycle_control.h"
+#include "vta_command_capacity_certificate.h"
+#include "vta_cpu_stage_gate.h"
+#include "vta_cpu_resource_groups.h"
+#include "vta_session_profile.h"
 
 #include <algorithm>
 #include <dlfcn.h>
 #include <chrono>
 #include <cctype>
 #include <condition_variable>
+#include <csignal>
 #include <cstdint>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
@@ -41,6 +48,7 @@
 #include <functional>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <memory>
 #include <mutex>
 #include <sstream>
@@ -77,6 +85,7 @@ struct StageArgs {
   std::vector<std::string> input_sources;
   std::vector<unsigned int> cpu_affinity;
   int runtime_num_threads = -1;
+  bool cpu_input_zero_copy = false;
 };
 
 struct Args {
@@ -85,12 +94,22 @@ struct Args {
   std::string input;
   std::vector<std::string> input_files;
   std::string input_list;
+  bool input_list_multi{false};
   std::string output_jsonl = "native_result.jsonl";
   std::string output_mode = "classification";
   std::string output_dump_dir;
   std::string profile_dir;
   std::string allocation_snapshot;
+  std::string thread_affinity_report;
+  std::string session_profile_json;
+  int session_profile_first_completion{-1};
+  int session_profile_completion_count{0};
+  std::string block_profile_json;
+  std::string component_thread_transition;
   std::string shared_buffer_plan;
+  std::string managed_lifecycle_plan;
+  std::string command_capacity_certificate;
+  std::string bitstream_artifact;
   int runs = 1;
   int warmup_runs = 0;
   int queue_depth = 2;
@@ -98,24 +117,62 @@ struct Args {
   int events_limit = 200;
   int checkpoint_every = 0;
   int start_timeout_s = 120;
+  int process_timeout_s = 0;
   std::string ready_file;
   std::string start_file;
   std::string barrier_token;
   bool profile_pmu = false;
   bool barrier_each_run = false;
   bool serial = false;
+  bool queue_timing = false;
+  bool defer_result_write = false;
+  bool c1_memory_audit = false;
+  int64_t shared_slot_budget_bytes = -1;
+  std::string cpu_stage_gate = "off";
+  bool cpu_input_zero_copy = false;
   bool host_empty = false;
   int host_empty_stage_count = 1;
   int host_empty_inner_repeats = 1000;
   int p8a_edge = -1;
   int p8_managed_slots = 0;
   int p8_slot_timeout_s = 120;
+  int block_profile_frames = 0;
+  int transition_wait_us = 0;
 };
 
 double NowMillis() {
   using clock = std::chrono::steady_clock;
   const auto now = clock::now().time_since_epoch();
   return std::chrono::duration<double, std::milli>(now).count();
+}
+
+// Qualification-only markers delimit the actual worker's submissions while the
+// global VTA mutex is held. No marker, debug flag, or queue query is enabled in
+// performance sessions. A main-thread queue cannot certify a worker's TLS queue.
+void C1MemoryAudit(const Args& args, int frame, size_t stage, bool begin) {
+  if (!args.c1_memory_audit) return;
+  using TLSHandle = void* (*)();
+  using DebugMode = void (*)(void*, int);
+  auto handle = reinterpret_cast<TLSHandle>(dlsym(RTLD_DEFAULT, "VTATLSCommandHandle"));
+  auto debug = reinterpret_cast<DebugMode>(dlsym(RTLD_DEFAULT, "VTASetDebugMode"));
+  const PackedFunc* status = Registry::Get("vta.runtime.queue_capacity_status");
+  if (handle == nullptr || debug == nullptr || status == nullptr)
+    throw std::runtime_error("C1 memory audit requires worker queue/debug status ABI");
+  void* queue = handle();
+  if (begin) debug(queue, 2);  // VTA_DEBUG_DUMP_INSN, on this worker only.
+  std::cout.flush();
+  std::fflush(stdout);
+  std::string queue_status = begin ? "null" : (*status)().operator std::string();
+  long tid = 0;
+#if defined(__linux__)
+  tid = static_cast<long>(syscall(SYS_gettid));
+#endif
+  std::fprintf(stderr, "[C1_MEMORY_STAGE] {\"event\":\"%s\",\"frame\":%d,"
+               "\"stage\":%zu,\"tid\":%ld,\"queue_id\":\"%p\",\"time_ms\":%.6f,"
+               "\"queue_status\":%s}\n", begin ? "begin" : "end", frame, stage,
+               tid, queue, NowMillis(), queue_status.c_str());
+  std::fflush(stderr);
+  if (!begin) debug(queue, 0);
 }
 
 double ProcessCpuMillis() {
@@ -449,11 +506,26 @@ void Usage(const char* prog) {
       << "  --stageN-device cpu|vta\n"
       << "  --stageN-name NAME\n"
       << "  --input PATH | --input-files PATH0[,PATH1] | --input-list PATH\n"
+      << "  --input-list-multi (each input-list line contains comma-separated frontier files)\n"
       << "  --runs N\n"
       << "  --warmup-runs N\n"
       << "  --allocation-snapshot PATH (diagnostic driver required)\n"
+      << "  --process-timeout-s N (Linux process deadline; 0 disables)\n"
       << "  --shared-buffer-plan PATH (fixed K2 input-pool reuse)\n"
+      << "  --command-capacity-certificate PATH (exact-program P-CAP preflight)\n"
+      << "  --bitstream-artifact PATH (required by command-capacity certificate)\n"
       << "  --queue-depth N\n"
+      << "  --queue-timing (pipeline-only opt-in queue timestamps)\n"
+      << "  --cpu-stage-gate off|observe|exclusive|resource_group (CPU set/run/get admission)\n"
+      << "  --defer-result-write (buffer JSON strings until execution finishes)\n"
+      << "  --c1-memory-audit (qualification-only worker/queue/submission markers)\n"
+      << "  --shared-slot-budget-bytes N (reject before execution; does not resize udmabuf)\n"
+      << "  --thread-affinity-report PATH (Linux stage/pool thread masks)\n"
+      << "  --session-profile-json PATH (opt-in PMU/schedstat diagnostics)\n"
+      << "  --session-profile-window FIRST,COUNT (pipeline completion window; default whole session)\n"
+      << "  --block-profile-json PATH --block-profile-frames N (serial diagnostic blocks)\n"
+      << "  --component-thread-transition fixed|4-4|1-4|3-1-4|3-1-wait-4\n"
+      << "  --transition-wait-us N (only with 3-1-wait-4)\n"
       << "  --runtime-num-threads N\n"
       << "  --process-cpu-affinity CPU0[,CPU1]\n"
       << "  --stageN-runtime-num-threads N\n"
@@ -475,6 +547,8 @@ void Usage(const char* prog) {
       << "  --p8-edge N (legacy alias: --p8a-edge)\n"
       << "  --p8-managed-slots N (1 for serial B1, 2 for pipeline B2)\n"
       << "  --p8-slot-timeout-s N\n";
+  std::cerr << "  --cpu-input-zero-copy (CPU-only serial; computed outputs remain snapshots)\n";
+  std::cerr << "  --managed-lifecycle-plan PATH (functional-test trace and FIFO gates)\n";
 }
 
 Args ParseArgs(int argc, char** argv) {
@@ -547,20 +621,58 @@ Args ParseArgs(int argc, char** argv) {
       args.input_files = SplitCSV(need_value(key));
     } else if (key == "--input-list") {
       args.input_list = need_value(key);
+    } else if (key == "--input-list-multi") {
+      args.input_list_multi = true;
     } else if (key == "--runs") {
       args.runs = std::stoi(need_value(key));
+    } else if (key == "--process-timeout-s") {
+      args.process_timeout_s = std::stoi(need_value(key));
+      if (args.process_timeout_s < 0) throw std::runtime_error("process timeout must be non-negative");
     } else if (key == "--shared-buffer-plan") {
       args.shared_buffer_plan = need_value(key);
+    } else if (key == "--command-capacity-certificate") {
+      args.command_capacity_certificate = need_value(key);
+    } else if (key == "--bitstream-artifact") {
+      args.bitstream_artifact = need_value(key);
     } else if (key == "--allocation-snapshot") {
       args.allocation_snapshot = need_value(key);
     } else if (key == "--warmup-runs") {
       args.warmup_runs = std::stoi(need_value(key));
     } else if (key == "--queue-depth") {
       args.queue_depth = std::stoi(need_value(key));
+    } else if (key == "--queue-timing") {
+      args.queue_timing = true;
+    } else if (key == "--defer-result-write") {
+      args.defer_result_write = true;
+    } else if (key == "--cpu-stage-gate") {
+      args.cpu_stage_gate = need_value(key);
+    } else if (key == "--thread-affinity-report") {
+      args.thread_affinity_report = need_value(key);
+    } else if (key == "--session-profile-json") {
+      args.session_profile_json = need_value(key);
+    } else if (key == "--session-profile-window") {
+      auto values = SplitCSV(need_value(key));
+      if (values.size() != 2) throw std::runtime_error("profile window requires FIRST,COUNT");
+      args.session_profile_first_completion = std::stoi(values[0]);
+      args.session_profile_completion_count = std::stoi(values[1]);
+    } else if (key == "--block-profile-json") {
+      args.block_profile_json = need_value(key);
+    } else if (key == "--block-profile-frames") {
+      args.block_profile_frames = std::stoi(need_value(key));
+    } else if (key == "--component-thread-transition") {
+      args.component_thread_transition = need_value(key);
+    } else if (key == "--transition-wait-us") {
+      args.transition_wait_us = std::stoi(need_value(key));
     } else if (key == "--runtime-num-threads") {
       args.runtime_num_threads = std::stoi(need_value(key));
     } else if (key == "--process-cpu-affinity") {
       args.process_cpu_affinity = ParseCPUList(need_value(key));
+    } else if (key == "--c1-memory-audit") {
+      args.c1_memory_audit = true;
+    } else if (key == "--shared-slot-budget-bytes") {
+      args.shared_slot_budget_bytes = std::stoll(need_value(key));
+      if (args.shared_slot_budget_bytes < 0)
+        throw std::runtime_error("shared slot budget must be non-negative");
     } else if (key == "--output-jsonl") {
       args.output_jsonl = need_value(key);
     } else if (key == "--output-mode") {
@@ -599,6 +711,10 @@ Args ParseArgs(int argc, char** argv) {
       args.p8_managed_slots = std::stoi(need_value(key));
     } else if (key == "--p8-slot-timeout-s") {
       args.p8_slot_timeout_s = std::stoi(need_value(key));
+    } else if (key == "--cpu-input-zero-copy") {
+      args.cpu_input_zero_copy = true;
+    } else if (key == "--managed-lifecycle-plan") {
+      args.managed_lifecycle_plan = need_value(key);
     } else if (key == "--help" || key == "-h") {
       Usage(argv[0]);
       std::exit(0);
@@ -634,6 +750,84 @@ Args ParseArgs(int argc, char** argv) {
     if (stage.runtime_num_threads < -1) {
       throw std::runtime_error("--stage*-runtime-num-threads must be >= -1");
     }
+    stage.cpu_input_zero_copy = args.cpu_input_zero_copy;
+  }
+  if (args.cpu_input_zero_copy &&
+      (!args.serial || args.p8_managed_slots > 0 || args.p8a_edge >= 0 || args.host_empty ||
+       std::any_of(args.stages.begin(), args.stages.end(),
+                   [](const StageArgs& stage) { return stage.device != "cpu"; }))) {
+    throw std::runtime_error("--cpu-input-zero-copy requires CPU-only ordinary serial execution");
+  }
+  if (args.queue_timing && (args.serial || args.host_empty || args.p8a_edge >= 0)) {
+    throw std::runtime_error("--queue-timing requires graph pipeline execution");
+  }
+  if (args.cpu_stage_gate != "off" && args.cpu_stage_gate != "observe" &&
+      args.cpu_stage_gate != "exclusive" && args.cpu_stage_gate != "resource_group") {
+    throw std::runtime_error("--cpu-stage-gate must be off, observe, exclusive or resource_group");
+  }
+  if (args.cpu_stage_gate != "off" &&
+      (args.serial || args.host_empty || args.p8a_edge >= 0 || args.p8_managed_slots > 0)) {
+    throw std::runtime_error("--cpu-stage-gate requires ordinary graph pipeline execution");
+  }
+  if (args.defer_result_write && (args.host_empty || args.p8a_edge >= 0)) {
+    throw std::runtime_error("--defer-result-write requires ordinary graph execution");
+  }
+  if (args.session_profile_first_completion != -1 &&
+      (args.serial || args.session_profile_json.empty() ||
+       args.session_profile_first_completion < 0 || args.session_profile_completion_count < 2 ||
+       args.session_profile_first_completion + args.session_profile_completion_count > args.runs)) {
+    throw std::runtime_error("session profile window requires pipeline mode and a valid completion range");
+  }
+  if (!args.thread_affinity_report.empty() && (args.host_empty || args.p8a_edge >= 0)) {
+    throw std::runtime_error("--thread-affinity-report requires ordinary graph execution");
+  }
+  if (!args.session_profile_json.empty() &&
+      (args.host_empty || args.p8a_edge >= 0 || args.p8_managed_slots > 0)) {
+    throw std::runtime_error("--session-profile-json requires ordinary graph execution");
+  }
+  if (!args.block_profile_json.empty() &&
+      (!args.serial || args.host_empty || args.p8a_edge >= 0 || args.p8_managed_slots > 0 ||
+       args.block_profile_frames <= 0)) {
+    throw std::runtime_error(
+        "--block-profile-json requires ordinary serial execution and positive block frames");
+  }
+  if (args.block_profile_json.empty() && args.block_profile_frames != 0) {
+    throw std::runtime_error("--block-profile-frames requires --block-profile-json");
+  }
+  if (!args.block_profile_json.empty() && !args.session_profile_json.empty()) {
+    throw std::runtime_error("block and whole-session profiles are mutually exclusive");
+  }
+  const std::vector<std::string> transition_modes{
+      "", "fixed", "4-4", "1-4", "3-1-4", "3-1-wait-4"};
+  if (std::find(transition_modes.begin(), transition_modes.end(),
+                args.component_thread_transition) == transition_modes.end()) {
+    throw std::runtime_error("unknown --component-thread-transition mode");
+  }
+  if (!args.component_thread_transition.empty() &&
+      (!args.serial || args.stages.size() != 1 || args.stages[0].device != "cpu" ||
+       args.stages[0].runtime_num_threads != 4)) {
+    throw std::runtime_error(
+        "component thread transitions require a one-stage CPU serial t4 session");
+  }
+  if (args.transition_wait_us < 0 ||
+      (args.transition_wait_us != 0 &&
+       args.component_thread_transition != "3-1-wait-4")) {
+    throw std::runtime_error(
+        "--transition-wait-us is non-negative and only valid with 3-1-wait-4");
+  }
+  if (!args.managed_lifecycle_plan.empty() &&
+      (args.serial || args.p8_managed_slots != 2 || args.p8a_edge >= 0 || args.host_empty ||
+       args.warmup_runs != 0)) {
+    throw std::runtime_error("managed lifecycle plan requires the ordinary two-slot managed pipeline");
+  }
+  if (!args.command_capacity_certificate.empty() &&
+      (args.host_empty || args.bitstream_artifact.empty())) {
+    throw std::runtime_error(
+        "command capacity certificate requires graph stages and --bitstream-artifact");
+  }
+  if (args.command_capacity_certificate.empty() && !args.bitstream_artifact.empty()) {
+    throw std::runtime_error(
+        "--bitstream-artifact is only accepted with --command-capacity-certificate");
   }
   if (args.stages.size() > 1) {
     for (size_t i = 0; i < args.stages.size(); ++i) {
@@ -741,11 +935,11 @@ Args ParseArgs(int argc, char** argv) {
     if (args.stages.size() < 2) {
       throw std::runtime_error("P8 managed slots require at least two stages");
     }
-    if (args.output_mode == "raw_all_stages") {
+    if (args.output_mode == "raw_all_stages" && !args.c1_memory_audit) {
       throw std::runtime_error(
           "P8 managed slots do not retain intermediate tensors for raw_all_stages");
     }
-    if (args.serial && args.p8_managed_slots != 1) {
+    if (args.serial && args.p8_managed_slots != 1 && args.shared_buffer_plan.empty()) {
       throw std::runtime_error("serial P8 managed mode requires exactly one slot per edge");
     }
     if (!args.serial && args.p8_managed_slots < 2) {
@@ -787,12 +981,9 @@ void ResolveStageThreadDefaults(Args* args) {
 void ValidateStageAffinities(const Args& args) {
   for (size_t i = 0; i < args.stages.size(); ++i) {
     const StageArgs& stage = args.stages[i];
-    if (stage.device == "vta" && !stage.cpu_affinity.empty()) {
-      throw std::runtime_error("--stage" + std::to_string(i) +
-                               "-cpu-affinity is only valid for CPU stages");
-    }
-    if (stage.device != "cpu") continue;
-    if (!stage.cpu_affinity.empty() &&
+    // An explicit VTA mask configures its host thread/pool. Its logical VTA
+    // thread count is independent of the number of eligible host CPU cores.
+    if (stage.device == "cpu" && !stage.cpu_affinity.empty() &&
         stage.cpu_affinity.size() != static_cast<size_t>(stage.runtime_num_threads)) {
       throw std::runtime_error("--stage" + std::to_string(i) +
                                "-cpu-affinity count must equal runtime-num-threads");
@@ -800,7 +991,7 @@ void ValidateStageAffinities(const Args& args) {
     const unsigned int hardware_threads = std::thread::hardware_concurrency();
     if (!stage.cpu_affinity.empty() && hardware_threads != 0 &&
         stage.cpu_affinity.back() >= hardware_threads) {
-      throw std::runtime_error("CPU stage affinity references a core outside the system");
+      throw std::runtime_error("stage affinity references a core outside the system");
     }
   }
 }
@@ -839,6 +1030,90 @@ void ConfigureProcessAffinity(const std::vector<unsigned int>& cpus) {
 #else
   throw std::runtime_error("process affinity is unsupported on this platform");
 #endif
+}
+
+struct ThreadAffinityRecord {
+  long caller_tid{0};
+  int active_runtime_threads{0};
+  std::vector<long> thread_ids;
+  std::vector<std::vector<unsigned int>> effective_affinities;
+};
+
+std::vector<long> ProcessThreadIds() {
+#if defined(__linux__)
+  DIR* directory = opendir("/proc/self/task");
+  if (directory == nullptr) throw std::runtime_error("unable to list affinity-report threads");
+  std::vector<long> tids;
+  while (dirent* entry = readdir(directory)) {
+    char* end = nullptr;
+    const long tid = std::strtol(entry->d_name, &end, 10);
+    if (end != entry->d_name && *end == '\0' && tid > 0) tids.push_back(tid);
+  }
+  closedir(directory);
+  std::sort(tids.begin(), tids.end());
+  return tids;
+#else
+  throw std::runtime_error("thread affinity reports require Linux");
+#endif
+}
+
+void CaptureThreadAffinities(ThreadAffinityRecord* record) {
+#if defined(__linux__)
+  record->effective_affinities.clear();
+  for (long tid : record->thread_ids) {
+    cpu_set_t cpuset;
+    CPU_ZERO(&cpuset);
+    if (sched_getaffinity(static_cast<pid_t>(tid), sizeof(cpuset), &cpuset) != 0) {
+      throw std::runtime_error("unable to read affinity for thread " + std::to_string(tid));
+    }
+    std::vector<unsigned int> cpus;
+    for (unsigned int cpu = 0; cpu < CPU_SETSIZE; ++cpu) {
+      if (CPU_ISSET(cpu, &cpuset)) cpus.push_back(cpu);
+    }
+    record->effective_affinities.push_back(std::move(cpus));
+  }
+#else
+  throw std::runtime_error("thread affinity reports require Linux");
+#endif
+}
+
+void WriteThreadAffinityReport(const Args& args, const std::vector<ThreadAffinityRecord>& records) {
+  std::ostringstream os;
+  auto cpus_json = [&](const std::vector<unsigned int>& cpus) {
+    os << "[";
+    for (size_t i = 0; i < cpus.size(); ++i) {
+      if (i != 0) os << ",";
+      os << cpus[i];
+    }
+    os << "]";
+  };
+  os << "{\"mode\":\"" << (args.serial ? "serial" : "pipeline")
+     << "\",\"pool_ownership\":\""
+     << (args.serial ? "shared_main_thread_pool" : "distinct_stage_thread_pools")
+     << "\",\"stages\":[";
+  for (size_t stage = 0; stage < records.size(); ++stage) {
+    if (stage != 0) os << ",";
+    const auto& record = records[stage];
+    os << "{\"stage_index\":" << stage << ",\"caller_tid\":" << record.caller_tid
+       << ",\"active_runtime_threads\":" << record.active_runtime_threads
+       << ",\"requested_cpus\":";
+    cpus_json(args.stages[stage].cpu_affinity);
+    os << ",\"thread_ids\":[";
+    for (size_t i = 0; i < record.thread_ids.size(); ++i) {
+      if (i != 0) os << ",";
+      os << record.thread_ids[i];
+    }
+    os << "],\"effective_affinities\":[";
+    for (size_t i = 0; i < record.thread_ids.size(); ++i) {
+      if (i != 0) os << ",";
+      os << "{\"tid\":" << record.thread_ids[i] << ",\"cpus\":";
+      cpus_json(record.effective_affinities.at(i));
+      os << "}";
+    }
+    os << "]}";
+  }
+  os << "]}\n";
+  WriteFile(args.thread_affinity_report, os.str());
 }
 
 size_t TensorNBytes(const DLTensor* tensor) {
@@ -891,7 +1166,7 @@ uint64_t FNV1a64(const uint8_t* data, size_t nbytes) {
   return hash;
 }
 
-NDArray MakeCPUInputLike(DLTensor* input_tensor, const std::string& input_bytes) {
+NDArray MakeCPUInputLike(const DLTensor* input_tensor, const std::string& input_bytes) {
   const size_t expected = TensorNBytes(input_tensor);
   if (input_bytes.size() != expected) {
     std::ostringstream os;
@@ -916,6 +1191,10 @@ struct StageExecutor {
   std::string name;
   std::string device;
   std::vector<std::string> input_names;
+  // -1 denotes a computed output. Other values retain an actual incoming view.
+  // Derive this from graph heads, never from an unverified eligibility flag.
+  std::vector<int> output_live_input_indices;
+  bool cpu_input_zero_copy{false};
   Module graph;
   PackedFunc set_input;
   PackedFunc set_input_zero_copy;
@@ -962,6 +1241,32 @@ StageExecutor LoadStage(const std::string& name, const std::string& device,
   stage.get_output = graph.GetFunction("get_output");
   stage.get_input = graph.GetFunction("get_input");
   stage.get_num_outputs = graph.GetFunction("get_num_outputs");
+  stage.cpu_input_zero_copy = stage_args.cpu_input_zero_copy;
+  if (stage.cpu_input_zero_copy && !stage.set_input_zero_copy.defined()) {
+    throw std::runtime_error("CPU input zero-copy function is unavailable");
+  }
+  using namespace shared_buffer;
+  const JSON compiled_graph = Parse(graph_json);
+  const auto& heads = As<Array>(Field(compiled_graph, "heads"));
+  const auto& nodes = As<Array>(Field(compiled_graph, "nodes"));
+  Require(heads.size() == static_cast<size_t>(stage.NumOutputs()), "graph output arity mismatch");
+  stage.output_live_input_indices.assign(heads.size(), -1);
+  for (size_t output_index = 0; output_index < heads.size(); ++output_index) {
+    const auto& head = As<Array>(heads[output_index]);
+    Require(head.size() == 3, "invalid graph head");
+    const auto& node = nodes.at(Number(head.at(0)));
+    if (Text(Field(node, "op")) != "null") continue;
+    const auto name = Text(Field(node, "name"));
+    const auto input = std::find(stage.input_names.begin(), stage.input_names.end(), name);
+    if (input == stage.input_names.end()) continue; // A parameter/constant head is not a live input.
+    Require(Number(head.at(1)) == 0 && As<Array>(Field(node, "inputs")).empty(),
+            "live-input head is not a plain argument");
+    const auto& args = As<Array>(Field(compiled_graph, "arg_nodes"));
+    Require(std::any_of(args.begin(), args.end(), [&](const JSON& arg) {
+      return Number(arg) == Number(head.at(0));
+    }), "live-input head is not in arg_nodes");
+    stage.output_live_input_indices[output_index] = static_cast<int>(input - stage.input_names.begin());
+  }
 
   std::cout << "[LOAD] " << name << " device=" << device
             << " inputs=" << stage.input_names.size()
@@ -1006,7 +1311,7 @@ std::vector<InputRecord> LoadInputs(const Args& args, StageExecutor* first_stage
     inputs.push_back(InputRecord{0, args.input, {make_input(0, args.input)}});
     return inputs;
   }
-  if (first_stage->input_names.size() != 1) {
+  if (first_stage->input_names.size() != 1 && !args.input_list_multi) {
     throw std::runtime_error("--input-list only supports a single-input first stage");
   }
 
@@ -1024,9 +1329,18 @@ std::vector<InputRecord> LoadInputs(const Args& args, StageExecutor* first_stage
   while (std::getline(list, line)) {
     std::string rel = TrimLine(line);
     if (rel.empty()) continue;
-    std::filesystem::path input_path(rel);
-    std::filesystem::path resolved = input_path.is_absolute() ? input_path : base / input_path;
-    inputs.push_back(InputRecord{input_index, rel, {make_input(0, resolved.string())}});
+    auto paths = args.input_list_multi ? SplitCSV(rel) : std::vector<std::string>{rel};
+    if (paths.size() != first_stage->input_names.size()) {
+      throw std::runtime_error("input-list frontier arity mismatch at record " +
+                               std::to_string(input_index));
+    }
+    std::vector<NDArray> arrays;
+    for (size_t slot = 0; slot < paths.size(); ++slot) {
+      std::filesystem::path input_path(paths[slot]);
+      auto resolved = input_path.is_absolute() ? input_path : base / input_path;
+      arrays.push_back(make_input(slot, resolved.string()));
+    }
+    inputs.push_back(InputRecord{input_index, rel, std::move(arrays)});
     ++input_index;
   }
   if (inputs.empty()) {
@@ -1044,6 +1358,16 @@ int Top1Float32(const NDArray& output_cpu) {
   const size_t count = nbytes / sizeof(float);
   const float* data = static_cast<const float*>(tensor->data);
   return static_cast<int>(std::max_element(data, data + count) - data);
+}
+
+int ResultTop1(const Args& args, const NDArray& output_cpu) {
+  const DLDataType dtype = output_cpu->dtype;
+  if (args.output_mode != "classification" &&
+      (dtype.code != kDLFloat || dtype.bits != 32 || dtype.lanes != 1)) {
+    // Raw component profiling can end at an integer quantized frontier.
+    return -1;
+  }
+  return Top1Float32(output_cpu);
 }
 
 std::string ShapeJSON(const DLTensor* tensor) {
@@ -1183,6 +1507,8 @@ std::string DumpOutputsJSON(const std::string& output_dump_dir,
 }
 
 struct StageTiming {
+  uint64_t c1_input_copy_bytes{0};
+  uint64_t c1_output_snapshot_bytes{0};
   // Passive G0 trace points. These do not change queue/slot admission or execution.
   double queue_pop_ms{0.0};
   double slots_acquired_ms{0.0};
@@ -1204,6 +1530,10 @@ struct StageTiming {
   double vta_run_call_start_ms{0.0};
   double vta_run_call_end_ms{0.0};
   bool vta_mutex_timing_valid{false};
+  double cpu_gate_request_ms{0.0};
+  double cpu_gate_acquire_ms{0.0};
+  double cpu_gate_release_ms{0.0};
+  bool cpu_gate_timing_valid{false};
 
   double SetMs() const { return set_end_ms - set_start_ms; }
   double RunMs() const { return get_start_ms - run_start_ms; }
@@ -1256,6 +1586,55 @@ struct P8BoundaryObservation {
   std::string direction;
   double producer_wait_ms{0.0};
   double consumer_wait_ms{0.0};
+  size_t live_input_copy_bytes{0};
+};
+
+// One record per frame/queue. A consumer can dequeue before Push finishes;
+// publishing the post-unlock return timestamp therefore needs its own barrier.
+// This synchronization is allocated and used only with --queue-timing.
+class QueueTiming {
+ public:
+  struct Snapshot {
+    double push_request_ms{0.0};
+    double enqueue_ms{0.0};
+    double dequeue_ms{0.0};
+    double push_return_ms{0.0};
+  };
+
+  void PushRequested(double time_ms) {
+    std::lock_guard<std::mutex> lock(mutex_);
+    snapshot_.push_request_ms = time_ms;
+  }
+  void Enqueued(double time_ms) {
+    std::lock_guard<std::mutex> lock(mutex_);
+    snapshot_.enqueue_ms = time_ms;
+  }
+  void Dequeued(double time_ms) {
+    std::lock_guard<std::mutex> lock(mutex_);
+    snapshot_.dequeue_ms = time_ms;
+    dequeued_ = true;
+  }
+  void PushReturned(double time_ms) {
+    {
+      std::lock_guard<std::mutex> lock(mutex_);
+      snapshot_.push_return_ms = time_ms;
+      push_returned_ = true;
+    }
+    ready_.notify_all();
+  }
+  Snapshot CompletedSnapshot() {
+    std::unique_lock<std::mutex> lock(mutex_);
+    ready_.wait(lock, [&] { return push_returned_; });
+    if (!dequeued_) throw std::runtime_error("queue timing serialized before dequeue");
+    return snapshot_;
+  }
+
+ private:
+  Snapshot snapshot_;
+  std::mutex mutex_;
+  std::condition_variable ready_;
+  bool push_returned_{false};
+  bool dequeued_{false};
 };
 
 struct Frame {
@@ -1266,11 +1645,16 @@ struct Frame {
   std::vector<NDArray> stage_inputs;
   std::vector<std::vector<NDArray>> stage_outputs;
   std::vector<StageTiming> stage_timings;
+  std::vector<std::shared_ptr<QueueTiming>> queue_timings;
   std::vector<P8SlotToken> p8_edge_tokens;
   std::vector<P8BoundaryObservation> p8_boundaries;
   PmuSnapshot process_pmu;
   double done_ms{0.0};
   int top1{-1};
+
+  std::shared_ptr<QueueTiming> QueueTimingFor(size_t edge_index) const {
+    return queue_timings.empty() ? nullptr : queue_timings.at(edge_index);
+  }
 };
 
 std::pair<int, int> ParseInputSource(const std::string& source) {
@@ -1333,11 +1717,63 @@ struct StageRunHooks {
   std::function<void()> before_run;
   std::function<void(double)> started;
   std::function<void(double)> finished;
+  std::function<void()> after_consumer_acquire, after_producer_acquire;
+  std::function<void()> after_run, before_publish, before_release;
 };
+
+NDArray ResolveStageOutput(StageExecutor* stage, const std::vector<NDArray>& inputs,
+                           int output_index) {
+  const int live_input = stage->output_live_input_indices.at(static_cast<size_t>(output_index));
+  if (live_input >= 0) return inputs.at(static_cast<size_t>(live_input));
+  return stage->get_output(output_index).operator NDArray();
+}
+
+// Opt-in experiment instrumentation: reread actual executor/slot storage before
+// publication or release. CPU snapshots alone cannot certify DMA completion.
+void CheckStableStageOutputs(StageExecutor* stage,
+                             const std::function<NDArray(int)>& resolve) {
+  const char* directory = std::getenv("THESIS_OUTPUT_STABILITY_DIR");
+  if (directory == nullptr || directory[0] == '\0') return;
+  static size_t call = 0;  // Enabled only in serial correctness sessions.
+  const size_t identity = call++;
+  std::filesystem::create_directories(directory);
+  std::vector<NDArray> first;
+  for (int i = 0; i < stage->NumOutputs(); ++i)
+    first.push_back(resolve(i).CopyTo(tvm::Device{kDLCPU, 0}));
+  const double immediate_ms = NowMillis();
+  std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  for (int i = 0; i < stage->NumOutputs(); ++i) {
+    NDArray second = resolve(i).CopyTo(tvm::Device{kDLCPU, 0});
+    const double delayed_ms = NowMillis();
+    const size_t bytes = TensorNBytes(first[i].operator->());
+    const bool stable = bytes == TensorNBytes(second.operator->()) &&
+        std::memcmp(TensorDataBytes(first[i].operator->()),
+                    TensorDataBytes(second.operator->()), bytes) == 0;
+    const std::string stem = stage->name + "_call" + std::to_string(identity) +
+        "_out" + std::to_string(i);
+    for (const auto& item : std::vector<std::pair<std::string, NDArray>>{
+             {"immediate", first[i]}, {"delayed", second}}) {
+      std::ofstream output(std::string(directory) + "/" + stem + "_" + item.first + ".bin",
+                           std::ios::binary);
+      output.write(reinterpret_cast<const char*>(TensorDataBytes(item.second.operator->())), bytes);
+      if (!output) throw std::runtime_error("Cannot preserve stability output");
+    }
+    std::cout << "[THESIS_STABILITY] {\"stage\":\"" << JsonEscape(stage->name)
+              << "\",\"call\":" << identity << ",\"output_index\":" << i
+              << ",\"shape\":" << ShapeJSON(first[i].operator->())
+              << ",\"dtype\":\"" << DTypeString(first[i]->dtype)
+              << "\",\"stem\":\"" << stem << "\",\"immediate_ms\":"
+              << std::fixed << std::setprecision(6) << immediate_ms
+              << ",\"delayed_ms\":" << delayed_ms
+              << ",\"stable\":" << (stable ? "true" : "false") << "}\n";
+    if (!stable || delayed_ms - immediate_ms < 10.0)
+      throw std::runtime_error("Returned output failed 10 ms stability: " + stem);
+  }
+}
 
 std::vector<NDArray> RunStage(StageExecutor* stage, const std::vector<NDArray>& inputs,
                               StageTiming* timing, bool measure_process_cpu_time,
-                              const StageRunHooks* hooks = nullptr) {
+                              const StageRunHooks* hooks = nullptr, bool count_c1_copy_bytes = false) {
   if (inputs.size() != stage->input_names.size()) {
     std::ostringstream os;
     os << stage->name << " expected " << stage->input_names.size() << " input(s), got "
@@ -1350,7 +1786,12 @@ std::vector<NDArray> RunStage(StageExecutor* stage, const std::vector<NDArray>& 
   }
   timing->set_start_ms = NowMillis();
   for (size_t i = 0; i < inputs.size(); ++i) {
-    stage->set_input(stage->input_names[i], inputs[i]);
+    if (stage->cpu_input_zero_copy) {
+      stage->set_input_zero_copy(stage->input_names[i], inputs[i]);
+    } else {
+      stage->set_input(stage->input_names[i], inputs[i]);
+      if (count_c1_copy_bytes) timing->c1_input_copy_bytes += TensorNBytes(inputs[i].operator->());
+    }
   }
   timing->set_end_ms = NowMillis();
   if (measure_process_cpu_time) {
@@ -1358,23 +1799,33 @@ std::vector<NDArray> RunStage(StageExecutor* stage, const std::vector<NDArray>& 
   }
   timing->run_start_ms = timing->set_end_ms;
   if (hooks != nullptr) {
-    hooks->before_run();
+    if (hooks->before_run) hooks->before_run();
     timing->run_start_ms = NowMillis();
-    hooks->started(timing->run_start_ms);
+    if (hooks->started) hooks->started(timing->run_start_ms);
   }
   stage->run();
   if (measure_process_cpu_time) {
     timing->process_cpu_after_run_ms = ProcessCpuMillis();
   }
   timing->get_start_ms = NowMillis();
-  if (hooks != nullptr) hooks->finished(timing->get_start_ms);
+  if (hooks != nullptr && hooks->finished) hooks->finished(timing->get_start_ms);
+  CheckStableStageOutputs(stage, [&](int i) { return ResolveStageOutput(stage, inputs, i); });
 
   std::vector<NDArray> outputs;
   const int num_outputs = stage->NumOutputs();
   outputs.reserve(static_cast<size_t>(num_outputs));
   for (int i = 0; i < num_outputs; ++i) {
-    NDArray output = stage->get_output(i).operator NDArray();
-    outputs.push_back(output.CopyTo(tvm::Device{kDLCPU, 0}));
+    const int live_input = stage->output_live_input_indices.at(static_cast<size_t>(i));
+    if (live_input >= 0) {
+      // SetInputZeroCopy updates operator pointers, not the Var-backed data_entry
+      // returned by GetOutput. Retain the real incoming buffer and its owner.
+      outputs.push_back(inputs.at(static_cast<size_t>(live_input)));
+    } else {
+      NDArray output = ResolveStageOutput(stage, inputs, i);
+      // Snapshot computed outputs before a later frame reuses this executor pool.
+      outputs.push_back(output.CopyTo(tvm::Device{kDLCPU, 0}));
+      if (count_c1_copy_bytes) timing->c1_output_snapshot_bytes += TensorNBytes(output.operator->());
+    }
   }
   timing->end_ms = NowMillis();
   if (measure_process_cpu_time) {
@@ -1578,9 +2029,58 @@ P8SharedEdge BindP8HeterogeneousEdge(std::vector<StageExecutor>* stages,
   P8SharedEdge edge = AllocateP8HeterogeneousEdgeSlot(stages, producer_stage);
   StageExecutor& producer = stages->at(edge.producer_stage);
   StageExecutor& consumer = stages->at(edge.consumer_stage);
-  producer.set_output_zero_copy(0, edge.producer_owner);
+  if (producer.output_live_input_indices.at(0) < 0) {
+    producer.set_output_zero_copy(0, edge.producer_owner);
+  }
   consumer.set_input_zero_copy(consumer.input_names[0], edge.consumer_owner);
   return edge;
+}
+
+std::string LoadedObjectPath(const char* symbol_name) {
+  void* symbol = dlsym(RTLD_DEFAULT, symbol_name);
+  Dl_info info{};
+  if (symbol == nullptr || dladdr(symbol, &info) == 0 || info.dli_fname == nullptr) {
+    throw std::runtime_error(std::string("cannot identify loaded object for ") + symbol_name);
+  }
+  return info.dli_fname;
+}
+
+std::string ExecutablePath() {
+#if defined(__linux__)
+  std::vector<char> buffer(4096);
+  const ssize_t length = readlink("/proc/self/exe", buffer.data(), buffer.size() - 1);
+  if (length <= 0 || static_cast<size_t>(length) >= buffer.size() - 1) {
+    throw std::runtime_error("cannot identify /proc/self/exe");
+  }
+  buffer[static_cast<size_t>(length)] = '\0';
+  return buffer.data();
+#else
+  throw std::runtime_error("command capacity certificate requires /proc/self/exe");
+#endif
+}
+
+command_capacity::VerifiedCertificate ValidateCommandCapacityCertificate(const Args& args) {
+  if (args.command_capacity_certificate.empty()) {
+    return command_capacity::VerifiedCertificate{};
+  }
+  command_capacity::ProgramIdentity program;
+  for (const StageArgs& stage : args.stages) {
+    program.stages.push_back(command_capacity::StageIdentity{
+        stage.name, stage.device, stage.graph, stage.lib, stage.params, stage.input_names});
+  }
+  program.runner = ExecutablePath();
+  program.runtime = LoadedObjectPath("TVMFuncGetGlobal");
+  program.driver = LoadedObjectPath("VTAMemAlloc");
+  program.bitstream = args.bitstream_artifact;
+  program.shared_buffer_plan = args.shared_buffer_plan;
+  program.vta_max_xfer_bytes = VTA_MAX_XFER;
+  auto verified = command_capacity::Validate(args.command_capacity_certificate, program);
+  std::cout << "[COMMAND-CAPACITY] certificate=" << verified.certificate_sha256
+            << " program=" << verified.program_id
+            << " evidence_scope=" << verified.evidence_scope
+            << " insn=" << verified.insn_capacity_bytes
+            << " uop=" << verified.uop_capacity_bytes << " verified before graph load\n";
+  return verified;
 }
 
 shared_buffer::JSON ValidateSharedBufferPlan(const Args& args) {
@@ -1692,14 +2192,16 @@ std::vector<P8SharedEdge> PrepareSharedBufferAnchor(
 class BoundarySlotManager {
  public:
   BoundarySlotManager(std::vector<StageExecutor>* stages, size_t edge_index,
-                      size_t slot_count, int timeout_s, std::vector<P8SharedEdge> anchor = {})
-      : edge_index_(edge_index), timeout_(std::chrono::seconds(timeout_s)) {
+                      size_t slot_count, int timeout_s, std::vector<P8SharedEdge> anchor = {},
+                      std::function<void(const char*, const P8SlotToken&)> observer = {})
+      : edge_index_(edge_index), timeout_(std::chrono::seconds(timeout_s)), observer_(std::move(observer)) {
     slots_.reserve(slot_count);
     for (size_t slot_id = 0; slot_id < slot_count; ++slot_id) {
       Slot slot;
       slot.tensors = slot_id == 0 && !anchor.empty() ? std::move(anchor) :
           AllocateP8HeterogeneousEdgeBundle(stages, edge_index);
       slots_.push_back(std::move(slot));
+      EmitLocked("slot_initialized", P8SlotToken{edge_index_, slot_id, 0, -1});
     }
   }
 
@@ -1707,6 +2209,7 @@ class BoundarySlotManager {
     const double start_ms = NowMillis();
     std::unique_lock<std::mutex> lock(mutex_);
     const auto ready = [&]() { return aborted_ || FindFreeSlotLocked() < slots_.size(); };
+    if (!ready()) EmitLocked("producer_wait_free", P8SlotToken{edge_index_, slots_.size(), 0, frame_id});
     if (!condition_.wait_for(lock, timeout_, ready)) {
       throw std::runtime_error("P8 producer timed out waiting for a FREE slot on edge " +
                                std::to_string(edge_index_));
@@ -1719,13 +2222,24 @@ class BoundarySlotManager {
     ++slot.generation;
     next_slot_ = (slot_id + 1) % slots_.size();
     *wait_ms = NowMillis() - start_ms;
-    return P8SlotToken{edge_index_, slot_id, slot.generation, frame_id};
+    const P8SlotToken token{edge_index_, slot_id, slot.generation, frame_id};
+    EmitLocked("producer_acquired", token);
+    return token;
   }
 
   const NDArray& ProducerView(const P8SlotToken& token, size_t tensor_index) {
     std::lock_guard<std::mutex> lock(mutex_);
     Slot& slot = ValidateTokenLocked(token, SlotState::kProducerWriting);
     return slot.tensors.at(tensor_index).producer_owner;
+  }
+
+  const NDArray& ProducerCPUView(const P8SlotToken& token, size_t tensor_index) {
+    std::lock_guard<std::mutex> lock(mutex_);
+    ThrowIfAbortedLocked();
+    Slot& slot = ValidateTokenLocked(token, SlotState::kProducerWriting);
+    // The CPU owner aliases the same validated u-dma-buf allocation. A raw
+    // external view has no DataBuffer header and cannot use ext_dev CopyTo.
+    return slot.tensors.at(tensor_index).cpu_owner;
   }
 
   const NDArray& ConsumerView(const P8SlotToken& token, size_t tensor_index) {
@@ -1744,20 +2258,32 @@ class BoundarySlotManager {
 
   void Publish(const P8SlotToken& token) {
     std::lock_guard<std::mutex> lock(mutex_);
+    ThrowIfAbortedLocked();
     Slot& slot = ValidateTokenLocked(token, SlotState::kProducerWriting);
     slot.state = SlotState::kReady;
+    EmitLocked("published", token);
     condition_.notify_all();
   }
 
   void AcquireForConsumer(const P8SlotToken& token, double* wait_ms) {
     const double start_ms = NowMillis();
     std::unique_lock<std::mutex> lock(mutex_);
+    ThrowIfAbortedLocked();
+    if (token.edge_index != edge_index_ || token.slot_id >= slots_.size()) {
+      throw std::runtime_error("P8 slot token references the wrong edge or slot");
+    }
+    const Slot& initial = slots_[token.slot_id];
+    if (initial.generation != token.generation || initial.frame_id != token.frame_id) {
+      throw std::runtime_error("P8 stale slot token generation/owner mismatch");
+    }
     const auto ready = [&]() {
       if (aborted_) return true;
-      const Slot& slot = slots_.at(token.slot_id);
-      return slot.state == SlotState::kReady && slot.generation == token.generation &&
-             slot.frame_id == token.frame_id;
+      const Slot& slot = slots_[token.slot_id];
+      // Wake on identity invalidation too; ValidateTokenLocked rejects it below.
+      return slot.generation != token.generation || slot.frame_id != token.frame_id ||
+             slot.state == SlotState::kReady;
     };
+    if (!ready()) EmitLocked("consumer_wait_ready", token);
     if (!condition_.wait_for(lock, timeout_, ready)) {
       throw std::runtime_error("P8 consumer timed out waiting for a READY slot on edge " +
                                std::to_string(edge_index_));
@@ -1765,6 +2291,7 @@ class BoundarySlotManager {
     ThrowIfAbortedLocked();
     Slot& slot = ValidateTokenLocked(token, SlotState::kReady);
     slot.state = SlotState::kConsumerUsing;
+    EmitLocked("consumer_acquired", token);
     *wait_ms = NowMillis() - start_ms;
   }
 
@@ -1773,6 +2300,7 @@ class BoundarySlotManager {
     Slot& slot = ValidateTokenLocked(token, SlotState::kConsumerUsing);
     slot.state = SlotState::kFree;
     slot.frame_id = -1;
+    EmitLocked("released", token);
     condition_.notify_all();
   }
 
@@ -1780,6 +2308,7 @@ class BoundarySlotManager {
     std::lock_guard<std::mutex> lock(mutex_);
     aborted_ = true;
     abort_reason_ = reason;
+    EmitLocked("aborted", P8SlotToken{edge_index_, slots_.size(), 0, -1});
     condition_.notify_all();
   }
 
@@ -1863,6 +2392,10 @@ class BoundarySlotManager {
     }
   }
 
+  void EmitLocked(const char* event, const P8SlotToken& token) {
+    if (observer_) observer_(event, token);
+  }
+
   size_t edge_index_{0};
   std::chrono::seconds timeout_;
   std::vector<Slot> slots_;
@@ -1871,38 +2404,63 @@ class BoundarySlotManager {
   std::condition_variable condition_;
   bool aborted_{false};
   std::string abort_reason_;
+  std::function<void(const char*, const P8SlotToken&)> observer_;
 };
 
 template <typename T>
 class BoundedQueue {
  public:
-  explicit BoundedQueue(size_t capacity) : capacity_(capacity) {}
+  explicit BoundedQueue(size_t capacity, std::function<void(const char*)> observer = {},
+                        bool queue_timing = false)
+      : capacity_(capacity), observer_(std::move(observer)), queue_timing_(queue_timing) {}
 
-  bool Push(T value) {
+  bool Push(T value, std::shared_ptr<QueueTiming> timing = nullptr) {
+    if (queue_timing_ && !timing) throw std::runtime_error("missing queue timing record");
+    if (queue_timing_) timing->PushRequested(NowMillis());
     std::unique_lock<std::mutex> lock(mutex_);
+    if (!closed_ && queue_.size() >= capacity_ && observer_) observer_("queue_wait_space");
     not_full_.wait(lock, [&]() { return closed_ || queue_.size() < capacity_; });
     if (closed_) {
       return false;
     }
     queue_.push_back(std::move(value));
+    if (queue_timing_) {
+      try {
+        timings_.push_back(timing);
+      } catch (...) {
+        queue_.pop_back();  // Keep the value and timing queues aligned on allocation failure.
+        throw;
+      }
+      timing->Enqueued(NowMillis());  // Queue ownership commits while holding its lock.
+    }
     not_empty_.notify_one();
+    if (queue_timing_) {
+      lock.unlock();
+      timing->PushReturned(NowMillis());  // Recorded after releasing the queue lock.
+    }
     return true;
   }
 
   bool Pop(T* value) {
     std::unique_lock<std::mutex> lock(mutex_);
+    if (!closed_ && queue_.empty() && observer_) observer_("queue_wait_input");
     not_empty_.wait(lock, [&]() { return closed_ || !queue_.empty(); });
     if (queue_.empty()) {
       return false;
     }
     *value = std::move(queue_.front());
     queue_.pop_front();
+    if (queue_timing_) {
+      timings_.front()->Dequeued(NowMillis());  // Dequeue is also recorded under the lock.
+      timings_.pop_front();
+    }
     not_full_.notify_one();
     return true;
   }
 
   void Close() {
     std::lock_guard<std::mutex> lock(mutex_);
+    if (!closed_ && observer_) observer_("queue_closed");
     closed_ = true;
     not_empty_.notify_all();
     not_full_.notify_all();
@@ -1915,6 +2473,9 @@ class BoundedQueue {
   std::condition_variable not_empty_;
   std::condition_variable not_full_;
   bool closed_{false};
+  std::function<void(const char*)> observer_;
+  bool queue_timing_{false};
+  std::deque<std::shared_ptr<QueueTiming>> timings_;
 };
 
 uint64_t EmptyStageTransform(uint64_t value, size_t stage_index) {
@@ -2124,6 +2685,45 @@ std::string ResultJSON(const Args& args, const Frame& frame, int completion_inde
     os << "null,\"pmu_instructions\":null,\"pmu_cache_references\":null"
        << ",\"pmu_cache_misses\":null";
   }
+  // Leave the legacy output schema unchanged when both switches are disabled.
+  if (args.queue_timing || args.defer_result_write) {
+    os << ",\"queue_timing_enabled\":" << (args.queue_timing ? "true" : "false")
+       << ",\"defer_result_write_enabled\":" << (args.defer_result_write ? "true" : "false");
+  }
+  if (args.cpu_stage_gate != "off") {
+    os << ",\"cpu_stage_gate_mode\":\"" << args.cpu_stage_gate << "\""
+       << ",\"cpu_stage_gate_scope\":\"CPU set/run/get and output snapshot; wait outside stage service\"";
+    for (size_t i = 0; i < frame.stage_timings.size(); ++i) {
+      const auto& timing = frame.stage_timings[i];
+      for (const auto& point : std::vector<std::pair<const char*, double>>{
+               {"request", timing.cpu_gate_request_ms},
+               {"acquire", timing.cpu_gate_acquire_ms},
+               {"release", timing.cpu_gate_release_ms}}) {
+        os << ",\"stage" << i << "_cpu_gate_" << point.first << "_ms\":";
+        if (timing.cpu_gate_timing_valid) os << rel(point.second);
+        else os << "null";
+      }
+      os << ",\"stage" << i << "_cpu_gate_wait_ms\":";
+      if (timing.cpu_gate_timing_valid)
+        os << timing.cpu_gate_acquire_ms - timing.cpu_gate_request_ms;
+      else os << "null";
+    }
+  }
+  if (args.queue_timing) {
+    os << ",\"queue_timings\":[";
+    for (size_t edge_index = 0; edge_index < frame.queue_timings.size(); ++edge_index) {
+      // In particular, wait for the final stage's Push return publication. The
+      // output queue can wake us before that stage records its return time.
+      const auto timing = frame.queue_timings[edge_index]->CompletedSnapshot();
+      if (edge_index != 0) os << ",";
+      os << "{\"edge_index\":" << edge_index
+         << ",\"push_request_ms\":" << rel(timing.push_request_ms)
+         << ",\"enqueue_ms\":" << rel(timing.enqueue_ms)
+         << ",\"dequeue_ms\":" << rel(timing.dequeue_ms)
+         << ",\"push_return_ms\":" << rel(timing.push_return_ms) << "}";
+    }
+    os << "]";
+  }
   for (size_t i = 0; i < frame.stage_timings.size(); ++i) {
     const StageTiming& timing = frame.stage_timings[i];
     os << ",\"stage" << i << "_ms\":" << timing.ServiceMs()
@@ -2184,8 +2784,12 @@ std::string ResultJSON(const Args& args, const Frame& frame, int completion_inde
   if (!frame.p8_boundaries.empty()) {
     double total_producer_wait_ms = 0.0;
     double total_consumer_wait_ms = 0.0;
+    size_t live_input_copy_bytes = 0;
+    for (const auto& boundary : frame.p8_boundaries) {
+      if (boundary.valid) live_input_copy_bytes += boundary.live_input_copy_bytes;
+    }
     os << ",\"p8_managed_slot_count\":" << args.p8_managed_slots
-       << ",\"p8_framework_materialization_bytes\":0"
+       << ",\"p8_framework_materialization_bytes\":" << live_input_copy_bytes
        << ",\"p8_boundaries\":[";
     for (size_t i = 0; i < frame.p8_boundaries.size(); ++i) {
       const P8BoundaryObservation& boundary = frame.p8_boundaries[i];
@@ -2220,13 +2824,28 @@ std::string ResultJSON(const Args& args, const Frame& frame, int completion_inde
          << ",\"physical_address\":\"0x" << std::hex
          << boundary.physical_address << std::dec << "\""
          << ",\"producer_wait_ms\":" << boundary.producer_wait_ms
-         << ",\"consumer_wait_ms\":" << boundary.consumer_wait_ms << "}";
+         << ",\"consumer_wait_ms\":" << boundary.consumer_wait_ms
+         << ",\"live_input_copy_bytes\":" << boundary.live_input_copy_bytes << "}";
     }
     os << "]"
        << ",\"p8_producer_slot_wait_ms\":" << total_producer_wait_ms
        << ",\"p8_consumer_slot_wait_ms\":" << total_consumer_wait_ms
        << ",\"p8_total_slot_wait_ms\":"
        << (total_producer_wait_ms + total_consumer_wait_ms);
+  }
+  if (args.c1_memory_audit) {
+    uint64_t materialized = 0;
+    if (args.p8_managed_slots > 0) {
+      for (const auto& edge : frame.p8_boundaries)
+        if (edge.valid) materialized += edge.live_input_copy_bytes;
+    } else {
+      for (size_t i = 0; i < frame.stage_timings.size(); ++i) {
+        if (i > 0) materialized += frame.stage_timings[i].c1_input_copy_bytes;
+        if (i + 1 < frame.stage_timings.size())
+          materialized += frame.stage_timings[i].c1_output_snapshot_bytes;
+      }
+    }
+    os << ",\"c1_framework_materialization_bytes\":" << materialized;
   }
   os << "}";
   return os.str();
@@ -2259,7 +2878,75 @@ void ConfigureThreadPool(int runtime_num_threads, const std::vector<unsigned int
   }
 }
 
+void ConfigureComponentTransition(const Args& args, const StageArgs& target) {
+  const std::string& mode = args.component_thread_transition;
+  if (mode.empty() || mode == "fixed") return;
+  const std::vector<unsigned int> prefix3{0, 1, 2};
+  auto configure_target = [&] {
+    ConfigureThreadPool(target.runtime_num_threads, target.cpu_affinity,
+                        "serial.component.target");
+  };
+  if (mode == "4-4") {
+    configure_target();
+    configure_target();
+    return;
+  }
+  if (mode == "1-4") {
+    ConfigureThreadPool(1, target.cpu_affinity, "serial.component.prelude1");
+    configure_target();
+    return;
+  }
+  if (mode == "3-1-4" || mode == "3-1-wait-4") {
+    ConfigureThreadPool(3, prefix3, "serial.component.prelude3");
+    ConfigureThreadPool(1, target.cpu_affinity, "serial.component.prelude1");
+    if (mode == "3-1-wait-4" && args.transition_wait_us > 0) {
+      std::this_thread::sleep_for(std::chrono::microseconds(args.transition_wait_us));
+    }
+    configure_target();
+    return;
+  }
+  throw std::runtime_error("unhandled component thread transition mode");
+}
+
 }  // namespace
+
+managed_lifecycle::Options LoadManagedLifecycleOptions(const Args& args) {
+  using namespace shared_buffer;
+  const JSON plan = Parse(Read(args.managed_lifecycle_plan));
+  Require(Text(Field(plan, "schema")) == "managed-lifecycle-control-v1", "unknown lifecycle schema");
+  managed_lifecycle::Options options;
+  options.trace_path = Text(Field(plan, "trace_path"));
+  options.command_fifo = Text(Field(plan, "command_fifo"));
+  Require(std::filesystem::path(options.trace_path).is_absolute() &&
+          std::filesystem::path(options.command_fifo).is_absolute() &&
+          options.trace_path.find('\0') == std::string::npos &&
+          options.command_fifo.find('\0') == std::string::npos, "absolute lifecycle paths required");
+  uint64_t timeout = Number(Field(plan, "timeout_seconds"));
+  Require(timeout > 0 && timeout <= 60, "lifecycle timeout outside functional-test contract");
+  options.timeout_seconds = static_cast<int>(timeout);
+  const std::vector<std::string> points{"consumer_acquired", "producer_acquired", "before_run",
+                                        "after_run", "before_publish", "before_release"};
+  for (const auto& gate : As<Array>(Field(plan, "gates"))) {
+    const auto id = Text(Field(gate, "id")); const auto point = Text(Field(gate, "point"));
+    uint64_t stage = Number(Field(gate, "stage")), frame = Number(Field(gate, "frame"));
+    Require(!id.empty() && id.size() <= 80 &&
+            id.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_") == std::string::npos,
+            "invalid lifecycle gate id");
+    Require(std::find(points.begin(), points.end(), point) != points.end() &&
+            stage < args.stages.size() && frame < static_cast<uint64_t>(args.runs),
+            "lifecycle selector outside actual stage/frame contract");
+    Require((point != "consumer_acquired" && point != "before_release") || stage > 0,
+            "consumer gate on stage without incoming edge");
+    Require((point != "producer_acquired" && point != "before_publish") || stage + 1 < args.stages.size(),
+            "producer gate on stage without outgoing edge");
+    for (const auto& prior : options.gates) {
+      Require(prior.id != id && !(prior.point == point && prior.stage == static_cast<int>(stage) &&
+                                 prior.frame == static_cast<int>(frame)), "duplicate lifecycle id or selector");
+    }
+    options.gates.push_back({id, point, static_cast<int>(stage), static_cast<int>(frame)});
+  }
+  return options;
+}
 
 // No u-dma-buf allocation and no per-frame hot-path logging. This optional
 // diagnostic requires the explicitly deployed driver snapshot ABI.
@@ -2282,11 +2969,57 @@ void WriteAllocationSnapshot(const Args& args, const char* phase) {
 }
 
 #ifndef VTA_STAGE_PIPELINE_NO_MAIN
+#if defined(__linux__)
+void ProcessDeadlineExpired(int) {
+  // Only async-signal-safe operations: a timed-out process is never qualified.
+  const char message[] = "[C1_PROCESS_DEADLINE_EXPIRED]\n";
+  const ssize_t ignored = ::write(STDERR_FILENO, message, sizeof(message) - 1);
+  (void)ignored;
+  ::_exit(124);
+}
+#endif
+
 int main(int argc, char** argv) {
   try {
     Args args = ParseArgs(argc, argv);
+    if (args.c1_memory_audit) {
+      // DumpInsn uses stdio, whereas driver completion records use stderr.
+      // Preserve whole instruction lines in the combined diagnostic archive.
+      std::setvbuf(stdout, nullptr, _IONBF, 0);
+    }
+    if (args.process_timeout_s > 0) {
+#if defined(__linux__)
+      std::signal(SIGALRM, ProcessDeadlineExpired);
+      ::alarm(static_cast<unsigned int>(args.process_timeout_s));
+#else
+      throw std::runtime_error("process timeout requires Linux");
+#endif
+    }
     // Hash subprocesses must run before ConfigureThreadPool starts any threads.
+    command_capacity::VerifiedCertificate command_capacity_certificate =
+        ValidateCommandCapacityCertificate(args);
     shared_buffer::JSON shared_plan = ValidateSharedBufferPlan(args);
+    uint64_t expected_slot_bytes = 0;
+    if (args.shared_slot_budget_bytes >= 0 && args.p8_managed_slots > 0) {
+      using namespace shared_buffer;
+      Require(!args.shared_buffer_plan.empty(), "slot capacity requires an exact shared plan");
+      for (const auto& edge : As<Array>(Field(shared_plan, "edges")))
+        expected_slot_bytes += Number(Field(edge, "external_k2_bytes"));
+      uint64_t saved = Number(Field(shared_plan, "predicted_saved_bytes"));
+      Require(saved <= expected_slot_bytes, "invalid shared plan saved bytes");
+      expected_slot_bytes -= saved;
+      if (expected_slot_bytes > static_cast<uint64_t>(args.shared_slot_budget_bytes)) {
+        std::cerr << "[C1_SLOT_CAPACITY_REJECTED] required=" << expected_slot_bytes
+                  << " budget=" << args.shared_slot_budget_bytes << " before_graph_load\n";
+        return 3;
+      }
+    }
+    managed_lifecycle::Options lifecycle_options;
+    std::string lifecycle_plan_hash;
+    if (!args.managed_lifecycle_plan.empty()) {
+      lifecycle_options = LoadManagedLifecycleOptions(args);
+      lifecycle_plan_hash = shared_buffer::FileSHA256(args.managed_lifecycle_plan);
+    }
     if (args.host_empty) {
       ConfigureProcessAffinity(args.process_cpu_affinity);
       return RunHostEmpty(args);
@@ -2318,15 +3051,35 @@ int main(int argc, char** argv) {
 
     WriteAllocationSnapshot(args, "graph_and_params_loaded");
     std::vector<InputRecord> inputs = LoadInputs(args, &stages[0]);
+    // Declare before managers so their observers cannot outlive this controller.
+    std::unique_ptr<managed_lifecycle::Control> lifecycle;
+    if (!args.managed_lifecycle_plan.empty()) {
+      lifecycle = std::make_unique<managed_lifecycle::Control>(std::move(lifecycle_options));
+      lifecycle->Emit("lifecycle_contract_loaded", -1, -1, -1, -1, 0, lifecycle_plan_hash);
+    }
     std::vector<std::unique_ptr<BoundarySlotManager>> p8_slot_managers;
     std::vector<std::pair<uint64_t, uint64_t>> anchor_ranges;
+    using C1Snapshot = int (*)(uint64_t*, size_t);
+    auto c1_snapshot = reinterpret_cast<C1Snapshot>(dlsym(RTLD_DEFAULT, "VTAMemAllocationSnapshotV1"));
+    uint64_t c1_before[8]{};
+    if (args.shared_slot_budget_bytes >= 0 && args.p8_managed_slots > 0 &&
+        (c1_snapshot == nullptr || c1_snapshot(c1_before, 8) != 0))
+      throw std::runtime_error("slot capacity requires actual allocation snapshot ABI");
     if (args.p8_managed_slots > 0) {
       p8_slot_managers.reserve(stages.size() - 1);
       for (size_t edge_index = 0; edge_index + 1 < stages.size(); ++edge_index) {
+        std::function<void(const char*, const P8SlotToken&)> observer;
+        if (lifecycle) observer = [&](const char* point, const P8SlotToken& token) {
+          const std::string event(point);
+          const int stage = static_cast<int>(token.edge_index) +
+              (event == "consumer_acquired" || event == "consumer_wait_ready" || event == "released");
+          lifecycle->Emit(event, stage, token.frame_id, static_cast<int64_t>(token.edge_index),
+                          token.slot_id < 2 ? static_cast<int64_t>(token.slot_id) : -1, token.generation);
+        };
         p8_slot_managers.emplace_back(std::make_unique<BoundarySlotManager>(
             &stages, edge_index, static_cast<size_t>(args.p8_managed_slots),
             args.p8_slot_timeout_s,
-            PrepareSharedBufferAnchor(&stages, args, shared_plan, edge_index, &anchor_ranges)));
+            PrepareSharedBufferAnchor(&stages, args, shared_plan, edge_index, &anchor_ranges), observer));
       }
       std::vector<std::pair<uint64_t, uint64_t>> ranges;
       for (const auto& manager : p8_slot_managers) {
@@ -2342,8 +3095,32 @@ int main(int argc, char** argv) {
         }
       }
     }
+    if (args.shared_slot_budget_bytes >= 0 && args.p8_managed_slots > 0) {
+      uint64_t after[8]{};
+      if (c1_snapshot(after, 8) != 0 || after[3] < c1_before[3] ||
+          after[3] - c1_before[3] != expected_slot_bytes ||
+          after[3] - c1_before[3] > static_cast<uint64_t>(args.shared_slot_budget_bytes))
+        throw std::runtime_error("actual slot allocation/anchor realization differs from capacity contract");
+      std::cout << "[C1_SLOT_CAPACITY] actual=" << (after[3] - c1_before[3])
+                << " budget=" << args.shared_slot_budget_bytes << " before_execution\n";
+    }
     WriteAllocationSnapshot(args, "slots_allocated");
     std::mutex vta_run_mutex;
+    std::vector<ThreadAffinityRecord> serial_affinities(stages.size());
+    bool serial_affinity_report_written = false;
+
+    auto capture_serial_affinity = [&](size_t stage_index, int frame_id) {
+      if (args.thread_affinity_report.empty() || frame_id != 0) return;
+      // Serial stages reuse the main thread's pool; these are snapshots after
+      // each stage's configuration, rather than independent worker ownership.
+      serial_affinities[stage_index].thread_ids = ProcessThreadIds();
+      const PackedFunc* count = Registry::Get("runtime.NumThreads");
+      serial_affinities[stage_index].active_runtime_threads = count ? (*count)().operator int() : 0;
+#if defined(__linux__)
+      serial_affinities[stage_index].caller_tid = static_cast<long>(syscall(SYS_gettid));
+#endif
+      CaptureThreadAffinities(&serial_affinities[stage_index]);
+    };
 
     auto prepare_managed_frame = [&](Frame* frame) {
       const size_t edge_count = stages.size() - 1;
@@ -2356,12 +3133,31 @@ int main(int argc, char** argv) {
       StageTiming& timing = frame->stage_timings.at(stage_index);
       const bool has_incoming = stage_index > 0;
       const bool has_outgoing = stage_index + 1 < stages.size();
+      StageRunHooks hooks;
+      if (lifecycle) {
+        auto pause = [&, stage_index](const char* point) {
+          lifecycle->Pause(point, static_cast<int>(stage_index), frame->frame_id);
+        };
+        hooks.after_consumer_acquire = [pause] { pause("consumer_acquired"); };
+        hooks.after_producer_acquire = [pause] { pause("producer_acquired"); };
+        hooks.before_run = [pause] { pause("before_run"); };
+        hooks.after_run = [pause] { pause("after_run"); };
+        hooks.before_publish = [pause] { pause("before_publish"); };
+        hooks.before_release = [pause] { pause("before_release"); };
+        hooks.started = [&, stage_index](double) {
+          lifecycle->Emit("stage_run_started", static_cast<int>(stage_index), frame->frame_id);
+        };
+        hooks.finished = [&, stage_index](double) {
+          lifecycle->Emit("stage_run_finished", static_cast<int>(stage_index), frame->frame_id);
+        };
+      }
 
       if (has_incoming) {
         const size_t edge_index = stage_index - 1;
         P8BoundaryObservation& observation = frame->p8_boundaries.at(edge_index);
         p8_slot_managers.at(edge_index)->AcquireForConsumer(
             frame->p8_edge_tokens.at(edge_index), &observation.consumer_wait_ms);
+        if (hooks.after_consumer_acquire) hooks.after_consumer_acquire();
       }
 
       if (has_outgoing) {
@@ -2383,11 +3179,13 @@ int main(int argc, char** argv) {
             p8_slot_managers.at(edge_index)->physical_addresses(token.slot_id);
         observation.direction = p8_slot_managers.at(edge_index)->direction();
         observation.producer_wait_ms = wait_ms;
+        if (hooks.after_producer_acquire) hooks.after_producer_acquire();
       }
 
       timing.slots_acquired_ms = NowMillis();
       timing.slots_acquired_timing_valid = true;
       timing.set_start_ms = NowMillis();
+      std::vector<NDArray> bound_inputs;
       if (has_incoming) {
         const size_t edge_index = stage_index - 1;
         if (stage.input_names.size() != p8_slot_managers.at(edge_index)->tensor_count()) {
@@ -2395,13 +3193,14 @@ int main(int argc, char** argv) {
         }
         for (size_t tensor_index = 0; tensor_index < stage.input_names.size();
              ++tensor_index) {
+          bound_inputs.push_back(p8_slot_managers.at(edge_index)->ConsumerView(
+              frame->p8_edge_tokens.at(edge_index), tensor_index));
           stage.set_input_zero_copy(
-              stage.input_names[tensor_index],
-              p8_slot_managers.at(edge_index)->ConsumerView(
-                  frame->p8_edge_tokens.at(edge_index), tensor_index));
+              stage.input_names[tensor_index], bound_inputs.back());
         }
       } else {
         const std::vector<NDArray> first_inputs = ResolveStageInputs(args, *frame, stage_index);
+        bound_inputs = first_inputs;
         if (first_inputs.size() != stage.input_names.size()) {
           throw std::runtime_error("P8 managed first-stage input arity mismatch");
         }
@@ -2416,12 +3215,14 @@ int main(int argc, char** argv) {
           throw std::runtime_error("P8 managed producer output arity changed at runtime");
         }
         for (size_t tensor_index = 0; tensor_index < tensor_count; ++tensor_index) {
+          if (stage.output_live_input_indices.at(tensor_index) >= 0) continue;
           stage.set_output_zero_copy(
               static_cast<int>(tensor_index),
               p8_slot_managers.at(stage_index)->ProducerView(token, tensor_index));
         }
       }
       timing.set_end_ms = NowMillis();
+      if (hooks.before_run) hooks.before_run();
       if (stage.device == "vta") {
         timing.vta_mutex_timing_valid = true;
         timing.vta_mutex_request_ms = NowMillis();
@@ -2429,33 +3230,78 @@ int main(int argc, char** argv) {
         timing.vta_mutex_acquire_ms = NowMillis();
         timing.run_start_ms = NowMillis();
         timing.vta_run_call_start_ms = timing.run_start_ms;
+        if (hooks.started) hooks.started(timing.run_start_ms);
+        C1MemoryAudit(args, frame->frame_id, stage_index, true);
         stage.run();
+        C1MemoryAudit(args, frame->frame_id, stage_index, false);
         timing.vta_run_call_end_ms = NowMillis();
         timing.get_start_ms = timing.vta_run_call_end_ms;
+        if (hooks.finished) hooks.finished(timing.get_start_ms);
         timing.vta_mutex_release_ms = NowMillis();
         lock.unlock();
       } else {
-        timing.run_start_ms = timing.set_end_ms;
+        timing.run_start_ms = NowMillis();
+        if (hooks.started) hooks.started(timing.run_start_ms);
         stage.run();
         timing.get_start_ms = NowMillis();
+        if (hooks.finished) hooks.finished(timing.get_start_ms);
       }
+      if (hooks.after_run) hooks.after_run();
+      CheckStableStageOutputs(&stage, [&](int i) {
+        if (has_outgoing && stage.output_live_input_indices.at(static_cast<size_t>(i)) < 0)
+          return p8_slot_managers.at(stage_index)->ProducerCPUView(
+              frame->p8_edge_tokens.at(stage_index), static_cast<size_t>(i));
+        return ResolveStageOutput(&stage, bound_inputs, i);
+      });
 
       if (has_outgoing) {
         const P8SlotToken& token = frame->p8_edge_tokens.at(stage_index);
+        // A Var-backed output cannot be redirected by SetOutputZeroCopy. Copy the
+        // live input into the complete outgoing bundle before its single Publish;
+        // keep the incoming token held until the copy has completed.
+        for (size_t output_index = 0; output_index < stage.output_live_input_indices.size();
+             ++output_index) {
+          const int live_input = stage.output_live_input_indices[output_index];
+          if (live_input < 0) continue;
+          NDArray destination = p8_slot_managers.at(stage_index)->ProducerView(token, output_index);
+          const NDArray& source = bound_inputs.at(static_cast<size_t>(live_input));
+          if (!SameDType(destination->dtype, source->dtype) ||
+              !SameShape(destination.operator->(), source.operator->())) {
+            throw std::runtime_error("P8 live-input bundle copy shape/dtype mismatch");
+          }
+          destination.CopyFrom(source);
+          frame->p8_boundaries.at(stage_index).live_input_copy_bytes += TensorNBytes(source.operator->());
+        }
+        const bool retain_audit_snapshots = args.c1_memory_audit &&
+                                            args.output_mode == "raw_all_stages";
+        if (retain_audit_snapshots) {
+          // Qualification snapshots are owned CPU copies, taken while this
+          // frame still owns both slot tokens. Never retain a borrowed view
+          // after Publish/Release permits another frame to reuse the slot.
+          auto& snapshots = frame->stage_outputs.at(stage_index);
+          snapshots.clear();
+          for (size_t tensor_index = 0; tensor_index <
+               p8_slot_managers.at(stage_index)->tensor_count(); ++tensor_index) {
+            snapshots.push_back(p8_slot_managers.at(stage_index)
+                ->ProducerCPUView(token, tensor_index).CopyTo(tvm::Device{kDLCPU, 0}));
+          }
+        }
+        if (hooks.before_publish) hooks.before_publish();
         p8_slot_managers.at(stage_index)->Publish(token);
         // Managed queues carry only the slot token.  The manager owns the shared
         // views, so no borrowed intermediate NDArray escapes into the frame queue.
-        frame->stage_outputs.at(stage_index).clear();
+        if (!retain_audit_snapshots) frame->stage_outputs.at(stage_index).clear();
       } else {
         const int num_outputs = stage.NumOutputs();
         frame->stage_outputs.at(stage_index).reserve(static_cast<size_t>(num_outputs));
         for (int output_index = 0; output_index < num_outputs; ++output_index) {
-          NDArray output = stage.get_output(output_index).operator NDArray();
+          NDArray output = ResolveStageOutput(&stage, bound_inputs, output_index);
           frame->stage_outputs.at(stage_index).push_back(
               output.CopyTo(tvm::Device{kDLCPU, 0}));
         }
       }
       if (has_incoming) {
+        if (hooks.before_release) hooks.before_release();
         p8_slot_managers.at(stage_index - 1)->Release(
             frame->p8_edge_tokens.at(stage_index - 1));
       }
@@ -2484,10 +3330,15 @@ int main(int argc, char** argv) {
       frame.stage_outputs.resize(executors->size());
       frame.stage_timings.resize(executors->size());
       for (size_t stage_index = 0; stage_index < executors->size(); ++stage_index) {
-        ConfigureThreadPool(args.stages[stage_index].runtime_num_threads,
-                            args.stages[stage_index].cpu_affinity,
-                            "serial.stage" + std::to_string(stage_index));
+        if (!args.component_thread_transition.empty()) {
+          ConfigureComponentTransition(args, args.stages[stage_index]);
+        } else {
+          ConfigureThreadPool(args.stages[stage_index].runtime_num_threads,
+                              args.stages[stage_index].cpu_affinity,
+                              "serial.stage" + std::to_string(stage_index));
+        }
         ConfigureProcessAffinity(args.process_cpu_affinity);
+        capture_serial_affinity(stage_index, frame_id);
         const std::vector<NDArray> current_inputs = ResolveStageInputs(args, frame, stage_index);
         frame.stage_outputs[stage_index] =
             RunStage(&executors->at(stage_index), current_inputs,
@@ -2495,7 +3346,7 @@ int main(int argc, char** argv) {
                      measure_process_cpu_time);
       }
       frame.done_ms = NowMillis();
-      frame.top1 = Top1Float32(frame.stage_outputs.back()[0]);
+      frame.top1 = ResultTop1(args, frame.stage_outputs.back()[0]);
       return frame;
     };
     auto run_serial_frame = [&](int frame_id, bool measure_process_cpu_time) {
@@ -2517,10 +3368,11 @@ int main(int argc, char** argv) {
                             args.stages[stage_index].cpu_affinity,
                             "p8_managed_serial.stage" + std::to_string(stage_index));
         ConfigureProcessAffinity(args.process_cpu_affinity);
+        capture_serial_affinity(stage_index, frame_id);
         run_managed_stage(&frame, stage_index);
       }
       frame.done_ms = NowMillis();
-      frame.top1 = Top1Float32(frame.stage_outputs.back()[0]);
+      frame.top1 = ResultTop1(args, frame.stage_outputs.back()[0]);
       return frame;
     };
 
@@ -2599,12 +3451,17 @@ int main(int argc, char** argv) {
           stage.run();
           timing.get_start_ms = NowMillis();
           if (stage_index == shared.producer_stage) {
+            if (stage.output_live_input_indices.at(0) >= 0) {
+              NDArray destination = shared.producer_owner;
+              destination.CopyFrom(current_inputs.at(
+                  static_cast<size_t>(stage.output_live_input_indices.at(0))));
+            }
             frame.stage_outputs[stage_index] = {shared.consumer_owner};
           } else {
             const int num_outputs = stage.NumOutputs();
             frame.stage_outputs[stage_index].reserve(static_cast<size_t>(num_outputs));
             for (int output_index = 0; output_index < num_outputs; ++output_index) {
-              NDArray output = stage.get_output(output_index).operator NDArray();
+              NDArray output = ResolveStageOutput(&stage, current_inputs, output_index);
               frame.stage_outputs[stage_index].push_back(
                   output.CopyTo(tvm::Device{kDLCPU, 0}));
             }
@@ -2612,7 +3469,7 @@ int main(int argc, char** argv) {
           timing.end_ms = NowMillis();
         }
         frame.done_ms = NowMillis();
-        frame.top1 = Top1Float32(frame.stage_outputs.back()[0]);
+        frame.top1 = ResultTop1(args, frame.stage_outputs.back()[0]);
         return frame;
       };
 
@@ -2746,10 +3603,36 @@ int main(int argc, char** argv) {
 
     const double benchmark_start_ms = NowMillis();
     int completed = 0;
+    std::vector<std::string> deferred_results;
+    if (args.defer_result_write) deferred_results.reserve(static_cast<size_t>(args.runs));
+    struct DeferredWriteGuard {
+      std::ofstream* result;
+      std::vector<std::string>* lines;
+      bool pending;
+      ~DeferredWriteGuard() {
+        if (!pending) return;
+        // Preserve already serialized rows if a later inference fails. This
+        // still retains only strings, and does not change the failure status.
+        try {
+          for (const auto& line : *lines) *result << line << "\n";
+          result->flush();
+        } catch (...) {
+        }
+      }
+    } deferred_write_guard{&result, &deferred_results, args.defer_result_write};
 
     auto write_completed = [&](const Frame& frame, const std::string& mode) {
-      result << ResultJSON(args, frame, completed, mode, benchmark_start_ms) << "\n";
-      result.flush();
+      if (args.serial && !args.thread_affinity_report.empty() && !serial_affinity_report_written) {
+        WriteThreadAffinityReport(args, serial_affinities);
+        serial_affinity_report_written = true;
+      }
+      if (args.defer_result_write) {
+        // Serialize now: retaining frames here would also retain all snapshots.
+        deferred_results.push_back(ResultJSON(args, frame, completed, mode, benchmark_start_ms));
+      } else {
+        result << ResultJSON(args, frame, completed, mode, benchmark_start_ms) << "\n";
+        result.flush();
+      }
       ++completed;
       const bool allow_intermediate_profile = args.serial;
       if (allow_intermediate_profile && !args.profile_dir.empty() && completed == 1) {
@@ -2768,7 +3651,26 @@ int main(int argc, char** argv) {
     };
 
     if (args.serial) {
+      if (args.component_thread_transition == "fixed") {
+        ConfigureThreadPool(args.stages[0].runtime_num_threads,
+                            args.stages[0].cpu_affinity,
+                            "serial.component.fixed");
+      }
+      vta_deploy::SessionProfile session_profile(args.session_profile_json);
+      session_profile.Start();
+      std::vector<std::string> block_profile_paths;
+      std::vector<std::pair<int, int>> block_profile_ranges;
+      std::unique_ptr<vta_deploy::SessionProfile> block_profile;
       for (int i = 0; i < args.runs; ++i) {
+        if (!args.block_profile_json.empty() && i % args.block_profile_frames == 0) {
+          std::ostringstream path;
+          path << args.block_profile_json << ".block" << std::setw(4) << std::setfill('0')
+               << block_profile_paths.size() << ".json";
+          block_profile_paths.push_back(path.str());
+          block_profile_ranges.emplace_back(i, std::min(args.runs, i + args.block_profile_frames));
+          block_profile = std::make_unique<vta_deploy::SessionProfile>(path.str());
+          block_profile->Start();
+        }
         if (args.barrier_each_run) SignalReadyAndWait(args, i);
         if (args.p8_managed_slots > 0) {
           Frame frame = run_managed_serial_frame(i);
@@ -2779,21 +3681,63 @@ int main(int argc, char** argv) {
           frame.process_pmu = process_pmu.Stop();
           write_completed(frame, "serial");
         }
+        if (block_profile &&
+            ((i + 1) % args.block_profile_frames == 0 || i + 1 == args.runs)) {
+          block_profile->Stop();
+          block_profile.reset();
+        }
+      }
+      session_profile.Stop();
+      if (!args.block_profile_json.empty()) {
+        std::ostringstream manifest;
+        manifest << "{\"schema\":\"vta_block_profile_v1\",\"block_frames\":"
+                 << args.block_profile_frames << ",\"blocks\":[";
+        for (size_t i = 0; i < block_profile_paths.size(); ++i) {
+          if (i != 0) manifest << ",";
+          manifest << "{\"index\":" << i << ",\"frame_start\":"
+                   << block_profile_ranges[i].first << ",\"frame_end_exclusive\":"
+                   << block_profile_ranges[i].second << ",\"profile_path\":\""
+                   << JsonEscape(block_profile_paths[i]) << "\"}";
+        }
+        manifest << "]}";
+        WriteFile(args.block_profile_json, manifest.str());
       }
     } else {
       std::vector<std::unique_ptr<BoundedQueue<std::shared_ptr<Frame>>>> queues;
       queues.reserve(stages.size() + 1);
       for (size_t i = 0; i <= stages.size(); ++i) {
+        std::function<void(const char*)> observer;
+        if (lifecycle) observer = [&, i](const char* event) {
+          lifecycle->Emit(event, static_cast<int>(i));
+        };
         queues.emplace_back(
-            std::make_unique<BoundedQueue<std::shared_ptr<Frame>>>(args.queue_depth));
+            std::make_unique<BoundedQueue<std::shared_ptr<Frame>>>(args.queue_depth, observer,
+                                                                args.queue_timing));
       }
       std::mutex error_mutex;
+      vta_deploy::CpuStageGate cpu_stage_gate;
+      std::vector<std::vector<unsigned int>> resource_masks;
+      if (args.cpu_stage_gate == "resource_group") {
+        for (const auto& stage : args.stages) {
+          if (stage.device == "cpu" &&
+              (stage.cpu_affinity.empty() || stage.runtime_num_threads !=
+                  static_cast<int>(stage.cpu_affinity.size()))) {
+            throw std::invalid_argument("resource_group requires explicit CPU masks and matching threads");
+          }
+          resource_masks.push_back(stage.device == "cpu" ? stage.cpu_affinity
+                                                          : std::vector<unsigned int>{});
+        }
+      }
+      vta_deploy::CpuResourceGroups cpu_resource_groups(resource_masks);
       std::exception_ptr first_error = nullptr;
 
       auto record_error = [&](std::exception_ptr err) {
         std::lock_guard<std::mutex> lock(error_mutex);
         if (first_error == nullptr) {
           first_error = err;
+          cpu_stage_gate.Cancel();
+          cpu_resource_groups.Cancel();
+          if (lifecycle) lifecycle->Cancel();
           for (auto& manager : p8_slot_managers) {
             manager->Abort("pipeline worker failure");
           }
@@ -2803,15 +3747,51 @@ int main(int argc, char** argv) {
         }
       };
 
+      if (lifecycle) lifecycle->Start([&] {
+        record_error(std::make_exception_ptr(std::runtime_error("managed lifecycle command aborted pipeline")));
+      });
+
       std::vector<std::thread> stage_threads;
       stage_threads.reserve(stages.size());
+      std::vector<ThreadAffinityRecord> stage_affinities(stages.size());
+      std::mutex initialization_mutex;
+      std::condition_variable initialization_ready;
+      std::mutex session_profile_mutex;
+      std::condition_variable session_profile_stopped;
+      bool session_profile_may_exit = args.session_profile_json.empty();
+      std::vector<bool> initialization_finished(stages.size(), false);
+      auto publish_initialization = [&](size_t stage_index) {
+        if (args.thread_affinity_report.empty() && args.session_profile_json.empty()) return;
+        {
+          std::lock_guard<std::mutex> lock(initialization_mutex);
+          initialization_finished[stage_index] = true;
+        }
+        initialization_ready.notify_one();
+      };
       for (size_t stage_index = 0; stage_index < stages.size(); ++stage_index) {
         stage_threads.emplace_back([&, stage_index]() {
           try {
+            std::vector<long> threads_before;
+            if (!args.thread_affinity_report.empty()) threads_before = ProcessThreadIds();
             ConfigureThreadPool(args.stages[stage_index].runtime_num_threads,
                                 args.stages[stage_index].cpu_affinity,
                                 "pipeline.stage" + std::to_string(stage_index));
             ConfigureProcessAffinity(args.process_cpu_affinity);
+            if (!args.thread_affinity_report.empty()) {
+              const auto threads_after = ProcessThreadIds();
+              auto& owned = stage_affinities[stage_index].thread_ids;
+              const PackedFunc* count = Registry::Get("runtime.NumThreads");
+              stage_affinities[stage_index].active_runtime_threads = count ? (*count)().operator int() : 0;
+              std::set_difference(threads_after.begin(), threads_after.end(),
+                                  threads_before.begin(), threads_before.end(),
+                                  std::back_inserter(owned));
+#if defined(__linux__)
+              stage_affinities[stage_index].caller_tid = static_cast<long>(syscall(SYS_gettid));
+              owned.push_back(stage_affinities[stage_index].caller_tid);
+#endif
+              std::sort(owned.begin(), owned.end());
+            }
+            publish_initialization(stage_index);
             std::shared_ptr<Frame> frame;
             while (queues[stage_index]->Pop(&frame)) {
               frame->stage_timings[stage_index].queue_pop_ms = NowMillis();
@@ -2827,31 +3807,81 @@ int main(int argc, char** argv) {
                   timing.vta_mutex_request_ms = NowMillis();
                   std::unique_lock<std::mutex> lock(vta_run_mutex);
                   timing.vta_mutex_acquire_ms = NowMillis();
+                  C1MemoryAudit(args, frame->frame_id, stage_index, true);
                   frame->stage_outputs[stage_index] = RunStage(
-                      &stages[stage_index], stage_inputs, &timing, false);
+                      &stages[stage_index], stage_inputs, &timing, false, nullptr, args.c1_memory_audit);
+                  C1MemoryAudit(args, frame->frame_id, stage_index, false);
                   timing.vta_run_call_start_ms = timing.run_start_ms;
                   timing.vta_run_call_end_ms = timing.get_start_ms;
                   timing.vta_mutex_release_ms = NowMillis();
                   lock.unlock();
                 } else {
+                  auto& timing = frame->stage_timings[stage_index];
+                  std::unique_ptr<vta_deploy::CpuStageGate::Lease> cpu_gate_lease;
+                  if (args.cpu_stage_gate != "off") {
+                    timing.cpu_gate_timing_valid = true;
+                    timing.cpu_gate_request_ms = NowMillis();
+                    if (args.cpu_stage_gate == "exclusive")
+                      cpu_gate_lease = cpu_stage_gate.Acquire();
+                    if (args.cpu_stage_gate == "resource_group")
+                      cpu_gate_lease = cpu_resource_groups.Acquire(stage_index);
+                    timing.cpu_gate_acquire_ms = NowMillis();
+                  }
                   frame->stage_outputs[stage_index] = RunStage(
                       &stages[stage_index], stage_inputs,
-                      &frame->stage_timings[stage_index], false);
+                      &timing, false, nullptr, args.c1_memory_audit);
+                  if (args.cpu_stage_gate != "off") {
+                    timing.cpu_gate_release_ms = NowMillis();
+                    cpu_gate_lease.reset();
+                  }
                 }
               }
               if (stage_index + 1 == stages.size()) {
                 frame->done_ms = NowMillis();
-                frame->top1 = Top1Float32(frame->stage_outputs[stage_index][0]);
+                frame->top1 = ResultTop1(args, frame->stage_outputs[stage_index][0]);
               }
-              if (!queues[stage_index + 1]->Push(frame)) break;
+              if (!queues[stage_index + 1]->Push(frame, frame->QueueTimingFor(stage_index + 1))) {
+                break;
+              }
             }
             queues[stage_index + 1]->Close();
+            if (!args.session_profile_json.empty()) {
+              std::unique_lock<std::mutex> lock(session_profile_mutex);
+              session_profile_stopped.wait(lock, [&] { return session_profile_may_exit; });
+            }
           } catch (...) {
             record_error(std::current_exception());
+            publish_initialization(stage_index);
           }
         });
+        if (!args.thread_affinity_report.empty() || !args.session_profile_json.empty()) {
+          // Do not create the next actor until this actor has registered its
+          // workers. Otherwise the /proc delta can include another stage's TID.
+          std::unique_lock<std::mutex> lock(initialization_mutex);
+          initialization_ready.wait(lock, [&] { return initialization_finished[stage_index]; });
+        }
       }
 
+      if (!args.thread_affinity_report.empty()) {
+        try {
+          bool initialization_failed;
+          {
+            std::lock_guard<std::mutex> lock(error_mutex);
+            initialization_failed = first_error != nullptr;
+          }
+          if (!initialization_failed) {
+            // All actors remain alive, waiting on empty queues. Capture final
+            // masks so later configurations cannot hide an earlier overwrite.
+            for (auto& record : stage_affinities) CaptureThreadAffinities(&record);
+            WriteThreadAffinityReport(args, stage_affinities);
+          }
+        } catch (...) {
+          record_error(std::current_exception());
+        }
+      }
+
+      vta_deploy::SessionProfile session_profile(args.session_profile_json);
+      if (args.session_profile_first_completion < 0) session_profile.Start();
       std::thread producer_thread([&]() {
         try {
           for (int i = 0; i < args.runs; ++i) {
@@ -2864,8 +3894,14 @@ int main(int argc, char** argv) {
             frame->stage_inputs = input.data;
             frame->stage_outputs.resize(stages.size());
             frame->stage_timings.resize(stages.size());
+            if (args.queue_timing) {
+              frame->queue_timings.reserve(stages.size() + 1);
+              for (size_t edge_index = 0; edge_index <= stages.size(); ++edge_index) {
+                frame->queue_timings.push_back(std::make_shared<QueueTiming>());
+              }
+            }
             if (args.p8_managed_slots > 0) prepare_managed_frame(frame.get());
-            if (!queues[0]->Push(frame)) {
+            if (!queues[0]->Push(frame, frame->QueueTimingFor(0))) {
               break;
             }
           }
@@ -2877,14 +3913,29 @@ int main(int argc, char** argv) {
       });
 
       std::shared_ptr<Frame> frame;
+      int profile_completion_index = 0;
       while (queues.back()->Pop(&frame)) {
+        if (profile_completion_index == args.session_profile_first_completion) session_profile.Start();
+        if (args.session_profile_first_completion >= 0 &&
+            profile_completion_index == args.session_profile_first_completion +
+                                            args.session_profile_completion_count - 1) {
+          session_profile.Stop();
+        }
         write_completed(*frame, "pipeline");
+        ++profile_completion_index;
       }
 
       producer_thread.join();
+      session_profile.Stop();
+      {
+        std::lock_guard<std::mutex> lock(session_profile_mutex);
+        session_profile_may_exit = true;
+      }
+      session_profile_stopped.notify_all();
       for (std::thread& stage_thread : stage_threads) {
         stage_thread.join();
       }
+      if (lifecycle) lifecycle->Stop();
 
       if (first_error != nullptr) {
         std::rethrow_exception(first_error);
@@ -2898,6 +3949,13 @@ int main(int argc, char** argv) {
 
     for (auto& manager : p8_slot_managers) {
       manager->VerifyAllFree();
+    }
+
+    if (args.defer_result_write) {
+      deferred_write_guard.pending = false;
+      for (const auto& line : deferred_results) result << line << "\n";
+      result.flush();
+      if (!result) throw std::runtime_error("failed to write deferred result JSONL");
     }
 
     WriteAllocationSnapshot(args, "after_steady_state");

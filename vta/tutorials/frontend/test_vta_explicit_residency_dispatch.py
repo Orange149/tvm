@@ -86,3 +86,33 @@ def test_combined_cheng_route_binds_mode_five():
         )
     assert mode == 5
     assert dispatch.summary()["all_routes_scheduled"]
+
+
+def test_composable_residency_route_binds_distinct_mode_ten():
+    raw = json.loads(json.dumps(route()))
+    raw["public_mode"] = "input_weight_resident_composable"
+    raw["implementation_mode"] = 10
+    raw["identity"]["public_mode"] = "input_weight_resident_composable"
+    raw["identity"]["implementation_mode"] = 10
+    with ExplicitResidencyDispatch([raw]) as dispatch:
+        selected = dispatch.query(None, tuple(raw["identity"]["workload"]))
+        mode = resolve_schedule_route(
+            selected, [output_for(raw["identity"]["workload"])]
+        )
+    assert mode == 10
+    assert dispatch.summary()["all_routes_scheduled"]
+
+
+def test_transition_safe_residency_route_binds_distinct_mode_eleven():
+    raw = json.loads(json.dumps(route()))
+    raw["public_mode"] = "input_weight_resident_transition_safe"
+    raw["implementation_mode"] = 11
+    raw["identity"]["public_mode"] = "input_weight_resident_transition_safe"
+    raw["identity"]["implementation_mode"] = 11
+    with ExplicitResidencyDispatch([raw]) as dispatch:
+        selected = dispatch.query(None, tuple(raw["identity"]["workload"]))
+        mode = resolve_schedule_route(
+            selected, [output_for(raw["identity"]["workload"])]
+        )
+    assert mode == 11
+    assert dispatch.summary()["all_routes_scheduled"]

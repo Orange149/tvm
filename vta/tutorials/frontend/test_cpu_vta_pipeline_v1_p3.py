@@ -178,3 +178,68 @@ def test_middle_cpu_stage_owns_both_adjacent_boundary_components():
         record["resource_load_ms"]["single_vta_service"]
         + record["resource_load_ms"]["vta_mutex_boundary_work_total"]
     )
+
+
+@pytest.mark.parametrize("mode", p3.SCORING_MODES)
+def test_scoring_mode_survives_every_cpu_and_vta_transition(mode):
+    context = load_context()
+    path = (("cpu:00:02", 4), ("vta:03:17", 1), ("cpu:18:20", 2))
+    label = p3.initial_label(mode)
+    for sid, threads in path:
+        previous_bound = label.search_lower_bound
+        label = p3.advance_label(label, context["profile_segments"][sid], threads, context)
+        assert label.scoring_mode == mode
+        assert label.search_lower_bound >= previous_bound
+    rebuilt = p3.label_from_path(path, context, scoring_mode=mode)
+    assert rebuilt == label
+    assert label.score == label.search_lower_bound
+
+
+@pytest.mark.parametrize("top_k", [1, 2])
+@pytest.mark.parametrize("mode", p3.SCORING_MODES)
+def test_search_queue_and_stop_threshold_use_only_selected_resources(monkeypatch, mode, top_k):
+    # Inactive DDR/core costs must not hide the baseline winner behind the stop
+    # threshold.  Two terminal branches isolate queue/stopping from graph costs.
+    monkeypatch.setattr(p3, "build_outgoing", lambda context: {})
+
+    def terminal_branches(label, context, outgoing):
+        for thread, vta, core_work, ddr in [(1, 6.0, 80.0, 100.0), (2, 7.0, 32.0, 9.0)]:
+            yield dataclasses.replace(
+                label, position=len(p3.UNIT_ORDER), last_device="cpu", vta_islands=1,
+                max_cpu_stage_ms=4.0, vta_service_sum_ms=vta,
+                cpu_core_work_sum_ms=core_work,
+                cpu_stage_core_work_by_threads_ms=(0.0, 0.0, 0.0, core_work),
+                max_cpu_thread_parameter=4, shared_ddr_service_ms=ddr,
+                path=(("cpu:00:20", thread),),
+            )
+
+    monkeypatch.setattr(p3, "expand_label", terminal_branches)
+    ranked, stats = p3.solve_k_best_label_setting({}, top_k, scoring_mode=mode)
+    expected_threads = [1, 2] if mode == "baseline" else [2, 1]
+    expected_scores = {
+        "baseline": [6.0, 7.0], "cpu_resource": [8.0, 20.0], "current": [9.0, 100.0],
+    }
+    assert [x.path[0][1] for x in ranked] == expected_threads[:top_k]
+    assert [x.score for x in ranked] == expected_scores[mode][:top_k]
+    assert stats["stop_threshold_ms"] == expected_scores[mode][top_k - 1]
+
+
+def test_inactive_ddr_does_not_affect_pareto_ties():
+    base = dataclasses.replace(p3.initial_label("baseline"), path=(("cpu:00:00", 1),))
+    later = dataclasses.replace(base, shared_ddr_service_ms=1.0, path=(("cpu:00:00", 2),))
+    assert p3.dominates(base, later)
+    assert not p3.dominates(later, base)
+    with pytest.raises(ValueError, match="different scoring modes"):
+        p3.dominates(base, dataclasses.replace(later, scoring_mode="current"))
+
+
+def test_invalid_scoring_mode_is_rejected():
+    with pytest.raises(ValueError, match="unknown scoring mode"):
+        p3.initial_label("unsupported")
+
+
+def test_comparison_refuses_to_overwrite_an_existing_directory(tmp_path):
+    from compare_cpu_vta_pipeline_static_scores import compare
+
+    with pytest.raises(FileExistsError, match="new directory"):
+        compare(tmp_path / "missing-input", tmp_path)

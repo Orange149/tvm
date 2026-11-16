@@ -141,7 +141,11 @@ def vta_sram_capacities() -> Dict[str, Any]:
         "inp_bytes": 1 << int(config["LOG_INP_BUFF_SIZE"]),
         "wgt_bytes": 1 << int(config["LOG_WGT_BUFF_SIZE"]),
         "acc_bytes": 1 << int(config["LOG_ACC_BUFF_SIZE"]),
-        "out_bytes": 1 << int(config["LOG_ACC_BUFF_SIZE"]),
+        "out_bytes": 1 << (
+            int(config["LOG_ACC_BUFF_SIZE"])
+            + int(config["LOG_INP_WIDTH"])
+            - int(config["LOG_ACC_WIDTH"])
+        ),
     }
     return {
         **capacities,

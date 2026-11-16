@@ -1,0 +1,22 @@
+TVM/VTA 对 ACL v21.02 的必要适配（只读审查，未改代码）
+
+1. caller计入线程数，但logical task id不相同。
+ACL src/runtime/CPP/CPPScheduler.cpp:249–261：caller绑定f(0)，workers绑定f(1..q-1)；311–337：caller执行最后一个ThreadInfo.thread_id=q-1。
+TVM src/runtime/thread_pool.cc:287–317：TVM_EXCLUDE_WORKER0=1时caller执行task_id=0，helpers执行task_id=1..q-1。
+因此只能对齐“q个计算线程含caller”的语义，不能复制ACL workload-id到TVM slot-id。
+
+2. TVM的-2模式并不会自动将caller限制为一个核心。
+TVM src/runtime/threading_backend.cc:232–250：helpers逐核固定后仍调用SetMainThreadFullCpuAffinity。
+项目 cpu_strategy/policy/native.py:110–112 的补丁额外 SetPolicyAffinity({cpu_affinity[0]})，才得到caller单核固定。这一点与ACL caller=f(0)的语义对应。
+
+3. 池首次初始化大小必须匹配目标核组。
+TVM src/runtime/threading_backend.cc:201–213：已创建worker数超过指定mask宽度时，即使-2也回退为组内共享。
+TVM src/runtime/thread_pool.cc:460–465先设置MaxConcurrency(cpus.size)，随后取得ThreadLocal池；首次配置应先用目标mask。
+项目 native.py:113–118已对serial pinned组件首次初始化作此适配，119–129在各stage线程配置/探针中设置pin模式。不要把存在的补丁当作新提出的资源分配策略。
+
+4. 池/锁的执行粒度必须写清。
+TVM ThreadPool::ThreadLocal（src/runtime/thread_pool.cc:320）让不同stage caller拥有不同池。项目 vta_cpu_resource_groups.h:18–46定义同mask共享设备门控；runner.cc:3821–3835门控覆盖完整RunStage。
+ACL CPPScheduler.cpp:311–337锁覆盖一次kernel workloads调用。同一个scheduler的actor不能并行调度，但这不等于整子图门控。Flexi-BOPI作者如何把修改Graph API的stage接入不同scheduler没有公开证据。
+
+5. 主机与控制线程是本项目附加的资源维度。
+项目 native.py:118及130–132分别配置collector/producer，CPU pin开关不应顺带重置它们；VTA host仍按VTA stage mask配置。Flexi-BOPI模型没有这一独立决策变量，不能把这部分宣称为原文直接复现。

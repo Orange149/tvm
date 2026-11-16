@@ -1,5 +1,9 @@
 # C1 最小收尾证据与主张限制
 
+> 历史状态说明：本文记录 2026-09-08 的旧收尾决定。第一创新点现已按
+> [共享内存感知 Top-K 方案](C1_SHARED_MEMORY_AWARE_TOPK.md) 恢复为独立研究主线；
+> 本文中的阴性 M2 结果继续作为新方案不得退化为“总 DMA 排序”的基线证据。
+
 2026-09-08；本轮只核对已有结果，不补新的切图/调优实验。
 
 | 项目 | 已有事实 | 允许的结论 / 限制 |
@@ -18,8 +22,10 @@
 `run_stage_memory_model_ablation.py` 从 `v1_local_cost_table.json`、`v1_profile_manifest.json`
 经 `solve_cpu_vta_pipeline_v1_p3.py:build_context/fit_boundary_ownership` 读取直接边界及其 CPU/VTA owner。
 `freeze_cpu_vta_pipeline_v1.py` 将其定义为 `host_adapter_set_get_copy`。
-这套 M1/M2 服务不应写成已经重新标定的 shared-K2 成本。C2 的 shared 测量是固定切图下的
-运行方式对照；C3-S 在同一 all-shared K2 基线上固定 topology，只改变额外缓冲来源，不借此重新评价 C1 排名。
+这套 M1/M2 服务不应写成已经重新标定的 shared-K2 成本。当前 C1 只通过 exact policy certificate
+把 C2 的 shared/anchor 空间与功能证据纳入带内重排；吞吐区间尚未合格，因而不从 M1 中乐观扣除
+copy 时间。C3-S 在同一 all-shared K2 基线上固定 topology，只改变额外缓冲来源，其旧结果不直接
+外推到未认证切图。
 
 ## 数值边界与未完成项
 

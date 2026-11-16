@@ -1,6 +1,6 @@
 # 硕士论文研究主线、既有实验与新创新点整合总结
 
-更新日期：2026-09-11。
+更新日期：2026-09-15。第一创新点的当前治理入口为 `C1_SHARED_MEMORY_AWARE_TOPK.md`。
 
 本文档面向论文《面向深度神经网络的嵌入式异构计算共享内存技术研究》，以仓库中已经冻结的实验记录为依据，重新区分：
 
@@ -90,14 +90,15 @@ T_{DMA}\approx
 
 因此，降低总 payload、减少输入/权重重复载入、合并小请求和避免不利 stride 都可能改善时间；仅报告“DMA 字节减少”不足以解释性能。
 
-## 3. 创新点一：面向共享资源与通信代价的 CPU--VTA 流水线 Top-K 划分
+## 3. 创新点一：共享资源、共享内存实现与通信代价感知的 CPU--VTA 流水线 Top-K 划分
 
 ### 3.1 研究问题
 
-在固定 VTA 硬件、量化和基础 schedule 的条件下，联合决定：
+在固定 VTA 硬件、量化政策和经审计的 per-workload schedule 复用规则下，联合决定：
 
 - 连续 CPU/VTA segment；
 - VTA island 数量；
+- 每个 VTA workload 的复用 Tile，或触发局部重调优；
 - 每个 CPU stage 的 TVM 线程参数；
 - CPU--VTA 边界及其共享内存通信代价。
 
@@ -106,10 +107,18 @@ T_{DMA}\approx
 ### 3.2 方法增量
 
 1. 将 ResNet18 表示为 21 个中小粒度、依赖闭合的计算单元。
-2. 枚举编译合法的连续 CPU/VTA segment、VTA island 和 per-stage thread。
-3. 显式建模单 VTA 串行 demand、CPU core-time、方向化 CPU--VTA 边界和共享 DDR demand。
-4. 利用非负服务量的单调下界执行 k-best 动态规划，仅输出 Top-K 上板候选。
-5. 使用编译上下文、workload 和 DMA signature 去重，避免对相同 VTA workload 按 stage 重复测量。
+2. 把切点 `P`、per-workload Tile `Theta` 和边界实现 `rho` 明确区分：冻结域按 workload 精确复用
+   Tile，新 workload/融合类/环境或容量失败局部完整 lowering/调优；AutoTune 是 `Theta` 的产生器，
+   不是额外相加的通信成本。
+3. 枚举编译合法的连续 CPU/VTA segment、VTA island 和 per-stage thread。
+4. 显式建模单 VTA 串行 demand、CPU core-time、方向化 CPU--VTA 边界和共享 DDR demand。
+5. 利用非负服务量的单调下界执行 k-best 动态规划，仅输出 Top-K 上板候选。
+6. 使用编译上下文、workload 和 DMA signature 去重，避免对相同 VTA workload 按 stage 重复测量。
+7. 把切图变量扩展为 `(partition, Tile, CPU threads, certified boundary policy)`：只有 exact
+   `external-K2/pool-anchor-K2` 证书可以启用共享策略，未知边、环境漂移或容量超限均回退普通 copy。
+8. Top-K 先按 topology 去重，再在 M1 最优值 2% 带内用框架物化、slot 容量、同步，以及分 memory
+   DMA bytes/calls、small/strided calls 和平均请求大小做 Pareto 测量重排；逻辑 payload 不作为真实
+   DDR 字节。
 
 FuseOps、量化、packing 和 AutoTVM 是复用的编译基础，不属于该创新点本身。
 
@@ -125,16 +134,39 @@ FuseOps、量化、packing 和 AutoTVM 是复用的编译基础，不属于该�
 | island 数与 copy | 1/2/3 island 的串行 copy 中位数约 3.431/6.212/10.959 ms | 多次重入 VTA 会增加边界代价 |
 | 同 topology 线程扫描 | t1/t2/t3/t4 为 5.413/6.237/9.312/10.449 FPS | CPU stage 线程数必须进入搜索，不能假设线性缩放 |
 | YOLOv3-tiny 回放 | 105696 个配置；6 组目标组件 profile 后，历史最优 topology 静态第 6 | 提供跨模型可迁移线索，但仍是回顾性、非零样本前瞻证据 |
+| 固定 Tile 融合传输盲测 | 23 个代表校准；其余 64/64 完整 lowering 逐项一致，DMA byte MAPE=0 | 冻结域内在线模板构建 87→23，减少 73.56% |
+| 切点--Tile--共享策略反事实汇总 | 19/19 语义卷积在 693 个 placement record 中保持一个 workload/config；固定 Tile 改切点、固定切点改 Tile、固定两者改共享策略三轴证据已带哈希冻结 | AutoTune 通过 Tile 产生 DMA signature；tensor payload、DMA 请求和框架物化不能混为一个标量 |
+| 同 workload Tile 请求反例 | R50A 右 Tile LOAD bytes `-23.25%`，calls `+622.22%`，latency `+112.84%` | 总 DMA bytes 不能单独排序，必须保留请求碎片与粒度 |
+| 统一结构化顺序实现审计 | 4623/4623 topology 的 per-memory DMA、请求密度、helper/conversion、slot/物化特征完整；统一 Top-5 与冻结 S2 同集合，仅交换第4/5位 | 实现接口已经闭合且不需增加板端候选；产物在两个 boot 标签后生成，只作诊断，不冒充前瞻排序证据 |
+| 全域共享边界审计 | 4623 topology、25410 edge occurrence、739 保守 edge context | 切图确实改变逻辑边界、K2 容量和共享策略可行域 |
+| 共享策略证书冻结 | 8 张 exact 证书覆盖 4 个 topology；1 张三 boot 功能证书；0 张吞吐合格证书 | C1 可以联合选择已认证实现，但当前不得用零拷贝外推 FPS |
+| topology-diverse S0/S1/S2 | 旧 Top-20 仅 4 个 topology；新冻结顺序不同，并集 5 topology/9 candidate-policy | 三独立 boot 的 27/27 配置--启动通过正确性与机制门；首次 oracle+2% 命中 S0/S1=5、S2=4，三者 Regret@5=0 |
+| E3-SM2 boot 0 | copy 物化 1,806,336--2,609,152 B/frame，anchor 为 0；四组 VTA 内部 DMA 字节/请求完全不变；union 最小 II 83.521695 ms | 证明实现分层和新拓扑可执行；单 boot 不支持筛选效率或吞吐提升主张 |
+| E3-SM2 boot 1 | 同一冻结合同下 9/9 正确、各 302 帧；copy/anchor 的 VTA 内部 DMA 再次不变；描述性最小 II 84.972147 ms | 历史中间证据；已与 boot0/boot2 一同进入三启动分析 |
+| E3-SM2 三启动闭合 | boot2 `e36394f4...` 补齐；union oracle 跨启动中位 II=83.935836 ms；同拓扑 copy/shared 的 DMA bytes/calls 全部不变 | 预注册命中/Regret 门通过，只声明冻结池内合格命中少一个候选（5→4）；原三启动没有完整T0封存，不用后续成本补测回填 |
+| E3 已有原始成本只读会计 | 达标前缀性能driver_run_calls：基线22348、S2=17818；correctness+performance子进程成本中位：基线155.524713秒、S2=156.757045秒 | dispatch预算降低但子进程成本没有降低；是冻结顺序的前缀重放，不是交错并集的经过时间或完整T0，保留计时阴性结果 |
+| E3 唯一专门T0成本补测 | 用户授权后先冻结协议；单一boot、S0/S1/S2各一次，14/14正确；条件化在线墙钟202.880903/201.046925/200.683615秒，命中5/5/4，性能dispatch22348/22348/17818 | 冻结库存/编译包可用条件下的真实墙钟已补齐；S2对最佳基线只低0.18%，不宣称显著时间优势。排除原始Relay枚举/M1 DP/离线调优；不混入原三启动排名 |
+| E2 endpoint service 三启动 | 三不同 boot 各 9 端点×3 case×3 repeat=81/81 正确，共243样本；DMA计数、contract identity和完整输出跨boot一致 | 三启动闭合，不再测量端点；只声明分资源机制，不把helper/graph remainder叫作纯CPU时间 |
+| E2 三 boot 机制汇总 | 三组新增projection的driver中位增量为1.224650/0.933550/0.917250 ms；新增CPU tail时DMA不变，driver变化绝对值≤0.015450 ms | 完整stage变化不单调；尾部driver尚未做统计等价检验；各字段分别取中位后不保证可加，不能外推FPS |
+| P7C 共享 DDR matched control | 单 boot 中 streaming 下 compute-heavy/DMA-heavy VTA slowdown 为 1.052x/1.066x；冻结 stage runner `dbc0...aec` 已精确恢复 | 额外延迟不能唯一归因于 DDR，且未解释冻结 Top-20 排序主误差；按 P7D 决策以阴性机制证据收口，不重复补 boot、不写回候选级 Top-K |
+| E4 跨模型编译机制 | ResNet-50/YOLOv3-tiny 各 6 个 label-free 代表先冻结 Tile；11/12 两类融合上下文 exact dispatch，11/11 基础 DMA 不变且出现正 ACC 残差；Y03 容量失败 | 只读扫描 16 个既有 fullgraph build 后，0/12 workload 有可复用的两个 exact natural placements；支持“固定 Tile+融合残差+容量守卫”机制，但不能称为真实跨 placement 稳定或跨模型加速 |
 
 ### 3.4 建议的正式创新表述
 
-> 针对嵌入式 CPU--FPGA 共享内存平台中逻辑阶段多于物理计算资源、CPU 核与 VTA 被多个阶段复用且异构边界代价不可忽略的问题，本文提出资源与通信代价感知的 Top-K 流水线划分方法。该方法联合搜索连续 CPU/VTA segment、VTA island 和 CPU stage 线程参数，以单物理 VTA、CPU 核心池、方向化边界和共享 DDR 服务需求构造稳态资源下界，并采用 k-best 动态规划从大规模合法配置中生成少量候选供实机验证。
+> 针对嵌入式 CPU--FPGA 共享内存平台中逻辑阶段多于物理资源、融合上下文与边界实现随切图变化的问题，本文提出固定 Tile 条件下的融合感知传输建模与共享内存感知 Top-K 划分方法。该方法以编译审计确定每个 workload 的 Tile 复用域，将切点造成的设备归属、融合残差与逻辑边界，同 Tile 决定的分 memory DMA 字节、请求碎片及经认证的 copy/共享 slot 策略分层建模；再以单物理 VTA、CPU 核心池、slot 容量、同步和共享 DDR 服务构造资源下界，通过 k-best DP、topology 去重和带内 Pareto 重排生成少量可部署候选，未知上下文或策略严格 fail-closed。
 
 ### 3.5 主张边界
 
-可以声称：静态目标下 DP 正确；通信项显著改善历史数据解释；Top-20 覆盖高性能区域。
+可以声称：静态目标下 DP 正确；通信项显著改善历史数据解释；固定 Tile 融合传输在冻结域内通过
+64 段盲测；跨模型 synthetic paired context 的 11 个正例验证基础 DMA/融合 ACC 残差分离，1 个容量
+反例验证 fail-closed；共享策略已经以 exact certificate 和 fail-closed 方式进入 topology-diverse Top-K；
+三个 Top-K boot 的 27 个配置--启动全部通过完整输出和分层 DMA 机制门；冻结 S2 首次命中
+union oracle+2% 比 S0/S1 少一个候选，且 Regret@5 同为 0；已有反事实证据支持切点、Tile、
+共享策略三轴分离，并证明 bytes-only 排序不足；统一细粒度特征已在 4623/4623 topology 上实现，
+但其 post-label 顺序不得用于当前前瞻优越性主张。
 
-不能声称：找到硬件全局最优；准确预测绝对 FPS；已经实现完整 stage--tile 全空间联合搜索；已经完成跨 DNN 零样本泛化。
+不能声称：找到硬件全局最优；准确预测绝对 FPS；逻辑边界等于物理 DDR；共享内存必然提高 FPS；
+端到端 T0 墙钟降低；当前 S2 在冻结池外或每次独立启动中都优于基线；已经完成跨 DNN 零样本泛化。
 
 ## 4. 创新点二：面向跨 Executor 多帧执行的生命周期与需求感知共享内存运行时
 
@@ -597,12 +629,12 @@ FPS”。目前已经获得“新工作负载同 tile 局部收益 + 极小板�
 | 项目 | 创新点一 | 创新点二 | 新创新点三 |
 |---|---|---|---|
 | 决策层次 | 整网/stage | 跨 Executor runtime | VTA workload/schedule |
-| 核心问题 | 切在哪里、线程怎样配 | 如何交接、何时复用、分配多少 | 驻留什么、tile 怎样选 |
-| 主要对象 | topology、island、thread、edge | slot、owner、generation、queue capacity | input/weight SRAM、tile、DMA request |
+| 核心问题 | 切在哪里、线程怎样配、采用哪种已认证边界实现 | 如何交接、何时复用、分配多少 | 驻留什么、tile 怎样选 |
+| 主要对象 | topology、island、thread、edge policy certificate | slot、owner、generation、queue capacity | input/weight SRAM、tile、DMA request |
 | 主要时间指标 | 稳态 II、FPS | boundary service、latency、II | workload/stage latency、DMA service |
-| 主要空间指标 | 边界数量和 DDR demand | slot/high-water/command backing | 片上 working set |
-| 主要算法 | 资源下界 + k-best DP | manifest + 状态机 + 安全定容 | 驻留模式 + 约束过滤 + DMA shortlist |
-| 当前状态 | 已完成，主张需守边界 | 核心完成，性能/通用性有边界 | 已有 400→2 小预算、同 tile 正收益和 TopHub 2% 等价带闭环；尚无新 TopHub/stage 胜者 |
+| 主要空间指标 | 边界逻辑量、可行 slot 容量和共享 DDR demand | slot/high-water/command backing | 片上 working set |
+| 主要算法 | 资源下界 + k-best DP + topology 去重 + 证书化 Pareto | manifest + 状态机 + 安全定容 | 驻留模式 + 约束过滤 + DMA shortlist |
+| 当前状态 | ResNet-18 固定Tile传输与端点service三启动闭环；跨模型编译机制11/12、容量拒绝1/12；共享Top-K三启动命中门通过（5→4）；唯一条件化在线T0补测完成、墙钟基本持平，不宣称显著节省 | 核心完成，性能/通用性有边界 | 已有 400→2 小预算、同 tile 正收益和 TopHub 2% 等价带闭环；尚无新 TopHub/stage 胜者 |
 
 三者采用分层而不是笛卡尔积联合搜索：创新点一生成有限 VTA workload 集；创新点三按去重 workload 优化并把安全结果反馈一次；创新点二在最终固定映射上部署共享 slot 和队列容量。这样既控制编译/上板成本，也避免把所有变量一次性展开成不可完成的搜索空间。
 

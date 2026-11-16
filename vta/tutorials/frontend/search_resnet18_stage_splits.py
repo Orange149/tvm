@@ -1214,15 +1214,8 @@ def score_scheme(scheme_cfg, unit_metadata, capacity_spec, args, cost_model):
             residual_live += int(meta["residual_live_bytes_est"])
             if unit_idx < len(units) - 1:
                 internal_boundary += int(meta["vta_out_bytes_est"])
-            for tile_key, reason in [
-                ("inp_tiles", "inp_tile_excess"),
-                ("wgt_tiles", "wgt_tile_excess"),
-                ("acc_tiles", "acc_tile_excess"),
-                ("out_tiles", "out_tile_excess"),
-            ]:
-                if int(tile[tile_key]) > 8:
-                    hard_reject = True
-                    reject_reasons.add(reason)
+            # These are whole-unit demand ratios, not compiled SRAM occupancy.
+            # Tiling allows tensors larger than SRAM; do not reject on this proxy.
         dma_bytes = tile_input + tile_weight + tile_output
         bridge_pack_ms = stage_overhead(cost_model, "vta", "bridge_pack_ms")
         bridge_unpack_ms = stage_overhead(cost_model, "vta", "bridge_unpack_ms")
@@ -1255,10 +1248,17 @@ def score_scheme(scheme_cfg, unit_metadata, capacity_spec, args, cost_model):
                 "static_dma_bytes_est": int(dma_bytes),
                 "static_tile_count_est": int(tile_count),
                 "static_tile_spill_penalty": int(tile_spill),
-                "onchip_inp_util_pct": 100.0 * stage_inp_ratio,
-                "onchip_wgt_util_pct": 100.0 * stage_wgt_ratio,
-                "onchip_acc_util_pct": 100.0 * stage_acc_ratio,
-                "onchip_out_util_pct": 100.0 * stage_out_ratio,
+                "unit_tensor_capacity_ratio_pct": {
+                    "inp": 100.0 * stage_inp_ratio,
+                    "wgt": 100.0 * stage_wgt_ratio,
+                    "acc": 100.0 * stage_acc_ratio,
+                    "out": 100.0 * stage_out_ratio,
+                },
+                "sram_utilization_status": "unknown_not_lowered",
+                "onchip_inp_util_pct": None,
+                "onchip_wgt_util_pct": None,
+                "onchip_acc_util_pct": None,
+                "onchip_out_util_pct": None,
                 "proxy_cost_est": int(proxy),
                 "static_ms_est": ms,
                 "static_vta_compute_ms_est": vta_compute_ms,
@@ -1307,10 +1307,10 @@ def score_scheme(scheme_cfg, unit_metadata, capacity_spec, args, cost_model):
     imbalance_penalty_ms = max(0.0, max_static_ms - median_stage_ms) * float(
         cost_model.get("weights", {}).get("imbalance", 0.25)
     )
-    sram_peak_ratio = max(max_inp_ratio, max_wgt_ratio, max_acc_ratio, max_out_ratio)
-    sram_risk_penalty_ms = max(0.0, sram_peak_ratio - 0.80) * max_static_ms * float(
-        cost_model.get("weights", {}).get("sram_risk", 0.15)
-    )
+    unit_tensor_peak_ratio = max(max_inp_ratio, max_wgt_ratio, max_acc_ratio, max_out_ratio)
+    # No post-StorageRewrite arenas are available in this pre-lowering scorer.
+    # Unknown occupancy must not produce a capacity penalty or a low-use claim.
+    sram_risk_penalty_ms = 0.0
     dma_fragmentation_penalty_ms = static_dma_fragmentation_score * float(
         cost_model.get("weights", {}).get("dma_fragmentation", 1.0)
     )
@@ -1353,12 +1353,14 @@ def score_scheme(scheme_cfg, unit_metadata, capacity_spec, args, cost_model):
         "dma_call_count_est": int(
             sum(item.get("static_dma_call_count_est", 0) for item in stage_infos)
         ),
-        "sram_utilization_pct": {
+        "sram_utilization_pct": None,
+        "sram_utilization_status": "unknown_not_lowered",
+        "unit_tensor_capacity_ratio_pct": {
             "inp": 100.0 * max_inp_ratio,
             "wgt": 100.0 * max_wgt_ratio,
             "acc": 100.0 * max_acc_ratio,
             "out": 100.0 * max_out_ratio,
-            "peak": 100.0 * sram_peak_ratio,
+            "peak": 100.0 * unit_tensor_peak_ratio,
         },
         "bottleneck_stage": max(stage_infos, key=lambda item: item["static_ms_est"])["name"]
         if stage_infos
@@ -1392,12 +1394,13 @@ def score_scheme(scheme_cfg, unit_metadata, capacity_spec, args, cost_model):
         "static_tile_spill_penalty": int(total_tile_spill),
         "static_internal_boundary_bytes": int(total_internal_boundary_bytes),
         "static_residual_live_bytes": int(total_residual_live_bytes),
-        "onchip_inp_util_pct": 100.0 * max_inp_ratio,
-        "onchip_wgt_util_pct": 100.0 * max_wgt_ratio,
-        "onchip_acc_util_pct": 100.0 * max_acc_ratio,
-        "onchip_out_util_pct": 100.0 * max_out_ratio,
-        "onchip_peak_util_pct": 100.0
-        * max(max_inp_ratio, max_wgt_ratio, max_acc_ratio, max_out_ratio),
+        "unit_tensor_capacity_ratio_pct": score_components["unit_tensor_capacity_ratio_pct"],
+        "sram_utilization_status": "unknown_not_lowered",
+        "onchip_inp_util_pct": None,
+        "onchip_wgt_util_pct": None,
+        "onchip_acc_util_pct": None,
+        "onchip_out_util_pct": None,
+        "onchip_peak_util_pct": None,
         "static_pipeline_cycle_ms_est": max_static_ms,
         "static_pipeline_fps_est": 1000.0 / max_static_ms if max_static_ms > 0.0 else 0.0,
         "static_stage_imbalance_ratio_est": max(proxy_imbalance, static_imbalance),
@@ -1572,11 +1575,13 @@ def static_candidate_row(candidate, args):
         "static_tile_spill_penalty": int(candidate["static_tile_spill_penalty"]),
         "static_internal_boundary_bytes": int(candidate["static_internal_boundary_bytes"]),
         "static_residual_live_bytes": int(candidate["static_residual_live_bytes"]),
-        "onchip_peak_util_pct": float(candidate["onchip_peak_util_pct"]),
-        "onchip_inp_util_pct": float(candidate["onchip_inp_util_pct"]),
-        "onchip_wgt_util_pct": float(candidate["onchip_wgt_util_pct"]),
-        "onchip_acc_util_pct": float(candidate["onchip_acc_util_pct"]),
-        "onchip_out_util_pct": float(candidate["onchip_out_util_pct"]),
+        "sram_utilization_status": candidate.get("sram_utilization_status", "unknown_legacy_proxy"),
+        "unit_tensor_capacity_ratio_json": json.dumps(candidate.get("unit_tensor_capacity_ratio_pct")),
+        "onchip_peak_util_pct": reported_sram_utilization(candidate, "onchip_peak_util_pct"),
+        "onchip_inp_util_pct": reported_sram_utilization(candidate, "onchip_inp_util_pct"),
+        "onchip_wgt_util_pct": reported_sram_utilization(candidate, "onchip_wgt_util_pct"),
+        "onchip_acc_util_pct": reported_sram_utilization(candidate, "onchip_acc_util_pct"),
+        "onchip_out_util_pct": reported_sram_utilization(candidate, "onchip_out_util_pct"),
         "static_pipeline_cycle_ms_est": float(candidate["static_pipeline_cycle_ms_est"]),
         "static_pipeline_fps_est": float(candidate["static_pipeline_fps_est"]),
         "static_stage_imbalance_ratio_est": float(candidate["static_stage_imbalance_ratio_est"]),
@@ -2041,9 +2046,9 @@ def theory_base_metrics(candidate):
         ) * 14.0
 
     cpu_tail_penalty_ms = max(0.0, tail_cpu_ms - 78.0) * 0.90
-    sram_spill_penalty_ms = float(candidate.get("sram_risk_penalty_ms_est", 0.0))
-    if int(candidate.get("static_tile_spill_penalty", 0)) > 0:
-        sram_spill_penalty_ms += 25.0
+    # The legacy tile-spill field is a whole-tensor cost heuristic, not evidence
+    # of an actual spill. Do not turn it into an observed SRAM risk penalty.
+    sram_spill_penalty_ms = 0.0
     dma_fragmentation_penalty_ms = float(
         candidate.get("dma_fragmentation_penalty_ms_est", 0.0)
     )
@@ -2061,7 +2066,7 @@ def theory_base_metrics(candidate):
         + effective_segment_penalty_ms
     )
     theory_hard_reject = bool(candidate.get("hard_reject", False)) or single_unit_islands > 0
-    if tail_cpu_ms > 95.0 or float(candidate.get("onchip_peak_util_pct", 0.0)) > 92.0:
+    if tail_cpu_ms > 95.0:
         theory_hard_reject = True
 
     return {
@@ -2210,7 +2215,8 @@ def theory_candidate_row(candidate):
     ]
     row = {}
     for key in keys:
-        value = candidate.get(key, "")
+        value = (reported_sram_utilization(candidate, key)
+                 if key.startswith("onchip_") else candidate.get(key, ""))
         if isinstance(value, list):
             value = ",".join(str(item) for item in value)
         row[key] = value
@@ -2330,7 +2336,7 @@ def write_theory_build_outputs(search_dir, args, candidates, rows):
                 "dma_fragmentation_score_est": float(
                     candidate.get("static_dma_fragmentation_score_est", 0.0)
                 ),
-                "onchip_peak_util_pct": float(candidate.get("onchip_peak_util_pct", 0.0)),
+                "onchip_peak_util_pct": reported_sram_utilization(candidate, "onchip_peak_util_pct"),
                 "buildable": buildable,
                 "build_cache_hit": bool(row.get("buildability_cache_hit", False)),
                 "build_failure_type": row.get("build_failure_type", ""),
@@ -2930,6 +2936,13 @@ def write_csv(path, rows):
             writer.writerow(row)
 
 
+def reported_sram_utilization(row, key):
+    """Never republish historical whole-unit proxies as compiled occupancy."""
+    if row.get("sram_utilization_status") != "compiled_arena":
+        return None
+    return row.get(key)
+
+
 def fmt(value):
     if value in ["", None]:
         return "n/a"
@@ -2997,7 +3010,9 @@ def render_readme(args, rows, stats):
                     fmt(best.get("ps_pl_total_bw_gbps")),
                     fmt(best.get("ps_pl_total_dma_bytes", best.get("static_dma_bytes_est"))),
                 ),
-                "- SRAM peak utilization: {}%".format(fmt(best.get("onchip_peak_util_pct"))),
+                "- Compiled SRAM arena utilization: {} (requires allocation evidence)".format(
+                    fmt(reported_sram_utilization(best, "onchip_peak_util_pct"))
+                ),
                 "- DMA fragmentation: measured={} static={}".format(
                     fmt(best.get("dma_fragmentation_score")),
                     fmt(best.get("static_dma_fragmentation_score_est")),
@@ -3009,7 +3024,7 @@ def render_readme(args, rows, stats):
         [
             "## Ranking",
             "",
-            "| rank | scheme | status | gate | fps | stages | threads | bottleneck | ps-pl Gbit/s | SRAM peak % | DMA frag | boundary bytes |",
+            "| rank | scheme | status | gate | fps | stages | threads | bottleneck | ps-pl Gbit/s | compiled SRAM % (unknown if absent) | DMA frag | boundary bytes |",
             "|---:|---|---|---|---:|---:|---|---|---:|---:|---:|---:|",
         ]
     )
@@ -3025,7 +3040,7 @@ def render_readme(args, rows, stats):
                 row.get("thread_config", row.get("stage_runtime_threads", "")),
                 row.get("stage_balance_bottleneck", row.get("static_bottleneck_stage", "")),
                 fmt(row.get("ps_pl_total_bw_gbps")),
-                fmt(row.get("onchip_peak_util_pct")),
+                fmt(reported_sram_utilization(row, "onchip_peak_util_pct")),
                 fmt(row.get("dma_fragmentation_score", row.get("static_dma_fragmentation_score_est"))),
                 fmt(row.get("boundary_bytes")),
             )
@@ -3534,7 +3549,7 @@ def main():
                 fmt(best.get("pipeline_throughput_fps")),
                 best.get("stage_balance_bottleneck", best.get("static_bottleneck_stage")),
                 fmt(best.get("ps_pl_total_bw_gbps")),
-                fmt(best.get("onchip_peak_util_pct")),
+                fmt(reported_sram_utilization(best, "onchip_peak_util_pct")),
                 fmt(best.get("dma_fragmentation_score", best.get("static_dma_fragmentation_score_est"))),
             )
         )

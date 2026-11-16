@@ -696,6 +696,8 @@ def compile_runner(package_dir):
     # The slot planner is header-only; invalidate the runner cache on either edit.
     source_sha = hashlib.sha256(
         source.read_bytes() + source.with_name("vta_shared_buffer_plan.h").read_bytes()
+        + source.with_name("vta_managed_lifecycle_control.h").read_bytes()
+        + source.with_name("vta_command_capacity_certificate.h").read_bytes()
         + (root / "3rdparty/picojson/picojson.h").read_bytes()
     ).hexdigest()
     if len(package_dir.parents) >= 3 and package_dir.parents[1].name == "buildability":

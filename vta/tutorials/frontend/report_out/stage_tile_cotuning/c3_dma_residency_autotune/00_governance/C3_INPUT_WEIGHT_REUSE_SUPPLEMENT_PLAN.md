@@ -1,5 +1,16 @@
 # C3 补充实验计划：输入复用、权重复用及组合的收益与边界
 
+2026-09-23 新增跨启动正结果：[YOLOv3-tiny Y00 输入复用与权重驻留双启动确认](20260923_C3_Y00_INPUT_WEIGHT_DUAL_BOOT.md)。
+固定真实 Y00 卷积层的 h16/w52 Tile，input-only→input＋首次使用全权重驻留在两个独立 boot 分别改善
+2.281%和2.125%，均6/6轮获胜；original→组合分别改善10.321%和10.175%。增量配对保持输入请求、
+计算、静态arena、累计UOP装载和同步匹配，权重请求从239,616 B/52次降至4,608 B/1次。
+这证明传输压力层上组合机制具有跨启动稳定净收益，但整层权重仅4,608 B，不能替代P1/P2部分驻留证据。
+
+2026-09-23 新增部分驻留本地边界：[R18-H1 T8 P1/P2 部分权重驻留本地资格](20260923_C3_PARTIAL_RESIDENCY_LOCAL_GATE.md)。
+P1-S/P2-S 均通过地址、依赖、三seed FSim、单提交和零额外drain检查，但累计UOP装载与P4-S同为
+1,624 B；其权重请求反而为202,752 B/147,456 B，高于P4-S的36,864 B。因此预注册UOP门槛未通过，
+不冻结上板候选。该负结果说明驻留粒度只有在lowering实际复用μop模板时才可能形成性能优势。
+
 2026-09-23 新增开发里程碑：[R18-H1 T8 首次使用分阶段全权重驻留](20260923_C3_VTHREAD_STAGED_RESIDENCY_PILOT.md)。
 固定 genuine O2 Tile 与双输出虚拟线程，对比 O2、前置全装载 P4-E 和首次使用分阶段装载 P4-S。
 P4-S 仍只请求36,864 B权重、单次提交且累计UOP装载保持1,624 B/16次；它把首个有效MAC前必须完成的
@@ -454,3 +465,343 @@ ACC/INP/WGT arena、同步次数和最大kernel μop一致；WGT请求从239,616
 随后把同一“保留现有高质量Tile/循环，仅增加受约束驻留”的构造应用到未参与本轮开发的真实网络层，
 按静态可消除WGT bytes/MAC分层验证。只有新层也能由静态规则区分收益，才进入完整YOLO图的conv2
 替换及端到端验证；暂不优先开发P1/P2部分驻留。
+
+## 11. 2026-09-24 mode 10：组合安全的局部完成语义
+
+后续 YOLO-608 与历史 ResNet18 整图实验暴露了一个比“传输是否减少”更基础的问题：mode 5 候选
+在孤立算子中通过三 seed FSim/FPGA 正确性，却在多个驻留路由组合进同一图后产生随执行顺序变化的
+错误输出。全图 `VTA_DEBUG_FORCE_SERIAL` 能恢复 YOLO 双路由正确性，因此问题被收敛为正常依赖编码
+下的程序组合安全，而不是参数、Graph JSON、路由命中或算法语义错误；尚不能进一步声称已经找到了
+某一条精确硬件 token/race 根因。
+
+新增 mode 10 `input_weight_resident_composable` 保持 mode 5 的 Tile、循环、驻留和数据请求安排，只在
+驻留命令段边界生成局部 `VTASetDebugMode(32) → VTASynchronize → VTASetDebugMode(0)`。全局
+debug flag 保持0。最终地址审计器只接受静态的 `[32, 0]` 转换，并将其作为有序控制事件记录；未知
+debug值或未闭合序列仍然失败。
+
+本地与二进制资格结果：
+
+- YOLO-608 两个真实 `1×1` 路由均通过 StorageRewrite 容量、最终 DDR/SRAM/UOP/GEMM/ALU 地址、
+  依赖闭合、三 seed FSim 精确相等和跨 seed 命令结构一致性；反汇编仅目标函数6和10各含两次
+  `VTASetDebugMode`。
+- ResNet18 历史失败 H3 路由也通过相同门槛；反汇编仅 `clip_cast_7_compute_` 含两次控制调用。
+- mode 5 保持不变，旧失败证据未被覆盖；mode 10 使用新的 schedule version 和 candidate ID。
+
+板端无计时正确性结果均来自 boot `c9d73f4c-c0df-474a-9a74-a28a2f8955e2`，未重载 bitstream：
+
+| 网络与路由 | 历史 mode 5 整图结果 | mode 10 整图结果 |
+|---|---:|---:|
+| YOLO-608，两条驻留路由 | 组合图错误 | 3/3 seed × 8输出全相等 |
+| ResNet18，H3驻留路由 | 0/6正确，每次1000 mismatch | 3/3 seed × 1输出全相等 |
+
+冻结后又执行了单启动、位置平衡的开发计时；每种方案9个单次样本，全部输出相等、0隐式调用：
+
+| 网络 | 对照 | 中位配对改善 | 获胜数 | 解释 |
+|---|---|---:|---:|---|
+| YOLO-608 | scoped composable vs stock | +13.484% | 9/9 | 强开发正例 |
+| YOLO-608 | scoped composable vs global force-serial | +12.298% | 9/9 | 局部完成保留了全局串行丢失的并行性 |
+| YOLO-608 | global force-serial vs stock | +1.323% | 9/9 | 全局串行仅保留很小净收益 |
+| ResNet18 | composable H3 vs 同H1/H2安全H3-original | +0.056% | 6/9 | 未形成稳定净收益 |
+| ResNet18 | composable H3 vs stock | -0.250% | 1/9 | 正确但不应部署为加速方案 |
+
+这些是单 boot 开发证据，不是双启动正式确认。用户报告重启后观测到的 boot ID 仍未变化，因此不能
+把本轮称为独立第二启动。结果也不能推出“所有驻留都应加入局部串行”；它支持的是把完成策略作为
+候选身份和选择维度。
+
+第三创新点据此加强为：
+
+> **面向固定 VTA 的组合安全、编译后代价感知驻留—Tile 联合选择。编译器为候选显式生成驻留与完成
+> 语义，利用容量、最终地址、数据请求、μop、同步和组合资格约束候选，并在有限板端预算下选择是否
+> 部署；选择单位从彼此独立的单层程序提升为带兼容约束的图级候选集合。**
+
+这里的关键新增不是“加一个 barrier”，而是三点：候选正确性合同覆盖程序组合；局部完成避免全图
+串行；选择器允许在 YOLO 强正例中采用 mode 10、在 ResNet18 低收益案例中回退。下一正式阶段需要
+在真正变化的 boot ID 上原样复测，不再修改 mode 10；之后 selector v3 才能把
+`completion_policy/composability_certificate` 纳入候选身份，并使用新的未见任务验证，不能把本轮已
+暴露性能的 YOLO/ResNet18 再称为 holdout。
+
+详细证据与下一步见
+`00_governance/20260924_C3_COMPOSABLE_RESIDENCY_MODE10.md`。
+
+## 12. 2026-09-24 selector v3 候选集合门禁与 YOLO-608 六轮确认
+
+在 mode 10 的开发计时之后，已把“组合安全”从人工判断实现为三层机器可读证书：单候选本地证书、
+静态候选集合证书和精确图上下文证书。当前冻结产物包含3个候选证书、2个静态集合证书和2个图上下文
+证书，覆盖 YOLOv3-tiny 与 ResNet18。候选/静态证书不声称整图正确；只有绑定精确 graph、params、
+候选集合和多 seed 板端零 mismatch 的图证书允许进入计时。
+
+selector v3 在原 v2 静态代价排序之前增加硬语义门禁，并把部署单位修正为
+`exact_graph_candidate_set`。这是必要的，因为 YOLO-608 的13%级收益属于两个 route 同时替换后的
+完整图程序，不能归给其中任意一个单层 candidate ID。旧 mode 5 barrier 候选默认拒绝并要求重新生成
+mode 10；未知完成策略 fail-closed；incumbent 始终保留为回退。
+
+本轮为 YOLO-608 新冻结了6轮确认合同，stock 与 scoped-composable 在首位各出现3次；每个程序每轮
+使用3个固定 seed，先求轮内中位数，再做轮间配对。结果如下：
+
+| 项目 | 结果 |
+|---|---:|
+| candidate set ID | `d29aa9dac2c7af8ad39e544ba7308053d174972a61f8e317d8fa0d53f966c47c` |
+| 中位配对改善 | 13.413% |
+| 获胜轮数 | 6/6 |
+| 正式计时调用 | 36 |
+| 完整图调用（含显式预热） | 48 |
+| 输出正确性 | 全部相等 |
+| 隐式额外调用 | 0 |
+
+产物哈希完整通过。但板端报告的 boot ID 仍为
+`c9d73f4c-c0df-474a-9a74-a28a2f8955e2`，与此前开发实验相同。因此该结果被登记为第一个正式
+boot 结果，而不是第二个独立启动。机器门禁当前输出：
+
+- YOLO-608：`PROMISING_REQUIRES_DISTINCT_BOOT_CONFIRMATION`；
+- ResNet18 H3：`FALL_BACK_TO_INCUMBENT`，不再为低收益分支消耗正式确认预算；
+- 总体：`deployment_authorized=false`。
+
+下一步只需在 boot ID 真正变化后，对完全相同的 YOLO candidate set、二进制、runtime 和6轮合同执行
+一次 boot-2。只有两个 boot 各自满足中位改善至少2%、至少5/6轮获胜，selector v3 才输出
+`DEPLOY`。在此之前不能把单启动13.413%写成跨启动正式收益。
+
+新增关键产物：
+
+- `07_grouped_holdout/20260924_c3_composability_certificates_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo608_composable_confirmation_boot1_run01/`；
+- `07_grouped_holdout/20260924_c3_selector_v3_development_evidence_run01/`。
+
+## 13. 2026-09-24 从 mode10 特例到通用图候选集合
+
+selector v3 已进一步去除对数字 mode10 和固定 YOLO route 的方法级依赖：新增版本化完成策略注册表，
+将局部 completion、普通依赖执行、旧未闭合 barrier 和全局串行诊断明确分型；新增精确图候选集合
+身份，绑定 workload、图节点、生成函数、完成策略和候选证书。有界集合枚举只在声明的 per-task 池与
+`max_replacements` 内称完整，组合积超过上限时直接拒绝，不静默截断。
+
+真实 YOLO-608 两 route 已按 workload 的输入/权重形状唯一映射到节点38/函数6和节点61/函数10，
+冻结为通用 candidate set `0eaab412...33377`。旧正确性与 boot-1 时间通过 graph、params、候选成员
+及函数作用域的精确相等迁移到新身份，迁移记录明确 `latency_values_modified=false`。集合级短名单只
+含 incumbent 与该候选集合，二者均具备图计时资格；部署门仍只因缺不同 boot ID 而回退。
+
+第三创新点由此可以收敛为“组合安全的驻留—Tile 联合选择”，但当前仍不能声称跨任务通用性能：
+方法接口与真实两-route实例已经成立，外部有效性还需要新的 latency-unseen 图任务、三 route 以上
+组合，以及相同预算下对 bytes/calls/random 的选择比较。详细边界见
+`00_governance/20260924_C3_SELECTOR_V3_GENERALITY_AND_NOVELTY.md`。
+
+新增产物：
+
+- `07_grouped_holdout/20260924_c3_yolo608_graph_candidate_set_run01/`；
+- `07_grouped_holdout/20260924_c3_selector_v3_graph_set_plan_run02/`。该修订产物把无图级预测分数时
+  的角色明确记为`selector_v3_static_fallback`，并冻结`performance_model_claim=false`；因此当前结果
+  只证明集合级资格、计时身份与回退门禁闭合，不证明已建立completion-aware性能预测模型。
+
+## 14. 2026-09-24 completion-aware selector v3 合同与数据准备度
+
+已新增独立的`c3_selector_v3_model.py`，模型单位严格限定为“精确图候选集合相对其incumbent”，而非
+孤立算子。特征包括请求/调用/UOP/指令/提交/同步的相对量、arena差值，以及replacement数、局部完成
+数、阻塞完成数、debug状态转换数、函数作用域数和完成策略计数。时延字段禁止进入特征。
+
+模型训练采用按执行任务留一：缺失值填补和median/IQR缩放均只在训练折拟合；正则选择先最小化每个
+留出任务等权的simple regret，再比较macro MAE，避免候选较多的任务主导模型。只有同时满足下列条件
+才允许生成`completion_aware_ridge`：
+
+- 至少8个精确图执行任务、40个候选集合—incumbent比较，目标覆盖率至少80%；
+- 至少3个scoped-completion任务和3个纯dependency-token任务；
+- 全部训练行硬件指纹一致、图上下文正确、FPGA正确，并具有匹配incumbent聚合指标；
+- 推理分数必须由冻结合同现场产生，调用方预填的预测值会被忽略。
+
+现有证据准备度审计的结果是：v2的121行/11任务均为孤立算子标签，不能改名为图级标签；旧barrier
+不能替代scoped-completion语义。YOLO只有一个两route集合、一个boot标签，且旧集合产物缺少匹配的
+incumbent聚合指标；ResNet18只有开发负例。因此当前 admitted training rows 为0，正式合同按设计
+冻结为`static_fallback`，不是伪造一个模型。真实YOLO计划run03已经读取该合同，输出
+`model_contract_not_completion_aware_ridge`和`performance_model_claim=false`。
+
+通用集合构造器现已支持同时聚合candidate与incumbent指标；指标不参与program/set ID，因此不会因
+补充性能特征改变程序身份。后续每个新图池在板测前就应生成这两套匹配指标，并把选择数据和确认数据
+分离。只有数据门槛达到后，同一graph-set plan接口才会切换到模型排序。
+
+新增产物：
+
+- `07_grouped_holdout/20260924_c3_selector_v3_model_readiness_run02/`；该版本额外绑定模型源码哈希；
+- `07_grouped_holdout/20260924_c3_selector_v3_graph_set_plan_run04/`。
+
+## 15. 2026-09-24 同预算完整池评价协议
+
+已在读取任何新图池时延前冻结selector v3的同预算评价器。B1/B2/B3均表示额外尝试1/2/3个新
+candidate set，incumbent共同成本另列；FPGA-invalid尝试消耗预算且不补位。每个方法只能决定尝试
+顺序，已测候选中仍按真实时延选最快者。
+
+对照固定为incumbent-only、bytes-only、calls-only、command-only、selector v3和1000个固定随机
+顺序（seed 20260924）。报告simple regret、相对incumbent改善、oracle+1%/+2%命中和invalid尝试数。
+oracle仅指“该参考任务事先声明且完整测量的池内FPGA-valid程序”，不能推广为所有VTA程序最优。
+selector排序只有在每个候选分数都来自冻结的completion-aware合同才启用；调用方注入的分数不会被
+接受。选择数据仍不得作为最终稳定改善确认数据。
+
+冻结产物`07_grouped_holdout/20260924_c3_selector_v3_evaluation_protocol_run02/`不读取性能标签、不接触
+开发板，仅预注册方法、预算、指标和边界，因此不能单独证明selector优于任何基线。
+
+## 16. 2026-09-24 mode10 前驱敏感性纠正与 mode11 入口排空
+
+第11--13节中把 mode10 称为“组合安全”的表述现被后续跨程序诊断收窄：mode10 在其已经执行过的
+精确 YOLO-608/ResNet18 图上下文中仍保留正确性与开发计时证据，但不能再作为任意 VTA 程序序列中的
+生产级完成策略。YOLO-576 诊断证明 mode10 独立执行、仅预加载其他 DSO、跟随 barrier 程序时可以
+正确；跟随普通 input-stationary 或 original 程序时会错误。重建 host CommandQueue 无效，而在
+debug flag 仍为0时执行一次空 `VTASynchronize` 可令3/3前驱—后继对恢复正确。因此证据支持的是
+FPGA 侧依赖/FIFO 状态需要在进入 force-serial 段前排空，不支持把差异归因于 DSO 符号冲突，也不支持
+声称已定位到某个具体周期或硬件 token。
+
+新增 mode11 `input_weight_resident_transition_safe` 保持 mode10 的 Tile、循环、驻留和数据请求语义，
+把完成合同改为：
+
+```text
+入口 VTASynchronize（debug=0）
+→ VTASetDebugMode(32)
+→ 驻留命令段
+→ VTASynchronize
+→ VTASetDebugMode(0)
+→ 函数正常结束同步
+```
+
+mode10 仍保留为历史前驱敏感反例，但其策略被标记为 `production_eligible=false`；旧 mode5 和 mode10
+都必须重新生成成 mode11 才能进入 selector。mode11 的入口排空成为候选身份与代价特征，不能把它
+隐去后沿用 mode10 的旧 latency 标签。
+
+当前完成的 mode11 资格证据为：
+
+- 聚焦回归 46/46 通过；入口和段尾同步使用不同 TIR 节点，避免静态审计漏计；
+- 3个真实 YOLO-576 `1×1, CO=256` 执行任务、9个 Tile 家族、45个五模式候选全部通过实际
+  lowering、StorageRewrite 后地址/容量/依赖审计和三 seed FSim，45个程序均不等价；
+- 9个 mode11 候选的 debug 转换均为 `[32,0]`，第一个同步事件位置均为0，静态同步多重度均为
+  `[1,1,1]`；45/45 AArch64 交叉编译且 re-lowered TIR 哈希一致；
+- 同一 boot `c9d73f4c-c0df-474a-9a74-a28a2f8955e2` 上，对3个任务分别冻结11个 fresh-RPC/
+  bitstream-reload case，覆盖独立三 seed、同 Tile 的 Input/Original 前驱、跨 Tile 前驱和三程序混合
+  前缀；合计33/33 case、129次算子调用、0 mismatch，未请求 latency。
+- 随后按完整45候选冻结顺序在一个连续 RPC 会话中执行三 seed FPGA correctness：45/45候选、
+  135/135调用全部正确，只使用1个wave，没有失败后重载、候选替换或结果拼接，仍未请求 latency。
+
+这组结果只证明精确测试任务和转换中的前驱安全性改善。它仍是单 boot；没有覆盖所有 VTA 程序、完整
+真实完整图或 mode11 性能。完整45候选同会话 FPGA correctness 已通过，因此下一门禁允许冻结只含
+Original、Input 和 mode11 的开发计时池；该池必须标记任务 latency 已暴露、mode11程序未计时，不能
+冒充 strict-unseen holdout。旧 mode10 的13%级开发结果不能自动迁移成 mode11收益。
+
+详细记录见 `00_governance/20260924_C3_TRANSITION_SAFE_MODE11.md`。关键产物：
+
+- `07_grouped_holdout/20260924_c3_yolo576_transition_safe_route_pools_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo576_transition_safe_local_qualification_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo576_transition_safe_board_pool_freeze_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo576_transition_safe_cross_compile_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo576_transition_safe_matrix_y256_run01/`、`..._y512_run01/`、
+  `..._y1024_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo576_transition_safe_full_pool_correctness_run01/`。
+
+## 17. 2026-09-24 mode11 开发计时与 selector 负结果
+
+在任何 mode11 时延暴露前，已冻结只含 Original、Input 和 mode11 的27程序开发计时池：3个真实
+YOLO-576 `1×1, CO=256`任务，每任务3个 Tile 家族、每 Tile 3种模式。任务本身已有历史时延，故
+`task_latency_unseen=false`；只有 mode11 的精确程序在冻结时尚未计时。本轮不构成 strict-unseen
+holdout，也不用于跨网络或跨启动结论。
+
+同一 boot `c9d73f4c-c0df-474a-9a74-a28a2f8955e2` 的完整开发会话中，27/27程序通过三 seed FPGA
+correctness；共完成711次算子调用，其中81次资格正确性、36次选择计时、108次确认计时、486次完整池
+参考计时。全部输出正确，隐式额外调用为0，会话未拼接。
+
+机制级结果支持 mode11 在这组访存请求很重的真实 `1×1` 层上有净收益：3/3池内 oracle 都是
+mode11；9个同 Tile 的 Input→mode11 配对全部获胜，每个配对均为6/6轮获胜，配对改善中位数为
+52.951%，范围为5.588%--73.790%。同 Tile 权重逻辑请求从 Input 的393,216--21,233,664 B降为
+mode11的65,536--262,144 B；同时实际提交数由1增至3，部分候选 UOP 成本也上升。因此证据仅支持
+“在这些层中传输节省超过了入口排空和闭合提交成本”，不等同于测得了DRAM等待周期或带宽瓶颈。
+这也解释了为什么不能从H1的约1%收益推广到所有层：驻留收益具有明确的工作负载与 Tile 条件性。
+
+本轮也得到必须保留的 selector 负结果。冻结的多角色短名单在B3只命中2/3个池内 oracle；简单
+bytes-only在B2已命中3/3，calls-only也优于以提交/UOP为字典序首项的静态兜底。失败任务中，多个
+mode11程序都具有很低的权重请求，但不同 Tile 的时延差异很大；原短名单只保留一个最低字节 Tile，
+遗漏了同为mode11的oracle Tile。故当前数据证明了驻留机制，不证明 selector v3 优于简单基线。
+
+下一版 selector 必须作为新的开发版本冻结：先在低传输候选窗口内保留 Tile 多样性，再生成
+B1/B2/B3前缀；不得用本轮暴露任务作为未见验证，也不得把静态支配当作速度保证。冻结后再选择新的
+latency-unseen任务验证。当前没有完整图、跨boot或性能模型成功主张。
+
+新增关键产物：
+
+- `07_grouped_holdout/20260924_c3_yolo576_transition_safe_timing_freeze_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo576_transition_safe_timing_boot1_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo576_transition_safe_timing_analysis_run02/`。
+
+## 18. 2026-09-24 selector v4、YOLO-544 严格未见 boot-1 与生产资格纠正
+
+在 YOLO-544 的任何板端时延暴露前，已冻结 selector v4：它不是性能模型，而是在编译后逻辑请求较低
+的固定窗口中，用归一化 Tile/线程坐标做确定性 farthest-first 排序；B1/B2/B3 是同一个顺序的前缀，
+窗口外候选不被安全剪枝。608和576已经暴露，因此新分辨率审计按预注册顺序选择544；该图含11个唯一
+VTA执行任务，其中3个真实 `1×1, CO=256`任务生成了每任务15个五模式程序。静态/FSim资格为43/45；
+CI1024任务的冻结incumbent因最终TIR审计展开超界而整体不进入参考评测，没有替换incumbent或补点。
+
+余下两个完整任务共30个程序全部交叉编译，并在时延之前完成30/30候选、90/90调用的三seed FPGA
+正确性。boot-1完整会话又完成30/30正确性、24次选择、72次确认和540次完整池参考计时，共726次调用，
+全部输出正确、0隐式调用、会话未拼接。按原始15程序孤立算子池，v4在B1命中2/2池内oracle；bytes-only
+和calls-only均在B2命中，command-only到B3仍未命中。六个同Tile Input→mode11配对全部6/6轮获胜，
+中位改善36.981%，范围13.427%--69.433%。这只是一种YOLO分辨率、两个任务和一个boot的证据，不能
+据此宣称selector已具备跨网络通用优势。
+
+本轮同时暴露并保留一个协议缺陷：两个15程序池的孤立算子oracle都是旧
+`input_weight_resident_barrier` mode5，但现有完成策略注册表早已把mode4/mode5标记为
+`production_eligible=false`并要求重新生成为mode11。原冻结器在v4排序前漏用了这道硬门，因此原
+B1结果只能称“孤立算子参考池选择”，不能称可部署选择成功，也不能直接进入完整图。
+
+修复采用独立新模块，不修改已冻结v4源码与历史产物：`c3_selector_v4_deployment.py`先调用既有
+`candidate_disposition`，再把生产合格的新候选交给label-free v4排序；legacy候选仍可留在完整机制
+参考池，但不得占用部署预算。聚焦回归68/68通过。看过boot-1时延后的审计拒绝了6个mode4与6个mode5
+程序；每任务留下incumbent加8个合格新程序。在这两个九程序生产子池中，mode11均为最快程序，修复后
+顺序均在B1命中。该结果只是`strict_unseen_claim=false`的事后协议审计，不能反向重标为未见验证；
+下一新holdout必须在时延前执行生产门。
+
+因此当前最准确的创新点表述进一步收敛为：
+
+> **组合安全、编译后代价感知的驻留—Tile联合选择：先以容量、最终地址、FPGA正确性和完成策略硬门
+> 区分参考候选与可部署候选，再在生产合格池中依据请求/命令代价与Tile多样性安排有限测量，最终以
+> 精确图上下文正确性和独立启动确认决定部署。**
+
+boot-1中相对冻结pool incumbent的65%/92%确认值不代表生产TopHub或整网收益。板卡当前报告的boot ID
+仍为`c9d73f4c-c0df-474a-9a74-a28a2f8955e2`，与boot-1相同；在boot ID真正变化前不执行或登记boot-2。
+当前也没有完整图正确性或端到端性能结论。
+
+新增关键产物：
+
+- `07_grouped_holdout/20260924_c3_selector_v4_diverse_development_freeze_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo544_selector_v4_board_pool_freeze_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo544_selector_v4_fpga_correctness_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo544_selector_v4_timing_boot1_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo544_selector_v4_boot1_analysis_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo544_selector_v4_deployment_gate_posthoc_audit_run01/`。
+- `07_grouped_holdout/20260924_c3_selector_v4_production_gate_freeze_run01/`。
+
+## 19. 2026-09-24 修复后首个 strict-unseen YOLO-512 池
+
+YOLO-544时延暴露且生产门合同冻结后，分辨率注册表按原顺序硬排除608/576/544，并在不读取任何新
+latency时选择512。YOLO-512静态图合同为114,504,192 B，小于192 MiB；含11个唯一VTA执行任务，11个
+任务均有至少8个静态候选身份。真实lowering门生成3个K1/CO256任务、45个五模式候选：
+`CI256,H32`、`CI512,H16`、`CI1024,H16`，每任务3个Tile家族。
+
+本地最终地址/容量/依赖与三seed FSim资格为43/45；43个通过程序全部FSim正确且互不等价。
+`CI256,H32`为13/15，不补点、不作为完整池；后两个任务均15/15，按稳定task ID形成两个完整参考池。
+冻结器在时延前把每任务15程序的孤立参考池与每任务9程序的生产池分开；生产B1/B2/B3只在通过
+completion-policy/composability硬门的Original、Input和mode11中形成。30/30程序随后交叉编译通过。
+
+correctness-only板端执行保留了三个基础设施记录：run01在第14个候选后因`/var/volatile`满而无法部署
+新wave；run02在候选调用前因bitstream文件缺失失败；run03在候选调用前因重启后`taskset`悬空链接
+失败。旧实验的板端临时副本从volatile清理后，使用SD上的同哈希bitstream和历史同哈希taskset恢复；
+恢复器新增只删除悬空软链接的处理，不绕过CPU3或哈希门。以上失败会话均未拼入最终结果。
+
+fresh run04结果为28/30 FPGA-correct、2个FPGA-rejected、86次算子调用、3个wave、未采集latency。
+两个拒绝均是各任务第三Tile家族的Original，分别在seed0产生36,703和35,080个mismatch；二者不是
+incumbent，也不在冻结B3中，因此每任务生产池剩8个FPGA-valid程序，而incumbent与B1/B2/B3均保持
+有效。拒绝候选不被替换，仍计入完整池资格成本；oracle只允许在事先声明池的FPGA-valid子池内定义。
+
+计时合同现已冻结为`FROZEN_AFTER_FPGA_CORRECTNESS_BEFORE_FIRST_LATENCY`，明确
+`latency_values_collected=false`、invalid消耗预算且不补位。当前boot ID仍为
+`c9d73f4c-c0df-474a-9a74-a28a2f8955e2`，因此尚未执行YOLO-512选择/完整池时延。这个池是修复后的
+首个真正生产门前置holdout，但在实际时延出现前不能主张selector命中oracle或优于基线。
+
+新增关键产物：
+
+- `07_grouped_holdout/20260924_c3_yolo_unseen_resolution_prepare_run05/`；
+- `07_grouped_holdout/20260924_c3_yolo512_transition_safe_route_pools_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo512_transition_safe_local_qualification_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo512_selector_v4_production_board_pool_freeze_run02/`；
+- `07_grouped_holdout/20260924_c3_yolo512_selector_v4_production_cross_compile_run01/`；
+- `07_grouped_holdout/20260924_c3_yolo512_selector_v4_production_fpga_correctness_run04/`；
+- `07_grouped_holdout/20260924_c3_yolo512_selector_v4_production_timing_freeze_run01/`。

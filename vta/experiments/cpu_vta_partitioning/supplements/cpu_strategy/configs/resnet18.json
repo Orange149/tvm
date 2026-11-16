@@ -1,0 +1,93 @@
+{
+  "experiment": "resnet18_resource_policy_dp",
+  "schema_version": 1,
+  "seed": 20261104,
+  "unit_count": 21,
+  "maximum_vta_islands": 3,
+  "environment": {
+    "cores": 4,
+    "frequency_khz": 1066666,
+    "poll_sleep_ns": 1000,
+    "post_start_sleep_ns": 1000,
+    "spin_count": 0,
+    "exclude_worker0": 1,
+    "bind_threads": 1
+  },
+  "cuts": {
+    "current": [
+      3,
+      18
+    ],
+    "historical_cut": [
+      3,
+      17
+    ],
+    "light_tail": [
+      3,
+      20
+    ]
+  },
+  "families": [
+    "current",
+    "local_fastest",
+    "fixed_groups",
+    "same_groups_pinned",
+    "pinned_reallocated",
+    "reserved_host"
+  ],
+  "boot_phases": [
+    "policy_discovery",
+    "policy_check",
+    "top20_screening",
+    "confirmation",
+    "confirmation",
+    "confirmation"
+  ],
+  "rounds": 2,
+  "calibration": {
+    "indices": [
+      0
+    ],
+    "warmup": 5,
+    "scored": 32,
+    "tail": 0
+  },
+  "performance": {
+    "indices": [
+      16
+    ],
+    "warmup": 8,
+    "extended_warmup": 24,
+    "scored": 32,
+    "tail": 4
+  },
+  "qualification_indices": [
+    0,
+    16,
+    17,
+    18
+  ],
+  "anchor_drift": 0.05,
+  "max_attempts": 2,
+  "practical_gain": 0.05,
+  "maximum_cut_regression": 0.05,
+  "mirror_tolerance": 0.05,
+  "top_k": 20,
+  "comparison_budget": 5,
+  "max_policy_pool": 26,
+  "max_search_pool": 30,
+  "cpu_gate_modes": [
+    "off",
+    "resource_group"
+  ],
+  "copy": "ordinary",
+  "queue_depth": 2,
+  "numeric": {
+    "integer": "exact",
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "boot_policy": "manual_reboot_only",
+  "formal_significance": false,
+  "historical_11511": "different_float_boundaries_and_input_not_a_reproduction_target"
+}

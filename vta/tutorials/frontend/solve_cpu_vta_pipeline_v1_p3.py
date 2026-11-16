@@ -28,6 +28,8 @@ CPU_THREAD_CHOICES = (1, 2, 3, 4)
 PHYSICAL_CPU_CORES = 4
 MAX_VTA_ISLANDS = 3
 DEFAULT_TOP_K = 20
+SCORING_MODES = ("baseline", "cpu_resource", "current")
+DEFAULT_SCORING_MODE = "current"
 EPSILON = 1.0e-12
 DMA_QUALIFICATION = (
     DEFAULT_OUTPUT
@@ -57,6 +59,7 @@ class Label:
     vta_ddr_physical_store_bytes: int
     boundary_ddr_bytes: int
     path: tuple[tuple[str, int], ...]
+    scoring_mode: str = DEFAULT_SCORING_MODE
 
     @property
     def state(self):
@@ -83,33 +86,43 @@ class Label:
 
     @property
     def search_lower_bound(self):
-        """Monotonic bound used by k-best search before the final CPU mask is known."""
-        return max(
-            self.max_cpu_stage_ms,
-            self.vta_service_sum_ms + self.vta_mutex_boundary_sum_ms,
-            self.cpu_core_pool_lower_bound_ms,
-            self.shared_ddr_service_ms,
-        )
+        """Use the selected monotonic objective for partial paths and stopping."""
+        return self.score
 
     @property
     def score(self):
-        return max(
+        baseline = max(
             self.max_cpu_stage_ms,
             self.vta_service_sum_ms + self.vta_mutex_boundary_sum_ms,
-            self.cpu_core_pool_lower_bound_ms,
-            self.shared_ddr_service_ms,
         )
+        if self.scoring_mode == "baseline":
+            return baseline
+        cpu_resource = max(baseline, self.cpu_core_pool_lower_bound_ms)
+        if self.scoring_mode == "cpu_resource":
+            return cpu_resource
+        if self.scoring_mode == "current":
+            return max(cpu_resource, self.shared_ddr_service_ms)
+        raise ValueError("unknown scoring mode: {}".format(self.scoring_mode))
 
     @property
     def score_without_direct_boundary(self):
-        return max(
+        baseline = max(
             self.max_cpu_stage_run_only_ms,
             self.vta_service_sum_ms,
+        )
+        if self.scoring_mode == "baseline":
+            return baseline
+        cpu_resource = max(
+            baseline,
             (self.cpu_core_work_sum_ms - self.boundary_host_core_work_sum_ms)
             / PHYSICAL_CPU_CORES,
             self.cpu_prefix_mask_lower_bound_ms,
-            self.shared_ddr_service_ms,
         )
+        if self.scoring_mode == "cpu_resource":
+            return cpu_resource
+        if self.scoring_mode == "current":
+            return max(cpu_resource, self.shared_ddr_service_ms)
+        raise ValueError("unknown scoring mode: {}".format(self.scoring_mode))
 
 
 def write_json(path, payload):
@@ -383,6 +396,10 @@ def stage_ddr_demand(segment, threads, context):
 
 
 def boundary_components(boundary_cost, context):
+    # An ablation context replaces the complete edge model, including core work.
+    # The normal context has no overrides and preserves the calibrated model.
+    if "boundary_component_overrides" in context:
+        return context["boundary_component_overrides"][boundary_cost["boundary_id"]]
     model = context["boundary_ownership_models"][boundary_cost["direction"]]
     logical_bytes = int(boundary_cost["logical_bytes"])
     cpu_owner_ms = logical_bytes * model["cpu_owner_ms_per_byte"]
@@ -471,6 +488,7 @@ def advance_label(label, segment, threads, context):
             vta_ddr_physical_store_bytes=label.vta_ddr_physical_store_bytes,
             boundary_ddr_bytes=label.boundary_ddr_bytes + boundary_bytes,
             path=label.path + ((segment["segment_id"], threads),),
+            scoring_mode=label.scoring_mode,
         )
     if label.vta_islands >= MAX_VTA_ISLANDS:
         raise RuntimeError("VTA island limit exceeded")
@@ -502,6 +520,7 @@ def advance_label(label, segment, threads, context):
         + ddr["vta_store_bytes"],
         boundary_ddr_bytes=label.boundary_ddr_bytes + boundary_bytes,
         path=label.path + ((segment["segment_id"], threads),),
+        scoring_mode=label.scoring_mode,
     )
 
 
@@ -527,6 +546,8 @@ def is_complete(label):
 
 
 def dominates(left, right):
+    if left.scoring_mode != right.scoring_mode:
+        raise ValueError("cannot compare labels from different scoring modes")
     left_metrics = (
         left.max_cpu_stage_ms,
         left.last_cpu_stage_resource_ms,
@@ -541,6 +562,9 @@ def dominates(left, right):
         right.cpu_core_pool_lower_bound_ms,
         right.shared_ddr_service_ms,
     )
+    active_count = {"baseline": 3, "cpu_resource": 4, "current": 5}[left.scoring_mode]
+    left_metrics = left_metrics[:active_count]
+    right_metrics = right_metrics[:active_count]
     return all(a <= b + EPSILON for a, b in zip(left_metrics, right_metrics)) and (
         any(a < b - EPSILON for a, b in zip(left_metrics, right_metrics))
         or left.path <= right.path
@@ -557,7 +581,9 @@ def insert_pareto(frontier, candidate):
     return kept, True, removed
 
 
-def initial_label():
+def initial_label(scoring_mode=DEFAULT_SCORING_MODE):
+    if scoring_mode not in SCORING_MODES:
+        raise ValueError("unknown scoring mode: {}".format(scoring_mode))
     return Label(
         position=0,
         vta_islands=0,
@@ -579,12 +605,13 @@ def initial_label():
         vta_ddr_physical_store_bytes=0,
         boundary_ddr_bytes=0,
         path=tuple(),
+        scoring_mode=scoring_mode,
     )
 
 
-def solve_single_best_pareto(context):
+def solve_single_best_pareto(context, scoring_mode=DEFAULT_SCORING_MODE):
     outgoing = build_outgoing(context)
-    start = initial_label()
+    start = initial_label(scoring_mode)
     states = {start.state: [start]}
     generated = 0
     pruned = 0
@@ -616,10 +643,14 @@ def solve_single_best_pareto(context):
     }
 
 
-def solve_k_best_label_setting(context, top_k=DEFAULT_TOP_K):
+def solve_k_best_label_setting(
+    context, top_k=DEFAULT_TOP_K, scoring_mode=DEFAULT_SCORING_MODE
+):
     """Exact k-best search using the monotonic partial objective as a lower bound."""
+    if top_k <= 0:
+        raise ValueError("top_k must be positive")
     outgoing = build_outgoing(context)
-    start = initial_label()
+    start = initial_label(scoring_mode)
     serial = itertools.count()
     heap = [(start.search_lower_bound, next(serial), start)]
     complete = []
@@ -679,8 +710,8 @@ def path_from_scheme(scheme, allocation):
     return tuple(path)
 
 
-def label_from_path(path, context, outgoing=None):
-    label = initial_label()
+def label_from_path(path, context, outgoing=None, scoring_mode=DEFAULT_SCORING_MODE):
+    label = initial_label(scoring_mode)
     for sid, threads in path:
         try:
             segment = context["profile_segments"][sid]
@@ -699,8 +730,14 @@ def _retain_top_k(items, candidate, key, top_k):
         del items[top_k:]
 
 
-def enumerate_oracle(unit_schema, context, top_k=DEFAULT_TOP_K):
+def enumerate_oracle(
+    unit_schema, context, top_k=DEFAULT_TOP_K, scoring_mode=DEFAULT_SCORING_MODE
+):
     """Stream every execution configuration while retaining only exact Top-K lists."""
+    if top_k <= 0:
+        raise ValueError("top_k must be positive")
+    # Validate even when the supplied domain has no complete candidate.
+    initial_label(scoring_mode)
     schemes, _, _ = enumerate_reachable(unit_schema)
     outgoing = build_outgoing(context)
     ranked = []
@@ -711,7 +748,9 @@ def enumerate_oracle(unit_schema, context, top_k=DEFAULT_TOP_K):
         cpu_stages = sum(stage["device"] == "cpu" for stage in scheme)
         for allocation in positive_allocations(cpu_stages):
             path = path_from_scheme(scheme, allocation)
-            label = label_from_path(path, context, outgoing=outgoing)
+            label = label_from_path(
+                path, context, outgoing=outgoing, scoring_mode=scoring_mode
+            )
             execution_count += 1
             _retain_top_k(ranked, label, rank_key, top_k)
             _retain_top_k(

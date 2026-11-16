@@ -38,6 +38,7 @@ DEFAULT_P7B2_SUMMARY = REPORT_ROOT / "v1_p7b2_runtime_qualification_summary.json
 DEFAULT_P7C_PLAN = REPORT_ROOT / "v1_p7c_measurement_plan.json"
 DEFAULT_P7C_SESSION = REPORT_ROOT / "v1_p7_session_boot1_p7c_ddr.json"
 DEFAULT_P7C_SUMMARY = REPORT_ROOT / "v1_p7c_qualification_summary.json"
+DEFAULT_P7C_MULTIBOOT = REPORT_ROOT / "v1_p7c_three_boot_reproducibility.json"
 DEFAULT_REFERENCE = REPORT_ROOT / "v1_p5a_reference.json"
 DEFAULT_LOCAL_COST = REPORT_ROOT / "v1_local_cost_table.json"
 
@@ -102,7 +103,11 @@ def _repo_relative_path(path):
     path = Path(path)
     if not path.is_absolute():
         path = Path.cwd() / path
-    return str(path.resolve().relative_to(ROOT.resolve()))
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(ROOT.resolve()))
+    except ValueError:
+        return str(resolved)
 
 
 def _coefficient_of_variation(values):
@@ -2471,6 +2476,8 @@ def run_p7c_qualification(args, parent_plan, manifest):
     ).strip()
     remote_root = args.remote_root.rstrip("/") + "/ddr"
     remote_binary = remote_root + "/ramps_cpu_memory_microbench"
+    memory_binary_sha256 = _file_sha256(args.memory_binary)
+    stage_runner_sha256 = _file_sha256(args.runner_binary)
     _ssh_command(
         args.board_host,
         args.ssh_user,
@@ -2490,6 +2497,14 @@ def run_p7c_qualification(args, parent_plan, manifest):
         "chmod 700 {}".format(shlex.quote(remote_binary)),
         args.timeout_s,
     )
+    remote_memory_binary_sha256 = _ssh_command(
+        args.board_host,
+        args.ssh_user,
+        "sha256sum {} | cut -d' ' -f1".format(shlex.quote(remote_binary)),
+        args.timeout_s,
+    ).strip()
+    if remote_memory_binary_sha256 != memory_binary_sha256:
+        raise RuntimeError("P7C memory runner failed remote SHA-256 attestation")
 
     resolved = {
         group["vta_pressure_class"]: _resolve_device_stage_package(
@@ -2500,6 +2515,11 @@ def run_p7c_qualification(args, parent_plan, manifest):
     deployed = {}
     for item in resolved.values():
         _deploy_p7b2_package(args, item, remote_root + "/packages", deployed)
+    deployed_runner_hashes = sorted(
+        {deployment["runner_sha256"] for deployment in deployed.values()}
+    )
+    if deployed_runner_hashes != [stage_runner_sha256]:
+        raise RuntimeError("P7C stage runner identity changed across packages")
 
     results = []
     for index, group in enumerate(subplan["case_groups"], 1):
@@ -2700,6 +2720,13 @@ def run_p7c_qualification(args, parent_plan, manifest):
                 "rpc_port": args.rpc_port,
             },
             "board_boot_id": boot_id,
+            "execution_binary_identity": {
+                "stage_runner_sha256": stage_runner_sha256,
+                "deployed_stage_runner_sha256": deployed_runner_hashes,
+                "memory_runner_sha256": memory_binary_sha256,
+                "remote_memory_runner_sha256": remote_memory_binary_sha256,
+                "remote_attestation_passed": True,
+            },
             "preflight_before": preflight_before,
             "preflight_after": preflight_after,
             "case_results": results,
@@ -2783,9 +2810,7 @@ def build_p7c_qualification_summary(session):
                 "run_minus_driver": result["summaries"]["vta_concurrent"][
                     "run_minus_driver_ms_median"
                 ]
-                - result["summaries"]["vta_only"][
-                    "run_minus_driver_ms_median"
-                ],
+                - result["summaries"]["vta_only"]["run_minus_driver_ms_median"],
             },
         }
         observations.append(record)
@@ -2812,7 +2837,10 @@ def build_p7c_qualification_summary(session):
             "interpretation": {
                 "candidate_throughput_used_for_fit": False,
                 "formal_shared_ddr_parameter_admitted": False,
-                "remaining_gate": "repeat unchanged subprotocol on at least two additional independent boots, then test a grouped shared-bandwidth model",
+                "remaining_gate": (
+                    "no repeat scheduled; a future protocol requires a new ranking-error "
+                    "hypothesis and bit-identical runner attestation on every boot"
+                ),
                 "cpu_core_user_process_overlap_controlled": True,
                 "vta_host_affinity_scope": "all_existing_threads_future_threads_inherit",
                 "kernel_interrupt_interference_fully_excluded": False,
@@ -2821,11 +2849,301 @@ def build_p7c_qualification_summary(session):
                 ),
                 "ddr_specificity_requires_streaming_vs_cache_and_cross_boot_evidence": True,
                 "simple_shared_bandwidth_model_ready": False,
-                "reason_simple_bandwidth_not_ready": "cache-resident repeated traffic is not DDR traffic, and the observed VTA stage deltas are mostly outside driver_run_total_us",
+                "reason_simple_bandwidth_not_ready": (
+                    "cache-resident repeated traffic is not DDR traffic, and the observed "
+                    "VTA stage deltas are mostly outside driver_run_total_us"
+                ),
             },
             "passed": session["passed"],
         }
     )
+
+
+def _paired_bootstrap_median_ci(values, seed, samples=4000):
+    """Deterministic percentile interval for a small set of paired boot effects."""
+    if len(values) < 2:
+        raise ValueError("paired bootstrap requires at least two values")
+    rng = random.Random(seed)
+    medians = sorted(
+        statistics.median(rng.choice(values) for _ in values)
+        for _ in range(samples)
+    )
+    return {
+        "method": "paired_boot_median_bootstrap_v1",
+        "samples": samples,
+        "lower_95": medians[int(0.025 * samples)],
+        "upper_95": medians[min(samples - 1, int(0.975 * samples))],
+    }
+
+
+def build_p7c_multiboot_summary(p7c_plan, session_paths):
+    """Admit only exact, protocol-scoped DDR contention effects from three boots."""
+    validate_artifact(
+        p7c_plan, "cpu_vta_pipeline_v1_p7c_shared_ddr_measurement_plan"
+    )
+    sources = [
+        (
+            path,
+            load_artifact(
+                path,
+                "cpu_vta_pipeline_v1_p7c_shared_ddr_qualification_session",
+            ),
+        )
+        for path in session_paths
+    ]
+    if len(sources) != 3:
+        raise ValueError("P7C reproducibility requires exactly three sessions")
+    boot_ids = [payload["board_boot_id"] for _, payload in sources]
+    if len(set(boot_ids)) != 3:
+        raise ValueError("P7C sessions must come from three unique board boots")
+    if any(
+        payload["p7c_plan_artifact_sha256"] != p7c_plan["artifact_sha256"]
+        for _, payload in sources
+    ):
+        raise ValueError("P7C sessions were produced from different subplans")
+    if any(payload["protocol_id"] != PROTOCOL_ID for _, payload in sources):
+        raise ValueError("P7C session protocol mismatch")
+
+    stage_runner_hashes = []
+    memory_runner_hashes = []
+    for _, payload in sources:
+        case_runner_hashes = {
+            result["representative_package"]["runner_sha256"]
+            for result in payload["case_results"]
+        }
+        if len(case_runner_hashes) != 1:
+            raise ValueError("P7C session used multiple stage runner binaries")
+        stage_runner_hashes.append(next(iter(case_runner_hashes)))
+        identity = payload.get("execution_binary_identity", {})
+        memory_runner_hashes.append(identity.get("memory_runner_sha256"))
+        if identity:
+            if identity.get("stage_runner_sha256") != stage_runner_hashes[-1]:
+                raise ValueError("P7C execution identity disagrees with package runner")
+            if not identity.get("remote_attestation_passed", False):
+                raise ValueError("P7C execution binary remote attestation failed")
+            if identity.get("remote_memory_runner_sha256") != memory_runner_hashes[-1]:
+                raise ValueError("P7C local and remote memory runner hashes differ")
+    stage_runner_identity_complete = len(set(stage_runner_hashes)) == 1
+    memory_runner_identity_complete = (
+        all(memory_runner_hashes) and len(set(memory_runner_hashes)) == 1
+    )
+    exact_binary_lineage_complete = (
+        stage_runner_identity_complete and memory_runner_identity_complete
+    )
+
+    expected_groups = {
+        group["group_id"]: group for group in p7c_plan["case_groups"]
+    }
+    result_maps = []
+    for _, payload in sources:
+        result_map = {
+            result["case_group"]["group_id"]: result
+            for result in payload["case_results"]
+        }
+        if set(result_map) != set(expected_groups):
+            raise ValueError("P7C case groups differ from the frozen subplan")
+        for group_id, result in result_map.items():
+            if canonical_json(result["case_group"]) != canonical_json(
+                expected_groups[group_id]
+            ):
+                raise ValueError("P7C case definition changed for " + group_id)
+            if any(
+                len(result["rows"][mode]) != SCORED_RUNS
+                for mode in (
+                    "cpu_only",
+                    "vta_only",
+                    "cpu_concurrent",
+                    "vta_concurrent",
+                )
+            ):
+                raise ValueError("P7C scored row count mismatch for " + group_id)
+        result_maps.append(result_map)
+
+    observations = []
+    by_class = {}
+    for group_id, group in expected_groups.items():
+        results = [result_map[group_id] for result_map in result_maps]
+        record = {
+            "group_id": group_id,
+            "cpu_pressure_class": group["cpu_pressure_class"],
+            "vta_pressure_class": group["vta_pressure_class"],
+            "vta_segment_id": group["vta_source"]["segment_id"],
+            "per_boot": {
+                boot_id: {
+                    "cpu_slowdown": result["slowdown"]["cpu"],
+                    "vta_slowdown": result["slowdown"]["vta"],
+                    "aggregate_effective_bandwidth_GBps": result["traffic"][
+                        "aggregate_effective_bandwidth_GBps"
+                    ],
+                }
+                for boot_id, result in zip(boot_ids, results)
+            },
+            "cpu_slowdown_median": statistics.median(
+                result["slowdown"]["cpu"] for result in results
+            ),
+            "vta_slowdown_median": statistics.median(
+                result["slowdown"]["vta"] for result in results
+            ),
+            "vta_slowdown_cross_boot_cv": _coefficient_of_variation(
+                [result["slowdown"]["vta"] for result in results]
+            ),
+            "all_sessions_passed": all(result["passed"] for result in results),
+        }
+        observations.append(record)
+        by_class[(group["cpu_pressure_class"], group["vta_pressure_class"])] = results
+
+    coefficients = {}
+    for vta_class in ("compute_heavy", "dma_heavy"):
+        cache_results = by_class[("cache_resident", vta_class)]
+        streaming_results = by_class[("streaming", vta_class)]
+        ratios = [
+            streaming["slowdown"]["vta"] / cache["slowdown"]["vta"]
+            for cache, streaming in zip(cache_results, streaming_results)
+        ]
+        deltas = [
+            streaming["slowdown"]["vta"] - cache["slowdown"]["vta"]
+            for cache, streaming in zip(cache_results, streaming_results)
+        ]
+        interval = _paired_bootstrap_median_ci(
+            ratios, "p7c-ddr:" + vta_class
+        )
+        cv = _coefficient_of_variation(ratios)
+        statistical_gate_passed = (
+            all(value > 1.0 for value in ratios)
+            and interval["lower_95"] > 1.0
+            and cv <= 0.10
+        )
+        coefficients[vta_class] = {
+            "definition": "median_boot(vta_slowdown_streaming / vta_slowdown_cache)",
+            "per_boot_ratio": dict(zip(boot_ids, ratios)),
+            "per_boot_slowdown_delta": dict(zip(boot_ids, deltas)),
+            "ddr_contention_multiplier": statistics.median(ratios),
+            "paired_bootstrap_95_ci": interval,
+            "cross_boot_cv": cv,
+            "statistical_gate_passed": statistical_gate_passed,
+            "admitted_exact_protocol_parameter": (
+                statistical_gate_passed and exact_binary_lineage_complete
+            ),
+        }
+
+    all_sessions_passed = all(payload["passed"] for _, payload in sources)
+    all_groups_passed = all(item["all_sessions_passed"] for item in observations)
+    all_coefficients_admitted = all(
+        item["admitted_exact_protocol_parameter"]
+        for item in coefficients.values()
+    )
+    passed = all_sessions_passed and all_groups_passed
+    return seal_artifact(
+        {
+            "schema_version": 1,
+            "kind": "cpu_vta_pipeline_v1_p7c_three_boot_reproducibility",
+            "protocol_id": PROTOCOL_ID,
+            "p7c_plan_artifact_sha256": p7c_plan["artifact_sha256"],
+            "board_boot_ids": boot_ids,
+            "source_sessions": [
+                {
+                    "path": _repo_relative_path(path),
+                    "artifact_sha256": payload["artifact_sha256"],
+                    "board_boot_id": payload["board_boot_id"],
+                }
+                for path, payload in sources
+            ],
+            "binary_lineage": {
+                "stage_runner_sha256_by_boot": dict(zip(boot_ids, stage_runner_hashes)),
+                "memory_runner_sha256_by_boot": dict(zip(boot_ids, memory_runner_hashes)),
+                "stage_runner_identity_complete": stage_runner_identity_complete,
+                "memory_runner_identity_complete": memory_runner_identity_complete,
+                "exact_binary_lineage_complete": exact_binary_lineage_complete,
+                "legacy_session_without_memory_hash": any(
+                    value is None for value in memory_runner_hashes
+                ),
+            },
+            "observations": observations,
+            "ddr_specific_contrast": coefficients,
+            "model": {
+                "equation": "T_vta_contended = T_vta_isolated * kappa_ddr[class]",
+                "control": "three-core cache-resident CPU traffic",
+                "treatment": "three-core streaming CPU traffic",
+                "fixed_traffic_bytes_per_sample": 128 * 1024 * 1024,
+                "scope": (
+                    "exact P7C pressure classes and frozen AXU5EVB environment only; "
+                    "not a candidate-wide or bandwidth-saturation surface"
+                ),
+            },
+            "gate_checks": {
+                "three_unique_boots": len(set(boot_ids)) == 3,
+                "same_frozen_subplan": True,
+                "all_sessions_passed": all_sessions_passed,
+                "all_case_groups_passed": all_groups_passed,
+                "exact_binary_lineage_complete": exact_binary_lineage_complete,
+                "candidate_throughput_used_for_fit": False,
+                "all_exact_protocol_coefficients_admitted": all_coefficients_admitted,
+            },
+            "exact_protocol_contention_profile_ready": (
+                passed and exact_binary_lineage_complete and all_coefficients_admitted
+            ),
+            "generalized_candidate_contention_surface_ready": False,
+            "passed": passed,
+            "evidence_scope": (
+                "three-boot paired cache-control versus streaming-treatment P7C "
+                "qualification; exact-protocol admission additionally requires "
+                "bit-identical stage and memory runner attestation on every boot"
+            ),
+        }
+    )
+
+
+def write_p7c_multiboot_review(path, summary):
+    coefficients = summary["ddr_specific_contrast"]
+    if summary["exact_protocol_contention_profile_ready"]:
+        conclusion = [
+            "P7C 已完成三个独立 boot 的 matched control，并通过统计与执行二进制谱系门。",
+            "准入参数只表示固定协议下 streaming CPU 压力相对于 cache-resident control 造成的",
+            "VTA 额外 slowdown；不外推为全部候选的 DDR 带宽曲面。",
+        ]
+    else:
+        conclusion = [
+            "P7C 三 boot 数据未通过 exact-protocol 全部门槛，不生成正式 contention 参数。",
+            "统计对比仍可作为固定压力协议下的诊断，但不得写回 Top-K 或外推为 DDR 带宽曲面。",
+        ]
+    lines = [
+        "# P7C Three-Boot Shared-DDR Reproducibility Review",
+        "",
+        "更新日期：{}".format(datetime.date.today().isoformat()),
+        "",
+        "## 结论",
+        "",
+        *conclusion,
+        "",
+        "## 配对结果",
+        "",
+    ]
+    for name in ("compute_heavy", "dma_heavy"):
+        item = coefficients[name]
+        lines.append(
+            "- `{}`: kappa={:.6f}, 95% CI=[{:.6f}, {:.6f}], cross-boot CV={:.2%}, admitted={}.".format(
+                name,
+                item["ddr_contention_multiplier"],
+                item["paired_bootstrap_95_ci"]["lower_95"],
+                item["paired_bootstrap_95_ci"]["upper_95"],
+                item["cross_boot_cv"],
+                item["admitted_exact_protocol_parameter"],
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## 使用边界",
+            "",
+            "模型为 `T_vta_contended = T_vta_isolated * kappa_ddr[class]`。只有两个精确压力类",
+            "均通过跨 boot 方向、置信区间、CV 和逐 boot 执行二进制身份门时，才生成",
+            "exact-protocol profile。候选级",
+            "连续争用曲面仍需独立的 grouped holdout，不能由本实验静默插值。",
+            "",
+            "- summary SHA256: `{}`".format(summary["artifact_sha256"]),
+        ]
+    )
+    Path(path).write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def write_p7c_review(path, summary):
@@ -3659,6 +3977,7 @@ def parse_args():
             "p7b1-multiboot",
             "p7b2-runtime",
             "p7c-ddr",
+            "p7c-multiboot",
         ),
         default="p7a",
     )
@@ -3696,6 +4015,15 @@ def parse_args():
     parser.add_argument("--p7c-plan-output", default=str(DEFAULT_P7C_PLAN))
     parser.add_argument("--p7c-session-output", default=str(DEFAULT_P7C_SESSION))
     parser.add_argument("--p7c-summary-output", default=str(DEFAULT_P7C_SUMMARY))
+    parser.add_argument(
+        "--p7c-session-inputs",
+        nargs="+",
+        default=[
+            str(REPORT_ROOT / "v1_p7_session_boot{}_p7c_ddr.json".format(boot))
+            for boot in (1, 2, 3)
+        ],
+    )
+    parser.add_argument("--p7c-multiboot-output", default=str(DEFAULT_P7C_MULTIBOOT))
     parser.add_argument("--local-cost-table", default=str(DEFAULT_LOCAL_COST))
     parser.add_argument("--top20-board-summary", default=str(DEFAULT_TOP20_BOARD_SUMMARY))
     parser.add_argument("--package-timeout-s", type=int, default=600)
@@ -3864,6 +4192,28 @@ def main():
             )
         )
         if not session["passed"]:
+            raise SystemExit(2)
+        return
+    if args.phase == "p7c-multiboot":
+        p7c_plan = load_artifact(
+            args.p7c_plan_output,
+            "cpu_vta_pipeline_v1_p7c_shared_ddr_measurement_plan",
+        )
+        summary = build_p7c_multiboot_summary(
+            p7c_plan, args.p7c_session_inputs
+        )
+        write_json(args.p7c_multiboot_output, summary)
+        write_p7c_multiboot_review(args.review_output, summary)
+        print(
+            "[P7C multiboot] passed={} boots={} exact_profile_ready={} "
+            "summary_sha256={}".format(
+                summary["passed"],
+                len(summary["board_boot_ids"]),
+                summary["exact_protocol_contention_profile_ready"],
+                summary["artifact_sha256"],
+            )
+        )
+        if not summary["passed"]:
             raise SystemExit(2)
         return
     smoke_values = (

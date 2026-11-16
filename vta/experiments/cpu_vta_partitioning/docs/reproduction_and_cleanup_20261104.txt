@@ -1,0 +1,81 @@
+2026-11-04 工作区清理与复现保留说明
+
+清理依据
+
+以 paper/my_paper/CPU_FPGA协同推理_中期检查报告_二十八次修订稿.docx 为准，保留以下三项研究和当前多线程/核心分配路线：
+1. CPU–VTA 共享资源感知划分，包括历史45.67%结果及3/1/3线程、主机专用核的三启动证据。
+2. 跨执行器零拷贝、所有权交接、输入最后读取后提前释放，以及输入池复用、队列定容。
+3. TPS程序的内容等价微指令身份复用，包括两个融合算子的9.1234%和3.7548%结果。
+较早的THESIS_INNOVATION_INTEGRATED_SUMMARY把第三项描述为驻留调优候选，不能替代第28稿来判断文件是否无用。
+
+实际处理
+
+- 71个旧34ms归因、并发拟合和YOLO双资源诊断脚本/测试/运行手册，退出当前工作树并归档。
+- 12个.orig备份、18份较早报告文档、223个旧报告生成中间文件、5个Windows下载侧文件和空文件“=”，归档后移除。
+- 两份补充构建缓存、native_check临时构建、未被批次使用的旧补充包1625536b02f43722c56fbbbc，去除重复内容；独有来源和元数据归档。
+- 旧native_stage_pipeline_build_cache/v23_20260506中1185个展开参数文件与压缩包成员逐项SHA256一致，移除展开副本，保留全部228个完整package.tar.gz。
+- 清理了工作源码目录中的Python/pytest缓存，未清理冻结包或原始结果目录中的缓存。
+- report_out中的新增生成数据按路径忽略；保留研究治理Markdown的显式入口。历史已跟踪文件不因ignore规则自动退出Git。
+- 最终第28稿DOCX/PDF、第27稿输入文件、最新报告生成/校验目录revision28、当前图表和研究方案保留。
+
+总计移除10099个已记录文件，另有可再生缓存。扣除归档和补回依赖，净释放有效载荷约20.3GiB；这是文件字节估算，文件系统块占用可能略有差异。
+清理前Git逐文件状态条目为23235；清理后1109。大部分减少来自生成数据不再作为未跟踪源码显示，另有真实文件清理；不能将状态条目减少解释为同等数量的源码删除。
+
+保留位置
+
+当前实验代码：vta/experiments/cpu_vta_partitioning/src/、tests/、configs/、supplements/multithreading/。
+当前主包：vta/experiments/cpu_vta_partitioning/artifacts/bundles/62a5cff7a2439cf3a7828476。
+当前补充包：vta/experiments/cpu_vta_partitioning/supplements/multithreading/artifacts/bundles/fe70c42fd53a73a83039d03b。
+当前构建缓存：artifacts/builds/resnet18-0f6771d8abd0326f。
+全部主实验结果、暂停的补充批次、short_01及依赖它的short_02均保留。
+
+第一项重要入口与证据：
+  vta/tutorials/frontend/solve_cpu_vta_pipeline_v1_p3.py
+  vta/tutorials/frontend/run_vta_c1_joint_ablation_pilot.py
+  vta/tutorials/frontend/analyze_vta_c1_joint_ablation_pilot.py
+  report_out/stage_tile_cotuning/c1_static_score_comparison/20261017_joint_resource_board_pilot_run04
+  report_out/stage_tile_cotuning/cpu_vta_core_partition_validation/20260917T150530Z_core_partition_v2
+  report_out/resource_aware_maxplus、compile_context_audit及thesis_supplement_experiments中的父证据链。
+
+第二项重要入口与证据：
+  vta/tutorials/frontend/run_c3_input_early_release.py
+  vta/tutorials/frontend/c3_input_early_release_analysis.py
+  vta/tutorials/frontend/c2_yolo416_quick.py、c2_yolo224_*及其依赖。
+  report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20261016_c3_input_last_read_run03
+  report_out/stage_tile_cotuning/c2_yolov3_tiny/20261018_run03及20261019_yolo416_quick_run01
+  report_out/stage_tile_cotuning/c3s_buffer_reuse、queue_capacity及resource_aware_maxplus/v1_p8_top20_zero_copy。
+
+第三项重要入口与证据：
+  vta/tutorials/frontend/c3_fallback_identity_compare.py、c3_fallback_identity_execute.py、c3_fallback_identity_closeout.py
+  report_out/stage_tile_cotuning/c3_dma_residency_autotune/07_grouped_holdout/20261019_c3_fallback_tps_identity_result01
+  同父目录20261019_c3_fallback_tps_identity_board_run01、20261019_c3_fallback_identity_local_run03及node34/node46父证据。
+  20261014_c3_official_valid_window_run01中的runtime_local_final/helper仍被最终实验使用。
+  最终冻结记录绑定了220个当前源码文件；即使没有import入边，也必须保留原路径和哈希。
+
+以上report_out简称均位于vta/tutorials/frontend/下。完整逐文件保护及来源在下述归档的tvm_cleanup_report28_hash_dependencies.json，不以本说明的简写替代它。
+
+归档与恢复
+
+本地归档目录：vta/experiments/cpu_vta_partitioning/artifacts/cleanup_20261104/。
+其中manifest.json逐文件记录原路径、SHA256、大小、权限、时间和恢复来源；349个小文件在sources_documents_and_provenance.tar.gz中，其余来自保留包或原始package.tar.gz。
+同目录保存清理前Git补丁、子模块补丁、源依赖审计、压缩包逐成员核验、清理前后保护文件核验和恢复测试记录。
+
+先列出要恢复的文件（不写入）：
+  python vta/experiments/cpu_vta_partitioning/maintenance/restore_cleanup_20261104.py --category obsolete_diagnostics
+恢复对应分类：
+  python vta/experiments/cpu_vta_partitioning/maintenance/restore_cleanup_20261104.py --category obsolete_diagnostics --restore
+旧缓存按原路径前缀按需恢复：
+  python vta/experiments/cpu_vta_partitioning/maintenance/restore_cleanup_20261104.py --category legacy_unpacked_parameters --path-prefix vta/tutorials/frontend/report_out/native_stage_pipeline_build_cache/v23_20260506/buildability/block_stage_c/ --restore
+恢复会逐项验证内容，不覆盖已存在的不同内容文件。旧buildability展开缓存已压缩保留，旧脚本若直接读取其参数，应先恢复对应前缀。不要删除恢复来源档案或现行包后再期望恢复器可用。
+
+验证结果
+
+1. 清理前后3718个受保护现存文件的大小和SHA256全部一致。
+2. C3绑定源码220项匹配；清理前原始C3统计和C1十五个窗口已复算，文件保留核验通过。
+3. 两个现行部署包完整本地验证通过，172个阶段继续可用。
+4. 主项目107项测试通过、5项编译工作区测试跳过；补充项目24项通过、2项跳过。随后指定保留补充包补跑原生加载器/QEMU测试1项通过；合并为132项不同测试通过、6项仍跳过。未重跑完整1.83亿映射审计，也未进行板端测试。
+5. 归档文件、保留包文件、旧压缩包成员三种恢复路径抽样通过SHA256回验；重复恢复不重复写入。
+6. 清理前发现10个历史二进制依赖已缺失。已从保留副本找到与原始清单完全相同的SHA256并补回原路径，无同名替代、无重新编译；记录在preexisting_binary_recovery.json和manifest.json。
+7. Git diff --check通过；原有功能改动、原始结果和子模块驱动改动未被重置。
+
+此次验证说明清理没有改变受保护证据和当前本地包；不将其扩大解释为所有历史批次已重新上板复现。

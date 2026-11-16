@@ -1,0 +1,129 @@
+{
+  "experiment": "resnet18_core_model_validation",
+  "schema_version": 1,
+  "seed": 20261107,
+  "environment": {
+    "cores": 4,
+    "frequency_khz": 1066666,
+    "poll_sleep_ns": 1000,
+    "post_start_sleep_ns": 1000,
+    "spin_count": 0,
+    "exclude_worker0": 1,
+    "bind_threads": 1
+  },
+  "calibration": {
+    "indices": [
+      0
+    ],
+    "warmup": 2,
+    "scored": 8,
+    "tail": 0
+  },
+  "performance": {
+    "indices": [
+      0
+    ],
+    "warmup": 8,
+    "scored": 16,
+    "tail": 4
+  },
+  "qualification": {
+    "indices": [
+      0
+    ],
+    "warmup": 0,
+    "scored": 1,
+    "tail": 0
+  },
+  "qualification_indices": [
+    0
+  ],
+  "component_blocks": [
+    "qualify",
+    "component"
+  ],
+  "component_probe_frames": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "performance_probe_frames": [],
+  "qualification_probe_frames": [
+    0
+  ],
+  "copy": "ordinary",
+  "queue_depth": 2,
+  "affinity_mode": "pinned",
+  "rounds": 1,
+  "anchors": false,
+  "performance_rejection_threshold": null,
+  "automatic_window_extension": false,
+  "boot_policy": "one_boot_no_automatic_reboot",
+  "kernel_settings_mutated": false,
+  "unavailable_counter_policy": "unknown_not_zero",
+  "profile_scope": "per_CPU_stage_run_call_worker_snapshot",
+  "detailed_session_profile": false,
+  "source_ranking_modified": false,
+  "numeric": {
+    "integer": "exact",
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "maximum_tasks": 47,
+  "maximum_forwards": 497,
+  "component_count": 11,
+  "maximum_pipeline_count": 12,
+  "methods": [
+    "balanced_fixed",
+    "weighted_fixed",
+    "balanced_movable",
+    "weighted_movable"
+  ],
+  "fixed_cut": [
+    "cpu_00_02",
+    "vta_03_04",
+    "cpu_05_07",
+    "vta_08_19",
+    "cpu_20_20"
+  ],
+  "cpu_tail": {
+    "threads": 1,
+    "mask": [
+      0
+    ],
+    "worker_core_map": [
+      0
+    ]
+  },
+  "host_mask": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "control_mask": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "cpu_stage_gate": "off",
+  "worker_map_policy": "caller_any_selected_core_helpers_remaining_ascending",
+  "cost_tables": "one_new_shared_isolated_table_for_all_four_methods",
+  "score_distribution": [
+    "balanced",
+    "weighted"
+  ],
+  "core_permutation_assumption": "measured_logical_slot_work_transfers_to_identical_physical_core_permutation",
+  "profile_probe": "six_multithread_heavy_CPU_signatures_only",
+  "formal_pipeline_probe": false,
+  "performance_blocks": [
+    "old_bridge",
+    "performance"
+  ]
+}

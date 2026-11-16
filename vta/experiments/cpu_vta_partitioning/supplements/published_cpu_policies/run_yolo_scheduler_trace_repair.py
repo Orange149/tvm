@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""Audit truncated old traces; prepare a separate, bounded recorder repair."""
+from pathlib import Path
+import argparse,json,sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'src'))
+if __name__=='__main__':
+    from yolo_scheduler_trace_repair.common import OUTPUT,RUN,CONFIG
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('command',choices=('audit','prepare','validate','qemu','board','status'))
+    p.add_argument('--output',type=Path,default=OUTPUT);p.add_argument('--run-dir',type=Path,default=RUN)
+    p.add_argument('--local-config',type=Path,default=CONFIG);p.add_argument('--execute-board',action='store_true');a=p.parse_args()
+    if a.command=='audit':
+        from yolo_scheduler_trace_repair.audit import audit
+        result=audit(a.output)
+    elif a.command in ('prepare','validate','qemu'):
+        from yolo_scheduler_trace_repair import prepare
+        result=getattr(prepare,a.command)(a.output)
+    elif a.command=='board':
+        from yolo_scheduler_trace_repair.campaign import run
+        result=run(a.output,a.run_dir,a.local_config,execute_board=a.execute_board)
+    else:
+        from cpu_vta_partitioning.common import read
+        result=read(a.run_dir/'state.json') if (a.run_dir/'state.json').exists() else dict(status='NOT_STARTED')
+    print(json.dumps(result,ensure_ascii=False))

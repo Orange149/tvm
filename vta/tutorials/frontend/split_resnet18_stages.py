@@ -1001,12 +1001,17 @@ def _count_partial_layer_boundaries(unit_names):
 
 
 def build_vta_capacity_spec():
+    """Physical byte capacities, not vector depths.
+
+    Whole-unit tensor sizes divided by these capacities are tiling-demand
+    estimates, not the occupancy of the compiled scratchpad allocations.
+    """
     env = vta.get_env()
     return {
-        "inp_cap_bytes": int(env.INP_BUFF_SIZE * env.INP_ELEM_BYTES),
-        "wgt_cap_bytes": int(env.WGT_BUFF_SIZE * env.WGT_ELEM_BYTES),
-        "acc_cap_bytes": int(env.ACC_BUFF_SIZE * env.ACC_ELEM_BYTES),
-        "out_cap_bytes": int(env.OUT_BUFF_SIZE * env.OUT_ELEM_BYTES),
+        "inp_cap_bytes": int(env.INP_BUFF_SIZE),
+        "wgt_cap_bytes": int(env.WGT_BUFF_SIZE),
+        "acc_cap_bytes": int(env.ACC_BUFF_SIZE),
+        "out_cap_bytes": int(env.OUT_BUFF_SIZE),
     }
 
 
@@ -1017,6 +1022,7 @@ def _ceil_div(lhs, rhs):
 
 
 def _estimate_unit_tile_cost(meta, capacity_spec):
+    """Legacy whole-unit cost heuristic; does not observe allocation or spills."""
     inp_cap_bytes = capacity_spec["inp_cap_bytes"]
     wgt_cap_bytes = capacity_spec["wgt_cap_bytes"]
     acc_cap_bytes = capacity_spec["acc_cap_bytes"]
@@ -1259,18 +1265,8 @@ def _score_resource_aware_candidate(vta_unit_names, unit_metadata, capacity_spec
         )
         tile_count_est += tile_info["tile_count_est"]
         tile_spill_penalty += tile_info["tile_spill_penalty"]
-        if tile_info["inp_tiles"] > 8:
-            hard_reject = True
-            reject_reasons.add("inp_tile_excess")
-        if tile_info["wgt_tiles"] > 8:
-            hard_reject = True
-            reject_reasons.add("wgt_tile_excess")
-        if tile_info["acc_tiles"] > 8:
-            hard_reject = True
-            reject_reasons.add("acc_tile_excess")
-        if tile_info["out_tiles"] > 8:
-            hard_reject = True
-            reject_reasons.add("out_tile_excess")
+        # Whole tensors may exceed SRAM and still lower to legal small tiles.
+        # Only actual lowering/allocation checks can reject for SRAM capacity.
         if idx < len(vta_unit_names) - 1:
             total_internal_boundary_bytes += out_est
         if residual_live_est > 0:
@@ -1371,6 +1367,8 @@ def _score_resource_aware_candidate(vta_unit_names, unit_metadata, capacity_spec
         "max_wgt_ratio": float(max_wgt_ratio),
         "max_acc_ratio": float(max_acc_ratio),
         "max_out_ratio": float(max_out_ratio),
+        "capacity_ratio_semantics": "whole_unit_tensor_bytes_over_sram_bytes_not_occupancy",
+        "sram_utilization_status": "unknown_not_lowered",
         "tile_input_load_bytes_est": int(tile_input_load_bytes_est),
         "tile_weight_load_bytes_est": int(tile_weight_load_bytes_est),
         "tile_output_store_bytes_est": int(tile_output_store_bytes_est),

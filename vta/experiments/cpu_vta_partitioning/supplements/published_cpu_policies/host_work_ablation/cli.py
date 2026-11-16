@@ -1,0 +1,42 @@
+"""Frozen capsule operations. Native execution remains explicit."""
+import argparse
+import json
+from pathlib import Path
+import re
+from .common import DEFAULT_RUN_ID,DEFAULT_LOCAL_CONFIG,PROJECT
+
+def main(argv=None):
+    parser=argparse.ArgumentParser(description='ResNet18三组模型消融')
+    sub=parser.add_subparsers(dest='command',required=True)
+    p=sub.add_parser('validate');p.add_argument('--bundle',type=Path,required=True)
+    for name in ('status','analyze'):
+        p=sub.add_parser(name);p.add_argument('--run-dir',type=Path,required=True)
+    board=sub.add_parser('board').add_subparsers(dest='action',required=True)
+    p=board.add_parser('run');p.add_argument('--bundle',type=Path,required=True)
+    p.add_argument('--run-id',default=DEFAULT_RUN_ID)
+    p.add_argument('--local-config',type=Path,default=DEFAULT_LOCAL_CONFIG)
+    p.add_argument('--execute-board',action='store_true')
+    p=board.add_parser('resume');p.add_argument('--run-dir',type=Path,required=True);p.add_argument('--execute-board',action='store_true')
+    args=parser.parse_args(argv)
+    if args.command=='validate':
+        from .prepare import validate_bundle
+        result={'status':'VALIDATED_OFFLINE','bundle_id':validate_bundle(args.bundle)['bundle_id']}
+    elif args.command=='status':
+        from .campaign import status
+        result=status(args.run_dir)
+    elif args.command=='analyze':
+        from .analysis import analyze
+        result=analyze(args.run_dir)
+    else:
+        if not args.execute_board:parser.error('board commands require --execute-board')
+        from .campaign import create,validate_state,run_current,status
+        from .runtime import SSH
+        if args.action=='run':
+            if not re.fullmatch('[A-Za-z0-9_-]+',args.run_id):parser.error('invalid run ID')
+            root=PROJECT/'supplements/published_cpu_policies/runs'/args.run_id
+            connection=json.loads(args.local_config.read_text())['board'];state=create(args.bundle,root,connection)
+        else:
+            root=args.run_dir.resolve();state=validate_state(root);connection=state['connection']
+        run_current(root,SSH(connection,execute_board=True,bundle=state['bundle']))
+        result=status(root)
+    print(json.dumps(result,ensure_ascii=False,allow_nan=False));return result

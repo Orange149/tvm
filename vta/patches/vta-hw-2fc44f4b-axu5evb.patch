@@ -1,0 +1,58 @@
+diff --git a/src/axu5evb/axu5evb_driver.cc b/src/axu5evb/axu5evb_driver.cc
+index fbefed2..494181b 100644
+--- a/src/axu5evb/axu5evb_driver.cc
++++ b/src/axu5evb/axu5evb_driver.cc
+@@ -302,6 +302,8 @@ class UdmabufPool {
+     char* ptr = static_cast<char*>(base_vaddr_) + aligned_off;
+     vta_phy_addr_t phy = static_cast<vta_phy_addr_t>(base_paddr_ + aligned_off);
+     offset_ = aligned_off + aligned_size;
++    requested_bytes_ += size;
++    allocation_count_ += 1;
+ 
+     LogInfo("Alloc size=%zu aligned=%zu vaddr=%p paddr=0x%llx used=%zu/%zu",
+             size,
+@@ -388,6 +390,23 @@ class UdmabufPool {
+     LogDebug("Free buf=%p (bump allocator no-op)", buf);
+   }
+ 
++  // Diagnostic ABI v1. Observing must not initialize/map/allocate the pool.
++  // Fields: initialized, capacity, high-water, requested bytes, padding,
++  // successful allocation count, virtual base, physical base.
++  int Snapshot(uint64_t* fields, size_t count) {
++    if (fields == nullptr || count != 8) return -1;
++    std::lock_guard<std::mutex> lock(mu_);
++    fields[0] = inited_ ? 1 : 0;
++    fields[1] = size_;
++    fields[2] = offset_;
++    fields[3] = requested_bytes_;
++    fields[4] = offset_ - requested_bytes_;
++    fields[5] = allocation_count_;
++    fields[6] = reinterpret_cast<uintptr_t>(base_vaddr_);
++    fields[7] = base_paddr_;
++    return 0;
++  }
++
+   vta_phy_addr_t GetPhyAddr(void* buf) {
+     std::lock_guard<std::mutex> lock(mu_);
+     EnsureInitLocked();
+@@ -568,6 +587,8 @@ class UdmabufPool {
+   size_t size_{0};
+   uint64_t base_paddr_{0};
+   size_t offset_{0};
++  uint64_t requested_bytes_{0};
++  uint64_t allocation_count_{0};
+   std::string dev_path_;
+   std::string sysfs_dir_;
+ };
+@@ -582,6 +603,11 @@ struct RegMapHandle {
+ 
+ extern "C" {
+ 
++// Optional AXU5EVB diagnostic extension consumed by diagnostic VTA runtimes.
++int VTAMemAllocationSnapshotV1(uint64_t* fields, size_t count) {
++  return UdmabufPool::Global().Snapshot(fields, count);
++}
++
+ static inline void CopyBytesSafe(void* dst, const void* src, size_t size) {
+   volatile uint8_t* d = reinterpret_cast<volatile uint8_t*>(dst);
+   const uint8_t* s = reinterpret_cast<const uint8_t*>(src);

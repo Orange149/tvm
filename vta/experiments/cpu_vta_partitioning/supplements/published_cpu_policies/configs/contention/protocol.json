@@ -1,0 +1,22 @@
+{
+  "experiment": "resnet18_controlled_contention",
+  "seed": 20261107,
+  "environment": {"cores":4,"frequency_khz":1066666,"poll_sleep_ns":1000,"post_start_sleep_ns":1000,"spin_count":0,"exclude_worker0":1,"bind_threads":1},
+  "input_index": 0,
+  "component": {"warmup":2,"scored":8},
+  "performance": {"warmup":8,"scored":16,"tail":4},
+  "maximum_sessions":48,
+  "anchors":false,
+  "automatic_remeasurement":false,
+  "performance_rejection_threshold":null,
+  "boot_policy":"one_boot_no_automatic_reboot",
+  "probe_frames":[2,6],
+  "cpu_distribution":"balanced",
+  "host_mask":[0,1,2,3],
+  "control_mask":[0,1,2,3],
+  "copy":"ordinary",
+  "queue_depth":2,
+  "background_call_limit":100000,
+  "process_timeout_s":90,
+  "pipeline_feedback_used_for_costs":false
+}

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cpu-vta-partitioning"
+version = "1.0.0"
+requires-python = ">=3.10"
+dependencies = ["numpy", "scipy", "matplotlib"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+cpu-vta-partitioning = "cpu_vta_partitioning.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--confcutdir=. -ra"
