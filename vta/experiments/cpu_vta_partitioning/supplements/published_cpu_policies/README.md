@@ -1,6 +1,19 @@
 # 已发表 CPU 资源方法的复现与 TVM 适配
 
-## 当前结果与复现入口（2026-11-12）
+## ResNet50 迁移与同域消融（2026-11-17）
+
+新增 [ResNet50-v2 迁移验证](resnet50_validation/README.md) 和
+[五组同域消融](resnet50_ablation/README.md)，复用冻结的运行库、执行器及真实组件成本。
+迁移验证为两种方法各 Top-20、40 项共同实测；后续消融为五份 Top-20 与三个基线桥接，
+去重 101 项、202 个会话、4,949 次完整推理。两批测量分别报告，不跨批相减解释评分贡献。
+
+对应入口为 `run_resnet50_validation.py`、`run_resnet50_top20_board.py` 和
+`run_resnet50_ablation.py`。首次排名的已封存控制器限制、恢复步骤和外部数据依赖见各包说明。
+`monitor_resnet50_status.py` 是独立只读监控工具；保留它不代表当前有后台任务运行。
+Git 保存代码与协议；编译模块、成本、冻结名单和原始测量仍在本地忽略目录 `artifacts/`、
+`runs/` 中，需要另行备份，不能仅凭源码提交恢复已经完成的实验数据。
+
+## ResNet18 与 YOLO 共同实测（2026-11-12）
 
 以 [最新共同实测](../../../../../paper/my_paper/analysis/20261112_common_tail_comparison/FINDINGS_zh.txt) 和 [研究汇总](../../../../../paper/my_paper/analysis/20261112_goal_synthesis/CONCLUSIONS_zh.txt) 为当前比较口径。两个网络共 88 个配置、176 个会话、4,312 次完整推理；输入 0，同一启动，8 帧预热、16 个完成时间戳、24 帧尾部。
 
